@@ -42,6 +42,20 @@ for c in counties:
     env["OUT_HTML"] = out
     if run("build_page.py", env): blocked.append(slug + " (build)"); continue
     if run("gate.py", env, args=[agg, out, str(c.get("official", 0))]): blocked.append(slug + " (gate)"); continue
+    # verified decision record: why this page exists + its evidence (ChatGPT review #5/#7)
+    a = json.load(open(agg)); Pp = a["policies"]
+    official = c.get("official", 0)
+    json.dump({
+        "slug": slug, "label": c["label"], "geoid": c["geoid"],
+        "sources": {"policies_asof": Pp.get("asof"), "retrieved": Pp.get("retrieved")},
+        "cohort_n": Pp.get("cohort_n"), "policy_units": Pp.get("units"),
+        "spread_shown": (Pp.get("cohort_n") or 0) >= 100,
+        "reconciliation_pct": round(abs(Pp["units"] - official) / official * 100, 2) if official else None,
+        "completeness": a.get("manifest"),
+        "nri": bool(a.get("nri")),
+        "why_distinct": "county-level reconciled cohort; unique cost spread, full-risk gap, claims and CRS for this county",
+        "gate": "pass",
+    }, open(os.path.join(d, "manifest.json"), "w"), indent=1)
     ok.append(slug)
 
 run("build_site.py", {"FF_PLACES": PLACES, "FF_DIST": DIST, "FF_DATADIR": DATA, "FF_BASEURL": BASE})

@@ -86,10 +86,14 @@ cf = (NRI or {}).get("coastal", {}); inl = (NRI or {}).get("inland", {})
 have_risk = NRI and (_present(cf.get("risk_rating")) or _present(inl.get("risk_rating")))
 if have_risk:
     def risk_rows(block, label):
-        rr, pctl, ealr = block.get("risk_rating"), block.get("eal_national_pctl"), block.get("eal_rating")
+        rr, pctl, ealr, eald = (block.get("risk_rating"), block.get("eal_national_pctl"),
+                                block.get("eal_rating"), block.get("eal_total_usd"))
         if not _present(rr): return ""
-        p = f" ({round(pctl)}th national percentile)" if isinstance(pctl, (int, float)) else ""
-        eal = f"<li><b>{label} expected annual loss</b><span>{html.escape(str(ealr))}{p}</span></li>" if _present(ealr) else ""
+        def _ord(n): return f"{n}th" if 10 <= n % 100 <= 20 else f"{n}{ {1: 'st', 2: 'nd', 3: 'rd'}.get(n % 10, 'th') }"
+        pct = f", {_ord(round(pctl))} national percentile" if isinstance(pctl, (int, float)) else ""
+        dollars = f"{money(eald)}/yr " if isinstance(eald, (int, float)) and eald > 0 else ""
+        eal = (f"<li><b>{label} expected annual loss</b><span>{dollars}({html.escape(str(ealr))}{pct})</span></li>"
+               if _present(ealr) else "")
         return f"<li><b>{label} flood risk</b><span>{html.escape(str(rr))}</span></li>" + eal
     risk_body = "<ul class='kv'>" + risk_rows(cf, "Coastal") + risk_rows(inl, "Inland") + "</ul>"
     parts = []
@@ -110,10 +114,20 @@ zu = P["zone_units"]
 zone_body = "<ul class='kv'>" + "".join(
     f"<li><b>Zone {html.escape(z)}</b><span>{num(v)} policy units</span></li>" for z, v in list(zu.items())[:8]) + "</ul>"
 
-cost_lead = (f"Among existing single-family primary-residence NFIP policies in {CS}, the median "
-             f"annual cost is {money(P['p50'])}, with the middle half between {money(P['p25'])} and "
-             f"{money(P['p75'])} ({num(P['cost_n'])} policies). This is what current policyholders pay — "
-             f"a new policy on a different building can differ.")
+SMALL_COHORT = (P.get("cohort_n") or 0) < 100  # too few for a reliable spread -> count + median only
+if SMALL_COHORT:
+    cost_lead = (f"Only {num(P['cohort_n'])} single-family primary-residence NFIP policies in {CS} — too few "
+                 f"for a reliable cost spread, so we show the count and median only. Median annual cost {money(P['p50'])}.")
+    cost_body = (f"<ul class='kv'><li><b>Cohort policies</b><span>{num(P['cohort_n'])}</span></li>"
+                 f"<li><b>Median annual cost</b><span>{money(P['p50'])}</span></li></ul>"
+                 "<p class='note'>Suppressed percentile spread: fewer than 100 policies in the cohort.</p>")
+else:
+    cost_lead = (f"Among existing single-family primary-residence NFIP policies in {CS}, the median "
+                 f"annual cost is {money(P['p50'])}, with the middle half between {money(P['p25'])} and "
+                 f"{money(P['p75'])} ({num(P['cost_n'])} policies). This is what current policyholders pay — "
+                 f"a new policy on a different building can differ.")
+    cost_body = (spread_svg() + "<p class='note'>Each policy's annual cost (premium plus fees), single-family "
+                 "primary residences. The bar is the middle half (p25–p75); the orange line is FEMA's full-risk price.</p>")
 gap_lead = (f"{P['share_below']}% of {num(P['below_n'])} single-family policies pay less than FEMA's own "
             f"full-risk price; the median full-risk premium is {money(P['frp_median'])} versus the "
             f"{money(P['p50'])} actually charged.")
@@ -267,8 +281,7 @@ th,td{{text-align:left;padding:6px 4px;border-bottom:1px solid var(--line)}}th{{
   f"<div class='two'><div>{zone_body}</div><div><p class='note'>Zone mix by policy units (summed policyCount). Federal rule: a lender must require flood insurance on a building in a Special Flood Hazard Area with a federally backed loan (42 U.S.C. §4012a). This is the mix of existing policies, not of all buildings, and does not establish any one property's obligation.</p></div></div>",
   src(POL_ASOF, RETR))}
 
-{card("How much does it cost here?", cost_lead, spread_svg() +
-  "<p class='note'>Each policy's annual cost (premium plus fees), single-family primary residences. The bar is the middle half (p25–p75); the orange line is FEMA's full-risk price.</p>", src(POL_ASOF, RETR))}
+{card("How much does it cost here?", cost_lead, cost_body, src(POL_ASOF, RETR))}
 
 {card("How far below the true price is it?", gap_lead,
   f"<ul class='kv'><li><b>Median charged now</b><span>{money(P['p50'])}</span></li>"

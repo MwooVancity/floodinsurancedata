@@ -97,9 +97,19 @@ data = HEAD.format(title="Download the flood-insurance data", desc="Per-county N
 wr(os.path.join(DIST, "data", "index.html"), data)
 
 # ---- sitemap, robots, llms.txt ----
-urls = [BASE + "/", BASE + "/methodology/", BASE + "/data/"] + [BASE + f"/flood-insurance/{p['slug']}/" for p in places]
+# lastmod = the data's effective date (real data change), per-county from its agg; site pages use the max.
+def county_lastmod(slug):
+    ap = os.path.join(DATADIR, slug, "agg.json")
+    if os.path.exists(ap):
+        a = json.load(open(ap))
+        return (a.get("policies") or {}).get("asof") or "2026-07-31"
+    return "2026-07-31"
+county_urls = [(BASE + f"/flood-insurance/{p['slug']}/", county_lastmod(p["slug"])) for p in places]
+site_lastmod = max([lm for _, lm in county_urls], default="2026-07-31")
+urls = [(BASE + "/", site_lastmod), (BASE + "/methodology/", site_lastmod),
+        (BASE + "/data/", site_lastmod)] + county_urls
 sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + \
-     "".join(f"  <url><loc>{u}</loc></url>\n" for u in urls) + "</urlset>\n"
+     "".join(f"  <url><loc>{u}</loc><lastmod>{lm}</lastmod></url>\n" for u, lm in urls) + "</urlset>\n"
 wr(os.path.join(DIST, "sitemap.xml"), sm)
 wr(os.path.join(DIST, "robots.txt"), f"User-agent: *\nAllow: /\nSitemap: {BASE}/sitemap.xml\n")
 wr(os.path.join(DIST, "llms.txt"),

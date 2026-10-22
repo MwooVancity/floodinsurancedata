@@ -1,0 +1,30 @@
+{
+ "slug": "kanawha-county-wv",
+ "label": "Kanawha County, West Virginia",
+ "geoid": "54039",
+ "sources": {
+  "policies_asof": "2026-07-31",
+  "retrieved": "2026-10-22"
+ },
+ "cohort_n": 926,
+ "policy_units": 1283,
+ "spread_shown": true,
+ "reconciliation_pct": 0.77,
+ "completeness": {
+  "policies": {
+   "reported_total": 1283,
+   "unique_fetched": 1283,
+   "complete": true,
+   "missing": 0
+  },
+  "claims": {
+   "reported_total": 2479,
+   "unique_fetched": 2479,
+   "complete": true,
+   "missing": 0
+  }
+ },
+ "nri": true,
+ "why_distinct": "county-level reconciled cohort; unique cost spread, full-risk gap, claims and CRS for this county",
+ "gate": "pass"
+}

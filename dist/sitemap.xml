@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://example.com/</loc></url>
-  <url><loc>https://example.com/methodology/</loc></url>
-  <url><loc>https://example.com/data/</loc></url>
-  <url><loc>https://example.com/flood-insurance/lee-county-fl/</loc></url>
-  <url><loc>https://example.com/flood-insurance/kanawha-county-wv/</loc></url>
+  <url><loc>https://example.com/</loc><lastmod>2026-07-31</lastmod></url>
+  <url><loc>https://example.com/methodology/</loc><lastmod>2026-07-31</lastmod></url>
+  <url><loc>https://example.com/data/</loc><lastmod>2026-07-31</lastmod></url>
+  <url><loc>https://example.com/flood-insurance/lee-county-fl/</loc><lastmod>2026-07-31</lastmod></url>
+  <url><loc>https://example.com/flood-insurance/kanawha-county-wv/</loc><lastmod>2026-07-31</lastmod></url>
 </urlset>

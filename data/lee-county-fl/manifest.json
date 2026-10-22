@@ -1,0 +1,30 @@
+{
+ "slug": "lee-county-fl",
+ "label": "Lee County, Florida",
+ "geoid": "12071",
+ "sources": {
+  "policies_asof": "2026-07-31",
+  "retrieved": "2026-10-22"
+ },
+ "cohort_n": 53965,
+ "policy_units": 134473,
+ "spread_shown": true,
+ "reconciliation_pct": 1.86,
+ "completeness": {
+  "policies": {
+   "reported_total": 90224,
+   "unique_fetched": 90224,
+   "complete": true,
+   "missing": 0
+  },
+  "claims": {
+   "reported_total": 48496,
+   "unique_fetched": 48496,
+   "complete": true,
+   "missing": 0
+  }
+ },
+ "nri": true,
+ "why_distinct": "county-level reconciled cohort; unique cost spread, full-risk gap, claims and CRS for this county",
+ "gate": "pass"
+}

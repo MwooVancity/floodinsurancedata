@@ -40,6 +40,12 @@ if "$None" in html or "None%" in html: fails.append("None leaked into a number")
 if not agg.get("nri") and "Gap:" not in html:
     fails.append("NRI missing without a gap line")
 
+# 6. cohort suppression consistency: spread chart shown iff cohort >= 100
+cn = P.get("cohort_n") or 0
+has_spread = "Annual NFIP cost spread" in html
+if cn < 100 and has_spread: fails.append(f"cohort {cn} < 100 but percentile spread chart shown")
+if cn >= 100 and not has_spread: fails.append(f"cohort {cn} >= 100 but spread chart missing")
+
 if fails:
     print("GATE FAIL:")
     for f in fails: print("  -", f)
