@@ -42,9 +42,16 @@ def page_all(base, filt, select, label):
         skip += PAGE
         if skip % 10000 < PAGE:
             print(f"  {label} {len(seen)}/{total}", flush=True)
+    # completeness gate: offset paging can silently drop rows; record the shortfall.
+    MANIFEST[label] = {"reported_total": total, "unique_fetched": len(seen),
+                       "complete": len(seen) == total, "missing": total - len(seen)}
+    print(f"{label} complete={len(seen)==total} ({len(seen)}/{total})", flush=True)
     return list(seen.values())
 
 agg = {}
+MANIFEST = {}
+RETRIEVED = "2026-10-22"
+POLICY_ASOF = "2026-07-31"
 t0 = time.time()
 
 # POLICIES ----------------------------------------------------------------------
@@ -62,14 +69,22 @@ both = [r for r in coh if isinstance(r.get("policyCost"), (int, float)) and isin
 frp = sorted(r["fullRiskPremium"] for r in both)
 below = sum(1 for r in both if r["policyCost"] < r["fullRiskPremium"])
 def q(a, p): return round(statistics.quantiles(a, n=100, method="inclusive")[p-1]) if len(a) > 1 else (a[0] if a else None)
+# zone mix by POLICY UNITS (sum policyCount), not record count; condo rows carry >1 unit.
+zone_units = defaultdict(int)
+for r in pol:
+    zone_units[(r.get("ratedFloodZone") or "Unknown").strip()] += int(r.get("policyCount") or 0)
+sfha_prefixes = ("A", "V")
+sfha_units = sum(u for z, u in zone_units.items() if z[:1] in sfha_prefixes)
 agg["policies"] = {
     "rows": len(pol), "units": units,
     "cohort_n": len(coh), "cost_n": len(cost),
     "p25": q(cost, 25), "p50": q(cost, 50), "p75": q(cost, 75), "p90": q(cost, 90),
     "frp_median": q(frp, 50), "frp_n": len(frp),
     "share_below": round(100 * below / len(both), 1) if both else None, "below_n": len(both),
-    "zones": dict(Counter((r.get("ratedFloodZone") or "?").strip() for r in pol).most_common(12)),
+    "zone_units": dict(sorted(zone_units.items(), key=lambda x: -x[1])[:12]),
+    "sfha_units": sfha_units, "sfha_share_units": round(100 * sfha_units / units, 1) if units else None,
     "zips": len(set(r.get("reportedZipCode") for r in pol)),
+    "asof": POLICY_ASOF, "retrieved": RETRIEVED,
 }
 print("policies agg done", round(time.time()-t0), "s", flush=True)
 json.dump(agg, open("agg.json", "w"))
@@ -86,10 +101,15 @@ for r in clm:
         byyear[int(y)][0] += 1
         byyear[int(y)][1] += paid
     tot_paid += paid
+yrs = sorted(byyear)
 agg["claims"] = {
     "rows": len(clm), "total_paid": round(tot_paid),
     "by_year": {str(y): [c, round(p)] for y, (c, p) in sorted(byyear.items())},
-    "claims_per_100_policies": round(100 * len(clm) / units, 1) if units else None,
+    # cumulative historical count over point-in-time policy units; NOT an annual rate or flood probability.
+    "cumulative_per_100_current_units": round(100 * len(clm) / units, 1) if units else None,
+    "year_min": yrs[0] if yrs else None, "year_max": yrs[-1] if yrs else None,
+    "geo_note": "claims filtered by claims-dataset countyCode, which may not match the policy property county",
+    "retrieved": RETRIEVED,
 }
 print("claims agg done", round(time.time()-t0), "s", flush=True)
 json.dump(agg, open("agg.json", "w"))
@@ -109,5 +129,9 @@ try:
 except Exception as e:
     agg["nri"] = None
     print("NRI err -> gap line", repr(e)[:80], flush=True)
+agg["manifest"] = MANIFEST
 json.dump(agg, open("agg.json", "w"))
-print("ALL DONE", round(time.time()-t0), "s", flush=True)
+# hard gate: fail loudly if either pull was incomplete
+incomplete = [k for k, v in MANIFEST.items() if not v["complete"]]
+print("MANIFEST", json.dumps(MANIFEST), flush=True)
+print("ALL DONE", round(time.time()-t0), "s; incomplete:", incomplete, flush=True)
