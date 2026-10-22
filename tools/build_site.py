@@ -105,11 +105,12 @@ def county_lastmod(slug):
         return (a.get("policies") or {}).get("asof") or "2026-07-31"
     return "2026-07-31"
 county_urls = [(BASE + f"/flood-insurance/{p['slug']}/", county_lastmod(p["slug"])) for p in places]
-site_lastmod = max([lm for _, lm in county_urls], default="2026-07-31")
-urls = [(BASE + "/", site_lastmod), (BASE + "/methodology/", site_lastmod),
-        (BASE + "/data/", site_lastmod)] + county_urls
+# county pages carry lastmod = their data's effective date (a real data change); home/methodology/data
+# have no trustworthy per-content modification date, so they omit lastmod rather than inherit a false one.
+urls = [(BASE + "/", None), (BASE + "/methodology/", None), (BASE + "/data/", None)] + county_urls
 sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + \
-     "".join(f"  <url><loc>{u}</loc><lastmod>{lm}</lastmod></url>\n" for u, lm in urls) + "</urlset>\n"
+     "".join(f"  <url><loc>{u}</loc>" + (f"<lastmod>{lm}</lastmod>" if lm else "") + "</url>\n" for u, lm in urls) + \
+     "</urlset>\n"
 wr(os.path.join(DIST, "sitemap.xml"), sm)
 wr(os.path.join(DIST, "robots.txt"), f"User-agent: *\nAllow: /\nSitemap: {BASE}/sitemap.xml\n")
 wr(os.path.join(DIST, "llms.txt"),

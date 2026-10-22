@@ -45,17 +45,25 @@ for c in counties:
     # verified decision record: why this page exists + its evidence (ChatGPT review #5/#7)
     a = json.load(open(agg)); Pp = a["policies"]
     official = c.get("official", 0)
+    recon = round(abs(Pp["units"] - official) / official * 100, 2) if official else None
+    crit = {
+        "statistical_sufficiency": {"valid_cost_obs": Pp.get("cost_n"), "spread_published": bool(Pp.get("spread_ok")),
+                                     "pass": (Pp.get("cost_n") or 0) >= 100},
+        "data_completeness": {"manifest": a.get("manifest"),
+                              "pass": all((v.get("complete") and not v.get("provisional")) for v in a.get("manifest", {}).values())},
+        "reconciliation": {"pct": recon, "pass": recon is not None and recon <= 5},
+        "distinct_from_parent": "N/A — county is the base geography (no parent to dedupe against); "
+                                "the 3-part test applies to sub-county ZIP pages, none published",
+        "distinct_search_intent": "NOT measurable offline — requires Search Console/keyword data post-launch",
+    }
+    publish = crit["statistical_sufficiency"]["pass"] and crit["data_completeness"]["pass"] and crit["reconciliation"]["pass"]
     json.dump({
         "slug": slug, "label": c["label"], "geoid": c["geoid"],
         "sources": {"policies_asof": Pp.get("asof"), "retrieved": Pp.get("retrieved")},
-        "cohort_n": Pp.get("cohort_n"), "policy_units": Pp.get("units"),
-        "spread_shown": (Pp.get("cohort_n") or 0) >= 100,
-        "reconciliation_pct": round(abs(Pp["units"] - official) / official * 100, 2) if official else None,
-        "completeness": a.get("manifest"),
-        "nri": bool(a.get("nri")),
-        "why_distinct": "county-level reconciled cohort; unique cost spread, full-risk gap, claims and CRS for this county",
-        "gate": "pass",
+        "policy_units": Pp.get("units"), "cohort_n": Pp.get("cohort_n"),
+        "publish_criteria": crit, "publish": publish, "gate": "pass",
     }, open(os.path.join(d, "manifest.json"), "w"), indent=1)
+    if not publish: blocked.append(slug + " (publish criteria not met)"); continue
     ok.append(slug)
 
 run("build_site.py", {"FF_PLACES": PLACES, "FF_DIST": DIST, "FF_DATADIR": DATA, "FF_BASEURL": BASE})

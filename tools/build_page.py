@@ -92,10 +92,12 @@ if have_risk:
         def _ord(n): return f"{n}th" if 10 <= n % 100 <= 20 else f"{n}{ {1: 'st', 2: 'nd', 3: 'rd'}.get(n % 10, 'th') }"
         pct = f", {_ord(round(pctl))} national percentile" if isinstance(pctl, (int, float)) else ""
         dollars = f"{money(eald)}/yr " if isinstance(eald, (int, float)) and eald > 0 else ""
-        eal = (f"<li><b>{label} expected annual loss</b><span>{dollars}({html.escape(str(ealr))}{pct})</span></li>"
+        eal = (f"<li><b>{label} modeled annual loss (county)</b><span>{dollars}({html.escape(str(ealr))}{pct})</span></li>"
                if _present(ealr) else "")
         return f"<li><b>{label} flood risk</b><span>{html.escape(str(rr))}</span></li>" + eal
-    risk_body = "<ul class='kv'>" + risk_rows(cf, "Coastal") + risk_rows(inl, "Inland") + "</ul>"
+    risk_body = ("<ul class='kv'>" + risk_rows(cf, "Coastal") + risk_rows(inl, "Inland") + "</ul>"
+                 "<p class='note'>Modeled annual loss is FEMA's estimate for the whole county (all buildings), "
+                 "not any one home's expected loss or premium, and not a flood probability.</p>")
     parts = []
     if _present(cf.get("risk_rating")): parts.append(f"coastal flood risk {html.escape(str(cf['risk_rating']))}")
     if _present(inl.get("risk_rating")): parts.append(f"inland flood risk {html.escape(str(inl['risk_rating']))}")
@@ -114,13 +116,16 @@ zu = P["zone_units"]
 zone_body = "<ul class='kv'>" + "".join(
     f"<li><b>Zone {html.escape(z)}</b><span>{num(v)} policy units</span></li>" for z, v in list(zu.items())[:8]) + "</ul>"
 
-SMALL_COHORT = (P.get("cohort_n") or 0) < 100  # too few for a reliable spread -> count + median only
+# suppress on VALID COST observations (cost_n), not raw cohort — a cohort full of null/refund costs
+# must not get a spread. agg carries spread_ok = cost_n >= 100.
+SMALL_COHORT = not P.get("spread_ok", (P.get("cost_n") or 0) >= 100)
 if SMALL_COHORT:
-    cost_lead = (f"Only {num(P['cohort_n'])} single-family primary-residence NFIP policies in {CS} — too few "
-                 f"for a reliable cost spread, so we show the count and median only. Median annual cost {money(P['p50'])}.")
-    cost_body = (f"<ul class='kv'><li><b>Cohort policies</b><span>{num(P['cohort_n'])}</span></li>"
+    cost_lead = (f"Only {num(P['cost_n'])} single-family primary-residence NFIP policies in {CS} have a valid "
+                 f"recorded cost — too few for a reliable spread, so we show the count and median only. "
+                 f"Median annual cost {money(P['p50'])}.")
+    cost_body = (f"<ul class='kv'><li><b>Policies with a valid cost</b><span>{num(P['cost_n'])}</span></li>"
                  f"<li><b>Median annual cost</b><span>{money(P['p50'])}</span></li></ul>"
-                 "<p class='note'>Suppressed percentile spread: fewer than 100 policies in the cohort.</p>")
+                 "<p class='note'>Suppressed percentile spread: fewer than 100 policies with a valid recorded cost.</p>")
 else:
     cost_lead = (f"Among existing single-family primary-residence NFIP policies in {CS}, the median "
                  f"annual cost is {money(P['p50'])}, with the middle half between {money(P['p25'])} and "
@@ -311,7 +316,7 @@ th,td{{text-align:left;padding:6px 4px;border-bottom:1px solid var(--line)}}th{{
 {card("Reconciliation &amp; data completeness", "Our counts are checked against FEMA's official figure and the API's own totals.",
   f"<p class='note'>In-force count: {num(P['units'])} policy units (from {num(P['rows'])} API records; condo-association records carry more than one unit). " +
   (f"FEMA's official count for 2026-07-31 was {num(OFFICIAL)} — a {round(abs(P['units']-OFFICIAL)/OFFICIAL*100,1)}% difference. " if OFFICIAL else "FEMA official reconciliation count pending for this county. ") +
-  f"Pull completeness: {mani_line}.</p>")}
+  f"Count reconciliation (not a snapshot proof): {mani_line}.</p>")}
 
 <section class="card"><h2>What this data cannot tell you</h2>
 <ul class="note">

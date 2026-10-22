@@ -1,8 +1,20 @@
-# Open items — only what code cannot close
+# Open items
 
-Updated 2026-10-22. Everything buildable is built, gated and committed. The items below are the only
-things left, and none of them is code I can write — they are owner decisions, external throughput, or
-empirical outcomes. This is the honest "what's left open."
+Updated 2026-10-22. The full pipeline, gate, generator, site and two gate-passing county pages are
+built and committed. Two engineering limits remain honestly open (below) alongside the owner, sweep
+and ranking items. This is NOT "everything buildable is done" — it is "the system works end to end,
+with named residual engineering."
+
+## Residual engineering (real, not owner/empirical)
+- [ ] **Pagination = reconciliation, not snapshot proof.** OpenFEMA offset paging has no stable sort
+      (`$orderby` 503s), so a matching unique-id count reconciles to the API's reported total but cannot
+      prove no record was substituted mid-pull. The collector now re-queries the count after paging and
+      marks a county `provisional` if totals drift; a true snapshot guarantee needs a keyset cursor FEMA
+      does not expose. Live pages reconcile independently to FEMA's official PIF count (Lee 1.9%, Kanawha 0.8%).
+- [ ] **Publication gate is partial.** `build_all` now records measured criteria (cost-sample sufficiency,
+      completeness, reconciliation ≤5%) and blocks a county that fails them. "Distinct search intent"
+      cannot be measured offline — it needs Search Console/keyword data after launch, so it is deferred,
+      not enforced. The 3-part ZIP test still applies only once ZIP pages exist (none published).
 
 ## Owner decisions (cannot be automated)
 - [ ] **Domain.** Working folder `floodinsurance` is local only; floodfigures.com is taken — pick another.
