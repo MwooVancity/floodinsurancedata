@@ -27,11 +27,11 @@ else:
         "coastal": {"risk_rating": g("CFLD_RISKR"), "risk_score": g("CFLD_RISKS"),
                     "eal_rating": g("CFLD_EALR"), "eal_national_pctl": g("CFLD_ALR_NPCTL"),
                     "eal_total_usd": g("CFLD_EALT")},
-        "riverine": {"risk_rating": g("RFLD_RISKR"), "risk_score": g("RFLD_RISKS"),
-                     "eal_rating": g("RFLD_EALR"), "eal_national_pctl": g("RFLD_ALR_NPCTL"),
-                     "eal_total_usd": g("RFLD_EALT")},
+        "inland": {"risk_rating": g("IFLD_RISKR"), "risk_score": g("IFLD_RISKS"),
+                   "eal_rating": g("IFLD_EALR"), "eal_national_pctl": g("IFLD_ALR_NPCTL"),
+                   "eal_total_usd": g("IFLD_EALT")},
         "source": "FEMA National Risk Index (county), FEMA_NationalRiskIndex ArcGIS, keyless",
     }
-    print("NRI ok:", a.get("COUNTY"), "coastal", g("CFLD_RISKR"), "pctl", g("CFLD_ALR_NPCTL"),
-          "| riverine", g("RFLD_RISKR"), "pctl", g("RFLD_ALR_NPCTL"))
+    print("NRI ok:", a.get("COUNTY"), "coastal", g("CFLD_RISKR"),
+          "| inland", g("IFLD_RISKR"), "pctl", g("IFLD_ALR_NPCTL"))
 json.dump(agg, open(AGG, "w"))

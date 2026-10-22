@@ -1,0 +1,11 @@
+# Flood insurance data
+
+> Per-county NFIP flood-insurance statistics from public FEMA data: what policyholders pay, the gap to FEMA's full-risk price, claims history, flood risk, and CRS discounts.
+
+## Pages
+- [Lee County](https://example.com/flood-insurance/lee-county-fl/): median $1,658
+- [Kanawha County](https://example.com/flood-insurance/kanawha-county-wv/): median $1,450
+- [Methodology](https://example.com/methodology/)
+- [Data CSV](https://example.com/data/counties.csv)
+
+Source: FEMA OpenFEMA. Not endorsed by FEMA. Aggregates only.

@@ -7,7 +7,7 @@ GEO = os.environ.get("FF_GEOID", "12071")
 CO = os.environ.get("FF_COUNTY", "LEE").upper()          # CRS: "LEE COUNTY"
 COT = os.environ.get("FF_COUNTYTITLE", "Lee")            # housing: "Lee (County)"
 CO3 = GEO[2:]                                             # declarations fipsCountyCode
-OUT = "data.json"
+OUT = os.path.join(os.environ.get("FF_DIR", "."), "data.json")
 
 def get(url, timeout=120):
     with urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "ff"}), timeout=timeout) as r:

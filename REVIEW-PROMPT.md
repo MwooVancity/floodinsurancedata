@@ -1,55 +1,56 @@
-# Cold review: tear this flood-insurance data site apart
+# Cold review: tear this flood-insurance data SITE apart (final form)
 
-You have no history with this project. Read every file in this zip, then scrutinize it hard as (a) a
-Google Search quality rater, (b) a demanding data journalist, and (c) a skeptical SEO. Assume it is
-wrong until proven otherwise. Be specific; quote the file and line.
+You have no history with this project. Unzip it, open the pages in a browser, read the code, then
+scrutinize hard as (a) a Google Search quality rater, (b) a demanding data journalist, (c) a skeptical
+SEO. Assume it is wrong until proven otherwise. Quote file and line.
 
 ## What this is
-A planned static data site: one page per US place showing what NFIP flood-insurance policyholders
-actually pay, the gap to FEMA's full-risk price, claims history, flood risk, and the CRS premium
-discount — all from public federal APIs. Built by a solo non-coder with an AI assistant. Competitors
-(NerdWallet, LendingTree, Policygenius, floodfigures.com) show one stale average and a policy count;
-this site shows the spread, the full-risk gap, claims per 100 policies, and the CRS discount nobody
-else surfaces. Monetization: display ads after a 4-week Search Console review.
+A complete static data site: one page per US county showing, from public FEMA data, what NFIP
+flood-insurance policyholders actually pay (cost spread p25/p50/p75/p90), the gap to FEMA's full-risk
+price, claims history, National Risk Index flood risk, FEMA disaster history, homeowner aid paid, and
+the CRS premium discount per community. Competitors (NerdWallet, LendingTree, Policygenius,
+floodfigures.com) show one stale average and a count. Built by a solo non-coder with an AI assistant.
+Ads only after a 4-week Search Console review.
 
-## Files
-- `CLAUDE.md` — the whole doctrine (reader, dataset catalog, page plan, ranking strategy, gates).
-- `docs/reader-spec.md` — the 8-dataset catalog with verified live endpoints.
-- `docs/OPEN-ITEMS.md` — owner decisions still open.
-- `dist/lee-county-fl.html` — the first real page (Lee County, FL). Open it in a browser.
-- `data/agg.json` — the exact numbers on that page, from the live FEMA APIs 2026-10-22.
-- `tools/collect.py`, `tools/collect_small.py` — the only network code (pulls + aggregates).
-- `tools/build_page.py` — turns the JSON into the static page. Audit all three for correctness bugs
-  (percentile math, policyCount summing, the no-$orderby paging + id dedupe, the cohort filter).
+## Open it
+- `dist/index.html` — home + client-side county search.
+- `dist/flood-insurance/lee-county-fl/index.html` — huge coastal county (134,473 policy units).
+- `dist/flood-insurance/kanawha-county-wv/index.html` — tiny inland county (1,283 units) — proves the
+  template generalizes across extremes.
+- `dist/methodology/index.html`, `dist/data/counties.csv`, `dist/sitemap.xml`, `dist/llms.txt`.
 
-## Verified facts (don't re-litigate these; attack what's built on them)
-- NFIP Policies v3 + Claims v3 APIs are live and keyless. Lee County in-force = 134,473 policy units
-  (sum of policyCount, not row count), reconciles to FEMA's official 132,012 within 1.9%.
-- Lee single-family cohort (53,965 policies): annual cost p25/p50/p75/p90 = $1,095 / $1,658 / $2,870 /
-  $4,257; median full-risk premium $3,461; 65.7% pay below full risk.
-- Lee claims since 1978: 48,496 paid, $3.95B, 36.1 per 100 policies (Hurricane Ian 2022 dominates).
-- CRS discounts are real per community (Cape Coral 25%, Fort Myers 20%).
+## The pipeline (audit for correctness)
+- `tools/collect.py` — NFIP policies+claims+NRI per county. Note: pages at `$top=1000`, NO `$orderby`
+  (it 503s), adaptive page-shrink on 503, dedupe by id, completeness manifest.
+- `tools/collect_small.py` — CRS, disaster declarations, housing assistance.
+- `tools/nri.py` — National Risk Index flood fields (CFLD coastal, IFLD inland) from FEMA's ArcGIS org.
+- `tools/build_page.py` — renders a county page (inline-SVG charts, JSON-LD, quote widget).
+- `tools/build_site.py` — home/methodology/data/sitemap/robots/llms.
+- `tools/build_all.py` — generator: builds every county in `tools/counties.json`, then the site, resumable.
+- `tools/gate.py` — correctness gate (fail = no ship): page numbers == JSON, completeness, reconciliation
+  ≤5%, required panels, no None/nan leak, NRI present or explicit gap.
 
-## Tear into these specifically
+## Verified facts (don't re-litigate; attack what's built on them)
+- Lee FL: 134,473 policy units (sum of policyCount, reconciles to FEMA official 132,012 within 1.9%);
+  single-family cohort median $1,658, full-risk median $3,461, 65.7% below full risk; 48,496 claims /
+  $3.95B since 1978; coastal flood risk Very High (80th pctl).
+- Kanawha WV: 1,283 units (0.8% vs official 1,293); median $1,450; inland flood risk Relatively High
+  (96th pctl); no community carries a CRS discount.
+
+## Tear into these
 1. **Thin/duplicate risk.** The owner's previous site lost ~99% of Google impressions and was rejected
-   by AdSense as thin. Plan is ~8,000–15,000 pages, released to the index in Search-Console-gated
-   waves, with a duplication test (a ZIP page exists only if it differs from its county). Is that test
-   strong enough? Where will near-duplicate pages still slip through? Is the wave-release real
-   protection or theater?
-2. **Can a brand-new domain rank at all** against NerdWallet/Bankrate for these queries, or is the
-   only realistic path AI-Overview/Perplexity citations + backlinks from data stories? Be blunt.
-3. **The page itself** (`lee-county-fl.html`). As a quality rater: is it genuinely more useful than a
-   competitor, or just denser? Which block would you cut? Which single missing thing would most change
-   a homeowner's decision? Is anything misleading — e.g. presenting an existing-policyholder median as
-   what a new buyer will pay?
-4. **FEMA terms / compliance.** Data is for "statistical research or as a reporting record," attribution
-   required, no record-level output, no determinations affecting eligibility. Does an ad-supported
-   aggregate site sit honestly inside that? Where is the risk?
-5. **Keyword priority.** Verified autocomplete demand is state-level and "flood insurance rates by zip
-   code." County demand is unproven. Is county-primary-with-ZIP-folded-in the right call, or should it
-   launch ZIP-first? What demand families are being missed (renewal increase, Risk Rating 2.0, "do I
-   need flood insurance in [zone]", city queries)?
-6. **The single weakest assumption in the whole plan.** Name it.
+   as thin. Plan: ~2,000 quality pages, released to the index in Search-Console-gated waves, with a
+   3-part publish test (statistical sufficiency + decision-relevant difference + distinct intent) for ZIP
+   pages. Is that test strong enough? Where do near-duplicates still slip through?
+2. **Can a new domain rank** vs NerdWallet/Bankrate, or is the only realistic path AI-Overview/Perplexity
+   citations + backlinks from data stories? Be blunt.
+3. **The two pages.** As a quality rater: genuinely more useful than a competitor, or just denser? Which
+   block would you cut? Which missing thing would most change a homeowner's decision? Anything misleading
+   (e.g. existing-policyholder median read as a new-buyer quote)?
+4. **The code.** Any correctness bug in the percentile math, policyCount summing, the no-$orderby paging +
+   dedupe, the completeness manifest, the gate, or the NRI coastal/inland mapping?
+5. **FEMA terms.** Aggregate-only, attributed, no record-level output — does an ad-supported site sit
+   honestly inside "statistical research or reporting"? Where's the risk?
+6. **Keyword priority & the single weakest assumption in the whole plan.** Name it.
 
-Give a ranked defect list, worst first, then a go / no-go with the one change that would most improve
-the odds.
+Give a ranked defect list, worst first, then a go / no-go and the one change that most improves the odds.

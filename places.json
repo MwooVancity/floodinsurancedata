@@ -1,0 +1,20 @@
+[
+ {
+  "slug": "lee-county-fl",
+  "label": "Lee County, Florida",
+  "short": "Lee County",
+  "geoid": "12071",
+  "units": 134473,
+  "median": 1658,
+  "state": "FL"
+ },
+ {
+  "slug": "kanawha-county-wv",
+  "label": "Kanawha County, West Virginia",
+  "short": "Kanawha County",
+  "geoid": "54039",
+  "units": 1283,
+  "median": 1450,
+  "state": "WV"
+ }
+]

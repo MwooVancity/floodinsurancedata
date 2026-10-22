@@ -5,9 +5,10 @@ import json, html, os
 from collections import defaultdict
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+DIR = os.environ.get("FF_DIR", HERE)
 OUT_HTML = os.environ.get("OUT_HTML", os.path.join(HERE, "lee.html"))
-data = json.load(open(os.path.join(HERE, "data.json")))
-agg = json.load(open(os.path.join(HERE, "agg.json")))
+data = json.load(open(os.path.join(DIR, "data.json")))
+agg = json.load(open(os.path.join(DIR, "agg.json")))
 P = agg["policies"]; C = agg["claims"]; NRI = agg.get("nri")
 CL = os.environ.get("FF_COUNTYLABEL", "Lee County, Florida")   # full label
 CS = os.environ.get("FF_COUNTYSHORT", "Lee County")            # short label
@@ -79,24 +80,27 @@ def card(title, standfirst, body, source=""):
     return f'<section class="card"><h2>{title}</h2><p class="stand">{standfirst}</p>{body}{source}</section>'
 
 # ---- risk card (NRI or honest gap) ----
-if NRI:
+ABSENT = {None, "", "Not Applicable", "Insufficient Data", "No Rating", "No Expected Annual Losses"}
+def _present(v): return v not in ABSENT and str(v).strip() not in ABSENT
+cf = (NRI or {}).get("coastal", {}); inl = (NRI or {}).get("inland", {})
+have_risk = NRI and (_present(cf.get("risk_rating")) or _present(inl.get("risk_rating")))
+if have_risk:
     def risk_rows(block, label):
         rr, pctl, ealr = block.get("risk_rating"), block.get("eal_national_pctl"), block.get("eal_rating")
-        if not rr: return ""
-        p = f"{round(pctl)}th national percentile" if isinstance(pctl, (int, float)) else "—"
-        return (f"<li><b>{label} flood risk</b><span>{html.escape(str(rr))}</span></li>"
-                f"<li><b>{label} expected annual loss</b><span>{html.escape(str(ealr))} ({p})</span></li>")
-    cf = NRI.get("coastal", {}); rf = NRI.get("riverine", {})
-    risk_body = "<ul class='kv'>" + risk_rows(cf, "Coastal") + risk_rows(rf, "Riverine") + "</ul>"
+        if not _present(rr): return ""
+        p = f" ({round(pctl)}th national percentile)" if isinstance(pctl, (int, float)) else ""
+        eal = f"<li><b>{label} expected annual loss</b><span>{html.escape(str(ealr))}{p}</span></li>" if _present(ealr) else ""
+        return f"<li><b>{label} flood risk</b><span>{html.escape(str(rr))}</span></li>" + eal
+    risk_body = "<ul class='kv'>" + risk_rows(cf, "Coastal") + risk_rows(inl, "Inland") + "</ul>"
     parts = []
-    if cf.get("risk_rating"): parts.append(f"coastal flood risk {html.escape(str(cf['risk_rating']))}")
-    if rf.get("risk_rating"): parts.append(f"riverine flood risk {html.escape(str(rf['risk_rating']))}")
+    if _present(cf.get("risk_rating")): parts.append(f"coastal flood risk {html.escape(str(cf['risk_rating']))}")
+    if _present(inl.get("risk_rating")): parts.append(f"inland flood risk {html.escape(str(inl['risk_rating']))}")
     risk = card("How much flood risk is here?",
                 f"FEMA's National Risk Index rates {CS}'s " + " and ".join(parts) + ", from expected annual loss.",
                 risk_body, src("NRI 2023 release", RETR))
 else:
     risk = card("How much flood risk is here?",
-                "Not shown yet — FEMA's National Risk Index could not be retrieved from our data environment.",
+                "FEMA's National Risk Index has no usable flood rating for this county.",
                 f"<p class='gap'>Gap: NRI flood expected-annual-loss and national percentile for {CS}. "
                 "Next source to pull (reachable host): FEMA NRI county table from gis.fema.gov or the "
                 "NRI_Table_Counties.csv download. The public third-party ArcGIS copy was a non-national sample.</p>")
@@ -118,15 +122,25 @@ claims_lead = (f"Between {C['year_min']} and {C['year_max']}, {CS} had {num(C['r
                f"claims over that whole period for every 100 policies in force today (a cumulative tally, "
                f"not an annual rate or a flood probability).")
 
-crs_rows = "".join(f"<tr><td>{html.escape(c['communityName'].title())}</td><td>Class {c.get('classRating','—')}</td>"
-                   f"<td>{c.get('sfhaDiscount','—')}</td><td>{c.get('nonSfhaDiscount','—')}</td></tr>" for c in crs)
-_top_crs = crs[0] if crs else None
-if _top_crs and (_top_crs.get("sfhaDiscount") or "0%") != "0%":
-    crs_lead = (f"{CS}'s NFIP communities carry Community Rating System discounts that cut every eligible "
-                f"policy's premium — up to {_top_crs.get('sfhaDiscount')} inside the high-risk zone "
-                f"({html.escape(_top_crs['communityName'].title())}).")
+def _pct(v):
+    if v in ABSENT or str(v).strip() in ABSENT: return None
+    s = str(v).strip().rstrip("%")
+    try: n = int(float(s))
+    except ValueError: return None
+    return None if n == 0 else f"{n}%"
+def _cls(v): return html.escape(str(v)) if (v not in ABSENT and str(v).strip() not in ABSENT) else "—"
+def _disc(v): return _pct(v) or "No discount"
+crs_rows = "".join(f"<tr><td>{html.escape(c['communityName'].title())}</td><td>{_cls(c.get('classRating'))}</td>"
+                   f"<td>{_disc(c.get('sfhaDiscount'))}</td><td>{_disc(c.get('nonSfhaDiscount'))}</td></tr>" for c in crs)
+_disc_communities = [c for c in crs if _pct(c.get("sfhaDiscount"))]
+if _disc_communities:
+    top = max(_disc_communities, key=lambda c: int(_pct(c["sfhaDiscount"]).rstrip("%")))
+    crs_lead = (f"{len(_disc_communities)} of {CS}'s {len(crs)} NFIP communities carry a Community Rating System "
+                f"discount that cuts every eligible policy's premium — up to {_pct(top['sfhaDiscount'])} inside the "
+                f"high-risk zone ({html.escape(top['communityName'].title())}).")
 else:
-    crs_lead = f"{CS}'s NFIP communities and their Community Rating System discount status are listed below."
+    crs_lead = (f"None of {CS}'s {len(crs)} NFIP communities currently carries a Community Rating System discount; "
+                f"they participate in the NFIP without the extra CRS premium reduction.")
 
 recent_li = "".join(
     f"<li>{html.escape(str(d.get('fyDeclared')))} — {html.escape(d.get('incidentType',''))}: "
@@ -137,10 +151,85 @@ mani_ok = all(v.get("complete") for v in mani.values()) if mani else False
 mani_line = "; ".join(f"{k}: {v['unique_fetched']}/{v['reported_total']} fetched"
                       + ("" if v["complete"] else f" (MISSING {v['missing']})") for k, v in mani.items()) or "n/a"
 
+# ---- SEO / GEO + place registry ----
+SLUG = os.environ.get("FF_SLUG", "lee-county-fl")
+BASE_URL = os.environ.get("FF_BASEURL", "https://example.com").rstrip("/")
+CANON = f"{BASE_URL}/flood-insurance/{SLUG}/"
+GEOID = os.environ.get("FF_GEOID", "12071")
+META_DESC = (f"Median NFIP flood insurance cost in {CS} is {money(P['p50'])} a year "
+             f"(middle half {money(P['p25'])}–{money(P['p75'])}); {P['share_below']}% pay below FEMA's "
+             f"full-risk price. {num(P['rows'])} policies, claims, flood risk and CRS discounts, from FEMA data.")
+# register this place so home/lookup/sitemap/siblings know it exists
+PLACES = os.environ.get("FF_PLACES", os.path.join(HERE, "places.json"))
+try: places = json.load(open(PLACES))
+except Exception: places = []
+places = [p for p in places if p.get("slug") != SLUG]
+places.append({"slug": SLUG, "label": CL, "short": CS, "geoid": GEOID,
+               "units": P["units"], "median": P["p50"], "state": agg.get("nri", {}).get("state") if agg.get("nri") else None})
+places.sort(key=lambda p: -(p.get("units") or 0))
+json.dump(places, open(PLACES, "w"), indent=1)
+siblings = [p for p in places if p.get("slug") != SLUG][:5]
+sib_html = ("<nav class='sib'><b>Compare nearby:</b> " +
+            " · ".join(f'<a href="../{p["slug"]}/">{html.escape(p["short"])}</a>' for p in siblings) +
+            ' · <a href="../../">all places</a></nav>') if siblings else '<nav class="sib"><a href="../../">All places</a></nav>'
+# JSON-LD: Dataset + Place + FAQPage + Breadcrumb
+_faq = [
+    (f"How much is flood insurance in {CS}?",
+     f"Existing single-family NFIP policyholders pay a median {money(P['p50'])} a year, with the middle "
+     f"half between {money(P['p25'])} and {money(P['p75'])}. This is what current policies cost, not a quote."),
+    (f"Is {CS} flood insurance below FEMA's full-risk price?",
+     f"Yes — {P['share_below']}% of single-family policies pay less than FEMA's full-risk premium "
+     f"(median full-risk {money(P['frp_median'])} vs {money(P['p50'])} charged)."),
+    (f"How many flood claims has {CS} had?",
+     f"{num(C['rows'])} paid NFIP claims totalling {money(C['total_paid'])} between {C['year_min']} and {C['year_max']}."),
+]
+jsonld = json.dumps([
+    {"@context": "https://schema.org", "@type": "Dataset",
+     "name": f"NFIP flood insurance data for {CL}", "description": META_DESC, "url": CANON,
+     "creator": {"@type": "Organization", "name": "FEMA OpenFEMA"},
+     "isBasedOn": "https://www.fema.gov/about/openfema/data-sets", "license": "https://www.fema.gov/about/openfema/terms-conditions"},
+    {"@context": "https://schema.org", "@type": "Place", "name": CL,
+     "address": {"@type": "PostalAddress", "addressRegion": agg.get("nri", {}).get("state") if agg.get("nri") else None, "addressCountry": "US"}},
+    {"@context": "https://schema.org", "@type": "FAQPage",
+     "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in _faq]},
+    {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Flood insurance", "item": f"{BASE_URL}/flood-insurance/"},
+        {"@type": "ListItem", "position": 2, "name": CS, "item": CANON}]},
+])
+# quote-compare widget (client-side; a position in the distribution, never a quote)
+quote_widget = f"""<section class="card"><h2>Where would your premium fall?</h2>
+<p class="stand">Type your annual flood premium to see where it sits among {CS}'s existing single-family policies. This is a comparison, not a quote.</p>
+<input id="q" type="number" inputmode="numeric" placeholder="e.g. 1800" aria-label="Your annual premium in dollars"
+ style="font-size:18px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:160px">
+<p id="qout" class="note" style="margin-top:10px">Enter an amount above.</p>
+<script>
+var P={{p25:{P['p25']},p50:{P['p50']},p75:{P['p75']},p90:{P['p90']}}};
+var el=document.getElementById('q'),out=document.getElementById('qout');
+el.addEventListener('input',function(){{
+  var v=parseFloat(el.value);
+  if(!v||v<=0){{out.textContent='Enter an amount above.';return;}}
+  var msg;
+  if(v< P.p25) msg='below the lowest quarter — cheaper than about 75% of existing policies here.';
+  else if(v< P.p50) msg='in the lower-middle — cheaper than about half of existing policies here.';
+  else if(v< P.p75) msg='in the upper-middle — more than about half of existing policies here.';
+  else if(v< P.p90) msg='in the top quarter — more than about 75% of existing policies here.';
+  else msg='above the 90th percentile — among the highest here.';
+  out.textContent='$'+v.toLocaleString()+' is '+msg+' (p25 $'+P.p25.toLocaleString()+', median $'+P.p50.toLocaleString()+', p75 $'+P.p75.toLocaleString()+').';
+}});
+</script></section>"""
+
 HTML = f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Flood insurance in {CL} — the data</title>
+<meta name="description" content="{html.escape(META_DESC)}">
+<link rel="canonical" href="{CANON}">
+<meta property="og:type" content="website"><meta property="og:title" content="Flood insurance in {html.escape(CL)}">
+<meta property="og:description" content="{html.escape(META_DESC)}"><meta property="og:url" content="{CANON}">
+<meta name="twitter:card" content="summary">
+<script type="application/ld+json">{jsonld}</script>
 <style>
+nav.sib{{font-size:13px;color:var(--mut);margin:10px 0}}nav.sib a{{color:var(--brand)}}
+.crumb{{font-size:13px;color:var(--mut);margin:4px 0}}.crumb a{{color:var(--brand)}}
 :root{{--bg:#f4f6f8;--card:#fff;--ink:#16202b;--mut:#5a6672;--line:#d7dde3;--bar:#9db4c6;--accent:#b4531f;--brand:#1f5c7a}}
 *{{box-sizing:border-box}}body{{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}}
 .wrap{{max-width:760px;margin:0 auto;padding:16px}}
@@ -162,6 +251,7 @@ th,td{{text-align:left;padding:6px 4px;border-bottom:1px solid var(--line)}}th{{
 .note{{color:var(--mut);font-size:13px}}footer{{color:var(--mut);font-size:12px;margin:24px 0}}
 </style></head><body><div class="wrap">
 <header>
+<p class="crumb"><a href="../../">Flood insurance</a> › {CS}</p>
 <span class="chip">Policies as of {POL_ASOF}</span><span class="chip">{num(P['units'])} policy units in force</span>
 <h1>Flood insurance in {CL}</h1>
 </header>
@@ -173,7 +263,7 @@ th,td{{text-align:left;padding:6px 4px;border-bottom:1px solid var(--line)}}th{{
 {risk}
 
 {card("Am I required to carry it?",
-  f"About {P['sfha_share_units']}% of Lee County policy units sit in a high-risk Special Flood Hazard Area (zones A/V), where a federally backed mortgage legally requires flood insurance.",
+  f"About {P['sfha_share_units']}% of {CS} policy units sit in a high-risk Special Flood Hazard Area (zones A/V), where a federally backed mortgage legally requires flood insurance.",
   f"<div class='two'><div>{zone_body}</div><div><p class='note'>Zone mix by policy units (summed policyCount). Federal rule: a lender must require flood insurance on a building in a Special Flood Hazard Area with a federally backed loan (42 U.S.C. §4012a). This is the mix of existing policies, not of all buildings, and does not establish any one property's obligation.</p></div></div>",
   src(POL_ASOF, RETR))}
 
@@ -191,7 +281,7 @@ th,td{{text-align:left;padding:6px 4px;border-bottom:1px solid var(--line)}}th{{
   src(f"{C['year_min']}–{C['year_max']}", RETR))}
 
 {card("How often is this county a flood disaster?",
-  f"Lee County has had {len(fh_events)} distinct federal flood, hurricane or tropical-storm disaster declarations. The most recent:",
+  f"{CS} has had {len(fh_events)} distinct federal flood, hurricane or tropical-storm disaster declarations. The most recent:",
   f"<ul>{recent_li}</ul><p class='note'>Distinct declared events (deduplicated by disaster number), not individual declaration records.</p>",
   src("declarations through 2026", RETR))}
 
@@ -218,7 +308,12 @@ th,td{{text-align:left;padding:6px 4px;border-bottom:1px solid var(--line)}}th{{
 <li>Why premiums are rising — we show the gap to full-risk, not the cause.</li>
 </ul></section>
 
-<footer>{ATTR} Place names via GeoNames (CC BY 4.0). Figures are aggregates, never individual quotes or records.</footer>
+{quote_widget}
+
+{sib_html}
+
+<footer>{ATTR} Place names via GeoNames (CC BY 4.0). Figures are aggregates, never individual quotes or records.
+<a href="../../methodology/">Methodology</a> · <a href="../../data/">Download the data</a></footer>
 </div></body></html>"""
 
 open(OUT_HTML, "w", encoding="utf-8").write(HTML)

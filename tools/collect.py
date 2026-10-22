@@ -9,41 +9,46 @@ ASOF = "2026-07-31T00:00:00.000z"
 PAGE = 1000
 ST = os.environ.get("FF_STATE", "FL")       # propertyState / claims state
 GEO = os.environ.get("FF_GEOID", "12071")    # 5-digit state+county FIPS
+DIR = os.environ.get("FF_DIR", ".")          # per-county output dir
+AGG_OUT = os.path.join(DIR, "agg.json")
 
-def get(url, timeout=240, tries=10):
+def get(url, timeout=240, tries=6):
+    """Fetch with retries. Raises on exhaustion so the caller can shrink and resume."""
+    last = None
     for i in range(tries):
         try:
             with urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "ff"}), timeout=timeout) as r:
                 return json.load(r)
         except Exception as e:
-            print("  retry", i, repr(e)[:90], flush=True)
-            time.sleep(min(30, 4 * (i + 1)))
-    raise SystemExit("API failed after retries: " + url[:120])
+            last = e
+            print("  retry", i, repr(e)[:80], flush=True)
+            time.sleep(min(20, 3 * (i + 1)))
+    raise RuntimeError("exhausted: " + repr(last)[:90])
 
 def page_all(base, filt, select, label):
-    # No $orderby: it forces a server-side sort of the filtered set and 503s. Page by $skip, dedupe by id.
-    first = get(base + "?" + urllib.parse.urlencode(
-        {"$filter": filt, "$select": select, "$top": PAGE, "$skip": 0,
-         "$inlinecount": "allpages"}, quote_via=urllib.parse.quote))
-    key = [k for k in first if k != "metadata"][0]
-    total = first["metadata"]["count"]
-    seen = {}
-    for r in first[key]:
-        seen[r["id"]] = r
+    # Total via a light count query (reliable even when bulk pages 503). No $orderby (forces a sort -> 503).
+    cnt = get(base + "?" + urllib.parse.urlencode(
+        {"$filter": filt, "$select": "id", "$top": 1, "$inlinecount": "allpages"}, quote_via=urllib.parse.quote))
+    key = [k for k in cnt if k != "metadata"][0]
+    total = cnt["metadata"]["count"]
     print(f"{label}: total {total}", flush=True)
-    skip = PAGE
+    seen, skip, top = {}, 0, PAGE
     while len(seen) < total:
-        d = get(base + "?" + urllib.parse.urlencode(
-            {"$filter": filt, "$select": select, "$top": PAGE, "$skip": skip},
-            quote_via=urllib.parse.quote))
+        try:
+            d = get(base + "?" + urllib.parse.urlencode(
+                {"$filter": filt, "$select": select, "$top": top, "$skip": skip}, quote_via=urllib.parse.quote))
+        except RuntimeError:
+            if top > 125:          # 503 on this window: shrink page size and retry the SAME offset
+                top = max(125, top // 2); print(f"  shrink top->{top} at skip {skip}", flush=True); continue
+            raise                  # already tiny and still failing: real outage, fail loudly
         got = d[key]
         if not got:
             break
         for r in got:
             seen[r["id"]] = r
-        skip += PAGE
-        if skip % 10000 < PAGE:
-            print(f"  {label} {len(seen)}/{total}", flush=True)
+        skip += top
+        if skip % 10000 < top:
+            print(f"  {label} {len(seen)}/{total} (top {top})", flush=True)
     # completeness gate: offset paging can silently drop rows; record the shortfall.
     MANIFEST[label] = {"reported_total": total, "unique_fetched": len(seen),
                        "complete": len(seen) == total, "missing": total - len(seen)}
@@ -89,7 +94,7 @@ agg["policies"] = {
     "asof": POLICY_ASOF, "retrieved": RETRIEVED,
 }
 print("policies agg done", round(time.time()-t0), "s", flush=True)
-json.dump(agg, open("agg.json", "w"))
+json.dump(agg, open(AGG_OUT, "w"))
 
 # CLAIMS ------------------------------------------------------------------------
 clm = page_all(CLM, f"state eq '{ST}' and countyCode eq '{GEO}'",
@@ -114,7 +119,7 @@ agg["claims"] = {
     "retrieved": RETRIEVED,
 }
 print("claims agg done", round(time.time()-t0), "s", flush=True)
-json.dump(agg, open("agg.json", "w"))
+json.dump(agg, open(AGG_OUT, "w"))
 
 # NRI: authoritative FEMA_NationalRiskIndex ArcGIS org (keyless). County = STCOFIPS. -----
 try:
@@ -132,9 +137,9 @@ try:
             "coastal": {"risk_rating": g("CFLD_RISKR"), "risk_score": g("CFLD_RISKS"),
                         "eal_rating": g("CFLD_EALR"), "eal_national_pctl": g("CFLD_ALR_NPCTL"),
                         "eal_total_usd": g("CFLD_EALT")},
-            "riverine": {"risk_rating": g("RFLD_RISKR"), "risk_score": g("RFLD_RISKS"),
-                         "eal_rating": g("RFLD_EALR"), "eal_national_pctl": g("RFLD_ALR_NPCTL"),
-                         "eal_total_usd": g("RFLD_EALT")},
+            "inland": {"risk_rating": g("IFLD_RISKR"), "risk_score": g("IFLD_RISKS"),
+                       "eal_rating": g("IFLD_EALR"), "eal_national_pctl": g("IFLD_ALR_NPCTL"),
+                       "eal_total_usd": g("IFLD_EALT")},
             "source": "FEMA National Risk Index (county), FEMA_NationalRiskIndex ArcGIS, keyless"}
         print("NRI ok:", a.get("COUNTY"), "coastal", g("CFLD_RISKR"), flush=True)
     else:
@@ -144,7 +149,7 @@ except Exception as e:
     agg["nri"] = None
     print("NRI err -> gap line", repr(e)[:80], flush=True)
 agg["manifest"] = MANIFEST
-json.dump(agg, open("agg.json", "w"))
+json.dump(agg, open(AGG_OUT, "w"))
 # hard gate: fail loudly if either pull was incomplete
 incomplete = [k for k, v in MANIFEST.items() if not v["complete"]]
 print("MANIFEST", json.dumps(MANIFEST), flush=True)
