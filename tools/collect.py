@@ -114,15 +114,27 @@ agg["claims"] = {
 print("claims agg done", round(time.time()-t0), "s", flush=True)
 json.dump(agg, open("agg.json", "w"))
 
-# NRI final attempt -------------------------------------------------------------
+# NRI: authoritative FEMA_NationalRiskIndex ArcGIS org (keyless). County = STCOFIPS. -----
 try:
-    b = "https://services2.arcgis.com/EiGeaCDLpVDPqdJ5/ArcGIS/rest/services/NRI_Counties_EAL/FeatureServer/0/query"
-    r = get(b + "?" + urllib.parse.urlencode({"where": "State_County_FIPS_Code=12071", "outFields": "*", "f": "json", "returnGeometry": "false"}), timeout=90, tries=3)
+    b = ("https://services.arcgis.com/XG15cJAlne2vxtgt/arcgis/rest/services/"
+         "National_Risk_Index_Counties/FeatureServer/0/query")
+    r = get(b + "?" + urllib.parse.urlencode(
+        {"where": "STCOFIPS='12071'", "outFields": "*", "f": "json",
+         "returnGeometry": "false", "resultRecordCount": 1}), timeout=90, tries=3)
     feats = r.get("features", [])
     if feats:
         a = feats[0]["attributes"]
-        agg["nri"] = {k: v for k, v in a.items() if any(t in k for t in ("Flooding", "Risk_Index___Rating___Composite", "County_Name", "State_Name"))}
-        print("NRI ok:", len(agg["nri"]), "fields", flush=True)
+        def g(k): return a.get(k)
+        agg["nri"] = {
+            "county": a.get("COUNTY"), "state": a.get("STATEABBRV"),
+            "coastal": {"risk_rating": g("CFLD_RISKR"), "risk_score": g("CFLD_RISKS"),
+                        "eal_rating": g("CFLD_EALR"), "eal_national_pctl": g("CFLD_ALR_NPCTL"),
+                        "eal_total_usd": g("CFLD_EALT")},
+            "riverine": {"risk_rating": g("RFLD_RISKR"), "risk_score": g("RFLD_RISKS"),
+                         "eal_rating": g("RFLD_EALR"), "eal_national_pctl": g("RFLD_ALR_NPCTL"),
+                         "eal_total_usd": g("RFLD_EALT")},
+            "source": "FEMA National Risk Index (county), FEMA_NationalRiskIndex ArcGIS, keyless"}
+        print("NRI ok:", a.get("COUNTY"), "coastal", g("CFLD_RISKR"), flush=True)
     else:
         agg["nri"] = None
         print("NRI: 0 features -> gap line", flush=True)

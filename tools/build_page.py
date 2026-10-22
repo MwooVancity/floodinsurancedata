@@ -77,11 +77,19 @@ def card(title, standfirst, body, source=""):
 
 # ---- risk card (NRI or honest gap) ----
 if NRI:
-    risk_body = "<ul class='kv'>" + "".join(
-        f"<li><b>{html.escape(k.replace('___',' – ').replace('_',' '))}</b><span>{html.escape(str(v))}</span></li>"
-        for k, v in list(NRI.items())[:8]) + "</ul>"
-    risk = card("How much flood risk is here?", "FEMA's National Risk Index rates this county's flood risk below.", risk_body,
-                src("2023 (NRI v1.20)", RETR))
+    def risk_rows(block, label):
+        rr, pctl, ealr = block.get("risk_rating"), block.get("eal_national_pctl"), block.get("eal_rating")
+        if not rr: return ""
+        p = f"{round(pctl)}th national percentile" if isinstance(pctl, (int, float)) else "—"
+        return (f"<li><b>{label} flood risk</b><span>{html.escape(str(rr))}</span></li>"
+                f"<li><b>{label} expected annual loss</b><span>{html.escape(str(ealr))} ({p})</span></li>")
+    cf = NRI.get("coastal", {}); rf = NRI.get("riverine", {})
+    lead_rate = cf.get("risk_rating") or rf.get("risk_rating") or "rated"
+    risk_body = "<ul class='kv'>" + risk_rows(cf, "Coastal") + risk_rows(rf, "Riverine") + "</ul>"
+    risk = card("How much flood risk is here?",
+                f"FEMA's National Risk Index rates Lee County's coastal flood risk {html.escape(str(cf.get('risk_rating') or '—'))} "
+                f"and riverine flood risk {html.escape(str(rf.get('risk_rating') or '—'))}, from expected annual loss.",
+                risk_body, src("NRI 2023 release", RETR))
 else:
     risk = card("How much flood risk is here?",
                 "Not shown yet — FEMA's National Risk Index could not be retrieved from our data environment.",
