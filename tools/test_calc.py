@@ -40,4 +40,13 @@ big = [{"id": i, "policyCost": 1000 + i, "fullRiskPremium": 2000, "ratedFloodZon
         "occupancyType": 1, "primaryResidenceIndicator": True, "policyCount": 1} for i in range(120)]
 assert ffcalc.aggregate_policies(big)["spread_ok"] is True
 
+# percentile convention edge cases (inclusive method), per review request
+assert ffcalc.pctl([], 50) is None                       # empty
+assert ffcalc.pctl([1200], 50) == 1200                   # single observation -> the value
+assert ffcalc.pctl([1200], 25) == 1200
+assert ffcalc.pctl([10, 20, 30, 40], 50) == 25           # even-sized -> interpolated midpoint
+assert ffcalc.pctl([5, 5, 5, 5], 50) == 5                # repeated values
+assert ffcalc.pctl([5, 5, 5, 5], 90) == 5
+assert ffcalc.pctl([1, 2, 3, 4, 5], 50) == 3             # odd-sized -> middle
+
 print("test_calc: all assertions passed (exercising ffcalc production functions)")

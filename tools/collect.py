@@ -82,7 +82,8 @@ agg["policies"] = dict(ffcalc.aggregate_policies(pol),
                        zips=len(set(r.get("reportedZipCode") for r in pol)),
                        asof=POLICY_ASOF, retrieved=RETRIEVED)
 print("policies agg done", round(time.time()-t0), "s", flush=True)
-json.dump(agg, open(AGG_OUT, "w"))
+# NOTE: no intermediate write — agg.json is written ONCE at the very end with "complete": true,
+# so a mid-pipeline failure never leaves a partial file that the generator would mistake for done.
 
 # CLAIMS ------------------------------------------------------------------------
 clm = page_all(CLM, f"state eq '{ST}' and countyCode eq '{GEO}'",
@@ -92,7 +93,6 @@ agg["claims"] = dict(ffcalc.aggregate_claims(clm, units),
     geo_note="claims filtered by claims-dataset countyCode, which may not match the policy property county",
     retrieved=RETRIEVED)
 print("claims agg done", round(time.time()-t0), "s", flush=True)
-json.dump(agg, open(AGG_OUT, "w"))
 
 # NRI: authoritative FEMA_NationalRiskIndex ArcGIS org (keyless). County = STCOFIPS. -----
 try:
@@ -122,8 +122,12 @@ except Exception as e:
     agg["nri"] = None
     print("NRI err -> gap line", repr(e)[:80], flush=True)
 agg["manifest"] = MANIFEST
-json.dump(agg, open(AGG_OUT, "w"))
-# hard gate: fail loudly if either pull was incomplete
+# every required dataset collected and reconciled -> mark the county complete. Written ONCE, atomically
+# (temp + replace) so a crash can never leave a half-written file that looks done.
 incomplete = [k for k, v in MANIFEST.items() if not v["complete"]]
+agg["complete"] = (len(incomplete) == 0)
+tmp = AGG_OUT + ".tmp"
+json.dump(agg, open(tmp, "w"))
+os.replace(tmp, AGG_OUT)
 print("MANIFEST", json.dumps(MANIFEST), flush=True)
-print("ALL DONE", round(time.time()-t0), "s; incomplete:", incomplete, flush=True)
+print("ALL DONE", round(time.time()-t0), "s; complete:", agg["complete"], "; incomplete:", incomplete, flush=True)

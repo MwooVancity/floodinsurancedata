@@ -8,6 +8,12 @@ DIST = os.environ.get("FF_DIST", "dist")
 DATADIR = os.environ.get("FF_DATADIR", "data")
 BASE = os.environ.get("FF_BASEURL", "https://example.com").rstrip("/")
 places = json.load(open(PLACES)) if os.path.exists(PLACES) else []
+# fail-closed: include ONLY counties that passed this run (published.json). A county that rendered a
+# page but failed the gate/criteria is in places.json but not here, so it never reaches home/sitemap/CSV.
+pub_path = os.environ.get("FF_PUBLISHED")
+if pub_path and os.path.exists(pub_path):
+    published = set(json.load(open(pub_path)))
+    places = [p for p in places if p.get("slug") in published]
 places.sort(key=lambda p: -(p.get("units") or 0))
 
 def money(n): return "$" + format(int(round(n)), ",") if n is not None else "—"

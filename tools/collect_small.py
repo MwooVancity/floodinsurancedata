@@ -12,27 +12,36 @@ OUT = os.path.join(os.environ.get("FF_DIR", "."), "data.json")
 def get(url, timeout=120):
     with urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "ff"}), timeout=timeout) as r:
         return json.load(r)
-def ofm(ds, params, ver="v2"):
-    return get(f"https://www.fema.gov/api/open/{ver}/{ds}?" + urllib.parse.urlencode(params, quote_via=urllib.parse.quote))
+
+def fetch_all(ds, ver, filt, select, orderby=None):
+    """Paginate through ALL matching rows; fail (raise) if the final count != API's reported total.
+    Fail-closed: a truncated response must never be saved as if complete."""
+    rows, skip, total = [], 0, None
+    while True:
+        p = {"$filter": filt, "$select": select, "$top": 1000, "$skip": skip, "$inlinecount": "allpages"}
+        if orderby: p["$orderby"] = orderby
+        r = get(f"https://www.fema.gov/api/open/{ver}/{ds}?" + urllib.parse.urlencode(p, quote_via=urllib.parse.quote))
+        total = r["metadata"]["count"]
+        got = r[ds]
+        rows += got
+        if not got or len(rows) >= total:
+            break
+        skip += 1000
+    if len(rows) != total:
+        raise SystemExit(f"{ds}: truncated {len(rows)}/{total} — not saving a partial dataset")
+    return rows
 
 d = {}
-r = ofm("NfipCommunityStatusBook", {"$filter": f"state eq '{ST}' and county eq '{CO} COUNTY'",
-        "$select": "communityName,classRating,sfhaDiscount,nonSfhaDiscount,participatingInNFIP",
-        "$top": 80, "$inlinecount": "allpages"}, ver="v1")
-d["crs"] = r["NfipCommunityStatusBook"]
+d["crs"] = fetch_all("NfipCommunityStatusBook", "v1", f"state eq '{ST}' and county eq '{CO} COUNTY'",
+                     "communityName,classRating,sfhaDiscount,nonSfhaDiscount,participatingInNFIP")
 print("CRS communities:", len(d["crs"]))
-
-r = ofm("DisasterDeclarationsSummaries", {"$filter": f"state eq '{ST}' and fipsCountyCode eq '{CO3}'",
-        "$select": "disasterNumber,declarationType,incidentType,declarationTitle,fyDeclared,declarationDate",
-        "$top": 300, "$inlinecount": "allpages", "$orderby": "declarationDate desc"})
-d["declarations"] = r["DisasterDeclarationsSummaries"]
-print("declarations (all types):", r["metadata"]["count"])
-
-r = ofm("HousingAssistanceOwners", {"$filter": f"state eq '{ST}' and county eq '{COT} (County)'",
-        "$select": "disasterNumber,zipCode,city,validRegistrations,totalApprovedIhpAmount,repairReplaceAmount,averageFemaInspectedDamage",
-        "$top": 2000, "$inlinecount": "allpages"})
-d["housing"] = r["HousingAssistanceOwners"]
-print("housing rows:", r["metadata"]["count"])
+d["declarations"] = fetch_all("DisasterDeclarationsSummaries", "v2", f"state eq '{ST}' and fipsCountyCode eq '{CO3}'",
+                              "disasterNumber,declarationType,incidentType,declarationTitle,fyDeclared,declarationDate",
+                              orderby="declarationDate desc")
+print("declarations (all types):", len(d["declarations"]))
+d["housing"] = fetch_all("HousingAssistanceOwners", "v2", f"state eq '{ST}' and county eq '{COT} (County)'",
+                         "disasterNumber,zipCode,city,validRegistrations,totalApprovedIhpAmount,repairReplaceAmount,averageFemaInspectedDamage")
+print("housing rows:", len(d["housing"]))
 
 json.dump(d, open(OUT, "w"))
 print("saved", OUT, "for", COT, "County", ST)

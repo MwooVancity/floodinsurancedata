@@ -34,7 +34,7 @@ A dataset that answers no reader question is left out.
 
 | # | Reader question | Dataset / endpoint | Per-place unit | Evidence (probed 2026-10-22) |
 |---|---|---|---|---|
-| 1 | How much risk here? | FEMA National Risk Index `NRI_Counties_EAL` FeatureServer (Coastal + Inland Flooding: expected annual loss, score, national percentile) | county, tract | ✅ VERIFIED — 468 fields, rich flood EAL + percentile; where-value FIPS format needs one tweak at build |
+| 1 | How much risk here? | FEMA National Risk Index `National_Risk_Index_Counties` FeatureServer (FEMA_NationalRiskIndex ArcGIS org; Coastal `CFLD_*` + Inland `IFLD_*`: expected annual loss, rating, national percentile) | county, tract | ✅ VERIFIED in production (`tools/nri.py`), match on `STCOFIPS` |
 | 1b | What flood zone am I in? | FEMA NFHL ArcGIS MapServer layer 28, point query | address/point | ⚠️ UNREACHABLE from this env (connection reset, both hosts). Covered: per-place zone MIX comes free from NFIP `ratedFloodZone`; point lookup = client-side link to FEMA map |
 | 2 | Required to buy it? | Derived: SFHA zone + quoted federal mandatory-purchase rule | zone | rule is quotable |
 | 3 | How much does it cost here? | OpenFEMA NFIP Policies v3 `policyCost`, spread p25/p50/p75/p90 | ZIP, county | ✅ VERIFIED endpoint (count 90,224 Lee) |
@@ -52,7 +52,7 @@ A dataset that answers no reader question is left out.
 - Disaster declarations: `https://www.fema.gov/api/open/v2/DisasterDeclarationsSummaries` (`state`, `fipsCountyCode`, `incidentType`).
 - Housing assistance: `https://www.fema.gov/api/open/v2/HousingAssistanceOwners` (filter field is `zipCode`, not `damagedZipCode`).
 - CRS discount: `https://www.fema.gov/api/open/v1/NfipCommunityStatusBook` (filter `state`, `county`).
-- National Risk Index: `https://services2.arcgis.com/EiGeaCDLpVDPqdJ5/ArcGIS/rest/services/NRI_Counties_EAL/FeatureServer/0/query` (FIPS field `State_County_FIPS_Code`; confirm string vs numeric at build).
+- National Risk Index (production): `https://services.arcgis.com/XG15cJAlne2vxtgt/arcgis/rest/services/National_Risk_Index_Counties/FeatureServer/0/query` (keyless FEMA_NationalRiskIndex org; `where STCOFIPS='<geoid>'`; coastal `CFLD_*`, inland `IFLD_*`). The earlier `services2.arcgis.com/EiGeaCDLpVDPqdJ5` copy was a non-national (Utah) sample and is NOT used.
 - NFHL point: `hazards.fema.gov/arcgis/.../NFHL/MapServer/28` — reset from this env; revisit from the collector host or use client-side.
 
 ## 4. API behaviour (VERIFIED this session, 2026-10-22)
