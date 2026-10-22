@@ -38,8 +38,12 @@ licence to pad.
 ## Pages — lean, not vast (quality beats volume)
 - `/flood-insurance/<state>/` — 51 state rollups: county table + state tile/risk map.
 - `/flood-insurance/<state>/<county>/` — the core page. County floor: >=100 single-family policies.
-- ZIP folds INTO the county page as a section, EXCEPT a standalone `/.../<zip>/` where the ZIP has
-  enough policies AND its spread differs from its county. This kills the thin-ZIP layer.
+- ZIP folds INTO the county page as a section, EXCEPT a standalone `/.../<zip>/` that passes the
+  **3-part publish test** (all three, not just one): (1) statistical sufficiency — enough eligible
+  policies for a stable estimate, not merely >=20; (2) decision-relevant difference — the ZIP changes
+  the reader's answer on cost, full-risk gap, claims or CRS discount in a way that matters, not just a
+  different number; (3) distinct intent/answer — it gives something the county page does not. Fails any
+  one -> fold into the county. This, not an arbitrary count, is what decides a page exists.
 - No city pages (no city field; the ZIP->city join is the mass-produced pattern Google and pSEO forbid).
 - Data stories (ranked, linkable, same data): counties paying furthest below full-risk; most claims
   paid since 1978; biggest CRS discounts; event pages ("Hurricane Ian claims by county").
@@ -58,7 +62,13 @@ Launch wave 1 ~350 (all states + top flood counties); scale only where Search Co
 
 ## Data pipeline (monthly, one command)
 `tools/collect.py` is the only network code: pulls per place, computes compact aggregates -> JSON.
-`tools/build_page.py` reads the JSON only and renders static HTML (inline-SVG charts, no client lib).
+Parameterized by env (FF_STATE, FF_GEOID, FF_COUNTY, FF_COUNTYLABEL, FF_OFFICIAL) so every county
+runs the same code. `tools/collect_small.py` pulls CRS/declarations/housing; `tools/nri.py` pulls the
+National Risk Index flood fields and merges them in. `tools/build_page.py` reads the JSON only and
+renders static HTML (inline-SVG charts, no client lib).
+NRI source (keyless, reachable): `services.arcgis.com/XG15cJAlne2vxtgt` (FEMA_NationalRiskIndex org),
+layer `National_Risk_Index_Counties`, match on `STCOFIPS`. NOT hazards.fema.gov (TLS-blocks some envs)
+and NOT the third-party `EiGeaCDLpVDPqdJ5` copy (a non-national sample).
 Traps baked into a check: SUM `policyCount`, never count rows (condo rows carry >1 unit; Lee rows
 undercount ~32%); `propertyState` required in every policies query or it 503s; page at `$top=1000`
 with NO `$orderby` (orderby forces a server sort of the filtered set and 503s), dedupe by id;

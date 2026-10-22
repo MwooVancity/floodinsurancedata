@@ -9,6 +9,9 @@ OUT_HTML = os.environ.get("OUT_HTML", os.path.join(HERE, "lee.html"))
 data = json.load(open(os.path.join(HERE, "data.json")))
 agg = json.load(open(os.path.join(HERE, "agg.json")))
 P = agg["policies"]; C = agg["claims"]; NRI = agg.get("nri")
+CL = os.environ.get("FF_COUNTYLABEL", "Lee County, Florida")   # full label
+CS = os.environ.get("FF_COUNTYSHORT", "Lee County")            # short label
+OFFICIAL = int(os.environ.get("FF_OFFICIAL", "132012"))        # FEMA official PIF count (0 = unknown)
 POL_ASOF = "July 31, 2026"; RETR = "October 22, 2026"
 ATTR = ("This product uses the Federal Emergency Management Agency's OpenFEMA API, "
         "but is not endorsed by FEMA.")
@@ -84,16 +87,17 @@ if NRI:
         return (f"<li><b>{label} flood risk</b><span>{html.escape(str(rr))}</span></li>"
                 f"<li><b>{label} expected annual loss</b><span>{html.escape(str(ealr))} ({p})</span></li>")
     cf = NRI.get("coastal", {}); rf = NRI.get("riverine", {})
-    lead_rate = cf.get("risk_rating") or rf.get("risk_rating") or "rated"
     risk_body = "<ul class='kv'>" + risk_rows(cf, "Coastal") + risk_rows(rf, "Riverine") + "</ul>"
+    parts = []
+    if cf.get("risk_rating"): parts.append(f"coastal flood risk {html.escape(str(cf['risk_rating']))}")
+    if rf.get("risk_rating"): parts.append(f"riverine flood risk {html.escape(str(rf['risk_rating']))}")
     risk = card("How much flood risk is here?",
-                f"FEMA's National Risk Index rates Lee County's coastal flood risk {html.escape(str(cf.get('risk_rating') or '—'))} "
-                f"and riverine flood risk {html.escape(str(rf.get('risk_rating') or '—'))}, from expected annual loss.",
+                f"FEMA's National Risk Index rates {CS}'s " + " and ".join(parts) + ", from expected annual loss.",
                 risk_body, src("NRI 2023 release", RETR))
 else:
     risk = card("How much flood risk is here?",
                 "Not shown yet — FEMA's National Risk Index could not be retrieved from our data environment.",
-                "<p class='gap'>Gap: NRI flood expected-annual-loss and national percentile for Lee County. "
+                f"<p class='gap'>Gap: NRI flood expected-annual-loss and national percentile for {CS}. "
                 "Next source to pull (reachable host): FEMA NRI county table from gis.fema.gov or the "
                 "NRI_Table_Counties.csv download. The public third-party ArcGIS copy was a non-national sample.</p>")
 
@@ -102,22 +106,27 @@ zu = P["zone_units"]
 zone_body = "<ul class='kv'>" + "".join(
     f"<li><b>Zone {html.escape(z)}</b><span>{num(v)} policy units</span></li>" for z, v in list(zu.items())[:8]) + "</ul>"
 
-cost_lead = (f"Among existing single-family primary-residence NFIP policies in Lee County, the median "
+cost_lead = (f"Among existing single-family primary-residence NFIP policies in {CS}, the median "
              f"annual cost is {money(P['p50'])}, with the middle half between {money(P['p25'])} and "
              f"{money(P['p75'])} ({num(P['cost_n'])} policies). This is what current policyholders pay — "
              f"a new policy on a different building can differ.")
 gap_lead = (f"{P['share_below']}% of {num(P['below_n'])} single-family policies pay less than FEMA's own "
             f"full-risk price; the median full-risk premium is {money(P['frp_median'])} versus the "
             f"{money(P['p50'])} actually charged.")
-claims_lead = (f"Between {C['year_min']} and {C['year_max']}, Lee County had {num(C['rows'])} paid NFIP flood "
+claims_lead = (f"Between {C['year_min']} and {C['year_max']}, {CS} had {num(C['rows'])} paid NFIP flood "
                f"claims totalling {money(C['total_paid'])} — about {C['cumulative_per_100_current_units']} "
                f"claims over that whole period for every 100 policies in force today (a cumulative tally, "
                f"not an annual rate or a flood probability).")
 
 crs_rows = "".join(f"<tr><td>{html.escape(c['communityName'].title())}</td><td>Class {c.get('classRating','—')}</td>"
                    f"<td>{c.get('sfhaDiscount','—')}</td><td>{c.get('nonSfhaDiscount','—')}</td></tr>" for c in crs)
-crs_lead = ("Lee County's NFIP communities carry Community Rating System discounts that cut every eligible "
-            "policy's premium — 25% inside the high-risk zone in Cape Coral, Sanibel and Lee County itself.")
+_top_crs = crs[0] if crs else None
+if _top_crs and (_top_crs.get("sfhaDiscount") or "0%") != "0%":
+    crs_lead = (f"{CS}'s NFIP communities carry Community Rating System discounts that cut every eligible "
+                f"policy's premium — up to {_top_crs.get('sfhaDiscount')} inside the high-risk zone "
+                f"({html.escape(_top_crs['communityName'].title())}).")
+else:
+    crs_lead = f"{CS}'s NFIP communities and their Community Rating System discount status are listed below."
 
 recent_li = "".join(
     f"<li>{html.escape(str(d.get('fyDeclared')))} — {html.escape(d.get('incidentType',''))}: "
@@ -130,7 +139,7 @@ mani_line = "; ".join(f"{k}: {v['unique_fetched']}/{v['reported_total']} fetched
 
 HTML = f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Flood insurance in Lee County, Florida — the data</title>
+<title>Flood insurance in {CL} — the data</title>
 <style>
 :root{{--bg:#f4f6f8;--card:#fff;--ink:#16202b;--mut:#5a6672;--line:#d7dde3;--bar:#9db4c6;--accent:#b4531f;--brand:#1f5c7a}}
 *{{box-sizing:border-box}}body{{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}}
@@ -154,7 +163,7 @@ th,td{{text-align:left;padding:6px 4px;border-bottom:1px solid var(--line)}}th{{
 </style></head><body><div class="wrap">
 <header>
 <span class="chip">Policies as of {POL_ASOF}</span><span class="chip">{num(P['units'])} policy units in force</span>
-<h1>Flood insurance in Lee County, Florida</h1>
+<h1>Flood insurance in {CL}</h1>
 </header>
 
 <div class="answer">Existing single-family policyholders here pay a median <b>{money(P['p50'])}</b> a year
@@ -187,7 +196,7 @@ th,td{{text-align:left;padding:6px 4px;border-bottom:1px solid var(--line)}}th{{
   src("declarations through 2026", RETR))}
 
 {card("Did the government pay homeowners after floods?",
-  f"FEMA approved {money(h_ihp)} in Individual &amp; Households housing help to Lee County homeowners across {h_disasters} disasters, on {num(h_regs)} valid registrations.",
+  f"FEMA approved {money(h_ihp)} in Individual &amp; Households housing help to {CS} homeowners across {h_disasters} disasters, on {num(h_regs)} valid registrations.",
   "<p class='note'>FEMA Individual Assistance is disaster aid, usually capped and partial — separate from NFIP insurance and not a substitute for a policy.</p>",
   src("owner registrations by disaster", RETR))}
 
@@ -197,7 +206,8 @@ th,td{{text-align:left;padding:6px 4px;border-bottom:1px solid var(--line)}}th{{
   src("Community Status Book", RETR))}
 
 {card("Reconciliation &amp; data completeness", "Our counts are checked against FEMA's official figure and the API's own totals.",
-  f"<p class='note'>In-force count: {num(P['units'])} policy units (from {num(P['rows'])} API records; condo-association records carry more than one unit). FEMA's official count for 2026-07-31 was 132,012 — a {round(abs(P['units']-132012)/132012*100,1)}% difference. "
+  f"<p class='note'>In-force count: {num(P['units'])} policy units (from {num(P['rows'])} API records; condo-association records carry more than one unit). " +
+  (f"FEMA's official count for 2026-07-31 was {num(OFFICIAL)} — a {round(abs(P['units']-OFFICIAL)/OFFICIAL*100,1)}% difference. " if OFFICIAL else "FEMA official reconciliation count pending for this county. ") +
   f"Pull completeness: {mani_line}.</p>")}
 
 <section class="card"><h2>What this data cannot tell you</h2>

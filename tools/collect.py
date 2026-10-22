@@ -1,12 +1,14 @@
 """Bulk Lee County FL (12071) collector: NFIP policies cohort + claims by year + final NRI try.
 Computes compact aggregates -> agg.json. Saves progress; small pages, generous retries."""
-import json, statistics, time, urllib.parse, urllib.request
+import json, os, statistics, time, urllib.parse, urllib.request
 from collections import Counter, defaultdict
 
 POL = "https://www.fema.gov/api/open/v3/NfipPolicies"
 CLM = "https://www.fema.gov/api/open/v3/NfipClaims"
 ASOF = "2026-07-31T00:00:00.000z"
 PAGE = 1000
+ST = os.environ.get("FF_STATE", "FL")       # propertyState / claims state
+GEO = os.environ.get("FF_GEOID", "12071")    # 5-digit state+county FIPS
 
 def get(url, timeout=240, tries=10):
     for i in range(tries):
@@ -56,7 +58,7 @@ t0 = time.time()
 
 # POLICIES ----------------------------------------------------------------------
 pol = page_all(POL,
-    f"propertyState eq 'FL' and startswith(censusGeoid,'12071') and policyEffectiveDate le '{ASOF}' and policyTerminationDate ge '{ASOF}'",
+    f"propertyState eq '{ST}' and startswith(censusGeoid,'{GEO}') and policyEffectiveDate le '{ASOF}' and policyTerminationDate ge '{ASOF}'",
     "id,policyCost,fullRiskPremium,ratedFloodZone,occupancyType,primaryResidenceIndicator,policyCount,reportedZipCode",
     "policies")
 
@@ -90,7 +92,7 @@ print("policies agg done", round(time.time()-t0), "s", flush=True)
 json.dump(agg, open("agg.json", "w"))
 
 # CLAIMS ------------------------------------------------------------------------
-clm = page_all(CLM, "state eq 'FL' and countyCode eq '12071'",
+clm = page_all(CLM, f"state eq '{ST}' and countyCode eq '{GEO}'",
     "id,yearOfLoss,netBuildingPaymentAmount,netContentsPaymentAmount,policyCount", "claims")
 byyear = defaultdict(lambda: [0, 0.0])  # year -> [count, paid]
 tot_paid = 0.0
@@ -119,7 +121,7 @@ try:
     b = ("https://services.arcgis.com/XG15cJAlne2vxtgt/arcgis/rest/services/"
          "National_Risk_Index_Counties/FeatureServer/0/query")
     r = get(b + "?" + urllib.parse.urlencode(
-        {"where": "STCOFIPS='12071'", "outFields": "*", "f": "json",
+        {"where": f"STCOFIPS='{GEO}'", "outFields": "*", "f": "json",
          "returnGeometry": "false", "resultRecordCount": 1}), timeout=90, tries=3)
     feats = r.get("features", [])
     if feats:
