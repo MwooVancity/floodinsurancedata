@@ -1,0 +1,10 @@
+{
+  "name": "floodinsurancedata",
+  "compatibility_date": "2026-10-19",
+  "assets": { "directory": "./dist" },
+  "workers_dev": true,
+  "routes": [
+    { "pattern": "floodinsurancedata.com", "custom_domain": true },
+    { "pattern": "www.floodinsurancedata.com", "custom_domain": true }
+  ]
+}

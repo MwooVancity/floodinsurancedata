@@ -18,9 +18,9 @@ with named residual engineering."
 
 ## Owner decisions (cannot be automated)
 - [x] **Domain.** floodinsurancedata.com (bought 2026-10-23). Baked into the build (FF_BASEURL default).
-- [ ] **Search Console property** — own, separate from calcscrape and the river site.
-- [ ] **Hosting project** — Cloudflare Pages/Workers, its own project. Set `FF_BASEURL` to the real domain
-      and re-run `tools/build_all.py` so canonicals/sitemap/JSON-LD carry it.
+- [ ] **Search Console** — add floodinsurancedata.com as a Domain property (your Google account), verify, submit /sitemap.xml. ONLY remaining launch step.
+- [x] **Hosting** — LIVE on Cloudflare Workers static-assets (`wrangler deploy`, worker name `floodinsurancedata`,
+      account 175119c9…). https://floodinsurancedata.com + www + floodinsurancedata.mwoo778.workers.dev (verified 200, real body 2026-10-23).
 - [ ] **Publisher name + contact email** for the methodology/about page.
 - [ ] **Ads + consent banner** — only after a four-week Search Console review passes.
 
