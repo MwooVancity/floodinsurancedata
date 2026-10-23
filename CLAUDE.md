@@ -18,6 +18,16 @@ question with real data they don't show. A page that shows only an average has f
 dataset bears on the decision and we are not showing it, that is a bug (see Line 0b). No quote, no
 advice prose, no "safe / you should" verdict, no hedging.
 
+**Maximize information gain. Hunt the data gaps.** The target is the single most useful flood-insurance
+page on the internet for this place — every public figure that changes a homeowner's decision, present
+and sourced. Each pass asks: what does a reader still not know, and which public dataset would tell
+them? Name every gap and the exact data to pull next (that is the honest answer to "are we done"); the
+loop never closes while a decision-relevant public dataset is unshown. The only valid reasons to leave
+one out are the hard four — wrong, misleading, padding (denser but changes no decision), or no mechanism
+— never "small sample", "confounded", or "not actionable". When a gap can't be closed by us (an owner
+key, a per-address lookup, a dataset that doesn't exist yet), it stays a printed gap line naming the
+source, not a silence.
+
 ## Line 0b — we are the dataset catalog (the moat)
 Competitors (NerdWallet, LendingTree, Policygenius, floodfigures.com) show one stale average and a
 count. We join every public dataset that bears on the decision. Eight, all verified live 2026-10-22:
