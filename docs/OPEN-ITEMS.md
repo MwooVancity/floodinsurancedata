@@ -17,7 +17,7 @@ with named residual engineering."
       not enforced. The 3-part ZIP test still applies only once ZIP pages exist (none published).
 
 ## Owner decisions (cannot be automated)
-- [ ] **Domain.** Working folder `floodinsurance` is local only; floodfigures.com is taken — pick another.
+- [x] **Domain.** floodinsurancedata.com (bought 2026-10-23). Baked into the build (FF_BASEURL default).
 - [ ] **Search Console property** — own, separate from calcscrape and the river site.
 - [ ] **Hosting project** — Cloudflare Pages/Workers, its own project. Set `FF_BASEURL` to the real domain
       and re-run `tools/build_all.py` so canonicals/sitemap/JSON-LD carry it.

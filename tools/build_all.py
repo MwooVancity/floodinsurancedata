@@ -10,7 +10,7 @@ DATA = os.path.join(ROOT, "data")
 DIST = os.path.join(ROOT, "dist")
 PLACES = os.path.join(ROOT, "places.json")
 PUBLISHED = os.path.join(ROOT, "published.json")   # authoritative list of counties that passed THIS run
-BASE = os.environ.get("FF_BASEURL", "https://example.com")
+BASE = os.environ.get("FF_BASEURL", "https://floodinsurancedata.com")
 FORCE = os.environ.get("FF_FORCE") == "1"
 counties = json.load(open(os.path.join(TOOLS, "counties.json")))
 
