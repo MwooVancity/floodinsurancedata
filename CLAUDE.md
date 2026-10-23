@@ -7,11 +7,16 @@ plain replies, decide sensible defaults, no "Next:" line. Model: riverwaterlevel
 entity, government data only, no verdict). This file is the whole spec; keep it under ~200 lines,
 reader first, orders not descriptions, one file, no competing side docs.
 
-## Line 0 — the one question every page answers
-"For THIS place, what do flood-insurance policyholders actually pay, how far is that below FEMA's
-true-risk price, how often does it flood, and how can I pay less?" A page that shows only an average
-has failed. Every number carries its exact federal source and its as-of date. No quote, no advice
-prose, no "safe / you should" verdict.
+## Line 0 — be the single most helpful flood-insurance page for this place. That is the whole job.
+Not "rank," not "run ads," not "cover more pages" — those are downstream and must never be the goal
+that shapes a page. The goal is: a homeowner at THIS place gets every answer a flood-insurance decision
+needs, each from public federal data with its exact source and as-of date — how risky it is, whether
+they're required to buy it, what it costs (and what it costs in THEIR flood zone), how far below FEMA's
+true-risk price, what floods have actually paid out, and how to pay less. More helpful than NerdWallet,
+Policygenius, Bankrate or floodfigures.com — not by having more URLs, but by answering more of the real
+question with real data they don't show. A page that shows only an average has failed. If a public
+dataset bears on the decision and we are not showing it, that is a bug (see Line 0b). No quote, no
+advice prose, no "safe / you should" verdict, no hedging.
 
 ## Line 0b — we are the dataset catalog (the moat)
 Competitors (NerdWallet, LendingTree, Policygenius, floodfigures.com) show one stale average and a
