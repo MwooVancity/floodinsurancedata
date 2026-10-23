@@ -8,43 +8,68 @@
 <meta name="twitter:card" content="summary">
 <script type="application/ld+json">[{"@context": "https://schema.org", "@type": "Dataset", "name": "NFIP flood insurance data for Kanawha County, West Virginia", "description": "Median NFIP flood insurance cost in Kanawha County is $1,450 a year (middle half $1,086\u2013$2,176); 64.8% pay below FEMA's full-risk price. 1,283 policies, claims, flood risk and CRS discounts, from FEMA data.", "url": "https://example.com/flood-insurance/kanawha-county-wv/", "creator": {"@type": "Organization", "name": "FEMA OpenFEMA"}, "isBasedOn": "https://www.fema.gov/about/openfema/data-sets", "license": "https://www.fema.gov/about/openfema/terms-conditions"}, {"@context": "https://schema.org", "@type": "Place", "name": "Kanawha County, West Virginia", "address": {"@type": "PostalAddress", "addressRegion": "WV", "addressCountry": "US"}}, {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How much is flood insurance in Kanawha County?", "acceptedAnswer": {"@type": "Answer", "text": "Existing single-family NFIP policyholders pay a median $1,450 a year, with the middle half between $1,086 and $2,176. This is what current policies cost, not a quote."}}, {"@type": "Question", "name": "Is Kanawha County flood insurance below FEMA's full-risk price?", "acceptedAnswer": {"@type": "Answer", "text": "Yes \u2014 64.8% of single-family policies pay less than FEMA's full-risk premium (median full-risk $2,418 vs $1,450 charged)."}}, {"@type": "Question", "name": "How many flood claims has Kanawha County had?", "acceptedAnswer": {"@type": "Answer", "text": "2,479 paid NFIP claims totalling $42,889,808 between 1978 and 2026."}}]}, {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Flood insurance", "item": "https://example.com/flood-insurance/"}, {"@type": "ListItem", "position": 2, "name": "Kanawha County", "item": "https://example.com/flood-insurance/kanawha-county-wv/"}]}]</script>
 <style>
-nav.sib{font-size:13px;color:var(--mut);margin:10px 0}nav.sib a{color:var(--brand)}
-.crumb{font-size:13px;color:var(--mut);margin:4px 0}.crumb a{color:var(--brand)}
-:root{--bg:#f4f6f8;--card:#fff;--ink:#16202b;--mut:#5a6672;--line:#d7dde3;--bar:#9db4c6;--accent:#b4531f;--brand:#1f5c7a}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
-.wrap{max-width:760px;margin:0 auto;padding:16px}
-header h1{font-size:26px;margin:.2em 0}
-.chip{display:inline-block;background:#e7edf2;color:var(--mut);border-radius:20px;padding:3px 11px;font-size:13px;margin-right:6px}
-.answer{background:var(--brand);color:#fff;border-radius:12px;padding:16px 18px;font-size:18px;margin:14px 0}
-.answer b{font-size:22px}.answer .caveat{display:block;font-size:13px;opacity:.9;margin-top:8px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
-.card h2{font-size:18px;margin:0 0 6px}.stand{margin:0 0 12px}
-.src{color:var(--mut);font-size:12px;margin:10px 0 0}.gap{color:var(--accent);font-size:14px}
-ul.kv{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:1fr 1fr;gap:6px 18px}
-ul.kv li{display:flex;justify-content:space-between;border-bottom:1px dotted var(--line);padding:4px 0;font-size:14px}
-ul.kv b{font-weight:600}ul.kv span{color:var(--mut)}
-table{width:100%;border-collapse:collapse;font-size:14px}
-th,td{text-align:left;padding:6px 4px;border-bottom:1px solid var(--line)}th{color:var(--mut);font-weight:600}
-.ax{fill:var(--mut);font-size:10px;text-anchor:middle}.ax2{fill:var(--mut);font-size:9px}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media(max-width:560px){.two{grid-template-columns:1fr}ul.kv{grid-template-columns:1fr}}
-.note{color:var(--mut);font-size:13px}footer{color:var(--mut);font-size:12px;margin:24px 0}
-</style></head><body><div class="wrap">
-<header>
-<p class="crumb"><a href="../../">Flood insurance</a> › Kanawha County</p>
-<span class="chip">Policies as of July 31, 2026</span><span class="chip">1,283 policy units in force</span>
+:root{--bg:#eef2f5;--surface:#fff;--ink:#132029;--mut:#5c6b78;--faint:#8795a0;--line:#e3e9ee;
+ --brand:#15617f;--brand-d:#0e4a61;--accent:#c2591f;--bar:#9fc0d2;--r:14px;--gut:20px;
+ --shadow:0 1px 2px rgba(16,32,43,.05),0 6px 20px rgba(16,32,43,.06)}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.62 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:740px;margin:0 auto;padding:0 var(--gut)}
+a{color:var(--brand)}
+.topbar{background:var(--brand-d)}.topbar .wrap{display:flex;gap:12px;align-items:baseline;padding:11px var(--gut)}
+.topbar .brand{color:#fff;font-weight:800;text-decoration:none;letter-spacing:.2px}
+.topbar .crumb{color:#bcd4df;font-size:13px}
+.hero{padding:30px 0 6px}
+.hero h1{font-size:31px;line-height:1.14;margin:.05em 0 .35em;letter-spacing:-.015em}
+.lede{color:var(--mut);font-size:16.5px;margin:.2em 0 1.2em;max-width:62ch}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:0 0 14px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;box-shadow:var(--shadow)}
+.stat .n{font-size:21px;font-weight:800;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.stat .l{font-size:11.5px;color:var(--faint);margin-top:3px;text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+.chips{margin:2px 0 10px}
+.chip{display:inline-block;background:#dde8ee;color:var(--brand-d);border-radius:999px;padding:4px 12px;font-size:12.5px;margin:0 6px 6px 0;font-weight:600}
+.caveat{color:var(--mut);font-size:14px;margin:.2em 0 1.1em;max-width:62ch}
+.btn{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;font-weight:700;padding:12px 20px;border-radius:10px;box-shadow:var(--shadow)}
+.btn:hover{filter:brightness(.96)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px 22px;margin:16px 0;box-shadow:var(--shadow)}
+.card h2{font-size:20px;font-weight:700;margin:0 0 5px;letter-spacing:-.01em}
+.stand{margin:0 0 14px}
+.src{color:var(--faint);font-size:12px;margin:14px 0 0;border-top:1px solid var(--line);padding-top:9px}
+.gap{color:#9a3d12;font-size:14px;background:#fbf0e9;border:1px solid #f0d9c9;border-radius:9px;padding:10px 13px}
+.note{color:var(--mut);font-size:13.5px;margin:.6em 0 0}
+ul.kv{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+ul.kv li{display:flex;flex-direction:column;background:#f5f8fb;border:1px solid var(--line);border-radius:10px;padding:11px 13px}
+ul.kv b{order:2;font-weight:600;color:var(--faint);font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;margin-top:3px}
+ul.kv span{order:1;font-size:19px;font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums}
+table{width:100%;border-collapse:collapse;font-size:14.5px;margin-top:4px}
+th,td{padding:9px 10px;text-align:left}
+thead th{color:var(--faint);font-weight:600;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--line)}
+tbody tr:nth-child(odd){background:#f5f8fb}
+td:nth-child(n+2),thead th:nth-child(n+2){text-align:right;font-variant-numeric:tabular-nums}
+svg{display:block;margin:6px 0}
+.ax{fill:var(--faint);font-size:10px;text-anchor:middle}.ax2{fill:var(--faint);font-size:9px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+nav.sib{font-size:14px;color:var(--mut);margin:16px 0;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+nav.sib a{color:var(--brand);font-weight:600}
+footer{color:var(--faint);font-size:12.5px;margin:28px 0;border-top:1px solid var(--line);padding-top:14px}
+footer a{color:var(--mut)}
+@media(max-width:620px){.stats{grid-template-columns:repeat(2,1fr)}.two,ul.kv{grid-template-columns:1fr}.hero h1{font-size:25px}}
+</style></head><body>
+<header class="topbar"><div class="wrap"><a class="brand" href="../../">Flood Data</a><span class="crumb">Flood insurance › Kanawha County</span></div></header>
+<main class="wrap">
+<section class="hero">
 <h1>Flood insurance in Kanawha County, West Virginia</h1>
-</header>
-
-<div class="answer">Existing single-family policyholders here pay a median <b>$1,450</b> a year
-(about $121/mo; middle half $1,086–$2,176). 64.8% pay less than FEMA's full-risk price.
-<span class="caveat">This is what current policies cost, not a quote — your own premium depends on your building, coverage and elevation.</span></div>
-
-<section class="card"><h2>Start with YOUR address</h2>
-<p class="stand">The figures on this page are for all of Kanawha County. Your own price and whether coverage is required
-are set at your exact address by its flood zone — so look that up first, then read your zone's row below.</p>
-<p><a href="https://msc.fema.gov/portal/home" rel="nofollow noopener" target="_blank">Look up your address free at FEMA's official Flood Map Service Center →</a></p>
-<p class="note">We link FEMA's official map rather than guess your zone. Have your flood-zone determination (from the map or your lender's letter) in hand, then use the cost-by-zone table and the premium comparison below.</p></section>
+<p class="lede">What existing NFIP policyholders here actually pay, how that compares with FEMA's full-risk price, the flood risk, the claims history, and how to pay less — every figure from public federal data, sourced and dated.</p>
+<div class="stats">
+<div class="stat"><div class="n">$1,450</div><div class="l">Median / yr</div></div>
+<div class="stat"><div class="n">$121</div><div class="l">Per month</div></div>
+<div class="stat"><div class="n">$1,086–$2,176</div><div class="l">Middle half</div></div>
+<div class="stat"><div class="n">64.8%</div><div class="l">Below full-risk</div></div>
+</div>
+<p class="chips"><span class="chip">Policies as of July 31, 2026</span><span class="chip">1,283 policy units in force</span></p>
+<p class="caveat">This is what existing single-family policies cost — not a quote. Your own premium depends on your building, coverage and elevation.</p>
+<a class="btn" href="https://msc.fema.gov/portal/home" rel="nofollow noopener" target="_blank">Check your address on FEMA's flood map →</a>
+<p class="note">Your flood zone is set at your exact address and drives your price and whether coverage is required. Look it up first, then read your zone's row in "What does it cost in my flood zone?" below.</p>
+</section>
 
 <section class="card"><h2>How much flood risk is here?</h2><p class="stand">FEMA's National Risk Index rates Kanawha County's inland flood risk Relatively High, from expected annual loss.</p><ul class='kv'><li><b>Inland flood risk</b><span>Relatively High</span></li><li><b>Inland modeled annual loss (county)</b><span>$132,659,912/yr (Relatively High, 96th national percentile)</span></li></ul><p class='note'>Modeled annual loss is FEMA's estimate for the whole county (all buildings), not any one home's expected loss or premium, and not a flood probability.</p><p class="src">Source: FEMA OpenFEMA. Data effective NRI 2023 release; retrieved October 22, 2026. This product uses the Federal Emergency Management Agency's OpenFEMA API, but is not endorsed by FEMA.</p></section>
 
@@ -104,4 +129,4 @@ el.addEventListener('input',function(){
 
 <footer>This product uses the Federal Emergency Management Agency's OpenFEMA API, but is not endorsed by FEMA. Place names via GeoNames (CC BY 4.0). Figures are aggregates, never individual quotes or records.
 <a href="../../methodology/">Methodology</a> · <a href="../../data/">Download the data</a></footer>
-</div></body></html>
+</main></body></html>
