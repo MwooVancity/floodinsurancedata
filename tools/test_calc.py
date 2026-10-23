@@ -35,10 +35,21 @@ assert C["by_year"]["2017"] == [2, 350], C["by_year"]["2017"]
 assert C["year_min"] == 1999 and C["year_max"] == 2017
 assert C["cumulative_per_100_current_units"] == round(100 * 3 / 9, 1)
 
-# spread_ok True once enough valid costs exist
+# small fixture: per-zone/per-year medians need enough obs, so they stay empty here
+assert P["cost_by_zone"] == {}, P["cost_by_zone"]
+assert P["cost_by_year"] == {}, P["cost_by_year"]
+assert P["coverage_building"] == 0 and P["coverage_contents"] == 0
+
+# spread_ok + cost_by_zone populate once enough valid costs exist
 big = [{"id": i, "policyCost": 1000 + i, "fullRiskPremium": 2000, "ratedFloodZone": "AE",
-        "occupancyType": 1, "primaryResidenceIndicator": True, "policyCount": 1} for i in range(120)]
-assert ffcalc.aggregate_policies(big)["spread_ok"] is True
+        "occupancyType": 1, "primaryResidenceIndicator": True, "policyCount": 1,
+        "policyEffectiveDate": "2026-03-01", "totalBuildingInsuranceCoverage": 250000} for i in range(120)]
+B = ffcalc.aggregate_policies(big, asof="2026-07-31")
+assert B["spread_ok"] is True
+assert B["cost_by_zone"]["AE"]["n"] == 120, B["cost_by_zone"]
+assert B["cost_by_year"]["2026"]["n"] == 120, B["cost_by_year"]
+assert B["recent_median"] is not None and B["recent_n"] == 120   # all written within 12mo of asof
+assert B["coverage_building"] == 120 * 250000
 
 # percentile convention edge cases (inclusive method), per review request
 assert ffcalc.pctl([], 50) is None                       # empty

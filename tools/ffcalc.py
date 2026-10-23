@@ -15,10 +15,39 @@ def pctl(values, p):
     if len(a) == 1: return round(a[0])
     return round(statistics.quantiles(a, n=100, method="inclusive")[p - 1])
 
-def aggregate_policies(rows):
+ZONE_MIN = 50   # min valid-cost observations to publish a per-zone median
+YEAR_MIN = 30   # min valid-cost observations to publish a per-year median (trend)
+
+def _valid_cost(r): return isinstance(r.get("policyCost"), (int, float)) and r["policyCost"] > 0
+
+def aggregate_policies(rows, asof=None):
     units = sum(int(r.get("policyCount") or 0) for r in rows)
     coh = [r for r in rows if isone(r.get("occupancyType")) and istrue(r.get("primaryResidenceIndicator"))]
     cost = [r["policyCost"] for r in coh if isinstance(r.get("policyCost"), (int, float)) and r["policyCost"] > 0]
+    # cost by flood zone (median per zone, only where enough valid observations)
+    zc = defaultdict(list)
+    for r in coh:
+        if _valid_cost(r): zc[(r.get("ratedFloodZone") or "Unknown").strip()].append(r["policyCost"])
+    cost_by_zone = {z: {"median": pctl(v, 50), "n": len(v)} for z, v in zc.items() if len(v) >= ZONE_MIN}
+    cost_by_zone = dict(sorted(cost_by_zone.items(), key=lambda kv: -kv[1]["n"]))
+    # premium trend: median cost by policy effective YEAR (cohort-mix caveat printed on page)
+    yc = defaultdict(list)
+    for r in coh:
+        d = r.get("policyEffectiveDate")
+        if _valid_cost(r) and isinstance(d, str) and len(d) >= 4 and d[:4].isdigit():
+            yc[d[:4]].append(r["policyCost"])
+    cost_by_year = {y: {"median": pctl(v, 50), "n": len(v)} for y, v in sorted(yc.items()) if len(v) >= YEAR_MIN}
+    # "going rate": median cost of policies written in the 12 months to the as-of date
+    recent_median = recent_n = None
+    if asof:
+        yy, mm, dd = int(asof[:4]) - 1, asof[5:7], asof[8:10]
+        cutoff = f"{yy}-{mm}-{dd}"
+        rc = [r["policyCost"] for r in coh if _valid_cost(r)
+              and isinstance(r.get("policyEffectiveDate"), str) and r["policyEffectiveDate"][:10] >= cutoff]
+        if len(rc) >= ZONE_MIN:
+            recent_median, recent_n = pctl(rc, 50), len(rc)
+    cov_b = sum(r.get("totalBuildingInsuranceCoverage") or 0 for r in rows)
+    cov_c = sum(r.get("totalContentsInsuranceCoverage") or 0 for r in rows)
     both = [r for r in coh if isinstance(r.get("policyCost"), (int, float)) and r["policyCost"] > 0
             and isinstance(r.get("fullRiskPremium"), (int, float)) and r["fullRiskPremium"] > 0]
     frp = [r["fullRiskPremium"] for r in both]
@@ -37,6 +66,9 @@ def aggregate_policies(rows):
         "zone_units": dict(sorted(zu.items(), key=lambda x: -x[1])[:12]),
         "sfha_units": sfha, "sfha_share_units": round(100 * sfha / units, 1) if units else None,
         "spread_ok": len(cost) >= SMALL_COHORT,         # publish the spread only on enough VALID cost obs
+        "cost_by_zone": cost_by_zone, "cost_by_year": cost_by_year,
+        "recent_median": recent_median, "recent_n": recent_n,
+        "coverage_building": round(cov_b), "coverage_contents": round(cov_c),
     }
 
 def aggregate_claims(rows, units):

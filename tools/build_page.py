@@ -133,6 +133,56 @@ else:
                  f"a new policy on a different building can differ.")
     cost_body = (spread_svg() + "<p class='note'>Each policy's annual cost (premium plus fees), single-family "
                  "primary residences. The bar is the middle half (p25–p75); the orange line is FEMA's full-risk price.</p>")
+# "Going rate" line only when recent policies are a MEANINGFUL SUBSET. On an in-force annual-policy
+# snapshot nearly every policy was written in the last 12 months, so "recent" == the whole book and the
+# line would just restate the median while implying a subset. Suppress it then (not padding).
+if P.get("recent_median") and P.get("recent_n") and P.get("cost_n") and P["recent_n"] < 0.9 * P["cost_n"]:
+    cost_body += (f"<p class='note'><b>Going rate:</b> policies written in the 12 months to {POL_ASOF} have a "
+                  f"median cost of {money(P['recent_median'])} ({num(P['recent_n'])} policies).</p>")
+if P.get("coverage_building"):
+    cost_body += (f"<p class='note'><b>Coverage in force:</b> {money(P['coverage_building'])} of building and "
+                  f"{money(P['coverage_contents'])} of contents coverage across all {CS} policies.</p>")
+# monthly framing for the median
+median_mo = money(round(P['p50'] / 12)) if P.get("p50") else None
+
+# ---- cost by flood zone (median per zone) ----
+czone = P.get("cost_by_zone") or {}
+zone_cost_card = ""
+if czone:
+    rows_ = "".join(f"<tr><td>Zone {html.escape(z)}</td><td>{money(d['median'])}</td><td>{num(d['n'])}</td></tr>"
+                    for z, d in czone.items())
+    zone_cost_card = card("What does it cost in my flood zone?",
+        f"Median annual cost of existing single-family policies by rated flood zone in {CS} — so you can read the row for your own zone (it's on your lender's determination).",
+        f"<table><thead><tr><th>Flood zone</th><th>Median annual cost</th><th>Policies</th></tr></thead><tbody>{rows_}</tbody></table>"
+        "<p class='note'>Zones with fewer than 50 priced single-family policies are omitted. Your own premium still depends on elevation and coverage.</p>",
+        src(POL_ASOF, RETR))
+
+# ---- premium trend (median cost by effective year) ----
+cyear = P.get("cost_by_year") or {}
+trend_card = ""
+if len(cyear) >= 3:
+    yrs = list(cyear.items())
+    vals = [d["median"] for _, d in yrs]
+    W, H, pad = 680, 160, 34
+    lo, hi = min(vals) * 0.9, max(vals) * 1.1
+    def _x(i): return pad + i / max(1, len(yrs) - 1) * (W - 2 * pad)
+    def _y(v): return H - pad - (v - lo) / (hi - lo) * (H - 2 * pad)
+    pts = " ".join(f"{_x(i):.1f},{_y(d['median']):.1f}" for i, (_, d) in enumerate(yrs))
+    dots = "".join(f'<circle cx="{_x(i):.1f}" cy="{_y(d["median"]):.1f}" r="3" fill="var(--accent)"><title>{y}: {money(d["median"])} ({d["n"]})</title></circle>'
+                   for i, (y, d) in enumerate(yrs))
+    labs = "".join(f'<text x="{_x(i):.1f}" y="{H-8}" class="ax">{y}</text>' for i, (y, _) in enumerate(yrs))
+    first_m, last_m = yrs[0][1]["median"], yrs[-1][1]["median"]
+    direction = "risen" if last_m > first_m else ("fallen" if last_m < first_m else "held")
+    trend_card = card("Is it going up?",
+        f"The median cost of single-family policies by the year they were written has {direction} from "
+        f"{money(first_m)} ({yrs[0][0]}) to {money(last_m)} ({yrs[-1][0]}) in {CS}.",
+        f'<svg viewBox="0 0 {W} {H}" width="100%" role="img" aria-label="Median cost by effective year">'
+        f'<polyline points="{pts}" fill="none" stroke="var(--brand)" stroke-width="2"/>{dots}'
+        f'<line x1="{pad}" y1="{H-pad}" x2="{W-pad}" y2="{H-pad}" stroke="var(--line)"/>{labs}</svg>'
+        "<p class='note'>Median cost grouped by each policy's effective year (years with under 30 priced policies omitted). "
+        "This reflects the mix of policies written each year and FEMA's Risk Rating 2.0 phase-in, not a like-for-like index for one home.</p>",
+        src(POL_ASOF, RETR))
+
 gap_lead = (f"{P['share_below']}% of {num(P['below_n'])} single-family policies pay less than FEMA's own "
             f"full-risk price; the median full-risk premium is {money(P['frp_median'])} versus the "
             f"{money(P['p50'])} actually charged.")
@@ -276,7 +326,7 @@ th,td{{text-align:left;padding:6px 4px;border-bottom:1px solid var(--line)}}th{{
 </header>
 
 <div class="answer">Existing single-family policyholders here pay a median <b>{money(P['p50'])}</b> a year
-(middle half {money(P['p25'])}–{money(P['p75'])}). {P['share_below']}% pay less than FEMA's full-risk price.
+(about {median_mo}/mo; middle half {money(P['p25'])}–{money(P['p75'])}). {P['share_below']}% pay less than FEMA's full-risk price.
 <span class="caveat">This is what current policies cost, not a quote — your own premium depends on your building, coverage and elevation.</span></div>
 
 {risk}
@@ -287,6 +337,10 @@ th,td{{text-align:left;padding:6px 4px;border-bottom:1px solid var(--line)}}th{{
   src(POL_ASOF, RETR))}
 
 {card("How much does it cost here?", cost_lead, cost_body, src(POL_ASOF, RETR))}
+
+{zone_cost_card}
+
+{trend_card}
 
 {card("How far below the true price is it?", gap_lead,
   f"<ul class='kv'><li><b>Median charged now</b><span>{money(P['p50'])}</span></li>"
@@ -324,6 +378,7 @@ th,td{{text-align:left;padding:6px 4px;border-bottom:1px solid var(--line)}}th{{
 <li>Private (non-NFIP) flood insurance prices.</li>
 <li>Your address's exact flood zone — use FEMA's Flood Map Service Center.</li>
 <li>Why premiums are rising — we show the gap to full-risk, not the cause.</li>
+<li>A year-over-year premium trend — the in-force snapshot holds only current-term policies, so a like-for-like multi-year index isn't possible from this data. A per-effective-year median is shown only where several years of policies exist.</li>
 </ul></section>
 
 {quote_widget}

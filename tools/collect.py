@@ -74,11 +74,12 @@ t0 = time.time()
 # POLICIES ----------------------------------------------------------------------
 pol = page_all(POL,
     f"propertyState eq '{ST}' and startswith(censusGeoid,'{GEO}') and policyEffectiveDate le '{ASOF}' and policyTerminationDate ge '{ASOF}'",
-    "id,policyCost,fullRiskPremium,ratedFloodZone,occupancyType,primaryResidenceIndicator,policyCount,reportedZipCode",
+    "id,policyCost,fullRiskPremium,ratedFloodZone,occupancyType,primaryResidenceIndicator,policyCount,"
+    "reportedZipCode,policyEffectiveDate,totalBuildingInsuranceCoverage,totalContentsInsuranceCoverage",
     "policies")
 
 units = sum(int(r.get("policyCount") or 0) for r in pol)
-agg["policies"] = dict(ffcalc.aggregate_policies(pol),
+agg["policies"] = dict(ffcalc.aggregate_policies(pol, asof=POLICY_ASOF),
                        zips=len(set(r.get("reportedZipCode") for r in pol)),
                        asof=POLICY_ASOF, retrieved=RETRIEVED)
 print("policies agg done", round(time.time()-t0), "s", flush=True)
