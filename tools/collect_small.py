@@ -13,6 +13,13 @@ def get(url, timeout=120):
     with urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "ff"}), timeout=timeout) as r:
         return json.load(r)
 
+def census_key():
+    env = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".env")
+    if os.path.exists(env):
+        for l in open(env):
+            if l.startswith("CENSUS_KEY="): return l.split("=", 1)[1].strip()
+    return os.environ.get("CENSUS_KEY")
+
 def fetch_all(ds, ver, filt, select, orderby=None):
     """Paginate through ALL matching rows; fail (raise) if the final count != API's reported total.
     Fail-closed: a truncated response must never be saved as if complete."""
@@ -42,6 +49,23 @@ print("declarations (all types):", len(d["declarations"]))
 d["housing"] = fetch_all("HousingAssistanceOwners", "v2", f"state eq '{ST}' and county eq '{COT} (County)'",
                          "disasterNumber,zipCode,city,validRegistrations,totalApprovedIhpAmount,repairReplaceAmount,averageFemaInspectedDamage")
 print("housing rows:", len(d["housing"]))
+
+# Census ACS 5-year total housing units (B25001) for the take-up rate. Enrichment, not a core dataset:
+# if the key is missing or the call fails, leave it null and the page shows a gap line (fail-open).
+d["housing_units"] = None
+d["housing_units_year"] = "2023"
+key = census_key()
+if key:
+    try:
+        u = (f"https://api.census.gov/data/2023/acs/acs5?get=NAME,B25001_001E"
+             f"&for=county:{GEO[2:]}&in=state:{GEO[:2]}&key={key}")
+        r = get(u, timeout=60)
+        d["housing_units"] = int(r[1][1])
+        print("housing units:", d["housing_units"])
+    except Exception as e:
+        print("census err (take-up -> gap line):", repr(e)[:100])
+else:
+    print("no CENSUS_KEY (take-up -> gap line)")
 
 json.dump(d, open(OUT, "w"))
 print("saved", OUT, "for", COT, "County", ST)

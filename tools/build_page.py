@@ -215,6 +215,26 @@ recent_li = "".join(
     f"<li>{html.escape(str(d.get('fyDeclared')))} — {html.escape(d.get('incidentType',''))}: "
     f"{html.escape((d.get('declarationTitle') or '').title())}</li>" for d in recent)
 
+# ---- take-up: how common NFIP coverage is here (policy units vs Census housing units) ----
+hu = data.get("housing_units")
+hu_yr = data.get("housing_units_year", "2023")
+if hu and P.get("units"):
+    tu = round(100 * P["units"] / hu, 1)
+    takeup_card = card("How common is flood insurance here?",
+        f"{CS} has about {tu} NFIP flood policies for every 100 homes ({num(P['units'])} policy units vs "
+        f"{num(hu)} housing units).",
+        f"<ul class='kv'><li><b>NFIP policy units</b><span>{num(P['units'])}</span></li>"
+        f"<li><b>Housing units</b><span>{num(hu)}</span></li>"
+        f"<li><b>Policies per 100 homes</b><span>{tu}</span></li></ul>"
+        "<p class='note'>A coverage-commonness proxy: policy units include some multi-unit and "
+        "non-residential policies and exclude private flood insurance, so read it as how widespread NFIP "
+        "coverage is here, not an exact share of households.</p>",
+        f"Source: FEMA OpenFEMA NFIP + U.S. Census ACS 5-year {hu_yr} (B25001), retrieved {RETR}.")
+else:
+    takeup_card = card("How common is flood insurance here?",
+        "Not shown — Census housing-unit data was not available for this county.",
+        "<p class='gap'>Gap: U.S. Census ACS 5-year B25001 housing units, to divide into NFIP policy units.</p>")
+
 mani = agg.get("manifest", {})
 mani_ok = all(v.get("complete") for v in mani.values()) if mani else False
 mani_line = "; ".join(f"{k}: {v['unique_fetched']}/{v['reported_total']} fetched"
@@ -335,6 +355,8 @@ th,td{{text-align:left;padding:6px 4px;border-bottom:1px solid var(--line)}}th{{
   f"About {P['sfha_share_units']}% of {CS} policy units sit in a high-risk Special Flood Hazard Area (zones A/V), where a federally backed mortgage legally requires flood insurance.",
   f"<div class='two'><div>{zone_body}</div><div><p class='note'>Zone mix by policy units (summed policyCount). Federal rule: a lender must require flood insurance on a building in a Special Flood Hazard Area with a federally backed loan (42 U.S.C. §4012a). This is the mix of existing policies, not of all buildings, and does not establish any one property's obligation.</p></div></div>",
   src(POL_ASOF, RETR))}
+
+{takeup_card}
 
 {card("How much does it cost here?", cost_lead, cost_body, src(POL_ASOF, RETR))}
 

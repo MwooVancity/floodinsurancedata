@@ -29,6 +29,8 @@ count. We join every public dataset that bears on the decision. Eight, all verif
 6. HousingAssistanceOwners — FEMA aid paid to owners after floods, per ZIP/county.
 7. NfipCommunityStatusBook — the CRS discount (5–45% off premiums), per community. NOBODY shows it.
 8. PIF workbook — reconciliation of our count to FEMA's official figure.
+9. Census ACS 5-year B25001 — take-up (NFIP policies per 100 homes), per county. Needs a free Census
+   key in `.env` (`CENSUS_KEY`); if absent the panel shows a gap line.
 A reader question with no dataset = a visible gap line naming the data to pull next. A dataset that
 answers no reader question = left out. Verified endpoints: `docs/reader-spec.md`.
 

@@ -30,7 +30,8 @@ with named residual engineering."
       large-state counties (e.g. Harris TX, 222k policies) are intermittently 503-ing right now — the
       collector shrinks page size and resumes, but a full sweep runs over hours/days when the API is calm,
       not in one pass. Lee (FL) and Kanawha (WV) are built as the proven pilot.
-- [ ] **Census ACS key** (free) — only needed later for the take-up rate (share of homes insured).
+- [x] **Take-up rate** — DONE. Census ACS 5-year B25001 wired in; `CENSUS_KEY` in `.env` (keep it there,
+      never in git/zip). Lee 31.3 / Kanawha 1.4 NFIP policies per 100 homes.
 
 ## Empirical (no one can certify in advance)
 - [ ] **Whether it ranks.** Months of Search Console evidence, gated by the decision rule in the build plan.
