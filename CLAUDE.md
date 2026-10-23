@@ -44,6 +44,15 @@ count. We join every public dataset that bears on the decision. Eight, all verif
 A reader question with no dataset = a visible gap line naming the data to pull next. A dataset that
 answers no reader question = left out. Verified endpoints: `docs/reader-spec.md`.
 
+## Line 1 — user first, clean presentable UI, never Google first
+Every choice serves the person reading, not a crawler. The page is clean and legible: one colour
+system, generous whitespace, the headline answer and the first decision-driving panels on the first
+screen, readable on a phone, fast (static, no client frameworks). We never do anything FOR Google that
+we wouldn't do for the reader — no keyword stuffing, doorway or near-duplicate pages, fake freshness,
+hidden text, or clutter added to chase rankings. If a layout or wording choice helps SEO but hurts the
+reader, the reader wins. Good ranking is a side effect of being the clearest, most useful page — never
+the thing we design for. When the two ever conflict, this line decides.
+
 ## The reader is the judge
 A homeowner or buyer at a specific place, on a phone, holding a flood-zone letter or a renewal,
 30–60 seconds, a deadline of days. Page order, answered above the long tables, from the page's own
