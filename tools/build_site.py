@@ -45,8 +45,8 @@ home = HEAD.format(title="Flood insurance by place — real NFIP data",
     canon=BASE + "/") + f"""
 <h1>Flood insurance, by the numbers</h1>
 <p>For each place: what existing NFIP policyholders actually pay, how far below FEMA's full-risk price,
-how often it floods, what claims paid out, and the community discounts that lower the bill. All from
-public federal data, every figure sourced and dated.</p>
+the historical flood claims and federal disaster declarations, the flood-risk rating, and the community
+discounts that lower the bill. All from public federal data, every figure sourced and dated.</p>
 <div class="card"><h2>Find your place</h2>
 <input id="s" placeholder="Type a county or state…" aria-label="Search places" autocomplete="off">
 <table id="t" style="margin-top:12px"><thead><tr><th>County</th><th>Median annual cost</th><th>Policies in force</th></tr></thead>

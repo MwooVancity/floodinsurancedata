@@ -47,6 +47,13 @@ has_spread = "Annual NFIP cost spread" in html
 if not spread_ok and has_spread: fails.append(f"cost_n {cn} < 100 but percentile spread chart shown")
 if spread_ok and not has_spread: fails.append(f"cost_n {cn} >= 100 but spread chart missing")
 
+# 7. no event shown with a year beyond now (catches FEMA fiscal-year mislabels like FY2027 on an Oct 2026 date)
+import datetime
+this_year = datetime.date.today().year
+for y in re.findall(r"<li>(\d{4}) — ", html):   # recent-event items "<li>YYYY — ..."
+    if int(y) > this_year:
+        fails.append(f"declaration shows future year {y} (fiscal-year mislabel?)")
+
 if fails:
     print("GATE FAIL:")
     for f in fails: print("  -", f)

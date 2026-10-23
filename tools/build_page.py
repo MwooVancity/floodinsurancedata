@@ -1,7 +1,7 @@
 """Build the Lee County FL flood page from data.json (small datasets) + agg.json (bulk).
 River-style: white cards, every number has a unit, one line of context, source + as-of once.
 No verdict, no advice prose. Writes directly to the repo dist path. -> OUT_HTML."""
-import json, html, os
+import json, html, os, re
 from collections import defaultdict
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -31,13 +31,25 @@ h_disasters = len(set(r.get("disasterNumber") for r in h_rows))
 
 # ---- declarations: distinct flood/storm events (by disasterNumber), not records ----
 decl = data.get("declarations", [])
-fh = [d for d in decl if d.get("incidentType") in ("Flood", "Hurricane", "Tropical Storm", "Coastal Storm", "Severe Storm")]
-fh_events = {d.get("disasterNumber") for d in fh}
+fh = [d for d in decl if d.get("incidentType") in ("Flood", "Hurricane", "Tropical Storm", "Tropical Depression", "Coastal Storm", "Severe Storm")]
+def cal_year(d):
+    # CALENDAR year from declarationDate — NOT fyDeclared (FEMA's federal fiscal year, which rolls to
+    # the next year on Oct 1 and would mislabel an Oct 2026 event as "2027").
+    s = d.get("declarationDate") or ""
+    return s[:4] if len(s) >= 4 and s[:4].isdigit() else (str(d.get("fyDeclared")) if d.get("fyDeclared") else "")
+def event_key(d):
+    # one real event = one storm in one year. FEMA issues BOTH an emergency (EM, 3000-series) and a
+    # major-disaster (DR, 4000-series) number for the same storm, sometimes with different type labels
+    # ("Hurricane Helene" vs "Tropical Storm Helene"); dedup by storm name + calendar year, not number.
+    t = (d.get("declarationTitle") or "").upper().strip()
+    m = re.match(r"(?:HURRICANE|TROPICAL STORM|TROPICAL DEPRESSION)\s+(.+)", t)
+    return (cal_year(d), (m.group(1).strip() if m else t))
+fh_events = {event_key(d) for d in fh}
 recent, seen = [], set()
 for d in sorted(fh, key=lambda x: x.get("declarationDate") or "", reverse=True):
-    dn = d.get("disasterNumber")
-    if dn in seen: continue
-    seen.add(dn); recent.append(d)
+    k = event_key(d)
+    if k in seen: continue
+    seen.add(k); recent.append(d)
     if len(recent) >= 6: break
 
 crs = sorted(data.get("crs", []), key=lambda x: -(int((x.get("sfhaDiscount") or "0%").rstrip("%") or 0)))
@@ -212,7 +224,7 @@ else:
                 f"they participate in the NFIP without the extra CRS premium reduction.")
 
 recent_li = "".join(
-    f"<li>{html.escape(str(d.get('fyDeclared')))} — {html.escape(d.get('incidentType',''))}: "
+    f"<li>{html.escape(cal_year(d))} — {html.escape(d.get('incidentType',''))}: "
     f"{html.escape((d.get('declarationTitle') or '').title())}</li>" for d in recent)
 
 # ---- take-up: how common NFIP coverage is here (policy units vs Census housing units) ----
@@ -349,10 +361,16 @@ th,td{{text-align:left;padding:6px 4px;border-bottom:1px solid var(--line)}}th{{
 (about {median_mo}/mo; middle half {money(P['p25'])}–{money(P['p75'])}). {P['share_below']}% pay less than FEMA's full-risk price.
 <span class="caveat">This is what current policies cost, not a quote — your own premium depends on your building, coverage and elevation.</span></div>
 
+<section class="card"><h2>Start with YOUR address</h2>
+<p class="stand">The figures on this page are for all of {CS}. Your own price and whether coverage is required
+are set at your exact address by its flood zone — so look that up first, then read your zone's row below.</p>
+<p><a href="https://msc.fema.gov/portal/home" rel="nofollow noopener" target="_blank">Look up your address free at FEMA's official Flood Map Service Center →</a></p>
+<p class="note">We link FEMA's official map rather than guess your zone. Have your flood-zone determination (from the map or your lender's letter) in hand, then use the cost-by-zone table and the premium comparison below.</p></section>
+
 {risk}
 
 {card("Am I required to carry it?",
-  f"About {P['sfha_share_units']}% of {CS} policy units sit in a high-risk Special Flood Hazard Area (zones A/V), where a federally backed mortgage legally requires flood insurance.",
+  f"About {P['sfha_share_units']}% of the NFIP policy units in this dataset for {CS} are in mapped high-risk (A/V) zones — not {P['sfha_share_units']}% of all buildings. In a Special Flood Hazard Area a federally backed mortgage legally requires flood insurance.",
   f"<div class='two'><div>{zone_body}</div><div><p class='note'>Zone mix by policy units (summed policyCount). Federal rule: a lender must require flood insurance on a building in a Special Flood Hazard Area with a federally backed loan (42 U.S.C. §4012a). This is the mix of existing policies, not of all buildings, and does not establish any one property's obligation.</p></div></div>",
   src(POL_ASOF, RETR))}
 
@@ -364,7 +382,7 @@ th,td{{text-align:left;padding:6px 4px;border-bottom:1px solid var(--line)}}th{{
 
 {trend_card}
 
-{card("How far below the true price is it?", gap_lead,
+{card("How do current premiums compare with FEMA's full-risk price?", gap_lead,
   f"<ul class='kv'><li><b>Median charged now</b><span>{money(P['p50'])}</span></li>"
   f"<li><b>Median full-risk price</b><span>{money(P['frp_median'])}</span></li>"
   f"<li><b>Pay below full risk</b><span>{P['share_below']}% of {num(P['below_n'])}</span></li></ul>", src(POL_ASOF, RETR))}
@@ -376,7 +394,7 @@ th,td{{text-align:left;padding:6px 4px;border-bottom:1px solid var(--line)}}th{{
 
 {card("How often is this county a flood disaster?",
   f"{CS} has had {len(fh_events)} distinct federal flood, hurricane or tropical-storm disaster declarations. The most recent:",
-  f"<ul>{recent_li}</ul><p class='note'>Distinct declared events (deduplicated by disaster number), not individual declaration records.</p>",
+  f"<ul>{recent_li}</ul><p class='note'>Distinct storms by calendar year (one storm's emergency and major-disaster declarations are counted once), not individual declaration records.</p>",
   src("declarations through 2026", RETR))}
 
 {card("Did the government pay homeowners after floods?",
