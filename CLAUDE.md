@@ -30,17 +30,20 @@ source, not a silence.
 
 ## Line 0b — we are the dataset catalog (the moat)
 Competitors (NerdWallet, LendingTree, Policygenius, floodfigures.com) show one stale average and a
-count. We join every public dataset that bears on the decision. Eight, all verified live 2026-10-22:
+count. We join every public dataset that bears on the decision. **SEVEN distinct federal datasets** (the
+page says "joins 7 of them" and the gate enforces that the stated count equals the sources listed — keep
+it at 7 everywhere). Items 1–2 share one dataset; the PIF workbook is a reconciliation benchmark, not a
+seventh fetch. All verified live 2026-10-22:
 1. NFIP Policies v3 — cost spread p25/p50/p75/p90 (they show only a median).
-2. NFIP Policies v3 `fullRiskPremium` — the gap to FEMA's true price, share paying below it.
+2. NFIP Policies v3 `fullRiskPremium` — the gap to FEMA's true price, share paying below it. (Same dataset as 1 — a field, not a separate source.)
 3. NFIP Claims v3 — claims per 100 policies + paid-by-year (they show raw counts).
 4. National Risk Index — flood expected-annual-loss + national percentile, per county.
 5. DisasterDeclarationsSummaries — flood/hurricane declarations, per county.
 6. HousingAssistanceOwners — FEMA aid paid to owners after floods, per ZIP/county.
 7. NfipCommunityStatusBook — the CRS discount (5–45% off premiums), per community. NOBODY shows it.
-8. PIF workbook — reconciliation of our count to FEMA's official figure.
-9. Census ACS 5-year B25001 — take-up (NFIP policies per 100 homes), per county. Needs a free Census
+8. Census ACS 5-year B25001 — take-up (NFIP policies per 100 homes), per county. Needs a free Census
    key in `.env` (`CENSUS_KEY`); if absent the panel shows a gap line.
+Reconciliation benchmark (not counted as a dataset): FEMA PIF workbook — checks our count to FEMA's official figure.
 A reader question with no dataset = a visible gap line naming the data to pull next. A dataset that
 answers no reader question = left out. Verified endpoints: `docs/reader-spec.md`.
 
@@ -102,9 +105,15 @@ negative premiums are refunds; claims `countyCode` may not match property county
 under 100 cohort policies, ZIP under 20.
 
 ## Gates — three only (no gate zoo)
-1. It builds.  2. Numbers on the page equal the JSON and reconcile to FEMA's official count within 5%
-(documented cause otherwise).  3. The live page is up and its body reads real content this session.
-A rule without a check is a note. "Live" = curl/browser confirms real content this session.
+1. It builds.  2. `tools/gate.py` — the one correctness + data-integrity audit (no second gate file): numbers on
+the page equal the JSON and reconcile to FEMA's official count within 5% (documented cause otherwise); AND every
+ratio's denominator is disclosed (SFHA share = sfha_units/units, recomputed), truncated tables disclose their
+remainder, claims-per-100 carries its "cumulative, not an annual rate" caveat, claims totals + largest loss year
+reconcile to agg, full-risk is framed "not a quote", the stated dataset count equals the sources listed, and
+`dateModified` is present. 3. The live page is up and its body reads real content this session.
+A rule without a check is a note. "Live" = curl/browser confirms real content this session. Added 2026-10-23
+(owner: "add the all in one gate we need") after a fresh-brain audit caught a truncated zone table and an
+undisclosed denominator that the old form-only check missed.
 
 ## What the data cannot say (printed on every page)
 Your own premium; private (non-NFIP) prices; your address's exact zone (link FEMA's map); why prices

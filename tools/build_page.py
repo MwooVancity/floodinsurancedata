@@ -125,8 +125,12 @@ else:
 
 # ---- zone card (policy UNITS) ----
 zu = P["zone_units"]
-zone_body = "<ul class='kv'>" + "".join(
-    f"<li><b>Zone {html.escape(z)}</b><span>{num(v)} policy units</span></li>" for z, v in list(zu.items())[:8]) + "</ul>"
+_zshown = list(zu.items())[:8]
+_zrest = P["units"] - sum(v for _, v in _zshown)   # units in zones not shown (lower-ranked) + other/unclassified
+zone_body = ("<ul class='kv'>" + "".join(
+    f"<li><b>Zone {html.escape(z)}</b><span>{num(v)} policy units</span></li>" for z, v in _zshown)
+    + (f"<li><b>Other or unclassified zones</b><span>{num(_zrest)} policy units</span></li>" if _zrest > 0 else "")
+    + "</ul>")
 
 # suppress on VALID COST observations (cost_n), not raw cohort — a cohort full of null/refund costs
 # must not get a spread. agg carries spread_ok = cost_n >= 100.
