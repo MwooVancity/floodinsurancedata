@@ -299,6 +299,26 @@ if bz:
         '</script>',
         src(POL_ASOF, RETR))
 
+# ---- repetitive-loss properties (FEMA IA multiple-loss; a chronic repeat-flood signal, distinct from
+# the annual NFIP claims) ----
+ml = data.get("multiloss") or {}
+multiloss_card = ""
+if ml.get("total"):
+    _srl = ml.get("srl") or 0
+    _mldate = ml.get("retrieved", RETR)
+    multiloss_card = card("How often do the same homes flood here?",
+        f"FEMA has recorded {num(ml['total'])} properties in {CS} that flooded more than once and drew "
+        f"federal disaster aid for repeat flood losses"
+        + (f", including {num(_srl)} rated severe repetitive-loss" if _srl else "") + ".",
+        f"<ul class='kv'><li><b>Repeat-loss properties</b><span>{num(ml['total'])}</span></li>"
+        + (f"<li><b>Severe repetitive-loss</b><span>{num(_srl)}</span></li>" if _srl else "")
+        + "</ul><p class='note'>FEMA-designated repetitive-loss (RL) and severe repetitive-loss (SRL) "
+        "properties — individual homes with more than one flood loss over time, aggregated to the county and "
+        "distinct from the annual NFIP claim counts above. A high count means the same homes flood again and "
+        "again here. These drew FEMA Individual Assistance (for uninsured losses), so read it as a "
+        "chronic-flooding signal, not an insured-claims total.</p>",
+        src(_mldate, _mldate, "FEMA repetitive-loss flood-property records."))
+
 mani = agg.get("manifest", {})
 mani_ok = all(v.get("complete") for v in mani.values()) if mani else False
 mani_line = "; ".join(f"{k}: {v['unique_fetched']}/{v['reported_total']} fetched"
@@ -348,6 +368,7 @@ SOURCES = [
     ("FEMA OpenFEMA — Disaster Declarations Summaries", "https://www.fema.gov/openfema-data-page/disaster-declarations-summaries-v2"),
     ("FEMA OpenFEMA — Housing Assistance (Owners)", "https://www.fema.gov/openfema-data-page/housing-assistance-program-data-owners-v2"),
     ("U.S. Census Bureau — ACS 5-year B25001 (housing units)", "https://data.census.gov/table/ACSDT5Y2023.B25001"),
+    ("FEMA OpenFEMA — Repetitive-Loss Flood Properties", "https://www.fema.gov/openfema-data-page/individual-assistance-multiple-loss-flood-properties-v1"),
 ]
 sources_li = "".join(f'<li><a href="{u}">{html.escape(n)}</a></li>' for n, u in SOURCES)
 # JSON-LD: Dataset + Place + FAQPage + Breadcrumb
@@ -527,6 +548,8 @@ details.more>summary::-webkit-details-marker{{display:none}}details.more>summary
   f"<p class='note'>Orange bars are the three costliest years: " + ", ".join(f"{y} ({money(p)})" for y, p in top_paid) +
   ". Net building + contents payments by year of loss. Claims are matched by the claims dataset's county code, which may not exactly match a policy's property county.</p>" + claims_ratio_note,
   src(f"{C['year_min']}–{C['year_max']}", RETR))}
+
+{multiloss_card}
 
 {tilemap_card}
 

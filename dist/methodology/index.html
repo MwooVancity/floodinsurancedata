@@ -27,8 +27,9 @@ ul{padding-left:20px}li{margin:.25em 0}
 <li><b>Housing Assistance (Owners) v2</b> — OpenFEMA. FEMA aid paid to owners after disasters.</li>
 <li><b>National Risk Index (counties)</b> — FEMA ArcGIS (FEMA_NationalRiskIndex). Flood expected annual loss + percentile.</li>
 <li><b>U.S. Census ACS 5-year (B25001)</b> — U.S. Census Bureau API. Housing units, for the take-up ratio (policies per 100 homes).</li>
+<li><b>Repetitive-Loss Flood Properties</b> — OpenFEMA (Individual Assistance Multiple-Loss). FEMA-designated RL/SRL properties with more than one flood loss, per county.</li>
 <li>Official <b>Policy Information by State and Community</b> workbook — reconciliation benchmark (a cross-check, not a dataset).</li></ul>
-<p class="mut">Seven federal datasets in all; the full-risk premium is a field within Policies and the PIF workbook is a reconciliation benchmark, not separate fetches.</p></div>
+<p class="mut">Eight federal datasets in all; the full-risk premium is a field within Policies and the PIF workbook is a reconciliation benchmark, not separate fetches.</p></div>
 <div class="card"><h2>Definitions &amp; rules</h2><ul>
 <li><b>Policy units</b> = sum of <code>policyCount</code>, never a row count — condo-association records carry more than one unit.</li>
 <li><b>Cost cohort</b>: single-family primary-residence policies (occupancy 1/11, primary residence), annual cost = premium + fees.</li>
