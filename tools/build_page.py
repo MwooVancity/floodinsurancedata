@@ -327,6 +327,18 @@ siblings = [p for p in places if p.get("slug") != SLUG][:5]
 sib_html = ("<nav class='sib'><b>Compare nearby:</b> " +
             " · ".join(f'<a href="../{p["slug"]}/">{html.escape(p["short"])}</a>' for p in siblings) +
             ' · <a href="../../">all places</a></nav>') if siblings else '<nav class="sib"><a href="../../">All places</a></nav>'
+# Federal source catalog — single source of truth for the citation schema AND the visible sources block.
+ISO_DATE = (P.get("retrieved") or "2026-10-22")   # ISO date the federal data was last pulled
+SOURCES = [
+    ("FEMA OpenFEMA — NFIP Policies", "https://www.fema.gov/openfema-data-page/fima-nfip-redacted-policies-v2"),
+    ("FEMA OpenFEMA — NFIP Claims", "https://www.fema.gov/openfema-data-page/fima-nfip-redacted-claims-v2"),
+    ("FEMA — National Risk Index (flood)", "https://www.fema.gov/flood-maps/products-tools/national-risk-index"),
+    ("FEMA OpenFEMA — NFIP Community Status Book (CRS)", "https://www.fema.gov/openfema-data-page/nfip-community-status-book-v1"),
+    ("FEMA OpenFEMA — Disaster Declarations Summaries", "https://www.fema.gov/openfema-data-page/disaster-declarations-summaries-v2"),
+    ("FEMA OpenFEMA — Housing Assistance (Owners)", "https://www.fema.gov/openfema-data-page/housing-assistance-program-data-owners-v2"),
+    ("U.S. Census Bureau — ACS 5-year B25001 (housing units)", "https://data.census.gov/table/ACSDT5Y2023.B25001"),
+]
+sources_li = "".join(f'<li><a href="{u}">{html.escape(n)}</a></li>' for n, u in SOURCES)
 # JSON-LD: Dataset + Place + FAQPage + Breadcrumb
 _faq = [
     (f"How much is flood insurance in {CS}?",
@@ -342,6 +354,8 @@ jsonld = json.dumps([
     {"@context": "https://schema.org", "@type": "Dataset",
      "name": f"NFIP flood insurance data for {CL}", "description": META_DESC, "url": CANON,
      "creator": {"@type": "Organization", "name": "FEMA OpenFEMA"},
+     "dateModified": ISO_DATE, "datePublished": ISO_DATE,
+     "citation": [{"@type": "Dataset", "name": n, "url": u} for n, u in SOURCES],
      "isBasedOn": "https://www.fema.gov/about/openfema/data-sets", "license": "https://www.fema.gov/about/openfema/terms-conditions"},
     {"@context": "https://schema.org", "@type": "Place", "name": CL,
      "address": {"@type": "PostalAddress", "addressRegion": agg.get("nri", {}).get("state") if agg.get("nri") else None, "addressCountry": "US"}},
@@ -507,6 +521,10 @@ details.more>summary::-webkit-details-marker{{display:none}}details.more>summary
 <li>Why premiums are rising — we show the gap to full-risk, not the cause.</li>
 <li>A year-over-year premium trend — the in-force snapshot holds only current-term policies, so a like-for-like multi-year index isn't possible from this data. A per-effective-year median is shown only where several years of policies exist.</li>
 </ul></section>
+
+<section class="card"><h2>The federal datasets behind this page</h2>
+<p class="stand">Every figure here comes from a public U.S. federal dataset — no estimates, no private data. This page joins {len(SOURCES)} of them for {CS}, each linked to its official source. Data last pulled {RETR}.</p>
+<ul class="srclist">{sources_li}</ul></section>
 
 {quote_widget}
 

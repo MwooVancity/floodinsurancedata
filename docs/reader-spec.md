@@ -91,14 +91,32 @@ join is the mass-produced pattern Google and our pSEO rules forbid).
 - Exact flood risk at your address (that's the FEMA map; we link it, not reproduce it).
 - Any place below the cohort floor (count only, suppressed charts).
 
-## 7. Differentiation vs floodfigures.com (inspected 2026-10-22)
+## 7. Differentiation vs the real competition (floodfigures.com + floodcostzip.com, 2026-10-23)
 
-FF (Rowan & Maple LLC, same OpenFEMA source, as-of 2026-07-21) is NFIP-only: counts, a median + mean,
-raw claims since 1978, zone-definition prose. FF states "Percentiles: not reported. Full-risk premium:
-not reported." FF has 51 states, ZIP pages for FL/LA/TX only, 7,663 city pages, no county pages.
-Our additions a median can't give: the cost spread, the full-risk gap, claims-per-100, the National
-Risk Index, disaster history, homeowner payouts, and the CRS discount (the only panel that lowers the
-reader's actual bill) — plus the county layer and FEMA reconciliation.
+Two direct competitors exist, both built on the same OpenFEMA source. Our earlier claim that "nobody
+shows full-risk or percentiles" is NOT true — floodcostzip does. The honest moat is breadth, the county
+layer, CRS, and sourcing — not having a cost lookup.
+
+- **floodfigures.com** (Rowan & Maple LLC, as-of 2026-07-21): NFIP-only — counts, a median + mean, raw
+  claims since 1978, zone-definition prose. States "Percentiles: not reported. Full-risk premium: not
+  reported." 51 states, ZIP pages for FL/LA/TX only, 7,663 city pages, NO county pages.
+- **floodcostzip.com**: single-family median, **full-risk comparison**, historical premium comparison,
+  **future-cost projections**, claims stats, storm-surge exposure. ZIP-level. This site already answers
+  "what will it cost me," so full-risk and a ZIP lookup are NOT our differentiators.
+
+Where we are NOT ahead: raw ZIP cost lookup (both tie us); future-cost projection (floodcostzip has it,
+we don't — a modeled series would break our no-verdict/no-modeled-number rule unless clearly labelled).
+
+Our real, still-unique edge (the bet):
+1. **Breadth joined per place** — risk (NRI) + legal requirement + disaster history + FEMA aid + CRS +
+   take-up on ONE page. Both competitors are NFIP-cost-only. Nobody joins all nine datasets.
+2. **County layer** — FF skips counties entirely; our reconciliation to FEMA's official PIF count lives
+   at county.
+3. **CRS discount** — the only panel that lowers the reader's actual bill. Neither competitor shows it.
+4. **Sourcing / E-E-A-T** — exact federal source + as-of on every number, public reconciliation, a real
+   methodology page. The transparency a homeowner (and an AI engine citing us) can trust.
+This is a narrower moat than the cost-only framing implied. It holds only if every page is genuinely
+nine datasets deep and place-specific — a thin rollout of near-duplicate county pages forfeits all of it.
 
 ## 8. Biggest risk
 
