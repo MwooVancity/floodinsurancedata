@@ -1,4 +1,322 @@
 [
-  {"slug": "lee-county-fl", "state": "FL", "geoid": "12071", "county": "LEE", "countytitle": "Lee", "label": "Lee County, Florida", "short": "Lee County", "official": 132012},
-  {"slug": "kanawha-county-wv", "state": "WV", "geoid": "54039", "county": "KANAWHA", "countytitle": "Kanawha", "label": "Kanawha County, West Virginia", "short": "Kanawha County", "official": 1293}
+ {
+  "slug": "lee-county-fl",
+  "state": "FL",
+  "geoid": "12071",
+  "county": "LEE",
+  "countytitle": "Lee",
+  "label": "Lee County, Florida",
+  "short": "Lee County",
+  "official": 132012
+ },
+ {
+  "slug": "kanawha-county-wv",
+  "state": "WV",
+  "geoid": "54039",
+  "county": "KANAWHA",
+  "countytitle": "Kanawha",
+  "label": "Kanawha County, West Virginia",
+  "short": "Kanawha County",
+  "official": 1293
+ },
+ {
+  "slug": "miami-dade-county-fl",
+  "state": "FL",
+  "geoid": "12086",
+  "county": "MIAMI-DADE",
+  "countytitle": "Miami-Dade",
+  "label": "Miami-Dade County, Florida",
+  "short": "Miami-Dade County",
+  "official": 0
+ },
+ {
+  "slug": "broward-county-fl",
+  "state": "FL",
+  "geoid": "12011",
+  "county": "BROWARD",
+  "countytitle": "Broward",
+  "label": "Broward County, Florida",
+  "short": "Broward County",
+  "official": 0
+ },
+ {
+  "slug": "pinellas-county-fl",
+  "state": "FL",
+  "geoid": "12103",
+  "county": "PINELLAS",
+  "countytitle": "Pinellas",
+  "label": "Pinellas County, Florida",
+  "short": "Pinellas County",
+  "official": 0
+ },
+ {
+  "slug": "collier-county-fl",
+  "state": "FL",
+  "geoid": "12021",
+  "county": "COLLIER",
+  "countytitle": "Collier",
+  "label": "Collier County, Florida",
+  "short": "Collier County",
+  "official": 0
+ },
+ {
+  "slug": "monroe-county-fl",
+  "state": "FL",
+  "geoid": "12087",
+  "county": "MONROE",
+  "countytitle": "Monroe",
+  "label": "Monroe County, Florida",
+  "short": "Monroe County",
+  "official": 0
+ },
+ {
+  "slug": "duval-county-fl",
+  "state": "FL",
+  "geoid": "12031",
+  "county": "DUVAL",
+  "countytitle": "Duval",
+  "label": "Duval County, Florida",
+  "short": "Duval County",
+  "official": 0
+ },
+ {
+  "slug": "brevard-county-fl",
+  "state": "FL",
+  "geoid": "12009",
+  "county": "BREVARD",
+  "countytitle": "Brevard",
+  "label": "Brevard County, Florida",
+  "short": "Brevard County",
+  "official": 0
+ },
+ {
+  "slug": "sarasota-county-fl",
+  "state": "FL",
+  "geoid": "12115",
+  "county": "SARASOTA",
+  "countytitle": "Sarasota",
+  "label": "Sarasota County, Florida",
+  "short": "Sarasota County",
+  "official": 0
+ },
+ {
+  "slug": "harris-county-tx",
+  "state": "TX",
+  "geoid": "48201",
+  "county": "HARRIS",
+  "countytitle": "Harris",
+  "label": "Harris County, Texas",
+  "short": "Harris County",
+  "official": 0
+ },
+ {
+  "slug": "galveston-county-tx",
+  "state": "TX",
+  "geoid": "48167",
+  "county": "GALVESTON",
+  "countytitle": "Galveston",
+  "label": "Galveston County, Texas",
+  "short": "Galveston County",
+  "official": 0
+ },
+ {
+  "slug": "jefferson-county-tx",
+  "state": "TX",
+  "geoid": "48245",
+  "county": "JEFFERSON",
+  "countytitle": "Jefferson",
+  "label": "Jefferson County, Texas",
+  "short": "Jefferson County",
+  "official": 0
+ },
+ {
+  "slug": "nueces-county-tx",
+  "state": "TX",
+  "geoid": "48355",
+  "county": "NUECES",
+  "countytitle": "Nueces",
+  "label": "Nueces County, Texas",
+  "short": "Nueces County",
+  "official": 0
+ },
+ {
+  "slug": "orleans-parish-la",
+  "state": "LA",
+  "geoid": "22071",
+  "county": "ORLEANS",
+  "countytitle": "Orleans",
+  "label": "Orleans Parish, Louisiana",
+  "short": "Orleans Parish",
+  "official": 0
+ },
+ {
+  "slug": "jefferson-parish-la",
+  "state": "LA",
+  "geoid": "22051",
+  "county": "JEFFERSON",
+  "countytitle": "Jefferson",
+  "label": "Jefferson Parish, Louisiana",
+  "short": "Jefferson Parish",
+  "official": 0
+ },
+ {
+  "slug": "st-tammany-parish-la",
+  "state": "LA",
+  "geoid": "22103",
+  "county": "ST. TAMMANY",
+  "countytitle": "St. Tammany",
+  "label": "St. Tammany Parish, Louisiana",
+  "short": "St. Tammany Parish",
+  "official": 0
+ },
+ {
+  "slug": "terrebonne-parish-la",
+  "state": "LA",
+  "geoid": "22109",
+  "county": "TERREBONNE",
+  "countytitle": "Terrebonne",
+  "label": "Terrebonne Parish, Louisiana",
+  "short": "Terrebonne Parish",
+  "official": 0
+ },
+ {
+  "slug": "charleston-county-sc",
+  "state": "SC",
+  "geoid": "45019",
+  "county": "CHARLESTON",
+  "countytitle": "Charleston",
+  "label": "Charleston County, South Carolina",
+  "short": "Charleston County",
+  "official": 0
+ },
+ {
+  "slug": "horry-county-sc",
+  "state": "SC",
+  "geoid": "45051",
+  "county": "HORRY",
+  "countytitle": "Horry",
+  "label": "Horry County, South Carolina",
+  "short": "Horry County",
+  "official": 0
+ },
+ {
+  "slug": "new-hanover-county-nc",
+  "state": "NC",
+  "geoid": "37129",
+  "county": "NEW HANOVER",
+  "countytitle": "New Hanover",
+  "label": "New Hanover County, North Carolina",
+  "short": "New Hanover County",
+  "official": 0
+ },
+ {
+  "slug": "dare-county-nc",
+  "state": "NC",
+  "geoid": "37055",
+  "county": "DARE",
+  "countytitle": "Dare",
+  "label": "Dare County, North Carolina",
+  "short": "Dare County",
+  "official": 0
+ },
+ {
+  "slug": "ocean-county-nj",
+  "state": "NJ",
+  "geoid": "34029",
+  "county": "OCEAN",
+  "countytitle": "Ocean",
+  "label": "Ocean County, New Jersey",
+  "short": "Ocean County",
+  "official": 0
+ },
+ {
+  "slug": "monmouth-county-nj",
+  "state": "NJ",
+  "geoid": "34025",
+  "county": "MONMOUTH",
+  "countytitle": "Monmouth",
+  "label": "Monmouth County, New Jersey",
+  "short": "Monmouth County",
+  "official": 0
+ },
+ {
+  "slug": "atlantic-county-nj",
+  "state": "NJ",
+  "geoid": "34001",
+  "county": "ATLANTIC",
+  "countytitle": "Atlantic",
+  "label": "Atlantic County, New Jersey",
+  "short": "Atlantic County",
+  "official": 0
+ },
+ {
+  "slug": "nassau-county-ny",
+  "state": "NY",
+  "geoid": "36059",
+  "county": "NASSAU",
+  "countytitle": "Nassau",
+  "label": "Nassau County, New York",
+  "short": "Nassau County",
+  "official": 0
+ },
+ {
+  "slug": "suffolk-county-ny",
+  "state": "NY",
+  "geoid": "36103",
+  "county": "SUFFOLK",
+  "countytitle": "Suffolk",
+  "label": "Suffolk County, New York",
+  "short": "Suffolk County",
+  "official": 0
+ },
+ {
+  "slug": "chatham-county-ga",
+  "state": "GA",
+  "geoid": "13051",
+  "county": "CHATHAM",
+  "countytitle": "Chatham",
+  "label": "Chatham County, Georgia",
+  "short": "Chatham County",
+  "official": 0
+ },
+ {
+  "slug": "baldwin-county-al",
+  "state": "AL",
+  "geoid": "01003",
+  "county": "BALDWIN",
+  "countytitle": "Baldwin",
+  "label": "Baldwin County, Alabama",
+  "short": "Baldwin County",
+  "official": 0
+ },
+ {
+  "slug": "harrison-county-ms",
+  "state": "MS",
+  "geoid": "28047",
+  "county": "HARRISON",
+  "countytitle": "Harrison",
+  "label": "Harrison County, Mississippi",
+  "short": "Harrison County",
+  "official": 0
+ },
+ {
+  "slug": "orange-county-ca",
+  "state": "CA",
+  "geoid": "06059",
+  "county": "ORANGE",
+  "countytitle": "Orange",
+  "label": "Orange County, California",
+  "short": "Orange County",
+  "official": 0
+ },
+ {
+  "slug": "st-louis-county-mo",
+  "state": "MO",
+  "geoid": "29189",
+  "county": "ST. LOUIS",
+  "countytitle": "St. Louis",
+  "label": "St. Louis County, Missouri",
+  "short": "St. Louis County",
+  "official": 0
+ }
 ]
