@@ -7,6 +7,7 @@ PLACES = os.environ.get("FF_PLACES", "places.json")
 DIST = os.environ.get("FF_DIST", "dist")
 DATADIR = os.environ.get("FF_DATADIR", "data")
 BASE = os.environ.get("FF_BASEURL", "https://example.com").rstrip("/")
+RETR = os.environ.get("FF_RETR", "October 22, 2026")   # data retrieval date, for Privacy/Terms "last updated"
 places = json.load(open(PLACES)) if os.path.exists(PLACES) else []
 # fail-closed: include ONLY counties that passed this run (published.json). A county that rendered a
 # page but failed the gate/criteria is in places.json but not here, so it never reaches home/sitemap/CSV.
@@ -44,7 +45,8 @@ ul{{padding-left:20px}}li{{margin:.25em 0}}
 <header class="topbar"><div class="wrap"><a href="/">Flood Insurance Data</a></div></header><main class="wrap">"""
 FOOT = ('<footer class="mut" style="margin:28px 0;border-top:1px solid var(--line);padding-top:14px">This product uses FEMA\'s OpenFEMA API but is not '
         'endorsed by FEMA. Place names via GeoNames (CC BY 4.0). Aggregates only, never individual quotes.'
-        ' <a href="/about/">About</a> · <a href="/methodology/">Methodology</a> · <a href="/data/">Data</a></footer></main></body></html>')
+        ' <a href="/about/">About</a> · <a href="/methodology/">Methodology</a> · <a href="/data/">Data</a>'
+        ' · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a></footer></main></body></html>')
 
 # ---- home + client-side lookup ----
 rows = "".join(f'<tr data-k="{html.escape((p["short"]+" "+(p.get("state") or "")).lower())}">'
@@ -144,6 +146,58 @@ later, will be disclosed here.</p></div>
 {FOOT}"""
 wr(os.path.join(DIST, "about", "index.html"), about)
 
+# ---- privacy policy (required for AdSense; written to current state + ad-ready, no false claims) ----
+privacy = HEAD.format(title="Privacy Policy — Flood Insurance Data", desc="How Flood Insurance Data handles data, cookies, logs, and advertising.", canon=BASE + "/privacy/") + f"""
+<h1>Privacy Policy</h1>
+<p class="mut">Last updated {RETR}.</p>
+<div class="card"><h2>What we collect</h2>
+<p>Flood Insurance Data is a static reference site. We do not ask for, collect, or store personal
+information, and there are no accounts, sign-ups, or forms. Our host (Cloudflare) processes standard
+server request logs (such as IP address and user agent) to serve the site and protect it from abuse; see
+Cloudflare's privacy policy for details.</p></div>
+<div class="card"><h2>Cookies</h2>
+<p>This site sets no first-party tracking cookies of its own. If analytics or advertising are added in
+future (see below), the cookies and third-party vendors involved will be disclosed here before they are
+enabled.</p></div>
+<div class="card"><h2>Advertising</h2>
+<p>The site currently shows no ads. If advertising is added, it may be served by Google, including Google
+AdSense. Third-party vendors such as Google use cookies to serve ads based on a user's prior visits to this
+and other websites. Google's use of advertising cookies enables it and its partners to serve ads based on
+visits here and elsewhere. You may opt out of personalized advertising via
+<a href="https://www.google.com/settings/ads" rel="nofollow">Google Ads Settings</a>, and review other
+options at <a href="https://www.aboutads.info" rel="nofollow">aboutads.info</a>. This section will be
+updated to name every ad vendor at the time ads are enabled.</p></div>
+<div class="card"><h2>Third-party data &amp; links</h2>
+<p>All figures are compiled from public U.S. federal sources (FEMA OpenFEMA, the FEMA National Risk Index,
+and the U.S. Census Bureau). We link to official FEMA and Census pages; their privacy practices are their
+own. We are not affiliated with or endorsed by FEMA.</p></div>
+<div class="card"><h2>Children &amp; changes</h2>
+<p>The site is not directed to children under 13 and collects no information from them. We may update this
+policy; material changes will be reflected by the date above.</p></div>
+{FOOT}"""
+wr(os.path.join(DIST, "privacy", "index.html"), privacy)
+
+# ---- terms ----
+terms = HEAD.format(title="Terms of Use — Flood Insurance Data", desc="Terms for using Flood Insurance Data and reusing its figures.", canon=BASE + "/terms/") + f"""
+<h1>Terms of Use</h1>
+<p class="mut">Last updated {RETR}.</p>
+<div class="card"><h2>What this is — and isn't</h2>
+<p>Flood Insurance Data presents aggregate statistics compiled from public federal data for general
+information only. It is <b>not insurance advice, not a quote, and not a substitute for FEMA's official
+flood maps or a licensed agent.</b> Figures are place-level aggregates and never describe an individual
+property or policy. We are not affiliated with or endorsed by FEMA or any insurer.</p></div>
+<div class="card"><h2>Accuracy &amp; no warranty</h2>
+<p>We work to reflect the source data faithfully and show each figure's source and date, but the data is
+provided "as is" without warranty of any kind. Verify anything you rely on against the official source we
+link, and confirm your own situation with FEMA's Flood Map Service Center and a licensed insurance
+professional.</p></div>
+<div class="card"><h2>Reusing the data</h2>
+<p>The underlying figures come from public-domain U.S. government datasets and may be reused. If you cite
+this site, please credit "Flood Insurance Data" and note: "This product uses FEMA's OpenFEMA API but is not
+endorsed by FEMA."</p></div>
+{FOOT}"""
+wr(os.path.join(DIST, "terms", "index.html"), terms)
+
 # ---- data download (CSV from per-county agg) ----
 csv_path = os.path.join(DIST, "data", "counties.csv")
 os.makedirs(os.path.dirname(csv_path), exist_ok=True)
@@ -175,7 +229,9 @@ def county_lastmod(slug):
 county_urls = [(BASE + f"/flood-insurance/{p['slug']}/", county_lastmod(p["slug"])) for p in places]
 # county pages carry lastmod = their data's effective date (a real data change); home/methodology/data
 # have no trustworthy per-content modification date, so they omit lastmod rather than inherit a false one.
-urls = [(BASE + "/", None), (BASE + "/flood-insurance/", None), (BASE + "/about/", None), (BASE + "/methodology/", None), (BASE + "/data/", None)] + county_urls
+urls = [(BASE + "/", None), (BASE + "/flood-insurance/", None), (BASE + "/about/", None),
+        (BASE + "/methodology/", None), (BASE + "/data/", None),
+        (BASE + "/privacy/", None), (BASE + "/terms/", None)] + county_urls
 sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + \
      "".join(f"  <url><loc>{u}</loc>" + (f"<lastmod>{lm}</lastmod>" if lm else "") + "</url>\n" for u, lm in urls) + \
      "</urlset>\n"

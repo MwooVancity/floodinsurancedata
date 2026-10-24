@@ -24,6 +24,21 @@ def agg_complete(path):
     try: return json.load(open(path)).get("complete") is True
     except Exception: return False
 
+# Pre-populate places.json from every complete agg.json BEFORE rendering, so each page's sibling links see
+# the FULL county set — not just the ones built earlier in this run (which left the first/biggest page in
+# each state with 0 links). build_page reads this, keeps it whole (removes+re-adds only itself).
+_pre = []
+for _c in counties:
+    _ap = os.path.join(DATA, _c["slug"], "agg.json")
+    if agg_complete(_ap):
+        _a = json.load(open(_ap)); _P = _a["policies"]
+        _pre.append({"slug": _c["slug"], "label": _c["label"], "short": _c["short"], "geoid": _c["geoid"],
+                     "units": _P.get("units"), "median": _P.get("p50"),
+                     "state": (_a.get("nri") or {}).get("state")})
+_pre.sort(key=lambda p: -(p.get("units") or 0))
+if _pre:
+    json.dump(_pre, open(PLACES, "w"), indent=1)
+
 def run(script, env, args=()):
     e = dict(os.environ, **env)
     r = subprocess.run([sys.executable, "-I", os.path.join(TOOLS, script), *args],

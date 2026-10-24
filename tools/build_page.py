@@ -209,14 +209,14 @@ def _pct(v):
     return None if n == 0 else f"{n}%"
 def _cls(v): return html.escape(str(v)) if (v not in ABSENT and str(v).strip() not in ABSENT) else "—"
 def _disc(v): return _pct(v) or "No discount"
-crs_rows = "".join(f"<tr><td>{html.escape(c['communityName'].title())}</td><td>{_cls(c.get('classRating'))}</td>"
+crs_rows = "".join(f"<tr><td>{html.escape(c['communityName'].replace('*','').strip().title())}</td><td>{_cls(c.get('classRating'))}</td>"
                    f"<td>{_disc(c.get('sfhaDiscount'))}</td><td>{_disc(c.get('nonSfhaDiscount'))}</td></tr>" for c in crs)
 _disc_communities = [c for c in crs if _pct(c.get("sfhaDiscount"))]
 if _disc_communities:
     top = max(_disc_communities, key=lambda c: int(_pct(c["sfhaDiscount"]).rstrip("%")))
     crs_lead = (f"{len(_disc_communities)} of {CS}'s {len(crs)} NFIP communities carry a Community Rating System "
                 f"discount that cuts every eligible policy's premium — up to {_pct(top['sfhaDiscount'])} inside the "
-                f"high-risk zone ({html.escape(top['communityName'].title())}).")
+                f"high-risk zone ({html.escape(top['communityName'].replace('*','').strip().title())}).")
 else:
     crs_lead = (f"None of {CS}'s {len(crs)} NFIP communities currently carries a Community Rating System discount; "
                 f"they participate in the NFIP without the extra CRS premium reduction.")
@@ -325,10 +325,19 @@ json.dump(places, open(PLACES, "w"), indent=1)
 # which just funnelled every page to the same mega-counties and orphaned the tail). No same-state page
 # built yet -> link to the full directory, not a false "nearby".
 _state = agg.get("nri", {}).get("state") if agg.get("nri") else None
-siblings = [p for p in places if p.get("slug") != SLUG and _state and p.get("state") == _state][:6]
-sib_html = (f"<nav class='sib'><b>Other {html.escape(_state)} counties:</b> " +
-            " · ".join(f'<a href="../{p["slug"]}/">{html.escape(p["short"])}</a>' for p in siblings) +
-            ' · <a href="../../">all places</a></nav>') if siblings else '<nav class="sib"><a href="../../">Browse all places by state →</a></nav>'
+_others = [p for p in places if p.get("slug") != SLUG]
+_same = [p for p in _others if _state and p.get("state") == _state]
+# guarantee >=3 links: same-state first; if fewer than 3, fill with the nearest-by-size other counties
+# (places.json is sorted by units desc). Never leave a page with 0 lateral links.
+_fill = [p for p in _others if p not in _same]
+siblings = _same[:6] if len(_same) >= 3 else (_same + _fill)[:5]
+if siblings:
+    _lbl = f"Other {html.escape(_state)} counties" if len(_same) >= 3 else "Compare other counties"
+    sib_html = (f"<nav class='sib'><b>{_lbl}:</b> " +
+                " · ".join(f'<a href="../{p["slug"]}/">{html.escape(p["short"])}</a>' for p in siblings) +
+                ' · <a href="../../">all places</a></nav>')
+else:
+    sib_html = '<nav class="sib"><a href="../../">Browse all places by state →</a></nav>'
 # Federal source catalog — single source of truth for the citation schema AND the visible sources block.
 ISO_DATE = (P.get("retrieved") or "2026-10-22")   # ISO date the federal data was last pulled
 SOURCES = [
@@ -512,7 +521,7 @@ details.more>summary::-webkit-details-marker{{display:none}}details.more>summary
 {card("Can I pay less than the sticker price?", crs_lead,
   f"<table><thead><tr><th>Community</th><th>CRS class</th><th>High-risk discount</th><th>Other-area discount</th></tr></thead><tbody>{crs_rows}</tbody></table>"
   "<p class='note'>The Community Rating System cuts NFIP premiums for every eligible policy in a community that does extra flood work. The discount shown is the community's rate; what share of its policies currently receive it is not in this data. Confirm with your agent.</p>",
-  src("Community Status Book", RETR))}
+  src(RETR, RETR))}
 
 {card("What do floods actually pay out here?", claims_lead, claims_svg() +
   f"<p class='note'>Orange bars are the three costliest years: " + ", ".join(f"{y} ({money(p)})" for y, p in top_paid) +
@@ -558,7 +567,7 @@ details.more>summary::-webkit-details-marker{{display:none}}details.more>summary
 {sib_html}
 
 <footer>{ATTR} Place names via GeoNames (CC BY 4.0). Figures are aggregates, never individual quotes or records.
-<a href="../../about/">About</a> · <a href="../../methodology/">Methodology</a> · <a href="../../data/">Download the data</a></footer>
+<a href="../../about/">About</a> · <a href="../../methodology/">Methodology</a> · <a href="../../data/">Download the data</a> · <a href="../../privacy/">Privacy</a> · <a href="../../terms/">Terms</a></footer>
 </main></body></html>"""
 
 open(OUT_HTML, "w", encoding="utf-8").write(HTML)
