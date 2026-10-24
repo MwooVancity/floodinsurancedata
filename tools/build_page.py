@@ -247,6 +247,60 @@ else:
         "Not shown — Census housing-unit data was not available for this county.",
         "<p class='gap'>Gap: U.S. Census ACS 5-year B25001 housing units, to divide into NFIP policy units.</p>")
 
+# ---- state flood-risk tile-map (every county in the state, this one highlighted) ----
+import math
+GEOID_SELF = os.environ.get("FF_GEOID", "12071")
+state_risk = agg.get("state_risk") or []
+RISK_COL = {4: "#8a1f11", 3: "#c2591f", 2: "#d9a441", 1: "#6aa0b8", 0: "#bcd4df", -1: "#dfe4e8"}
+RISK_ORD = {"Very High": 4, "Relatively High": 3, "Relatively Moderate": 2, "Relatively Low": 1, "Very Low": 0}
+def _ord(r): return RISK_ORD.get(r, -1)
+tilemap_card = ""
+if len(state_risk) >= 4:
+    n = len(state_risk); cols = math.ceil(math.sqrt(n * 1.6)); rows_ = math.ceil(n / cols)
+    cell, gap = 26, 3; W = cols * (cell + gap) + gap; H = rows_ * (cell + gap) + gap
+    tiles = []
+    for i, c in enumerate(state_risk):
+        x = gap + (i % cols) * (cell + gap); y = gap + (i // cols) * (cell + gap)
+        col = RISK_COL[_ord(c.get("rating"))]
+        here = (c.get("fips") == GEOID_SELF)
+        stroke = ' stroke="#132029" stroke-width="2.5"' if here else ' stroke="#fff" stroke-width="1"'
+        tiles.append(f'<rect x="{x}" y="{y}" width="{cell}" height="{cell}" rx="4" fill="{col}"{stroke}>'
+                     f'<title>{html.escape(c.get("county") or "")}: {html.escape(str(c.get("rating") or "no rating"))}'
+                     f'{" (this county)" if here else ""}</title></rect>')
+    legend = ('<div class="note" style="margin-top:8px">Flood-risk rating (FEMA National Risk Index): '
+              + " ".join(f'<span style="display:inline-block;width:11px;height:11px;border-radius:2px;'
+                         f'background:{RISK_COL[o]};vertical-align:middle"></span> {lab}'
+                         for lab, o in [("Very Low",0),("Low",1),("Moderate",2),("High",3),("Very High",4)])
+              + '. Your county is outlined.</div>')
+    tilemap_card = card(f"How {CS} compares across the state",
+        f"Every county in the state shaded by its FEMA flood-risk rating — {CS} is outlined, so you can see whether it runs hotter or cooler than its neighbours.",
+        f'<svg viewBox="0 0 {W} {H}" width="100%" style="max-width:{W}px" role="img" aria-label="State counties by flood risk">{"".join(tiles)}</svg>{legend}',
+        src("NRI 2023 release", RETR))
+
+# ---- ZIP lookup inside the county (your-place flow) ----
+bz = [z for z in (agg["policies"].get("by_zip") or []) if z.get("units")]
+zip_card = ""
+if bz:
+    import json as _j
+    data_js = _j.dumps({z["zip"]: {"u": z["units"], "m": z["median"], "n": z["cost_n"]} for z in bz})
+    toprows = "".join(
+        f"<tr><td>{html.escape(z['zip'])}</td><td>{money(z['median']) if z.get('median') else '—'}</td>"
+        f"<td>{num(z['units'])}</td></tr>" for z in bz[:8])
+    zip_card = card("Find your ZIP in this county",
+        f"Type your ZIP to see its own NFIP policy count and median cost within {CS}. Biggest ZIPs are listed below.",
+        f'<input id="zq" inputmode="numeric" maxlength="5" placeholder="e.g. {bz[0]["zip"]}" aria-label="Your ZIP code" '
+        f'style="font-size:18px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;width:160px">'
+        f'<p id="zout" class="note" style="margin-top:10px">Enter a 5-digit ZIP above.</p>'
+        f'<table style="margin-top:12px"><thead><tr><th>ZIP</th><th>Median annual cost</th><th>Policy units</th></tr></thead>'
+        f'<tbody>{toprows}</tbody></table>'
+        '<p class="note">Median shown only for ZIPs with 25+ priced single-family policies; smaller ZIPs show count only.</p>'
+        f'<script>var ZD={data_js};var zi=document.getElementById("zq"),zo=document.getElementById("zout");'
+        'zi.addEventListener("input",function(){var z=zi.value.trim();var d=ZD[z];'
+        'if(!d){zo.textContent=z.length>=5?"No NFIP data for ZIP "+z+" in this county.":"Enter a 5-digit ZIP above.";return;}'
+        'zo.innerHTML="<b>"+z+"</b>: "+d.u.toLocaleString()+" policy units"+(d.m?("; median $"+d.m.toLocaleString()+" / yr ("+d.n.toLocaleString()+" priced policies)"):" (too few priced policies for a median).");});'
+        '</script>',
+        src(POL_ASOF, RETR))
+
 mani = agg.get("manifest", {})
 mani_ok = all(v.get("complete") for v in mani.values()) if mani else False
 mani_line = "; ".join(f"{k}: {v['unique_fetched']}/{v['reported_total']} fetched"
@@ -373,6 +427,8 @@ nav.sib{{font-size:14px;color:var(--mut);margin:16px 0;background:var(--surface)
 nav.sib a{{color:var(--brand);font-weight:600}}
 footer{{color:var(--faint);font-size:12.5px;margin:28px 0;border-top:1px solid var(--line);padding-top:14px}}
 footer a{{color:var(--mut)}}
+details.more{{margin:16px 0}}details.more>summary{{cursor:pointer;font-weight:700;color:var(--brand);padding:12px 0;list-style:none}}
+details.more>summary::-webkit-details-marker{{display:none}}details.more>summary:before{{content:"▸ "}}details.more[open]>summary:before{{content:"▾ "}}
 @media(max-width:620px){{.stats{{grid-template-columns:repeat(2,1fr)}}.two,ul.kv{{grid-template-columns:1fr}}.hero h1{{font-size:25px}}}}
 </style></head><body>
 <header class="topbar"><div class="wrap"><a class="brand" href="../../">Flood Insurance Data</a><span class="crumb">Flood insurance › {CS}</span></div></header>
@@ -394,6 +450,8 @@ footer a{{color:var(--mut)}}
 
 {risk}
 
+{tilemap_card}
+
 {card("Am I required to carry it?",
   f"About {P['sfha_share_units']}% of the NFIP policy units in this dataset for {CS} are in mapped high-risk (A/V) zones — not {P['sfha_share_units']}% of all buildings. In a Special Flood Hazard Area a federally backed mortgage legally requires flood insurance.",
   f"<div class='two'><div>{zone_body}</div><div><p class='note'>Zone mix by policy units (summed policyCount). Federal rule: a lender must require flood insurance on a building in a Special Flood Hazard Area with a federally backed loan (42 U.S.C. §4012a). This is the mix of existing policies, not of all buildings, and does not establish any one property's obligation.</p></div></div>",
@@ -404,6 +462,8 @@ footer a{{color:var(--mut)}}
 {card("How much does it cost here?", cost_lead, cost_body, src(POL_ASOF, RETR))}
 
 {zone_cost_card}
+
+{zip_card}
 
 {trend_card}
 
@@ -422,20 +482,22 @@ footer a{{color:var(--mut)}}
   f"<ul>{recent_li}</ul><p class='note'>Distinct storms by calendar year (one storm's emergency and major-disaster declarations are counted once), not individual declaration records.</p>",
   src("declarations through 2026", RETR))}
 
-{card("Did the government pay homeowners after floods?",
-  f"FEMA approved {money(h_ihp)} in Individual &amp; Households housing help to {CS} homeowners across {h_disasters} disasters, on {num(h_regs)} valid registrations.",
-  "<p class='note'>FEMA Individual Assistance is disaster aid, usually capped and partial — separate from NFIP insurance and not a substitute for a policy.</p>",
-  src("owner registrations by disaster", RETR))}
-
 {card("Can I pay less than the sticker price?", crs_lead,
   f"<table><thead><tr><th>Community</th><th>CRS class</th><th>High-risk discount</th><th>Other-area discount</th></tr></thead><tbody>{crs_rows}</tbody></table>"
   "<p class='note'>The Community Rating System cuts NFIP premiums for every eligible policy in a community that does extra flood work. The discount shown is the community's rate; what share of its policies currently receive it is not in this data. Confirm with your agent.</p>",
   src("Community Status Book", RETR))}
 
+<details class="more"><summary>More data: FEMA disaster aid &amp; reconciliation</summary>
+{card("Did the government pay homeowners after floods?",
+  f"FEMA approved {money(h_ihp)} in Individual &amp; Households housing help to {CS} homeowners across {h_disasters} disasters, on {num(h_regs)} valid registrations.",
+  "<p class='note'>FEMA Individual Assistance is disaster aid, usually capped and partial — separate from NFIP insurance and not a substitute for a policy.</p>",
+  src("owner registrations by disaster", RETR))}
+
 {card("Reconciliation &amp; data completeness", "Our counts are checked against FEMA's official figure and the API's own totals.",
   f"<p class='note'>In-force count: {num(P['units'])} policy units (from {num(P['rows'])} API records; condo-association records carry more than one unit). " +
   (f"FEMA's official count for 2026-07-31 was {num(OFFICIAL)} — a {round(abs(P['units']-OFFICIAL)/OFFICIAL*100,1)}% difference. " if OFFICIAL else "FEMA official reconciliation count pending for this county. ") +
   f"Count reconciliation (not a snapshot proof): {mani_line}.</p>")}
+</details>
 
 <section class="card"><h2>What this data cannot tell you</h2>
 <ul class="note">

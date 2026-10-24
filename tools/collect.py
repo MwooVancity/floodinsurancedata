@@ -122,6 +122,24 @@ try:
 except Exception as e:
     agg["nri"] = None
     print("NRI err -> gap line", repr(e)[:80], flush=True)
+# STATE county-risk for the tile-map: every county in the state + its worst flood rating (NRI).
+try:
+    bb = ("https://services.arcgis.com/XG15cJAlne2vxtgt/arcgis/rest/services/"
+          "National_Risk_Index_Counties/FeatureServer/0/query")
+    rr = get(bb + "?" + urllib.parse.urlencode(
+        {"where": f"STATEFIPS='{GEO[:2]}'", "outFields": "STCOFIPS,COUNTY,CFLD_RISKR,IFLD_RISKR",
+         "f": "json", "returnGeometry": "false", "resultRecordCount": 400}), timeout=90, tries=3)
+    sr = []
+    for f in rr.get("features", []):
+        a = f["attributes"]
+        sr.append({"fips": a.get("STCOFIPS"), "county": a.get("COUNTY"),
+                   "rating": ffcalc.worst_flood_rating(a.get("CFLD_RISKR"), a.get("IFLD_RISKR"))})
+    agg["state_risk"] = sorted(sr, key=lambda d: (d["county"] or ""))
+    print("state_risk counties:", len(agg["state_risk"]), flush=True)
+except Exception as e:
+    agg["state_risk"] = []
+    print("state_risk err:", repr(e)[:80], flush=True)
+
 agg["manifest"] = MANIFEST
 # every required dataset collected and reconciled -> mark the county complete. Written ONCE, atomically
 # (temp + replace) so a crash can never leave a half-written file that looks done.

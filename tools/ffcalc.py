@@ -48,6 +48,19 @@ def aggregate_policies(rows, asof=None):
             recent_median, recent_n = pctl(rc, 50), len(rc)
     cov_b = sum(r.get("totalBuildingInsuranceCoverage") or 0 for r in rows)
     cov_c = sum(r.get("totalContentsInsuranceCoverage") or 0 for r in rows)
+    # per-ZIP: units (all policies) + cohort median cost where enough valid observations (>=25)
+    zu_zip = defaultdict(int); zc_zip = defaultdict(list)
+    for r in rows:
+        z = (str(r.get("reportedZipCode") or "")).strip()
+        if z: zu_zip[z] += int(r.get("policyCount") or 0)
+    for r in coh:
+        if _valid_cost(r):
+            z = (str(r.get("reportedZipCode") or "")).strip()
+            if z: zc_zip[z].append(r["policyCost"])
+    by_zip = sorted(
+        ({"zip": z, "units": zu_zip[z], "cost_n": len(zc_zip[z]),
+          "median": pctl(zc_zip[z], 50) if len(zc_zip[z]) >= 25 else None} for z in zu_zip),
+        key=lambda d: -d["units"])[:25]
     both = [r for r in coh if isinstance(r.get("policyCost"), (int, float)) and r["policyCost"] > 0
             and isinstance(r.get("fullRiskPremium"), (int, float)) and r["fullRiskPremium"] > 0]
     frp = [r["fullRiskPremium"] for r in both]
@@ -69,7 +82,19 @@ def aggregate_policies(rows, asof=None):
         "cost_by_zone": cost_by_zone, "cost_by_year": cost_by_year,
         "recent_median": recent_median, "recent_n": recent_n,
         "coverage_building": round(cov_b), "coverage_contents": round(cov_c),
+        "by_zip": by_zip,
     }
+
+# National Risk Index flood rating scale (worst of coastal/inland), for the state tile-map colour/order.
+RISK_ORDER = {"Very Low": 0, "Relatively Low": 1, "Relatively Moderate": 2,
+              "Relatively High": 3, "Very High": 4, "No Rating": -1, "Not Applicable": -1,
+              "Insufficient Data": -1, None: -1}
+def worst_flood_rating(coastal, inland):
+    best = -1; label = None
+    for r in (coastal, inland):
+        o = RISK_ORDER.get(r, -1)
+        if o > best: best, label = o, r
+    return label
 
 def aggregate_claims(rows, units):
     byyear = defaultdict(lambda: [0, 0.0])
