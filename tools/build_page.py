@@ -391,6 +391,31 @@ el.addEventListener('input',function(){{
 }});
 </script></section>"""
 
+# ---- OG social/citation card (PIL): branded 1200x630 PNG so shares + AI cards aren't blank ----
+def write_og(dirpath):
+    try:
+        from PIL import Image, ImageDraw, ImageFont
+    except Exception:
+        return None
+    def font(sz, bold=True):
+        for p in (("C:/Windows/Fonts/arialbd.ttf" if bold else "C:/Windows/Fonts/arial.ttf"),
+                  "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"):
+            try: return ImageFont.truetype(p, sz)
+            except Exception: pass
+        return ImageFont.load_default()
+    img = Image.new("RGB", (1200, 630), (14, 74, 97)); d = ImageDraw.Draw(img)
+    d.text((70, 66), "FLOOD INSURANCE DATA", font=font(30), fill=(188, 212, 223))
+    d.text((70, 140), CL, font=font(60), fill=(255, 255, 255))
+    d.text((70, 250), f"Median NFIP cost  {money(P['p50'])}/yr", font=font(50), fill=(255, 255, 255))
+    if P.get("share_below") is not None:
+        d.text((70, 330), f"{P['share_below']}% pay below FEMA's full-risk price", font=font(34), fill=(194, 89, 31))
+    d.text((70, 520), "Public federal data · sourced & dated · not a quote", font=font(26, False), fill=(159, 192, 210))
+    try: img.save(os.path.join(dirpath, "og.png")); return "og.png"
+    except Exception: return None
+OG = write_og(os.path.dirname(os.path.abspath(OUT_HTML)))
+_og_meta = (f'<meta property="og:image" content="{CANON}og.png">'
+            '<meta name="twitter:card" content="summary_large_image">') if OG else '<meta name="twitter:card" content="summary">'
+
 HTML = f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Flood insurance in {CL} — the data</title>
@@ -398,7 +423,7 @@ HTML = f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <link rel="canonical" href="{CANON}">
 <meta property="og:type" content="website"><meta property="og:title" content="Flood insurance in {html.escape(CL)}">
 <meta property="og:description" content="{html.escape(META_DESC)}"><meta property="og:url" content="{CANON}">
-<meta name="twitter:card" content="summary">
+{_og_meta}
 <script type="application/ld+json">{jsonld}</script>
 <style>
 :root{{--bg:#eef2f5;--surface:#fff;--ink:#132029;--mut:#5c6b78;--faint:#8795a0;--line:#e3e9ee;

@@ -1,0 +1,42 @@
+name: deploy
+# Auto-deploy the committed dist/ to Cloudflare on every push to master (backup + rollback via git),
+# and run the correctness gate on pull requests. No FEMA re-pull in CI — it deploys the built output,
+# so a flaky API can never block a deploy. (Unverified until the first Actions run.)
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  gate:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run the correctness gate on every built county page
+        run: |
+          set -e
+          for d in data/*/; do
+            slug=$(basename "$d")
+            page="dist/flood-insurance/$slug/index.html"
+            [ -f "$d/agg.json" ] && [ -f "$page" ] || continue
+            python -I tools/gate.py "$d/agg.json" "$page"
+          done
+
+  deploy:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Deploy committed dist/ to Cloudflare
+        run: npx --yes wrangler@4 deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

@@ -1,8 +1,17 @@
 """Bulk Lee County FL (12071) collector: NFIP policies cohort + claims by year + final NRI try.
 Computes compact aggregates -> agg.json. Saves progress; small pages, generous retries."""
-import json, os, sys, time, urllib.parse, urllib.request
+import json, os, sys, time, urllib.parse, urllib.request, hashlib
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))  # -I drops script dir; restore for ffcalc
 import ffcalc
+
+def check_fields(rows, required, label):
+    """FEMA schema-drift alarm: if a field we compute from has vanished/renamed, FAIL LOUD before we
+    produce a wrong number from a missing key. Checked against a real fetched row, not a guess."""
+    if rows:
+        missing = [k for k in required if k not in rows[0]]
+        if missing:
+            raise RuntimeError(f"SCHEMA DRIFT [{label}]: expected fields absent from the API response "
+                               f"{missing} — FEMA changed the schema; aborting before computing wrong numbers.")
 
 POL = "https://www.fema.gov/api/open/v3/NfipPolicies"
 CLM = "https://www.fema.gov/api/open/v3/NfipClaims"
@@ -60,6 +69,10 @@ def page_all(base, filt, select, label):
     MANIFEST[label] = {"reported_total": total, "recheck_total": total2, "unique_fetched": len(seen),
                        "missing": total - len(seen), "complete": len(seen) == total,
                        "stable": total == total2,
+                       # reproducibility fingerprint: sha256 of the exact id-set the aggregates were computed
+                       # from. Re-running and getting the same hash proves the same records; a changed hash
+                       # explains any number that moved. (Raw rows aren't stored; this ties agg to its source.)
+                       "sha256": hashlib.sha256(",".join(sorted(map(str, seen))).encode()).hexdigest(),
                        "provisional": not (len(seen) == total and total == total2)}
     print(f"{label} fetched {len(seen)}/{total} recheck {total2} "
           f"provisional={MANIFEST[label]['provisional']}", flush=True)
@@ -77,6 +90,8 @@ pol = page_all(POL,
     "id,policyCost,fullRiskPremium,ratedFloodZone,occupancyType,primaryResidenceIndicator,policyCount,"
     "reportedZipCode,policyEffectiveDate,totalBuildingInsuranceCoverage,totalContentsInsuranceCoverage",
     "policies")
+check_fields(pol, ["policyCost", "fullRiskPremium", "ratedFloodZone", "occupancyType",
+                   "primaryResidenceIndicator", "policyCount", "reportedZipCode", "policyEffectiveDate"], "policies")
 
 units = sum(int(r.get("policyCount") or 0) for r in pol)
 agg["policies"] = dict(ffcalc.aggregate_policies(pol, asof=POLICY_ASOF),
@@ -89,6 +104,7 @@ print("policies agg done", round(time.time()-t0), "s", flush=True)
 # CLAIMS ------------------------------------------------------------------------
 clm = page_all(CLM, f"state eq '{ST}' and countyCode eq '{GEO}'",
     "id,yearOfLoss,netBuildingPaymentAmount,netContentsPaymentAmount,policyCount", "claims")
+check_fields(clm, ["yearOfLoss", "netBuildingPaymentAmount", "netContentsPaymentAmount", "policyCount"], "claims")
 agg["claims"] = dict(ffcalc.aggregate_claims(clm, units),
     # cumulative historical count over point-in-time policy units; NOT an annual rate or flood probability.
     geo_note="claims filtered by claims-dataset countyCode, which may not match the policy property county",
