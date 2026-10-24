@@ -1,5 +1,32 @@
 [
  {
+  "slug": "miami-dade-county-fl",
+  "label": "Miami-Dade County, Florida",
+  "short": "Miami-Dade County",
+  "geoid": "12086",
+  "units": 366669,
+  "median": 891,
+  "state": "FL"
+ },
+ {
+  "slug": "broward-county-fl",
+  "label": "Broward County, Florida",
+  "short": "Broward County",
+  "geoid": "12011",
+  "units": 234789,
+  "median": 831,
+  "state": "FL"
+ },
+ {
+  "slug": "harris-county-tx",
+  "label": "Harris County, Texas",
+  "short": "Harris County",
+  "geoid": "48201",
+  "units": 231234,
+  "median": 1084,
+  "state": "TX"
+ },
+ {
   "slug": "lee-county-fl",
   "label": "Lee County, Florida",
   "short": "Lee County",
@@ -7,6 +34,249 @@
   "units": 134473,
   "median": 1658,
   "state": "FL"
+ },
+ {
+  "slug": "pinellas-county-fl",
+  "label": "Pinellas County, Florida",
+  "short": "Pinellas County",
+  "geoid": "12103",
+  "units": 132836,
+  "median": 1442,
+  "state": "FL"
+ },
+ {
+  "slug": "collier-county-fl",
+  "label": "Collier County, Florida",
+  "short": "Collier County",
+  "geoid": "12021",
+  "units": 100302,
+  "median": 1265,
+  "state": "FL"
+ },
+ {
+  "slug": "jefferson-parish-la",
+  "label": "Jefferson Parish, Louisiana",
+  "short": "Jefferson Parish",
+  "geoid": "22051",
+  "units": 87527,
+  "median": 1172,
+  "state": "LA"
+ },
+ {
+  "slug": "orleans-parish-la",
+  "label": "Orleans Parish, Louisiana",
+  "short": "Orleans Parish",
+  "geoid": "22071",
+  "units": 67988,
+  "median": 1093,
+  "state": "LA"
+ },
+ {
+  "slug": "sarasota-county-fl",
+  "label": "Sarasota County, Florida",
+  "short": "Sarasota County",
+  "geoid": "12115",
+  "units": 61446,
+  "median": 1084,
+  "state": "FL"
+ },
+ {
+  "slug": "galveston-county-tx",
+  "label": "Galveston County, Texas",
+  "short": "Galveston County",
+  "geoid": "48167",
+  "units": 60942,
+  "median": 1101,
+  "state": "TX"
+ },
+ {
+  "slug": "charleston-county-sc",
+  "label": "Charleston County, South Carolina",
+  "short": "Charleston County",
+  "geoid": "45019",
+  "units": 60873,
+  "median": 978,
+  "state": "SC"
+ },
+ {
+  "slug": "horry-county-sc",
+  "label": "Horry County, South Carolina",
+  "short": "Horry County",
+  "geoid": "45051",
+  "units": 53412,
+  "median": 583,
+  "state": "SC"
+ },
+ {
+  "slug": "brevard-county-fl",
+  "label": "Brevard County, Florida",
+  "short": "Brevard County",
+  "geoid": "12009",
+  "units": 43440,
+  "median": 865,
+  "state": "FL"
+ },
+ {
+  "slug": "st-tammany-parish-la",
+  "label": "St. Tammany Parish, Louisiana",
+  "short": "St. Tammany Parish",
+  "geoid": "22103",
+  "units": 41503,
+  "median": 1212,
+  "state": "LA"
+ },
+ {
+  "slug": "nassau-county-ny",
+  "label": "Nassau County, New York",
+  "short": "Nassau County",
+  "geoid": "36059",
+  "units": 41308,
+  "median": 1470,
+  "state": "NY"
+ },
+ {
+  "slug": "ocean-county-nj",
+  "label": "Ocean County, New Jersey",
+  "short": "Ocean County",
+  "geoid": "34029",
+  "units": 41040,
+  "median": 1146,
+  "state": "NJ"
+ },
+ {
+  "slug": "monroe-county-fl",
+  "label": "Monroe County, Florida",
+  "short": "Monroe County",
+  "geoid": "12087",
+  "units": 31747,
+  "median": 1915,
+  "state": "FL"
+ },
+ {
+  "slug": "suffolk-county-ny",
+  "label": "Suffolk County, New York",
+  "short": "Suffolk County",
+  "geoid": "36103",
+  "units": 29237,
+  "median": 1232,
+  "state": "NY"
+ },
+ {
+  "slug": "duval-county-fl",
+  "label": "Duval County, Florida",
+  "short": "Duval County",
+  "geoid": "12031",
+  "units": 28217,
+  "median": 1034,
+  "state": "FL"
+ },
+ {
+  "slug": "nueces-county-tx",
+  "label": "Nueces County, Texas",
+  "short": "Nueces County",
+  "geoid": "48355",
+  "units": 26908,
+  "median": 910,
+  "state": "TX"
+ },
+ {
+  "slug": "baldwin-county-al",
+  "label": "Baldwin County, Alabama",
+  "short": "Baldwin County",
+  "geoid": "01003",
+  "units": 25823,
+  "median": 1132,
+  "state": "AL"
+ },
+ {
+  "slug": "chatham-county-ga",
+  "label": "Chatham County, Georgia",
+  "short": "Chatham County",
+  "geoid": "13051",
+  "units": 23782,
+  "median": 1016,
+  "state": "GA"
+ },
+ {
+  "slug": "atlantic-county-nj",
+  "label": "Atlantic County, New Jersey",
+  "short": "Atlantic County",
+  "geoid": "34001",
+  "units": 23137,
+  "median": 1246,
+  "state": "NJ"
+ },
+ {
+  "slug": "jefferson-county-tx",
+  "label": "Jefferson County, Texas",
+  "short": "Jefferson County",
+  "geoid": "48245",
+  "units": 20824,
+  "median": 1087,
+  "state": "TX"
+ },
+ {
+  "slug": "monmouth-county-nj",
+  "label": "Monmouth County, New Jersey",
+  "short": "Monmouth County",
+  "geoid": "34025",
+  "units": 19956,
+  "median": 1197,
+  "state": "NJ"
+ },
+ {
+  "slug": "new-hanover-county-nc",
+  "label": "New Hanover County, North Carolina",
+  "short": "New Hanover County",
+  "geoid": "37129",
+  "units": 17667,
+  "median": 963,
+  "state": "NC"
+ },
+ {
+  "slug": "dare-county-nc",
+  "label": "Dare County, North Carolina",
+  "short": "Dare County",
+  "geoid": "37055",
+  "units": 15894,
+  "median": 756,
+  "state": "NC"
+ },
+ {
+  "slug": "harrison-county-ms",
+  "label": "Harrison County, Mississippi",
+  "short": "Harrison County",
+  "geoid": "28047",
+  "units": 13404,
+  "median": 1212,
+  "state": "MS"
+ },
+ {
+  "slug": "terrebonne-parish-la",
+  "label": "Terrebonne Parish, Louisiana",
+  "short": "Terrebonne Parish",
+  "geoid": "22109",
+  "units": 11936,
+  "median": 1369,
+  "state": "LA"
+ },
+ {
+  "slug": "orange-county-ca",
+  "label": "Orange County, California",
+  "short": "Orange County",
+  "geoid": "06059",
+  "units": 9496,
+  "median": 1083,
+  "state": "CA"
+ },
+ {
+  "slug": "st-louis-county-mo",
+  "label": "St. Louis County, Missouri",
+  "short": "St. Louis County",
+  "geoid": "29189",
+  "units": 3126,
+  "median": 1257,
+  "state": "MO"
  },
  {
   "slug": "kanawha-county-wv",

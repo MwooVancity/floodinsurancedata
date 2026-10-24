@@ -1,0 +1,53 @@
+{
+ "slug": "sarasota-county-fl",
+ "label": "Sarasota County, Florida",
+ "geoid": "12115",
+ "sources": {
+  "policies_asof": "2026-07-31",
+  "retrieved": "2026-10-22"
+ },
+ "policy_units": 61446,
+ "cohort_n": 24736,
+ "publish_criteria": {
+  "statistical_sufficiency": {
+   "valid_cost_obs": 24736,
+   "spread_published": true,
+   "pass": true
+  },
+  "data_completeness": {
+   "manifest": {
+    "policies": {
+     "reported_total": 39527,
+     "recheck_total": 39527,
+     "unique_fetched": 39527,
+     "missing": 0,
+     "complete": true,
+     "stable": true,
+     "sha256": "1ce8a279b53c2f2f118f75e5be75756416c2abf3dcd29a9a1d23833430f4be6f",
+     "provisional": false
+    },
+    "claims": {
+     "reported_total": 14415,
+     "recheck_total": 14415,
+     "unique_fetched": 14415,
+     "missing": 0,
+     "complete": true,
+     "stable": true,
+     "sha256": "a54d5758f4a568bf2afe78321b7934be4c103a3f473502459c63e3cd5eb562a8",
+     "provisional": false
+    }
+   },
+   "pass": true
+  },
+  "reconciliation": {
+   "pct": null,
+   "official_known": false,
+   "pass": true
+  },
+  "distinct_from_parent": "N/A \u2014 county is the base geography (no parent to dedupe against); the 3-part test applies to sub-county ZIP pages, none published",
+  "distinct_search_intent": "NOT measurable offline \u2014 requires Search Console/keyword data post-launch"
+ },
+ "data_ok": true,
+ "indexing_approved": false,
+ "gate": "pass"
+}

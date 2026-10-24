@@ -1,0 +1,53 @@
+{
+ "slug": "jefferson-county-tx",
+ "label": "Jefferson County, Texas",
+ "geoid": "48245",
+ "sources": {
+  "policies_asof": "2026-07-31",
+  "retrieved": "2026-10-22"
+ },
+ "policy_units": 20824,
+ "cohort_n": 16640,
+ "publish_criteria": {
+  "statistical_sufficiency": {
+   "valid_cost_obs": 16640,
+   "spread_published": true,
+   "pass": true
+  },
+  "data_completeness": {
+   "manifest": {
+    "policies": {
+     "reported_total": 20644,
+     "recheck_total": 20644,
+     "unique_fetched": 20644,
+     "missing": 0,
+     "complete": true,
+     "stable": true,
+     "sha256": "b7b951092527602fe416cbff01a55be95b63308c2d330d40fff92b51e905224f",
+     "provisional": false
+    },
+    "claims": {
+     "reported_total": 22715,
+     "recheck_total": 22715,
+     "unique_fetched": 22715,
+     "missing": 0,
+     "complete": true,
+     "stable": true,
+     "sha256": "cd399f5126c1b48e40b2d731b62f42c6a33defe0f651e239bacdf0c770801e7f",
+     "provisional": false
+    }
+   },
+   "pass": true
+  },
+  "reconciliation": {
+   "pct": null,
+   "official_known": false,
+   "pass": true
+  },
+  "distinct_from_parent": "N/A \u2014 county is the base geography (no parent to dedupe against); the 3-part test applies to sub-county ZIP pages, none published",
+  "distinct_search_intent": "NOT measurable offline \u2014 requires Search Console/keyword data post-launch"
+ },
+ "data_ok": true,
+ "indexing_approved": false,
+ "gate": "pass"
+}

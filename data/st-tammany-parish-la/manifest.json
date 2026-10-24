@@ -1,0 +1,53 @@
+{
+ "slug": "st-tammany-parish-la",
+ "label": "St. Tammany Parish, Louisiana",
+ "geoid": "22103",
+ "sources": {
+  "policies_asof": "2026-07-31",
+  "retrieved": "2026-10-22"
+ },
+ "policy_units": 41503,
+ "cohort_n": 33358,
+ "publish_criteria": {
+  "statistical_sufficiency": {
+   "valid_cost_obs": 33358,
+   "spread_published": true,
+   "pass": true
+  },
+  "data_completeness": {
+   "manifest": {
+    "policies": {
+     "reported_total": 40387,
+     "recheck_total": 40387,
+     "unique_fetched": 40387,
+     "missing": 0,
+     "complete": true,
+     "stable": true,
+     "sha256": "8ae0a3349690e400cfb65a83b6c13acf2b30f62708cb087fccc0263b04379772",
+     "provisional": false
+    },
+    "claims": {
+     "reported_total": 38420,
+     "recheck_total": 38420,
+     "unique_fetched": 38420,
+     "missing": 0,
+     "complete": true,
+     "stable": true,
+     "sha256": "b495e56482d37f07008335373d4631731846b3f661d3804372b8a7a383b0813d",
+     "provisional": false
+    }
+   },
+   "pass": true
+  },
+  "reconciliation": {
+   "pct": null,
+   "official_known": false,
+   "pass": true
+  },
+  "distinct_from_parent": "N/A \u2014 county is the base geography (no parent to dedupe against); the 3-part test applies to sub-county ZIP pages, none published",
+  "distinct_search_intent": "NOT measurable offline \u2014 requires Search Console/keyword data post-launch"
+ },
+ "data_ok": true,
+ "indexing_approved": false,
+ "gate": "pass"
+}

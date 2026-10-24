@@ -39,6 +39,7 @@
   },
   "reconciliation": {
    "pct": 1.86,
+   "official_known": true,
    "pass": true
   },
   "distinct_from_parent": "N/A \u2014 county is the base geography (no parent to dedupe against); the 3-part test applies to sub-county ZIP pages, none published",

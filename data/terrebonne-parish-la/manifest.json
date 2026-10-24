@@ -1,0 +1,53 @@
+{
+ "slug": "terrebonne-parish-la",
+ "label": "Terrebonne Parish, Louisiana",
+ "geoid": "22109",
+ "sources": {
+  "policies_asof": "2026-07-31",
+  "retrieved": "2026-10-22"
+ },
+ "policy_units": 11936,
+ "cohort_n": 9134,
+ "publish_criteria": {
+  "statistical_sufficiency": {
+   "valid_cost_obs": 9134,
+   "spread_published": true,
+   "pass": true
+  },
+  "data_completeness": {
+   "manifest": {
+    "policies": {
+     "reported_total": 11936,
+     "recheck_total": 11936,
+     "unique_fetched": 11936,
+     "missing": 0,
+     "complete": true,
+     "stable": true,
+     "sha256": "0075eb28c2dc0aa881b349e9c2933fe2915454a2f19196d784a1aef0acf105f4",
+     "provisional": false
+    },
+    "claims": {
+     "reported_total": 13501,
+     "recheck_total": 13501,
+     "unique_fetched": 13501,
+     "missing": 0,
+     "complete": true,
+     "stable": true,
+     "sha256": "67795b89da138bd23c114f0fb92b07911d9142ea3e075f91633f6c5d8c9ccd58",
+     "provisional": false
+    }
+   },
+   "pass": true
+  },
+  "reconciliation": {
+   "pct": null,
+   "official_known": false,
+   "pass": true
+  },
+  "distinct_from_parent": "N/A \u2014 county is the base geography (no parent to dedupe against); the 3-part test applies to sub-county ZIP pages, none published",
+  "distinct_search_intent": "NOT measurable offline \u2014 requires Search Console/keyword data post-launch"
+ },
+ "data_ok": true,
+ "indexing_approved": false,
+ "gate": "pass"
+}

@@ -1,0 +1,53 @@
+{
+ "slug": "brevard-county-fl",
+ "label": "Brevard County, Florida",
+ "geoid": "12009",
+ "sources": {
+  "policies_asof": "2026-07-31",
+  "retrieved": "2026-10-22"
+ },
+ "policy_units": 43440,
+ "cohort_n": 23964,
+ "publish_criteria": {
+  "statistical_sufficiency": {
+   "valid_cost_obs": 23964,
+   "spread_published": true,
+   "pass": true
+  },
+  "data_completeness": {
+   "manifest": {
+    "policies": {
+     "reported_total": 31196,
+     "recheck_total": 31196,
+     "unique_fetched": 31196,
+     "missing": 0,
+     "complete": true,
+     "stable": true,
+     "sha256": "a6c872605d77f8048a14f3ee943840c367e1d6a9645b72d8aa734458943e8b4d",
+     "provisional": false
+    },
+    "claims": {
+     "reported_total": 5690,
+     "recheck_total": 5690,
+     "unique_fetched": 5690,
+     "missing": 0,
+     "complete": true,
+     "stable": true,
+     "sha256": "d6b7b00defda875f1748ba0739b037ae8c281df18e5dfc4afc796549ce9b1a96",
+     "provisional": false
+    }
+   },
+   "pass": true
+  },
+  "reconciliation": {
+   "pct": null,
+   "official_known": false,
+   "pass": true
+  },
+  "distinct_from_parent": "N/A \u2014 county is the base geography (no parent to dedupe against); the 3-part test applies to sub-county ZIP pages, none published",
+  "distinct_search_intent": "NOT measurable offline \u2014 requires Search Console/keyword data post-launch"
+ },
+ "data_ok": true,
+ "indexing_approved": false,
+ "gate": "pass"
+}

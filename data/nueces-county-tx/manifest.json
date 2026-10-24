@@ -1,0 +1,53 @@
+{
+ "slug": "nueces-county-tx",
+ "label": "Nueces County, Texas",
+ "geoid": "48355",
+ "sources": {
+  "policies_asof": "2026-07-31",
+  "retrieved": "2026-10-22"
+ },
+ "policy_units": 26908,
+ "cohort_n": 12304,
+ "publish_criteria": {
+  "statistical_sufficiency": {
+   "valid_cost_obs": 12304,
+   "spread_published": true,
+   "pass": true
+  },
+  "data_completeness": {
+   "manifest": {
+    "policies": {
+     "reported_total": 21726,
+     "recheck_total": 21726,
+     "unique_fetched": 21726,
+     "missing": 0,
+     "complete": true,
+     "stable": true,
+     "sha256": "073b4099c7cb56095eaaf55709fad750dd4cadef3312f06553da50bbaf17da3a",
+     "provisional": false
+    },
+    "claims": {
+     "reported_total": 8673,
+     "recheck_total": 8673,
+     "unique_fetched": 8673,
+     "missing": 0,
+     "complete": true,
+     "stable": true,
+     "sha256": "ad85999450ff1502dfe7632a1bd4eba343b80839aade65a13389f5569490948f",
+     "provisional": false
+    }
+   },
+   "pass": true
+  },
+  "reconciliation": {
+   "pct": null,
+   "official_known": false,
+   "pass": true
+  },
+  "distinct_from_parent": "N/A \u2014 county is the base geography (no parent to dedupe against); the 3-part test applies to sub-county ZIP pages, none published",
+  "distinct_search_intent": "NOT measurable offline \u2014 requires Search Console/keyword data post-launch"
+ },
+ "data_ok": true,
+ "indexing_approved": false,
+ "gate": "pass"
+}

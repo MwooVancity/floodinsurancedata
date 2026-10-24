@@ -1,0 +1,53 @@
+{
+ "slug": "harris-county-tx",
+ "label": "Harris County, Texas",
+ "geoid": "48201",
+ "sources": {
+  "policies_asof": "2026-07-31",
+  "retrieved": "2026-10-22"
+ },
+ "policy_units": 231234,
+ "cohort_n": 184869,
+ "publish_criteria": {
+  "statistical_sufficiency": {
+   "valid_cost_obs": 184869,
+   "spread_published": true,
+   "pass": true
+  },
+  "data_completeness": {
+   "manifest": {
+    "policies": {
+     "reported_total": 222995,
+     "recheck_total": 222995,
+     "unique_fetched": 222995,
+     "missing": 0,
+     "complete": true,
+     "stable": true,
+     "sha256": "5a0b27f8f0eb0a89b79ca31c20369f595ff1e3ac003809994a1d502085a2145f",
+     "provisional": false
+    },
+    "claims": {
+     "reported_total": 170854,
+     "recheck_total": 170854,
+     "unique_fetched": 170854,
+     "missing": 0,
+     "complete": true,
+     "stable": true,
+     "sha256": "be555c9cc34638382e5506263f44e56bcb278804b2ba289f04dab940f0c832fc",
+     "provisional": false
+    }
+   },
+   "pass": true
+  },
+  "reconciliation": {
+   "pct": null,
+   "official_known": false,
+   "pass": true
+  },
+  "distinct_from_parent": "N/A \u2014 county is the base geography (no parent to dedupe against); the 3-part test applies to sub-county ZIP pages, none published",
+  "distinct_search_intent": "NOT measurable offline \u2014 requires Search Console/keyword data post-launch"
+ },
+ "data_ok": true,
+ "indexing_approved": false,
+ "gate": "pass"
+}

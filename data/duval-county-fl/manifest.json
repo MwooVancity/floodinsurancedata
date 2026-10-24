@@ -1,0 +1,53 @@
+{
+ "slug": "duval-county-fl",
+ "label": "Duval County, Florida",
+ "geoid": "12031",
+ "sources": {
+  "policies_asof": "2026-07-31",
+  "retrieved": "2026-10-22"
+ },
+ "policy_units": 28217,
+ "cohort_n": 17386,
+ "publish_criteria": {
+  "statistical_sufficiency": {
+   "valid_cost_obs": 17386,
+   "spread_published": true,
+   "pass": true
+  },
+  "data_completeness": {
+   "manifest": {
+    "policies": {
+     "reported_total": 22477,
+     "recheck_total": 22477,
+     "unique_fetched": 22477,
+     "missing": 0,
+     "complete": true,
+     "stable": true,
+     "sha256": "9b7c07e7f9a55fa8cf13e585e097a81922c21c21795156d7299a5efcf293cbd0",
+     "provisional": false
+    },
+    "claims": {
+     "reported_total": 6064,
+     "recheck_total": 6064,
+     "unique_fetched": 6064,
+     "missing": 0,
+     "complete": true,
+     "stable": true,
+     "sha256": "33b2ad9b2bc8097586a54b4f5e6a7b13a6cf1e92c89e0db92af9283704c2e0f6",
+     "provisional": false
+    }
+   },
+   "pass": true
+  },
+  "reconciliation": {
+   "pct": null,
+   "official_known": false,
+   "pass": true
+  },
+  "distinct_from_parent": "N/A \u2014 county is the base geography (no parent to dedupe against); the 3-part test applies to sub-county ZIP pages, none published",
+  "distinct_search_intent": "NOT measurable offline \u2014 requires Search Console/keyword data post-launch"
+ },
+ "data_ok": true,
+ "indexing_approved": false,
+ "gate": "pass"
+}

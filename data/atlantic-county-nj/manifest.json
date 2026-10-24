@@ -1,0 +1,53 @@
+{
+ "slug": "atlantic-county-nj",
+ "label": "Atlantic County, New Jersey",
+ "geoid": "34001",
+ "sources": {
+  "policies_asof": "2026-07-31",
+  "retrieved": "2026-10-22"
+ },
+ "policy_units": 23137,
+ "cohort_n": 5675,
+ "publish_criteria": {
+  "statistical_sufficiency": {
+   "valid_cost_obs": 5675,
+   "spread_published": true,
+   "pass": true
+  },
+  "data_completeness": {
+   "manifest": {
+    "policies": {
+     "reported_total": 13372,
+     "recheck_total": 13372,
+     "unique_fetched": 13372,
+     "missing": 0,
+     "complete": true,
+     "stable": true,
+     "sha256": "7cdccce7025b20cc71166730e10310d50e0c8ed9097d9eb25b441c53d5394597",
+     "provisional": false
+    },
+    "claims": {
+     "reported_total": 20909,
+     "recheck_total": 20909,
+     "unique_fetched": 20909,
+     "missing": 0,
+     "complete": true,
+     "stable": true,
+     "sha256": "7794956f6bf5fdc5a40df83843497e7edcbefa675682ee2f652cd820e7132b9e",
+     "provisional": false
+    }
+   },
+   "pass": true
+  },
+  "reconciliation": {
+   "pct": null,
+   "official_known": false,
+   "pass": true
+  },
+  "distinct_from_parent": "N/A \u2014 county is the base geography (no parent to dedupe against); the 3-part test applies to sub-county ZIP pages, none published",
+  "distinct_search_intent": "NOT measurable offline \u2014 requires Search Console/keyword data post-launch"
+ },
+ "data_ok": true,
+ "indexing_approved": false,
+ "gate": "pass"
+}
