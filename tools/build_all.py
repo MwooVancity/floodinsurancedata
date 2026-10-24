@@ -81,6 +81,38 @@ for c in counties:
     if not data_ok: blocked.append(slug + " (data criteria not met)"); continue
     ok.append(slug)
 
+# C1: DUPLICATION GUARD — no two published pages may share more than 80% of their MASKED prose (numbers
+# AND the county/state name blanked, so only templated boilerplate counts). The thin tail is where
+# near-duplicates live; of any over-threshold pair, the page with FEWER policies (less unique data) is
+# dropped so the richest survivor ships and the dupes never go live.
+import re as _re
+DUP_THRESH = 0.80
+def _masked_shingles(slug, k=6):
+    c = next((x for x in counties if x["slug"] == slug), {})
+    names = [w.lower() for w in _re.findall(r"[A-Za-z]+", (c.get("label", "") + " " + c.get("short", "")))]
+    t = open(os.path.join(DIST, "flood-insurance", slug, "index.html"), encoding="utf-8").read()
+    t = _re.sub(r"<(script|style)[^>]*>.*?</\1>", " ", t, flags=_re.S | _re.I)
+    t = _re.sub(r"<[^>]+>", " ", t)
+    t = _re.sub(r"\d[\d,.]*", " num ", t).lower()
+    w = [x for x in _re.findall(r"[a-z]+", t) if x not in names]   # blank place-name tokens too
+    return set(tuple(w[i:i+k]) for i in range(max(0, len(w) - k + 1)))
+def _units(slug):
+    try: return json.load(open(os.path.join(DATA, slug, "agg.json")))["policies"]["units"] or 0
+    except Exception: return 0
+_kept, _sh = [], {}
+for slug in sorted(ok, key=lambda s: -_units(s)):   # richest first; it wins any duplicate pair
+    _sh[slug] = _masked_shingles(slug)
+    hit = None
+    for ks in _kept:
+        inter = len(_sh[slug] & _sh[ks]); uni = len(_sh[slug] | _sh[ks]) or 1
+        if inter / uni > DUP_THRESH: hit = (ks, inter / uni); break
+    if hit:
+        blocked.append(f"{slug} (near-duplicate {hit[1]:.0%} of {hit[0]})")
+        print(f"DUP BLOCK {slug} ~ {hit[0]} ({hit[1]:.0%} masked overlap)")
+    else:
+        _kept.append(slug)
+ok = _kept
+
 # fail-closed: prune any county dir in dist that did NOT pass this run (stale output never served).
 fdir = os.path.join(DIST, "flood-insurance")
 if os.path.isdir(fdir):

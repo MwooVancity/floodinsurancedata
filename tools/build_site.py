@@ -44,7 +44,7 @@ ul{{padding-left:20px}}li{{margin:.25em 0}}
 <header class="topbar"><div class="wrap"><a href="/">Flood Insurance Data</a></div></header><main class="wrap">"""
 FOOT = ('<footer class="mut" style="margin:28px 0;border-top:1px solid var(--line);padding-top:14px">This product uses FEMA\'s OpenFEMA API but is not '
         'endorsed by FEMA. Place names via GeoNames (CC BY 4.0). Aggregates only, never individual quotes.'
-        ' <a href="/methodology/">Methodology</a> · <a href="/data/">Data</a></footer></main></body></html>')
+        ' <a href="/about/">About</a> · <a href="/methodology/">Methodology</a> · <a href="/data/">Data</a></footer></main></body></html>')
 
 # ---- home + client-side lookup ----
 rows = "".join(f'<tr data-k="{html.escape((p["short"]+" "+(p.get("state") or "")).lower())}">'
@@ -92,6 +92,37 @@ meth = HEAD.format(title="Methodology — flood insurance data", desc="Definitio
 {FOOT}"""
 wr(os.path.join(DIST, "methodology", "index.html"), meth)
 
+# ---- about (E-E-A-T: who runs it, purpose, corrections, non-commercial, not FEMA) ----
+CONTACT = os.environ.get("FF_CONTACT", "")   # owner-supplied; omitted until provided (never fabricate one)
+contact_html = (f'<li><b>Corrections &amp; contact:</b> <a href="mailto:{html.escape(CONTACT)}">{html.escape(CONTACT)}</a> — '
+                'tell us about any figure that looks wrong and we will check it against the source record.</li>'
+                if CONTACT else
+                '<li><b>Corrections:</b> a public contact address is being set up; every figure links to its official '
+                'federal source so any number can be checked against the record it came from.</li>')
+about = HEAD.format(title="About — Flood Insurance Data", desc="Who runs Flood Insurance Data, how the figures are compiled and checked, and our independence from FEMA and insurers.", canon=BASE + "/about/") + f"""
+<h1>About Flood Insurance Data</h1>
+<div class="card"><h2>What this is</h2>
+<p>Flood Insurance Data is an independent, non-commercial project that makes the U.S. government's own
+flood-insurance records readable one place at a time. For each county we publish what existing NFIP
+policyholders actually pay, how that compares with FEMA's full-risk price, the claims history, the flood
+risk, and the community discounts that lower the bill — every figure drawn from a public federal dataset,
+with its exact source and the date it was pulled.</p></div>
+<div class="card"><h2>How the numbers are made and checked</h2><ul>
+<li>Compiled directly from FEMA's OpenFEMA APIs and the U.S. Census Bureau — no estimates, no modelled or private data.</li>
+<li>Every page is built by code and must pass an automated correctness gate before it ships: percentiles and
+sums are recomputed, counts are reconciled to FEMA's official policy figure, every ratio's denominator is
+disclosed, and nothing publishes if a check fails. The <a href="/methodology/">methodology</a> defines every term.</li>
+<li>We show aggregates only — never an individual property, policy, or quote.</li>
+{contact_html}
+</ul></div>
+<div class="card"><h2>Independence</h2>
+<p>This site is <b>not affiliated with or endorsed by FEMA</b> or any government agency, and has <b>no
+relationship with any insurer, agent, or lead-generation service</b>. It does not sell insurance, generate
+quotes, or earn commissions on policies. It is a reference, not a sales page. Any advertising, if added
+later, will be disclosed here.</p></div>
+{FOOT}"""
+wr(os.path.join(DIST, "about", "index.html"), about)
+
 # ---- data download (CSV from per-county agg) ----
 csv_path = os.path.join(DIST, "data", "counties.csv")
 os.makedirs(os.path.dirname(csv_path), exist_ok=True)
@@ -123,7 +154,7 @@ def county_lastmod(slug):
 county_urls = [(BASE + f"/flood-insurance/{p['slug']}/", county_lastmod(p["slug"])) for p in places]
 # county pages carry lastmod = their data's effective date (a real data change); home/methodology/data
 # have no trustworthy per-content modification date, so they omit lastmod rather than inherit a false one.
-urls = [(BASE + "/", None), (BASE + "/methodology/", None), (BASE + "/data/", None)] + county_urls
+urls = [(BASE + "/", None), (BASE + "/about/", None), (BASE + "/methodology/", None), (BASE + "/data/", None)] + county_urls
 sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + \
      "".join(f"  <url><loc>{u}</loc>" + (f"<lastmod>{lm}</lastmod>" if lm else "") + "</url>\n" for u, lm in urls) + \
      "</urlset>\n"

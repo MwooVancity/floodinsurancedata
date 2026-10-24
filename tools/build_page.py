@@ -173,39 +173,33 @@ if czone:
         "<p class='note'>Zones with fewer than 50 priced single-family policies are omitted. Your own premium still depends on elevation and coverage.</p>",
         src(POL_ASOF, RETR))
 
-# ---- premium trend (median cost by effective year) ----
-cyear = P.get("cost_by_year") or {}
+# ---- premium trend: REMOVED. An in-force annual-policy snapshot holds only current-term policies, so
+# there are never enough distinct effective-years for an honest like-for-like trend — and showing one
+# would contradict the page's own "what this data cannot tell you" note. The glide-path above is the
+# sourced, rule-based answer to "is it going up?" instead.
 trend_card = ""
-if len(cyear) >= 3:
-    yrs = list(cyear.items())
-    vals = [d["median"] for _, d in yrs]
-    W, H, pad = 680, 160, 34
-    lo, hi = min(vals) * 0.9, max(vals) * 1.1
-    def _x(i): return pad + i / max(1, len(yrs) - 1) * (W - 2 * pad)
-    def _y(v): return H - pad - (v - lo) / (hi - lo) * (H - 2 * pad)
-    pts = " ".join(f"{_x(i):.1f},{_y(d['median']):.1f}" for i, (_, d) in enumerate(yrs))
-    dots = "".join(f'<circle cx="{_x(i):.1f}" cy="{_y(d["median"]):.1f}" r="3" fill="var(--accent)"><title>{y}: {money(d["median"])} ({d["n"]})</title></circle>'
-                   for i, (y, d) in enumerate(yrs))
-    labs = "".join(f'<text x="{_x(i):.1f}" y="{H-8}" class="ax">{y}</text>' for i, (y, _) in enumerate(yrs))
-    first_m, last_m = yrs[0][1]["median"], yrs[-1][1]["median"]
-    direction = "risen" if last_m > first_m else ("fallen" if last_m < first_m else "held")
-    trend_card = card("Is it going up?",
-        f"The median cost of single-family policies by the year they were written has {direction} from "
-        f"{money(first_m)} ({yrs[0][0]}) to {money(last_m)} ({yrs[-1][0]}) in {CS}.",
-        f'<svg viewBox="0 0 {W} {H}" width="100%" role="img" aria-label="Median cost by effective year">'
-        f'<polyline points="{pts}" fill="none" stroke="var(--brand)" stroke-width="2"/>{dots}'
-        f'<line x1="{pad}" y1="{H-pad}" x2="{W-pad}" y2="{H-pad}" stroke="var(--line)"/>{labs}</svg>'
-        "<p class='note'>Median cost grouped by each policy's effective year (years with under 30 priced policies omitted). "
-        "This reflects the mix of policies written each year and FEMA's Risk Rating 2.0 phase-in, not a like-for-like index for one home.</p>",
-        src(POL_ASOF, RETR))
 
 gap_lead = (f"{P['share_below']}% of {num(P['below_n'])} single-family policies pay less than FEMA's own "
             f"full-risk price; the median full-risk premium is {money(P['frp_median'])} versus the "
             f"{money(P['p50'])} actually charged.")
+# Years-to-full-risk glide path — derived from data we already hold + the statutory annual cap (a RULE,
+# not a model). Honest, sourced counter to competitors' black-box projections.
+import math as _math
+glide_note = ""
+if P.get("frp_median") and P.get("p50") and P["frp_median"] > P["p50"]:
+    _yrs = _math.ceil(_math.log(P["frp_median"] / P["p50"]) / _math.log(1.18))
+    glide_note = (f"<p class='note'><b>Years to the full-risk price:</b> under the statutory cap, premiums for most "
+                  f"primary residences rise at most 18% a year (HFIAA cap, FEMA Risk Rating 2.0). At that maximum "
+                  f"rate a policy at today's median ({money(P['p50'])}) would take at least about {_yrs} annual "
+                  f"renewals to reach the median full-risk price ({money(P['frp_median'])}). This is the cap on how "
+                  f"fast a bill can climb, not a forecast of any one policy; statutory surcharges and fees are "
+                  f"outside the cap.</p>")
 claims_lead = (f"Between {C['year_min']} and {C['year_max']}, {CS} had {num(C['rows'])} paid NFIP flood "
-               f"claims totalling {money(C['total_paid'])} — about {C['cumulative_per_100_current_units']} "
-               f"claims over that whole period for every 100 policies in force today (a cumulative tally, "
-               f"not an annual rate or a flood probability).")
+               f"claims totalling {money(C['total_paid'])}.")
+# the ratio reads like a risk score, so it is demoted to a note with both numbers shown, never the headline.
+claims_ratio_note = (f"<p class='note'>That is {num(C['rows'])} paid claims since {C['year_min']} against "
+                     f"{num(P['units'])} policies in force today — a cumulative tally spanning ~{C['year_max']-C['year_min']+1} "
+                     f"years over a present-day snapshot, not an annual claim rate or a flood probability.</p>")
 
 def _pct(v):
     if v in ABSENT or str(v).strip() in ABSENT: return None
@@ -327,10 +321,14 @@ places.append({"slug": SLUG, "label": CL, "short": CS, "geoid": GEOID,
                "units": P["units"], "median": P["p50"], "state": agg.get("nri", {}).get("state") if agg.get("nri") else None})
 places.sort(key=lambda p: -(p.get("units") or 0))
 json.dump(places, open(PLACES, "w"), indent=1)
-siblings = [p for p in places if p.get("slug") != SLUG][:5]
-sib_html = ("<nav class='sib'><b>Compare nearby:</b> " +
+# siblings must be ACTUAL neighbours: same-state BUILT pages (never the global top-5 by policy count,
+# which just funnelled every page to the same mega-counties and orphaned the tail). No same-state page
+# built yet -> link to the full directory, not a false "nearby".
+_state = agg.get("nri", {}).get("state") if agg.get("nri") else None
+siblings = [p for p in places if p.get("slug") != SLUG and _state and p.get("state") == _state][:6]
+sib_html = (f"<nav class='sib'><b>Other {html.escape(_state)} counties:</b> " +
             " · ".join(f'<a href="../{p["slug"]}/">{html.escape(p["short"])}</a>' for p in siblings) +
-            ' · <a href="../../">all places</a></nav>') if siblings else '<nav class="sib"><a href="../../">All places</a></nav>'
+            ' · <a href="../../">all places</a></nav>') if siblings else '<nav class="sib"><a href="../../">Browse all places by state →</a></nav>'
 # Federal source catalog — single source of truth for the citation schema AND the visible sources block.
 ISO_DATE = (P.get("retrieved") or "2026-10-22")   # ISO date the federal data was last pulled
 SOURCES = [
@@ -358,6 +356,8 @@ jsonld = json.dumps([
     {"@context": "https://schema.org", "@type": "Dataset",
      "name": f"NFIP flood insurance data for {CL}", "description": META_DESC, "url": CANON,
      "creator": {"@type": "Organization", "name": "FEMA OpenFEMA"},
+     "publisher": {"@type": "Organization", "name": "Flood Insurance Data", "url": BASE_URL,
+                   "url_about": f"{BASE_URL}/about/"},
      "dateModified": ISO_DATE, "datePublished": ISO_DATE,
      "citation": [{"@type": "Dataset", "name": n, "url": u} for n, u in SOURCES],
      "isBasedOn": "https://www.fema.gov/about/openfema/data-sets", "license": "https://www.fema.gov/about/openfema/terms-conditions"},
@@ -468,14 +468,10 @@ details.more>summary::-webkit-details-marker{{display:none}}details.more>summary
 
 {risk}
 
-{tilemap_card}
-
 {card("Am I required to carry it?",
   f"About {P['sfha_share_units']}% of the NFIP policy units in this dataset for {CS} are in mapped high-risk (A/V) zones — not {P['sfha_share_units']}% of all buildings. In a Special Flood Hazard Area a federally backed mortgage legally requires flood insurance.",
   f"<div class='two'><div>{zone_body}</div><div><p class='note'>Zone mix by policy units (summed policyCount). Federal rule: a lender must require flood insurance on a building in a Special Flood Hazard Area with a federally backed loan (42 U.S.C. §4012a). This is the mix of existing policies, not of all buildings, and does not establish any one property's obligation.</p></div></div>",
   src(POL_ASOF, RETR))}
-
-{takeup_card}
 
 {card("How much does it cost here?", cost_lead, cost_body, src(POL_ASOF, RETR))}
 
@@ -483,27 +479,29 @@ details.more>summary::-webkit-details-marker{{display:none}}details.more>summary
 
 {zip_card}
 
-{trend_card}
-
 {card("How do current premiums compare with FEMA's full-risk price?", gap_lead,
   f"<ul class='kv'><li><b>Median charged now</b><span>{money(P['p50'])}</span></li>"
   f"<li><b>Median full-risk price</b><span>{money(P['frp_median'])}</span></li>"
-  f"<li><b>Pay below full risk</b><span>{P['share_below']}% of {num(P['below_n'])}</span></li></ul>", src(POL_ASOF, RETR))}
-
-{card("What do floods actually pay out here?", claims_lead, claims_svg() +
-  f"<p class='note'>Orange bars are the three costliest years: " + ", ".join(f"{y} ({money(p)})" for y, p in top_paid) +
-  ". Net building + contents payments by year of loss. Claims are matched by the claims dataset's county code, which may not exactly match a policy's property county.</p>",
-  src(f"{C['year_min']}–{C['year_max']}", RETR))}
-
-{card("How often is this county a flood disaster?",
-  f"{CS} has had {len(fh_events)} distinct federal flood, hurricane or tropical-storm disaster declarations. The most recent:",
-  f"<ul>{recent_li}</ul><p class='note'>Distinct storms by calendar year (one storm's emergency and major-disaster declarations are counted once), not individual declaration records.</p>",
-  src("declarations through 2026", RETR))}
+  f"<li><b>Pay below full risk</b><span>{P['share_below']}% of {num(P['below_n'])}</span></li></ul>" + glide_note, src(POL_ASOF, RETR))}
 
 {card("Can I pay less than the sticker price?", crs_lead,
   f"<table><thead><tr><th>Community</th><th>CRS class</th><th>High-risk discount</th><th>Other-area discount</th></tr></thead><tbody>{crs_rows}</tbody></table>"
   "<p class='note'>The Community Rating System cuts NFIP premiums for every eligible policy in a community that does extra flood work. The discount shown is the community's rate; what share of its policies currently receive it is not in this data. Confirm with your agent.</p>",
   src("Community Status Book", RETR))}
+
+{card("What do floods actually pay out here?", claims_lead, claims_svg() +
+  f"<p class='note'>Orange bars are the three costliest years: " + ", ".join(f"{y} ({money(p)})" for y, p in top_paid) +
+  ". Net building + contents payments by year of loss. Claims are matched by the claims dataset's county code, which may not exactly match a policy's property county.</p>" + claims_ratio_note,
+  src(f"{C['year_min']}–{C['year_max']}", RETR))}
+
+{tilemap_card}
+
+{takeup_card}
+
+{card("How often is this county a flood disaster?",
+  f"{CS} has had {len(fh_events)} distinct federal flood, hurricane or tropical-storm disaster declarations. The most recent:",
+  f"<ul>{recent_li}</ul><p class='note'>Distinct storms by calendar year (one storm's emergency and major-disaster declarations are counted once), not individual declaration records.</p>",
+  src("declarations through 2026", RETR))}
 
 <details class="more"><summary>More data: FEMA disaster aid &amp; reconciliation</summary>
 {card("Did the government pay homeowners after floods?",
@@ -535,7 +533,7 @@ details.more>summary::-webkit-details-marker{{display:none}}details.more>summary
 {sib_html}
 
 <footer>{ATTR} Place names via GeoNames (CC BY 4.0). Figures are aggregates, never individual quotes or records.
-<a href="../../methodology/">Methodology</a> · <a href="../../data/">Download the data</a></footer>
+<a href="../../about/">About</a> · <a href="../../methodology/">Methodology</a> · <a href="../../data/">Download the data</a></footer>
 </main></body></html>"""
 
 open(OUT_HTML, "w", encoding="utf-8").write(HTML)
