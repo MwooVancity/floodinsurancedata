@@ -68,6 +68,25 @@ s.addEventListener('input',function(){{var q=s.value.toLowerCase();
 </script>{FOOT}"""
 wr(os.path.join(DIST, "index.html"), home)
 
+# ---- /flood-insurance/ hub (the Breadcrumb target + county directory; previously a hard 404) ----
+hub = HEAD.format(title="Flood insurance by county — NFIP data",
+    desc="Browse per-county flood-insurance data: what NFIP policyholders pay, the gap to FEMA's full-risk price, claims history, flood risk and CRS discounts. Public federal data.",
+    canon=BASE + "/flood-insurance/") + f"""
+<section class="hero"><h1>Flood insurance by county</h1>
+<p class="lede">Every published county, with what existing NFIP policyholders actually pay and how far below
+FEMA's full-risk price. Open a county for the full data: the cost spread, claims since 1978, flood risk,
+required-coverage zones, and the community discounts that lower the bill.</p></section>
+<div class="card"><h2>Counties</h2>
+<input id="s" placeholder="Type a county or state…" aria-label="Search counties" autocomplete="off">
+<table id="t" style="margin-top:12px"><thead><tr><th>County</th><th>Median annual cost</th><th>Policies in force</th></tr></thead>
+<tbody>{rows or '<tr><td colspan=3 class=mut>No counties published yet.</td></tr>'}</tbody></table></div>
+<script>
+var s=document.getElementById('s'),t=document.getElementById('t');
+s.addEventListener('input',function(){{var q=s.value.toLowerCase();
+ [].forEach.call(t.tBodies[0].rows,function(r){{r.style.display=(!q||(r.dataset.k||'').indexOf(q)>-1)?'':'none';}});}});
+</script>{FOOT}"""
+wr(os.path.join(DIST, "flood-insurance", "index.html"), hub)
+
 # ---- methodology ----
 meth = HEAD.format(title="Methodology — flood insurance data", desc="Definitions, sources, dates, cohort rules and reconciliation for the flood-insurance data.", canon=BASE + "/methodology/") + f"""
 <h1>Methodology</h1>
@@ -77,7 +96,9 @@ meth = HEAD.format(title="Methodology — flood insurance data", desc="Definitio
 <li><b>Disaster Declarations Summaries v2</b> — OpenFEMA. Federal flood/storm declarations.</li>
 <li><b>Housing Assistance (Owners) v2</b> — OpenFEMA. FEMA aid paid to owners after disasters.</li>
 <li><b>National Risk Index (counties)</b> — FEMA ArcGIS (FEMA_NationalRiskIndex). Flood expected annual loss + percentile.</li>
-<li>Official <b>Policy Information by State and Community</b> workbook — reconciliation benchmark.</li></ul></div>
+<li><b>U.S. Census ACS 5-year (B25001)</b> — U.S. Census Bureau API. Housing units, for the take-up ratio (policies per 100 homes).</li>
+<li>Official <b>Policy Information by State and Community</b> workbook — reconciliation benchmark (a cross-check, not a dataset).</li></ul>
+<p class="mut">Seven federal datasets in all; the full-risk premium is a field within Policies and the PIF workbook is a reconciliation benchmark, not separate fetches.</p></div>
 <div class="card"><h2>Definitions &amp; rules</h2><ul>
 <li><b>Policy units</b> = sum of <code>policyCount</code>, never a row count — condo-association records carry more than one unit.</li>
 <li><b>Cost cohort</b>: single-family primary-residence policies (occupancy 1/11, primary residence), annual cost = premium + fees.</li>
@@ -154,7 +175,7 @@ def county_lastmod(slug):
 county_urls = [(BASE + f"/flood-insurance/{p['slug']}/", county_lastmod(p["slug"])) for p in places]
 # county pages carry lastmod = their data's effective date (a real data change); home/methodology/data
 # have no trustworthy per-content modification date, so they omit lastmod rather than inherit a false one.
-urls = [(BASE + "/", None), (BASE + "/about/", None), (BASE + "/methodology/", None), (BASE + "/data/", None)] + county_urls
+urls = [(BASE + "/", None), (BASE + "/flood-insurance/", None), (BASE + "/about/", None), (BASE + "/methodology/", None), (BASE + "/data/", None)] + county_urls
 sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + \
      "".join(f"  <url><loc>{u}</loc>" + (f"<lastmod>{lm}</lastmod>" if lm else "") + "</url>\n" for u, lm in urls) + \
      "</urlset>\n"
