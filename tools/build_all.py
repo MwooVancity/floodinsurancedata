@@ -86,27 +86,27 @@ for c in counties:
     if not data_ok: blocked.append(slug + " (data criteria not met)"); continue
     ok.append(slug)
 
-# C1: DUPLICATION GUARD — no two published pages may share more than 80% of their MASKED prose (numbers
-# AND the county/state name blanked, so only templated boilerplate counts). The thin tail is where
-# near-duplicates live; of any over-threshold pair, the page with FEWER policies (less unique data) is
-# dropped so the richest survivor ships and the dupes never go live.
+# C1: DUPLICATION GUARD — no two published pages may share more than DUP_THRESH of their FULL visible
+# text, numbers and place names INCLUDED. On a data page the numbers ARE the content that makes each
+# county distinct, so they must count: an earlier version masked numbers+names and then measured overlap,
+# which deleted the real differentiation and wrongly flagged genuinely distinct counties (different median,
+# claims, zones, CRS) as duplicates. This 8-gram check on full text still catches a true mad-lib/doorway
+# page (same prose, one number swapped ~ >0.9 overlap) but passes pages that share only structure. Of any
+# over-threshold pair the page with FEWER policies (less unique data) is dropped; the richest survives.
 import re as _re
-DUP_THRESH = 0.80
-def _masked_shingles(slug, k=6):
-    c = next((x for x in counties if x["slug"] == slug), {})
-    names = [w.lower() for w in _re.findall(r"[A-Za-z]+", (c.get("label", "") + " " + c.get("short", "")))]
+DUP_THRESH = 0.85
+def _page_shingles(slug, k=8):
     t = open(os.path.join(DIST, "flood-insurance", slug, "index.html"), encoding="utf-8").read()
     t = _re.sub(r"<(script|style)[^>]*>.*?</\1>", " ", t, flags=_re.S | _re.I)
-    t = _re.sub(r"<[^>]+>", " ", t)
-    t = _re.sub(r"\d[\d,.]*", " num ", t).lower()
-    w = [x for x in _re.findall(r"[a-z]+", t) if x not in names]   # blank place-name tokens too
+    t = _re.sub(r"<[^>]+>", " ", t).lower()
+    w = _re.findall(r"[a-z0-9]+", t)
     return set(tuple(w[i:i+k]) for i in range(max(0, len(w) - k + 1)))
 def _units(slug):
     try: return json.load(open(os.path.join(DATA, slug, "agg.json")))["policies"]["units"] or 0
     except Exception: return 0
 _kept, _sh = [], {}
 for slug in sorted(ok, key=lambda s: -_units(s)):   # richest first; it wins any duplicate pair
-    _sh[slug] = _masked_shingles(slug)
+    _sh[slug] = _page_shingles(slug)
     hit = None
     for ks in _kept:
         inter = len(_sh[slug] & _sh[ks]); uni = len(_sh[slug] | _sh[ks]) or 1
