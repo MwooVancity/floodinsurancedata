@@ -330,7 +330,7 @@ if bz:
 # the annual NFIP claims) ----
 ml = data.get("multiloss") or {}
 multiloss_card = ""
-if ml.get("total"):
+if ml.get("total") is not None:   # 0 is a real, reassuring finding (no chronic repeat-flood homes), not "no data"
     _srl = ml.get("srl") or 0
     _mldate = ml.get("retrieved", RETR)
     multiloss_card = card("How often do the same homes flood here?",

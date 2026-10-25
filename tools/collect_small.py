@@ -7,6 +7,10 @@ GEO = os.environ.get("FF_GEOID", "12071")
 CO = os.environ.get("FF_COUNTY", "LEE").upper()          # CRS: "LEE COUNTY"
 COT = os.environ.get("FF_COUNTYTITLE", "Lee")            # housing: "Lee (County)"
 CO3 = GEO[2:]                                             # declarations fipsCountyCode
+# Louisiana's county-equivalent is the PARISH; FEMA's text county fields spell it out that way
+# ("JEFFERSON PARISH", "Jefferson (Parish)"), so a hard-coded "COUNTY" returns 0 rows there.
+UNIT = "PARISH" if ST == "LA" else "COUNTY"              # CRS county field word
+UNIT_T = "Parish" if ST == "LA" else "County"            # housing county field word
 OUT = os.path.join(os.environ.get("FF_DIR", "."), "data.json")
 
 def get(url, timeout=120):
@@ -39,14 +43,14 @@ def fetch_all(ds, ver, filt, select, orderby=None):
     return rows
 
 d = {}
-d["crs"] = fetch_all("NfipCommunityStatusBook", "v1", f"state eq '{ST}' and county eq '{CO} COUNTY'",
+d["crs"] = fetch_all("NfipCommunityStatusBook", "v1", f"state eq '{ST}' and county eq '{CO} {UNIT}'",
                      "communityName,classRating,sfhaDiscount,nonSfhaDiscount,participatingInNFIP")
 print("CRS communities:", len(d["crs"]))
 d["declarations"] = fetch_all("DisasterDeclarationsSummaries", "v2", f"state eq '{ST}' and fipsCountyCode eq '{CO3}'",
                               "disasterNumber,declarationType,incidentType,declarationTitle,fyDeclared,declarationDate",
                               orderby="declarationDate desc")
 print("declarations (all types):", len(d["declarations"]))
-d["housing"] = fetch_all("HousingAssistanceOwners", "v2", f"state eq '{ST}' and county eq '{COT} (County)'",
+d["housing"] = fetch_all("HousingAssistanceOwners", "v2", f"state eq '{ST}' and county eq '{COT} ({UNIT_T})'",
                          "disasterNumber,zipCode,city,validRegistrations,totalApprovedIhpAmount,repairReplaceAmount,averageFemaInspectedDamage")
 print("housing rows:", len(d["housing"]))
 
@@ -67,5 +71,14 @@ if key:
 else:
     print("no CENSUS_KEY (take-up -> gap line)")
 
+# preserve the 'multiloss' aggregate that collect_multiloss.py adds in a separate step, so re-running
+# this collector never silently drops it (data.json is otherwise rebuilt from scratch here).
+try:
+    prev = json.load(open(OUT))
+    if "multiloss" in prev and "multiloss" not in d:
+        d["multiloss"] = prev["multiloss"]
+except Exception:
+    pass
+
 json.dump(d, open(OUT, "w"))
-print("saved", OUT, "for", COT, "County", ST)
+print("saved", OUT, "for", COT, UNIT_T, ST)
