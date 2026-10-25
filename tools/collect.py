@@ -94,7 +94,7 @@ check_fields(pol, ["policyCost", "fullRiskPremium", "ratedFloodZone", "occupancy
                    "primaryResidenceIndicator", "policyCount", "reportedZipCode", "policyEffectiveDate"], "policies")
 
 units = sum(int(r.get("policyCount") or 0) for r in pol)
-agg["policies"] = dict(ffcalc.aggregate_policies(pol, asof=POLICY_ASOF),
+agg["policies"] = dict(ffcalc.aggregate_policies(pol),
                        zips=len(set(r.get("reportedZipCode") for r in pol)),
                        asof=POLICY_ASOF, retrieved=RETRIEVED)
 print("policies agg done", round(time.time()-t0), "s", flush=True)

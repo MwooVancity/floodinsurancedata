@@ -44,11 +44,10 @@ assert P["coverage_building"] == 0 and P["coverage_contents"] == 0
 big = [{"id": i, "policyCost": 1000 + i, "fullRiskPremium": 2000, "ratedFloodZone": "AE",
         "occupancyType": 1, "primaryResidenceIndicator": True, "policyCount": 1,
         "policyEffectiveDate": "2026-03-01", "totalBuildingInsuranceCoverage": 250000} for i in range(120)]
-B = ffcalc.aggregate_policies(big, asof="2026-07-31")
+B = ffcalc.aggregate_policies(big)
 assert B["spread_ok"] is True
 assert B["cost_by_zone"]["AE"]["n"] == 120, B["cost_by_zone"]
 assert B["cost_by_year"]["2026"]["n"] == 120, B["cost_by_year"]
-assert B["recent_median"] is not None and B["recent_n"] == 120   # all written within 12mo of asof
 assert B["coverage_building"] == 120 * 250000
 
 # percentile convention edge cases (inclusive method), per review request

@@ -41,7 +41,7 @@ td a{{font-weight:600}}
 input{{font-size:17px;padding:11px 13px;border:1px solid var(--line);border-radius:10px;width:100%;max-width:380px;box-shadow:var(--shadow)}}
 ul{{padding-left:20px}}li{{margin:.25em 0}}
 .mut{{color:var(--mut);font-size:13px}}
-@media(max-width:620px){{h1{{font-size:25px}}}}</style></head><body>
+@media(max-width:620px){{h1{{font-size:25px}}table{{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;width:auto;min-width:100%;white-space:nowrap}}}}</style></head><body>
 <header class="topbar"><div class="wrap"><a href="/">Flood Insurance Data</a></div></header><main class="wrap">"""
 FOOT = ('<footer class="mut" style="margin:28px 0;border-top:1px solid var(--line);padding-top:14px">This product uses FEMA\'s OpenFEMA API but is not '
         'endorsed by FEMA. Place names via GeoNames (CC BY 4.0). Aggregates only, never individual quotes.'

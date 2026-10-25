@@ -159,12 +159,6 @@ if P.get("frp_median") and P.get("share_below"):
     cost_lead += (f" Most policyholders here pay below FEMA's full &ldquo;risk-based&rdquo; price — what a policy "
                   f"would cost without today's discounts and yearly caps, about {money(P['frp_median'])} median — "
                   f"the gap a bill can climb toward over time; see below.")
-# "Going rate" line only when recent policies are a MEANINGFUL SUBSET. On an in-force annual-policy
-# snapshot nearly every policy was written in the last 12 months, so "recent" == the whole book and the
-# line would just restate the median while implying a subset. Suppress it then (not padding).
-if P.get("recent_median") and P.get("recent_n") and P.get("cost_n") and P["recent_n"] < 0.9 * P["cost_n"]:
-    cost_body += (f"<p class='note'><b>Going rate:</b> policies written in the 12 months to {POL_ASOF} have a "
-                  f"median cost of {money(P['recent_median'])} ({num(P['recent_n'])} policies).</p>")
 if P.get("coverage_building"):
     cost_body += (f"<p class='note'><b>Coverage in force:</b> {money(P['coverage_building'])} of building and "
                   f"{money(P['coverage_contents'])} of contents coverage across all {CS} policies.</p>")
@@ -528,7 +522,8 @@ footer{{color:var(--faint);font-size:12.5px;margin:28px 0;border-top:1px solid v
 footer a{{color:var(--mut)}}
 details.more{{margin:16px 0}}details.more>summary{{cursor:pointer;font-weight:700;color:var(--brand);padding:12px 0;list-style:none}}
 details.more>summary::-webkit-details-marker{{display:none}}details.more>summary:before{{content:"▸ "}}details.more[open]>summary:before{{content:"▾ "}}
-@media(max-width:620px){{.stats{{grid-template-columns:repeat(2,1fr)}}.two,ul.kv{{grid-template-columns:1fr}}.hero h1{{font-size:25px}}}}
+@media(max-width:620px){{.stats{{grid-template-columns:repeat(2,1fr)}}.two,ul.kv{{grid-template-columns:1fr}}.hero h1{{font-size:25px}}
+table{{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;width:auto;min-width:100%;white-space:nowrap}}}}
 </style></head><body>
 <header class="topbar"><div class="wrap"><a class="brand" href="../../">Flood Insurance Data</a><span class="crumb">Flood insurance › {CS}</span></div></header>
 <main class="wrap">

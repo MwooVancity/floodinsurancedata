@@ -30,7 +30,7 @@ ZIP_MIN = 25    # min priced single-family policies to publish a per-ZIP median
 
 def _valid_cost(r): return isinstance(r.get("policyCost"), (int, float)) and r["policyCost"] > 0
 
-def aggregate_policies(rows, asof=None):
+def aggregate_policies(rows):
     units = sum(int(r.get("policyCount") or 0) for r in rows)
     coh = [r for r in rows if isone(r.get("occupancyType")) and istrue(r.get("primaryResidenceIndicator"))]
     cost = [r["policyCost"] for r in coh if isinstance(r.get("policyCost"), (int, float)) and r["policyCost"] > 0]
@@ -47,15 +47,6 @@ def aggregate_policies(rows, asof=None):
         if _valid_cost(r) and isinstance(d, str) and len(d) >= 4 and d[:4].isdigit():
             yc[d[:4]].append(r["policyCost"])
     cost_by_year = {y: {"median": pctl(v, 50), "n": len(v)} for y, v in sorted(yc.items()) if len(v) >= YEAR_MIN}
-    # "going rate": median cost of policies written in the 12 months to the as-of date
-    recent_median = recent_n = None
-    if asof:
-        yy, mm, dd = int(asof[:4]) - 1, asof[5:7], asof[8:10]
-        cutoff = f"{yy}-{mm}-{dd}"
-        rc = [r["policyCost"] for r in coh if _valid_cost(r)
-              and isinstance(r.get("policyEffectiveDate"), str) and r["policyEffectiveDate"][:10] >= cutoff]
-        if len(rc) >= ZONE_MIN:
-            recent_median, recent_n = pctl(rc, 50), len(rc)
     cov_b = sum(r.get("totalBuildingInsuranceCoverage") or 0 for r in rows)
     cov_c = sum(r.get("totalContentsInsuranceCoverage") or 0 for r in rows)
     # per-ZIP: units (all policies) + cohort median cost where enough valid observations (>=25)
@@ -90,7 +81,6 @@ def aggregate_policies(rows, asof=None):
         "sfha_units": sfha, "sfha_share_units": round(100 * sfha / units, 1) if units else None,
         "spread_ok": len(cost) >= SMALL_COHORT,         # publish the spread only on enough VALID cost obs
         "cost_by_zone": cost_by_zone, "cost_by_year": cost_by_year,
-        "recent_median": recent_median, "recent_n": recent_n,
         "coverage_building": round(cov_b), "coverage_contents": round(cov_c),
         "by_zip": by_zip,
     }
