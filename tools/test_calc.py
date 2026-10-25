@@ -60,4 +60,61 @@ assert ffcalc.pctl([5, 5, 5, 5], 50) == 5                # repeated values
 assert ffcalc.pctl([5, 5, 5, 5], 90) == 5
 assert ffcalc.pctl([1, 2, 3, 4, 5], 50) == 3             # odd-sized -> middle
 
+# years-to-full-risk glide path (the production formula build_page prints), incl. the yrs==1 edge
+assert ffcalc.years_to_full_risk(1658, 3461) == 5        # Lee FL: matches the shipped page
+assert ffcalc.years_to_full_risk(1000, 1100) == 1        # a tiny gap still rounds up to 1 renewal (yrs==1)
+assert ffcalc.years_to_full_risk(2000, 1500) is None     # already above full-risk -> no glide
+assert ffcalc.years_to_full_risk(1000, 1000) is None     # no gap
+assert ffcalc.years_to_full_risk(0, 3000) is None        # no current median
+assert ffcalc.years_to_full_risk(1000, None) is None     # no full-risk figure
+
+# zone (ZONE_MIN=50) and per-ZIP (ZIP_MIN=25) publish thresholds
+mix = ([{"id": f"a{i}", "policyCost": 1000 + i, "ratedFloodZone": "AE", "occupancyType": 1,
+         "primaryResidenceIndicator": True, "policyCount": 1, "reportedZipCode": "33333"} for i in range(60)]
+     + [{"id": f"x{i}", "policyCost": 2000 + i, "ratedFloodZone": "X", "occupancyType": 1,
+         "primaryResidenceIndicator": True, "policyCount": 1, "reportedZipCode": "44444"} for i in range(40)]
+     + [{"id": f"z{i}", "policyCost": 3000 + i, "ratedFloodZone": "AE", "occupancyType": 1,
+         "primaryResidenceIndicator": True, "policyCount": 1, "reportedZipCode": "55555"} for i in range(10)])
+M = ffcalc.aggregate_policies(mix)
+assert M["cost_by_zone"]["AE"]["n"] == 70, M["cost_by_zone"]       # 60 + 10 AE, >= ZONE_MIN -> shown
+assert "X" not in M["cost_by_zone"], M["cost_by_zone"]             # 40 < ZONE_MIN -> omitted
+bzp = {d["zip"]: d for d in M["by_zip"]}
+assert bzp["33333"]["cost_n"] == 60 and bzp["33333"]["median"] is not None
+assert bzp["44444"]["cost_n"] == 40 and bzp["44444"]["median"] is not None
+assert bzp["55555"]["cost_n"] == 10 and bzp["55555"]["median"] is None and bzp["55555"]["units"] == 10  # < ZIP_MIN
+
+# ---- integration: build a real county page, smoke-check the render, and prove the gate catches a bad page.
+# Exercises the shipping build_page.py + gate.py, not a re-implementation. Skips if the county data is absent.
+import subprocess, tempfile, json as _json
+TOOLS = os.path.dirname(os.path.abspath(__file__))
+_lee = os.path.join(os.path.dirname(TOOLS), "data", "lee-county-fl")
+_agg = os.path.join(_lee, "agg.json")
+if os.path.exists(_agg) and os.path.exists(os.path.join(_lee, "data.json")):
+    tmp = tempfile.mkdtemp()
+    out = os.path.join(tmp, "index.html")
+    env = dict(os.environ, FF_DIR=_lee, OUT_HTML=out, FF_COUNTYLABEL="Lee County, Florida",
+               FF_COUNTYSHORT="Lee County", FF_OFFICIAL="132012", FF_SLUG="lee-county-fl",
+               FF_GEOID="12071", FF_BASEURL="https://floodinsurancedata.com",
+               FF_PLACES=os.path.join(tmp, "places.json"))
+    rb = subprocess.run([sys.executable, "-I", os.path.join(TOOLS, "build_page.py")],
+                        env=env, cwd=TOOLS, capture_output=True, text=True)
+    assert rb.returncode == 0, "build_page failed: " + rb.stderr[-500:]
+    page = open(out, encoding="utf-8").read()
+    import re as _re2
+    assert not _re2.search(r">\s*(None|nan|NaN|undefined)\s*<", page), "null leaked into page text"
+    assert "$None" not in page and "None%" not in page and "$nan" not in page, "null leaked into a number"
+    assert ">{}<" not in page and "{money(" not in page and "{P[" not in page, "raw template token leaked"
+
+    def _gate(html_path):
+        return subprocess.run([sys.executable, "-I", os.path.join(TOOLS, "gate.py"), _agg, html_path, "132012"],
+                              capture_output=True, text=True).returncode
+    assert _gate(out) == 0, "gate should PASS a good page"
+    med = "$" + format(int(round(_json.load(open(_agg))["policies"]["p50"])), ",")
+    bad = os.path.join(tmp, "bad.html")
+    open(bad, "w", encoding="utf-8").write(page.replace(med, "$1"))   # strip the median the gate requires
+    assert _gate(bad) == 1, "gate should FAIL when the required median is missing from the page"
+    print("integration: build+smoke ok; gate PASS on good page, FAIL on median-stripped page")
+else:
+    print("integration: skipped (data/lee-county-fl not present)")
+
 print("test_calc: all assertions passed (exercising ffcalc production functions)")

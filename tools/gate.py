@@ -21,8 +21,9 @@ for k in ("units", "p25", "p50", "p75", "frp_median", "share_below", "zone_units
     if P.get(k) in (None, "", {}): fails.append(f"policies.{k} missing")
 for k in ("rows", "total_paid", "by_year", "year_min", "year_max"):
     if C.get(k) in (None, "", {}): fails.append(f"claims.{k} missing")
-if P.get("p25") and P.get("p75") and not (P["p25"] <= P["p50"] <= P["p75"]):
-    fails.append("percentiles not monotonic")
+pv = [P.get(k) for k in ("p25", "p50", "p75", "p90") if P.get(k) is not None]
+if pv != sorted(pv):   # every present percentile must be monotonic, p90 included
+    fails.append(f"percentiles not monotonic: {pv}")
 
 # 3. reconciliation to FEMA official (if known)
 if official and P.get("units"):
@@ -88,6 +89,12 @@ else:
     m = re.search(r"joins\s+(\d+)\s+of them", html)
     if m and int(m.group(1)) != n_listed:
         fails.append(f"stated dataset count {m.group(1)} != {n_listed} sources actually listed")
+
+# 8c-bis. A listed source must have a visible data block. The repetitive-loss panel is the one that is
+# data-driven (suppressed when the dataset was never collected), so if it is listed as a source its block
+# must be present — never a source with nothing behind it.
+if "Repetitive-Loss Flood Properties" in html and "flooded more than once" not in html:
+    fails.append("Repetitive-Loss listed as a source but its data block is missing from the page")
 
 # 8d. A ratio that reads like a risk score must carry its caveat.
 if re.search(r"per 100", html, re.I) and not re.search(r"cumulative|not an annual rate", html, re.I):

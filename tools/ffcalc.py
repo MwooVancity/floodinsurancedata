@@ -1,10 +1,19 @@
 """Shared production calculations. Imported by collect.py (real pipeline) AND test_calc.py
 (fixtures), so the tests exercise the exact code that ships. Pure functions, no I/O."""
+import math
 import statistics
 from collections import defaultdict
 
 SFHA_PREFIXES = ("A", "V")
 SMALL_COHORT = 100  # min VALID COST observations to publish a percentile spread
+HFIAA_CAP = 0.18    # statutory max annual NFIP premium increase for most primary residences (HFIAA / Risk Rating 2.0)
+
+def years_to_full_risk(current, full_risk, cap=HFIAA_CAP):
+    """Minimum annual renewals for `current` to reach `full_risk` at the statutory max increase `cap`.
+    A labeled legal RULE (the HFIAA cap), not a forecast. Returns None when there is no gap to close."""
+    if not current or not full_risk or full_risk <= current:
+        return None
+    return math.ceil(math.log(full_risk / current) / math.log(1 + cap))
 
 def isone(v): return v in (1, 11, "1", "11")          # single-family occupancy types
 def istrue(v): return v in (True, "true", "True", 1, "1")
@@ -17,6 +26,7 @@ def pctl(values, p):
 
 ZONE_MIN = 50   # min valid-cost observations to publish a per-zone median
 YEAR_MIN = 30   # min valid-cost observations to publish a per-year median (trend)
+ZIP_MIN = 25    # min priced single-family policies to publish a per-ZIP median
 
 def _valid_cost(r): return isinstance(r.get("policyCost"), (int, float)) and r["policyCost"] > 0
 
@@ -59,7 +69,7 @@ def aggregate_policies(rows, asof=None):
             if z: zc_zip[z].append(r["policyCost"])
     by_zip = sorted(
         ({"zip": z, "units": zu_zip[z], "cost_n": len(zc_zip[z]),
-          "median": pctl(zc_zip[z], 50) if len(zc_zip[z]) >= 25 else None} for z in zu_zip),
+          "median": pctl(zc_zip[z], 50) if len(zc_zip[z]) >= ZIP_MIN else None} for z in zu_zip),
         key=lambda d: -d["units"])[:25]
     both = [r for r in coh if isinstance(r.get("policyCost"), (int, float)) and r["policyCost"] > 0
             and isinstance(r.get("fullRiskPremium"), (int, float)) and r["fullRiskPremium"] > 0]

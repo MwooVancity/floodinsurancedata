@@ -1,8 +1,10 @@
 """Build the Lee County FL flood page from data.json (small datasets) + agg.json (bulk).
 River-style: white cards, every number has a unit, one line of context, source + as-of once.
 No verdict, no advice prose. Writes directly to the repo dist path. -> OUT_HTML."""
-import json, html, os, re
+import json, html, os, re, sys
 from collections import defaultdict
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))  # -I drops script dir; restore for ffcalc
+import ffcalc
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DIR = os.environ.get("FF_DIR", HERE)
@@ -183,21 +185,19 @@ if czone:
 
 # ---- premium trend: REMOVED. An in-force annual-policy snapshot holds only current-term policies, so
 # there are never enough distinct effective-years for an honest like-for-like trend — and showing one
-# would contradict the page's own "what this data cannot tell you" note. The glide-path above is the
-# sourced, rule-based answer to "is it going up?" instead.
-trend_card = ""
+# would contradict the page's own "what this data cannot tell you" note. The glide-path below is the
+# sourced, rule-based answer to "is it going up?" instead. (No trend card is rendered.)
 
 gap_lead = (f"{P['share_below']}% of {num(P['below_n'])} single-family policies pay less than FEMA's own "
             f"full-risk price; the median full-risk premium is {money(P['frp_median'])} versus the "
             f"{money(P['p50'])} actually charged.")
 # Years-to-full-risk glide path — derived from data we already hold + the statutory annual cap (a RULE,
 # not a model). Honest, sourced counter to competitors' black-box projections.
-import math as _math
 glide_note = ""
-if P.get("frp_median") and P.get("p50") and P["frp_median"] > P["p50"]:
-    _yrs = _math.ceil(_math.log(P["frp_median"] / P["p50"]) / _math.log(1.18))
+_yrs = ffcalc.years_to_full_risk(P.get("p50"), P.get("frp_median"))
+if _yrs is not None:
     glide_note = (f"<p class='note'><b>Years to the full-risk price:</b> under the statutory cap, premiums for most "
-                  f"primary residences rise at most 18% a year (HFIAA cap, FEMA Risk Rating 2.0). At that maximum "
+                  f"primary residences rise at most {int(ffcalc.HFIAA_CAP*100)}% a year (HFIAA cap, FEMA Risk Rating 2.0). At that maximum "
                   f"rate a policy at today's median ({money(P['p50'])}) would take at least about {_yrs} annual "
                   f"renewal{'s' if _yrs != 1 else ''} to reach the median full-risk price ({money(P['frp_median'])}). This is the cap on how "
                   f"fast a bill can climb, not a forecast of any one policy; statutory surcharges and fees are "
@@ -306,8 +306,7 @@ if len(state_risk) >= 4:
 bz = [z for z in (agg["policies"].get("by_zip") or []) if z.get("units")]
 zip_card = ""
 if bz:
-    import json as _j
-    data_js = _j.dumps({z["zip"]: {"u": z["units"], "m": z["median"], "n": z["cost_n"]} for z in bz})
+    data_js = json.dumps({z["zip"]: {"u": z["units"], "m": z["median"], "n": z["cost_n"]} for z in bz})
     toprows = "".join(
         f"<tr><td>{html.escape(z['zip'])}</td><td>{money(z['median']) if z.get('median') else '—'}</td>"
         f"<td>{num(z['units'])}</td></tr>" for z in bz[:8])
