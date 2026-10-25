@@ -39,7 +39,7 @@ mechanism. NOT valid: "confounded", "small sample", "not actionable" — print t
   durable edge is breadth + county layer + CRS + transparency, not "we show full-risk."
 
 ## 4. The data catalog
-**SEVEN distinct federal datasets** (the page states "joins 7", the gate enforces stated-count == sources
+**EIGHT distinct federal datasets** (the page states "joins 8", the gate enforces stated-count == sources
 listed). Items that look like more are a field or a benchmark, not separate fetches.
 1. NFIP Policies v3 (OpenFEMA, keyless) — cost spread p25/p50/p75/p90; `fullRiskPremium` field = gap to
    FEMA's true price + share paying below; `ratedFloodZone` = zone mix; per-ZIP units/median.
@@ -52,6 +52,8 @@ listed). Items that look like more are a field or a benchmark, not separate fetc
 5. Disaster Declarations Summaries v2 (OpenFEMA) — distinct flood/hurricane/storm declarations per county.
 6. Housing Assistance (Owners) v2 (OpenFEMA) — FEMA aid paid to owners after floods.
 7. U.S. Census ACS 5-year B25001 — take-up (policies per 100 homes). Needs a free `CENSUS_KEY` in `.env`.
+8. IndividualAssistanceMultipleLossFloodProperties v1 (OpenFEMA) — repetitive-loss (RL/SRL) property
+   counts per county, a chronic-repeat-flood signal competitors do not join.
 Reconciliation benchmark (not a dataset): FEMA official PIF workbook — checks our count within 5%.
 
 **OpenFEMA pull traps baked into code:** SUM `policyCount` (never count rows — condo rows carry >1 unit);

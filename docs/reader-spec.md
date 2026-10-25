@@ -109,14 +109,14 @@ we don't — a modeled series would break our no-verdict/no-modeled-number rule 
 
 Our real, still-unique edge (the bet):
 1. **Breadth joined per place** — risk (NRI) + legal requirement + disaster history + FEMA aid + CRS +
-   take-up on ONE page. Both competitors are NFIP-cost-only. Nobody joins all seven datasets.
+   take-up on ONE page. Both competitors are NFIP-cost-only. Nobody joins all eight datasets.
 2. **County layer** — FF skips counties entirely; our reconciliation to FEMA's official PIF count lives
    at county.
 3. **CRS discount** — the only panel that lowers the reader's actual bill. Neither competitor shows it.
 4. **Sourcing / E-E-A-T** — exact federal source + as-of on every number, public reconciliation, a real
    methodology page. The transparency a homeowner (and an AI engine citing us) can trust.
 This is a narrower moat than the cost-only framing implied. It holds only if every page is genuinely
-seven datasets deep and place-specific — a thin rollout of near-duplicate county pages forfeits all of it.
+eight datasets deep and place-specific — a thin rollout of near-duplicate county pages forfeits all of it.
 
 ## 8. Biggest risk
 

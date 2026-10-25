@@ -30,10 +30,10 @@ source, not a silence.
 
 ## Line 0b — we are the dataset catalog (the moat)
 Competitors (NerdWallet, LendingTree, Policygenius, floodfigures.com) show one stale average and a
-count. We join every public dataset that bears on the decision. **SEVEN distinct federal datasets** (the
-page says "joins 7 of them" and the gate enforces that the stated count equals the sources listed — keep
-it at 7 everywhere). Items 1–2 share one dataset; the PIF workbook is a reconciliation benchmark, not a
-seventh fetch. All verified live 2026-10-22:
+count. We join every public dataset that bears on the decision. **EIGHT distinct federal datasets** (the
+page says "joins 8 of them" and the gate enforces that the stated count equals the sources listed — keep
+it at 8 everywhere). Item 2 is a field of item 1, not a separate fetch; the PIF workbook is a
+reconciliation benchmark, not a dataset. All verified live 2026-10-22 (item 9 added 2026-10-24):
 1. NFIP Policies v3 — cost spread p25/p50/p75/p90 (they show only a median).
 2. NFIP Policies v3 `fullRiskPremium` — the gap to FEMA's true price, share paying below it. (Same dataset as 1 — a field, not a separate source.)
 3. NFIP Claims v3 — claims per 100 policies + paid-by-year (they show raw counts).
@@ -43,6 +43,9 @@ seventh fetch. All verified live 2026-10-22:
 7. NfipCommunityStatusBook — the CRS discount (5–45% off premiums), per community. NOBODY shows it.
 8. Census ACS 5-year B25001 — take-up (NFIP policies per 100 homes), per county. Needs a free Census
    key in `.env` (`CENSUS_KEY`); if absent the panel shows a gap line.
+9. IndividualAssistanceMultipleLossFloodProperties v1 — repetitive-loss (RL) + severe repetitive-loss
+   (SRL) counts per county, the chronic-repeat-flood signal nobody else joins.
+(Eight DISTINCT datasets: items 1–9 minus item 2, which is a field of item 1.)
 Reconciliation benchmark (not counted as a dataset): FEMA PIF workbook — checks our count to FEMA's official figure.
 A reader question with no dataset = a visible gap line naming the data to pull next. A dataset that
 answers no reader question = left out. Verified endpoints: `docs/reader-spec.md`.
