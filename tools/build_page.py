@@ -149,6 +149,9 @@ else:
                  f"a new policy on a different building can differ.")
     cost_body = (spread_svg() + "<p class='note'>Each policy's annual cost (premium plus fees), single-family "
                  "primary residences. The bar is the middle half (p25–p75); the orange line is FEMA's full-risk price.</p>")
+if P.get("frp_median") and P.get("share_below"):
+    cost_lead += (f" Most policyholders here pay below FEMA's full risk-based price (about "
+                  f"{money(P['frp_median'])} median) — the gap a bill can climb toward over time; see below.")
 # "Going rate" line only when recent policies are a MEANINGFUL SUBSET. On an in-force annual-policy
 # snapshot nearly every policy was written in the last 12 months, so "recent" == the whole book and the
 # line would just restate the median while implying a subset. Suppress it then (not padding).
@@ -191,7 +194,7 @@ if P.get("frp_median") and P.get("p50") and P["frp_median"] > P["p50"]:
     glide_note = (f"<p class='note'><b>Years to the full-risk price:</b> under the statutory cap, premiums for most "
                   f"primary residences rise at most 18% a year (HFIAA cap, FEMA Risk Rating 2.0). At that maximum "
                   f"rate a policy at today's median ({money(P['p50'])}) would take at least about {_yrs} annual "
-                  f"renewals to reach the median full-risk price ({money(P['frp_median'])}). This is the cap on how "
+                  f"renewal{'s' if _yrs != 1 else ''} to reach the median full-risk price ({money(P['frp_median'])}). This is the cap on how "
                   f"fast a bill can climb, not a forecast of any one policy; statutory surcharges and fees are "
                   f"outside the cap.</p>")
 claims_lead = (f"Between {C['year_min']} and {C['year_max']}, {CS} had {num(C['rows'])} paid NFIP flood "
@@ -220,6 +223,24 @@ if _disc_communities:
 else:
     crs_lead = (f"None of {CS}'s {len(crs)} NFIP communities currently carries a Community Rating System discount; "
                 f"they participate in the NFIP without the extra CRS premium reduction.")
+
+# ---- how to get covered (factual public NFIP rules — the reader's "what do I do next" + the 30-day catch) ----
+howto_card = card("How do I actually get covered — and how fast?",
+    "Flood damage is almost never covered by a standard homeowners policy; you buy flood insurance separately "
+    "through the federal NFIP or a private insurer. Two facts change your timing and your limits:",
+    "<ul class='kv'><li><b>Waiting period</b><span>~30 days</span></li>"
+    "<li><b>NFIP building limit</b><span>$250,000</span></li>"
+    "<li><b>NFIP contents limit</b><span>$100,000</span></li></ul>"
+    "<p class='note'>Most NFIP policies take effect <b>30 days after you buy</b>, so you can't buy today and be "
+    "covered for a storm this week — a flood-zone letter or an approaching season is a reason to act now. "
+    "(Exceptions: no wait when coverage is required to close a loan, or one day after a map change puts a home "
+    "in a high-risk zone.) NFIP covers up to <b>$250,000</b> on the building and <b>$100,000</b> on contents "
+    "(contents bought separately); higher-value homes add private &ldquo;excess&rdquo; flood insurance. To buy: "
+    "call the NFIP at <b>1-877-336-2627</b>, go to <a href='https://www.floodsmart.gov' rel='nofollow noopener' "
+    "target='_blank'>FloodSmart.gov</a>, or ask any licensed insurance agent — NFIP's price is set federally, so "
+    "it is the same whichever agent you use.</p>",
+    '<p class="src">Source: FEMA National Flood Insurance Program — waiting period, coverage limits and how to '
+    'buy, via FloodSmart.gov. Not endorsed by FEMA.</p>')
 
 recent_li = "".join(
     f"<li>{html.escape(cal_year(d))} — {html.escape(d.get('incidentType',''))}: "
@@ -524,7 +545,7 @@ details.more>summary::-webkit-details-marker{{display:none}}details.more>summary
 {risk}
 
 {card("Am I required to carry it?",
-  f"About {P['sfha_share_units']}% of the NFIP policy units in this dataset for {CS} are in mapped high-risk (A/V) zones — not {P['sfha_share_units']}% of all buildings. In a Special Flood Hazard Area a federally backed mortgage legally requires flood insurance.",
+  f"Whether <b>you</b> must carry flood insurance depends on your exact address and loan — look your address up on <a href=\"https://msc.fema.gov/portal/home\" rel=\"nofollow noopener\" target=\"_blank\">FEMA's flood map</a>. The rule: a federally backed mortgage on a building in a high-risk zone (a Special Flood Hazard Area) legally requires it. For context, {P['sfha_share_units']}% of {CS}'s existing NFIP policies sit in those high-risk (A/V) zones — not {P['sfha_share_units']}% of all buildings, and not an answer about your own home.",
   f"<div class='two'><div>{zone_body}</div><div><p class='note'>Zone mix by policy units (summed policyCount). Federal rule: a lender must require flood insurance on a building in a Special Flood Hazard Area with a federally backed loan (42 U.S.C. §4012a). This is the mix of existing policies, not of all buildings, and does not establish any one property's obligation.</p></div></div>",
   src(POL_ASOF, RETR))}
 
@@ -543,6 +564,8 @@ details.more>summary::-webkit-details-marker{{display:none}}details.more>summary
   f"<table><thead><tr><th>Community</th><th>CRS class</th><th>High-risk discount</th><th>Other-area discount</th></tr></thead><tbody>{crs_rows}</tbody></table>"
   "<p class='note'>The Community Rating System cuts NFIP premiums for every eligible policy in a community that does extra flood work. The discount shown is the community's rate; what share of its policies currently receive it is not in this data. Confirm with your agent.</p>",
   src(RETR, RETR))}
+
+{howto_card}
 
 {card("What do floods actually pay out here?", claims_lead, claims_svg() +
   f"<p class='note'>Orange bars are the three costliest years: " + ", ".join(f"{y} ({money(p)})" for y, p in top_paid) +
