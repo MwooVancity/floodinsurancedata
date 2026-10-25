@@ -14,9 +14,14 @@ needs, each from public federal data with its exact source and as-of date — ho
 they're required to buy it, what it costs (and what it costs in THEIR flood zone), how far below FEMA's
 true-risk price, what floods have actually paid out, and how to pay less. More helpful than NerdWallet,
 Policygenius, Bankrate or floodfigures.com — not by having more URLs, but by answering more of the real
-question with real data they don't show. A page that shows only an average has failed. If a public
-dataset bears on the decision and we are not showing it, that is a bug (see Line 0b). No quote, no
-advice prose, no "safe / you should" verdict, no hedging.
+question with real data they don't show. A page that shows only an average has failed. The reader is a DESPERATE person — at a closing with a
+flood-zone letter, a renewal that jumped, a purchase to decide, or a street that flooded last night — on a
+phone, 60 seconds. So "most helpful" means they also learn, fast and in plain words, how urgent it is and
+exactly what to do next (how and where to buy, the 30-day waiting period, the coverage limits), not only
+complete data. Showing that reader anything buggy, wrong, mislabeled, or misleading is the one unforgivable
+sin. A page that is factually complete but that a scared reader can't understand or act on in a minute has
+also failed. If a public dataset bears on the decision and we are not showing it, that is a bug (see Line
+0b). No quote, no advice prose, no "safe / you should" verdict, no hedging.
 
 **Maximize information gain. Hunt the data gaps.** The target is the single most useful flood-insurance
 page on the internet for this place — every public figure that changes a homeowner's decision, present
