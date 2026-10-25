@@ -97,24 +97,28 @@ def _present(v): return v not in ABSENT and str(v).strip() not in ABSENT
 cf = (NRI or {}).get("coastal", {}); inl = (NRI or {}).get("inland", {})
 have_risk = NRI and (_present(cf.get("risk_rating")) or _present(inl.get("risk_rating")))
 if have_risk:
-    def risk_rows(block, label):
-        rr, pctl, ealr, eald = (block.get("risk_rating"), block.get("eal_national_pctl"),
-                                block.get("eal_rating"), block.get("eal_total_usd"))
-        if not _present(rr): return ""
-        def _ord(n): return f"{n}th" if 10 <= n % 100 <= 20 else f"{n}{ {1: 'st', 2: 'nd', 3: 'rd'}.get(n % 10, 'th') }"
-        pct = f", {_ord(round(pctl))} national percentile" if isinstance(pctl, (int, float)) else ""
-        dollars = f"{money(eald)}/yr " if isinstance(eald, (int, float)) and eald > 0 else ""
-        eal = (f"<li><b>{label} modeled annual loss (county)</b><span>{dollars}({html.escape(str(ealr))}{pct})</span></li>"
-               if _present(ealr) else "")
-        return f"<li><b>{label} flood risk</b><span>{html.escape(str(rr))}</span></li>" + eal
-    risk_body = ("<ul class='kv'>" + risk_rows(cf, "Coastal") + risk_rows(inl, "Inland") + "</ul>"
-                 "<p class='note'>Modeled annual loss is FEMA's estimate for the whole county (all buildings), "
-                 "not any one home's expected loss or premium, and not a flood probability.</p>")
+    # headline = the plain rating word; the modeled-loss dollars + percentile are demoted into a plain note
+    # (kept, not hidden — just not near-top jargon noise).
+    def rating_row(block, label):
+        rr = block.get("risk_rating")
+        return f"<li><b>{label} flood risk</b><span>{html.escape(str(rr))}</span></li>" if _present(rr) else ""
+    def _detail(block, label):
+        pctl, eald = block.get("eal_national_pctl"), block.get("eal_total_usd")
+        if not _present(block.get("risk_rating")): return ""
+        bits = []
+        if isinstance(pctl, (int, float)): bits.append(f"higher flood risk than about {round(pctl)}% of U.S. counties")
+        if isinstance(eald, (int, float)) and eald > 0: bits.append(f"FEMA models roughly {money(eald)} of flood loss a year across all its buildings")
+        return (f" {label.lower()}: " + "; ".join(bits) + ".") if bits else ""
+    risk_body = ("<ul class='kv'>" + rating_row(cf, "Coastal") + rating_row(inl, "Inland") + "</ul>"
+                 "<p class='note'>This is FEMA's plain risk rating for the county, a comparison — not a prediction "
+                 "for your home."
+                 + _detail(cf, "Coastal") + _detail(inl, "Inland") +
+                 " Any loss figure is a whole-county estimate across all buildings, never one home's expected loss or premium.</p>")
     parts = []
     if _present(cf.get("risk_rating")): parts.append(f"coastal flood risk {html.escape(str(cf['risk_rating']))}")
     if _present(inl.get("risk_rating")): parts.append(f"inland flood risk {html.escape(str(inl['risk_rating']))}")
     risk = card("How much flood risk is here?",
-                f"FEMA's National Risk Index rates {CS}'s " + " and ".join(parts) + ", from expected annual loss.",
+                f"FEMA rates {CS}'s " + " and ".join(parts) + " — how this county compares with others, not odds for your address.",
                 risk_body, src("NRI 2023 release", RETR))
 else:
     risk = card("How much flood risk is here?",
@@ -150,8 +154,9 @@ else:
     cost_body = (spread_svg() + "<p class='note'>Each policy's annual cost (premium plus fees), single-family "
                  "primary residences. The bar is the middle half (p25–p75); the orange line is FEMA's full-risk price.</p>")
 if P.get("frp_median") and P.get("share_below"):
-    cost_lead += (f" Most policyholders here pay below FEMA's full risk-based price (about "
-                  f"{money(P['frp_median'])} median) — the gap a bill can climb toward over time; see below.")
+    cost_lead += (f" Most policyholders here pay below FEMA's full &ldquo;risk-based&rdquo; price — what a policy "
+                  f"would cost without today's discounts and yearly caps, about {money(P['frp_median'])} median — "
+                  f"the gap a bill can climb toward over time; see below.")
 # "Going rate" line only when recent policies are a MEANINGFUL SUBSET. On an in-force annual-policy
 # snapshot nearly every policy was written in the last 12 months, so "recent" == the whole book and the
 # line would just restate the median while implying a subset. Suppress it then (not padding).
@@ -218,7 +223,8 @@ _disc_communities = [c for c in crs if _pct(c.get("sfhaDiscount"))]
 if _disc_communities:
     top = max(_disc_communities, key=lambda c: int(_pct(c["sfhaDiscount"]).rstrip("%")))
     crs_lead = (f"{len(_disc_communities)} of {CS}'s {len(crs)} NFIP communities carry a Community Rating System "
-                f"discount that cuts every eligible policy's premium — up to {_pct(top['sfhaDiscount'])} inside the "
+                f"discount — a group discount a town earns for extra flood-prevention work — that cuts every "
+                f"eligible policy's premium, up to {_pct(top['sfhaDiscount'])} inside the "
                 f"high-risk zone ({html.escape(top['communityName'].replace('*','').strip().title())}).")
 else:
     crs_lead = (f"None of {CS}'s {len(crs)} NFIP communities currently carries a Community Rating System discount; "
