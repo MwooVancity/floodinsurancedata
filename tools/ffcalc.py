@@ -30,6 +30,20 @@ ZIP_MIN = 25    # min priced single-family policies to publish a per-ZIP median
 
 def _valid_cost(r): return isinstance(r.get("policyCost"), (int, float)) and r["policyCost"] > 0
 
+PREM = "totalInsurancePremiumOfThePolicy"
+
+def premium_gap(coh):
+    """Like-for-like gap to FEMA's full-risk price: premium charged vs fullRiskPremium, BOTH premium-only.
+    policyCost adds the reserve fund assessment, federal policy fee and HFIAA surcharge (FEMA data
+    dictionary), so comparing it to fullRiskPremium overstated bills and understated 'share below'."""
+    both = [r for r in coh if isinstance(r.get(PREM), (int, float)) and r[PREM] > 0
+            and isinstance(r.get("fullRiskPremium"), (int, float)) and r["fullRiskPremium"] > 0]
+    below = sum(1 for r in both if r[PREM] < r["fullRiskPremium"])
+    return {"prem_median": pctl([r[PREM] for r in both], 50),
+            "frp_median": pctl([r["fullRiskPremium"] for r in both], 50), "frp_n": len(both),
+            "share_below": round(100 * below / len(both), 1) if both else None, "below_n": len(both),
+            "gap_basis": "premium"}
+
 def aggregate_policies(rows):
     units = sum(int(r.get("policyCount") or 0) for r in rows)
     coh = [r for r in rows if isone(r.get("occupancyType")) and istrue(r.get("primaryResidenceIndicator"))]
@@ -62,10 +76,7 @@ def aggregate_policies(rows):
         ({"zip": z, "units": zu_zip[z], "cost_n": len(zc_zip[z]),
           "median": pctl(zc_zip[z], 50) if len(zc_zip[z]) >= ZIP_MIN else None} for z in zu_zip),
         key=lambda d: -d["units"])[:25]
-    both = [r for r in coh if isinstance(r.get("policyCost"), (int, float)) and r["policyCost"] > 0
-            and isinstance(r.get("fullRiskPremium"), (int, float)) and r["fullRiskPremium"] > 0]
-    frp = [r["fullRiskPremium"] for r in both]
-    below = sum(1 for r in both if r["policyCost"] < r["fullRiskPremium"])
+    gap = premium_gap(coh)
     zu = defaultdict(int)
     for r in rows:
         zu[(r.get("ratedFloodZone") or "Unknown").strip()] += int(r.get("policyCount") or 0)
@@ -75,8 +86,7 @@ def aggregate_policies(rows):
         "cohort_n": len(coh), "cost_n": len(cost),
         "cost_excluded": len(coh) - len(cost),          # cohort records dropped for null/non-positive cost
         "p25": pctl(cost, 25), "p50": pctl(cost, 50), "p75": pctl(cost, 75), "p90": pctl(cost, 90),
-        "frp_median": pctl(frp, 50), "frp_n": len(frp),
-        "share_below": round(100 * below / len(both), 1) if both else None, "below_n": len(both),
+        **gap,
         "zone_units": dict(sorted(zu.items(), key=lambda x: -x[1])[:12]),
         "sfha_units": sfha, "sfha_share_units": round(100 * sfha / units, 1) if units else None,
         "spread_ok": len(cost) >= SMALL_COHORT,         # publish the spread only on enough VALID cost obs

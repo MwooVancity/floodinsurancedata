@@ -114,6 +114,18 @@ if by:
 if P.get("frp_median") and money(P["frp_median"]) in html and not re.search(r"not a quote", html, re.I):
     fails.append("full-risk shown without a 'not a quote' caveat")
 
+# 8g. Direction words must agree with the county's own numbers (caught live 2026-10-25: "most pay below"
+# printed on 23 pages where 50% or fewer did; "climb toward" where full-risk was below the median bill).
+_sb = P.get("share_below")
+if _sb is not None and _sb <= 50 and re.search(r"\bmost (policyholders|policies)[^.<]{0,40}below", html, re.I):
+    fails.append(f"says most pay below full-risk but share_below is {_sb}%")
+if P.get("frp_median") and P.get("prem_median") and P["frp_median"] <= P["prem_median"] \
+        and re.search(r"climb(ing)? toward", html, re.I) and not re.search(r"not climbing toward", html, re.I):
+    fails.append("says bills climb toward full-risk but full-risk median <= median premium")
+# 8h. Full-risk gap must be like-for-like: premium vs fullRiskPremium (policyCost adds fees; caught 2026-10-25).
+if P.get("frp_median") and P.get("gap_basis") != "premium":
+    fails.append("full-risk gap not computed on the premium basis (run tools/collect_premium_gap.py)")
+
 # 9. freshness metadata present (strongest AI-citation correlate; must reflect a real data date)
 if '"dateModified"' not in html:
     fails.append("no dateModified in schema (freshness metadata missing)")

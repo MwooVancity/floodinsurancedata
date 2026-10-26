@@ -109,7 +109,7 @@ meth = HEAD.format(title="Methodology — flood insurance data", desc="Definitio
 <li><b>Policy units</b> = sum of <code>policyCount</code>, never a row count — condo-association records carry more than one unit.</li>
 <li><b>Cost cohort</b>: single-family primary-residence policies (occupancy 1/11, primary residence), annual cost = premium + fees.</li>
 <li><b>Percentiles</b> p25/p50/p75/p90 by inclusive interpolation.</li>
-<li><b>Full-risk gap</b>: share of cohort whose cost is below FEMA's full-risk premium.</li>
+<li><b>Full-risk gap</b>: share of cohort whose premium charged (<code>totalInsurancePremiumOfThePolicy</code>) is below FEMA's full-risk premium (<code>fullRiskPremium</code>); both are premium-only. The cost figures elsewhere use <code>policyCost</code>, which FEMA defines as premium plus the reserve fund assessment, federal policy fee and HFIAA surcharge, so they are not compared with full-risk.</li>
 <li><b>Claims per 100</b>: cumulative paid claims since 1978 over current policy units — a historical tally, not an annual rate or a flood probability.</li>
 <li><b>Suppression</b>: cost charts need ≥100 cohort policies; a ZIP page exists only if it passes the 3-part publish test (sufficiency, decision-relevant difference, distinct intent).</li>
 <li><b>Dates</b>: each figure shows its effective date and retrieval date; policy snapshot differs from other datasets' retrieval dates.</li></ul></div>
