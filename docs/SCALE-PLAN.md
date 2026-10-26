@@ -65,6 +65,22 @@ Only where Search Console shows demand:
   stays an address-level link, not a fabricated county number.
 - Standalone ZIP pages only where the 3-part publish test passes.
 
+## 5a. Queued data blocks, ranked (from the 2026-10-25 gap research — build when ready, each verified-fetch-first, never faked)
+The site shows the insurance but never the flood itself, and misses homeowners' most-asked questions. Build in this order:
+
+**Tier 1 — need NO new dataset (recompute from the OpenFEMA Policies/Claims files already ingested; highest leverage, cheapest):**
+1. **Payout reality** — average paid claim + the share of claims closed WITH NO payment, per county. Source: NFIP Claims (already have; uses the closed-without-payment flag). Answers "is NFIP even worth it / do claims actually pay?" Nobody publishes this. Caveat: closed-without-payment ≠ "denied" (withdrawn, below-deductible, duplicate all count).
+2. **Local premium trend** — median cost by policy effective year, per county. Source: NFIP Policies (already have). Answers "are premiums here rising?" Caveat: cohort-mix + RR2.0 phase-in, not a like-for-like index (already noted on page).
+3. **Claims paid OUTSIDE the high-risk zone** — share of paid claim dollars in Zone X / non-SFHA, per county. Source: NFIP Claims `floodZone` (already have). Answers the #1 reader question "do I need it outside the 100-year floodplain?" Caveat: insured-claims only, not all flood damage.
+
+**Tier 2 — one new keyless federal dataset each (verified endpoints):**
+4. **NCEI Storm Events** (highest info-gain NEW dataset) — actual flood/flash-flood event counts + NWS damage $ per county, 1950–present. Source (VERIFIED, keyless bulk CSV): `https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/` (`StormEvents_details-ftp_v1.0_d{YEAR}_c*.csv.gz`), county FIPS + event type. Adds the missing PHYSICAL-flood axis ("has it actually flooded here, how badly"), distinct from insured claims. Caveat: NWS damage dollars are field estimates, not audited.
+5. **NfipResidentialPenetrationRates** (VERIFIED OpenFEMA, 3,159 rows, county) — take-up overall AND inside the SFHA. A cleaner "how many homes here actually carry it" than our Census proxy; could replace/augment the take-up card. Caveat: NFIP-only, estimated denominator.
+
+**Also captured (lower priority / bigger lift):** NfipMultipleLossProperties (real 240k-row repetitive-loss file, county/ZIP, richer than the IA one we use); RR2.0 county/ZIP premium-change XLSX files (static, binned, off May-2020 data). Honest explainer wedge (not data): the pre-2021 vs RR2.0 correction — grandfathering gone (→ glide path), elevation certificates no longer required, "assume the seller's rate" now = inheriting a glide-path discount; the web still repeats the obsolete rules.
+
+**Genuinely unanswerable (leave as printed gap lines, never fake):** a property's exact future full-risk premium, live private-insurer quotes, why a specific claim was closed without payment, and county %-in-SFHA without our own GIS intersection. NFHL zone-mix / SLOSH surge / First Street are address-only / GIS / paywalled — out of scope unless we add a GIS step.
+
 ## 6. Infra for scale (built or named)
 - ✅ CI auto-deploy (committed `dist/` → Cloudflare on push; gate on PR).
 - ✅ FEMA schema-drift alarm (`collect.py` fails loud if a field vanishes).

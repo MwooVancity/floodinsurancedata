@@ -35,8 +35,8 @@ source, not a silence.
 
 ## Line 0b — we are the dataset catalog (the moat)
 Competitors (NerdWallet, LendingTree, Policygenius, floodfigures.com) show one stale average and a
-count. We join every public dataset that bears on the decision. **EIGHT distinct federal datasets** (the
-page says "joins 8 of them" and the gate enforces that the stated count equals the sources listed — keep
+count. We join every public dataset that bears on the decision. **TEN distinct federal datasets** (the
+page says "joins 10 of them" and the gate enforces that the stated count equals the sources listed — keep
 it at 8 everywhere). Item 2 is a field of item 1, not a separate fetch; the PIF workbook is a
 reconciliation benchmark, not a dataset. All verified live 2026-10-22 (item 9 added 2026-10-24):
 1. NFIP Policies v3 — cost spread p25/p50/p75/p90 (they show only a median).
