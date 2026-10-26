@@ -570,7 +570,7 @@ if cx.get("claims"):
         f"<li><b>Claims that paid</b><span>{tp('claims_paid_n', 'data.claims_extra.paid_n')}</span></li></ul>"
         f"<p class='note'>{rule('cwop')} The average is over claims that paid something; a single home can file "
         "across several floods over the years.</p>",
-        src(["claims_filed", "avg_paid", "cwop_share"], f"{C['year_min']}–{C['year_max']}", cx.get("retrieved", RETR)))
+        src(["claims_filed", "avg_paid", "cwop_share"], f"{C['year_min']}–{C['year_max']}", cx.get("retrieved", RETR)), id="payout")
 
 # ---- claims OUTSIDE the high-risk zone (the "I'm not in the flood zone" rebuttal) ----
 outside_note = ""
@@ -766,6 +766,17 @@ _faq = [
     (f"How many flood claims has {CS} had?",
      f"{num(C['rows'])} NFIP flood claims between {C['year_min']} and {C['year_max']}, which paid {money(C['total_paid'])} in total."),
 ]
+_qa = [f'<a href="#required"><b>Am I required to buy it?</b> {rule("purchase_answer")}</a>',
+       f'<a href="#covered"><b>How fast does it start?</b> {rule("howto_answer")}</a>']
+_cxq = data.get("claims_extra") or {}
+if _cxq.get("claims") and _cxq.get("avg_paid") and P.get("p50"):
+    _qa.append(f'<a href="#payout"><b>Does it pay out here?</b> {m("paid_share", str(round(100 - _cxq["cwop_share"], 1)) + "%")} of claims here paid '
+               f'something; the average paid claim, {tp("avg_paid", "data.claims_extra.avg_paid", money)}, is about '
+               f'{m("claim_years", str(round(_cxq["avg_paid"] / P["p50"])))} years of the typical bill here.</a>')
+_qa.append('<a href="#covered"><b>Already flooded?</b> What to do now, and what FEMA aid covers.</a>')
+_qa.append('<a href="#compare"><b>Is my quote normal?</b> These are existing policies, not a quote; type yours in to see where it sits.</a>')
+quick_answers = '<nav class="jump qa">' + "".join(_qa) + "</nav>"
+
 # provenance: we download every record FEMA publishes for the place and recompute; say so, with the counts
 _man = agg.get("manifest") or {}
 _mp, _mc = _man.get("policies") or {}, _man.get("claims") or {}
@@ -904,6 +915,9 @@ svg{{display:block;margin:6px 0}}
 .ax{{fill:var(--mut);font-size:13px;text-anchor:middle}}.ax2{{fill:var(--faint);font-size:13px}}
 nav.jump{{font-size:14px;margin:0 0 12px;display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center}}
 nav.jump a{{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:5px 11px;text-decoration:none;font-weight:600}}
+nav.qa{{display:block;margin:8px 0 14px}}
+nav.qa a{{display:block;border-radius:10px;padding:9px 12px;margin:0 0 6px;font-weight:400;color:var(--ink);font-size:14.5px;line-height:1.45}}
+nav.qa a b{{color:var(--brand);margin-right:4px}}nav.qa a:after{{content:" →";color:var(--brand)}}
 .two{{display:grid;grid-template-columns:1fr 1fr;gap:16px}}
 nav.sib{{font-size:14px;color:var(--mut);margin:16px 0;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 16px}}
 nav.sib a{{color:var(--brand);font-weight:600}}
@@ -921,17 +935,15 @@ table{{width:100%}}}}
 <section class="hero">
 <p class="kicker">NFIP records · {CS} · policies as of {POL_ASOF}</p>
 <h1>Flood insurance in {CL}</h1>
-<p class="lede">What policyholders here actually pay, what floods have paid out, and how to pay less, from public federal records.</p>
 <div class="stats">
 <div class="stat"><div class="n">{m('cost_p50', money(P['p50']))}</div><div class="l">Median / yr</div></div>
 <div class="stat"><div class="n">{m('cost_mo', median_mo)}</div><div class="l">Per month</div></div>
 <div class="stat"><div class="n">{m('cost_p25', money(P['p25']))}–{m('cost_p75', money(P['p75']))}</div><div class="l">Middle half</div></div>
 <div class="stat"><div class="n">{m('share_below', str(P['share_below']) + '%')}</div><div class="l">Pay under FEMA's full-risk price</div></div>
 </div>
-<nav class="jump"><b>Jump to:</b> <a href="#required">Am I required?</a> <a href="#zone-cost">Cost in my zone</a> <a href="#compare">Is my quote normal?</a> <a href="#covered">How to buy / already flooded</a></nav>
 {cmp_line}
-<p class="caveat">This is what existing single-family policies cost — not a quote. Your own premium depends on your building, coverage and elevation.</p>
 <a class="btn" href="https://msc.fema.gov/portal/home" rel="nofollow noopener" target="_blank">Check your address on FEMA's flood map →</a>
+{quick_answers}
 <p class="note">Your flood zone is set at your exact address and drives your price and whether coverage is required. Look it up first, then read your zone's row in "What does it cost in my flood zone?" below.</p>
 {prov_line}
 </section>

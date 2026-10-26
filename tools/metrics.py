@@ -141,6 +141,7 @@ METRICS.update({   # every other figure a page prints; q (data-q) names the row 
     "n_sources": _m(POL, ["id"], "count"),
     "units_listed": _m(POL, ["censusGeoid"], "count"),
     "zip": _m(POL, ["reportedZipCode"], "count"),
+    "claim_years": _m(CLM, ["netBuildingPaymentAmount", "netContentsPaymentAmount", "netIccPaymentAmount"], "count"),   # avg paid claim / median yearly cost
 })
 
 def values(agg, data):
