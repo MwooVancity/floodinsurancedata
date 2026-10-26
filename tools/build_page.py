@@ -19,6 +19,9 @@ CL = os.environ.get("FF_COUNTYLABEL", "Lee County, Florida")   # full label
 CS = os.environ.get("FF_COUNTYSHORT", "Lee County")            # short label
 IS_STATE = os.environ.get("FF_LEVEL", "county") == "state"     # state hub page: same template, state data, county table
 EXTRAS = json.load(open(os.path.join(DIR, "extras.json"))) if os.path.exists(os.path.join(DIR, "extras.json")) else {}
+if not EXTRAS:   # county pages: the raw-pull extras live in data/all-counties/<geoid>.json
+    _xp = os.path.join(os.path.dirname(HERE), "data", "all-counties", os.environ.get("FF_GEOID", "") + ".json")
+    if os.path.exists(_xp): EXTRAS = json.load(open(_xp)).get("extras") or {}
 OFFICIAL = int(os.environ.get("FF_OFFICIAL", "132012"))        # FEMA official PIF count (0 = unknown)
 POL_ASOF = "July 31, 2026"; RETR = "October 22, 2026"
 ATTR = ("This product uses the Federal Emergency Management Agency's OpenFEMA API, "
@@ -440,6 +443,42 @@ if IS_STATE:
             "Private flood policies are not in this data.</p>",
             src(["inforce"], "2019–2026", RETR))
 
+# ---- raw-pull extras: would a policy rebuild the home, why claims went unpaid, which storms paid most ----
+_xp, _xc = EXTRAS.get("policies") or {}, EXTRAS.get("claims") or {}
+rebuild_card = unpaid_card = events_card = ""
+if (_xp.get("replacement_n") or 0) >= 30 and _xp.get("replacement_over_250k_pct") is not None:
+    _ro = _xp["replacement_over_250k_pct"]
+    rebuild_card = card("Would a policy here pay to rebuild my home?",
+        f"Not in full for {m('rebuild_over_cap_pct', str(_ro) + '%')} of insured single-family homes here: FEMA's records put their "
+        f"rebuilding cost above {rule('building_cap')}",
+        f"<ul class='kv'><li><b>Rebuilding cost above the building limit</b><span>{_ro}% of {m('rebuild_n', num(_xp['replacement_n']))} policies reporting one</span></li>"
+        + (f"<li><b>Carry the maximum building coverage</b><span>{m('at_cap_pct', str(_xp['at_building_max_pct']) + '%')}</span></li>" if _xp.get("at_building_max_pct") is not None else "")
+        + (f"<li><b>Damage was more than the coverage</b><span>{m('damage_over_cov_pct', str(_xc['damage_over_coverage_pct']) + '%')} of {num(_xc['damage_n'])} claims paid with a damage figure</span></li>"
+           if _xc.get("damage_over_coverage_pct") is not None and (_xc.get("damage_n") or 0) >= 30 else "")
+        + f"</ul><p class='note'>{rule('limits')} Rebuilding cost is the replacement-cost figure on each single-family primary-home policy record.</p>",
+        src(["rebuild_over_cap_pct", "at_cap_pct", "damage_over_cov_pct"], POL_ASOF, RETR) + src_rules(["building_cap", "limits"]))
+_why = [r for r in (_xc.get("unpaid_reasons") or []) if r["code"] not in ("97", "98", "99")]   # 97 other, 98/99 recorded in error: not a reason
+if _why and (_xc.get("unpaid_n") or 0) >= 10:
+    unpaid_card = card("Why do flood claims here go unpaid?",
+        f"Of the {m('unpaid_n', num(_xc['unpaid_n']))} claims here closed without payment, the top reason FEMA recorded was "
+        f"“{html.escape(_why[0]['label']).lower()}” ({m('unpaid_reason_n', num(_why[0]['n']))} claims).",
+        "<table><thead><tr><th>Reason recorded</th><th>Claims</th></tr></thead><tbody>"
+        + "".join(f"<tr><td>{html.escape(r['label'])}</td><td>{num(r['n'])}</td></tr>" for r in _why) + "</tbody></table>"
+        "<p class='note'>The building non-payment reason on each NFIP claim closed with nothing paid. Records marked "
+        "“other” or entered in error are left out.</p>",
+        src(["unpaid_n", "unpaid_reason_n"], f"{C['year_min']}–{C['year_max']}", RETR))
+_GENERIC = {"flood", "flooding", "floods", "heavy", "rain", "rains", "rainfall", "severe", "storm", "storms", "and", "flash", "spring", "event"}
+_ev = [e for e in (_xc.get("events") or []) if set(e["name"].lower().replace("/", " ").split()) - _GENERIC]
+if len(_ev) >= 2:
+    events_card = card("Which named storms paid out the biggest totals here?",
+        f"Among named storms, {html.escape(_ev[0]['name'])} paid out the largest total: {m('event_paid', big(_ev[0]['paid']))} across "
+        f"{m('event_claims', num(_ev[0]['claims']))} NFIP flood claims.",
+        "<table><thead><tr><th>Storm (FEMA's name)</th><th>Claims</th><th>Total paid</th><th>Average</th></tr></thead><tbody>"
+        + "".join(f"<tr><td>{html.escape(e['name'])}</td><td>{num(e['claims'])}</td><td>{big(e['paid'])}</td><td>{money(e['avg'])}</td></tr>" for e in _ev)
+        + "</tbody></table><p class='note'>NFIP claims that were paid, grouped by the flood event FEMA assigned; claims with no event "
+        "name, or a generic one like “flooding”, are left out.</p>",
+        src(["event_paid", "event_claims"], f"{C['year_min']}–{C['year_max']}", RETR))
+
 # ---- repetitive-loss properties (FEMA IA multiple-loss; a chronic repeat-flood signal, distinct from
 # the annual NFIP claims) ----
 ml = data.get("multiloss") or {}
@@ -815,6 +854,12 @@ table{{width:100%}}}}
   src(["claims_filed", "claims_total"], f"{C['year_min']}–{C['year_max']}", RETR))}
 
 {payout_card}
+
+{unpaid_card}
+
+{events_card}
+
+{rebuild_card}
 
 {storm_card}
 

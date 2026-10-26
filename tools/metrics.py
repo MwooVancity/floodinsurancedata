@@ -85,6 +85,15 @@ METRICS = {
     "inforce_change_pct": _m(POL, ["policyEffectiveDate", "policyTerminationDate"], "pct", of="in-force policy records, 2022 to 2026"),
     "county_units": _m(POL, ["policyCount", "censusGeoid"], "count", counts="policy_unit"),
     "zone_inversion": _m(POL, ["policyCost", "ratedFloodZone"], "count"),   # 1 if any A/V zone median < Zone X median
+    # extras (raw pull, tools/extras_raw.py): single-family primary-home policy rows; claims by building non-payment code
+    "rebuild_over_cap_pct": _m(POL, ["buildingReplacementCost"], "pct", of="single-family home policies reporting a rebuilding cost"),
+    "rebuild_n": _m(POL, ["buildingReplacementCost"], "count", counts="policy_record"),
+    "at_cap_pct": _m(POL, ["totalBuildingInsuranceCoverage"], "pct", of="single-family home policies"),
+    "damage_over_cov_pct": _m(CLM, ["buildingDamageAmount", "totalBuildingInsuranceCoverage"], "pct", of="paid claims with a damage figure"),
+    "unpaid_n": _m(CLM, ["netBuildingPaymentAmount", "netContentsPaymentAmount", "netIccPaymentAmount"], "count", counts="claim_record"),
+    "unpaid_reason_n": _m(CLM, ["nonPaymentReasonBuilding"], "count", counts="claim_record"),
+    "event_paid": _m(CLM, ["floodEvent", "netBuildingPaymentAmount", "netContentsPaymentAmount", "netIccPaymentAmount"], "usd_claim_paid"),
+    "event_claims": _m(CLM, ["floodEvent"], "count", counts="claim_record"),
 }
 
 def values(agg, data):

@@ -44,6 +44,9 @@ RULES = {
                 "policy.",
         "sources": [(FS + "/get-insured/buy-a-policy", "Building policies cover up to $250,000", "curl"),
                     (FS + "/get-insured/buy-a-policy", "contents policies cover up to $100,000", "curl")]},
+    "building_cap": {
+        "text": "the NFIP's <b>$250,000</b> building limit.",
+        "sources": [(FS + "/get-insured/buy-a-policy", "Building policies cover up to $250,000", "curl")]},
     "how_to_buy": {
         "text": "To buy: call the NFIP at <b>(877) 336-2627</b>, go to <a href='https://www.floodsmart.gov' rel='nofollow "
                 "noopener' target='_blank'>FloodSmart.gov</a>, or ask any licensed insurance agent. Every NFIP insurer "
