@@ -91,6 +91,11 @@ def values(agg, data):
          "outside_sfha_dollars": cx.get("outside_sfha_pct"), "ml_total": ml.get("total"), "ml_srl": ml.get("srl"),
          "outside_sfha_policies": round(100 - P["sfha_share_units"], 1) if P.get("sfha_share_units") is not None else None,
          "zone_inversion": int(bool(xm) and any(z[:1] in "AV" and d["median"] < xm for z, d in cz.items()))}
+    v["ia_paid"] = sum(float(r.get("totalApprovedIhpAmount") or 0) for r in data.get("housing", []))
+    def _disc(x):
+        try: return float(str(x).rstrip("%") or 0) > 0
+        except ValueError: return False
+    v["crs_discount_communities"] = sum(1 for c in data.get("crs", []) if _disc(c.get("sfhaDiscount")) or _disc(c.get("nonSfhaDiscount")))
     return v
 
 OPS = {">": lambda a, b: a > b, ">=": lambda a, b: a >= b, "<": lambda a, b: a < b, "<=": lambda a, b: a <= b,
@@ -98,7 +103,7 @@ OPS = {">": lambda a, b: a > b, ">=": lambda a, b: a >= b, "<": lambda a, b: a <
 # words that carry a numeric direction or majority: on a rendered page they may appear only inside a claim()
 # span whose condition holds, or inside a rule() span (registry text). Matching is on whole words/phrases.
 QUANT = ("most", "majority", "climb", "climbing", "climbs", "rise", "rises", "rising", "less per policy",
-         "as much per policy", "cost less than", "at or above")
+         "as much per policy", "cost less than", "at or above", "yes")   # "yes" = a yes/no heading's answer
 
 def holds(cond, vals):
     a, op, b = cond
@@ -111,7 +116,9 @@ def claim(text, word, cond, vals):
     assert word in QUANT and re.search(rf"\b{re.escape(word)}\b", text, re.I), (word, text)
     if not holds(cond, vals):
         raise ValueError(f"claim '{word}' false: {cond} with {vals.get(cond[0])} vs {cond[2]}")
-    return f"<span data-claim='{json.dumps({'word': word, 'cond': list(cond)})}'>{text}</span>"
+    # attribute is HTML-escaped: the condition contains ">"/"<", which must never end the tag early
+    attr = json.dumps({"word": word, "cond": list(cond)}).replace("&", "&amp;").replace('"', "&quot;").replace("<", "&lt;").replace(">", "&gt;")
+    return f'<span data-claim="{attr}">{text}</span>'
 
 
 class UnitMismatch(ValueError):

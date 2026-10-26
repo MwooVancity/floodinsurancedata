@@ -26,6 +26,11 @@ RULES = {
         "sources": [(FS + "/get-insured/buy-a-policy", "while making, increasing, extending or renewing a mortgage", "curl"),
                     ("https://www.govinfo.gov/content/pkg/CFR-2024-title44-vol1/xml/CFR-2024-title44-vol1-sec61-11.xml",
                      "During the 13-month period beginning on the effective date of a revised", "curl")]},
+    "howto_answer": {
+        "text": "Buy it now: most policies start <b>30 days</b> after you buy, but there's no wait if you buy it with a new "
+                "or refinanced mortgage.",
+        "sources": [(FS + "/get-insured/buy-a-policy", "will go into effect 30 days after your date of purchase", "curl"),
+                    (FS + "/get-insured/buy-a-policy", "There is no wait if you buy flood insurance while making", "curl")]},
     "howto_tiles": {
         "text": "<ul class='kv'><li><b>Waiting period</b><span>30 days</span></li>"
                 "<li><b>Bought with a new or refinanced mortgage</b><span>No wait</span></li>"
@@ -54,10 +59,9 @@ RULES = {
         "sources": [(FS + "/contact", "Report your loss immediately to your insurance agent or carrier.", "curl"),
                     (IA_META, "in designated counties who sustained damage", "curl"),
                     (IA_META, "resulting from a federally declared disaster may apply", "curl")]},
-    "purchase_req": {
-        "text": "If the building is in a high-risk zone (any zone starting with A or V, such as A, AE, AH, AO or VE) and the "
-                "loan comes from a federally regulated lender, or the purchase or construction gets federal financial "
-                "assistance, federal law (42 U.S.C. §4012a) requires it.",
+    "purchase_answer": {
+        "text": "Only if your home is in a high-risk zone (A or V) and your mortgage is from a federally regulated lender, or federal "
+                "help to buy or build (42 U.S.C. §4012a).",
         "sources": [("https://www.govinfo.gov/content/pkg/USCODE-2023-title42/html/USCODE-2023-title42-chap50-subchapI-sec4012a.htm",
                      "regulated lending institutions", "curl"),
                     ("https://www.govinfo.gov/content/pkg/USCODE-2023-title42/html/USCODE-2023-title42-chap50-subchapI-sec4012a.htm",
@@ -77,6 +81,13 @@ RULES = {
                 "these are existing policies whose buildings differ. The reason for any one zone is not in this data.",
         "sources": [(FS + "/premiumcosts", "The premium amount is based on the flood risk of the building.", "curl"),
                     ("https://www.fema.gov/flood-insurance/risk-rating", "does not use flood zones to determine flood risk", "manual")]},
+    "glide": {
+        "text": "Those prices step up toward full-risk each year, limited by the yearly cap.",
+        "sources": [(FS + "/premiumcosts", "Limits annual premium increases to a set percentage.", "curl"),
+                    ("https://www.fema.gov/flood-insurance/risk-rating", "most rates not increase more than 18% per year", "manual")]},
+    "crs_auto": {
+        "text": "It applies to every eligible policy there.",
+        "sources": [(FS + "/premiumcosts", "Applies to all eligible policies within the community, regardless of flood zone.", "curl")]},
     "cwop": {
         "text": "FEMA lists reasons a claim closes without payment, such as damage below the deductible, no flood as "
                 "the policy defines it, or seepage and drain backup the policy does not cover.",

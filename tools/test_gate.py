@@ -42,15 +42,18 @@ STORM = re.search(r'<p class="src" data-src="storm_events,storm_damage">Source: 
 MUTATIONS = [   # (defect class from THE EVIDENCE table, what we reintroduce, expected id, page or agg)
     ("1 fee-vs-premium basis", "gap computed on policyCost", "L17", None, agg_with(gap_basis="cost")),
     ("2 prose vs numbers", "'most' asserted at 46.1%", "B1",
-     sub("of policyholders here pay", "of policyholders here pay <span data-claim='{\"word\": \"most\", \"cond\": [\"share_below\", \">\", 50]}'>most</span>"), None),
-    ("2 prose vs numbers", "free-typed 'climb toward'", "B2", sub("Both are premiums only;", "Bills climb toward it. Both are premiums only;"), None),
+     sub("Both are premiums only", '<span data-claim="{&quot;word&quot;: &quot;most&quot;, &quot;cond&quot;: [&quot;share_below&quot;, &quot;&gt;&quot;, 50]}">Most</span> pay below. Both are premiums only')
+     if "Both are premiums only" in PAGE else sub("(premiums only, before fees)", '(premiums only, before fees) <span data-claim="{&quot;word&quot;: &quot;most&quot;, &quot;cond&quot;: [&quot;share_below&quot;, &quot;&gt;&quot;, 50]}">Most</span> pay below.'), None),
+    ("2 prose vs numbers", "free-typed 'climb toward'", "B2", sub("(premiums only, before fees)", "(premiums only, before fees). Bills climb toward it"), None),
     ("3 rows called homes", "IA records labelled homes", "A2", sub("</span> flood-damage applications", "</span> homes"), None),
-    ("4 cross-panel", "filed count called 'paid'", "C3", sub("</span> NFIP flood claims, which paid", "</span> paid NFIP flood claims, which paid"), None),
+    ("4 cross-panel", "filed count called 'paid'", "C3", sub("</span> NFIP flood claims and", "</span> paid NFIP flood claims and"), None),
     ("5 rating vs percentile", "percentile without its basis", "A4", PAGE.replace("expected annual flood loss above about", "higher flood risk than about"), None),
     ("6 attribution", "NOAA panel credited to FEMA", "A1", sub(STORM, '<p class="src" data-src="storm_events,storm_damage">Source: FEMA OpenFEMA.'), None),
     ("6 attribution", "hand-typed source line", "A1", re.sub(r'<p class="src" data-src="ml_total">', '<p class="src">', PAGE, count=1), None),
-    ("8 law wording", "purchase rule narrowed", "E1", sub("federally regulated lender, or", "federally backed lender, or"), None),
+    ("8 law wording", "purchase rule narrowed", "E1", sub("federally regulated lender, or federal", "federally backed lender, or federal"), None),
     ("sources", "dataset listed that no panel shows", "A5", sub('<ul class="srclist">', '<ul class="srclist"><li><a href="x">FEMA OpenFEMA — Made Up</a></li>'), None),
+    ("reader first", "card opens with a data dump", "F1",
+     PAGE.replace('<p class="stand">', '<p class="stand">' + "This block lists every figure in the dataset before any answer is given to the reader at all. " * 2, 1), None),
     ("one figure", "same metric shows two values", "A3", sub('<span data-m="cost_p50">$865</span>', '<span data-m="cost_p50">$856</span>'), None),
     # these two proved legacy L6 / L12b redundant (deleted 2026-10-25); kept as regression tests of A1 / C4
     ("legacy L6", "all OpenFEMA attribution removed", "A1", PAGE.replace("This product uses the Federal Emergency Management Agency's OpenFEMA API, but is not endorsed by FEMA.", ""), None),

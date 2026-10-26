@@ -150,8 +150,8 @@ if blk:
         fail("A5", f"sources block lists {sorted(set(listed) ^ set(cited))} that no panel cites (or misses one)")
 
 # ---------------- B. claims ----------------
-for attr, body in re.findall(r"<span data-claim='([^']*)'>(.*?)</span>", page, re.S):
-    c = json.loads(attr)
+for attr, body in re.findall(r'<span data-claim="([^"]*)">(.*?)</span>', page, re.S):
+    c = json.loads(H.unescape(attr))
     if not re.search(rf"\b{re.escape(c['word'])}\b", norm(re.sub(r'<[^>]+>', '', body)), re.I):
         fail("B1", f"claim word '{c['word']}' not in its sentence")
     if not MX.holds(c["cond"], VALS):
@@ -176,6 +176,11 @@ req = re.search(r'id="required".*?<tbody>(.*?)</tbody>', page, re.S)
 if req and units:
     tot = sum(int(x.replace(",", "")) for x in re.findall(r"<tr><td>[^<]*</td><td>([\d,]+)</td>", req.group(1)))
     if tot != units: fail("C4", f"zone table rows sum to {tot}, not the {units} units shown")
+
+# ---------------- F. reader first: every card opens with a short answer, not a data dump ----------------
+for stand in re.findall(r'<p class="stand">(.*?)</p>', page, re.S):
+    words = norm(re.sub(r"<[^>]+>", " ", stand)).split()
+    if len(words) > 40: fail("F1", f"card opening is {len(words)} words (max 40): '{' '.join(words[:12])}…'")
 
 # ---------------- E. rules registry ----------------
 for tag, key, body in re.findall(r'<(span|div) data-rule="(\w+)">(.*?)</\1>(?=\s|<|$)', page, re.S):
