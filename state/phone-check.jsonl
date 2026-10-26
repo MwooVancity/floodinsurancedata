@@ -78,3 +78,22 @@
 {"date": "2026-10-25", "base": "https://floodinsurancedata.com", "slug": "miami-dade-county-fl", "height": 15463, "pass": true, "fails": []}
 {"date": "2026-10-25", "base": "https://floodinsurancedata.com", "slug": "jefferson-parish-la", "height": 14350, "pass": true, "fails": []}
 {"date": "2026-10-25", "base": "https://floodinsurancedata.com", "slug": "kanawha-county-wv", "height": 14380, "pass": true, "fails": []}
+{"date": "2026-10-25", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpoh46tahy/site", "slug": "brevard-county-fl", "height": 14732, "pass": true, "fails": []}
+{"date": "2026-10-25", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpoh46tahy/site", "slug": "brevard-county-fl", "height": 13961, "pass": false, "fails": ["P5 1 collapsed <details> hide data"]}
+{"date": "2026-10-25", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpoh46tahy/site", "slug": "brevard-county-fl", "height": 14732, "pass": false, "fails": ["P4 quote checker not within screen 2 (top 14397.0625)"]}
+{"date": "2026-10-25", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpoh46tahy/site", "slug": "brevard-county-fl", "height": 14732, "pass": false, "fails": ["P2 text under 11px: ['text 3.5px \"$607\"', 'text 3.5px \"$865\"', 'text 3.5px \"$1,145\"', 'text 3.5px \"$1,332\"']"]}
+{"date": "2026-10-25", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpoh46tahy/site", "slug": "brevard-county-fl", "height": 14759, "pass": false, "fails": ["P1 wider than screen: ['page is 921px wide', 'DIV.']"]}
+{"date": "2026-10-25", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "miami-dade-county-fl", "height": 15463, "pass": true, "fails": []}
+{"date": "2026-10-25", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "jefferson-parish-la", "height": 14350, "pass": true, "fails": []}
+{"date": "2026-10-25", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "kanawha-county-wv", "height": 14380, "pass": true, "fails": []}
+{"date": "2026-10-25", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "district-of-columbia", "height": 13810, "pass": true, "fails": []}
+{"date": "2026-10-25", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpckul_1fs/site", "slug": "brevard-county-fl", "height": 14855, "pass": false, "fails": ["P3 map not on screen 1 (top 891.328125)"]}
+{"date": "2026-10-25", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmp9vxhy5bg/site", "slug": "brevard-county-fl", "height": 14865, "pass": true, "fails": []}
+{"date": "2026-10-25", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmp9vxhy5bg/site", "slug": "brevard-county-fl", "height": 14094, "pass": false, "fails": ["P5 1 collapsed <details> hide data"]}
+{"date": "2026-10-25", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmp9vxhy5bg/site", "slug": "brevard-county-fl", "height": 14865, "pass": false, "fails": ["P4 quote checker not within screen 2 (top 14530.359375)"]}
+{"date": "2026-10-25", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmp9vxhy5bg/site", "slug": "brevard-county-fl", "height": 14865, "pass": false, "fails": ["P2 text under 11px: ['text 3.5px \"$607\"', 'text 3.5px \"$865\"', 'text 3.5px \"$1,145\"', 'text 3.5px \"$1,332\"']"]}
+{"date": "2026-10-25", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmp9vxhy5bg/site", "slug": "brevard-county-fl", "height": 14893, "pass": false, "fails": ["P1 wider than screen: ['page is 921px wide', 'DIV.']"]}
+{"date": "2026-10-25", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "miami-dade-county-fl", "height": 15596, "pass": true, "fails": []}
+{"date": "2026-10-25", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "jefferson-parish-la", "height": 14483, "pass": true, "fails": []}
+{"date": "2026-10-25", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "kanawha-county-wv", "height": 14513, "pass": true, "fails": []}
+{"date": "2026-10-25", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "district-of-columbia", "height": 13943, "pass": true, "fails": []}

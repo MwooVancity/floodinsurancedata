@@ -68,6 +68,12 @@ rows = "".join(f'<tr data-k="{html.escape((p["short"]+" "+(p.get("state") or "")
 srows = "".join(f'<tr data-k="{html.escape((s["name"] + " " + s["abbr"]).lower())}"><td><a href="/flood-insurance/{s["slug"]}/">{html.escape(s["name"])}</a></td>'
                 f'<td>{money(s["median"])}</td><td>{format(s["units"], ",")}</td></tr>' for s in sorted(states, key=lambda s: -s["units"]))
 national = ""
+def _man(sl):   # records downloaded for a built state (its pull manifest)
+    mm = json.load(open(os.path.join(DATADIR, "states", sl, "agg.json"))).get("manifest") or {}
+    return (mm.get("policies") or {}).get("unique_fetched") or 0, (mm.get("claims") or {}).get("unique_fetched") or 0
+_tp = sum(_man(s["slug"])[0] for s in states); _tc = sum(_man(s["slug"])[1] for s in states)
+prov = (f'<p class="mut" style="font-size:14px">Built from {_tp:,} NFIP policy records and {_tc:,} claim records downloaded from FEMA: '
+        f'every record for each state shown, matched to FEMA’s own count. <a href="/methodology/">How we check them</a></p>') if states else ""
 if len(states) == 51:   # U.S. figures only once every state is built and gated: never a partial total called national
     _h = json.load(open(os.path.join(DATADIR, "us", "cost_hist.json")))
     _all = sorted((int(v), c) for st in _h.values() for v, c in st.items())
@@ -87,6 +93,7 @@ home = HEAD.format(title="Flood insurance cost by state and county (FEMA data)",
 <h1>What flood insurance really costs where you live</h1>
 <p class="lede">Answers from FEMA's own policy and claim records: what people near you pay, whether you're required to buy it, and how fast it starts.</p>
 {national}
+{prov}
 <input id="s" placeholder="Type your state or county…" aria-label="Find your state or county" autocomplete="off"></section>
 <div class="card"><h2>Three things to know first</h2>
 <p class="stand"><b>How fast does it start?</b> {rule("howto_answer")}</p>
@@ -130,6 +137,7 @@ wr(os.path.join(DIST, "flood-insurance", "index.html"), hub)
 # ---- methodology ----
 meth = HEAD.format(title="Methodology — flood insurance data", desc="Definitions, sources, dates, cohort rules and reconciliation for the flood-insurance data.", canon=BASE + "/methodology/") + f"""
 <h1>Methodology</h1>
+<div class="card"><h2>What we downloaded</h2><p>We do not use FEMA's summary tables. For every state page we download every NFIP policy record in force and every NFIP claim record FEMA publishes for that state, check the count against the API's own record total (a page is blocked if any record is missing), and compute every figure ourselves. So far: {_tp:,} policy records and {_tc:,} claim records. Each page states its own counts and offers its figures as a CSV.</p></div>
 <div class="card"><h2>Sources</h2><ul>
 <li>NFIP Redacted <b>Policies v3</b> and <b>Claims v3</b> — OpenFEMA API (keyless). Cost, full-risk premium, zones, claims.</li>
 <li><b>Community Status Book v1</b> — OpenFEMA. CRS class and premium discount by community.</li>

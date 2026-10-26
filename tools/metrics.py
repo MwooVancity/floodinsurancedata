@@ -94,6 +94,9 @@ METRICS = {
     "unpaid_reason_n": _m(CLM, ["nonPaymentReasonBuilding"], "count", counts="claim_record"),
     "event_paid": _m(CLM, ["floodEvent", "netBuildingPaymentAmount", "netContentsPaymentAmount", "netIccPaymentAmount"], "usd_claim_paid"),
     "event_claims": _m(CLM, ["floodEvent"], "count", counts="claim_record"),
+    # provenance: how many records we downloaded (gate G1 checks against the pull manifest)
+    "records_policies": _m(POL, ["id"], "count", counts="policy_record"),
+    "records_claims": _m(CLM, ["id"], "count", counts="claim_record"),
 }
 
 def values(agg, data):

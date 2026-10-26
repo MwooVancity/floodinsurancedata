@@ -182,6 +182,16 @@ for stand in re.findall(r'<p class="stand">(.*?)</p>', page, re.S):
     words = norm(re.sub(r"<[^>]+>", " ", stand)).split()
     if len(words) > 40: fail("F1", f"card opening is {len(words)} words (max 40): '{' '.join(words[:12])}…'")
 
+# ---------------- G. provenance: "built from all N records" must equal the download manifest ----------------
+_man = agg.get("manifest") or {}
+for _k, _ds in (("records_policies", "policies"), ("records_claims", "claims")):
+    _mm = _man.get(_ds) or {}
+    _shown = re.findall(rf'<span data-m="{_k}">([\d,]+)</span>', page)
+    if _shown and (not _mm.get("complete") or _mm.get("missing") or int(_shown[0].replace(",", "")) != _mm.get("unique_fetched")):
+        fail("G1", f"page says {_shown[0]} {_ds} records, manifest has {_mm.get('unique_fetched')} (complete={_mm.get('complete')}, missing={_mm.get('missing')})")
+    if not _shown and _mm.get("complete") and not _mm.get("missing"):
+        fail("G1", f"complete {_ds} download not stated on the page")
+
 # ---------------- E. rules registry ----------------
 for tag, key, body in re.findall(r'<(span|div) data-rule="(\w+)">(.*?)</\1>(?=\s|<|$)', page, re.S):
     if key not in RULES: fail("E1", f"unknown rule {key}")

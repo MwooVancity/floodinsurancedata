@@ -662,9 +662,27 @@ _faq = [
     (f"How many flood claims has {CS} had?",
      f"{num(C['rows'])} NFIP flood claims between {C['year_min']} and {C['year_max']}, which paid {money(C['total_paid'])} in total."),
 ]
+# provenance: we download every record FEMA publishes for the place and recompute; say so, with the counts
+_man = agg.get("manifest") or {}
+_mp, _mc = _man.get("policies") or {}, _man.get("claims") or {}
+_pulled = pretty_date(_mp["pulled"]) if _mp.get("pulled") else RETR
+PROV_OK = bool(_mp.get("complete") and _mc.get("complete") and not _mp.get("missing") and not _mc.get("missing"))
+prov_line = (f'<p class="prov">Built from all {m("records_policies", num(_mp["unique_fetched"]))} in-force NFIP policy records and '
+             f'{m("records_claims", num(_mc["unique_fetched"]))} claim records FEMA publishes for {CS}, downloaded {_pulled} and '
+             f'matched to FEMA\'s own count, none missing. <a href="data.csv">Download the figures on this page (CSV)</a> · '
+             f'<a href="../../methodology/">How we check them</a></p>') if PROV_OK else ""
 jsonld = json.dumps([
     {"@context": "https://schema.org", "@type": "Dataset",
-     "name": f"NFIP flood insurance data for {CL}", "description": META_DESC, "url": CANON,
+     "name": f"NFIP flood insurance data for {CL}", "url": CANON,
+     "description": META_DESC + (f" Computed from a full download of {_mp['unique_fetched']:,} in-force NFIP policy records and "
+                                 f"{_mc['unique_fetched']:,} NFIP claim records (OpenFEMA NfipPolicies v3 and NfipClaims v3), "
+                                 "reconciled to FEMA's published record count." if PROV_OK else ""),
+     "measurementTechnique": "Full record-level download of OpenFEMA NfipPolicies v3 and NfipClaims v3, deduplicated by record id, reconciled to the API's record count, recomputed offline",
+     "variableMeasured": ["annual policy cost (premium plus fees)", "full-risk premium", "flood zone", "NFIP claims paid", "claim non-payment reason", "building replacement cost"],
+     "temporalCoverage": f"{C['year_min']}/{C['year_max']}",
+     "spatialCoverage": {"@type": "Place", "name": CL},
+     "distribution": [{"@type": "DataDownload", "encodingFormat": "text/csv", "contentUrl": CANON + "data.csv"}],
+     "keywords": ["flood insurance", "NFIP", "FEMA", CS],
      "creator": {"@type": "Organization", "name": "FEMA OpenFEMA"},
      "publisher": {"@type": "Organization", "name": "Flood Insurance Data", "url": BASE_URL},
      "dateModified": ISO_DATE, "datePublished": ISO_DATE,
@@ -749,6 +767,7 @@ a{{color:var(--brand)}}
 .topbar .crumb{{color:#bcd4df;font-size:13px}}
 .hero{{padding:30px 0 6px}}
 .hero h1{{font-family:var(--serif);font-weight:600;font-size:36px;line-height:1.1;margin:.1em 0 .3em;letter-spacing:-.01em}}
+.prov{{font-size:13.5px;color:var(--mut);border-left:3px solid var(--brand);padding:2px 0 2px 10px;margin:10px 0}}
 .kicker{{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin:0}}
 .lede{{color:var(--mut);font-size:16.5px;margin:.2em 0 1.1em;max-width:62ch}}
 .stats{{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:0 0 14px}}
@@ -808,6 +827,7 @@ table{{width:100%}}}}
 <p class="caveat">This is what existing single-family policies cost — not a quote. Your own premium depends on your building, coverage and elevation.</p>
 <a class="btn" href="https://msc.fema.gov/portal/home" rel="nofollow noopener" target="_blank">Check your address on FEMA's flood map →</a>
 <p class="note">Your flood zone is set at your exact address and drives your price and whether coverage is required. Look it up first, then read your zone's row in "What does it cost in my flood zone?" below.</p>
+{prov_line}
 </section>
 
 {quote_widget}
@@ -914,5 +934,13 @@ HTML = (HTML.replace("@@SOURCES_LI@@", "".join(f'<li><a href="{u}">{html.escape(
             .replace("@@N_SOURCES@@", str(len(SOURCES)))
             .replace('"@@CITATION@@"', json.dumps([{"@type": "Dataset", "name": n, "url": u} for n, u in SOURCES])))
 open(OUT_HTML, "w", encoding="utf-8").write(HTML)
+# data.csv next to the page: exactly the tagged figures the page shows, each with its dataset and FEMA fields
+import csv
+with open(os.path.join(os.path.dirname(OUT_HTML), "data.csv"), "w", newline="", encoding="utf-8") as _f:
+    _w = csv.writer(_f); _w.writerow(["place", "metric", "value", "unit", "dataset", "fields", "policies_as_of"]); _seen = set()
+    for _k, _v in re.findall(r'<span data-m="(\w+)">(.*?)</span>', HTML):
+        if _k in _seen: continue
+        _seen.add(_k); _d = MX.METRICS[_k]
+        _w.writerow([CL, _k, html.unescape(re.sub("<[^>]+>", "", _v)), _d["unit"], MX.DATASETS[_d["dataset"]][0], " + ".join(_d["fields"]), POL_ASOF])
 print("wrote", OUT_HTML, len(HTML), "bytes; NRI:", "yes" if NRI else "GAP",
       "; zones=policyUnits; completeness", mani_ok)

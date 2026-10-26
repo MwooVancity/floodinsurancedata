@@ -55,6 +55,8 @@ MUTATIONS = [   # (defect class from THE EVIDENCE table, what we reintroduce, ex
     ("reader first", "card opens with a data dump", "F1",
      PAGE.replace('<p class="stand">', '<p class="stand">' + "This block lists every figure in the dataset before any answer is given to the reader at all. " * 2, 1), None),
     ("one figure", "same metric shows two values", "A3", sub('<span data-m="cost_p50">$865</span>', '<span data-m="cost_p50">$856</span>'), None),
+    ("provenance", "record count inflated", "G1", re.sub(r'(<span data-m="records_policies">)[\d,]+', r"\g<1>99,999", PAGE, count=1), None),
+    ("provenance", "complete download not stated", "G1", re.sub(r'<p class="prov">.*?</p>', "", PAGE, count=1, flags=re.S), None),
     # these two proved legacy L6 / L12b redundant (deleted 2026-10-25); kept as regression tests of A1 / C4
     ("legacy L6", "all OpenFEMA attribution removed", "A1", PAGE.replace("This product uses the Federal Emergency Management Agency's OpenFEMA API, but is not endorsed by FEMA.", ""), None),
     ("legacy L12b", "'other zones' row dropped", "C4", re.sub(r"<tr><td>Other or unclassified zones</td>.*?</tr>", "", PAGE, count=1), None),

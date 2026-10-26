@@ -21,6 +21,9 @@ if not slugs:
     big, small = max(u, key=u.get), min(u, key=u.get)
     parish = next((s for s in sorted(u, key=u.get, reverse=True) if "parish" in s), big)
     slugs = list(dict.fromkeys([big, parish, small]))
+    _bp = os.path.join(ROOT, "data", "states", "built.json")   # plus the largest and smallest state page
+    st = sorted(json.load(open(_bp)), key=lambda s: s["units"]) if os.path.exists(_bp) else []
+    slugs += list(dict.fromkeys(s["slug"] for s in st[-1:] + st[:1]))
 
 # vw is the DEVICE width, not innerWidth: given wide content a phone widens the layout viewport and zooms the whole
 # page out, so measuring against innerWidth would hide exactly the overflow a reader suffers.
