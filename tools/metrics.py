@@ -102,6 +102,47 @@ METRICS = {
     "records_claims": _m(CLM, ["id"], "count", counts="claim_record"),
 }
 
+# method constants a page states ("zones with fewer than 50 priced policies are omitted"): printed as tagged figures
+CONST = {"min_priced": 30, "zone_min": 50, "zip_min": 25, "spread_min": 100, "rank_min": 100, "year_min": 30}
+_NRI, _CSB, _PEN, _ML = "NRI", "NfipCommunityStatusBook", "NfipResidentialPenetrationRates", "IndividualAssistanceMultipleLossFloodProperties"
+METRICS.update({   # every other figure a page prints; q (data-q) names the row when one metric fills a table
+    "threshold": _m(POL, ["policyCost"], "count"),
+    "cost_p90": _m(POL, ["policyCost"], "usd_cost_with_fees"),
+    "cost_n": _m(POL, ["policyCost"], "count"),
+    "zone_units": _m(POL, ["policyCount", "ratedFloodZone"], "count"),
+    "zone_share": _m(POL, ["policyCount", "ratedFloodZone"], "pct", of="policy units"),
+    "zone_cost_n": _m(POL, ["policyCost", "ratedFloodZone"], "count"),
+    "zip_units": _m(POL, ["policyCount", "reportedZipCode"], "count"),
+    "county_cost": _m(POL, ["policyCost", "censusGeoid"], "usd_cost_with_fees"),
+    "county_share_below": _m(POL, ["totalInsurancePremiumOfThePolicy", "fullRiskPremium", "censusGeoid"], "pct"),
+    "county_claims": _m(CLM, ["id", "countyCode"], "count"),
+    "county_count": _m(_NRI, ["RISK_RATNG"], "count"),
+    "prem_sf_median": _m(POL, ["totalInsurancePremiumOfThePolicy"], "usd_premium_only"),
+    "cost_by_year": _m(POL, ["policyCost", "policyEffectiveDate"], "usd_cost_with_fees"),
+    "cost_by_year_n": _m(POL, ["policyCost", "policyEffectiveDate"], "count"),
+    "claims_year_paid": _m(CLM, ["yearOfLoss", "netBuildingPaymentAmount", "netContentsPaymentAmount"], "usd_claim_paid"),
+    "claims_span_years": _m(CLM, ["yearOfLoss"], "count"),
+    "paid_share": _m(CLM, ["netBuildingPaymentAmount", "netContentsPaymentAmount", "netIccPaymentAmount"], "pct", of="claims filed"),
+    "event_avg": _m(CLM, ["floodEvent", "netBuildingPaymentAmount", "netContentsPaymentAmount", "netIccPaymentAmount"], "usd_claim_paid"),
+    "damage_n": _m(CLM, ["buildingDamageAmount"], "count"),
+    "crs_count": _m(_CSB, ["communityName", "sfhaDiscount"], "count"),
+    "crs_class": _m(_CSB, ["classRating"], "count"),
+    "pen_contracts": _m(_PEN, ["resContractsInForce"], "count"),
+    "pen_words": _m(_PEN, ["resPenetrationRate"], "pct"),
+    "takeup_per_100": _m(POL, ["policyCount"], "pct"),
+    "glide_years": _m(POL, ["totalInsurancePremiumOfThePolicy", "fullRiskPremium"], "count"),
+    "cap_pct": _m(POL, ["totalInsurancePremiumOfThePolicy"], "pct"),
+    "ia_per_reg": _m("HousingAssistanceOwners", ["totalApprovedIhpAmount", "validRegistrations"], "usd_aid_paid"),
+    "pct_vs": _m(POL, ["policyCost"], "pct"),
+    "rank_n": _m(POL, ["policyCost"], "count"),
+    "official_count": _m(POL, ["policyCount"], "count"),
+    "official_diff": _m(POL, ["policyCount"], "pct"),
+    "records_total": _m(POL, ["id"], "count"),
+    "n_sources": _m(POL, ["id"], "count"),
+    "units_listed": _m(POL, ["censusGeoid"], "count"),
+    "zip": _m(POL, ["reportedZipCode"], "count"),
+})
+
 def values(agg, data):
     """Numeric value of each claim-able metric, straight from the county's JSON (what gate re-checks claims on)."""
     P, C = agg.get("policies", {}), agg.get("claims", {})
@@ -157,10 +198,13 @@ def compare(a, b):
         raise UnitMismatch(f"cannot compare {a} ({ua}) with {b} ({ub})")
     return True
 
-def m(key, shown):
-    """Print a figure tagged with its metric key so the gate can check labels, bases and repeats."""
+def m(key, shown, path=None, q=None):
+    """Print a figure tagged with its metric key (labels, bases, repeats) and, when it is read straight from the
+    data, the path it came from ("policies.cost_by_zone.X.median"): the gate re-reads that path and fails if the
+    shown text is not that value. q names the row when one metric fills a table (zone, ZIP, year, county)."""
     assert key in METRICS, key
-    return f'<span data-m="{key}">{shown}</span>'
+    return (f'<span data-m="{key}"' + (f' data-q="{q}"' if q is not None else "") + (f' data-p="{path}"' if path else "")
+            + f'>{shown}</span>')
 
 def sources_for(keys):
     """Dataset display names for the figures a panel shows, in first-seen order (the panel's source line)."""

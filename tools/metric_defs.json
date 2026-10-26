@@ -34,6 +34,10 @@
    "def": "The actual cash value amount of damage to a main property in whole dollars.",
    "sha256": "75b3f1c609d1906372c95699e8e91dc2fb543c498a0187db1715ce8b5dc79764"
   },
+  "countyCode": {
+   "def": "FIPS code uniquely identifying the primary County (e.g., 011 represents Broward County) associated with the project. Note, the County Code field may not reflect the individual county the property is located as projects can be associated with more than one county",
+   "sha256": "b13dee4e84db751e675081123124d232cf3333e628447c4e97f325ac08c941de"
+  },
   "floodEvent": {
    "def": "Name given to a flooding catastrophe",
    "sha256": "866bc8ad19253e8518591bcd884cf3dc6e1303baa8c5dc5e1bad2fcaa83347e8"
@@ -65,12 +69,20 @@
   "totalBuildingInsuranceCoverage": {
    "def": "Total Insurance Amount in whole dollars on the Building",
    "sha256": "fe4725e33a7512f8e30287a66aa9134952cec95eb9280b40777f9fb8902e336e"
+  },
+  "yearOfLoss": {
+   "def": "Year in which the flood loss occurred",
+   "sha256": "5fd0fe6e101ed77067e2c8027b2caeea10ed2edda0e1a0bbea5c08e2d83c6bab"
   }
  },
  "NfipCommunityStatusBook": {
   "classRating": {
    "def": "The Class rating are based on aggregated points communities received for implementing floodplain activities that are higher than the minimum requirements of the National Flood Insurance Program (NFIP)",
    "sha256": "c7954d1d91c444ddba2c49466f6156027e6529029bffe69202955feaa6778d87"
+  },
+  "communityName": {
+   "def": "This is the name of the community, and is associated with the unique CID identifier. Generally, an NFIP community represents the lowest level of government with land use authority. Thus, not every city or town is recognized as its own community with the NFIP. Each state or territory determines land use authority granted to counties/parishes/boroughs, towns/cities, tribal area, etc. within their own jurisdiction",
+   "sha256": "48be6f2dbcf9f23d8612a88f6ae88497a7c065ffa795bb51f85843b36dc85dcc"
   },
   "nonSfhaDiscount": {
    "def": "The percentage of non Special Flood Hazard Area insurance (non-SFHA)  discount available based on the information received from the Community Rating System (CRS)",
@@ -140,6 +152,10 @@
   }
  },
  "NfipResidentialPenetrationRates": {
+  "resContractsInForce": {
+   "def": "National Flood Insurance Program (NFIP) Insured Residential Policy Contracts in Force (CIF) in the county. Data Source: PIVOT (system of record).",
+   "sha256": "29d42096c01c380dcaef91f396036691e3a75dc01ba9057729c3d65492757897"
+  },
   "resPenetrationRate": {
    "def": "NFIP insured residential structures in the county divided by all residential structures in the county. Policy Contracts in Force (CIF) is a good approximation of individual insured structures, as opposed to Policies in Force (PIF), which includes individual units within condominium structures.",
    "sha256": "f22419abcef78d7e53977e3e7079009d29ce55506f8be804085221dbd4cd0681"

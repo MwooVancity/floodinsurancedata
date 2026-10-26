@@ -48,7 +48,7 @@ def page_figures(slug):
                                   headers={"User-Agent": "Mozilla/5.0 (recheck)"}), timeout=60).read().decode() if base
            else open(path, encoding="utf-8").read())
     out = {}
-    for k, v in re.findall(r'<span data-m="(\w+)">([^<]*)</span>', src):
+    for k, v in re.findall(r'<span data-m="(\w+)"[^>]*>([^<]*)</span>', src):
         try: out.setdefault(k, float(v.replace("$", "").replace(",", "").replace("%", "")))
         except ValueError: pass   # a text figure ("16th highest" rank); recheck compares numbers only
     return out

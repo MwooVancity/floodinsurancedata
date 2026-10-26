@@ -11,7 +11,7 @@ SLUG = "brevard-county-fl"
 src_dir = os.path.join(ROOT, "data", SLUG)
 if not os.path.exists(os.path.join(src_dir, "agg.json")):
     print("test_gate: skipped (no data for", SLUG + ")"); sys.exit(0)
-tmp = tempfile.mkdtemp(); d = os.path.join(tmp, "d"); shutil.copytree(src_dir, d)
+tmp = tempfile.mkdtemp(); d = os.path.join(tmp, SLUG); shutil.copytree(src_dir, d)   # named like data/<slug>, so the gate finds its extras
 site = os.path.join(tmp, "site", "flood-insurance", SLUG); os.makedirs(site)
 good = os.path.join(site, "index.html")
 env = dict(os.environ, FF_DIR=d, OUT_HTML=good, FF_COUNTYLABEL="Brevard County, Florida", FF_COUNTYSHORT="Brevard County",
@@ -35,6 +35,26 @@ _defs = json.load(open(os.path.join(T, "metric_defs.json")))
 _unrec = sorted({f"{d['dataset']}.{f}" for d in MX.METRICS.values() if d["dataset"] in MX.API_VERSION
                  for f in d["fields"] if f not in (_defs.get(d["dataset"]) or {})})
 assert not _unrec, f"metric fields with no recorded FEMA definition (run: python -I tools/metrics.py --refresh): {_unrec}"
+
+# inputs: the national pull covers exactly the 51 states (Hawaii was once missing), and no module another tool
+# imports runs code on import (importing collect_small once ran a Lee County collection)
+import ast
+from agg_raw import NAMES as _NAMES
+_pull = ast.parse(open(os.path.join(T, "pull_raw.py"), encoding="utf-8").read())
+_st = next(n.value for n in _pull.body if isinstance(n, ast.Assign) and getattr(n.targets[0], "id", "") == "STATES")
+_pulled = set(ast.literal_eval(_st.func.value).split()) if isinstance(_st, ast.Call) else set()
+assert _pulled == set(_NAMES), f"pull_raw.STATES differs from the 51 names: missing {set(_NAMES) - _pulled}, extra {_pulled - set(_NAMES)}"
+_imported = {a.name.split(".")[0] for f in os.listdir(T) if f.endswith(".py")
+             for n in ast.walk(ast.parse(open(os.path.join(T, f), encoding="utf-8").read()))
+             if isinstance(n, (ast.Import, ast.ImportFrom)) for a in (n.names if isinstance(n, ast.Import) else [ast.alias(n.module or "")])}
+_IO = {"print", "urlopen", "dump", "write", "makedirs", "run", "remove", "rmtree", "copytree", "system"}   # a side effect
+for _mod in sorted(_imported):
+    _fp = os.path.join(T, _mod + ".py")
+    if not os.path.exists(_fp): continue
+    for _n in ast.parse(open(_fp, encoding="utf-8").read()).body:
+        if isinstance(_n, (ast.FunctionDef, ast.ClassDef)) or (isinstance(_n, ast.If) and "__main__" in ast.unparse(_n.test)): continue
+        _io = [c for c in ast.walk(_n) if isinstance(c, ast.Call) and getattr(c.func, "attr", getattr(c.func, "id", "")) in _IO]
+        assert not _io, f"{_mod}.py does I/O on import (line {_n.lineno}: {ast.unparse(_n)[:60]}); put it under if __name__ == '__main__'"
 
 ids, out = gate()
 assert not ids, "clean page must pass gate 2:\n" + out
@@ -61,12 +81,15 @@ MUTATIONS = [   # (defect class from THE EVIDENCE table, what we reintroduce, ex
     ("reader first", "card opens with a data dump", "F1",
      PAGE.replace('<p class="stand">', '<p class="stand">' + "This block lists every figure in the dataset before any answer is given to the reader at all. " * 2, 1), None),
     ("one figure", "same metric shows two values", "A3", sub('<span data-m="cost_p50">$865</span>', '<span data-m="cost_p50">$856</span>'), None),
-    ("provenance", "record count inflated", "G1", re.sub(r'(<span data-m="records_policies">)[\d,]+', r"\g<1>99,999", PAGE, count=1), None),
+    ("provenance", "record count inflated", "V2", re.sub(r'(<span data-m="records_policies"[^>]*>)[\d,]+', r"\g<1>99,999", PAGE, count=1), None),
     ("provenance", "complete download not stated", "G1", re.sub(r'<p class="prov">.*?</p>', "", PAGE, count=1, flags=re.S), None),
     ("reader text", "county shown as its code", "H1", sub("</main>", '<div id="counties"><table><tbody><tr><td>12009</td></tr></tbody></table></div></main>'), None),
     ("reader text", "points to county pages it does not link", "H2", sub('<p class="stand">', '<p class="stand">Open a county below for its own figures. '), None),
     ("reader text", "percentile code in a chart label", "H3", sub("<b>Typical</b>", "<b>p25 median</b>"), None),
     ("reader text", "effective date is the download day", "H4", sub("Data effective July 31, 2026; retrieved October 22, 2026", "Data effective October 22, 2026; retrieved October 22, 2026"), None),
+    ("numbers", "hand-typed figure in a lead", "V1", sub('<p class="stand">', '<p class="stand">About 4,200 homes flooded here. '), None),
+    ("numbers", "table cell differs from its data", "V2",
+     re.sub(r'(<span data-m="zone_cost" data-q="X" data-p="[^"]+">)\$[\d,]+', r"\g<1>$999", PAGE), None),
     ("reader text", "share over 100%", "H6", sub('<p class="stand">', '<p class="stand">Inside the zone it is 113.1% insured. '), None),
     ("reader text", "'1 in N' disagrees with its percent", "H7", sub('<p class="stand">', '<p class="stand">About 1 in 2 homes here have flood insurance (64.9%). '), None),
     ("reader text", "storm without its year", "H5", re.sub(r"(Among named storms, [^<(]*?) \(\d{4}[^)]*\)", r"\1", PAGE, count=1), None),
@@ -108,7 +131,9 @@ try:
         ("9 reader", "data collapsed in <details>", "P5", re.sub(r'(<section class="card" id="required">.*?</section>)', r"<details>\1</details>", PAGE, count=1, flags=re.S)),
         ("9 reader", "quote checker moved to the end", "P4", PAGE.replace(QW, "").replace("</main>", QW + "</main>")),
         ("9 reader", "4px chart labels", "P2", PAGE.replace(".ax{fill:var(--mut);font-size:13px", ".ax{fill:var(--mut);font-size:4px")),
-        ("9 reader", "page wider than the phone", "P1", PAGE.replace("</main>", '<div style="width:900px">x</div></main>'))]:
+        ("9 reader", "page wider than the phone", "P1", PAGE.replace("</main>", '<div style="width:900px">x</div></main>')),
+        ("9 reader", "chart labels print over each other", "P6", PAGE.replace("</main>",
+         '<svg viewBox="0 0 360 40" width="100%"><text x="100" y="20" class="ax">$1,008</text><text x="110" y="20" class="ax">$1,172</text></svg></main>'))]:
         got, o = phone(html); hit = want in got; ok &= hit
         table.append((cls, what, want, "PASS" if hit else "MISSED", ",".join(sorted(got)) or "-"))
     open(good, "w", encoding="utf-8").write(PAGE)

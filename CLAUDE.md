@@ -112,26 +112,25 @@ with NO `$orderby` (orderby forces a server sort of the filtered set and 503s), 
 negative premiums are refunds; claims `countyCode` may not match property county; suppress cost charts
 under 100 cohort policies, ZIP under 20.
 
-## Gates — three only, checking MEANING not form (rebuilt 2026-10-25, design in docs/GATE-PROMPT.md)
-The old 29-check gate passed all 32 pages while 9 defect classes shipped (policyCost-with-fees compared with a
-premium-only full-risk price, "most" at 34.5%, IA rows called homes, NOAA cited as FEMA...). It only asked "does
-the page match the JSON?" Now the page is built so those errors can't render, and the gate re-checks it:
-1. **It builds.** `build_page.py` prints figures with `metrics.m()`, compares with `metrics.compare()` (raises on
-   a unit mismatch), writes direction/majority words only through `claim()` (raises if false), prints law and
-   program text only through `rules_registry.rule()`, and builds every source line and the dataset list from the
-   metrics a panel shows.
-2. **It is true** — `tools/gate.py` per page: A registry (source lines, count nouns, one value per figure,
-   basis named, dataset list = what panels cite), B claims (every claim's condition holds; no quantifier word
-   outside one), C invariants (paid ≤ filed, paid + closed-without-payment = filed, "N paid claims" = paid count,
-   zone table sums to units), E rules (text = registry), plus the legacy data checks (L*). Release-level:
-   `tools/recheck.py` recomputes hero figures for 2 random counties from the API with separate code, checks FEMA
-   field definitions (`metric_defs.json` hashes) and every rule excerpt on its official page.
-3. **It is live and usable** — `tools/phone_check.py` at 390px (no overflow, no text under 11px, median + map
-   button + jump menu on screen 1, quote checker by screen 2, nothing collapsed), plus the live body.
-Proof: `tools/test_gate.py` reintroduces each known bug and asserts its check fires (CI runs it on every PR); a
-check that catches nothing is deleted. One command: `python -I tools/release.py`, deploy, `release.py --live`,
-then `recheck.py` as one background job. A new defect class becomes a registry rule plus a mutation, never a patch.
-A new rule needs an official URL and an excerpt in `rules_registry.py`; a new figure needs a `metrics.py` entry.
+## The gate — one, small, nothing unchecked (2026-10-26; why: docs/GATE-PROMPT.md)
+Two rounds proved a big gate misses things: 29 checks passed 9 shipped defect classes, then 45 checks passed a page a
+reader found 15 defects on. So correctness lives in the BUILDER, and the gate asks 9 questions:
+- **Builder rules (make wrong text impossible):** every number through `tp(key, path)` (reads the data path, tags it)
+  or `m(key, shown)` for a derived figure; words of size/direction only through `claim()`; law text only through
+  `rule()`; source lines built from metrics; places named from Census/NRI, never codes; county/parish/borough from
+  `UNIT`; shares through `_share_words()`. Never type a number, date, law or source into a template.
+- **`tools/gate.py`** (every page, at build AND on the live HTML via `gate_live.py`): 1 inputs complete, 2 every number
+  tagged (V1) and equal to the data at its path (V2), 3 nouns/bases/panels agree, 4 words agree with numbers,
+  5 sources and rules generated, 6 reader words (no codes, jargon, dead pointers, undated storms, None), 7 each card
+  opens with a 40-word answer. 8 **`phone_check.py`**: 390px, nothing wider, text 11px+, answers on screen 1, no
+  collapsed data, no overlapping chart labels. 9 **live**: `release.py --live` gates every live page.
+- **Outside the per-page gate:** `test_gate.py` (each check proven by a mutation of a real shipped bug; the pull
+  covers all 51 states; no imported module does I/O; every metric field has a recorded FEMA definition) and
+  `recheck.py` (independent recompute from the API, FEMA definition drift, rule excerpts still on official pages).
+- **What code can't judge** ("true but misleading", order, tone): after any template change, read one random page
+  per template on a phone, screen by screen, as the frightened reader. Each defect becomes a class, is scanned
+  across all pages, then becomes a builder rule or a gate check with a mutation, never a one-off patch.
+One command: `python -I tools/release.py`, deploy, `release.py --live`; `recheck.py` as one background job.
 
 ## What the data cannot say (printed on every page)
 Your own premium; private (non-NFIP) prices; your address's exact zone (link FEMA's map); why prices

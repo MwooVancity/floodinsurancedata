@@ -48,6 +48,13 @@ JS = """() => {
   const top = s => { const e = document.querySelector(s); return e ? e.getBoundingClientRect().top + scrollY : null; };
   out.median = top('[data-m="cost_p50"]'); out.map = top('a.btn'); out.jump = top('nav.jump'); out.compare = top('#compare');
   out.hidden = [...document.querySelectorAll('details:not([open])')].filter(d => d.querySelector('.card, table, [data-m]')).length;
+  out.overlap = [];   // P6 chart labels that print over each other ("$1,0$8,17$1,376")
+  for (const svg of document.querySelectorAll('svg')) {
+    const t = [...svg.querySelectorAll('text')].map(e => [e.textContent.trim(), e.getBoundingClientRect()]).filter(x => x[1].width);
+    for (let i = 0; i < t.length; i++) for (let j = i + 1; j < t.length; j++) {
+      const a = t[i][1], b = t[j][1];
+      if (a.left < b.right - 1 && b.left < a.right - 1 && a.top < b.bottom - 1 && b.top < a.bottom - 1)
+        out.overlap.push('"' + t[i][0] + '" / "' + t[j][0] + '"'); } }
   return out; }""".replace("%MIN%", str(MIN_PX)).replace("%W%", str(W))
 
 failed = False
@@ -66,6 +73,7 @@ with sync_playwright() as p:
             if r[k] is None or r[k] > H: bad.append(f"P3 {k} not on screen 1 (top {r[k]})")
         if r["compare"] is None or r["compare"] > 2 * H: bad.append(f"P4 quote checker not within screen 2 (top {r['compare']})")
         if r["hidden"]: bad.append(f"P5 {r['hidden']} collapsed <details> hide data")
+        if r["overlap"]: bad.append(f"P6 chart labels overlap: {r['overlap'][:3]}")
         print(("PHONE FAIL " if bad else "PHONE PASS ") + f"{s} (height {r['height']}px = {r['height'] / H:.1f} screens)")
         for b in bad: print("  -", b)
         failed |= bool(bad)
