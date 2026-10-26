@@ -3,7 +3,57 @@
 > Per-county NFIP flood-insurance statistics from public FEMA data: what policyholders pay, the gap to FEMA's full-risk price, claims history, flood risk, and CRS discounts.
 
 ## States
+- [Alabama](https://floodinsurancedata.com/flood-insurance/alabama/): median $1,140
+- [Alaska](https://floodinsurancedata.com/flood-insurance/alaska/): median $368
+- [Arizona](https://floodinsurancedata.com/flood-insurance/arizona/): median $959
+- [Arkansas](https://floodinsurancedata.com/flood-insurance/arkansas/): median $969
+- [California](https://floodinsurancedata.com/flood-insurance/california/): median $1,053
+- [Colorado](https://floodinsurancedata.com/flood-insurance/colorado/): median $840
+- [Connecticut](https://floodinsurancedata.com/flood-insurance/connecticut/): median $1,501
+- [Delaware](https://floodinsurancedata.com/flood-insurance/delaware/): median $923
 - [District of Columbia](https://floodinsurancedata.com/flood-insurance/district-of-columbia/): median $384
+- [Florida](https://floodinsurancedata.com/flood-insurance/florida/): median $983
+- [Georgia](https://floodinsurancedata.com/flood-insurance/georgia/): median $976
+- [Hawaii](https://floodinsurancedata.com/flood-insurance/hawaii/): median $1,395
+- [Idaho](https://floodinsurancedata.com/flood-insurance/idaho/): median $1,022
+- [Illinois](https://floodinsurancedata.com/flood-insurance/illinois/): median $1,128
+- [Indiana](https://floodinsurancedata.com/flood-insurance/indiana/): median $935
+- [Iowa](https://floodinsurancedata.com/flood-insurance/iowa/): median $1,040
+- [Kansas](https://floodinsurancedata.com/flood-insurance/kansas/): median $1,031
+- [Kentucky](https://floodinsurancedata.com/flood-insurance/kentucky/): median $1,186
+- [Louisiana](https://floodinsurancedata.com/flood-insurance/louisiana/): median $1,086
+- [Maine](https://floodinsurancedata.com/flood-insurance/maine/): median $971
+- [Maryland](https://floodinsurancedata.com/flood-insurance/maryland/): median $568
+- [Massachusetts](https://floodinsurancedata.com/flood-insurance/massachusetts/): median $1,297
+- [Michigan](https://floodinsurancedata.com/flood-insurance/michigan/): median $789
+- [Minnesota](https://floodinsurancedata.com/flood-insurance/minnesota/): median $1,102
+- [Mississippi](https://floodinsurancedata.com/flood-insurance/mississippi/): median $1,208
+- [Missouri](https://floodinsurancedata.com/flood-insurance/missouri/): median $1,080
+- [Montana](https://floodinsurancedata.com/flood-insurance/montana/): median $909
+- [Nebraska](https://floodinsurancedata.com/flood-insurance/nebraska/): median $898
+- [Nevada](https://floodinsurancedata.com/flood-insurance/nevada/): median $857
+- [New Hampshire](https://floodinsurancedata.com/flood-insurance/new-hampshire/): median $1,282
+- [New Jersey](https://floodinsurancedata.com/flood-insurance/new-jersey/): median $1,210
+- [New Mexico](https://floodinsurancedata.com/flood-insurance/new-mexico/): median $1,027
+- [New York](https://floodinsurancedata.com/flood-insurance/new-york/): median $1,233
+- [North Carolina](https://floodinsurancedata.com/flood-insurance/north-carolina/): median $919
+- [North Dakota](https://floodinsurancedata.com/flood-insurance/north-dakota/): median $856
+- [Ohio](https://floodinsurancedata.com/flood-insurance/ohio/): median $881
+- [Oklahoma](https://floodinsurancedata.com/flood-insurance/oklahoma/): median $1,047
+- [Oregon](https://floodinsurancedata.com/flood-insurance/oregon/): median $1,079
+- [Pennsylvania](https://floodinsurancedata.com/flood-insurance/pennsylvania/): median $1,199
+- [Rhode Island](https://floodinsurancedata.com/flood-insurance/rhode-island/): median $1,149
+- [South Carolina](https://floodinsurancedata.com/flood-insurance/south-carolina/): median $883
+- [South Dakota](https://floodinsurancedata.com/flood-insurance/south-dakota/): median $1,168
+- [Tennessee](https://floodinsurancedata.com/flood-insurance/tennessee/): median $1,073
+- [Texas](https://floodinsurancedata.com/flood-insurance/texas/): median $1,080
+- [Utah](https://floodinsurancedata.com/flood-insurance/utah/): median $612
+- [Vermont](https://floodinsurancedata.com/flood-insurance/vermont/): median $1,286
+- [Virginia](https://floodinsurancedata.com/flood-insurance/virginia/): median $754
+- [Washington](https://floodinsurancedata.com/flood-insurance/washington/): median $1,016
+- [West Virginia](https://floodinsurancedata.com/flood-insurance/west-virginia/): median $1,319
+- [Wisconsin](https://floodinsurancedata.com/flood-insurance/wisconsin/): median $915
+- [Wyoming](https://floodinsurancedata.com/flood-insurance/wyoming/): median $1,007
 
 ## Counties
 - [Miami-Dade County](https://floodinsurancedata.com/flood-insurance/miami-dade-county-fl/): median $891

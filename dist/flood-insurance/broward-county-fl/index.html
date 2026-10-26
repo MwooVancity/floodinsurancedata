@@ -22,6 +22,7 @@ a{color:var(--brand)}
 .topbar .crumb{color:#bcd4df;font-size:13px}
 .hero{padding:30px 0 6px}
 .hero h1{font-family:var(--serif);font-weight:600;font-size:36px;line-height:1.1;margin:.1em 0 .3em;letter-spacing:-.01em}
+.cmp{font-size:15px;margin:2px 0 10px;color:var(--ink)}
 .prov{font-size:13.5px;color:var(--mut);border-left:3px solid var(--brand);padding:2px 0 2px 10px;margin:10px 0}
 .kicker{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin:0}
 .lede{color:var(--mut);font-size:16.5px;margin:.2em 0 1.1em;max-width:62ch}
@@ -65,7 +66,7 @@ details.more>summary::-webkit-details-marker{display:none}details.more>summary:b
 table{font-size:13.5px}th,td{padding:7px 6px}thead th{font-size:11px;white-space:normal}
 table{width:100%}}
 </style></head><body>
-<header class="topbar"><div class="wrap"><a class="brand" href="../../">Flood Insurance Data</a><span class="crumb">Flood insurance › Broward County</span></div></header>
+<header class="topbar"><div class="wrap"><a class="brand" href="../../">Flood Insurance Data</a><span class="crumb">Flood insurance › <a href="../florida/" style="color:inherit">Florida</a> › Broward County</span></div></header>
 <main class="wrap">
 <section class="hero">
 <p class="kicker">NFIP records · Broward County · policies as of July 31, 2026</p>
@@ -78,7 +79,7 @@ table{width:100%}}
 <div class="stat"><div class="n"><span data-m="share_below">46.4%</span></div><div class="l">Pay under FEMA's full-risk price</div></div>
 </div>
 <nav class="jump"><b>Jump to:</b> <a href="#required">Am I required?</a> <a href="#zone-cost">Cost in my zone</a> <a href="#compare">Is my quote normal?</a> <a href="#covered">How to buy / already flooded</a></nav>
-<p class="chips"><span class="chip">234,789 insured units in force (all types)</span></p>
+<p class="cmp">That is 15% below the Florida median of <span data-m="state_p50">$983</span> and 21% below the U.S. median of <span data-m="us_p50">$1,055</span>; <span data-m="cost_rank">15th lowest</span> of 55 Florida counties.</p>
 <p class="caveat">This is what existing single-family policies cost — not a quote. Your own premium depends on your building, coverage and elevation.</p>
 <a class="btn" href="https://msc.fema.gov/portal/home" rel="nofollow noopener" target="_blank">Check your address on FEMA's flood map →</a>
 <p class="note">Your flood zone is set at your exact address and drives your price and whether coverage is required. Look it up first, then read your zone's row in "What does it cost in my flood zone?" below.</p>
@@ -152,7 +153,7 @@ el.addEventListener('input',function(){
 
 <section class="card"><h2>Did the government pay homeowners after floods?</h2><p class="stand"><span data-claim="{&quot;word&quot;: &quot;yes&quot;, &quot;cond&quot;: [&quot;ia_paid&quot;, &quot;&gt;&quot;, 0]}">Yes</span>, but not much per household: FEMA approved <span data-m="ia_paid">$167.1 million</span> for homeowners here, about $537 per registration, against an average paid flood claim of <span data-m="avg_paid">$26,180</span>.</p><p class='note'><span data-rule="ia_partial">FEMA disaster aid helps with uninsured and underinsured losses, and is separate from NFIP insurance.</span></p><p class="src" data-src="ia_paid,ia_regs,avg_paid">Source: FEMA OpenFEMA — Housing Assistance (Owners); FEMA OpenFEMA — NFIP Claims. Data effective owner registrations by disaster; retrieved October 22, 2026. This product uses the Federal Emergency Management Agency's OpenFEMA API, but is not endorsed by FEMA.</p></section>
 
-<section class="card"><h2>Reconciliation &amp; data completeness</h2><p class="stand">Our counts are checked against FEMA's official figure and the API's own totals.</p><p class='note'>In-force count: 234,789 policy units (from 137,127 API records; condo-association records carry more than one unit). FEMA official reconciliation count pending for this county. Count reconciliation (not a snapshot proof): policies: 137127/137127 fetched; claims: 35049/35049 fetched.</p></section>
+<section class="card"><h2>Reconciliation &amp; data completeness</h2><p class="stand">Our record counts match the API's own totals; FEMA's official policy count is not yet joined for Broward County.</p><p class='note'>In-force count: 234,789 policy units (from 137,127 API records; condo-association records carry more than one unit). Count reconciliation (not a snapshot proof): policies: 137127/137127 fetched; claims: 35049/35049 fetched.</p></section>
 
 <section class="card"><h2>What this data cannot tell you</h2>
 <ul class="note">
@@ -167,7 +168,7 @@ el.addEventListener('input',function(){
 <p class="stand">Every figure comes from a public U.S. federal dataset; estimates are labeled where they appear. This page joins 9 of them for Broward County. Last pulled October 25, 2026.</p>
 <ul class="srclist"><li><a href="https://www.fema.gov/openfema-data-page/fima-nfip-redacted-policies-v2">FEMA OpenFEMA — NFIP Policies</a></li><li><a href="https://www.fema.gov/openfema-data-page/fima-nfip-redacted-claims-v2">FEMA OpenFEMA — NFIP Claims</a></li><li><a href="https://www.fema.gov/flood-maps/products-tools/national-risk-index">FEMA — National Risk Index (flood)</a></li><li><a href="https://www.fema.gov/openfema-data-page/nfip-community-status-book-v1">FEMA OpenFEMA — NFIP Community Status Book (CRS)</a></li><li><a href="https://www.fema.gov/openfema-data-page/disaster-declarations-summaries-v2">FEMA OpenFEMA — Disaster Declarations Summaries</a></li><li><a href="https://www.fema.gov/openfema-data-page/housing-assistance-program-data-owners-v2">FEMA OpenFEMA — Housing Assistance (Owners)</a></li><li><a href="https://www.fema.gov/openfema-data-page/individual-assistance-multiple-loss-flood-properties-v1">FEMA OpenFEMA — Repetitive-Loss Flood Properties</a></li><li><a href="https://www.fema.gov/openfema-data-page/nfip-residential-penetration-rates-v1">FEMA OpenFEMA — NFIP Residential Penetration Rates</a></li><li><a href="https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/">NOAA NCEI — Storm Events Database</a></li></ul></section>
 
-<nav class='sib'><b>Other FL counties:</b> <a href="../miami-dade-county-fl/">Miami-Dade County</a> · <a href="../lee-county-fl/">Lee County</a> · <a href="../pinellas-county-fl/">Pinellas County</a> · <a href="../collier-county-fl/">Collier County</a> · <a href="../sarasota-county-fl/">Sarasota County</a> · <a href="../brevard-county-fl/">Brevard County</a> · <a href="../../">all places</a></nav>
+<nav class='sib'><a href="../florida/">Florida overview</a> · <b>Other FL counties:</b> <a href="../miami-dade-county-fl/">Miami-Dade County</a> · <a href="../lee-county-fl/">Lee County</a> · <a href="../pinellas-county-fl/">Pinellas County</a> · <a href="../collier-county-fl/">Collier County</a> · <a href="../sarasota-county-fl/">Sarasota County</a> · <a href="../brevard-county-fl/">Brevard County</a> · <a href="../../">all places</a></nav>
 
 <footer>This product uses the Federal Emergency Management Agency's OpenFEMA API, but is not endorsed by FEMA. Place names via GeoNames (CC BY 4.0). Figures are aggregates, never individual quotes or records.
 <a href="../../about/">About</a> · <a href="../../methodology/">Methodology</a> · <a href="../../data/">Download the data</a> · <a href="../../privacy/">Privacy</a> · <a href="../../terms/">Terms</a></footer>

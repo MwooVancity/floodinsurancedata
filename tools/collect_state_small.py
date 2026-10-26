@@ -37,9 +37,9 @@ def fema(ver, ds, filt, select):
     if len(rows) != total: raise RuntimeError(f"{ds}: {len(rows)}/{total}")
     return rows
 
-def count(filt):
+def count(filt, tries=6):
     return get("https://www.fema.gov/api/open/v3/NfipPolicies?" + urllib.parse.urlencode(
-        {"$filter": filt, "$select": "id", "$top": 1, "$inlinecount": "allpages"}, quote_via=urllib.parse.quote))["metadata"]["count"]
+        {"$filter": filt, "$select": "id", "$top": 1, "$inlinecount": "allpages"}, quote_via=urllib.parse.quote), tries)["metadata"]["count"]
 
 def run(st):
     d = os.path.join(ROOT, "data", "states", slug(st)); os.makedirs(d, exist_ok=True)
@@ -73,11 +73,17 @@ def run(st):
                             "coastal": f["attributes"]["CFLD_RISKR"], "inland": f["attributes"]["IFLD_RISKR"],
                             "rating": ffcalc.worst_flood_rating(f["attributes"]["CFLD_RISKR"], f["attributes"]["IFLD_RISKR"])}
                            for f in nri.get("features", [])]
+    # FEMA's API times out (503 after ~147 s) on this count for the biggest states, sliced or not; then the
+    # page simply has no trend card and says nothing about a trend (gap recorded here, never guessed)
     hist = {}
-    for y in range(2019, 2027):
-        a = f"{y}-07-31T00:00:00.000z"
-        hist[str(y)] = count(f"propertyState eq '{st}' and policyEffectiveDate le '{a}' and policyTerminationDate ge '{a}'")
-    out["inforce_history"] = {"by_year": hist, "note": "in-force NFIP policy records on July 31 of each year", "source": "OpenFEMA NfipPolicies v3"}
+    try:
+        for y in range(2019, 2027):
+            a = f"{y}-07-31T00:00:00.000z"
+            hist[str(y)] = count(f"propertyState eq '{st}' and policyEffectiveDate le '{a}' and policyTerminationDate ge '{a}'", tries=2)
+        out["inforce_history"] = {"by_year": hist, "note": "in-force NFIP policy records on July 31 of each year", "source": "OpenFEMA NfipPolicies v3"}
+    except RuntimeError as e:
+        hist = None
+        out["inforce_history"] = {"by_year": None, "unavailable": f"OpenFEMA count query timed out: {e}"}
     json.dump(out, open(os.path.join(d, "data.json"), "w"))
     print(f"{st}: crs {len(out['crs'])}, decl {len(out['declarations'])}, housing {len(out['housing'])}, multiloss {len(ml)}, "
           f"pen {out['penetration']['overall_pct']}%, nri counties {len(out['nri_counties'])}, in-force {hist}", flush=True)

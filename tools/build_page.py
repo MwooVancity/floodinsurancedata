@@ -624,6 +624,49 @@ try: _built_states = {s["abbr"] for s in json.load(open(os.path.join(os.path.dir
 except Exception: _built_states = set()
 _state_link = (f'<a href="../{state_slug(_state)}/">{html.escape(STATE_NAMES[_state])} overview</a> · '
                if _state in _built_states else "")   # only link a state page that was actually built and gated
+
+# "is $865 high?": the place beside its state and the U.S., same cohort (single-family primary-home policyCost),
+# same snapshot. U.S. only when all 51 states are in the histogram; never a partial total called national.
+_DD = os.path.join(os.path.dirname(HERE), "data")
+def _hist_median(hist):
+    a = sorted((int(v), c) for v, c in hist.items()); n, acc = sum(c for _, c in a), 0
+    for v, c in a:
+        acc += c
+        if acc >= n / 2: return v
+try: _uh = json.load(open(os.path.join(_DD, "us", "cost_hist.json")))
+except Exception: _uh = {}
+US_P50 = None
+if len(_uh) == 51:
+    _all = defaultdict(int)
+    for _st in _uh.values():
+        for v, c in _st.items(): _all[int(v)] += c
+    US_P50 = _hist_median(_all)
+def ordinal(n): return f"{n}{'th' if 10 <= n % 100 <= 20 else {1: 'st', 2: 'nd', 3: 'rd'}.get(n % 10, 'th')}"
+_ab = agg.get("state") if IS_STATE else _state
+_sp = os.path.join(_DD, "states", state_slug(_ab), "agg.json") if _ab in STATE_NAMES else ""
+_sagg = json.load(open(_sp)) if _sp and os.path.exists(_sp) else None
+def _rank(r, n): return f"{ordinal(r)} highest" if r <= (n + 1) // 2 else f"{ordinal(n - r + 1)} lowest"   # say the short end
+def _pct_vs(a, b): d = round(100 * (a - b) / b); return "the same as" if d == 0 else f"{abs(d)}% {'above' if d > 0 else 'below'}"
+cmp_line = ""
+if IS_STATE and US_P50:
+    _ranked = []
+    for _a in STATE_NAMES:
+        _q = os.path.join(_DD, "states", state_slug(_a), "agg.json")
+        if os.path.exists(_q):
+            _pp = json.load(open(_q))["policies"]
+            if (_pp.get("cost_n") or 0) >= 100: _ranked.append((_pp["p50"], _a))
+    _ranked.sort(reverse=True)
+    _r = next((i + 1 for i, (_, a) in enumerate(_ranked) if a == _ab), None)
+    cmp_line = (f'<p class="cmp">That is {_pct_vs(P["p50"], US_P50)} the U.S. median of {m("us_p50", money(US_P50))}'
+                + (f'; {m("cost_rank", _rank(_r, len(_ranked)))} of {len(_ranked)} states' if _r else "") + ".</p>")
+elif _sagg and not IS_STATE:
+    _sc = [(r["p50"], g) for g, r in (_sagg.get("counties") or {}).items() if (r.get("cost_n") or 0) >= 100 and r.get("p50")]
+    _sc.sort(reverse=True)
+    _r = next((i + 1 for i, (_, g) in enumerate(_sc) if g == GEOID_SELF), None)
+    _sn = html.escape(STATE_NAMES[_ab])
+    cmp_line = (f'<p class="cmp">That is {_pct_vs(P["p50"], _sagg["policies"]["p50"])} the {_sn} median of {m("state_p50", money(_sagg["policies"]["p50"]))}'
+                + (f' and {_pct_vs(P["p50"], US_P50)} the U.S. median of {m("us_p50", money(US_P50))}' if US_P50 else "")
+                + (f'; {m("cost_rank", _rank(_r, len(_sc)))} of {len(_sc)} {_sn} counties' if _r else "") + ".</p>")
 if IS_STATE:
     _st_all = sorted(STATE_NAMES.items(), key=lambda kv: kv[1])
     _i = next((i for i, (a, n) in enumerate(_st_all) if n == CS), 0)
@@ -767,6 +810,7 @@ a{{color:var(--brand)}}
 .topbar .crumb{{color:#bcd4df;font-size:13px}}
 .hero{{padding:30px 0 6px}}
 .hero h1{{font-family:var(--serif);font-weight:600;font-size:36px;line-height:1.1;margin:.1em 0 .3em;letter-spacing:-.01em}}
+.cmp{{font-size:15px;margin:2px 0 10px;color:var(--ink)}}
 .prov{{font-size:13.5px;color:var(--mut);border-left:3px solid var(--brand);padding:2px 0 2px 10px;margin:10px 0}}
 .kicker{{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin:0}}
 .lede{{color:var(--mut);font-size:16.5px;margin:.2em 0 1.1em;max-width:62ch}}
@@ -823,7 +867,7 @@ table{{width:100%}}}}
 <div class="stat"><div class="n">{m('share_below', str(P['share_below']) + '%')}</div><div class="l">Pay under FEMA's full-risk price</div></div>
 </div>
 <nav class="jump"><b>Jump to:</b> <a href="#required">Am I required?</a> <a href="#zone-cost">Cost in my zone</a> <a href="#compare">Is my quote normal?</a> <a href="#covered">How to buy / already flooded</a></nav>
-<p class="chips"><span class="chip">{num(P['units'])} insured units in force (all types)</span></p>
+{cmp_line}
 <p class="caveat">This is what existing single-family policies cost — not a quote. Your own premium depends on your building, coverage and elevation.</p>
 <a class="btn" href="https://msc.fema.gov/portal/home" rel="nofollow noopener" target="_blank">Check your address on FEMA's flood map →</a>
 <p class="note">Your flood zone is set at your exact address and drives your price and whether coverage is required. Look it up first, then read your zone's row in "What does it cost in my flood zone?" below.</p>
@@ -905,9 +949,10 @@ table{{width:100%}}}}
   src(["ia_paid", "ia_regs"] + (["avg_paid"] if (data.get('claims_extra') or {}).get('avg_paid') and h_ihp and h_regs else []),
       "owner registrations by disaster", RETR))}
 
-{card("Reconciliation &amp; data completeness", "Our counts are checked against FEMA's official figure and the API's own totals.",
+{card("Reconciliation &amp; data completeness", ("Our counts are checked against FEMA's official figure and the API's own totals." if OFFICIAL
+  else "Our record counts match the API's own totals; FEMA's official policy count is not yet joined for " + CS + "."),
   f"<p class='note'>In-force count: {num(P['units'])} policy units (from {num(P['rows'])} API records; condo-association records carry more than one unit). " +
-  (f"FEMA's official count for 2026-07-31 was {num(OFFICIAL)} — a {round(abs(P['units']-OFFICIAL)/OFFICIAL*100,1)}% difference. " if OFFICIAL else "FEMA official reconciliation count pending for this county. ") +
+  (f"FEMA's official count for 2026-07-31 was {num(OFFICIAL)} — a {round(abs(P['units']-OFFICIAL)/OFFICIAL*100,1)}% difference. " if OFFICIAL else "") +
   f"Count reconciliation (not a snapshot proof): {mani_line}.</p>")}
 
 <section class="card"><h2>What this data cannot tell you</h2>

@@ -94,6 +94,9 @@ METRICS = {
     "unpaid_reason_n": _m(CLM, ["nonPaymentReasonBuilding"], "count", counts="claim_record"),
     "event_paid": _m(CLM, ["floodEvent", "netBuildingPaymentAmount", "netContentsPaymentAmount", "netIccPaymentAmount"], "usd_claim_paid"),
     "event_claims": _m(CLM, ["floodEvent"], "count", counts="claim_record"),
+    "state_p50": _m(POL, ["policyCost"], "usd_cost_with_fees"),
+    "us_p50": _m(POL, ["policyCost"], "usd_cost_with_fees"),
+    "cost_rank": _m(POL, ["policyCost", "censusGeoid"], "count"),
     # provenance: how many records we downloaded (gate G1 checks against the pull manifest)
     "records_policies": _m(POL, ["id"], "count", counts="policy_record"),
     "records_claims": _m(CLM, ["id"], "count", counts="claim_record"),

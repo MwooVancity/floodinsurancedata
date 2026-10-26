@@ -11,7 +11,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RAW = os.path.join(ROOT, ".cache", "raw")
 API = "https://www.fema.gov/api/open/v3/"
 ASOF = "2026-07-31T00:00:00.000z"
-STATES = ("DC WY SD AK MT VT ND NH NE UT ID NM KS NV IA ME WV OK OR CO KY AR RI MN WI TN IN MO MI AZ WA MS DE CT "
+STATES = ("DC HI WY SD AK MT VT ND NH NE UT ID NM KS NV IA ME WV OK OR CO KY AR RI MN WI TN IN MO MI AZ WA MS DE CT "
           "OH IL AL MD PA GA MA VA NC SC NY NJ CA LA TX FL").split()          # smallest first
 POL_FIELDS = ("id propertyState censusGeoid reportedZipCode reportedCity nfipCommunityNumberCurrent ratedFloodZone floodZoneCurrent "
               "occupancyType primaryResidenceIndicator policyCount policyCost totalInsurancePremiumOfThePolicy fullRiskPremium "

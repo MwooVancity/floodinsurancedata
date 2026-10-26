@@ -1,5 +1,85 @@
 [
  {
+  "abbr": "AL",
+  "slug": "alabama",
+  "name": "Alabama",
+  "units": 46025,
+  "median": 1140,
+  "share_below": 58.0,
+  "claims": 44896,
+  "paid": 1182375995
+ },
+ {
+  "abbr": "AK",
+  "slug": "alaska",
+  "name": "Alaska",
+  "units": 3292,
+  "median": 368,
+  "share_below": 16.6,
+  "claims": 808,
+  "paid": 16365674
+ },
+ {
+  "abbr": "AZ",
+  "slug": "arizona",
+  "name": "Arizona",
+  "units": 22509,
+  "median": 959,
+  "share_below": 48.9,
+  "claims": 5336,
+  "paid": 62721145
+ },
+ {
+  "abbr": "AR",
+  "slug": "arkansas",
+  "name": "Arkansas",
+  "units": 11324,
+  "median": 969,
+  "share_below": 46.7,
+  "claims": 10260,
+  "paid": 217642147
+ },
+ {
+  "abbr": "CA",
+  "slug": "california",
+  "name": "California",
+  "units": 173168,
+  "median": 1053,
+  "share_below": 44.8,
+  "claims": 53563,
+  "paid": 758994896
+ },
+ {
+  "abbr": "CO",
+  "slug": "colorado",
+  "name": "Colorado",
+  "units": 16266,
+  "median": 840,
+  "share_below": 31.4,
+  "claims": 5802,
+  "paid": 90755956
+ },
+ {
+  "abbr": "CT",
+  "slug": "connecticut",
+  "name": "Connecticut",
+  "units": 31909,
+  "median": 1501,
+  "share_below": 53.5,
+  "claims": 29492,
+  "paid": 544191966
+ },
+ {
+  "abbr": "DE",
+  "slug": "delaware",
+  "name": "Delaware",
+  "units": 25513,
+  "median": 923,
+  "share_below": 40.2,
+  "claims": 6339,
+  "paid": 89277372
+ },
+ {
   "abbr": "DC",
   "slug": "district-of-columbia",
   "name": "District of Columbia",
@@ -8,5 +88,425 @@
   "share_below": 15.1,
   "claims": 501,
   "paid": 5445365
+ },
+ {
+  "abbr": "FL",
+  "slug": "florida",
+  "name": "Florida",
+  "units": 1795894,
+  "median": 983,
+  "share_below": 49.8,
+  "claims": 448618,
+  "paid": 19301860211
+ },
+ {
+  "abbr": "GA",
+  "slug": "georgia",
+  "name": "Georgia",
+  "units": 71326,
+  "median": 976,
+  "share_below": 43.9,
+  "claims": 24479,
+  "paid": 515350354
+ },
+ {
+  "abbr": "HI",
+  "slug": "hawaii",
+  "name": "Hawaii",
+  "units": 65751,
+  "median": 1395,
+  "share_below": 66.5,
+  "claims": 6285,
+  "paid": 167844607
+ },
+ {
+  "abbr": "ID",
+  "slug": "idaho",
+  "name": "Idaho",
+  "units": 4851,
+  "median": 1022,
+  "share_below": 41.8,
+  "claims": 1116,
+  "paid": 10404009
+ },
+ {
+  "abbr": "IL",
+  "slug": "illinois",
+  "name": "Illinois",
+  "units": 30962,
+  "median": 1128,
+  "share_below": 39.2,
+  "claims": 52890,
+  "paid": 579842974
+ },
+ {
+  "abbr": "IN",
+  "slug": "indiana",
+  "name": "Indiana",
+  "units": 15545,
+  "median": 935,
+  "share_below": 36.2,
+  "claims": 19787,
+  "paid": 303084964
+ },
+ {
+  "abbr": "IA",
+  "slug": "iowa",
+  "name": "Iowa",
+  "units": 9431,
+  "median": 1040,
+  "share_below": 47.4,
+  "claims": 14788,
+  "paid": 346167462
+ },
+ {
+  "abbr": "KS",
+  "slug": "kansas",
+  "name": "Kansas",
+  "units": 6729,
+  "median": 1031,
+  "share_below": 42.5,
+  "claims": 7901,
+  "paid": 115386982
+ },
+ {
+  "abbr": "KY",
+  "slug": "kentucky",
+  "name": "Kentucky",
+  "units": 17561,
+  "median": 1186,
+  "share_below": 56.0,
+  "claims": 27947,
+  "paid": 524247634
+ },
+ {
+  "abbr": "LA",
+  "slug": "louisiana",
+  "name": "Louisiana",
+  "units": 407916,
+  "median": 1086,
+  "share_below": 56.6,
+  "claims": 485743,
+  "paid": 20682152359
+ },
+ {
+  "abbr": "ME",
+  "slug": "maine",
+  "name": "Maine",
+  "units": 8657,
+  "median": 971,
+  "share_below": 48.0,
+  "claims": 5672,
+  "paid": 86723826
+ },
+ {
+  "abbr": "MD",
+  "slug": "maryland",
+  "name": "Maryland",
+  "units": 62336,
+  "median": 568,
+  "share_below": 22.0,
+  "claims": 25376,
+  "paid": 325283871
+ },
+ {
+  "abbr": "MA",
+  "slug": "massachusetts",
+  "name": "Massachusetts",
+  "units": 58524,
+  "median": 1297,
+  "share_below": 46.9,
+  "claims": 35375,
+  "paid": 439893592
+ },
+ {
+  "abbr": "MI",
+  "slug": "michigan",
+  "name": "Michigan",
+  "units": 19685,
+  "median": 789,
+  "share_below": 29.3,
+  "claims": 14954,
+  "paid": 149425533
+ },
+ {
+  "abbr": "MN",
+  "slug": "minnesota",
+  "name": "Minnesota",
+  "units": 6447,
+  "median": 1102,
+  "share_below": 46.2,
+  "claims": 12474,
+  "paid": 156217118
+ },
+ {
+  "abbr": "MS",
+  "slug": "mississippi",
+  "name": "Mississippi",
+  "units": 49167,
+  "median": 1208,
+  "share_below": 64.9,
+  "claims": 64589,
+  "paid": 3075487707
+ },
+ {
+  "abbr": "MO",
+  "slug": "missouri",
+  "name": "Missouri",
+  "units": 14778,
+  "median": 1080,
+  "share_below": 48.2,
+  "claims": 51304,
+  "paid": 964588498
+ },
+ {
+  "abbr": "MT",
+  "slug": "montana",
+  "name": "Montana",
+  "units": 3770,
+  "median": 909,
+  "share_below": 44.5,
+  "claims": 2220,
+  "paid": 19008777
+ },
+ {
+  "abbr": "NE",
+  "slug": "nebraska",
+  "name": "Nebraska",
+  "units": 7441,
+  "median": 898,
+  "share_below": 35.7,
+  "claims": 6069,
+  "paid": 97221762
+ },
+ {
+  "abbr": "NV",
+  "slug": "nevada",
+  "name": "Nevada",
+  "units": 9160,
+  "median": 857,
+  "share_below": 33.8,
+  "claims": 1964,
+  "paid": 47386497
+ },
+ {
+  "abbr": "NH",
+  "slug": "new-hampshire",
+  "name": "New Hampshire",
+  "units": 7368,
+  "median": 1282,
+  "share_below": 54.3,
+  "claims": 4423,
+  "paid": 65646780
+ },
+ {
+  "abbr": "NJ",
+  "slug": "new-jersey",
+  "name": "New Jersey",
+  "units": 197558,
+  "median": 1210,
+  "share_below": 56.1,
+  "claims": 202340,
+  "paid": 6250856025
+ },
+ {
+  "abbr": "NM",
+  "slug": "new-mexico",
+  "name": "New Mexico",
+  "units": 13951,
+  "median": 1027,
+  "share_below": 33.5,
+  "claims": 1938,
+  "paid": 41729250
+ },
+ {
+  "abbr": "NY",
+  "slug": "new-york",
+  "name": "New York",
+  "units": 167319,
+  "median": 1233,
+  "share_below": 49.9,
+  "claims": 175430,
+  "paid": 5681770494
+ },
+ {
+  "abbr": "NC",
+  "slug": "north-carolina",
+  "name": "North Carolina",
+  "units": 132260,
+  "median": 919,
+  "share_below": 42.5,
+  "claims": 109593,
+  "paid": 2268150733
+ },
+ {
+  "abbr": "ND",
+  "slug": "north-dakota",
+  "name": "North Dakota",
+  "units": 5784,
+  "median": 856,
+  "share_below": 43.3,
+  "claims": 13307,
+  "paid": 259025707
+ },
+ {
+  "abbr": "OH",
+  "slug": "ohio",
+  "name": "Ohio",
+  "units": 22407,
+  "median": 881,
+  "share_below": 35.3,
+  "claims": 28417,
+  "paid": 368820683
+ },
+ {
+  "abbr": "OK",
+  "slug": "oklahoma",
+  "name": "Oklahoma",
+  "units": 8525,
+  "median": 1047,
+  "share_below": 45.9,
+  "claims": 12998,
+  "paid": 259553011
+ },
+ {
+  "abbr": "OR",
+  "slug": "oregon",
+  "name": "Oregon",
+  "units": 22926,
+  "median": 1079,
+  "share_below": 46.1,
+  "claims": 6095,
+  "paid": 106442949
+ },
+ {
+  "abbr": "PA",
+  "slug": "pennsylvania",
+  "name": "Pennsylvania",
+  "units": 42711,
+  "median": 1199,
+  "share_below": 52.7,
+  "claims": 77060,
+  "paid": 1425386635
+ },
+ {
+  "abbr": "RI",
+  "slug": "rhode-island",
+  "name": "Rhode Island",
+  "units": 11808,
+  "median": 1149,
+  "share_below": 36.8,
+  "claims": 7026,
+  "paid": 138559662
+ },
+ {
+  "abbr": "SC",
+  "slug": "south-carolina",
+  "name": "South Carolina",
+  "units": 193546,
+  "median": 883,
+  "share_below": 42.9,
+  "claims": 49622,
+  "paid": 1033315211
+ },
+ {
+  "abbr": "SD",
+  "slug": "south-dakota",
+  "name": "South Dakota",
+  "units": 2562,
+  "median": 1168,
+  "share_below": 47.8,
+  "claims": 4016,
+  "paid": 61862528
+ },
+ {
+  "abbr": "TN",
+  "slug": "tennessee",
+  "name": "Tennessee",
+  "units": 23394,
+  "median": 1073,
+  "share_below": 45.2,
+  "claims": 17706,
+  "paid": 476656134
+ },
+ {
+  "abbr": "TX",
+  "slug": "texas",
+  "name": "Texas",
+  "units": 579326,
+  "median": 1080,
+  "share_below": 47.6,
+  "claims": 394204,
+  "paid": 17343761184
+ },
+ {
+  "abbr": "UT",
+  "slug": "utah",
+  "name": "Utah",
+  "units": 4196,
+  "median": 612,
+  "share_below": 21.5,
+  "claims": 1216,
+  "paid": 8115915
+ },
+ {
+  "abbr": "VT",
+  "slug": "vermont",
+  "name": "Vermont",
+  "units": 4015,
+  "median": 1286,
+  "share_below": 49.3,
+  "claims": 3725,
+  "paid": 117314716
+ },
+ {
+  "abbr": "VA",
+  "slug": "virginia",
+  "name": "Virginia",
+  "units": 91046,
+  "median": 754,
+  "share_below": 31.1,
+  "claims": 50609,
+  "paid": 748840249
+ },
+ {
+  "abbr": "WA",
+  "slug": "washington",
+  "name": "Washington",
+  "units": 29901,
+  "median": 1016,
+  "share_below": 45.2,
+  "claims": 16074,
+  "paid": 362697047
+ },
+ {
+  "abbr": "WV",
+  "slug": "west-virginia",
+  "name": "West Virginia",
+  "units": 9254,
+  "median": 1319,
+  "share_below": 75.9,
+  "claims": 27998,
+  "paid": 383749881
+ },
+ {
+  "abbr": "WI",
+  "slug": "wisconsin",
+  "name": "Wisconsin",
+  "units": 11201,
+  "median": 915,
+  "share_below": 36.4,
+  "claims": 9522,
+  "paid": 140923765
+ },
+ {
+  "abbr": "WY",
+  "slug": "wyoming",
+  "name": "Wyoming",
+  "units": 1620,
+  "median": 1007,
+  "share_below": 35.4,
+  "claims": 562,
+  "paid": 3769076
  }
 ]
