@@ -21,9 +21,9 @@ ATTR = ("This product uses the Federal Emergency Management Agency's OpenFEMA AP
 
 def money(n): return "$" + format(int(round(n)), ",") if n is not None else "—"
 def num(n): return format(int(n), ",") if n is not None else "—"
-def src(effective, retrieved, extra=""):
-    return (f'<p class="src">Source: FEMA OpenFEMA. Data effective {effective}; retrieved {retrieved}. '
-            f'{html.escape(extra)}{" " if extra else ""}{ATTR}</p>')
+def src(effective, retrieved, extra="", source="FEMA OpenFEMA", attr=ATTR):
+    return (f'<p class="src">Source: {html.escape(source)}. Data effective {effective}; retrieved {retrieved}. '
+            f'{html.escape(extra)}{" " if extra else ""}{attr}</p>')
 
 # ---- housing assistance: aggregate Lee rows ----
 h_rows = data.get("housing", [])
@@ -108,7 +108,7 @@ if have_risk:
         pctl, eald = block.get("eal_national_pctl"), block.get("eal_total_usd")
         if not _present(block.get("risk_rating")): return ""
         bits = []
-        if isinstance(pctl, (int, float)): bits.append(f"higher flood risk than about {round(pctl)}% of U.S. counties")
+        if isinstance(pctl, (int, float)): bits.append(f"expected annual flood loss above about {round(pctl)}% of U.S. counties")
         if isinstance(eald, (int, float)) and eald > 0: bits.append(f"FEMA models roughly {money(eald)} of flood loss a year across all its buildings")
         return (f" {label.lower()}: " + "; ".join(bits) + ".") if bits else ""
     risk_body = ("<ul class='kv'>" + rating_row(cf, "Coastal") + rating_row(inl, "Inland") + "</ul>"
@@ -196,10 +196,10 @@ if _yrs is not None:
                   f"renewal{'s' if _yrs != 1 else ''} to reach the median full-risk price ({money(P['frp_median'])}). This is the cap on how "
                   f"fast a bill can climb, not a forecast of any one policy; statutory surcharges and fees are "
                   f"outside the cap.</p>")
-claims_lead = (f"Between {C['year_min']} and {C['year_max']}, {CS} had {num(C['rows'])} paid NFIP flood "
-               f"claims totalling {money(C['total_paid'])}.")
+claims_lead = (f"Between {C['year_min']} and {C['year_max']}, {CS} had {num(C['rows'])} NFIP flood "
+               f"claims, which paid {money(C['total_paid'])} in total.")
 # the ratio reads like a risk score, so it is demoted to a note with both numbers shown, never the headline.
-claims_ratio_note = (f"<p class='note'>That is {num(C['rows'])} paid claims since {C['year_min']} against "
+claims_ratio_note = (f"<p class='note'>That is {num(C['rows'])} claims since {C['year_min']} against "
                      f"{num(P['units'])} policies in force today — a cumulative tally spanning ~{C['year_max']-C['year_min']+1} "
                      f"years over a present-day snapshot, not an annual claim rate or a flood probability.</p>")
 
@@ -389,7 +389,7 @@ if se.get("events"):
         + "</ul><p class='note'>Physical flood events recorded by the National Weather Service for this county "
         "(1996 on), separate from insured NFIP claims — it counts floods that happened, insured or not. Damage "
         "figures are NWS field estimates, not audited, and undercount in early years.</p>",
-        src(se.get("period", "1996-2025"), se.get("retrieved", RETR), "NOAA NCEI Storm Events Database."))
+        src(se.get("period", "1996-2025"), se.get("retrieved", RETR), source="NOAA NCEI Storm Events Database", attr=""))
 
 # ---- premium trend: median cost by the YEAR a policy was written (cohort-mix caveat, not a like-for-like index) ----
 cyear = agg["policies"].get("cost_by_year") or {}
