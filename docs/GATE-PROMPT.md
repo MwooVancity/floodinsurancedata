@@ -28,6 +28,62 @@ phone task test found 9 defect classes. **The gate caught 0 of 9.**
 "does the JSON mean what the sentence says?" Wrong *meaning* passes because the page faithfully prints
 it. Fix that layer. Do NOT add nine regexes (that is whack-a-mole; see Inviolable 2).
 
+## THE EVIDENCE, ROUND 2 (2026-10-26): every check passed, a reader still found 15 defects
+All 83 pages passed A–E, the mutation suite and the phone check. Then one person read **one** state page
+(Vermont) and **one** county page (Jefferson Parish) on a phone as a frightened reader:
+
+| # | Defect that shipped | Why every check passed it |
+|---|---|---|
+| 10 | County shown as a code ("20015", a Kansas county on a Vermont page; 8 Connecticut counties as "09001") | gates checked figures, never names |
+| 11 | "Each county page lists its own towns" / "Open a county below" with no county pages | no check reads pointers |
+| 12 | "Data effective October 22, 2026" (the download day) on claims back to 1978; "retrieved October 22" on data pulled Oct 25 | dates were free-typed strings |
+| 13 | "Vermont/New York Flooding paid $43.3 million", no year | nothing asks "when?" |
+| 14 | "Inside the high-risk zone it's 113.1%" | % checked against the JSON, which says 113.1 |
+| 15 | "About 1 in 2 homes" beside 64.9% | arithmetic right, words wrong |
+| 16 | Chart labels overprinted ("$1,0$8,17$1,376") | phone check measured font size, not collisions |
+| 17 | "16th highest of 51 Louisiana counties" (parishes) | no unit vocabulary |
+| 18 | "p25 / p75 / policyCount" in reader text | no vocabulary check |
+| 19 | "0 of Vermont's 14 counties are rated High" beside $117M of floods | true, misleading, unchecked |
+| 20 | Hawaii missing from the national pull; a helper import silently ran a collection | no completeness check on inputs |
+
+**Root cause:** A–E guard the *numbers*. Nothing guarded the *words the reader reads* (names, dates,
+units, ratios, pointers, labels), and gate 3 sampled 3 pages of 83. Round 2's first answer (H1–H7) is
+seven output regexes: a backstop, not the fix (Inviolable 2).
+
+## ROUND 2 DESIGN: make the reader's words impossible to get wrong
+### F. Typed reader words (render-time, like metrics): wrong text cannot be produced
+- `name(geoid)`: the only way to print a place. Census name, then NRI; no name means **build fails**,
+  never a code. A geoid outside the page's state never reaches a table.
+- `unit_word(state)`: county / parish / borough, singular and plural. Templates never type "county".
+- `src(keys, effective=Period|Snapshot|Current, retrieved=manifest.pulled)`: an effective date is a
+  typed value from the data (a claims year range, the policy snapshot, "current list"), never the
+  retrieval day. The retrieval date comes only from the pull manifest.
+- `share_words(p)`: the only way to say "N in 10" / "1 in N"; a share over 100 raises and forces an
+  explanation sentence from the registry.
+- `event_label(e)`: name plus year(s) of loss, from the records.
+- `link_to(kind)`: a sentence that points somewhere ("each county page…") renders only if the target
+  exists in the build.
+- Vocabulary: reader text is built from metric labels and registry text; field names and statistics
+  codes (p25, policyCount) are not in the vocabulary.
+- H1–H7 stay as the backstop on the rendered page, each with its mutation.
+
+### G. Coverage: every page, the live page, every template
+- Gate 2 runs on **every** page at build **and** on the **live HTML** of every page after deploy
+  (`gate_live.py`). A sample is never called verified.
+- Gate 3 adds **P6 label collision**: no two rendered text boxes overlap (JS bounding boxes). It runs on
+  the pages most likely to break: per template, the page whose percentiles sit closest together, the
+  longest county name, and the smallest and largest page.
+- Inputs: the pull's state set must equal the 51 names; each dataset's count must equal its manifest;
+  helpers are imported only from modules with a `__main__` guard (a test greps for it).
+
+### H. The reader read: a defect a human finds becomes a class, then a scan, then a check
+- On every template change, one random page per template is read on a phone, screen by screen, as the
+  frightened reader (a scripted capture plus a written defect list, worst first).
+- Each defect is named as a class, and a scan runs that class over **all** pages *before* anyone says
+  "fixed". Then it becomes an F function (preferred) or an H check, with a mutation.
+- "Misleading but true" (#19) is a defect: a lead must name the measure's basis when real outcomes on
+  the same page point the other way (rating vs claims).
+
 ## MISSION
 Rebuild the checking so each defect class above is **impossible to render**, not merely detected after
 the fact, and prove every check by making it fail on a reintroduced bug.
@@ -133,6 +189,18 @@ one entry: the exact page wording, the official URL, a ≤15-word quoted excerpt
    gate change is logged with its reason.
 6. The final report goes worst first: what each layer now makes impossible, what is still only detected,
    and what still needs a human (rule wording, new dataset meaning).
+
+### Round 2 done when
+7. F functions replace every free-typed name, unit word, date, ratio phrase, event label and pointer in
+   `build_page.py`. A source lint fails on a template string containing "county", a date literal, or "1 in ".
+8. P6 (label collision) and the input-completeness tests exist, each with a failing fixture.
+9. `release.py --live` ends with `gate_live.py` passing on every live page (done 2026-10-26: 83/83).
+10. One reader read per template after the change, with zero defects, or each one logged with its class
+    and its scan result over all pages.
+
+Known open items (not yet checks): the state tile map is unlabelled squares; pages run about 20 phone
+screens, with the flood history near screen 11; disaster titles repeat ("Severe Storm: Severe Storm…");
+AK, MT, ND and WY show dashes for over half their counties (fewer than 30 priced policies, a real data limit).
 
 ## OUT OF SCOPE
 New datasets, new page sections, copy rewrites, unless a claim contradicts its data. Ranking work. Ads.
