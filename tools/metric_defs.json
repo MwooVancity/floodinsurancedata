@@ -1,0 +1,112 @@
+{
+ "DisasterDeclarationsSummaries": {
+  "declarationDate": {
+   "def": "Date the disaster was declared",
+   "sha256": "5f69818559fecdbb06a68885612c9aab827bd57e3d95203df4044e1138a3b6db"
+  },
+  "disasterNumber": {
+   "def": "Sequentially assigned number used to designate an event or incident declared as a disaster.  For more information on the disaster process, please visit https://www.fema.gov/disasters/how-declared",
+   "sha256": "dc855b037be2ea37327157edd23da2ae05c2691b774b0625f8b7d4e215c61822"
+  },
+  "incidentType": {
+   "def": "The primary or official type of incident such as fire or flood. Secondary incident types may have been designated. See the designatedIncidentTypes field. For more information on incident types, please visit https://www.fema.gov/disasters/how-declared.",
+   "sha256": "6ca859689075d0bf1b1c2a8fa3c8c58b0fa40e7f6f1a45f9e09d38c710a1682b"
+  }
+ },
+ "HousingAssistanceOwners": {
+  "totalApprovedIhpAmount": {
+   "def": "Total amount approved in dollars under FEMAs IHP program",
+   "sha256": "046d6607fad84dda1bfb6c85d44e60cc69639202347e8ec3805562b5f9b09b04"
+  },
+  "validRegistrations": {
+   "def": "Count of FEMA registration owners within the state, county, zip where the registration is valid.  In order to be a valid registration, the applicant must be in an Individual Assistance declared state and county and have registered within the FEMA designated registration period",
+   "sha256": "db3dc69f8321a431ceac799b6a618d09b18f277e8e71a838d31a873e6812c0de"
+  }
+ },
+ "IndividualAssistanceMultipleLossFloodProperties": {
+  "highRiskPropertyType": {
+   "def": "Indicate High Risk Property Type: RL - IA Repetitve Loss; SRL - IA Severe Repetitive Loss. RL is properties impacted by 2-3 disaster declarations. SRL denotes properties impacted by 4 or more disaster declarations.",
+   "sha256": "a6a3b1b4eb1c1446dbcf38fc037e5730cb1e044ec8c889bf7ec7291307093693"
+  }
+ },
+ "NfipClaims": {
+  "id": {
+   "def": "Unique ID assigned to the record",
+   "sha256": "d23432de5a37f07dc947672d495511c775d768346d8a3d0b144356ec9cfa2b6f"
+  },
+  "netBuildingPaymentAmount": {
+   "def": "Net building payment amount made to insured in dollars. It is the amountPaidOnBuildingClaim minus any recovery amounts.",
+   "sha256": "c729a58b7e8626981327619e704af00b8f258415721da355ded1e508ebd2c341"
+  },
+  "netContentsPaymentAmount": {
+   "def": "Net contents payment amount made to insured in dollars. This is the amountPaidOnContentsClaim minus recovery amounts.",
+   "sha256": "360a2711b5f6f68bb6af0187f611181f97b15a74c6e970ecf19e93bea161e2c4"
+  },
+  "netIccPaymentAmount": {
+   "def": "Net Increased Cost of Compliance (ICC) payment amount made to insured in dollars.",
+   "sha256": "0fac17d66b2524134d7493b9a63d75346b0198601d06f3cd2257ea0e6da49806"
+  },
+  "ratedFloodZone": {
+   "def": "Formerly called floodZone. NFIP Flood Zone derived from the Flood Insurance Rate Map (FIRM) used to rate the insured property.\n\nA - Special Flood with no Base Flood Elevation on FIRM; \nAE, A1-A30 - Special Flood with Base Flood Elevation on FIRM; \nA99 - Special Flood with Protection Zone; \nAH, AHB* - Special Flood with Shallow Ponding; \nAO, AOB* - Special Flood with Sheet Flow; \nX, B - Moderate Flood from primary water source.  Pockets of areas subject to drainage problems; \nX, C - Minimal Flood from primary water source.  Pockets of areas subject to drainage problems; \nD - Possible Flood; \nV - Velocity Flood with no Base Flood Elevation on FIRM; \nVE, V1-V30 - Velocity Flood with Base Flood Elevation on FIRM; \nAE, VE, X - New zone designations used on new maps starting January 1, 1986, in lieu of A1-A30, V1-V30, and B and C; \nAR - A Special Flood Hazard Area that results from the decertification of a previously accredited flood protection system that is determined to be in the process of being restored to provide base flood protection;\nAR Dual Zones - (AR/AE, AR/A1-A30, AR/AH, AR/AO, AR/A) Areas subject to flooding from failure of the flood protection system (Zone AR) which also overlap an existing Special Flood Hazard Area as a dual zone; \n\n*AHB, AOB, ARE, ARH, ARO, and ARA are not risk zones shown on a map, but are acceptable values for rating purposes",
+   "sha256": "96668f0f87a88990c2ff26646b6f92796c80e07f2860eef042012695e9220011"
+  }
+ },
+ "NfipCommunityStatusBook": {
+  "classRating": {
+   "def": "The Class rating are based on aggregated points communities received for implementing floodplain activities that are higher than the minimum requirements of the National Flood Insurance Program (NFIP)",
+   "sha256": "c7954d1d91c444ddba2c49466f6156027e6529029bffe69202955feaa6778d87"
+  },
+  "nonSfhaDiscount": {
+   "def": "The percentage of non Special Flood Hazard Area insurance (non-SFHA)  discount available based on the information received from the Community Rating System (CRS)",
+   "sha256": "e073bc121a843691e70c901df20751e16c7a998a273ef2ba563c6c94aea3ecc0"
+  },
+  "sfhaDiscount": {
+   "def": "The percentage of Special Flood Hazard Area (SFHA) insurance discount available based on the information received from the Community Rating System (CRS)",
+   "sha256": "f8da7944046ec0e6dbcea595994a8310b04d935c1d5c8ad0015f62bb3a8717a0"
+  }
+ },
+ "NfipPolicies": {
+  "fullRiskPremium": {
+   "def": "The chargeable premium for a property based on its determined flood risk and the full cost to pay anticipated losses and expenses for that property.",
+   "sha256": "5949a0d6510bed61695ff70ffaec546df95a591e6e2173f666bb1f0a4dc8936d"
+  },
+  "policyCost": {
+   "def": "Calculated in dollars by adding together calculated premium, reserve fund assessment, federal policy fee, and HFIAA surcharge",
+   "sha256": "347114f895b55ba70abe89d11e826946ff5c730a548bb00be8725c764e4e04ed"
+  },
+  "policyCount": {
+   "def": "Insured units in an active status. A policy contract ceases to be in an active status as of the cancellation date or the expiration date. Residential Condominium Building Association Policy (RCBAP) contracts are stored as a single policy contract but insure multiple units and therefore represent multiple policies",
+   "sha256": "21461698052be4ed16b45ab2ae5321e0d66134f4a23d770af0dc989858c52bd8"
+  },
+  "ratedFloodZone": {
+   "def": "NFIP Flood Zone - Flood zone derived from the Flood Insurance Rate Map (FIRM) used to rate the insured property.\n\nA - Special Flood with no Base Flood Elevation on FIRM; \nAE, A1-A30 - Special Flood with Base Flood Elevation on FIRM; \nA99 - Special Flood with Protection Zone; \nAH, AHB* - Special Flood with Shallow Ponding; \nAO, AOB* - Special Flood with Sheet Flow; \nX, B - Moderate Flood from primary water source.  Pockets of areas subject to drainage problems; \nX, C - Minimal Flood from primary water source.  Pockets of areas subject to drainage problems; \nD - Possible Flood; \nV - Velocity Flood with no Base Flood Elevation on FIRM; \nVE, V1-V30 - Velocity Flood with Base Flood Elevation on FIRM; \nAE, VE, X - New zone designations used on new maps starting January 1, 1986, in lieu of A1-A30, V1-V30, and B and C; \nAR - A Special Flood Hazard Area that results from the decertification of a previously accredited flood protection system that is determined to be in the process of being restored to provide base flood protection;\nAR Dual Zones    - (AR/AE, AR/A1-A30, AR/AH, AR/AO, AR/A) Areas subject to flooding from failure of the flood protection system (Zone AR) which also overlap an existing Special Flood Hazard Area as a dual zone; \n\n*AHB, AOB, ARE, ARH, ARO, and ARA are not risk zones shown on a map, but are acceptable values for rating purposes",
+   "sha256": "d17058378bd90bbddc7e55057325c9443b7df3cbbca8f3be8535092c6792aa84"
+  },
+  "reportedZipCode": {
+   "def": "5-digit Postal  Zip Code for the insured property reported by WYO partners",
+   "sha256": "be184bd71ae28b21265070b9c24d1797f7c22070c761b537094d65137c5f28ce"
+  },
+  "totalBuildingInsuranceCoverage": {
+   "def": "Total Insurance Amount in whole dollars on the Building",
+   "sha256": "fe4725e33a7512f8e30287a66aa9134952cec95eb9280b40777f9fb8902e336e"
+  },
+  "totalContentsInsuranceCoverage": {
+   "def": "Total Insurance Amount in whole dollars on the Contents",
+   "sha256": "b1a357ae0cc7805e281ae924b153d608711e9d623f8440a496f70fa3e9d42134"
+  },
+  "totalInsurancePremiumOfThePolicy": {
+   "def": "Total Insurance Premium of the Policy in whole dollars. Negative values indicate a refund.",
+   "sha256": "28fe27514b17454589f685819dd081d660e01bf6709efafcda808d0126c2aa9b"
+  }
+ },
+ "NfipResidentialPenetrationRates": {
+  "resPenetrationRate": {
+   "def": "NFIP insured residential structures in the county divided by all residential structures in the county. Policy Contracts in Force (CIF) is a good approximation of individual insured structures, as opposed to Policies in Force (PIF), which includes individual units within condominium structures.",
+   "sha256": "f22419abcef78d7e53977e3e7079009d29ce55506f8be804085221dbd4cd0681"
+  },
+  "resPenetrationRateSfha": {
+   "def": "NFIP insured residential structures in the Special Flood Hazard Area (SFHA) of the county divided by all residential structures in the SFHA of the county.",
+   "sha256": "540eb0a3786fb5e6fa3b3614856a442fe1115cf810e2232e8d07a77dc3a32489"
+  }
+ }
+}

@@ -112,16 +112,26 @@ with NO `$orderby` (orderby forces a server sort of the filtered set and 503s), 
 negative premiums are refunds; claims `countyCode` may not match property county; suppress cost charts
 under 100 cohort policies, ZIP under 20.
 
-## Gates — three only (no gate zoo)
-1. It builds.  2. `tools/gate.py` — the one correctness + data-integrity audit (no second gate file): numbers on
-the page equal the JSON and reconcile to FEMA's official count within 5% (documented cause otherwise); AND every
-ratio's denominator is disclosed (SFHA share = sfha_units/units, recomputed), truncated tables disclose their
-remainder, claims-per-100 carries its "cumulative, not an annual rate" caveat, claims totals + largest loss year
-reconcile to agg, full-risk is framed "not a quote", the stated dataset count equals the sources listed, and
-`dateModified` is present. 3. The live page is up and its body reads real content this session.
-A rule without a check is a note. "Live" = curl/browser confirms real content this session. Added 2026-10-23
-(owner: "add the all in one gate we need") after a fresh-brain audit caught a truncated zone table and an
-undisclosed denominator that the old form-only check missed.
+## Gates — three only, checking MEANING not form (rebuilt 2026-10-25, design in docs/GATE-PROMPT.md)
+The old 29-check gate passed all 32 pages while 9 defect classes shipped (policyCost-with-fees compared with a
+premium-only full-risk price, "most" at 34.5%, IA rows called homes, NOAA cited as FEMA...). It only asked "does
+the page match the JSON?" Now the page is built so those errors can't render, and the gate re-checks it:
+1. **It builds.** `build_page.py` prints figures with `metrics.m()`, compares with `metrics.compare()` (raises on
+   a unit mismatch), writes direction/majority words only through `claim()` (raises if false), prints law and
+   program text only through `rules_registry.rule()`, and builds every source line and the dataset list from the
+   metrics a panel shows.
+2. **It is true** — `tools/gate.py` per page: A registry (source lines, count nouns, one value per figure,
+   basis named, dataset list = what panels cite), B claims (every claim's condition holds; no quantifier word
+   outside one), C invariants (paid ≤ filed, paid + closed-without-payment = filed, "N paid claims" = paid count,
+   zone table sums to units), E rules (text = registry), plus the legacy data checks (L*). Release-level:
+   `tools/recheck.py` recomputes hero figures for 2 random counties from the API with separate code, checks FEMA
+   field definitions (`metric_defs.json` hashes) and every rule excerpt on its official page.
+3. **It is live and usable** — `tools/phone_check.py` at 390px (no overflow, no text under 11px, median + map
+   button + jump menu on screen 1, quote checker by screen 2, nothing collapsed), plus the live body.
+Proof: `tools/test_gate.py` reintroduces each known bug and asserts its check fires (CI runs it on every PR); a
+check that catches nothing is deleted. One command: `python -I tools/release.py`, deploy, `release.py --live`,
+then `recheck.py` as one background job. A new defect class becomes a registry rule plus a mutation, never a patch.
+A new rule needs an official URL and an excerpt in `rules_registry.py`; a new figure needs a `metrics.py` entry.
 
 ## What the data cannot say (printed on every page)
 Your own premium; private (non-NFIP) prices; your address's exact zone (link FEMA's map); why prices

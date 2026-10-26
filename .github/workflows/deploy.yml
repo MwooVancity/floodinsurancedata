@@ -26,6 +26,11 @@ jobs:
             [ -f "$d/agg.json" ] && [ -f "$page" ] || continue
             python -I tools/gate.py "$d/agg.json" "$page"
           done
+      - name: Unit tests and the gate mutation suite (each check proven by a reintroduced bug)
+        run: |
+          set -e
+          python -I tools/test_calc.py
+          python -I tools/test_gate.py
 
   deploy:
     if: github.event_name == 'push'
