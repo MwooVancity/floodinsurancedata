@@ -2,7 +2,10 @@
 
 > Per-county NFIP flood-insurance statistics from public FEMA data: what policyholders pay, the gap to FEMA's full-risk price, claims history, flood risk, and CRS discounts.
 
-## Pages
+## States
+- [District of Columbia](https://floodinsurancedata.com/flood-insurance/district-of-columbia/): median $384
+
+## Counties
 - [Miami-Dade County](https://floodinsurancedata.com/flood-insurance/miami-dade-county-fl/): median $891
 - [Broward County](https://floodinsurancedata.com/flood-insurance/broward-county-fl/): median $831
 - [Harris County](https://floodinsurancedata.com/flood-insurance/harris-county-tx/): median $1,084

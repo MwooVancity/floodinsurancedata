@@ -82,6 +82,7 @@ def run(st):
     print(f"{st}: crs {len(out['crs'])}, decl {len(out['declarations'])}, housing {len(out['housing'])}, multiloss {len(ml)}, "
           f"pen {out['penetration']['overall_pct']}%, nri counties {len(out['nri_counties'])}, in-force {hist}", flush=True)
 
-for st in (sys.argv[1:] or sorted(NAMES)):
-    try: run(st)
-    except Exception as e: print(st, "FAILED", repr(e)[:150], flush=True)
+if __name__ == "__main__":
+    for st in (sys.argv[1:] or sorted(NAMES)):
+        try: run(st)
+        except Exception as e: print(st, "FAILED", repr(e)[:150], flush=True)

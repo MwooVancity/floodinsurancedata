@@ -17,6 +17,8 @@ agg = json.load(open(os.path.join(DIR, "agg.json")))
 P = agg["policies"]; C = agg["claims"]; NRI = agg.get("nri")
 CL = os.environ.get("FF_COUNTYLABEL", "Lee County, Florida")   # full label
 CS = os.environ.get("FF_COUNTYSHORT", "Lee County")            # short label
+IS_STATE = os.environ.get("FF_LEVEL", "county") == "state"     # state hub page: same template, state data, county table
+EXTRAS = json.load(open(os.path.join(DIR, "extras.json"))) if os.path.exists(os.path.join(DIR, "extras.json")) else {}
 OFFICIAL = int(os.environ.get("FF_OFFICIAL", "132012"))        # FEMA official PIF count (0 = unknown)
 POL_ASOF = "July 31, 2026"; RETR = "October 22, 2026"
 ATTR = ("This product uses the Federal Emergency Management Agency's OpenFEMA API, "
@@ -164,6 +166,7 @@ else:
                 f"<p class='gap'>Gap: NRI flood expected-annual-loss and national percentile for {CS}. "
                 "Next source to pull (reachable host): FEMA NRI county table from gis.fema.gov or the "
                 "NRI_Table_Counties.csv download. The public third-party ArcGIS copy was a non-national sample.</p>")
+if IS_STATE: risk = ""   # FEMA's NRI rates counties; the state page shows every county's rating in the tile map instead
 
 # ---- zone card (policy UNITS) ----
 zu = P["zone_units"]
@@ -224,8 +227,8 @@ if czone:
 # sourced, rule-based answer to "is it going up?" instead. (No trend card is rendered.)
 
 MX.compare("prem_median", "frp_median")   # like-for-like or it raises
-gap_lead = ((claim("Many bills here can keep rising", "rising", ("share_below", ">", 0))
-             + f": {m('share_below', str(P['share_below']) + '%')} of policies pay less than FEMA's full-risk price. "
+gap_lead = ((m('share_below', str(P['share_below']) + '%') + " of bills here "
+             + claim("can keep rising", "rising", ("share_below", ">", 0)) + ": they pay less than FEMA's full-risk price. "
              + rule("glide") if P.get("share_below") else
              "No policy here pays less than FEMA's full-risk price.")
             + f" Median premium {m('prem_median', money(PREM_MED))}, full-risk {m('frp_median', money(P['frp_median']))} (premiums only, before fees).")
@@ -268,9 +271,14 @@ def _cname(c):
 # table only for communities with a discount; the rest fold into one named line (a screen of "No discount" rows helps no one)
 _has_disc = [c for c in crs if _pct(c.get("sfhaDiscount")) or _pct(c.get("nonSfhaDiscount"))]
 _no_disc = [c for c in crs if c not in _has_disc]
-crs_rows = "".join(f"<tr><td>{_cname(c)}</td>"
-                   f"<td>{_disc(c.get('sfhaDiscount'))}</td><td>{_disc(c.get('nonSfhaDiscount'))}</td><td>{_cls(c.get('classRating'))}</td></tr>" for c in _has_disc)
-crs_none_note = (f"<p class='note'><b>No CRS discount ({len(_no_disc)}):</b> " + "; ".join(_cname(c) for c in _no_disc) + ".</p>") if _no_disc else ""
+def _dnum(c): return int((_pct(c.get("sfhaDiscount")) or "0%").rstrip("%"))
+_shown_disc = sorted(_has_disc, key=lambda c: -_dnum(c))[:15] if IS_STATE else _has_disc   # a state can have hundreds
+crs_rows = "".join(f"<tr><td>{_cname(c)}" + (f" ({html.escape(str(c.get('county') or '').title())})" if IS_STATE and c.get('county') else "") + "</td>"
+                   f"<td>{_disc(c.get('sfhaDiscount'))}</td><td>{_disc(c.get('nonSfhaDiscount'))}</td><td>{_cls(c.get('classRating'))}</td></tr>" for c in _shown_disc)
+crs_none_note = ((f"<p class='note'>The {len(_shown_disc)} largest discounts of {len(_has_disc)} discounted communities are shown; "
+                  f"{len(_no_disc)} communities here have no CRS discount. Each county page lists its own towns.</p>")
+                 if IS_STATE else
+                 (f"<p class='note'><b>No CRS discount ({len(_no_disc)}):</b> " + "; ".join(_cname(c) for c in _no_disc) + ".</p>") if _no_disc else "")
 _disc_communities = [c for c in crs if _pct(c.get("sfhaDiscount"))]
 if _disc_communities:
     top = max(_disc_communities, key=lambda c: int(_pct(c["sfhaDiscount"]).rstrip("%")))
@@ -279,7 +287,8 @@ if _disc_communities:
                 f"{_pct(top['sfhaDiscount'])} off in {_cname(top)}. "
                 + rule("crs_auto") + " Find your town below.")
 else:
-    crs_lead = f"Not through a community discount: none of {CS}'s {len(crs)} NFIP communities has one."
+    crs_lead = ("Not through a community discount: " +
+                (f"none of {CS}'s {len(crs)} NFIP communities has one." if len(crs) != 1 else f"{CS}'s only NFIP community has none."))
 
 # ---- how to get covered (factual public NFIP rules — the reader's "what do I do next" + the 30-day catch) ----
 _HOWTO = ["howto_answer", "homeowners_excl", "howto_tiles", "wait_exceptions", "limits", "how_to_buy", "already_flooded"]
@@ -340,10 +349,13 @@ if len(state_risk) >= 4:
               + " ".join(f'<span style="display:inline-block;width:11px;height:11px;border-radius:2px;'
                          f'background:{RISK_COL[o]};vertical-align:middle"></span> {lab}'
                          for lab, o in [("Very Low",0),("Low",1),("Moderate",2),("High",3),("Very High",4)])
-              + '. Your county is outlined.</div>')
-    tilemap_card = card(f"How {CS} compares across the state",
-        ((lambda own: f"{CS} is rated {html.escape(str(own.get('rating')))}: {sum(1 for c in state_risk if _ord(c.get('rating')) >= _ord(own.get('rating')))} "
-                        f"of the state's {len(state_risk)} counties are rated the same or higher. {CS} is outlined.")
+              + ('.' if IS_STATE else '. Your county is outlined.') + '</div>')
+    _high = sum(1 for c in state_risk if _ord(c.get("rating")) >= 3)
+    tilemap_card = card(f"How {CS} counties compare" if IS_STATE else f"How {CS} compares across the state",
+        (f"{_high} of {CS}'s {len(state_risk)} counties are rated Relatively High or Very High for flooding by FEMA. "
+         "Open a county below for its own figures." if IS_STATE else
+         (lambda own: f"{CS} is rated {html.escape(str(own.get('rating')))}: {sum(1 for c in state_risk if _ord(c.get('rating')) >= _ord(own.get('rating')))} "
+                      f"of the state's {len(state_risk)} counties are rated the same or higher. {CS} is outlined.")
          (next((c for c in state_risk if c.get("fips") == GEOID_SELF), None) or {"rating": "unrated"})),
         f'<svg viewBox="0 0 {W} {H}" width="100%" style="max-width:{W}px" role="img" aria-label="State counties by flood risk">{"".join(tiles)}</svg>{legend}',
         src(["nri_rating"], "NRI 2023 release", RETR))
@@ -371,6 +383,62 @@ if bz:
         'zo.innerHTML="<b>"+z+"</b>: "+d.u.toLocaleString()+" policy units"+(d.m?("; median $"+d.m.toLocaleString()+" / yr ("+d.n.toLocaleString()+" priced policies)"):" (too few priced policies for a median).");});'
         '</script>',
         src(["zip_cost", "units"], POL_ASOF, RETR))
+
+# ---- STATE-ONLY blocks: cost by county (the hub), why published averages differ, policies-in-force trend ----
+averages_card = state_trend_card = ""
+if IS_STATE:
+    _nm = {c["fips"]: c["county"] for c in (data.get("nri_counties") or [])}
+    try: _pl = {p.get("geoid"): p["slug"] for p in json.load(open(os.environ.get("FF_PLACES", "")))}
+    except Exception: _pl = {}
+    def _cn(g): return html.escape(_nm.get(g) or g)
+    def _clink(g): return f'<a href="../{_pl[g]}/">{_cn(g)}</a>' if g in _pl else _cn(g)
+    _cty = sorted(((g, r) for g, r in (agg.get("counties") or {}).items() if r.get("units")), key=lambda kv: -kv[1]["units"])
+    _priced = [(g, r) for g, r in _cty if (r.get("cost_n") or 0) >= 100 and r.get("p50")]
+    _ok = lambda r: (r.get("cost_n") or 0) >= 100
+    _rows = "".join(f"<tr><td>{_clink(g)}</td><td>{num(r['units'])}</td><td>{money(r['p50']) if _ok(r) else '—'}</td>"
+                    f"<td>{str(r['share_below']) + '%' if _ok(r) and r.get('share_below') is not None else '—'}</td><td>{num(r['claims'])}</td></tr>"
+                    for g, r in _cty[:30])
+    _cheap = sorted(_priced, key=lambda kv: kv[1]["p50"])[:5]; _dear = sorted(_priced, key=lambda kv: -kv[1]["p50"])[:5]
+    zip_card = "" if len(_cty) < 2 else card("What does it cost in my county?",
+        (f"From about {money(_cheap[0][1]['p50'])} a year in {_cn(_cheap[0][0])} to {money(_dear[0][1]['p50'])} in {_cn(_dear[0][0])}, "
+         f"among counties with 100 or more priced policies. Find yours below." if len(_priced) > 1 else "Find your county below."),
+        "<table><thead><tr><th>County</th><th>Policies</th><th>Median / yr</th><th>Below full-risk</th><th>Claims since 1978</th></tr></thead>"
+        f"<tbody>{_rows}</tbody></table>"
+        + (f"<p class='note'>{len(_cty) - 30} smaller counties are not listed. </p>" if len(_cty) > 30 else "")
+        + (f"<p class='note'><b>Lowest typical cost:</b> {and_list(_cn(g) + ' (' + money(r['p50']) + ')' for g, r in _cheap)}. "
+           f"<b>Highest:</b> {and_list(_cn(g) + ' (' + money(r['p50']) + ')' for g, r in _dear)}. "
+           "Median annual cost of single-family primary-home policies; counties with fewer than 100 priced policies show a dash.</p>" if len(_priced) >= 10 else ""),
+        src(["county_units", "cost_p50", "share_below", "claims_filed"], POL_ASOF, RETR), id="counties")
+    _av = (EXTRAS.get("policies") or {}).get("averages") or {}
+    if _av.get("sf_cost_mean"):
+        _avrows = [("Median cost, single-family homes", m("cost_p50", money(P["p50"])), "premium plus fees; the middle policy"),
+                   ("Average (mean) cost, single-family homes", m("cost_mean", money(_av["sf_cost_mean"])), "pulled up by a few expensive policies"),
+                   ("Median premium only, single-family homes", money(_av["sf_prem_median"]), "before the federal fee, reserve fund and surcharge"),
+                   ("Average premium only, single-family homes", m("prem_mean", money(_av["sf_prem_mean"])), "the figure many sites quote"),
+                   ("Median cost, every policy type", m("cost_all_median", money(_av["all_cost_median"])), "adds condos, rentals and businesses"),
+                   ("Average cost, every policy type", m("cost_all_mean", money(_av["all_cost_mean"])), "")]
+        averages_card = card(f"Why do sites quote different averages for {CS}?",
+            f"Because they measure different things. From the same FEMA records, the typical single-family home pays "
+            f"{m('cost_p50', money(P['p50']))} a year, but the average across every policy type is {m('cost_all_mean', money(_av['all_cost_mean']))}.",
+            "<table><thead><tr><th>Measure</th><th>Amount</th><th>What it counts</th></tr></thead><tbody>"
+            + "".join(f"<tr><td>{a}</td><td>{b}</td><td>{c}</td></tr>" for a, b, c in _avrows) + "</tbody></table>"
+            "<p class='note'>Published averages rarely say which of these they are, or which year. All six here come from the "
+            f"NFIP policies in force on {POL_ASOF}.</p>",
+            src(["cost_p50", "cost_mean", "prem_mean", "cost_all_median", "cost_all_mean"], POL_ASOF, RETR))
+    _h = (data.get("inforce_history") or {}).get("by_year") or {}
+    _ch = VALS.get("inforce_change_pct")
+    if _h and _ch is not None:
+        _c = ("inforce_change_pct", "<", 0) if _ch < 0 else ("inforce_change_pct", ">", 0)
+        _txt = (claim("Yes", "yes", _c) + ": " + claim(f"policies in force fell {m('inforce_change_pct', str(abs(_ch)) + '%')} from 2022 to 2026", "fell", _c)
+                if _ch < 0 else "No: " + claim(f"policies in force grew {m('inforce_change_pct', str(_ch) + '%')} from 2022 to 2026", "grew", _c)
+                if _ch > 0 else "No: policies in force were unchanged from 2022 to 2026")
+        state_trend_card = card(f"Are people dropping flood insurance in {CS}?",
+            _txt + f", from {num(_h['2022'])} to {num(_h['2026'])} NFIP policy records.",
+            "<table><thead><tr><th>July 31</th><th>Policies in force</th></tr></thead><tbody>"
+            + "".join(f"<tr><td>{y}</td><td>{num(v)}</td></tr>" for y, v in sorted(_h.items())) + "</tbody></table>"
+            "<p class='note'>Policy records in force on July 31 of each year (a condo-building policy counts once). "
+            "Private flood policies are not in this data.</p>",
+            src(["inforce"], "2019–2026", RETR))
 
 # ---- repetitive-loss properties (FEMA IA multiple-loss; a chronic repeat-flood signal, distinct from
 # the annual NFIP claims) ----
@@ -438,9 +506,10 @@ if pen.get("overall_pct") is not None:
     takeup_card = card("How many homes here carry flood insurance?",
         (f"About 1 in {round(100 / pen['overall_pct'])} homes here has flood insurance ({m('pen_overall', str(pen['overall_pct']) + '%')}). "
          if pen["overall_pct"] else f"Almost no homes here have NFIP flood insurance ({m('pen_overall', str(pen['overall_pct']) + '%')}). ")
-        + f"Inside the high-risk zone it's {m('pen_sfha', str(pen['sfha_pct']) + '%')}.",
+        + (f"Inside the high-risk zone it's {m('pen_sfha', str(pen['sfha_pct']) + '%')}." if pen.get("sfha_pct") is not None else ""),
         f"<ul class='kv'><li><b>All homes insured</b><span>{m('pen_overall', str(pen['overall_pct']) + '%')}</span></li>"
-        f"<li><b>High-risk-zone homes insured</b><span>{m('pen_sfha', str(pen['sfha_pct']) + '%')}</span></li>"
+        + (f"<li><b>High-risk-zone homes insured</b><span>{m('pen_sfha', str(pen['sfha_pct']) + '%')}</span></li>" if pen.get("sfha_pct") is not None else "")
+        + f""
         f"<li><b>Residential policies in force</b><span>{num(pen['contracts'])}</span></li></ul>"
         "<p class='note'>FEMA's NFIP residential take-up rate — share of residential structures with an NFIP "
         "policy, overall and inside the Special Flood Hazard Area. NFIP only (excludes private flood insurance); "
@@ -495,11 +564,13 @@ META_DESC = (f"Median NFIP flood insurance cost in {CS} is {money(P['p50'])} a y
 PLACES = os.environ.get("FF_PLACES", os.path.join(HERE, "places.json"))
 try: places = json.load(open(PLACES))
 except Exception: places = []
-places = [p for p in places if p.get("slug") != SLUG]
-places.append({"slug": SLUG, "label": CL, "short": CS, "geoid": GEOID,
-               "units": P["units"], "median": P["p50"], "state": agg.get("nri", {}).get("state") if agg.get("nri") else None})
-places.sort(key=lambda p: -(p.get("units") or 0))
-json.dump(places, open(PLACES, "w"), indent=1)
+if not IS_STATE:   # places.json lists county pages; state pages are listed by build_states.py
+    places = [p for p in places if p.get("slug") != SLUG]
+    places.append({"slug": SLUG, "label": CL, "short": CS, "geoid": GEOID,
+                   "units": P["units"], "median": P["p50"], "state": agg.get("nri", {}).get("state") if agg.get("nri") else None})
+    places.sort(key=lambda p: -(p.get("units") or 0))
+    json.dump(places, open(PLACES, "w"), indent=1)
+from agg_raw import NAMES as STATE_NAMES, slug as state_slug
 # siblings must be ACTUAL neighbours: same-state BUILT pages (never the global top-5 by policy count,
 # which just funnelled every page to the same mega-counties and orphaned the tail). No same-state page
 # built yet -> link to the full directory, not a false "nearby".
@@ -510,13 +581,23 @@ _same = [p for p in _others if _state and p.get("state") == _state]
 # (places.json is sorted by units desc). Never leave a page with 0 lateral links.
 _fill = [p for p in _others if p not in _same]
 siblings = _same[:6] if len(_same) >= 3 else (_same + _fill)[:5]
-if siblings:
+try: _built_states = {s["abbr"] for s in json.load(open(os.path.join(os.path.dirname(HERE), "data", "states", "built.json")))}
+except Exception: _built_states = set()
+_state_link = (f'<a href="../{state_slug(_state)}/">{html.escape(STATE_NAMES[_state])} overview</a> · '
+               if _state in _built_states else "")   # only link a state page that was actually built and gated
+if IS_STATE:
+    _st_all = sorted(STATE_NAMES.items(), key=lambda kv: kv[1])
+    _i = next((i for i, (a, n) in enumerate(_st_all) if n == CS), 0)
+    _nb = [_st_all[(_i + d) % len(_st_all)] for d in (-3, -2, -1, 1, 2, 3)]
+    sib_html = ("<nav class='sib'><b>Other states:</b> " + " · ".join(f'<a href="../{state_slug(a)}/">{html.escape(n)}</a>' for a, n in _nb)
+                + ' · <a href="../../">all states</a></nav>')
+elif siblings:
     _lbl = f"Other {html.escape(_state)} counties" if len(_same) >= 3 else "Compare other counties"
-    sib_html = (f"<nav class='sib'><b>{_lbl}:</b> " +
+    sib_html = (f"<nav class='sib'>{_state_link}<b>{_lbl}:</b> " +
                 " · ".join(f'<a href="../{p["slug"]}/">{html.escape(p["short"])}</a>' for p in siblings) +
                 ' · <a href="../../">all places</a></nav>')
 else:
-    sib_html = '<nav class="sib"><a href="../../">Browse all places by state →</a></nav>'
+    sib_html = f'<nav class="sib">{_state_link}<a href="../../">Browse all places by state →</a></nav>'
 # Federal source catalog — single source of truth for the citation schema AND the visible sources block.
 ISO_DATE = (P.get("retrieved") or "2026-10-22")   # ISO date the federal data was last pulled
 _pulls = [ISO_DATE] + [str((data.get(k) or {}).get("retrieved") or "") for k in ("claims_extra", "storm_events", "multiloss")]
@@ -671,7 +752,7 @@ details.more>summary::-webkit-details-marker{{display:none}}details.more>summary
 table{{font-size:13.5px}}th,td{{padding:7px 6px}}thead th{{font-size:11px;white-space:normal}}
 table{{width:100%}}}}
 </style></head><body>
-<header class="topbar"><div class="wrap"><a class="brand" href="../../">Flood Insurance Data</a><span class="crumb">Flood insurance › {CS}</span></div></header>
+<header class="topbar"><div class="wrap"><a class="brand" href="../../">Flood Insurance Data</a><span class="crumb">Flood insurance › {(f'<a href="../{state_slug(_state)}/" style="color:inherit">{html.escape(STATE_NAMES[_state])}</a> › ' if (not IS_STATE and _state in _built_states) else '')}{CS}</span></div></header>
 <main class="wrap">
 <section class="hero">
 <p class="kicker">NFIP records · {CS} · policies as of {POL_ASOF}</p>
@@ -708,6 +789,8 @@ table{{width:100%}}}}
 
 {zip_card}
 
+{averages_card}
+
 {card("How do current premiums compare with FEMA's full-risk price?", gap_lead,
   f"<ul class='kv'><li><b>Median premium charged (before fees)</b><span>{m('prem_median', money(PREM_MED))}</span></li>"
   f"<li><b>Median full-risk premium</b><span>{m('frp_median', money(P['frp_median']))}</span></li>"
@@ -715,6 +798,8 @@ table{{width:100%}}}}
   src(["prem_median", "frp_median", "share_below"], POL_ASOF, RETR))}
 
 {trend_card}
+
+{state_trend_card}
 
 {card("Can I pay less than the sticker price?", crs_lead,
   (f"<table><thead><tr><th>Community</th><th>High-risk zone</th><th>Other areas</th><th>CRS class</th></tr></thead><tbody>{crs_rows}</tbody></table>" if crs_rows else "")
@@ -739,7 +824,7 @@ table{{width:100%}}}}
 
 {takeup_card}
 
-{card("How often is this county a flood disaster?",
+{card(f"How often is {CS} a flood disaster?" if IS_STATE else "How often is this county a flood disaster?",
   f"{m('declarations', str(len(fh_events)))} federal disasters for floods or storms here"
   + (f"; the latest was {html.escape((recent[0].get('declarationTitle') or '').title())} ({html.escape(cal_year(recent[0]))})." if recent else "."),
   f"<ul>{recent_li}</ul><p class='note'>Distinct storms by calendar year (one storm's emergency and major-disaster declarations are counted once), not individual declaration records.</p>",

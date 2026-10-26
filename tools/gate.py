@@ -61,7 +61,7 @@ if P.get("p50") and money(P["p50"]) not in page: fail("L5", f"median {money(P['p
 # (L6 "OpenFEMA appears somewhere" deleted 2026-10-25: A1 checks each panel's attribution; mutation proves it.)
 if re.search(r">\s*(None|nan|NaN|undefined)\s*<", page) or "$None" in page or "None%" in page:
     fail("L7", "None/nan leaked into the page")
-if not agg.get("nri") and "Gap:" not in page: fail("L8", "NRI missing without a gap line")
+if not agg.get("nri") and agg.get("level") != "state" and "Gap:" not in page: fail("L8", "NRI missing without a gap line")
 cn = P.get("cost_n") or 0
 spread_ok = P.get("spread_ok", cn >= 100); has_spread = "Annual NFIP cost spread" in page
 if spread_ok != has_spread: fail("L9", f"spread chart shown={has_spread} but spread_ok={spread_ok} (cost_n {cn})")

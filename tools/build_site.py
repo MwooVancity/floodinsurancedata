@@ -25,13 +25,21 @@ def wr(path, s):
 HEAD = """<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1"><title>{title}</title>
 <meta name="description" content="{desc}"><link rel="canonical" href="{canon}">
-<style>:root{{--bg:#eef2f5;--surface:#fff;--ink:#132029;--mut:#5c6b78;--faint:#8795a0;--line:#e3e9ee;--brand:#15617f;--brand-d:#0e4a61;--accent:#c2591f;--r:14px;--gut:20px;--shadow:0 1px 2px rgba(16,32,43,.05),0 6px 20px rgba(16,32,43,.06)}}
+<style>:root{{--bg:#f4f7f8;--surface:#fff;--ink:#132029;--mut:#55656f;--faint:#7d8c96;--line:#dbe3e7;--brand:#15617f;--brand-d:#0e4a61;--accent:#c2591f;--r:12px;--gut:20px;
+ --serif:"Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;--mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;--shadow:none}}
 *{{box-sizing:border-box}}body{{margin:0;background:var(--bg);color:var(--ink);font:17px/1.62 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}}
 .wrap{{max-width:740px;margin:0 auto;padding:0 var(--gut)}}
 .topbar{{background:var(--brand-d)}}.topbar .wrap{{padding:11px var(--gut)}}.topbar a{{color:#fff;font-weight:800;text-decoration:none}}
-.hero{{padding:28px 0 4px}}h1{{font-size:30px;line-height:1.15;letter-spacing:-.015em;margin:.1em 0 .3em}}h2{{font-size:20px;font-weight:700;letter-spacing:-.01em;margin:0 0 6px}}
+.hero{{padding:30px 0 4px}}h1{{font-family:var(--serif);font-weight:600;font-size:36px;line-height:1.1;letter-spacing:-.01em;margin:.1em 0 .3em}}
+h2{{font-family:var(--serif);font-size:24px;font-weight:600;line-height:1.2;margin:0 0 6px}}
+.kicker{{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin:0}}
 .lede{{color:var(--mut);max-width:62ch;margin:.2em 0 1.1em}}
-.card{{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px 22px;margin:16px 0;box-shadow:var(--shadow)}}
+.stats{{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}}
+.stat{{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px}}
+.stat .n{{font-family:var(--serif);font-size:27px;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.15}}
+.stat .l{{font-size:11.5px;color:var(--faint);margin-top:3px;text-transform:uppercase;letter-spacing:.05em;font-weight:600}}
+.card{{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px 24px;margin:18px 0}}
+.stand{{margin:0 0 12px}}
 a{{color:var(--brand)}}
 table{{width:100%;border-collapse:collapse;font-size:14.5px}}
 th,td{{padding:9px 10px;text-align:left}}
@@ -41,52 +49,81 @@ td a{{font-weight:600}}
 input{{font-size:17px;padding:11px 13px;border:1px solid var(--line);border-radius:10px;width:100%;max-width:380px;box-shadow:var(--shadow)}}
 ul{{padding-left:20px}}li{{margin:.25em 0}}
 .mut{{color:var(--mut);font-size:13px}}
-@media(max-width:620px){{h1{{font-size:25px}}table{{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;width:auto;min-width:100%;white-space:nowrap}}}}</style></head><body>
+@media(max-width:620px){{h1{{font-size:30px}}.stats{{grid-template-columns:1fr 1fr}}.card{{padding:18px 15px}}table{{font-size:13.5px}}th,td{{padding:7px 6px}}thead th{{font-size:11px}}}}</style></head><body>
 <header class="topbar"><div class="wrap"><a href="/">Flood Insurance Data</a></div></header><main class="wrap">"""
 FOOT = ('<footer class="mut" style="margin:28px 0;border-top:1px solid var(--line);padding-top:14px">This product uses FEMA\'s OpenFEMA API but is not '
         'endorsed by FEMA. Place names via GeoNames (CC BY 4.0). Aggregates only, never individual quotes.'
         ' <a href="/about/">About</a> · <a href="/methodology/">Methodology</a> · <a href="/data/">Data</a>'
         ' · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a></footer></main></body></html>')
 
-# ---- home + client-side lookup ----
+# ---- home: the reader's first questions answered, then find your state or county ----
+import sys as _sys
+_sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from rules_registry import rule
+_bp = os.path.join(DATADIR, "states", "built.json")
+states = json.load(open(_bp)) if os.path.exists(_bp) else []
 rows = "".join(f'<tr data-k="{html.escape((p["short"]+" "+(p.get("state") or "")).lower())}">'
                f'<td><a href="/flood-insurance/{p["slug"]}/">{html.escape(p["short"])}</a></td>'
                f'<td>{money(p.get("median"))}</td><td>{format(p.get("units") or 0, ",")}</td></tr>' for p in places)
-home = HEAD.format(title="Flood insurance by place — real NFIP data",
-    desc="What NFIP flood-insurance policyholders actually pay by county: cost spread, FEMA full-risk gap, claims, flood risk and CRS discounts. Federal data.",
+srows = "".join(f'<tr data-k="{html.escape((s["name"] + " " + s["abbr"]).lower())}"><td><a href="/flood-insurance/{s["slug"]}/">{html.escape(s["name"])}</a></td>'
+                f'<td>{money(s["median"])}</td><td>{format(s["units"], ",")}</td></tr>' for s in sorted(states, key=lambda s: -s["units"]))
+national = ""
+if len(states) == 51:   # U.S. figures only once every state is built and gated: never a partial total called national
+    _h = json.load(open(os.path.join(DATADIR, "us", "cost_hist.json")))
+    _all = sorted((int(v), c) for st in _h.values() for v, c in st.items())
+    _n = sum(c for _, c in _all); _acc = 0; _med = None
+    for v, c in _all:
+        _acc += c
+        if _acc >= _n / 2: _med = v; break
+    _units = sum(s["units"] for s in states)
+    national = (f'<div class="stats"><div class="stat"><div class="n">{money(_med)}</div><div class="l">U.S. median a year</div></div>'
+                f'<div class="stat"><div class="n">{money(round(_med / 12))}</div><div class="l">Per month</div></div>'
+                f'<div class="stat"><div class="n">{_units / 1e6:.1f}M</div><div class="l">Insured units in force</div></div></div>'
+                '<p class="mut">Single-family primary homes, premium plus fees, NFIP policies in force on July 31, 2026.</p>')
+home = HEAD.format(title="Flood insurance cost by state and county (FEMA data)",
+    desc="What flood insurance actually costs where you live, from FEMA's own policy and claim records: typical cost, whether you're required to buy it, how fast it starts, and what floods have paid out.",
     canon=BASE + "/") + f"""
-<section class="hero"><h1>Flood insurance, by the numbers</h1>
-<p class="lede">For each place: what existing NFIP policyholders actually pay, how far below FEMA's full-risk price,
-the historical flood claims and federal disaster declarations, the flood-risk rating, and the community
-discounts that lower the bill. All from public federal data, every figure sourced and dated.</p>
-<p class="mut">Currently {len(places)} counties, with more added as each county's data is verified.</p></section>
-<div class="card"><h2>Find your place</h2>
-<input id="s" placeholder="Type a county or state…" aria-label="Search places" autocomplete="off">
-<table id="t" style="margin-top:12px"><thead><tr><th>County</th><th>Median annual cost</th><th>Policies in force</th></tr></thead>
-<tbody>{rows or '<tr><td colspan=3 class=mut>No places published yet.</td></tr>'}</tbody></table></div>
+<section class="hero"><p class="kicker">NFIP records · {len(states)} state{"" if len(states) == 1 else "s"} · {len(places)} counties</p>
+<h1>What flood insurance really costs where you live</h1>
+<p class="lede">Answers from FEMA's own policy and claim records: what people near you pay, whether you're required to buy it, and how fast it starts.</p>
+{national}
+<input id="s" placeholder="Type your state or county…" aria-label="Find your state or county" autocomplete="off"></section>
+<div class="card"><h2>Three things to know first</h2>
+<p class="stand"><b>How fast does it start?</b> {rule("howto_answer")}</p>
+<p class="stand"><b>Am I required to buy it?</b> {rule("purchase_answer")} Check your zone on <a href="https://msc.fema.gov/portal/home" rel="nofollow noopener" target="_blank">FEMA's flood map</a>.</p>
+<p class="stand"><b>Does my homeowners policy cover floods?</b> {rule("homeowners_excl")}</p></div>
+<div class="card"><h2>Flood insurance by state</h2>
+<table id="st"><thead><tr><th>State</th><th>Median / yr</th><th>Insured units</th></tr></thead>
+<tbody>{srows or '<tr><td colspan=3 class=mut>State pages are being built.</td></tr>'}</tbody></table></div>
+<div class="card"><h2>County pages</h2>
+<table id="t"><thead><tr><th>County</th><th>Median / yr</th><th>Insured units</th></tr></thead>
+<tbody>{rows or '<tr><td colspan=3 class=mut>No counties published yet.</td></tr>'}</tbody></table></div>
 <script>
-var s=document.getElementById('s'),t=document.getElementById('t');
+var s=document.getElementById('s');
 s.addEventListener('input',function(){{var q=s.value.toLowerCase();
- [].forEach.call(t.tBodies[0].rows,function(r){{r.style.display=(!q||(r.dataset.k||'').indexOf(q)>-1)?'':'none';}});}});
+ ['st','t'].forEach(function(id){{[].forEach.call(document.getElementById(id).tBodies[0].rows,function(r){{
+   r.style.display=(!q||(r.dataset.k||'').indexOf(q)>-1)?'':'none';}});}});}});
 </script>{FOOT}"""
 wr(os.path.join(DIST, "index.html"), home)
 
 # ---- /flood-insurance/ hub (the Breadcrumb target + county directory; previously a hard 404) ----
-hub = HEAD.format(title="Flood insurance by county — NFIP data",
-    desc="Browse per-county flood-insurance data: what NFIP policyholders pay, the gap to FEMA's full-risk price, claims history, flood risk and CRS discounts. Public federal data.",
+hub = HEAD.format(title="Flood insurance by state and county (FEMA data)",
+    desc="Every published state and county: what NFIP policyholders pay, whether coverage is required, claims history and flood risk. Public federal data.",
     canon=BASE + "/flood-insurance/") + f"""
-<section class="hero"><h1>Flood insurance by county</h1>
-<p class="lede">Every published county, with what existing NFIP policyholders actually pay and how far below
-FEMA's full-risk price. Open a county for the full data: the cost spread, claims since 1978, flood risk,
-required-coverage zones, and the community discounts that lower the bill.</p></section>
+<section class="hero"><p class="kicker">{len(states)} state{"" if len(states) == 1 else "s"} · {len(places)} counties</p><h1>Flood insurance by state and county</h1>
+<p class="lede">Find your state or county for what people there pay, whether you're required to buy it, and what floods have paid out.</p>
+<input id="s" placeholder="Type your state or county…" aria-label="Find your state or county" autocomplete="off"></section>
+<div class="card"><h2>States</h2>
+<table id="st"><thead><tr><th>State</th><th>Median / yr</th><th>Insured units</th></tr></thead>
+<tbody>{srows or '<tr><td colspan=3 class=mut>State pages are being built.</td></tr>'}</tbody></table></div>
 <div class="card"><h2>Counties</h2>
-<input id="s" placeholder="Type a county or state…" aria-label="Search counties" autocomplete="off">
-<table id="t" style="margin-top:12px"><thead><tr><th>County</th><th>Median annual cost</th><th>Policies in force</th></tr></thead>
+<table id="t"><thead><tr><th>County</th><th>Median / yr</th><th>Insured units</th></tr></thead>
 <tbody>{rows or '<tr><td colspan=3 class=mut>No counties published yet.</td></tr>'}</tbody></table></div>
 <script>
-var s=document.getElementById('s'),t=document.getElementById('t');
+var s=document.getElementById('s');
 s.addEventListener('input',function(){{var q=s.value.toLowerCase();
- [].forEach.call(t.tBodies[0].rows,function(r){{r.style.display=(!q||(r.dataset.k||'').indexOf(q)>-1)?'':'none';}});}});
+ ['st','t'].forEach(function(id){{[].forEach.call(document.getElementById(id).tBodies[0].rows,function(r){{
+   r.style.display=(!q||(r.dataset.k||'').indexOf(q)>-1)?'':'none';}});}});}});
 </script>{FOOT}"""
 wr(os.path.join(DIST, "flood-insurance", "index.html"), hub)
 
@@ -242,7 +279,8 @@ county_urls = [(BASE + f"/flood-insurance/{p['slug']}/", county_lastmod(p["slug"
 # have no trustworthy per-content modification date, so they omit lastmod rather than inherit a false one.
 urls = [(BASE + "/", None), (BASE + "/flood-insurance/", None), (BASE + "/about/", None),
         (BASE + "/methodology/", None), (BASE + "/data/", None),
-        (BASE + "/privacy/", None), (BASE + "/terms/", None)] + county_urls
+        (BASE + "/privacy/", None), (BASE + "/terms/", None)] + county_urls + \
+       [(BASE + f"/flood-insurance/{s['slug']}/", county_lastmod(os.path.join("states", s["slug"]))) for s in states]
 sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + \
      "".join(f"  <url><loc>{u}</loc>" + (f"<lastmod>{lm}</lastmod>" if lm else "") + "</url>\n" for u, lm in urls) + \
      "</urlset>\n"
@@ -251,7 +289,8 @@ wr(os.path.join(DIST, "robots.txt"), f"User-agent: *\nAllow: /\nSitemap: {BASE}/
 wr(os.path.join(DIST, "llms.txt"),
    "# Flood insurance data\n\n> Per-county NFIP flood-insurance statistics from public FEMA data: what "
    "policyholders pay, the gap to FEMA's full-risk price, claims history, flood risk, and CRS discounts.\n\n"
-   "## Pages\n" + "".join(f"- [{p['short']}]({BASE}/flood-insurance/{p['slug']}/): median {money(p.get('median'))}\n" for p in places) +
+   "## States\n" + "".join(f"- [{s['name']}]({BASE}/flood-insurance/{s['slug']}/): median {money(s['median'])}\n" for s in states) +
+   "\n## Counties\n" + "".join(f"- [{p['short']}]({BASE}/flood-insurance/{p['slug']}/): median {money(p.get('median'))}\n" for p in places) +
    f"- [Methodology]({BASE}/methodology/)\n- [Data CSV]({BASE}/data/counties.csv)\n\n"
    "Source: FEMA OpenFEMA. Not endorsed by FEMA. Aggregates only.\n")
 

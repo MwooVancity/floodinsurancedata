@@ -30,7 +30,7 @@ API_VERSION = {"NfipPolicies": 3, "NfipClaims": 3, "NfipCommunityStatusBook": 1,
 # disaster, so "1,133 homes" fails and "1,133 flood-damage applications" passes. (A positive rule, not a ban list.)
 UNITS = {"usd_cost_with_fees", "usd_premium_only", "usd_claim_paid", "usd_aid_paid", "usd_coverage", "usd_modeled_loss",
          "usd_reported_damage", "pct", "count", "rating"}
-NOUN_REQUIRED = {"ia_damage_record": r"records?|applications?",
+NOUN_REQUIRED = {"ia_damage_record": r"records?|applications?", "policy_record": r"polic(y|ies)|records?",
                  "claim_record": r"claims?|NFIP flood claims",
                  "noaa_event": r"flood|events?"}
 
@@ -76,6 +76,14 @@ METRICS = {
     "storm_events": _m("StormEvents", ["EVENT_TYPE", "CZ_FIPS"], "count", counts="noaa_event"),
     "storm_damage": _m("StormEvents", ["DAMAGE_PROPERTY"], "usd_reported_damage"),
     "housing_units": _m("CensusACS", ["B25001_001E"], "count", counts="housing_unit"),
+    # state-page "why the averages differ" figures: all from the same NfipPolicies records, different cuts
+    "cost_mean": _m(POL, ["policyCost"], "usd_cost_with_fees"),
+    "cost_all_median": _m(POL, ["policyCost", "occupancyType"], "usd_cost_with_fees"),
+    "cost_all_mean": _m(POL, ["policyCost", "occupancyType"], "usd_cost_with_fees"),
+    "prem_mean": _m(POL, ["totalInsurancePremiumOfThePolicy"], "usd_premium_only"),
+    "inforce": _m(POL, ["policyEffectiveDate", "policyTerminationDate"], "count", counts="policy_record"),
+    "inforce_change_pct": _m(POL, ["policyEffectiveDate", "policyTerminationDate"], "pct", of="in-force policy records, 2022 to 2026"),
+    "county_units": _m(POL, ["policyCount", "censusGeoid"], "count", counts="policy_unit"),
     "zone_inversion": _m(POL, ["policyCost", "ratedFloodZone"], "count"),   # 1 if any A/V zone median < Zone X median
 }
 
@@ -95,6 +103,9 @@ def values(agg, data):
     def _disc(x):
         try: return float(str(x).rstrip("%") or 0) > 0
         except ValueError: return False
+    h = (data.get("inforce_history") or {}).get("by_year") or {}
+    v["inforce_change_pct"] = (round(100 * (h["2026"] - h["2022"]) / h["2022"], 1)
+                               if h.get("2022") and h.get("2026") is not None else None)
     v["crs_discount_communities"] = sum(1 for c in data.get("crs", []) if _disc(c.get("sfhaDiscount")) or _disc(c.get("nonSfhaDiscount")))
     return v
 
@@ -103,7 +114,7 @@ OPS = {">": lambda a, b: a > b, ">=": lambda a, b: a >= b, "<": lambda a, b: a <
 # words that carry a numeric direction or majority: on a rendered page they may appear only inside a claim()
 # span whose condition holds, or inside a rule() span (registry text). Matching is on whole words/phrases.
 QUANT = ("most", "majority", "climb", "climbing", "climbs", "rise", "rises", "rising", "less per policy",
-         "as much per policy", "cost less than", "at or above", "yes")   # "yes" = a yes/no heading's answer
+         "as much per policy", "cost less than", "at or above", "yes", "fell", "grew")   # "yes" = a yes/no heading's answer
 
 def holds(cond, vals):
     a, op, b = cond

@@ -140,6 +140,8 @@ if os.path.isdir(fdir):
         if name not in ok and os.path.isdir(os.path.join(fdir, name)):   # only county dirs; never the hub index.html
             import shutil; shutil.rmtree(os.path.join(fdir, name), ignore_errors=True)
             print("pruned stale dist/flood-insurance/" + name)
+# state pages: rebuilt and gated every run (the prune above removed them); a failing state is removed and left out of built.json
+run("build_states.py", {"FF_BASEURL": BASE})
 # the site (home search, sitemap, CSV) is built ONLY from counties that passed this run.
 json.dump(ok, open(PUBLISHED, "w"))
 run("build_site.py", {"FF_PLACES": PLACES, "FF_DIST": DIST, "FF_DATADIR": DATA,

@@ -99,5 +99,6 @@ def run(st):
     print(f"{st}: {len(pol)} policy rows ({P['units']} units, median ${P['p50']}, {P.get('share_below')}% below full-risk), "
           f"{len(clm)} claims, {len(rollup)} counties, {unassigned} policies without a county")
 
-for st in (sys.argv[1:] or sorted(NAMES)):
-    run(st)
+if __name__ == "__main__":   # imported by extras_raw / collect_state_small / build_page for NAMES and slug()
+    for st in (sys.argv[1:] or sorted(NAMES)):
+        run(st)

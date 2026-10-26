@@ -13,7 +13,9 @@ def step(name, *cmd):
 if "--live" in sys.argv:
     base = "https://floodinsurancedata.com"
     step("phone check (live)", os.path.join(T, "phone_check.py"), "--base", base)
-    for s in ("brevard-county-fl", "jefferson-parish-la", "kanawha-county-wv"):
+    import json   # every state the home page links to must be live, not just three counties
+    states = [s["slug"] for s in json.load(open(os.path.join(os.path.dirname(T), "data", "states", "built.json")))]
+    for s in ("brevard-county-fl", "jefferson-parish-la", "kanawha-county-wv", *states):
         req = urllib.request.Request(f"{base}/flood-insurance/{s}/", headers={"User-Agent": "Mozilla/5.0 (release-check)"})
         body = urllib.request.urlopen(req, timeout=60).read().decode()   # Cloudflare 403s Python's default UA
         ok = 'data-m="cost_p50"' in body and "srclist" in body and len(body) > 30000

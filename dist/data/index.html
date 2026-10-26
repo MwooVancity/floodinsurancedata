@@ -1,13 +1,21 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1"><title>Download the flood-insurance data</title>
 <meta name="description" content="Per-county NFIP flood-insurance aggregates as CSV."><link rel="canonical" href="https://floodinsurancedata.com/data/">
-<style>:root{--bg:#eef2f5;--surface:#fff;--ink:#132029;--mut:#5c6b78;--faint:#8795a0;--line:#e3e9ee;--brand:#15617f;--brand-d:#0e4a61;--accent:#c2591f;--r:14px;--gut:20px;--shadow:0 1px 2px rgba(16,32,43,.05),0 6px 20px rgba(16,32,43,.06)}
+<style>:root{--bg:#f4f7f8;--surface:#fff;--ink:#132029;--mut:#55656f;--faint:#7d8c96;--line:#dbe3e7;--brand:#15617f;--brand-d:#0e4a61;--accent:#c2591f;--r:12px;--gut:20px;
+ --serif:"Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;--mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;--shadow:none}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.62 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
 .wrap{max-width:740px;margin:0 auto;padding:0 var(--gut)}
 .topbar{background:var(--brand-d)}.topbar .wrap{padding:11px var(--gut)}.topbar a{color:#fff;font-weight:800;text-decoration:none}
-.hero{padding:28px 0 4px}h1{font-size:30px;line-height:1.15;letter-spacing:-.015em;margin:.1em 0 .3em}h2{font-size:20px;font-weight:700;letter-spacing:-.01em;margin:0 0 6px}
+.hero{padding:30px 0 4px}h1{font-family:var(--serif);font-weight:600;font-size:36px;line-height:1.1;letter-spacing:-.01em;margin:.1em 0 .3em}
+h2{font-family:var(--serif);font-size:24px;font-weight:600;line-height:1.2;margin:0 0 6px}
+.kicker{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin:0}
 .lede{color:var(--mut);max-width:62ch;margin:.2em 0 1.1em}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px 22px;margin:16px 0;box-shadow:var(--shadow)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.stat .n{font-family:var(--serif);font-size:27px;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.15}
+.stat .l{font-size:11.5px;color:var(--faint);margin-top:3px;text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px 24px;margin:18px 0}
+.stand{margin:0 0 12px}
 a{color:var(--brand)}
 table{width:100%;border-collapse:collapse;font-size:14.5px}
 th,td{padding:9px 10px;text-align:left}
@@ -17,7 +25,7 @@ td a{font-weight:600}
 input{font-size:17px;padding:11px 13px;border:1px solid var(--line);border-radius:10px;width:100%;max-width:380px;box-shadow:var(--shadow)}
 ul{padding-left:20px}li{margin:.25em 0}
 .mut{color:var(--mut);font-size:13px}
-@media(max-width:620px){h1{font-size:25px}table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;width:auto;min-width:100%;white-space:nowrap}}</style></head><body>
+@media(max-width:620px){h1{font-size:30px}.stats{grid-template-columns:1fr 1fr}.card{padding:18px 15px}table{font-size:13.5px}th,td{padding:7px 6px}thead th{font-size:11px}}</style></head><body>
 <header class="topbar"><div class="wrap"><a href="/">Flood Insurance Data</a></div></header><main class="wrap">
 <h1>Download the data</h1>
 <p>Per-county aggregates computed from FEMA OpenFEMA and NOAA NCEI: policy units, cost spread, full-risk gap, claims, average paid claim, share closed without payment, share of paid dollars outside the high-risk zone, NFIP take-up, and NOAA flood events (1996–2025). Blank = not available for that county.</p>
