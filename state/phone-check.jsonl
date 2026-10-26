@@ -156,3 +156,13 @@
 {"date": "2026-10-26", "base": "https://floodinsurancedata.com", "slug": "kanawha-county-wv", "height": 16827, "pass": true, "fails": []}
 {"date": "2026-10-26", "base": "https://floodinsurancedata.com", "slug": "florida", "height": 18519, "pass": true, "fails": []}
 {"date": "2026-10-26", "base": "https://floodinsurancedata.com", "slug": "wyoming", "height": 16517, "pass": true, "fails": []}
+{"date": "2026-10-26", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmphbnijrm8/site", "slug": "brevard-county-fl", "height": 17157, "pass": true, "fails": []}
+{"date": "2026-10-26", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmphbnijrm8/site", "slug": "brevard-county-fl", "height": 16386, "pass": false, "fails": ["P5 1 collapsed <details> hide data"]}
+{"date": "2026-10-26", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmphbnijrm8/site", "slug": "brevard-county-fl", "height": 17157, "pass": false, "fails": ["P4 quote checker not within screen 2 (top 16822.015625)"]}
+{"date": "2026-10-26", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmphbnijrm8/site", "slug": "brevard-county-fl", "height": 17157, "pass": false, "fails": ["P2 text under 11px: ['text 3.5px \"$607\"', 'text 3.5px \"$865\"', 'text 3.5px \"$1,145\"', 'text 3.5px \"$1,332\"']"]}
+{"date": "2026-10-26", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmphbnijrm8/site", "slug": "brevard-county-fl", "height": 17184, "pass": false, "fails": ["P1 wider than screen: ['page is 921px wide', 'DIV.']"]}
+{"date": "2026-10-26", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpkisjlxb7/site", "slug": "brevard-county-fl", "height": 17157, "pass": true, "fails": []}
+{"date": "2026-10-26", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpkisjlxb7/site", "slug": "brevard-county-fl", "height": 16386, "pass": false, "fails": ["P5 1 collapsed <details> hide data"]}
+{"date": "2026-10-26", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpkisjlxb7/site", "slug": "brevard-county-fl", "height": 17157, "pass": false, "fails": ["P4 quote checker not within screen 2 (top 16822.015625)"]}
+{"date": "2026-10-26", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpkisjlxb7/site", "slug": "brevard-county-fl", "height": 17157, "pass": false, "fails": ["P2 text under 11px: ['text 3.5px \"$607\"', 'text 3.5px \"$865\"', 'text 3.5px \"$1,145\"', 'text 3.5px \"$1,332\"']"]}
+{"date": "2026-10-26", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpkisjlxb7/site", "slug": "brevard-county-fl", "height": 17184, "pass": false, "fails": ["P1 wider than screen: ['page is 921px wide', 'DIV.']"]}

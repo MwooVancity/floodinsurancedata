@@ -49,7 +49,8 @@ def page_figures(slug):
            else open(path, encoding="utf-8").read())
     out = {}
     for k, v in re.findall(r'<span data-m="(\w+)">([^<]*)</span>', src):
-        out.setdefault(k, float(v.replace("$", "").replace(",", "").replace("%", "")))
+        try: out.setdefault(k, float(v.replace("$", "").replace(",", "").replace("%", "")))
+        except ValueError: pass   # a text figure ("16th highest" rank); recheck compares numbers only
     return out
 
 def recompute(c):

@@ -30,6 +30,14 @@
   }
  },
  "NfipClaims": {
+  "buildingDamageAmount": {
+   "def": "The actual cash value amount of damage to a main property in whole dollars.",
+   "sha256": "75b3f1c609d1906372c95699e8e91dc2fb543c498a0187db1715ce8b5dc79764"
+  },
+  "floodEvent": {
+   "def": "Name given to a flooding catastrophe",
+   "sha256": "866bc8ad19253e8518591bcd884cf3dc6e1303baa8c5dc5e1bad2fcaa83347e8"
+  },
   "id": {
    "def": "Unique ID assigned to the record",
    "sha256": "d23432de5a37f07dc947672d495511c775d768346d8a3d0b144356ec9cfa2b6f"
@@ -46,9 +54,17 @@
    "def": "Net Increased Cost of Compliance (ICC) payment amount made to insured in dollars.",
    "sha256": "0fac17d66b2524134d7493b9a63d75346b0198601d06f3cd2257ea0e6da49806"
   },
+  "nonPaymentReasonBuilding": {
+   "def": "Reason why a claim was not paid for a property structure. \nTRRP Field: Claim Closed Without Payment Reason - Building \nLegal values (value : description): \n01 : Claim denied that was less than deductible; \n02 : Seepage; \n03 : Backup drains; \n04 : Shrubs not covered; \n05 : Sea wall; \n06 : Not actual flood; \n07 : Loss in progress; \n08 : Failure to pursue claim; \n09 : Debris removal only; \n10 : Fire; \n11 : Fence damage; \n12 : Hydrostatic pressure; \n13 : Drainage clogged; \n14 : Boat piers; \n15 : Not insured, damage before inception of policy; \n16 : Not insured, wind damage; \n17 : Type of erosion not included in definition of flood or flooding; \n18 : Landslide; \n19 : Type of mudflow not included in definition of flood or flooding; \n20 : No demonstrable damage; \n97 : Other; \n98 : Error-delete claim (no assignment); \n99 : Erroneous assignment;",
+   "sha256": "a1c9421c2ffe1bc6f52b685c82736160a018e5514bd577eb1e2844ef3d795f4a"
+  },
   "ratedFloodZone": {
    "def": "Formerly called floodZone. NFIP Flood Zone derived from the Flood Insurance Rate Map (FIRM) used to rate the insured property.\n\nA - Special Flood with no Base Flood Elevation on FIRM; \nAE, A1-A30 - Special Flood with Base Flood Elevation on FIRM; \nA99 - Special Flood with Protection Zone; \nAH, AHB* - Special Flood with Shallow Ponding; \nAO, AOB* - Special Flood with Sheet Flow; \nX, B - Moderate Flood from primary water source.  Pockets of areas subject to drainage problems; \nX, C - Minimal Flood from primary water source.  Pockets of areas subject to drainage problems; \nD - Possible Flood; \nV - Velocity Flood with no Base Flood Elevation on FIRM; \nVE, V1-V30 - Velocity Flood with Base Flood Elevation on FIRM; \nAE, VE, X - New zone designations used on new maps starting January 1, 1986, in lieu of A1-A30, V1-V30, and B and C; \nAR - A Special Flood Hazard Area that results from the decertification of a previously accredited flood protection system that is determined to be in the process of being restored to provide base flood protection;\nAR Dual Zones - (AR/AE, AR/A1-A30, AR/AH, AR/AO, AR/A) Areas subject to flooding from failure of the flood protection system (Zone AR) which also overlap an existing Special Flood Hazard Area as a dual zone; \n\n*AHB, AOB, ARE, ARH, ARO, and ARA are not risk zones shown on a map, but are acceptable values for rating purposes",
    "sha256": "96668f0f87a88990c2ff26646b6f92796c80e07f2860eef042012695e9220011"
+  },
+  "totalBuildingInsuranceCoverage": {
+   "def": "Total Insurance Amount in whole dollars on the Building",
+   "sha256": "fe4725e33a7512f8e30287a66aa9134952cec95eb9280b40777f9fb8902e336e"
   }
  },
  "NfipCommunityStatusBook": {
@@ -66,9 +82,25 @@
   }
  },
  "NfipPolicies": {
+  "buildingReplacementCost": {
+   "def": "Estimated cost in whole dollars to replace the building as reported by the insurer. \nNOTE: Replacement cost is not market value, and it does not include the cost of the land or contents. It is strictly the estimated cost to reconstruct the building",
+   "sha256": "76997b84a764ae5aabe4969ec4923442192caeb03a8f712bfd927a7ebdb16ffe"
+  },
+  "censusGeoid": {
+   "def": "Numeric code that uniquely identifies all administrative/legal and statistical geographic areas for which the Census Bureau tabulates data. In this instance, the Census GeoID is presented at the Census Block Group level. This is an address-based 12-character code that is the concatenation of fields consisting of the 2-character state FIPS code, the 3-character county FIPS code, the 6-character census tract code, and the 1-character block group code. Block numbers beginning with a zero are associated with water-only areas. Please see: https://www.census.gov/programs-surveys/geography/guidance/geo-identifiers.html",
+   "sha256": "0d361dd30ac1ed0333dc989a6a219d329578581c70e9dccaa22bdad3cfc83807"
+  },
   "fullRiskPremium": {
    "def": "The chargeable premium for a property based on its determined flood risk and the full cost to pay anticipated losses and expenses for that property.",
    "sha256": "5949a0d6510bed61695ff70ffaec546df95a591e6e2173f666bb1f0a4dc8936d"
+  },
+  "id": {
+   "def": "Unique ID assigned to the record",
+   "sha256": "d23432de5a37f07dc947672d495511c775d768346d8a3d0b144356ec9cfa2b6f"
+  },
+  "occupancyType": {
+   "def": "Code indicating the use and occupancy type of the insured structure. Note, 2-digit codes are for Risk Rating 2.0 policies.  1 = Single family residence; 2 = 2 to 4 Unit residential building; 3 = Residential building with more than 4 units; 4 = Non-residential building; 6 = Non-Residential Business; 11 = Single-family residential building with the exception of a mobile home or a single residential unit within a multi unit building; 12 = A residential non-condo building with 2, 3, or 4  units seeking insurance on all units; 13 = A residential non-condo building with 5 or more units seeking insurance on all units; 14 = Residential mobile/manufactured home; 15 = Residential condo association seeking coverage on a building with one or more units; 16 = Single residential unit within a multi-unit building; 17 = Non-residential mobile/manufactured home; 18 = A non-residential building; 19 = A non-residential unit within a multi-unit building;",
+   "sha256": "742a6d3d45501bcd930cfb1a7fef2e8e582845dbe712c45847600e5a987a854d"
   },
   "policyCost": {
    "def": "Calculated in dollars by adding together calculated premium, reserve fund assessment, federal policy fee, and HFIAA surcharge",
@@ -77,6 +109,14 @@
   "policyCount": {
    "def": "Insured units in an active status. A policy contract ceases to be in an active status as of the cancellation date or the expiration date. Residential Condominium Building Association Policy (RCBAP) contracts are stored as a single policy contract but insure multiple units and therefore represent multiple policies",
    "sha256": "21461698052be4ed16b45ab2ae5321e0d66134f4a23d770af0dc989858c52bd8"
+  },
+  "policyEffectiveDate": {
+   "def": "The effective date of the flood policy. When time is not specified in the field, it will default to T00:00:00.000Z. Effective March 1, 1995, the standard waiting period for new business applications and for endorsements increasing coverage is 30 days from the date of application and the presentment of premium.  (Example:  A policy applied for on April 3 would become effective at 12:01 a.m. on May 3.)",
+   "sha256": "e17aeeeb01150a884b09a628e61007693e4627b15de1ca75666f18acc679a57f"
+  },
+  "policyTerminationDate": {
+   "def": "Date upon which the cancellation of a flood insurance policy becomes effective - either because it was cancelled or lapsed. When time is not specified in the field, it will default to T00:00:00.000Z",
+   "sha256": "5f3305fcfe1dc28cbd2bbd0135f2bc8be32faf1837f99c27377bcdf0bbba539a"
   },
   "ratedFloodZone": {
    "def": "NFIP Flood Zone - Flood zone derived from the Flood Insurance Rate Map (FIRM) used to rate the insured property.\n\nA - Special Flood with no Base Flood Elevation on FIRM; \nAE, A1-A30 - Special Flood with Base Flood Elevation on FIRM; \nA99 - Special Flood with Protection Zone; \nAH, AHB* - Special Flood with Shallow Ponding; \nAO, AOB* - Special Flood with Sheet Flow; \nX, B - Moderate Flood from primary water source.  Pockets of areas subject to drainage problems; \nX, C - Minimal Flood from primary water source.  Pockets of areas subject to drainage problems; \nD - Possible Flood; \nV - Velocity Flood with no Base Flood Elevation on FIRM; \nVE, V1-V30 - Velocity Flood with Base Flood Elevation on FIRM; \nAE, VE, X - New zone designations used on new maps starting January 1, 1986, in lieu of A1-A30, V1-V30, and B and C; \nAR - A Special Flood Hazard Area that results from the decertification of a previously accredited flood protection system that is determined to be in the process of being restored to provide base flood protection;\nAR Dual Zones    - (AR/AE, AR/A1-A30, AR/AH, AR/AO, AR/A) Areas subject to flooding from failure of the flood protection system (Zone AR) which also overlap an existing Special Flood Hazard Area as a dual zone; \n\n*AHB, AOB, ARE, ARH, ARO, and ARA are not risk zones shown on a map, but are acceptable values for rating purposes",

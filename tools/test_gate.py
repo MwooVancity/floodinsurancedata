@@ -30,6 +30,12 @@ def gate(html=None, agg=None):
     json.dump(AGG, open(ap, "w"))
     return set(re.findall(r"\[(\w+)\]", out.stdout)), out.stdout
 
+# every OpenFEMA field a metric uses has a recorded definition hash (else recheck cannot see FEMA change it)
+_defs = json.load(open(os.path.join(T, "metric_defs.json")))
+_unrec = sorted({f"{d['dataset']}.{f}" for d in MX.METRICS.values() if d["dataset"] in MX.API_VERSION
+                 for f in d["fields"] if f not in (_defs.get(d["dataset"]) or {})})
+assert not _unrec, f"metric fields with no recorded FEMA definition (run: python -I tools/metrics.py --refresh): {_unrec}"
+
 ids, out = gate()
 assert not ids, "clean page must pass gate 2:\n" + out
 
