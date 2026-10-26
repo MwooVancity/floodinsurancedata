@@ -1,4 +1,4 @@
-"""Build the Lee County FL flood page from data.json (small datasets) + agg.json (bulk).
+"""Build one county's flood page from data.json (small datasets) + agg.json (bulk); parameterized by env.
 River-style: white cards, every number has a unit, one line of context, source + as-of once.
 No verdict, no advice prose. Writes directly to the repo dist path. -> OUT_HTML."""
 import json, html, os, re, sys
@@ -406,8 +406,7 @@ jsonld = json.dumps([
     {"@context": "https://schema.org", "@type": "Dataset",
      "name": f"NFIP flood insurance data for {CL}", "description": META_DESC, "url": CANON,
      "creator": {"@type": "Organization", "name": "FEMA OpenFEMA"},
-     "publisher": {"@type": "Organization", "name": "Flood Insurance Data", "url": BASE_URL,
-                   "url_about": f"{BASE_URL}/about/"},
+     "publisher": {"@type": "Organization", "name": "Flood Insurance Data", "url": BASE_URL},
      "dateModified": ISO_DATE, "datePublished": ISO_DATE,
      "citation": [{"@type": "Dataset", "name": n, "url": u} for n, u in SOURCES],
      "isBasedOn": "https://www.fema.gov/about/openfema/data-sets", "license": "https://www.fema.gov/about/openfema/terms-conditions"},

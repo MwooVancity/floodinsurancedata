@@ -137,7 +137,7 @@ ok = _kept
 fdir = os.path.join(DIST, "flood-insurance")
 if os.path.isdir(fdir):
     for name in os.listdir(fdir):
-        if name not in ok:
+        if name not in ok and os.path.isdir(os.path.join(fdir, name)):   # only county dirs; never the hub index.html
             import shutil; shutil.rmtree(os.path.join(fdir, name), ignore_errors=True)
             print("pruned stale dist/flood-insurance/" + name)
 # the site (home search, sitemap, CSV) is built ONLY from counties that passed this run.

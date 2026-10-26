@@ -1,4 +1,4 @@
-"""Bulk Lee County FL (12071) collector: NFIP policies cohort + claims by year + final NRI try.
+"""Bulk per-county collector (parameterized by env, e.g. FF_GEOID): NFIP policies cohort + claims by year + NRI.
 Computes compact aggregates -> agg.json. Saves progress; small pages, generous retries."""
 import json, os, sys, time, urllib.parse, urllib.request, hashlib
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))  # -I drops script dir; restore for ffcalc
