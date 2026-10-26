@@ -283,3 +283,25 @@
 {"date": "2026-10-26", "base": "https://floodinsurancedata.com", "slug": "kanawha-county-wv", "height": 16819, "pass": true, "fails": []}
 {"date": "2026-10-26", "base": "https://floodinsurancedata.com", "slug": "florida", "height": 19563, "pass": true, "fails": []}
 {"date": "2026-10-26", "base": "https://floodinsurancedata.com", "slug": "wyoming", "height": 17158, "pass": true, "fails": []}
+{"date": "2026-10-26", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpzeojywcb/site", "slug": "brevard-county-fl", "height": 17499, "pass": true, "fails": []}
+{"date": "2026-10-26", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpzeojywcb/site", "slug": "brevard-county-fl", "height": 16728, "pass": false, "fails": ["P5 1 collapsed <details> hide data"]}
+{"date": "2026-10-26", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpzeojywcb/site", "slug": "brevard-county-fl", "height": 17499, "pass": false, "fails": ["P4 quote checker not within screen 2 (top 17164.015625)"]}
+{"date": "2026-10-26", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpzeojywcb/site", "slug": "brevard-county-fl", "height": 17499, "pass": false, "fails": ["P2 text under 11px: ['text 3.5px \"1980\"', 'text 3.5px \"1990\"', 'text 3.5px \"2000\"', 'text 3.5px \"2010\"']"]}
+{"date": "2026-10-26", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpzeojywcb/site", "slug": "brevard-county-fl", "height": 17526, "pass": false, "fails": ["P1 wider than screen: ['page is 921px wide', 'DIV.']"]}
+{"date": "2026-10-26", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpzeojywcb/site", "slug": "brevard-county-fl", "height": 17544, "pass": false, "fails": ["P6 chart labels overlap: ['\"$1,008\" / \"$1,172\"']"]}
+{"date": "2026-10-26", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpazt2cw69/site", "slug": "brevard-county-fl", "height": 17499, "pass": true, "fails": []}
+{"date": "2026-10-26", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpazt2cw69/site", "slug": "brevard-county-fl", "height": 16728, "pass": false, "fails": ["P5 1 collapsed <details> hide data"]}
+{"date": "2026-10-26", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpazt2cw69/site", "slug": "brevard-county-fl", "height": 17499, "pass": false, "fails": ["P4 quote checker not within screen 2 (top 17164.015625)"]}
+{"date": "2026-10-26", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpazt2cw69/site", "slug": "brevard-county-fl", "height": 17499, "pass": false, "fails": ["P2 text under 11px: ['text 3.5px \"1980\"', 'text 3.5px \"1990\"', 'text 3.5px \"2000\"', 'text 3.5px \"2010\"']"]}
+{"date": "2026-10-26", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpazt2cw69/site", "slug": "brevard-county-fl", "height": 17526, "pass": false, "fails": ["P1 wider than screen: ['page is 921px wide', 'DIV.']"]}
+{"date": "2026-10-26", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpazt2cw69/site", "slug": "brevard-county-fl", "height": 17544, "pass": false, "fails": ["P6 chart labels overlap: ['\"$1,008\" / \"$1,172\"']"]}
+{"date": "2026-10-26", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "miami-dade-county-fl", "height": 18288, "pass": true, "fails": []}
+{"date": "2026-10-26", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "jefferson-parish-la", "height": 17054, "pass": true, "fails": []}
+{"date": "2026-10-26", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "kanawha-county-wv", "height": 16833, "pass": true, "fails": []}
+{"date": "2026-10-26", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "florida", "height": 19559, "pass": true, "fails": []}
+{"date": "2026-10-26", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "wyoming", "height": 17132, "pass": true, "fails": []}
+{"date": "2026-10-26", "base": "https://floodinsurancedata.com", "slug": "miami-dade-county-fl", "height": 18288, "pass": true, "fails": []}
+{"date": "2026-10-26", "base": "https://floodinsurancedata.com", "slug": "jefferson-parish-la", "height": 17054, "pass": true, "fails": []}
+{"date": "2026-10-26", "base": "https://floodinsurancedata.com", "slug": "kanawha-county-wv", "height": 16833, "pass": true, "fails": []}
+{"date": "2026-10-26", "base": "https://floodinsurancedata.com", "slug": "florida", "height": 19559, "pass": true, "fails": []}
+{"date": "2026-10-26", "base": "https://floodinsurancedata.com", "slug": "wyoming", "height": 17132, "pass": true, "fails": []}

@@ -379,11 +379,11 @@ if len(state_risk) >= 4:
     def _rn(c): return html.escape(_CNM.get(c.get("fips")) or c.get("county") or "")
     _by = {}
     for c in state_risk: _by.setdefault(_ord(c.get("rating")), []).append(c)
-    _rt = "".join(f"<tr><td>{lab}</td><td>{m('county_count', str(len(_by.get(o, []))), q=lab)}</td><td>"
+    _rt = "".join(f"<tr><td>{lab}</td><td>{m('county_count', str(len(_by.get(o, []))), q=lab)}</td><td class='t'>"
                   + (", ".join(("<b>" + _rn(c) + "</b>") if c.get("fips") == GEOID_SELF else _rn(c) for c in _by.get(o, [])[:12])
                      + (f" and {m('county_count', str(len(_by[o]) - 12), q=lab + ':more')} more" if len(_by.get(o, [])) > 12 else "") if o >= 3 or any(c.get("fips") == GEOID_SELF for c in _by.get(o, [])) else "")
                   + "</td></tr>" for lab, o in [("Very High", 4), ("Relatively High", 3), ("Relatively Moderate", 2), ("Relatively Low", 1), ("Very Low", 0)])
-    tiles_body = (f"<table><thead><tr><th>FEMA flood-risk rating</th><th>{UNITS.title()}</th><th>Which</th></tr></thead><tbody>{_rt}</tbody></table>"
+    tiles_body = (f"<table><thead><tr><th>FEMA flood-risk rating</th><th>{UNITS.title()}</th><th class='t'>Which</th></tr></thead><tbody>{_rt}</tbody></table>"
                   "<p class='note'>FEMA's National Risk Index rating (coastal and inland flooding, the worse of the two), a model of expected loss. "
                   "Names are listed for the two highest ratings" + ("" if IS_STATE else f" and for this {UNIT}, in bold") + ".</p>")
     _high = sum(1 for c in state_risk if _ord(c.get("rating")) >= 3)
@@ -514,19 +514,22 @@ def _evname(e):   # FEMA's event name plus its year(s) of loss: "Vermont/New Yor
     y = e.get("years") or []
     n = re.sub(r"^\d{4}-\d{2}-", "", e["name"])                       # FEMA codes like "2026-03-KonaStorm"
     n = re.sub(r"(?<=[a-z])(?=[A-Z])", " ", n.replace("-", " ")).strip()   # -> "Kona Storm"
+    if re.match(r"not a named (storm|event)", n, re.I): n = "Unnamed flood"     # FEMA's label for a flood with no name
     return html.escape(n) +(f" ({y[0]})" if len(y) == 1 else f" ({y[0]}–{y[-1]})" if y else "")
-_GENERIC = {"flood", "flooding", "floods", "heavy", "rain", "rains", "rainfall", "severe", "storm", "storms", "and", "flash", "spring", "event"}
-_ev = [dict(e, i=i) for i, e in enumerate(_xc.get("events") or []) if set(e["name"].lower().replace("/", " ").split()) - _GENERIC]
+# an event is a label whose paid claims fall within two calendar years; a label spanning more ("Flooding" 1979-2024)
+# is FEMA's catch-all, not one flood, and is left out
+_ev = [dict(e, i=i) for i, e in enumerate(_xc.get("events") or [])
+       if e.get("years") and int(e["years"][-1]) - int(e["years"][0]) <= 1]
 if len(_ev) >= 2:
-    events_card = card("Which named storms paid out the biggest totals here?",
-        f"Among named storms, {_evname(_ev[0])} paid out the largest total: {tp('event_paid', f'extras.claims.events.{_ev[0][chr(105)]}.paid', big, q=_ev[0]['name'])} across "
+    events_card = card("Which floods paid out the biggest totals here?",
+        f"The costliest single flood here was {_evname(_ev[0])}: {tp('event_paid', f'extras.claims.events.{_ev[0][chr(105)]}.paid', big, q=_ev[0]['name'])} across "
         f"{tp('event_claims', f'extras.claims.events.{_ev[0][chr(105)]}.claims', q=_ev[0]['name'])} NFIP flood claims.",
-        "<table><thead><tr><th>Storm (FEMA's name)</th><th>Claims</th><th>Total paid</th><th>Average</th></tr></thead><tbody>"
+        "<table><thead><tr><th>Flood (FEMA's name)</th><th>Claims</th><th>Total paid</th><th>Average</th></tr></thead><tbody>"
         + "".join(f"<tr><td>{_evname(e)}</td><td>{tp('event_claims', f'extras.claims.events.{e[chr(105)]}.claims', q=e['name'])}</td>"
                   f"<td>{tp('event_paid', f'extras.claims.events.{e[chr(105)]}.paid', big, q=e['name'])}</td>"
                   f"<td>{tp('event_avg', f'extras.claims.events.{e[chr(105)]}.avg', money, q=e['name'])}</td></tr>" for e in _ev)
-        + "</tbody></table><p class='note'>NFIP claims that were paid, grouped by the flood event FEMA assigned; claims with no event "
-        "name, or a generic one like “flooding”, are left out.</p>",
+        + "</tbody></table><p class='note'>NFIP claims that were paid, grouped by the flood event FEMA assigned (FEMA's name). "
+        "Claims with no event, or a catch-all label spanning many years, are left out.</p>",
         src(["event_paid", "event_claims"], f"{C['year_min']}–{C['year_max']}", RETR))
 
 # ---- repetitive-loss properties (FEMA IA multiple-loss; a chronic repeat-flood signal, distinct from
@@ -586,7 +589,7 @@ if cx.get("outside_sfha_pct") is not None and P.get("sfha_share_units") is not N
         f"<ul class='kv'><li><b>Claim dollars paid outside A/V zones</b><span>{m('outside_sfha_dollars', str(cx['outside_sfha_pct']) + '%')}</span></li>"
         f"<li><b>Policies outside A/V zones</b><span>{m('outside_sfha_policies', str(_out_pol) + '%')}</span></li>"
         + (f"<li><b>Zone X median cost</b><span>{tp('zone_cost', 'policies.cost_by_zone.X.median', money, q='X')}</span></li>" if _xmed else "")
-        + f"</ul><p class='note'>{rule('lender_any_zone')} Insured claims only, by each policy's rated zone.</p>",
+        + "</ul><p class='note'>Insured claims only, by each policy's rated zone. Whether a lender can require coverage outside these zones is under “Am I required to carry it?”</p>",
         src(["outside_sfha_dollars", "outside_sfha_policies", "zone_cost"], f"claims {C['year_min']}–{C['year_max']}; policies {POL_ASOF}", cx.get("retrieved", RETR)))
 
 # ---- how common flood insurance is: prefer NFIP penetration (overall + inside-SFHA) over the Census proxy ----
@@ -890,12 +893,13 @@ a{{color:var(--brand)}}
 ul.kv{{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:1fr 1fr;gap:10px}}
 ul.kv li{{display:flex;flex-direction:column;background:#f5f8fb;border:1px solid var(--line);border-radius:10px;padding:11px 13px}}
 ul.kv b{{order:2;font-weight:600;color:var(--faint);font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;margin-top:3px}}
-ul.kv span{{order:1;font-family:var(--serif);font-size:22px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}}
+ul.kv > li > span{{order:1;font-family:var(--serif);font-size:22px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}}
 table{{width:100%;border-collapse:collapse;font-size:14.5px;margin-top:4px}}
 th,td{{padding:9px 10px;text-align:left}}
 thead th{{color:var(--faint);font-weight:600;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--line)}}
 tbody tr:nth-child(odd){{background:#f5f8fb}}
 td:nth-child(n+2),thead th:nth-child(n+2){{text-align:right;font-variant-numeric:tabular-nums}}
+td.t,th.t{{text-align:left}}
 svg{{display:block;margin:6px 0}}
 .ax{{fill:var(--mut);font-size:13px;text-anchor:middle}}.ax2{{fill:var(--faint);font-size:13px}}
 nav.jump{{font-size:14px;margin:0 0 12px;display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center}}
@@ -908,7 +912,7 @@ footer a{{color:var(--mut)}}
 details.more{{margin:16px 0}}details.more>summary{{cursor:pointer;font-weight:700;color:var(--brand);padding:12px 0;list-style:none}}
 details.more>summary::-webkit-details-marker{{display:none}}details.more>summary:before{{content:"▸ "}}details.more[open]>summary:before{{content:"▾ "}}
 @media(max-width:620px){{.stats{{grid-template-columns:repeat(2,1fr)}}.two{{grid-template-columns:1fr}}.hero h1{{font-size:30px}}
-.card{{padding:18px 15px}}.card h2{{font-size:21px}}.stat .n{{font-size:23px}}ul.kv span{{font-size:19px}}ul.kv b{{font-size:11px}}
+.card{{padding:18px 15px}}.card h2{{font-size:21px}}.stat .n{{font-size:23px}}ul.kv > li > span{{font-size:19px}}ul.kv b{{font-size:11px}}
 table{{font-size:13.5px}}th,td{{padding:7px 6px}}thead th{{font-size:11px;white-space:normal}}
 table{{width:100%}}}}
 </style></head><body>

@@ -198,6 +198,12 @@ one entry: the exact page wording, the official URL, a ≤15-word quoted excerpt
 10. One reader read per template after the change, with zero defects, or each one logged with its class
     and its scan result over all pages.
 
+**Status 2026-10-26: round 2 done.** `gate.py` is one 228-line file asking 7 questions, plus phone and live checks.
+The core is V1 (no untagged number on a page) and V2 (every tagged number equals the data at its path); Brevard went
+from 163 unchecked numbers to 0. All 83 live pages pass, and every check has a mutation. Items 7–9 are done; item 10
+(reader read) ran on Minnesota and Duval and found 4 defects, all fixed. Previously open items are fixed: flood history
+moved up, rating table replaces the mosaic, disaster titles de-duplicated.
+
 Known open items (not yet checks): the state tile map is unlabelled squares; pages run about 20 phone
 screens, with the flood history near screen 11; disaster titles repeat ("Severe Storm: Severe Storm…");
 AK, MT, ND and WY show dashes for over half their counties (fewer than 30 priced policies, a real data limit).

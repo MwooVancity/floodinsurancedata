@@ -92,7 +92,7 @@ MUTATIONS = [   # (defect class from THE EVIDENCE table, what we reintroduce, ex
      re.sub(r'(<span data-m="zone_cost" data-q="X" data-p="[^"]+">)\$[\d,]+', r"\g<1>$999", PAGE), None),
     ("reader text", "share over 100%", "H6", sub('<p class="stand">', '<p class="stand">Inside the zone it is 113.1% insured. '), None),
     ("reader text", "'1 in N' disagrees with its percent", "H7", sub('<p class="stand">', '<p class="stand">About 1 in 2 homes here have flood insurance (64.9%). '), None),
-    ("reader text", "storm without its year", "H5", re.sub(r"(Among named storms, [^<(]*?) \(\d{4}[^)]*\)", r"\1", PAGE, count=1), None),
+    ("reader text", "storm without its year", "H5", re.sub(r"(costliest single flood here was [^<(]*?) \(\d{4}[^)]*\)", r"\1", PAGE, count=1), None),
     # these two proved legacy L6 / L12b redundant (deleted 2026-10-25); kept as regression tests of A1 / C4
     ("legacy L6", "all OpenFEMA attribution removed", "A1", PAGE.replace("This product uses the Federal Emergency Management Agency's OpenFEMA API, but is not endorsed by FEMA.", ""), None),
     ("legacy L12b", "'other zones' row dropped", "C4", re.sub(r"<tr><td>Other or unclassified zones</td>.*?</tr>", "", PAGE, count=1), None),

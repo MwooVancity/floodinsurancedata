@@ -204,7 +204,7 @@ if re.search(r"Each (county|parish|borough) page lists|Open a county below", REA
         and not re.search(r'<a href="\.\./[a-z0-9-]+-(county|parish|borough|city)-[a-z]{2}/"', page):
     fail("H2", "points the reader to county pages, but links none")
 for _j in re.findall(r"\b(p25|p75|p90|policyCount|policyCost|censusGeoid|ratedFloodZone|fullRiskPremium)\b", READ): fail("H3", f"jargon '{_j}' in reader text")
-_sv = re.search(r"Among named storms, (.*?) paid out", READ)
+_sv = re.search(r"costliest single flood here was (.*?):", READ)
 if _sv and not re.search(r"\(\d{4}(–\d{4})?\)", _sv.group(1)): fail("H5", f"storm named without its year: {_sv.group(1)[:50]}")
 if re.search(r">\s*(None|nan|NaN|undefined)\s*<", page) or "$None" in page or "None%" in page: fail("L7", "None/nan leaked into the page")
 for y in re.findall(r"<li>(\d{4}) — ", page):
