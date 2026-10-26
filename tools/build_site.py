@@ -208,16 +208,23 @@ os.makedirs(os.path.dirname(csv_path), exist_ok=True)
 with open(csv_path, "w", newline="", encoding="utf-8") as f:
     w = csv.writer(f)
     w.writerow(["slug", "county", "geoid", "policy_units", "median_cost", "p25", "p75", "p90",
-                "full_risk_median", "share_below_full_risk_pct", "claims_since_1978", "claims_paid_usd"])
+                "full_risk_median", "share_below_full_risk_pct", "claims_since_1978", "claims_paid_usd",
+                "nfip_takeup_pct", "nfip_takeup_sfha_pct", "avg_paid_claim_usd", "closed_no_payment_pct",
+                "paid_outside_sfha_pct", "noaa_flood_events_1996_2025", "noaa_flood_damage_usd"])
     for p in places:
         ap = os.path.join(DATADIR, p["slug"], "agg.json")
         if not os.path.exists(ap): continue
         a = json.load(open(ap)); P = a["policies"]; C = a["claims"]
+        dp = os.path.join(DATADIR, p["slug"], "data.json")
+        d = json.load(open(dp)) if os.path.exists(dp) else {}
+        pen, cx, se = d.get("penetration") or {}, d.get("claims_extra") or {}, d.get("storm_events") or {}
         w.writerow([p["slug"], p["short"], p.get("geoid"), P["units"], P["p50"], P["p25"], P["p75"], P["p90"],
-                    P["frp_median"], P["share_below"], C["rows"], C["total_paid"]])
+                    P["frp_median"], P["share_below"], C["rows"], C["total_paid"],
+                    pen.get("overall_pct"), pen.get("sfha_pct"), cx.get("avg_paid"), cx.get("cwop_share"),
+                    cx.get("outside_sfha_pct"), se.get("events"), se.get("damage")])
 data = HEAD.format(title="Download the flood-insurance data", desc="Per-county NFIP flood-insurance aggregates as CSV.", canon=BASE + "/data/") + f"""
 <h1>Download the data</h1>
-<p>Per-county aggregates computed from FEMA OpenFEMA: policy units, cost spread, full-risk gap, and claims.</p>
+<p>Per-county aggregates computed from FEMA OpenFEMA and NOAA NCEI: policy units, cost spread, full-risk gap, claims, average paid claim, share closed without payment, share of paid dollars outside the high-risk zone, NFIP take-up, and NOAA flood events (1996–2025). Blank = not available for that county.</p>
 <p><a href="/data/counties.csv">counties.csv</a> — {len(places)} places.</p>
 <p class="mut">Reuse freely with attribution: "This product uses FEMA's OpenFEMA API, but is not endorsed by FEMA."</p>{FOOT}"""
 wr(os.path.join(DIST, "data", "index.html"), data)
