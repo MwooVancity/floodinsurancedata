@@ -68,7 +68,7 @@ try: MX.compare("cost_p50", "frp_median"); table.append(("7 chart overlay", "cos
 except MX.UnitMismatch: table.append(("7 chart overlay", "cost vs full-risk compare", "compare()", "PASS", "UnitMismatch"))
 
 # rule facts may only enter build_page.py through rules_registry (source lint on string literals)
-RULE_FACTS = ("$250,000", "$100,000", "336-2627", "4012a", "30 days", "12 months", "18&ndash;25")
+RULE_FACTS = ("$250,000", "$100,000", "336-2627", "4012a", "30 days", "13 months", "61.11", "18&ndash;25")
 lits = [t.string for t in tokenize.generate_tokens(io.StringIO(open(os.path.join(T, "build_page.py"), encoding="utf-8").read()).readline)
         if t.type == tokenize.STRING or getattr(tokenize, "FSTRING_MIDDLE", -1) == t.type]
 leaked = [f for f in RULE_FACTS if any(f in s for s in lits)]

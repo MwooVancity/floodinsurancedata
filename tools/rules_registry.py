@@ -20,10 +20,12 @@ RULES = {
         "sources": [(FS + "/get-insured/buy-a-policy", "will go into effect 30 days after your date of purchase", "curl")]},
     "wait_exceptions": {
         "text": "Exceptions: no wait if you buy while making, increasing, extending or renewing a mortgage, or change "
-                "coverage at renewal; a one-day wait if a map update puts the property in a high-risk zone and you buy "
-                "within 12 months of the update.",
+                "coverage at renewal; a one-day wait if a map revision puts the property in a high-risk zone and you buy "
+                "within 13 months of the revision (44 CFR §61.11).",
+        # FloodSmart's consumer page rounds this to "12 months"; the regulation says 13 — the regulation is cited.
         "sources": [(FS + "/get-insured/buy-a-policy", "while making, increasing, extending or renewing a mortgage", "curl"),
-                    (FS + "/get-insured/buy-a-policy", "you buy a policy within 12 months of the update", "curl")]},
+                    ("https://www.govinfo.gov/content/pkg/CFR-2024-title44-vol1/xml/CFR-2024-title44-vol1-sec61-11.xml",
+                     "During the 13-month period beginning on the effective date of a revised", "curl")]},
     "howto_tiles": {
         "text": "<ul class='kv'><li><b>Waiting period</b><span>30 days</span></li>"
                 "<li><b>Bought with a new or refinanced mortgage</b><span>No wait</span></li>"
@@ -62,7 +64,8 @@ RULES = {
                      "financial assistance for acquisition or construction purposes", "curl")]},
     "lender_any_zone": {
         "text": "Outside those zones the federal requirement drops, but a lender can still require coverage.",
-        "sources": [("https://www.maricopa.gov/Faq.aspx?TID=40", "your mortgage company may require you to have flood insurance", "curl")]},
+        "sources": [("https://www.federalreserve.gov/frrs/regulations/interagency-questions-and-answers-regarding-flood-insurance.htm",
+                     "a lender may require flood insurance as a condition of making the loan, as a matter of safety and soundness", "curl")]},
     "cap": {
         "text": "By law most premiums cannot rise more than 18% a year (FloodSmart puts it at 18&ndash;25% for most "
                 "policyholders); the cap usually does not apply to new policies, and fees and surcharges sit outside it.",
