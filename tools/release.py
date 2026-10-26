@@ -21,6 +21,7 @@ if "--live" in sys.argv:
         ok = 'data-m="cost_p50"' in body and "srclist" in body and len(body) > 30000
         print(f"live body {s}: {'ok' if ok else 'BAD'} ({len(body)} bytes)")
         if not ok: sys.exit("RELEASE STOPPED at: live body")
+    step("gate on every live page", os.path.join(T, "gate_live.py"))
     print("LIVE OK")
 else:
     out = subprocess.run([sys.executable, "-I", os.path.join(T, "build_all.py")], cwd=os.path.dirname(T),

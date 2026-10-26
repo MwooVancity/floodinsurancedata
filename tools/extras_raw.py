@@ -91,7 +91,7 @@ def net(r): return sum(f(r[c]) or 0 for c in ("netBuildingPaymentAmount", "netCo
 
 def claims(st):
     acc = collections.defaultdict(lambda: {"n": 0, "unpaid": 0, "reason": collections.Counter(), "cause": collections.Counter(),
-                                           "depth": [], "event": collections.defaultdict(lambda: [0, 0.0]), "icc_n": 0, "icc": [],
+                                           "depth": [], "event": collections.defaultdict(lambda: [0, 0.0, collections.Counter()]), "icc_n": 0, "icc": [],
                                            "dmg": [], "paid_b": [], "over_cov": 0, "dmg_n": 0, "elev_paid": [], "low_paid": []})
     for r in rows("NfipClaims", st):
         paid = net(r)
@@ -107,7 +107,7 @@ def claims(st):
             d = f(r["waterDepth"])
             if d and 0 < d < 400: a["depth"].append(d)
             ev = (r["floodEvent"] or "").strip()
-            if ev: e = a["event"][ev]; e[0] += 1; e[1] += paid
+            if ev: e = a["event"][ev]; e[0] += 1; e[1] += paid; e[2][r["yearOfLoss"]] += 1
             icc = f(r["netIccPaymentAmount"]) or 0
             if icc > 0: a["icc_n"] += 1; a["icc"].append(icc)
             dmg, cov, pb = f(r["buildingDamageAmount"]), f(r["totalBuildingInsuranceCoverage"]), f(r["netBuildingPaymentAmount"])
@@ -122,7 +122,8 @@ def claims(st):
                   "unpaid_n": a["unpaid"], "unpaid_with_reason_pct": pct(n_reason, a["unpaid"]),
                   "causes": [{"code": c, "label": CAUSE[c], "pct": pct(v, n_cause)} for c, v in a["cause"].most_common(4)],
                   "depth_median_in": med(a["depth"]), "depth_n": len(a["depth"]),
-                  "events": [{"name": e, "claims": v[0], "paid": round(v[1]), "avg": round(v[1] / v[0])}
+                  "events": [{"name": e, "claims": v[0], "paid": round(v[1]), "avg": round(v[1] / v[0]),
+                              "years": sorted(y for y in v[2] if y)}   # years of loss on its paid claims
                              for e, v in sorted(a["event"].items(), key=lambda kv: -kv[1][1])[:8]],
                   "icc_claims": a["icc_n"], "icc_avg": round(statistics.mean(a["icc"])) if a["icc"] else None,
                   "damage_median": med(a["dmg"]), "paid_building_median": med(a["paid_b"]),

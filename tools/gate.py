@@ -182,6 +182,37 @@ for stand in re.findall(r'<p class="stand">(.*?)</p>', page, re.S):
     words = norm(re.sub(r"<[^>]+>", " ", stand)).split()
     if len(words) > 40: fail("F1", f"card opening is {len(words)} words (max 40): '{' '.join(words[:12])}…'")
 
+# ---------------- H. reader text: what a person reads, chart labels included (born from the Vermont read, 2026-10-26) ----------------
+_READ = norm(re.sub(r"<[^>]+>", " ", re.sub(r"<(script|style)\b.*?</\1>", " ", page, flags=re.S)))
+# H1 a county is named, never shown as its code
+_ct = re.search(r'id="counties".*?<tbody>(.*?)</tbody>', page, re.S)
+for _c in (re.findall(r"<tr><td>(.*?)</td>", _ct.group(1)) if _ct else []):
+    if re.fullmatch(r"\d{5}", re.sub(r"<[^>]+>", "", _c).strip()): fail("H1", f"county shown as a code: {_c}")
+# H2 the page never points to county pages it does not link
+if re.search(r"Each county page lists|Open a county below", _READ) and not re.search(r'<a href="\.\./[a-z0-9-]+-(county|parish|borough|city)-[a-z]{2}/"', page):
+    fail("H2", "points the reader to county pages, but links none")
+# H3 no database field names or percentile codes in reader text
+for _j in re.findall(r"\b(p25|p75|p90|policyCount|policyCost|censusGeoid|ratedFloodZone|fullRiskPremium)\b", _READ):
+    fail("H3", f"jargon '{_j}' in reader text")
+# H4 a source's effective date is the data's own date, never just the day we downloaded it
+for _e, _r in re.findall(r"Data effective ([A-Z][a-z]+ \d{1,2}, \d{4}); retrieved ([A-Z][a-z]+ \d{1,2}, \d{4})", _READ):
+    if _e == _r: fail("H4", f"data effective date is only the retrieval day ({_e})")
+# H5 a named storm says when it happened
+_sv = re.search(r"Among named storms, (.*?) paid out", _READ)
+if _sv and not re.search(r"\(\d{4}(–\d{4})?\)", _sv.group(1)): fail("H5", f"storm named without its year: {_sv.group(1)[:50]}")
+
+# H6 a share is never over 100% (a comparison like "120% above" is not a share); an over-100 source rate is explained
+for _mm in re.finditer(r"(\d+(?:\.\d+)?)%(.{0,40})", _READ):
+    if float(_mm.group(1)) > 100 and not re.match(r"\s*(above|below|more|higher|lower|difference)", _mm.group(2)) \
+            and "exact share is unknown" not in _mm.group(2) + _READ[_mm.end():_mm.end() + 120]:
+        fail("H6", f"share over 100%: {_mm.group(0)[:60]}")
+# H7 "N in 10" / "1 in N" words agree with the percentage beside them (64.9% is not "1 in 2")
+for _a, _b, _p in re.findall(r"About (\d+) in (\d+) homes[^(]{0,40}\((\d+(?:\.\d+)?)%\)", _READ):
+    _a, _b, _p = int(_a), int(_b), float(_p)
+    # "1 in N" only for small shares: 1 in 2 rounds from anything 40-67%, so above 15% the words are "N in 10"
+    ok = (abs(10 * _a - _p) <= 5) if _b == 10 else (_a == 1 and _p < 15 and round(100 / _p) == _b) if _p else False
+    if not ok: fail("H7", f"'{_a} in {_b}' beside {_p}%")
+
 # ---------------- G. provenance: "built from all N records" must equal the download manifest ----------------
 _man = agg.get("manifest") or {}
 for _k, _ds in (("records_policies", "policies"), ("records_claims", "claims")):
