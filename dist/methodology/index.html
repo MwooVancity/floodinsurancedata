@@ -35,8 +35,8 @@ ul{padding-left:20px}li{margin:.25em 0}
 <li><b>Disaster Declarations Summaries v2</b> — OpenFEMA. Federal flood/storm declarations.</li>
 <li><b>Housing Assistance (Owners) v2</b> — OpenFEMA. FEMA aid paid to owners after disasters.</li>
 <li><b>National Risk Index (counties)</b> — FEMA ArcGIS (FEMA_NationalRiskIndex). Flood expected annual loss + percentile.</li>
-<li><b>U.S. Census ACS 5-year (B25001)</b> — U.S. Census Bureau API. Housing units, for the take-up ratio (policies per 100 homes).</li>
-<li><b>Repetitive-Loss Flood Properties</b> — OpenFEMA (Individual Assistance Multiple-Loss). FEMA-designated RL/SRL properties with more than one flood loss, per county.</li>
+<li><b>U.S. Census ACS 5-year (B25001)</b> — U.S. Census Bureau API. Housing units, used only where FEMA's own penetration rate is missing.</li>
+<li><b>Multiple-Loss Flood Properties</b> — OpenFEMA (Individual Assistance). One record per property per declared disaster that damaged it, for properties that flooded more than once; a property on FEMA's severe repetitive loss list is flagged.</li>
 <li><b>NFIP Residential Penetration Rates</b> — OpenFEMA. Share of residential structures with an NFIP policy, overall and inside the high-risk zone, per county.</li>
 <li><b>NOAA NCEI Storm Events</b> — NOAA. Recorded flood/flash-flood/coastal-flood events + NWS property-damage estimates, per county (1996 on).</li>
 <li>Official <b>Policy Information by State and Community</b> workbook — reconciliation benchmark (a cross-check, not a dataset).</li></ul>
@@ -47,7 +47,7 @@ ul{padding-left:20px}li{margin:.25em 0}
 <li><b>Percentiles</b> p25/p50/p75/p90 by inclusive interpolation.</li>
 <li><b>Full-risk gap</b>: share of cohort whose premium charged (<code>totalInsurancePremiumOfThePolicy</code>) is below FEMA's full-risk premium (<code>fullRiskPremium</code>); both are premium-only. The cost figures elsewhere use <code>policyCost</code>, which FEMA defines as premium plus the reserve fund assessment, federal policy fee and HFIAA surcharge, so they are not compared with full-risk.</li>
 <li><b>Claims per 100</b>: cumulative paid claims since 1978 over current policy units — a historical tally, not an annual rate or a flood probability.</li>
-<li><b>Suppression</b>: cost charts need ≥100 cohort policies; a ZIP page exists only if it passes the 3-part publish test (sufficiency, decision-relevant difference, distinct intent).</li>
+<li><b>Minimum sizes</b>: a cost spread needs 100 or more priced single-family policies; a flood-zone median 50; a county median 30; a ZIP median 25. Smaller medians move more from year to year, and the count is shown beside each.</li>
 <li><b>Dates</b>: each figure shows its effective date and retrieval date; policy snapshot differs from other datasets' retrieval dates.</li></ul></div>
 <div class="card"><h2>What the data cannot tell you</h2><ul>
 <li>Your own premium (depends on elevation, coverage, deductible).</li><li>Private (non-NFIP) prices.</li>

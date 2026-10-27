@@ -9,7 +9,7 @@ below is proven by a mutation in tools/test_gate.py that reintroduces a real shi
   5 SOURCES   is every source line, dataset list and rule text generated and current?
   6 READER    names not codes, no jargon or dead pointers, storms dated, caveats present
   7 ANSWER    does every card open with a short answer?"""
-import datetime, html as H, json, os, re, sys
+import collections, datetime, html as H, json, os, re, sys
 from html.parser import HTMLParser
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import metrics as MX
@@ -189,6 +189,22 @@ if _bars and max(d for _, d in _bars) > 0:
     _k = max(h for h, _ in _bars) / max(d for _, d in _bars)
     for h, d in _bars:
         if abs(h - d * _k) > 1.0: fail("C5", f"claims chart bar height {h} is not dollars ({d:,.0f}); the caption says bars are dollars"); break
+# C7 the zone table's high-risk rows add to the high-risk share the card states (hater r1: VE/AH hid in "other")
+_zt = re.search(r"<th>Flood zone</th><th>Policy units</th><th>Share</th></tr></thead><tbody>(.*?)</tbody>", page, re.S)
+if _zt and P.get("sfha_share_units") is not None:
+    _hr = sum(float(s) for lab, s in re.findall(r"<tr><td>([^<]*)</td><td>.*?</td><td><span[^>]*>([\d.]+)%</span></td></tr>", _zt.group(1))
+              if "high-risk" in lab)
+    if abs(_hr - P["sfha_share_units"]) > 0.3: fail("C7", f"zone table high-risk rows add to {_hr:.1f}%, page states {P['sfha_share_units']}%")
+# C8 the unpaid-reasons table accounts for every unpaid claim (hater r1: 3 rows covered 45%)
+_ut = re.search(r"<th>Reason recorded</th><th>Claims</th></tr></thead><tbody>(.*?)</tbody>", page, re.S)
+if _ut and (EXTRAS.get("claims") or {}).get("unpaid_n"):
+    _us = sum(int(x.replace(",", "")) for x in re.findall(r"<td><span[^>]*>([\d,]+)</span></td></tr>", _ut.group(1)))
+    if _us != EXTRAS["claims"]["unpaid_n"]: fail("C8", f"unpaid-reasons rows add to {_us}, not the {EXTRAS['claims']['unpaid_n']} unpaid claims")
+# E2 no sentence of 12+ words printed twice on one page (hater r1: rules repeated verbatim)
+# keyed on each sentence's last 12 words: a tile value glued in front ("$100,000 Most homeowners...") must not hide a copy
+_sent = collections.Counter(" ".join(s.split()[-12:]) for s in re.split(r"(?<=[.!?])\s+", TEXT) if len(s.split()) >= 12)
+for _s, _c in _sent.items():
+    if _c > 1: fail("E2", f"sentence printed {_c} times: {_s[:80]}"); break
 # C6 CRS discounts under Risk Rating 2.0 are one rate for every zone: no separate "other areas" rate
 if re.search(r"<th>Other areas</th>", page): fail("C6", "CRS table shows a separate non-high-risk discount (pre-2021 rule; Risk Rating 2.0 is one rate in every zone)")
 _foot = re.search(r"<footer>(.*?)</footer>", page, re.S)

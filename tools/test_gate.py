@@ -76,7 +76,7 @@ MUTATIONS = [   # (defect class from THE EVIDENCE table, what we reintroduce, ex
      sub("Both are premiums only", '<span data-claim="{&quot;word&quot;: &quot;most&quot;, &quot;cond&quot;: [&quot;share_below&quot;, &quot;&gt;&quot;, 50]}">Most</span> pay below. Both are premiums only')
      if "Both are premiums only" in PAGE else sub("(premiums only, before fees)", '(premiums only, before fees) <span data-claim="{&quot;word&quot;: &quot;most&quot;, &quot;cond&quot;: [&quot;share_below&quot;, &quot;&gt;&quot;, 50]}">Most</span> pay below.'), None),
     ("2 prose vs numbers", "free-typed 'climb toward'", "B2", sub("(premiums only, before fees)", "(premiums only, before fees). Bills climb toward it"), None),
-    ("3 rows called homes", "IA records labelled homes", "A2", sub("</span> flood-damage applications", "</span> homes"), None),
+    ("3 rows called homes", "IA records labelled homes", "A2", sub("</span> damage records from homes", "</span> homes"), None),
     ("4 cross-panel", "filed count called 'paid'", "C3", sub("</span> NFIP flood claims and", "</span> paid NFIP flood claims and"), None),
     ("5 rating vs percentile", "percentile without its basis", "A4", PAGE.replace("per dollar of building value, that loss is higher than in about", "flood risk is higher than in about"), None),
     ("6 attribution", "NOAA panel credited to FEMA", "A1", sub(STORM, '<p class="src" data-src="storm_events,storm_damage">Source: FEMA OpenFEMA.'), None),
@@ -106,7 +106,12 @@ MUTATIONS = [   # (defect class from THE EVIDENCE table, what we reintroduce, ex
     ("hater r1", "claims chart drawn as claim counts", "C5",
      re.sub(r'height="([\d.]+)"(?=[^>]*><title>\d{4}: [\d,]+ claims, \$[\d,]+</title>)', lambda mm: f'height="{float(mm.group(1)) * 0.5 + 3:.1f}"', PAGE, count=3), None),
     ("hater r1", "pre-2021 'other areas' CRS discount column", "C6", sub("<th>Discount</th>", "<th>Discount</th><th>Other areas</th>"), None),
-    ("legacy L12b", "'other zones' row dropped", "C4", re.sub(r"<tr><td>Other or unclassified zones</td>.*?</tr>", "", PAGE, count=1), None),
+    ("hater r1", "high-risk zone hidden in 'other'", "C7", re.sub(r"(<tr><td>Zone A[^<]*?) \(high-risk\)", r"\1", PAGE, count=1), None),
+    ("hater r1", "unpaid table shows only some reasons", "C8",
+     re.sub(r"(<th>Reason recorded</th><th>Claims</th></tr></thead><tbody>)<tr>.*?</tr>", r"\1", PAGE, count=1, flags=re.S), None),
+    ("hater r1", "a rule printed twice on the page", "E2",
+     PAGE.replace("<p class='note'>Every zone starting", "<p class='note'>Most homeowners insurance does not cover flood damage; flood insurance is bought separately, through the federal NFIP or a private insurer. Every zone starting", 1), None),
+    ("legacy L12b", "'other zones' row dropped", "C4", re.sub(r"<tr><td>Other[^<]*</td>.*?</tr>", "", PAGE, count=1), None),
 ]
 table, ok = [], True
 for cls, what, want, html, agg in MUTATIONS:

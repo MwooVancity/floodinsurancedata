@@ -16,7 +16,7 @@ DATASETS = {   # display name, citation URL, whether the OpenFEMA attribution ap
     "NfipCommunityStatusBook": ("FEMA OpenFEMA — NFIP Community Status Book (CRS)", "https://www.fema.gov/openfema-data-page/nfip-community-status-book-v1", OPENFEMA),
     "DisasterDeclarationsSummaries": ("FEMA OpenFEMA — Disaster Declarations Summaries", "https://www.fema.gov/openfema-data-page/disaster-declarations-summaries-v2", OPENFEMA),
     "HousingAssistanceOwners": ("FEMA OpenFEMA — Housing Assistance (Owners)", "https://www.fema.gov/openfema-data-page/housing-assistance-program-data-owners-v2", OPENFEMA),
-    "IndividualAssistanceMultipleLossFloodProperties": ("FEMA OpenFEMA — Repetitive-Loss Flood Properties", "https://www.fema.gov/openfema-data-page/individual-assistance-multiple-loss-flood-properties-v1", OPENFEMA),
+    "IndividualAssistanceMultipleLossFloodProperties": ("FEMA OpenFEMA — Individual Assistance Multiple-Loss Flood Properties", "https://www.fema.gov/openfema-data-page/individual-assistance-multiple-loss-flood-properties-v1", OPENFEMA),
     "NfipResidentialPenetrationRates": ("FEMA OpenFEMA — NFIP Residential Penetration Rates", "https://www.fema.gov/openfema-data-page/nfip-residential-penetration-rates-v1", OPENFEMA),
     "StormEvents": ("NOAA NCEI — Storm Events Database", "https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/", "noaa"),
     "CensusACS": ("U.S. Census Bureau — ACS 5-year B25001 (housing units)", "https://data.census.gov/table/ACSDT5Y2023.B25001", "census"),
@@ -144,6 +144,7 @@ METRICS.update({   # every other figure a page prints; q (data-q) names the row 
     "claim_years": _m(CLM, ["netBuildingPaymentAmount", "netContentsPaymentAmount", "netIccPaymentAmount"], "count"),   # avg paid claim / median yearly cost
 })
 
+FLOOD_STORM = ("Flood", "Hurricane", "Tropical Storm", "Tropical Depression", "Coastal Storm", "Severe Storm")   # disaster types a flood page counts
 def values(agg, data):
     """Numeric value of each claim-able metric, straight from the county's JSON (what gate re-checks claims on)."""
     P, C = agg.get("policies", {}), agg.get("claims", {})
@@ -156,7 +157,9 @@ def values(agg, data):
          "outside_sfha_dollars": cx.get("outside_sfha_pct"), "ml_total": ml.get("total"), "ml_srl": ml.get("srl"),
          "outside_sfha_policies": round(100 - P["sfha_share_units"], 1) if P.get("sfha_share_units") is not None else None,
          "zone_inversion": int(bool(xm) and any(z[:1] in "AV" and d["median"] < xm for z, d in cz.items()))}
-    v["ia_paid"] = sum(float(r.get("totalApprovedIhpAmount") or 0) for r in data.get("housing", []))
+    _fh = {d.get("disasterNumber") for d in data.get("declarations", []) if d.get("incidentType") in FLOOD_STORM
+           and "EVACUAT" not in (d.get("declarationTitle") or "").upper()}
+    v["ia_paid"] = sum(float(r.get("totalApprovedIhpAmount") or 0) for r in data.get("housing", []) if r.get("disasterNumber") in _fh)
     def _disc(x):
         try: return float(str(x).rstrip("%") or 0) > 0
         except ValueError: return False

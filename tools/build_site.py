@@ -67,7 +67,7 @@ from rules_registry import rule
 _bp = os.path.join(DATADIR, "states", "built.json")
 states = json.load(open(_bp)) if os.path.exists(_bp) else []
 rows = "".join(f'<tr data-k="{html.escape((p["short"]+" "+(p.get("state") or "")).lower())}">'
-               f'<td><a href="/flood-insurance/{p["slug"]}/">{html.escape(p["short"])}</a></td>'
+               f'<td><a href="/flood-insurance/{p["slug"]}/">{html.escape(p["short"])}, {html.escape(p.get("state") or "")}</a></td>'
                f'<td>{money(p.get("median"))}</td><td>{format(p.get("units") or 0, ",")}</td></tr>' for p in indexable)
 hrows = "".join(f'<tr data-k="{html.escape((p["short"]+" "+(p.get("state") or "")).lower())}">'
                 f'<td><a href="/flood-insurance/{p["slug"]}/">{html.escape(p["short"])}, {html.escape(p.get("state") or "")}</a></td>'
@@ -92,13 +92,13 @@ if len(states) == 51:   # U.S. figures only once every state is built and gated:
     national = (f'<div class="stats"><div class="stat"><div class="n">{money(_med)}</div><div class="l">U.S. median a year</div></div>'
                 f'<div class="stat"><div class="n">{money(round(_med / 12))}</div><div class="l">Per month</div></div>'
                 f'<div class="stat"><div class="n">{_units / 1e6:.1f}M</div><div class="l">Insured units in force</div></div></div>'
-                '<p class="mut">Single-family primary homes, premium plus fees, NFIP policies in force on July 31, 2026.</p>')
+                '<p class="mut">Median and per month: what existing single-family primary-home policies pay, premium plus fees (a new policy is priced at full risk). Insured units: every NFIP policy unit in force on July 31, 2026, including condos, rentals and businesses.</p>')
 home = HEAD.format(title="Flood insurance cost by state and county (FEMA data)",
     desc="What flood insurance actually costs where you live, from FEMA's own policy and claim records: typical cost, whether you're required to buy it, how fast it starts, and what floods have paid out.",
     canon=BASE + "/") + f"""
-<section class="hero"><p class="kicker">NFIP records · {len(states)} state{"" if len(states) == 1 else "s"} · {len(places)} counties</p>
-<h1>What flood insurance really costs where you live</h1>
-<p class="lede">Answers from FEMA's own policy and claim records: what people near you pay, whether you're required to buy it, and how fast it starts.</p>
+<section class="hero"><p class="kicker">NFIP records · {"50 states and DC" if len(states) == 51 else str(len(states)) + " states"} · {len(places)} counties</p>
+<h1>What flood insurance costs in your state and county</h1>
+<p class="lede">From FEMA's own records of existing policies and claims, not quotes: what policyholders pay, whether you're required to buy it, and how fast it starts.</p>
 {national}
 {prov}
 <input id="s" placeholder="Type your state or county…" aria-label="Find your state or county" autocomplete="off"></section>
@@ -151,8 +151,8 @@ meth = HEAD.format(title="Methodology — flood insurance data", desc="Definitio
 <li><b>Disaster Declarations Summaries v2</b> — OpenFEMA. Federal flood/storm declarations.</li>
 <li><b>Housing Assistance (Owners) v2</b> — OpenFEMA. FEMA aid paid to owners after disasters.</li>
 <li><b>National Risk Index (counties)</b> — FEMA ArcGIS (FEMA_NationalRiskIndex). Flood expected annual loss + percentile.</li>
-<li><b>U.S. Census ACS 5-year (B25001)</b> — U.S. Census Bureau API. Housing units, for the take-up ratio (policies per 100 homes).</li>
-<li><b>Repetitive-Loss Flood Properties</b> — OpenFEMA (Individual Assistance Multiple-Loss). FEMA-designated RL/SRL properties with more than one flood loss, per county.</li>
+<li><b>U.S. Census ACS 5-year (B25001)</b> — U.S. Census Bureau API. Housing units, used only where FEMA's own penetration rate is missing.</li>
+<li><b>Multiple-Loss Flood Properties</b> — OpenFEMA (Individual Assistance). One record per property per declared disaster that damaged it, for properties that flooded more than once; a property on FEMA's severe repetitive loss list is flagged.</li>
 <li><b>NFIP Residential Penetration Rates</b> — OpenFEMA. Share of residential structures with an NFIP policy, overall and inside the high-risk zone, per county.</li>
 <li><b>NOAA NCEI Storm Events</b> — NOAA. Recorded flood/flash-flood/coastal-flood events + NWS property-damage estimates, per county (1996 on).</li>
 <li>Official <b>Policy Information by State and Community</b> workbook — reconciliation benchmark (a cross-check, not a dataset).</li></ul>
@@ -163,7 +163,7 @@ meth = HEAD.format(title="Methodology — flood insurance data", desc="Definitio
 <li><b>Percentiles</b> p25/p50/p75/p90 by inclusive interpolation.</li>
 <li><b>Full-risk gap</b>: share of cohort whose premium charged (<code>totalInsurancePremiumOfThePolicy</code>) is below FEMA's full-risk premium (<code>fullRiskPremium</code>); both are premium-only. The cost figures elsewhere use <code>policyCost</code>, which FEMA defines as premium plus the reserve fund assessment, federal policy fee and HFIAA surcharge, so they are not compared with full-risk.</li>
 <li><b>Claims per 100</b>: cumulative paid claims since 1978 over current policy units — a historical tally, not an annual rate or a flood probability.</li>
-<li><b>Suppression</b>: cost charts need ≥100 cohort policies; a ZIP page exists only if it passes the 3-part publish test (sufficiency, decision-relevant difference, distinct intent).</li>
+<li><b>Minimum sizes</b>: a cost spread needs 100 or more priced single-family policies; a flood-zone median 50; a county median 30; a ZIP median 25. Smaller medians move more from year to year, and the count is shown beside each.</li>
 <li><b>Dates</b>: each figure shows its effective date and retrieval date; policy snapshot differs from other datasets' retrieval dates.</li></ul></div>
 <div class="card"><h2>What the data cannot tell you</h2><ul>
 <li>Your own premium (depends on elevation, coverage, deductible).</li><li>Private (non-NFIP) prices.</li>
@@ -176,8 +176,8 @@ CONTACT = os.environ.get("FF_CONTACT", "")   # owner-supplied; omitted until pro
 contact_html = (f'<li><b>Corrections &amp; contact:</b> <a href="mailto:{html.escape(CONTACT)}">{html.escape(CONTACT)}</a> — '
                 'tell us about any figure that looks wrong and we will check it against the source record.</li>'
                 if CONTACT else
-                '<li><b>Corrections:</b> a public contact address is being set up; every figure links to its official '
-                'federal source so any number can be checked against the record it came from.</li>')
+                '<li><b>Checking a figure:</b> every figure links to its official federal source, and each page offers its '
+                'figures as a CSV, so any number can be checked against the record it came from.</li>')
 about = HEAD.format(title="About — Flood Insurance Data", desc="Who runs Flood Insurance Data, how the figures are compiled and checked, and our independence from FEMA and insurers.", canon=BASE + "/about/") + f"""
 <h1>About Flood Insurance Data</h1>
 <div class="card"><h2>What this is</h2>
@@ -187,9 +187,9 @@ policyholders actually pay, how that compares with FEMA's full-risk price, the c
 risk, and the community discounts that lower the bill — every figure drawn from a public federal dataset,
 with its exact source and the date it was pulled.</p></div>
 <div class="card"><h2>How the numbers are made and checked</h2><ul>
-<li>Compiled directly from FEMA's OpenFEMA APIs and the U.S. Census Bureau — no estimates, no modelled or private data.</li>
+<li>Compiled directly from FEMA's OpenFEMA records, NOAA and the U.S. Census Bureau; no private data. Two figures are FEMA models and are labeled as such: the National Risk Index and FEMA's estimate of how many homes are insured.</li>
 <li>Every page is built by code and must pass an automated correctness gate before it ships: percentiles and
-sums are recomputed, counts are reconciled to FEMA's official policy figure, every ratio's denominator is
+sums are recomputed, record counts are checked against the download's own totals (FEMA's separate official policy count is not yet compared), every ratio's denominator is
 disclosed, and nothing publishes if a check fails. The <a href="/methodology/">methodology</a> defines every term.</li>
 <li>We show aggregates only — never an individual property, policy, or quote.</li>
 {contact_html}

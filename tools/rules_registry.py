@@ -62,6 +62,18 @@ RULES = {
         "sources": [(FS + "/contact", "Report your loss immediately to your insurance agent or carrier.", "curl"),
                     (IA_META, "in designated counties who sustained damage", "curl"),
                     (IA_META, "resulting from a federally declared disaster may apply", "curl")]},
+    "purchase_short": {   # the screen-1 summary; the full rule sits in its card (no sentence printed twice)
+        "text": "Only in a high-risk zone with a federally regulated or backed mortgage or federal building help.",
+        "sources": [("https://www.govinfo.gov/content/pkg/USCODE-2023-title42/html/USCODE-2023-title42-chap50-subchapI-sec4012a.htm",
+                     "regulated lending institutions", "curl")]},
+    "howto_short": {
+        "text": "Usually 30 days after you buy; no wait with a new or refinanced mortgage.",
+        "sources": [(FS + "/get-insured/buy-a-policy", "will go into effect 30 days after your date of purchase", "curl")]},
+    "aid_insurance": {   # owner of a flood-damaged home in a high-risk zone: FEMA aid comes with an insurance duty
+        "text": "If FEMA aid pays to repair a home in a high-risk zone, you must buy and keep flood insurance on it, or "
+                "you cannot get that aid again after a later flood.",
+        "sources": [("https://www.fema.gov/press-release/20250121/flood-aid-recipients-get-insurance-stay-eligible-repeat-assistance",
+                     "ineligible for IHP Assistance for flood-damaged real or personal property in future disasters", "manual")]},
     "purchase_answer": {
         "text": "Only if your home is in a high-risk zone (A or V) and your mortgage is from a federally regulated lender, or federal "
                 "help to buy or build (42 U.S.C. §4012a).",
@@ -74,8 +86,9 @@ RULES = {
         "sources": [("https://www.federalreserve.gov/frrs/regulations/interagency-questions-and-answers-regarding-flood-insurance.htm",
                      "a lender may require flood insurance as a condition of making the loan, as a matter of safety and soundness", "curl")]},
     "cap": {
-        "text": "By law most premiums cannot rise more than 18% a year (FloodSmart puts it at 18&ndash;25% for most "
-                "policyholders); the cap usually does not apply to new policies, and fees and surcharges sit outside it.",
+        "text": "By law a primary home's premium cannot rise more than 18% a year; some policies, such as second homes "
+                "and businesses, can rise up to 25%. The cap usually does not apply to new policies, and fees and "
+                "surcharges sit outside it.",
         "sources": [(FS + "/premiumcosts", "per year for most policyholders. This usually does not apply to new policies.", "curl"),
                     ("https://www.fema.gov/flood-insurance/risk-rating", "most rates not increase more than 18% per year", "manual")]},
     "rr2_zone": {
