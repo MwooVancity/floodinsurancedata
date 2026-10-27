@@ -110,7 +110,7 @@ MUTATIONS = [   # (defect class from THE EVIDENCE table, what we reintroduce, ex
     ("hater r1", "unpaid table shows only some reasons", "C8",
      re.sub(r"(<th>Reason recorded</th><th>Claims</th></tr></thead><tbody>)<tr>.*?</tr>", r"\1", PAGE, count=1, flags=re.S), None),
     ("hater r1", "a rule printed twice on the page", "E2",
-     PAGE.replace("<p class='note'>Every zone starting", "<p class='note'>Most homeowners insurance does not cover flood damage; flood insurance is bought separately, through the federal NFIP or a private insurer. Every zone starting", 1), None),
+     PAGE.replace("<p class='note'>Every zone starting", "<p class='note'>Standard homeowners insurance does not cover flood damage; flood insurance is bought separately, through the federal NFIP or a private insurer. Every zone starting", 1), None),
     ("legacy L12b", "'other zones' row dropped", "C4", re.sub(r"<tr><td>Other[^<]*</td>.*?</tr>", "", PAGE, count=1), None),
 ]
 table, ok = [], True

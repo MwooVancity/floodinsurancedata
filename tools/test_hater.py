@@ -1,0 +1,20 @@
+"""Prove hater.py record: PASS only for a clean section, FAIL if any BLOCKER/MAJOR, and ignore non-page sections."""
+import os, sys, json, shutil
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(ROOT, "tools")); import hater, review as RV
+p = os.path.join(hater.DIR, "hater-round99.md")
+open(p, "w", encoding="utf-8").write(
+    "# x\n## home\n1. **MINOR** tiny\nVerdict: PASS\n"
+    "## louisiana\n1. **MAJOR** bad thing\nVerdict: PASS\n"
+    "## palm-beach-county-fl\n1. **BLOCKER** wrong\nVerdict: FAIL\n"
+    "## Classes\n**MAJOR** everywhere\n")
+keep = {s: RV.get(s) for s in ("home", "louisiana", "palm-beach-county-fl")}
+hater.record(99)
+got = {s: RV.get(s)["verdict"] for s in keep}
+for s, r in keep.items():   # restore whatever was there
+    f = os.path.join(RV.DIR, s + ".json")
+    if r: json.dump(r, open(f, "w", encoding="utf-8"), indent=1)
+    elif os.path.exists(f): os.remove(f)
+os.remove(p)
+assert got == {"home": "PASS", "louisiana": "FAIL", "palm-beach-county-fl": "FAIL"}, got
+print("hater record self-test OK", got)

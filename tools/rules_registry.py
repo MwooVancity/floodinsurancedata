@@ -11,7 +11,7 @@ IA_META = "https://www.fema.gov/api/open/v1/OpenFemaDataSets?$filter=name%20eq%2
 
 RULES = {
     "homeowners_excl": {
-        "text": "Most homeowners insurance does not cover flood damage; flood insurance is bought separately, through the "
+        "text": "Standard homeowners insurance does not cover flood damage; flood insurance is bought separately, through the "
                 "federal NFIP or a private insurer.",
         "sources": [(FS + "/flood-insurance-basics", "most homeowners insurance does not cover flood damage", "curl")]},
     "wait_30": {
@@ -27,7 +27,7 @@ RULES = {
                     ("https://www.govinfo.gov/content/pkg/CFR-2024-title44-vol1/xml/CFR-2024-title44-vol1-sec61-11.xml",
                      "During the 13-month period beginning on the effective date of a revised", "curl")]},
     "howto_answer": {
-        "text": "Buy it now: most policies start <b>30 days</b> after you buy, but there's no wait if you buy it with a new "
+        "text": "Most policies start <b>30 days</b> after you buy, but there is no wait if you buy it with a new "
                 "or refinanced mortgage.",
         "sources": [(FS + "/get-insured/buy-a-policy", "will go into effect 30 days after your date of purchase", "curl"),
                     (FS + "/get-insured/buy-a-policy", "There is no wait if you buy flood insurance while making", "curl")]},
@@ -40,8 +40,8 @@ RULES = {
                     (FS + "/get-insured/buy-a-policy", "There is no wait if you buy flood insurance while making", "curl"),
                     (FS + "/get-insured/buy-a-policy", "Building policies cover up to $250,000", "curl")]},
     "limits": {
-        "text": "NFIP covers up to <b>$250,000</b> on the building and <b>$100,000</b> on contents, which is a separate "
-                "policy.",
+        "text": "NFIP covers up to <b>$250,000</b> on the building and <b>$100,000</b> on contents, which you choose separately "
+                "on the same policy.",
         "sources": [(FS + "/get-insured/buy-a-policy", "Building policies cover up to $250,000", "curl"),
                     (FS + "/get-insured/buy-a-policy", "contents policies cover up to $100,000", "curl")]},
     "building_cap": {
