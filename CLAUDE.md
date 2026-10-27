@@ -160,7 +160,10 @@ reader found 15 defects on. So correctness lives in the BUILDER, and the gate as
 - **What code can't judge** ("true but misleading", order, tone): after any template change, read one random page
   per template on a phone, screen by screen, as the frightened reader. Each defect becomes a class, is scanned
   across all pages, then becomes a builder rule or a gate check with a mutation, never a one-off patch.
-One command: `python -I tools/release.py`, deploy, `release.py --live`; `recheck.py` as one background job.
+Ship ONLY with `python -I tools/release.py --ship` (build + every gate + Google gate incl. hater review, commit dist,
+push, deploy, live gate). Never run wrangler or push by hand: every push redeploys the committed dist (2026-10-27 a
+docs push put old pages back live). `--hotfix "reason"` skips only the hater review, only to remove wrong live text.
+`recheck.py` runs as its own background job.
 
 ## What the data cannot say (printed on every page)
 Your own premium; private (non-NFIP) prices; your address's exact zone (link FEMA's map); why prices

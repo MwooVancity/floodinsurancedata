@@ -32,4 +32,18 @@ else:
     step("unit tests", os.path.join(T, "test_calc.py"))
     step("mutation suite", os.path.join(T, "test_gate.py"))
     step("phone check (dist)", os.path.join(T, "phone_check.py"))
-    print("READY TO DEPLOY (then: release.py --live, and run recheck.py)")
+    # Google gate; S12 (hater review) is skipped only by --hotfix "<reason>", for a fix that removes wrong text from live pages
+    hot = sys.argv[sys.argv.index("--hotfix") + 1] if "--hotfix" in sys.argv else ""
+    step("google gate", os.path.join(T, "google_gate.py"), *(["--skip-review"] if hot else []))
+    if "--ship" not in sys.argv: sys.exit(print("READY TO SHIP: release.py --ship [--hotfix \"reason\"]"))
+    # every push to master redeploys the COMMITTED dist (deploy.yml), so commit the built pages before anything ships
+    R = os.path.dirname(T); g = lambda *a: subprocess.run(["git", *a], cwd=R, check=True)
+    g("add", "-A", "dist", "data/c", "places.json", "tools", "state")
+    if subprocess.run(["git", "diff", "--cached", "--quiet"], cwd=R).returncode:
+        g("commit", "-q", "-m", "release: built site" + (f" (hotfix, hater review skipped: {hot})" if hot else "")
+          + "\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>")
+    g("push", "-q")
+    if subprocess.run("npx wrangler deploy", cwd=R, shell=True).returncode: sys.exit("RELEASE STOPPED at: deploy")
+    import time; time.sleep(45)
+    step("live", os.path.join(T, "release.py"), "--live")
+    print("SHIPPED")

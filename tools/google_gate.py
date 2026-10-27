@@ -152,7 +152,7 @@ if _us and _seen - {_us.group(1)}: fail("S11", f"home U.S. median {_us.group(1)}
 # S12 hater review: every indexable page (home, states, counties) has a current PASS from a hostile reader (tools/review.py)
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import review as RV
 _th = RV.template_hash()
-for p in sorted(indexable):
+for p in ([] if "--skip-review" in sys.argv else sorted(indexable)):   # skipped only by release.py --hotfix "<reason>"
     m_ = re.fullmatch(r"/flood-insurance/([^/]+)/", p)
     slug = "home" if p == "/" else m_.group(1) if m_ else None
     if slug and not RV.ok(slug, _th):

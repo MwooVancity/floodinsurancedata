@@ -16,11 +16,11 @@ def run(script):
     if r.returncode: print(f"[{script}] FAILED", r.stderr[-600:])
     return r.returncode
 
-run("build_counties.py")
+codes = [run("build_counties.py")]
 places = {p["slug"] for p in json.load(open(os.path.join(ROOT, "places.json")))}
 fdir = os.path.join(DIST, "flood-insurance")
 for name in os.listdir(fdir):   # prune any page folder that is not a county that passed this run (states are rebuilt next)
     if os.path.isdir(os.path.join(fdir, name)) and name not in places:
         shutil.rmtree(os.path.join(fdir, name), ignore_errors=True)
-run("build_states.py")
-run("build_site.py")
+codes += [run("build_states.py"), run("build_site.py")]
+sys.exit(1 if any(codes) else 0)   # a blocked page fails the build, so nothing downstream can ship around it
