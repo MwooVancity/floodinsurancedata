@@ -74,6 +74,11 @@ if P.get("frp_median") and P.get("gap_basis") != "premium":
 
 # ---------------- 2 NUMBERS: every number tagged (V1) and equal to the data it names (V2) ----------------
 ROOT_DATA = dict(agg, data=data, extras=EXTRAS, const=MX.CONST)
+from agg_raw import NAMES as _SN, slug as _sslug
+_SD = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "states", _sslug(agg["state"])) \
+    if agg.get("level") == "county" and agg.get("state") in _SN else ""
+if _SD and os.path.exists(os.path.join(_SD, "agg.json")):   # county pages print the state's figure beside their own (q='state')
+    ROOT_DATA["state"] = {f: json.load(open(os.path.join(_SD, f + ".json"))) for f in ("agg", "data", "extras") if os.path.exists(os.path.join(_SD, f + ".json"))}
 def _resolve(path):
     v = ROOT_DATA
     for seg in path.split("."):

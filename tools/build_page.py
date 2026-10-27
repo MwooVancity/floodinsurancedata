@@ -146,6 +146,10 @@ def spread_svg():
             f'<p class="note" style="margin-top:0">{vals}{" or more" if p90 else ""}</p>')
 
 ROOT_DATA = dict(agg, data=data, extras=EXTRAS, const=MX.CONST)   # what tp() reads and the gate re-reads
+from agg_raw import NAMES as STATE_NAMES, slug as state_slug
+_SD = os.path.join(os.path.dirname(HERE), "data", "states", state_slug(agg["state"])) if agg.get("level") == "county" and agg.get("state") in STATE_NAMES else ""
+if _SD and os.path.exists(os.path.join(_SD, "agg.json")):   # the county's state, so each figure can sit beside the state's own
+    ROOT_DATA["state"] = {f: json.load(open(os.path.join(_SD, f + ".json"))) for f in ("agg", "data", "extras") if os.path.exists(os.path.join(_SD, f + ".json"))}
 def _get(path):
     v = ROOT_DATA
     for seg in path.split("."):
@@ -155,6 +159,12 @@ def pct(v): return f"{v}%"
 def tp(key, path, fmt=num, q=None):
     """The one way to print a figure read from the data: the gate re-reads the same path (V2)."""
     return m(key, fmt(_get(path)), path, q)
+def vs_state(key, path, fmt=num):
+    """County pages: the state's figure for the same measure, under the county's tile ("Hawaii: $41,200")."""
+    try: v = _get("state." + path)
+    except (KeyError, IndexError, TypeError): return ""
+    if v is None: return ""
+    return f"<small class='vs'>{html.escape(STATE_NAMES[agg['state']])}: {tp(key, 'state.' + path, fmt, q='state')}</small>"
 
 def card(title, standfirst, body, source="", id=""):
     _id = f' id="{id}"' if id else ""
@@ -503,7 +513,7 @@ if (_xp.get("replacement_n") or 0) >= 30 and _xp.get("replacement_over_250k_pct"
     rebuild_card = card("Would a policy here pay to rebuild my home?",
         f"Not in full for {tp('rebuild_over_cap_pct', 'extras.policies.replacement_over_250k_pct', pct)} of insured single-family homes here: FEMA's records put their "
         f"rebuilding cost above {rule('building_cap')}",
-        f"<ul class='kv'><li><b>Rebuilding cost above the building limit (of {tp('rebuild_n', 'extras.policies.replacement_n')} policies reporting one)</b><span>{tp('rebuild_over_cap_pct', 'extras.policies.replacement_over_250k_pct', pct)}</span></li>"
+        f"<ul class='kv'><li><b>Rebuilding cost above the building limit (of {tp('rebuild_n', 'extras.policies.replacement_n')} policies reporting one)</b><span>{tp('rebuild_over_cap_pct', 'extras.policies.replacement_over_250k_pct', pct)}</span>{vs_state('rebuild_over_cap_pct', 'extras.policies.replacement_over_250k_pct', pct)}</li>"
         + (f"<li><b>Carry the maximum building coverage</b><span>{tp('at_cap_pct', 'extras.policies.at_building_max_pct', pct)}</span></li>" if _xp.get("at_building_max_pct") is not None else "")
         + (f"<li><b>Damage was more than the coverage (of {tp('damage_n', 'extras.claims.damage_n')} claims paid with a damage figure)</b><span>{tp('damage_over_cov_pct', 'extras.claims.damage_over_coverage_pct', pct)}</span></li>"
            if _xc.get("damage_over_coverage_pct") is not None and (_xc.get("damage_n") or 0) >= 30 else "")
@@ -574,8 +584,8 @@ if cx.get("claims"):
             if cx["cwop_share"] > 50 else f"About half: {m('cwop_share', str(cx['cwop_share']) + '%')} of claims here closed with no payment")
     payout_card = card("Do flood claims here actually pay out?",
         f"{_ans}. The average paid claim was {tp('avg_paid', 'data.claims_extra.avg_paid', money)}.",
-        f"<ul class='kv'><li><b>Average paid claim</b><span>{tp('avg_paid', 'data.claims_extra.avg_paid', money)}</span></li>"
-        f"<li><b>Closed with no payment</b><span>{tp('cwop_share', 'data.claims_extra.cwop_share', pct)}</span></li>"
+        f"<ul class='kv'><li><b>Average paid claim</b><span>{tp('avg_paid', 'data.claims_extra.avg_paid', money)}</span>{vs_state('avg_paid', 'data.claims_extra.avg_paid', money)}</li>"
+        f"<li><b>Closed with no payment</b><span>{tp('cwop_share', 'data.claims_extra.cwop_share', pct)}</span>{vs_state('cwop_share', 'data.claims_extra.cwop_share', pct)}</li>"
         f"<li><b>Claims that paid</b><span>{tp('claims_paid_n', 'data.claims_extra.paid_n')}</span></li></ul>"
         f"<p class='note'>{rule('cwop')} The average is over claims that paid something; a single home can file "
         "across several floods over the years.</p>",
@@ -599,7 +609,7 @@ if cx.get("outside_sfha_pct") is not None and P.get("sfha_share_units") is not N
         f"outside the high-risk zones, though they hold {m('outside_sfha_policies', str(_out_pol) + '%')} of policies here. "
         "Uninsured damage is not counted.")
     outside_note = card("I'm outside the high-risk zone. Do floods happen there?", _lead,
-        f"<ul class='kv'><li><b>Claim dollars paid outside A/V zones</b><span>{m('outside_sfha_dollars', str(cx['outside_sfha_pct']) + '%')}</span></li>"
+        f"<ul class='kv'><li><b>Claim dollars paid outside A/V zones</b><span>{m('outside_sfha_dollars', str(cx['outside_sfha_pct']) + '%')}</span>{vs_state('outside_sfha_dollars', 'data.claims_extra.outside_sfha_pct', pct)}</li>"
         f"<li><b>Policies outside A/V zones</b><span>{m('outside_sfha_policies', str(_out_pol) + '%')}</span></li>"
         + (f"<li><b>Zone X median cost</b><span>{tp('zone_cost', 'policies.cost_by_zone.X.median', money, q='X')}</span></li>" if _xmed else "")
         + "</ul><p class='note'>Insured claims only, by each policy's rated zone. Whether a lender can require coverage outside these zones is under “Am I required to carry it?”</p>",
@@ -616,7 +626,7 @@ if pen.get("overall_pct") is not None:
         + ((f"Inside the high-risk zone it's {m('pen_sfha', str(pen['sfha_pct']) + '%')}." if pen["sfha_pct"] <= 100 else
             f"Inside the high-risk zone FEMA's rate is {m('pen_sfha', str(pen['sfha_pct']) + '%')}: it counts more policies there than its own "
             "estimate of high-risk buildings, so the exact share is unknown.") if pen.get("sfha_pct") is not None else ""),
-        f"<ul class='kv'><li><b>All homes insured</b><span>{m('pen_overall', str(pen['overall_pct']) + '%')}</span></li>"
+        f"<ul class='kv'><li><b>All homes insured</b><span>{m('pen_overall', str(pen['overall_pct']) + '%')}</span>{vs_state('pen_overall', 'data.penetration.overall_pct', pct)}</li>"
         + (f"<li><b>High-risk-zone homes insured</b><span>{m('pen_sfha', str(pen['sfha_pct']) + '%')}</span></li>"
            if pen.get("sfha_pct") is not None and pen["sfha_pct"] <= 100 else "")   # over 100%: explained in the lead, never a bare tile
         + f""
@@ -908,6 +918,7 @@ ul.kv{{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:1fr
 ul.kv li{{display:flex;flex-direction:column;background:#f5f8fb;border:1px solid var(--line);border-radius:10px;padding:11px 13px}}
 ul.kv b{{order:2;font-weight:600;color:var(--faint);font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;margin-top:3px}}
 ul.kv > li > span{{order:1;font-family:var(--serif);font-size:22px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}}
+ul.kv small.vs{{order:3;color:var(--faint);font-size:12.5px;margin-top:2px}}
 table{{width:100%;border-collapse:collapse;font-size:14.5px;margin-top:4px}}
 th,td{{padding:9px 10px;text-align:left}}
 thead th{{color:var(--faint);font-weight:600;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--line)}}
@@ -987,7 +998,7 @@ table{{width:100%}}}}
 {card("How do current premiums compare with FEMA's full-risk price?", gap_lead,
   f"<ul class='kv'><li><b>Median premium charged (before fees)</b><span>{m('prem_median', money(PREM_MED))}</span></li>"
   f"<li><b>Median full-risk premium</b><span>{m('frp_median', money(P['frp_median']))}</span></li>"
-  f"<li><b>Pay below full-risk</b><span>{m('share_below', str(P['share_below']) + '%')} of {tp('units_listed', 'policies.below_n', q='below_n')}</span></li></ul>" + glide_note,
+  f"<li><b>Pay below full-risk</b><span>{m('share_below', str(P['share_below']) + '%')} of {tp('units_listed', 'policies.below_n', q='below_n')}</span>{vs_state('share_below', 'agg.policies.share_below', pct)}</li></ul>" + glide_note,
   src(["prem_median", "frp_median", "share_below"], POL_ASOF, RETR))}
 
 {trend_card}
