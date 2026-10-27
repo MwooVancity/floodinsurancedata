@@ -79,6 +79,8 @@ if __name__ == "__main__":
         g = f[:5]; raw = json.load(open(os.path.join(DATA, "all-counties", f)))
         if g[:2] not in ST_OF or g not in NAMES_CEN or (raw["policies"].get("cost_n") or 0) < MIN_PRICED: continue
         if not raw.get("claims", {}).get("rows"): continue   # no NFIP claim ever filed: the claim-history half of the page would be empty
+        if not raw.get("extras"):   # extras_raw.py not run since the last agg_raw: cards would vanish silently (2026-10-27)
+            sys.exit(f"STOP: data/all-counties/{f} has no extras; run python -I tools/extras_raw.py first")
         if ST_OF[g[:2]] == "DC": continue   # one county = the state page; a second copy would be a duplicate
         # publish only the counties listed in counties.json (live and indexed). New counties are added there a few at a
         # time, each read as a reader first; publishing ~1,000 at once on a new domain risks a scaled-content verdict

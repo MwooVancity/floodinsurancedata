@@ -102,9 +102,17 @@
    "def": "Numeric code that uniquely identifies all administrative/legal and statistical geographic areas for which the Census Bureau tabulates data. In this instance, the Census GeoID is presented at the Census Block Group level. This is an address-based 12-character code that is the concatenation of fields consisting of the 2-character state FIPS code, the 3-character county FIPS code, the 6-character census tract code, and the 1-character block group code. Block numbers beginning with a zero are associated with water-only areas. Please see: https://www.census.gov/programs-surveys/geography/guidance/geo-identifiers.html",
    "sha256": "0d361dd30ac1ed0333dc989a6a219d329578581c70e9dccaa22bdad3cfc83807"
   },
+  "federalPolicyFee": {
+   "def": "Dollar amount of the Federal Policy Fee of the policy",
+   "sha256": "10ea05b714d7664e265ac59e7adce4d7e3ad81c52506205d5f2f19e32f7cfe74"
+  },
   "fullRiskPremium": {
    "def": "The chargeable premium for a property based on its determined flood risk and the full cost to pay anticipated losses and expenses for that property.",
    "sha256": "5949a0d6510bed61695ff70ffaec546df95a591e6e2173f666bb1f0a4dc8936d"
+  },
+  "hfiaaSurcharge": {
+   "def": "Required for all new and renewal policies on or after April 1, 2015. Congressionally mandated annual surcharge in dollars required by the Homeowner Flood Insurance Affordability Act of 2014 (HFIAA)",
+   "sha256": "a5b0cc5be186c83e08778c66e9d42d7cb33694c198f71e8b23c5edd7d43962cd"
   },
   "id": {
    "def": "Unique ID assigned to the record",
@@ -137,6 +145,10 @@
   "reportedZipCode": {
    "def": "5-digit Postal  Zip Code for the insured property reported by WYO partners",
    "sha256": "be184bd71ae28b21265070b9c24d1797f7c22070c761b537094d65137c5f28ce"
+  },
+  "reserveFundAssessment": {
+   "def": "The dollar sum of the reserve fund as reported by the company",
+   "sha256": "0dea77c9e57e05d1712bf13565d8d5aa0bff5a19faa885de4b19f47c04f0a424"
   },
   "totalBuildingInsuranceCoverage": {
    "def": "Total Insurance Amount in whole dollars on the Building",

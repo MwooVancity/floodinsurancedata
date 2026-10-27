@@ -81,7 +81,7 @@ MUTATIONS = [   # (defect class from THE EVIDENCE table, what we reintroduce, ex
     ("5 rating vs percentile", "percentile without its basis", "A4", PAGE.replace("per dollar of building value, that loss is higher than in about", "flood risk is higher than in about"), None),
     ("6 attribution", "NOAA panel credited to FEMA", "A1", sub(STORM, '<p class="src" data-src="storm_events,storm_damage">Source: FEMA OpenFEMA.'), None),
     ("6 attribution", "hand-typed source line", "A1", re.sub(r'<p class="src" data-src="ml_total">', '<p class="src">', PAGE, count=1), None),
-    ("8 law wording", "purchase rule narrowed", "E1", sub("federally regulated lender, or federal", "federally backed lender, or federal"), None),
+    ("8 law wording", "purchase rule narrowed", "E1", sub("federally regulated or backed mortgage", "federally backed mortgage"), None),
     ("sources", "dataset listed that no panel shows", "A5", sub('<ul class="srclist">', '<ul class="srclist"><li><a href="x">FEMA OpenFEMA — Made Up</a></li>'), None),
     ("reader first", "card opens with a data dump", "F1",
      PAGE.replace('<p class="stand">', '<p class="stand">' + "This block lists every figure in the dataset before any answer is given to the reader at all. " * 2, 1), None),

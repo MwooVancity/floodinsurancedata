@@ -90,8 +90,10 @@ def run(st):
         cp = ffcalc.aggregate_policies(by_c.get(g, []))
         cc = ffcalc.aggregate_claims(cl_c.get(g, []), cp["units"])
         cx = claims_extra(cl_c.get(g, []))
-        json.dump({"geoid": g, "state": st, "policies": cp, "claims": cc, "claims_extra": cx},
-                  open(os.path.join(ROOT, "data", "all-counties", g + ".json"), "w"))
+        fp = os.path.join(ROOT, "data", "all-counties", g + ".json")
+        prev = json.load(open(fp)) if os.path.exists(fp) else {}   # extras_raw.py adds "extras" later: a rerun must not wipe it
+        json.dump({"geoid": g, "state": st, "policies": cp, "claims": cc, "claims_extra": cx,
+                   **({"extras": prev["extras"]} if prev.get("extras") else {})}, open(fp, "w"))
         rollup[g] = {"units": cp["units"], "cost_n": cp["cost_n"], "p50": cp["p50"], "prem_median": cp.get("prem_median"),
                      "share_below": cp.get("share_below"), "sfha_share": cp["sfha_share_units"],
                      "claims": cc["rows"], "paid": cc["total_paid"], "cwop_share": (cx or {}).get("cwop_share")}

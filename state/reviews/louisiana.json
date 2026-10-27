@@ -1,0 +1,17 @@
+{
+ "slug": "louisiana",
+ "verdict": "FAIL",
+ "template": "a4f82d0f01244e42",
+ "defects": [
+  "**BLOCKER** (SEO): this page would not beat MoneyGeek or Insurify for \"flood insurance cost Louisiana\".",
+  "**MAJOR**, louisiana-00/04 and the checker: the headline \"$1,086 median\" mixes policy terms that began in 2025 with terms that began in 2026.",
+  "**MAJOR**, louisiana-10/11 and 12..16: medians cluster on one value, with no explanation.",
+  "**MAJOR**, louisiana-20: \"Each parish page lists its own towns.\"",
+  "**MAJOR**: the meta description, the thing the searcher sees on Google, says \"395,032 policies\". On the page that number is records; the page says \"407,916 poli",
+  "**MAJOR**, louisiana-09: \"Not in full for 21.5% of insured single-family homes here\".",
+  "**MAJOR**, louisiana-22/23: \"FEMA also publishes a separate official policy count, which we have not yet compared for Louisiana.\"",
+  "**MAJOR** (rater, scaled content):"
+ ],
+ "reviewer": "hater round 3 (fresh agent, docs/HATER-PROMPT.md)",
+ "notes": ""
+}

@@ -1,0 +1,16 @@
+{
+ "slug": "home",
+ "verdict": "FAIL",
+ "template": "a4f82d0f01244e42",
+ "defects": [
+  "**BLOCKER** (SEO): this page would not beat #1 for \"flood insurance cost\".",
+  "**MAJOR**, home-00: \"$1,055 U.S. median a year\" is 14\u201317% above every top result (Bankrate $926, NerdWallet $899, Insurify $786), and the home page never says w",
+  "**MAJOR**, home-01: \"Am I required to buy it? Only if your home is in a high-risk zone (A or V) and your mortgage is from a federally regulated lender, or feder",
+  "**MAJOR**, home-00: \"Built from 3,490,299 NFIP policy records ... matched to FEMA's own count.\"",
+  "**MAJOR** (YMYL trust): no named person, organisation or contact anywhere.",
+  "**MAJOR**, home-00: the H1 says \"What flood insurance costs in your state **and county**\", and the search box reads \"Type your state or county\u2026\".",
+  "**MAJOR**, home-01..03: the state table is sorted by insured units, not by cost, and has no rank and no high/low callout."
+ ],
+ "reviewer": "hater round 3 (fresh agent, docs/HATER-PROMPT.md)",
+ "notes": ""
+}

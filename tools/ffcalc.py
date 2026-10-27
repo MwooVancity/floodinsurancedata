@@ -75,7 +75,7 @@ def aggregate_policies(rows):
     by_zip = sorted(
         ({"zip": z, "units": zu_zip[z], "cost_n": len(zc_zip[z]),
           "median": pctl(zc_zip[z], 50) if len(zc_zip[z]) >= ZIP_MIN else None} for z in zu_zip),
-        key=lambda d: -d["units"])[:25]
+        key=lambda d: -d["units"])   # every ZIP: a reader's ZIP must never read "no data" because it ranked 26th
     gap = premium_gap(coh)
     zu = defaultdict(int)
     for r in rows:

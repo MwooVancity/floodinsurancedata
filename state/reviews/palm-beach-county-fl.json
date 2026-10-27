@@ -1,0 +1,20 @@
+{
+ "slug": "palm-beach-county-fl",
+ "verdict": "FAIL",
+ "template": "a4f82d0f01244e42",
+ "defects": [
+  "**BLOCKER**, palm-beach-county-fl-00 and -02: \"Am I required to buy it? **Only** in a high-risk zone with a federally regulated or backed mortgage or federal bu",
+  "**BLOCKER**, the ZIP lookup (script `ZD`, palm-beach-county-fl-11): the lookup holds only the 25 largest ZIPs.",
+  "**BLOCKER** (SEO): as published, the page would not beat NerdWallet for its query, despite being the only county-specific result.",
+  "**MAJOR**, palm-beach-county-fl-06/07 and -03: three county figures are each extreme against Florida, and they are published as facts without a check.",
+  "**MAJOR**, palm-beach-county-fl-01, first-screen tile: \"Does it pay out here? 43.5% of claims here paid something; the average paid claim was $15,396.\"",
+  "**MAJOR**, palm-beach-county-fl-09: \"Not in full for 50.6% of insured single-family homes here\".",
+  "**MAJOR**, palm-beach-county-fl-14/15, NRI:",
+  "**MAJOR**, counts:",
+  "**MAJOR**, palm-beach-county-fl-11: the ZIP table mixes two bases in one row.",
+  "**MAJOR** (rater, scaled content): 56% of this page's prose is word for word on the Louisiana page (louisiana 8), including the triple purchase rule.",
+  "**MAJOR**, palm-beach-county-fl-01/19: the records are verified only at state level (\"with every record for Florida\"), and the page adds \"FEMA also publishes a "
+ ],
+ "reviewer": "hater round 3 (fresh agent, docs/HATER-PROMPT.md)",
+ "notes": ""
+}

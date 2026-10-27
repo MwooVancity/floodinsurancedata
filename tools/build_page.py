@@ -439,34 +439,72 @@ if len(state_risk) >= 4:
         tiles_body,
         src(["nri_rating"], "NRI 2023 release", RETR))
 
-# ---- ZIP lookup inside the county (your-place flow) ----
+# ---- ZIP lookup inside the county (your-place flow): every ZIP, with the town the reader knows it by ----
 bz = [z for z in (agg["policies"].get("by_zip") or []) if z.get("units")]
+try: ZIPTOWN = json.load(open(os.path.join(os.path.dirname(HERE), "data", "us", "zip_places.json"), encoding="utf-8"))
+except Exception: ZIPTOWN = {}
+def _zl(z): return html.escape(z) + (f" <span data-name>{html.escape(ZIPTOWN[z])}</span>" if z in ZIPTOWN else "")
 zip_card = ""
 if bz:
-    data_js = json.dumps({z["zip"]: {"u": z["units"], "m": z["median"], "n": z["cost_n"]} for z in bz})
+    data_js = json.dumps({z["zip"]: {"u": z["units"], "m": z["median"], "n": z["cost_n"], "t": ZIPTOWN.get(z["zip"], "")} for z in bz})
     _zi = {z["zip"]: i for i, z in enumerate(agg["policies"].get("by_zip") or [])}
+    _zp = lambda z, k: f"policies.by_zip.{_zi[z['zip']]}.{k}"
+    _ranked = sorted([z for z in bz if z.get("median")], key=lambda z: -z["cost_n"])[:8]   # most priced policies: the medians a reader can trust most
     toprows = "".join(
-        f"<tr><td>{m('zip', html.escape(z['zip']), q=z['zip'])}</td><td>{tp('zip_cost', f'policies.by_zip.{_zi[z[chr(122)+chr(105)+chr(112)]]}.median', money, q=z['zip']) if z.get('median') else '—'}</td>"
-        f"<td>{tp('zip_units', f'policies.by_zip.{_zi[z[chr(122)+chr(105)+chr(112)]]}.units', num, q=z['zip'])}</td></tr>" for z in bz[:8])
+        f"<tr><td>{m('zip', _zl(z['zip']), q=z['zip'])}</td><td>{tp('zip_cost', _zp(z, 'median'), money, q=z['zip'])}</td>"
+        f"<td>{tp('zip_cost_n', _zp(z, 'cost_n'), num, q=z['zip'])}</td><td>{tp('zip_units', _zp(z, 'units'), num, q=z['zip'])}</td></tr>" for z in _ranked)
+    _zs = [z for z in bz if z.get("median")]
+    _lo, _hi = (min(_zs, key=lambda z: z["median"]), max(_zs, key=lambda z: z["median"])) if len(_zs) > 1 else (None, None)
     zip_card = card(f"Find your ZIP in this {UNIT}",
-        ((lambda zs: f"Costs vary by ZIP here, from about {tp('zip_cost', f'policies.by_zip.{_zi[min(zs, key=lambda z: z[1])[0]]}.median', money, q=min(zs, key=lambda z: z[1])[0])} to "
-                     f"{tp('zip_cost', f'policies.by_zip.{_zi[max(zs, key=lambda z: z[1])[0]]}.median', money, q=max(zs, key=lambda z: z[1])[0])} a year among the largest. " if len(zs) > 1 else "")
-         ([(z["zip"], z["median"]) for z in bz if z.get("median")])) + "Type yours to see its own figures.",
+        (f"Typical costs run from {tp('zip_cost', _zp(_lo, 'median'), money, q=_lo['zip'])} a year in {m('zip', _zl(_lo['zip']), q=_lo['zip'])} to "
+         f"{tp('zip_cost', _zp(_hi, 'median'), money, q=_hi['zip'])} in {m('zip', _zl(_hi['zip']), q=_hi['zip'])}. " if _lo else "")
+        + f"All {m('zip_count', str(len(bz)), q='all')} ZIPs with NFIP policies here are in the lookup.",
         f'<input id="zq" inputmode="numeric" maxlength="5" placeholder="e.g. {bz[0]["zip"]}" aria-label="Your ZIP code" '
         f'style="font-size:18px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;width:160px">'
         f'<p id="zout" class="note" style="margin-top:10px">Enter a five-digit ZIP above.</p>'
-        f'<table style="margin-top:12px"><thead><tr><th>ZIP</th><th>Median annual cost</th><th>Policy units</th></tr></thead>'
+        f'<table style="margin-top:12px"><thead><tr><th>ZIP</th><th>Median / yr</th><th>Priced policies</th><th>Policy units</th></tr></thead>'
         f'<tbody>{toprows}</tbody></table>'
-        f'<p class="note">Median shown only for ZIPs with {tp("threshold", "const.zip_min", q="zip_min")} or more priced single-family policies; smaller ZIPs show count only.</p>'
+        f'<p class="note">The eight ZIPs with the largest number of priced single-family policies. A median is shown for a ZIP with '
+        f'{tp("threshold", "const.zip_min", q="zip_min")} or more priced single-family policies; otherwise the lookup gives its policy count. '
+        f'Policy units also count condo units, so they can be far more than the priced policies. Each town name is the Census place with the largest share of that ZIP code area.</p>'
         f'<script>var ZD={data_js};var zi=document.getElementById("zq"),zo=document.getElementById("zout");'
         'zi.addEventListener("input",function(){var z=zi.value.trim();var d=ZD[z];'
-        'if(!d){zo.textContent=z.length>=5?"No NFIP data for ZIP "+z+" in this ' + UNIT + '.":"Enter a five-digit ZIP above.";return;}'
-        'zo.innerHTML="<b>"+z+"</b>: "+d.u.toLocaleString()+" policy units"+(d.m?("; median $"+d.m.toLocaleString()+" / yr ("+d.n.toLocaleString()+" priced policies)"):" (too few priced policies for a median).");});'
+        'if(!d){zo.textContent=z.length>=5?"No NFIP policy in this ' + UNIT + ' lists ZIP "+z+"; it may belong to a neighboring ' + UNIT + '.":"Enter a five-digit ZIP above.";return;}'
+        'zo.innerHTML="<b>"+z+(d.t?" ("+d.t+")":"")+"</b>: "+d.u.toLocaleString()+" policy units"+(d.m?("; median $"+d.m.toLocaleString()+" a year ("+d.n.toLocaleString()+" priced single-family policies)"):"; too few priced policies for a median.");});'
         '</script>',
         src(["zip_cost", "units"], POL_ASOF, RETR), id="zip")
 
+# ---- why published prices differ (every page): one set of FEMA records, many honest "averages" ----
+averages_card = ""
+_xpp = EXTRAS.get("policies") or {}
+_av = _xpp.get("averages") or {}
+_cby = P.get("cost_by_year") or {}
+_yrs_cb = sorted(y for y, d in _cby.items() if (d.get("n") or 0) >= MX.CONST["year_min"])
+_fees = sum(_xpp.get(k) or 0 for k in ("fee_mean", "hfiaa_mean", "reserve_mean")) if _xpp.get("fee_mean") is not None else None
+_avrows = [("Typical cost, single-family homes (median)", m("cost_p50", money(P["p50"])), "premium plus fees; the middle policy"),
+           ("Typical premium only", m("prem_median", money(P["prem_median"])), "before the federal fee, reserve fund and surcharge")]
+for _y in _yrs_cb[-2:]:
+    _avrows.append((f"Typical cost, policies whose term began in {_y}", tp("cost_year", f"policies.cost_by_year.{_y}.median", money, q=_y),
+                    f"{tp('cost_year_n', f'policies.cost_by_year.{_y}.n', num, q=_y)} policies"))
+if P.get("frp_median"):
+    _avrows.append(("FEMA's full-risk premium (median)", m("frp_median", money(P["frp_median"])), "the price FEMA's model sets; new policies start here"))
+    if _fees:
+        _avrows.append(("Full-risk premium plus average fees", m("frp_plus_fees", money(P["frp_median"] + _fees)), "close to what a new single-family policy pays"))
+if _av.get("sf_cost_mean"):
+    _avrows += [("Average (mean) cost, single-family homes", tp("cost_mean", "extras.policies.averages.sf_cost_mean", money), "pulled up by a few expensive policies"),
+                ("Average cost, every policy type", tp("cost_all_mean", "extras.policies.averages.all_cost_mean", money), "adds condos, rentals and businesses")]
+averages_card = card(f"Why do sites quote different prices for {CS}?",
+    f"Because they measure different things. Existing single-family policies here typically cost {m('cost_p50', money(P['p50']))} a year"
+    + (f", but a new one is priced at full risk: about {m('frp_plus_fees', money(P['frp_median'] + _fees))} with fees." if P.get("frp_median") and _fees else "."),
+    "<table><thead><tr><th>Measure</th><th>Amount</th><th>What it counts</th></tr></thead><tbody>"
+    + "".join(f"<tr><td>{a_}</td><td>{b_}</td><td>{c_}</td></tr>" for a_, b_, c_ in _avrows) + "</tbody></table>"
+    f"<p class='note'>All from the NFIP policies in force on {POL_ASOF}. Published figures rarely say which of these they are, "
+    "or which year; private flood insurance is not in this data. Policies renew on their own anniversaries, so the "
+    "latest year shows where renewals are heading.</p>",
+    src(["cost_p50", "prem_median", "frp_median", "cost_year"] + (["cost_mean", "cost_all_mean"] if _av.get("sf_cost_mean") else []), POL_ASOF, RETR), id="prices")
+
 # ---- STATE-ONLY blocks: cost by county (the hub), why published averages differ, policies-in-force trend ----
-averages_card = state_trend_card = ""
+state_trend_card = ""
 if IS_STATE:
     _nm = {c["fips"]: c["county"] for c in (data.get("nri_counties") or [])}
     try: _pl = {p.get("geoid"): p["slug"] for p in json.load(open(os.environ.get("FF_PLACES", "")))}
@@ -496,22 +534,6 @@ if IS_STATE:
            "Median annual cost of single-family primary-home policies.</p>" if len(_priced) >= 10 else "")
         + f"<p class='note'>{UNITS.title()} with fewer than {tp('threshold', 'const.min_priced', q='min_priced')} priced single-family policies show a dash; medians from under {tp('threshold', 'const.spread_min', q='spread_min')} policies move more from year to year.</p>",
         src(["county_units", "cost_p50", "share_below", "claims_filed"], POL_ASOF, RETR), id="counties")
-    _av = (EXTRAS.get("policies") or {}).get("averages") or {}
-    if _av.get("sf_cost_mean"):
-        _avrows = [("Median cost, single-family homes", m("cost_p50", money(P["p50"])), "premium plus fees; the middle policy"),
-                   ("Average (mean) cost, single-family homes", tp("cost_mean", "extras.policies.averages.sf_cost_mean", money), "pulled up by a few expensive policies"),
-                   ("Median premium only, single-family homes", tp("prem_sf_median", "extras.policies.averages.sf_prem_median", money), "before the federal fee, reserve fund and surcharge"),
-                   ("Average premium only, single-family homes", tp("prem_mean", "extras.policies.averages.sf_prem_mean", money), "the figure many sites quote"),
-                   ("Median cost, every policy type", tp("cost_all_median", "extras.policies.averages.all_cost_median", money), "adds condos, rentals and businesses"),
-                   ("Average cost, every policy type", tp("cost_all_mean", "extras.policies.averages.all_cost_mean", money), "")]
-        averages_card = card(f"Why do sites quote different averages for {CS}?",
-            f"Because they measure different things. From the same FEMA records, the typical single-family home pays "
-            f"{m('cost_p50', money(P['p50']))} a year, but the average across every policy type is {tp('cost_all_mean', 'extras.policies.averages.all_cost_mean', money)}.",
-            "<table><thead><tr><th>Measure</th><th>Amount</th><th>What it counts</th></tr></thead><tbody>"
-            + "".join(f"<tr><td>{a}</td><td>{b}</td><td>{c}</td></tr>" for a, b, c in _avrows) + "</tbody></table>"
-            "<p class='note'>Published averages rarely say which of these they are, or which year. All six here come from the "
-            f"NFIP policies in force on {POL_ASOF}.</p>",
-            src(["cost_p50", "cost_mean", "prem_mean", "cost_all_median", "cost_all_mean"], POL_ASOF, RETR))
     _h = (data.get("inforce_history") or {}).get("by_year") or {}
     _ch = VALS.get("inforce_change_pct")
     if _h and _ch is not None:
@@ -533,8 +555,8 @@ rebuild_card = unpaid_card = events_card = ""
 if (_xp.get("replacement_n") or 0) >= 30 and _xp.get("replacement_over_250k_pct") is not None:
     _ro = _xp["replacement_over_250k_pct"]
     rebuild_card = card("Would a policy here pay to rebuild my home?",
-        f"Not in full for {tp('rebuild_over_cap_pct', 'extras.policies.replacement_over_250k_pct', pct)} of insured single-family homes here: FEMA's records put their "
-        f"rebuilding cost above {rule('building_cap')}",
+        f"Not in full for {tp('rebuild_over_cap_pct', 'extras.policies.replacement_over_250k_pct', pct)} of the {tp('rebuild_n', 'extras.policies.replacement_n')} single-family policies here that report a rebuilding cost: FEMA's records put it "
+        f"above {rule('building_cap')}",
         f"<ul class='kv'><li><b>Rebuilding cost above the building limit (of {tp('rebuild_n', 'extras.policies.replacement_n')} policies reporting one)</b><span>{tp('rebuild_over_cap_pct', 'extras.policies.replacement_over_250k_pct', pct)}</span>{vs_state('rebuild_over_cap_pct', 'extras.policies.replacement_over_250k_pct', pct)}</li>"
         + (f"<li><b>Single-family policies insured to the building maximum (all of them, not only those above)</b><span>{tp('at_cap_pct', 'extras.policies.at_building_max_pct', pct)}</span></li>" if _xp.get("at_building_max_pct") is not None else "")
         + (f"<li><b>Damage was more than the coverage (of {tp('damage_n', 'extras.claims.damage_n')} claims paid with a damage figure)</b><span>{tp('damage_over_cov_pct', 'extras.claims.damage_over_coverage_pct', pct)}</span></li>"
@@ -710,7 +732,7 @@ CANON = f"{BASE_URL}/flood-insurance/{SLUG}/"
 GEOID = os.environ.get("FF_GEOID", "12071")
 META_DESC = (f"Median NFIP flood insurance cost in {CS} is {money(P['p50'])} a year "
              f"(middle half {money(P['p25'])}–{money(P['p75'])}); {P['share_below']}% pay below FEMA's "
-             f"full-risk price. {num(P['rows'])} policies, claims, flood risk and CRS discounts, from FEMA data.")
+             f"full-risk price. {num(P['units'])} insured units, claims, flood risk and community discounts, from FEMA's own records.")
 # register this place so home/lookup/sitemap/siblings know it exists
 PLACES = os.environ.get("FF_PLACES", os.path.join(HERE, "places.json"))
 try: places = json.load(open(PLACES))
@@ -799,11 +821,11 @@ elif _sagg and not IS_STATE:
                 + (f'; {m("cost_rank", _rank(_r, len(_sc)))} of {m("rank_n", str(len(_sc)))} {_sn} {UNITS} with {tp("threshold", "const.rank_min", q="rank_min")}+ priced policies' if _r else "") + ".</p>")
     _zs = [z for z in (P.get("by_zip") or []) if z.get("median")]
     if len(_zs) >= 2:   # a county median can hide coastal ZIPs paying two or three times as much: say so on screen 1
-        _zl, _zh = min(_zs, key=lambda z: z["median"]), max(_zs, key=lambda z: z["median"])
-        _zi = {z["zip"]: i for i, z in enumerate(P["by_zip"])}
-        cmp_line += (f'<p class="cmp">By ZIP it ranges from {tp("zip_cost", f"policies.by_zip.{_zi[_zl[chr(122)+chr(105)+chr(112)]]}.median", money, q=_zl["zip"])} '
-                     f'({m("zip", html.escape(_zl["zip"]), q=_zl["zip"])}) to {tp("zip_cost", f"policies.by_zip.{_zi[_zh[chr(122)+chr(105)+chr(112)]]}.median", money, q=_zh["zip"])} '
-                     f'({m("zip", html.escape(_zh["zip"]), q=_zh["zip"])}); <a href="#zip">find your ZIP</a>.</p>')
+        _zlo, _zhi = min(_zs, key=lambda z: z["median"]), max(_zs, key=lambda z: z["median"])
+        _zix = {z["zip"]: i for i, z in enumerate(P["by_zip"])}
+        cmp_line += (f'<p class="cmp">By ZIP it ranges from {tp("zip_cost", f"policies.by_zip.{_zix[_zlo['zip']]}.median", money, q=_zlo["zip"])} '
+                     f'({m("zip", _zl(_zlo["zip"]), q=_zlo["zip"])}) to {tp("zip_cost", f"policies.by_zip.{_zix[_zhi['zip']]}.median", money, q=_zhi["zip"])} '
+                     f'({m("zip", _zl(_zhi["zip"]), q=_zhi["zip"])}); <a href="#zip">find your ZIP</a>.</p>')
 if IS_STATE:
     _nb = [(a, STATE_NAMES[a]) for a in NEIGHBORS.get(_ab, []) if a in STATE_NAMES]   # the states that border this one
     sib_html = ("<nav class='sib'><b>Neighboring states:</b> " + " · ".join(f'<a href="../{state_slug(a)}/">{html.escape(n)}</a>' for a, n in _nb)
@@ -830,12 +852,17 @@ def page_sources():
     return [MX.DATASETS[d][:2] for d in MX.DATASETS if d in seen]
 sources_li = "@@SOURCES_LI@@"
 # JSON-LD: Dataset + Place + Breadcrumb (no FAQ markup: Google requires it to match visible Q&A)
-_qa = [f'<a href="#required"><b>Am I required to buy it?</b> {rule("purchase_short")}</a>',
+_qa = [f'<a href="#required"><b>Am I required to buy it?</b> {rule("purchase_short")}'
+       + (f' {rule("fl_citizens_short")}' if agg.get("state") == "FL" else "") + '</a>',
        f'<a href="#covered"><b>How fast does it start?</b> {rule("howto_short")}</a>']
 _cxq = data.get("claims_extra") or {}
 if _cxq.get("claims") and _cxq.get("avg_paid") and P.get("p50"):
+    _sroot = ROOT_DATA.get("state") if isinstance(ROOT_DATA.get("state"), dict) else {}   # on a state page "state" is just its code
+    _scx = (_sroot.get("data") or {}).get("claims_extra") or {}
     _qa.append(f'<a href="#payout"><b>Does it pay out here?</b> {m("paid_share", str(round(100 - _cxq["cwop_share"], 1)) + "%")} of claims here paid '
-               f'something; the average paid claim was {tp("avg_paid", "data.claims_extra.avg_paid", money)}.</a>')
+               + (f'something ({html.escape(STATE_NAMES[agg["state"]])}: {m("paid_share", str(round(100 - _scx["cwop_share"], 1)) + "%", q="state")}); '
+                  if _scx.get("cwop_share") is not None else 'something; ')
+               + f'the average paid claim was {tp("avg_paid", "data.claims_extra.avg_paid", money)}. Many unpaid claims are no-damage or paperwork closures.</a>')
 _qa.append('<a href="#covered"><b>Already flooded?</b> What to do now, and what FEMA aid covers.</a>')
 _qa.append('<a href="#compare"><b>Is my quote normal?</b> These are existing policies, not a quote; type yours in to see where it sits.</a>')
 quick_answers = '<nav class="jump qa">' + "".join(_qa) + "</nav>"
@@ -1006,7 +1033,7 @@ table{{width:100%}}}}
 <div class="stat"><div class="n">{m('share_below', str(P['share_below']) + '%')}</div><div class="l">Below full-risk price: bills step up yearly</div></div>
 </div>
 {cmp_line}
-<a class="btn" href="https://msc.fema.gov/portal/home" rel="nofollow noopener" target="_blank">Check your address on FEMA's flood map →</a>
+<a class="btn" href="https://msc.fema.gov/portal/home" rel="noopener" target="_blank">Check your address on FEMA's flood map →</a>
 {quick_answers}
 <p class="note">Your flood zone is set at your exact address and decides whether a lender must require coverage; your price comes mainly from your own building's flood risk. Look up your zone, then see "What does it cost in my flood zone?" below.</p>
 {prov_line}
@@ -1015,10 +1042,11 @@ table{{width:100%}}}}
 {quote_widget}
 
 {card("Am I required to buy it?",
-  rule("purchase_answer") + " Check your zone on <a href=\"https://msc.fema.gov/portal/home\" rel=\"nofollow noopener\" target=\"_blank\">FEMA's flood map</a>.",
-  f"<p class='note'>{m('sfha_share', str(P['sfha_share_units']) + '%')} of {CS}'s NFIP policies are in high-risk zones (not {tp('sfha_share', 'policies.sfha_share_units', pct)} of all buildings, and not an answer about your own home).</p>"
-  f"{zone_body}<p class='note'>Insured units by the flood zone each policy is rated in (a condo-building policy counts each unit). {rule('lender_any_zone')}</p>",
-  src(["units", "sfha_share"], POL_ASOF, RETR) + src_rules(["purchase_answer", "lender_any_zone"]), id="required")}
+  rule("purchase_answer") + " " + rule("lender_any_zone"),
+  (f"<p class='note'><b>{rule('fl_citizens')}</b></p>" if agg.get("state") == "FL" else "") +
+  f"<p class='note'>{m('sfha_share', str(P['sfha_share_units']) + '%')} of {CS}'s NFIP policy units are in high-risk zones (not {tp('sfha_share', 'policies.sfha_share_units', pct)} of all buildings, and not an answer about your own home).</p>"
+  f"{zone_body}<p class='note'>Insured units by the flood zone each policy is rated in (a condo-building policy counts each unit).</p>",
+  src(["units", "sfha_share"], POL_ASOF, RETR) + src_rules(["purchase_answer", "lender_any_zone"] + (["fl_citizens"] if agg.get("state") == "FL" else [])), id="required")}
 
 {outside_note}
 
@@ -1094,14 +1122,7 @@ table{{width:100%}}}}
   (f"FEMA's official count for July 31, 2026 was {m('official_count', num(OFFICIAL))}: a {m('official_diff', str(round(abs(P['units']-OFFICIAL)/OFFICIAL*100,1)) + '%')} difference. " if OFFICIAL else "") +
   f"Download check: {mani_line}.</p>")}
 
-<section class="card"><h2>What this data cannot tell you</h2>
-<ul class="note">
-<li>Your own premium — it depends on elevation, coverage and deductible. We show where existing policies fall.</li>
-<li>Private (non-NFIP) flood insurance prices.</li>
-<li>Your address's exact flood zone — use FEMA's Flood Map Service Center.</li>
-<li>Why any one premium changes — we show the gap to full-risk, not the cause.</li>
-<li>A year-over-year premium trend — the in-force snapshot holds only current-term policies, so a like-for-like multi-year index isn't possible from this data. A per-effective-year median is shown only where several years of policies exist.</li>
-</ul></section>
+<p class="note">What these records cannot tell you (your own premium, private prices, your exact zone) is on the <a href="../../methodology/#limits">methodology page</a>.</p>
 
 <section class="card"><h2>The federal datasets behind this page</h2>
 <p class="stand">Every figure comes from a public U.S. federal dataset; estimates are labeled where they appear. This page joins <span data-m="n_sources">@@N_SOURCES@@</span> of them for {CS}. The newest of these downloads was {LATEST_PULL}.</p>

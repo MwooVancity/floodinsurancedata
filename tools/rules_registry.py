@@ -55,15 +55,28 @@ RULES = {
                     (FS + "/get-insured/buy-a-policy", "Each one offers the same rates.", "curl")]},
     "already_flooded": {
         "text": "<b>Already flooded?</b> Insured: report the loss to your insurance agent or company now (FEMA's steps: "
-                "<a href='https://www.floodsmart.gov/recover/start-a-claim' rel='nofollow noopener' target='_blank'>how "
+                "<a href='https://www.floodsmart.gov/recover/start-a-claim' rel='noopener' target='_blank'>how "
                 "to start a flood claim</a>). Not insured: a policy bought today will not cover a flood that already "
                 "happened, and FEMA disaster aid is open to people in counties designated in a federally declared "
                 "disaster.",
         "sources": [(FS + "/contact", "Report your loss immediately to your insurance agent or carrier.", "curl"),
                     (IA_META, "in designated counties who sustained damage", "curl"),
                     (IA_META, "resulting from a federally declared disaster may apply", "curl")]},
+    "fl_citizens": {   # Florida only: the state's insurer of last resort requires flood cover in ANY zone (s. 627.351, F.S.)
+        "text": "In Florida, a home insured by Citizens Property Insurance with wind coverage must also carry flood insurance, "
+                "in any flood zone: from January 1, 2026 if it would cost $400,000 or more to rebuild, and from January 1, "
+                "2027 for all other Citizens homes. Condo-unit and no-wind policies are exempt.",
+        "sources": [("https://www.citizensfla.com/-/new-flood-requirements-begin-january-1",
+                     "January 1, 2026, for a structure with a dwelling replacement cost of $400,000 or more", "curl"),
+                    ("https://www.flsenate.gov/Laws/Statutes/2025/627.351",
+                     "January 1, 2027, for all other personal lines residential property insured by the corporation", "curl")]},
+    "fl_citizens_short": {
+        "text": "In Florida, homes insured by Citizens with wind cover need it in any zone.",
+        "sources": [("https://www.citizensfla.com/-/new-flood-requirements-begin-january-1",
+                     "January 1, 2026, for a structure with a dwelling replacement cost of $400,000 or more", "curl")]},
     "purchase_short": {   # the screen-1 summary; the full rule sits in its card (no sentence printed twice)
-        "text": "Only in a high-risk zone with a federally regulated or backed mortgage or federal building help.",
+        "text": "Federal law requires it in a high-risk zone with a federally regulated or backed mortgage or federal "
+                "building help; a lender or insurer can require it anywhere.",
         "sources": [("https://www.govinfo.gov/content/pkg/USCODE-2023-title42/html/USCODE-2023-title42-chap50-subchapI-sec4012a.htm",
                      "regulated lending institutions", "curl")]},
     "howto_short": {
@@ -75,14 +88,14 @@ RULES = {
         "sources": [("https://www.fema.gov/press-release/20250121/flood-aid-recipients-get-insurance-stay-eligible-repeat-assistance",
                      "ineligible for IHP Assistance for flood-damaged real or personal property in future disasters", "manual")]},
     "purchase_answer": {
-        "text": "Only if your home is in a high-risk zone (A or V) and your mortgage is from a federally regulated lender, or federal "
-                "help to buy or build (42 U.S.C. §4012a).",
+        "text": "Federal law requires it only in a high-risk zone (A or V) with a federally regulated or backed mortgage, "
+                "or federal help to buy or build (42 U.S.C. §4012a).",
         "sources": [("https://www.govinfo.gov/content/pkg/USCODE-2023-title42/html/USCODE-2023-title42-chap50-subchapI-sec4012a.htm",
                      "regulated lending institutions", "curl"),
                     ("https://www.govinfo.gov/content/pkg/USCODE-2023-title42/html/USCODE-2023-title42-chap50-subchapI-sec4012a.htm",
                      "financial assistance for acquisition or construction purposes", "curl")]},
     "lender_any_zone": {
-        "text": "Outside those zones the federal requirement drops, but a lender can still require coverage.",
+        "text": "Outside them, a lender can still require it.",
         "sources": [("https://www.federalreserve.gov/frrs/regulations/interagency-questions-and-answers-regarding-flood-insurance.htm",
                      "a lender may require flood insurance as a condition of making the loan, as a matter of safety and soundness", "curl")]},
     "cap": {
@@ -92,7 +105,7 @@ RULES = {
         "sources": [(FS + "/premiumcosts", "per year for most policyholders. This usually does not apply to new policies.", "curl"),
                     ("https://www.fema.gov/flood-insurance/risk-rating", "most rates not increase more than 18% per year", "manual")]},
     "rr2_zone": {
-        "text": "Since FEMA's <a href='https://www.fema.gov/flood-insurance/risk-rating' rel='nofollow noopener' "
+        "text": "Since FEMA's <a href='https://www.fema.gov/flood-insurance/risk-rating' rel='noopener' "
                 "target='_blank'>Risk Rating 2.0</a>, price is set from each building's own flood risk, not its zone, and "
                 "these are existing policies whose buildings differ. The reason for any one zone is not in this data.",
         "sources": [(FS + "/premiumcosts", "The premium amount is based on the flood risk of the building.", "curl"),

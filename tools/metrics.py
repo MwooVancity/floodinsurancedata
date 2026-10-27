@@ -78,6 +78,9 @@ METRICS = {
     "housing_units": _m("CensusACS", ["B25001_001E"], "count", counts="housing_unit"),
     # state-page "why the averages differ" figures: all from the same NfipPolicies records, different cuts
     "cost_mean": _m(POL, ["policyCost"], "usd_cost_with_fees"),
+    "cost_year": _m(POL, ["policyCost", "policyEffectiveDate"], "usd_cost_with_fees"),
+    "cost_year_n": _m(POL, ["policyCost", "policyEffectiveDate"], "count"),
+    "frp_plus_fees": _m(POL, ["fullRiskPremium", "federalPolicyFee", "hfiaaSurcharge", "reserveFundAssessment"], "usd_cost_with_fees"),
     "cost_all_median": _m(POL, ["policyCost", "occupancyType"], "usd_cost_with_fees"),
     "cost_all_mean": _m(POL, ["policyCost", "occupancyType"], "usd_cost_with_fees"),
     "prem_mean": _m(POL, ["totalInsurancePremiumOfThePolicy"], "usd_premium_only"),
@@ -113,6 +116,8 @@ METRICS.update({   # every other figure a page prints; q (data-q) names the row 
     "zone_share": _m(POL, ["policyCount", "ratedFloodZone"], "pct", of="policy units"),
     "zone_cost_n": _m(POL, ["policyCost", "ratedFloodZone"], "count"),
     "zip_units": _m(POL, ["policyCount", "reportedZipCode"], "count"),
+    "zip_cost_n": _m(POL, ["policyCost", "reportedZipCode"], "count"),
+    "zip_count": _m(POL, ["reportedZipCode"], "count"),
     "county_cost": _m(POL, ["policyCost", "censusGeoid"], "usd_cost_with_fees"),
     "county_share_below": _m(POL, ["totalInsurancePremiumOfThePolicy", "fullRiskPremium", "censusGeoid"], "pct"),
     "county_claims": _m(CLM, ["id", "countyCode"], "count"),
