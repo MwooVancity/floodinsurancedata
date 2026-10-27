@@ -127,6 +127,28 @@ for p, h in pages.items():
 for p, h in pages.items():
     if len(h.encode()) > 400_000: fail("S9", f"{p}: {len(h.encode()) // 1000} KB of HTML (max 400)")
 
+# S11 home and hub figures: every table row re-read from its page's own data; record totals = the state manifests;
+# the U.S. median on the home equals the one every state and county page prints
+def _agg(slug):
+    for d in (os.path.join(ROOT, "data", "states", slug), os.path.join(ROOT, "data", "c", slug)):
+        if os.path.exists(os.path.join(d, "agg.json")): return json.load(open(os.path.join(d, "agg.json")))
+for hp in ("/", "/flood-insurance/"):
+    for slug, med, units in re.findall(r'<a href="/flood-insurance/([^/"]+)/">[^<]*</a></td><td>([^<]*)</td><td>([\d,]+)</td>', pages.get(hp, "")):
+        a = _agg(slug)
+        if not a: fail("S11", f"{hp} lists {slug}, which has no data"); continue
+        want = (f"${a['policies']['p50']:,.0f}", f"{a['policies']['units']:,}")
+        if (med, units) != want: fail("S11", f"{hp} row {slug} shows {med} / {units}, its data says {want[0]} / {want[1]}")
+_tot = [0, 0]
+for s in states:
+    mm = (_agg(s["slug"]) or {}).get("manifest") or {}
+    _tot[0] += (mm.get("policies") or {}).get("unique_fetched") or 0; _tot[1] += (mm.get("claims") or {}).get("unique_fetched") or 0
+for hp in ("/", "/methodology/", "/about/"):
+    for tp_, tc_ in re.findall(r"([\d,]+) (?:NFIP )?policy records and ([\d,]+) claim records", text(pages.get(hp, ""))):
+        if [int(tp_.replace(",", "")), int(tc_.replace(",", ""))] != _tot: fail("S11", f"{hp} says {tp_} policy / {tc_} claim records; the manifests total {_tot[0]:,} / {_tot[1]:,}")
+_us = re.search(r'<div class="n">(\$[\d,]+)</div><div class="l">U\.S\. median', pages.get("/", ""))
+_seen = {re.sub(r"<[^>]+>", "", v) for h in pages.values() for v in re.findall(r'<span data-m="us_p50"[^>]*>(.*?)</span>', h)}
+if _us and _seen - {_us.group(1)}: fail("S11", f"home U.S. median {_us.group(1)} but pages print {sorted(_seen)}")
+
 # S10 cloaking (live): Googlebot and a browser get the same page
 if "--live" in sys.argv:
     for p in sorted(indexable)[:: max(1, len(indexable) // 12)]:
