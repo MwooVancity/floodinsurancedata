@@ -148,7 +148,13 @@ The code gates check only what someone thought to code; they passed "since None"
 - Enforced: `google_gate.py` S12 fails a release with any indexable page lacking a current PASS, and `add_counties.py`
   (the daily GitHub job) only queues reviewed counties. Every defect class found becomes a builder rule or gate check.
 
-## The gate — one, small, nothing unchecked (2026-10-26; why: docs/GATE-PROMPT.md)
+## Work brief: docs/MASTER-PROMPT.md (HARD, owner 2026-10-27: "we have no qc")
+Every build or fix follows its loop: stop live harm, fix the open defect list with a proof line each
+(`state/reviews/fixlog-round<N>.md`), truth check (figures recomputed from raw, labels match the population), rule
+dates and quotes, beat #1, gates once, review only when the fixlog is complete, ship only on PASS. Old prompts in
+`docs/archive/` are history.
+
+## The gate — one, small, nothing unchecked (2026-10-26; why: docs/archive/GATE-PROMPT.md)
 Two rounds proved a big gate misses things: 29 checks passed 9 shipped defect classes, then 45 checks passed a page a
 reader found 15 defects on. So correctness lives in the BUILDER, and the gate asks 9 questions:
 - **Builder rules (make wrong text impossible):** every number through `tp(key, path)` (reads the data path, tags it)
