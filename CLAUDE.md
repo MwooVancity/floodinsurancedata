@@ -112,18 +112,24 @@ with NO `$orderby` (orderby forces a server sort of the filtered set and 503s), 
 negative premiums are refunds; claims `countyCode` may not match property county; suppress cost charts
 under 100 cohort policies, ZIP under 20.
 
-## Musk's five steps, in order (HARD, owner 2026-10-27: "make sure it's smart like Elon Musk")
-Never automate or speed up a step that should not exist. Before any build, gate or page change, in this order:
-1. **Question the requirement.** Who asked and why? Page count is not the goal; the best answer for one reader is.
-   Gates catching everything is false (proven): only a hostile reader catches new defect kinds.
-2. **Delete.** Pages are ~20 phone screens; the reader wants three answers (cost, required?, does it pay). Cut to
-   ~12 cards; drop any card a reader at the counter would not miss. Delete the duplicate hub list and old collectors.
-   If nothing deleted ever comes back, too little was deleted.
-3. **Simplify.** One template, reviewed deeply on 3 pages; fix each defect at the source for every page. Then a lighter
-   per-page review of only what varies (odd numbers, gaps, strange names).
-4. **Accelerate.** Every defect a review finds becomes a gate check with a mutation test the same day.
-5. **Automate last.** The daily 10-county job ships only reviewed pages (S12). Never automate before 1-4.
-Next build layer (ZIP pages, ~2,500 with 100+ priced policies) waits until county pages pass review and Google shows indexing.
+## Musk's five steps, in order, in service of the reader (HARD, owner 2026-10-27: "smart like Elon Musk ... we still want maximum helpfulness for the user")
+The goal is the most helpful page a frightened reader can find, not the shortest page or the most pages. The five
+steps remove waste between the reader and the answer; they never remove an answer. Before any build, gate or page
+change, in this order:
+1. **Question the requirement.** For every card, rule and gate: which reader question does it answer, and is that
+   answer correct for THIS place? A requirement with no reader behind it (page count, a word floor, a check nobody
+   can name a defect for) is suspect. Code gates do not catch everything (proven); a hostile reader does.
+2. **Delete what stands between the reader and the answer, never the answer.** Delete: wrong or misleading text,
+   the same sentence twice, a second copy of a rule, filler, jargon, a figure with no use to the reader, a duplicate
+   page. Do NOT delete true, useful local data to shorten a page; fix it (e.g. disaster aid limited to flood events,
+   not dropped). No card or page-length caps. Test per card: would this reader miss it if it vanished?
+3. **Simplify.** Order by the reader's urgency: cost, am I required, how fast it starts, does it pay out, my zone or
+   ZIP, then the deeper data. One template, reviewed deeply on 3 pages; fix each defect at its source for every page;
+   then a lighter per-page review of only what varies (odd numbers, gaps, strange names).
+4. **Accelerate.** Each defect a review finds becomes a builder rule or gate check with a mutation test the same day,
+   so the next review starts higher.
+5. **Automate last.** The daily 10-county job ships only reviewed pages (S12). Never automate a step before 1-4.
+Next layer (ZIP pages, ~2,500 with 100+ priced policies) waits until county pages pass review and Google shows indexing.
 
 ## Nothing goes live without a hater review (HARD, owner 2026-10-27: "we are not going to put out any pages live unless it's scrutinized like the worst hater in the world")
 The code gates check only what someone thought to code; they passed "since None" and a false "Yes". So every page
