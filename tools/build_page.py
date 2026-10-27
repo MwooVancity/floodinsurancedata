@@ -210,7 +210,8 @@ if have_risk:
                  "for your home. A place with many valuable buildings can have a large total loss and a low "
                  "loss per dollar, so the rating and the percentile below can differ."
                  + _detail(cf, "Coastal") + _detail(inl, "Inland") +
-                 " Any loss figure is a whole-" + UNIT + " model estimate, never one home's expected loss or premium.</p>")
+                 " Any loss figure is a whole-" + UNIT + " model estimate of all flood loss, insured or not, averaged per year, so it runs far above the "
+                 "insurance payouts shown elsewhere on this page; it is never one home's expected loss or premium.</p>")
     parts = []
     if _present(inl.get("risk_rating")): parts.append(f"{html.escape(str(inl['risk_rating']))} for river flooding")
     if _present(cf.get("risk_rating")): parts.append(f"{html.escape(str(cf['risk_rating']))} for coastal flooding")
@@ -282,8 +283,7 @@ if czone:
          f"(Zone {html.escape(_zhi[0])}) here. " if len(czone) > 1 else "")
         + "Your zone is on your lender's flood determination or FEMA's map; find its row below.",
         f"<table><thead><tr><th>Flood zone</th><th>Median / yr</th><th>Priced policies</th></tr></thead><tbody>{rows_}</tbody></table>"
-        + ("<p class='note'>Some zones show the same median because many policies pay one of a few common amounts "
-           "under FEMA's current rating, whatever the zone.</p>" if len({d['median'] for d in czone.values()}) < len(czone) else "")
+        + ("<p class='note'>Some zones share the same median; each is computed from that zone's own policy records.</p>" if len({d['median'] for d in czone.values()}) < len(czone) else "")
         + (("<p class='note'><b>" + claim("Why can a high-risk zone cost less than Zone X here?", "cost less than",
                                            ("zone_inversion", "==", 1)) + "</b> " + rule("rr2_zone") + "</p>")
            if VALS["zone_inversion"] else "")
@@ -360,7 +360,7 @@ crs_rows = "".join(f"<tr><td>{_cname(c)}" + (f" ({html.escape(_tc(str(c.get('cou
                    f"<td>{_tagd('crs_discount', _disc(c.get('sfhaDiscount')), _cname_plain(c) + ':sfha')}</td>"   # Risk Rating 2.0: one rate for every zone; FEMA's separate non-SFHA column is pre-2021
                    f"<td>{_tagd('crs_class', _cls(c.get('classRating')), _cname_plain(c))}</td></tr>" for c in _shown_disc)
 crs_none_note = ((f"<p class='note'>The {m('crs_count', str(len(_shown_disc)), q='shown')} largest discounts of {m('crs_count', str(len(_has_disc)), q='discounted')} discounted communities are shown; "
-                  f"{m('crs_count', str(len(_no_disc)), q='none')} communities here have no CRS discount." + (f" Each {UNIT} page lists its own towns." if HAS_CPAGES else "") + "</p>")
+                  f"{m('crs_count', str(len(_no_disc)), q='none')} communities here have no CRS discount." + (f" {UNITS.title()} with their own page list their towns." if HAS_CPAGES else "") + "</p>")
                  if IS_STATE else
                  (f"<p class='note'><b>No CRS discount ({m('crs_count', str(len(_no_disc)), q='none')}):</b> " + "; ".join(_cname(c) for c in _no_disc) + ".</p>") if _no_disc else "")
 _disc_communities = [c for c in crs if _pct(c.get("sfhaDiscount"))]
@@ -682,7 +682,7 @@ if pen.get("overall_pct") is not None:
         + (f"<li><b>High-risk-zone homes insured</b><span>{m('pen_sfha', str(pen['sfha_pct']) + '%')}</span></li>"
            if pen.get("sfha_pct") is not None and pen["sfha_pct"] <= 100 else "")   # over 100%: explained in the lead, never a bare tile
         + f""
-        f"<li><b>Residential policies in force</b><span>{tp('pen_contracts', 'data.penetration.contracts')}</span></li></ul>"
+        f"<li><b>Residential policies in FEMA's insured-homes count (each condo building counts once)</b><span>{tp('pen_contracts', 'data.penetration.contracts')}</span></li></ul>"
         "<p class='note'>FEMA's NFIP residential take-up rate — share of residential structures with an NFIP "
         "policy, overall and inside the Special Flood Hazard Area. NFIP only (excludes private flood insurance); "
         "the structure count is a FEMA estimate.</p>",
@@ -798,6 +798,10 @@ def _pct_vs(a, b, q):
     d = round(100 * (a - b) / b)
     return "the same as" if d == 0 else f"{m('pct_vs', str(abs(d)) + '%', q=q)} {'above' if d > 0 else 'below'}"
 cmp_line = ""
+_cby1 = P.get("cost_by_year") or {}
+_ly = max((y for y, d in _cby1.items() if (d.get("n") or 0) >= MX.CONST["year_min"]), default=None)
+_renew_line = (f'<p class="cmp">Policies whose term began in {_ly} typically pay {tp("cost_year", f"policies.cost_by_year.{_ly}.median", money, q=_ly)}; '
+               f'<a href="#prices">why prices differ</a>.</p>') if _ly and len(_cby1) > 1 else ""
 if IS_STATE and US_P50:
     _ranked = []
     for _a in STATE_NAMES:
@@ -1032,7 +1036,7 @@ table{{width:100%}}}}
 <div class="stat"><div class="n">{m('cost_p25', money(P['p25']))}–{m('cost_p75', money(P['p75']))}</div><div class="l">Half pay between</div></div>
 <div class="stat"><div class="n">{m('share_below', str(P['share_below']) + '%')}</div><div class="l">Below full-risk price: bills step up yearly</div></div>
 </div>
-{cmp_line}
+{cmp_line}{_renew_line}
 <a class="btn" href="https://msc.fema.gov/portal/home" rel="noopener" target="_blank">Check your address on FEMA's flood map →</a>
 {quick_answers}
 <p class="note">Your flood zone is set at your exact address and decides whether a lender must require coverage; your price comes mainly from your own building's flood risk. Look up your zone, then see "What does it cost in my flood zone?" below.</p>
