@@ -1,20 +1,17 @@
 {
  "slug": "palm-beach-county-fl",
  "verdict": "FAIL",
- "template": "a4f82d0f01244e42",
+ "template": "7a5cb23a4f52be5a",
  "defects": [
-  "**BLOCKER**, palm-beach-county-fl-00 and -02: \"Am I required to buy it? **Only** in a high-risk zone with a federally regulated or backed mortgage or federal bu",
-  "**BLOCKER**, the ZIP lookup (script `ZD`, palm-beach-county-fl-11): the lookup holds only the 25 largest ZIPs.",
-  "**BLOCKER** (SEO): as published, the page would not beat NerdWallet for its query, despite being the only county-specific result.",
-  "**MAJOR**, palm-beach-county-fl-06/07 and -03: three county figures are each extreme against Florida, and they are published as facts without a check.",
-  "**MAJOR**, palm-beach-county-fl-01, first-screen tile: \"Does it pay out here? 43.5% of claims here paid something; the average paid claim was $15,396.\"",
-  "**MAJOR**, palm-beach-county-fl-09: \"Not in full for 50.6% of insured single-family homes here\".",
-  "**MAJOR**, palm-beach-county-fl-14/15, NRI:",
-  "**MAJOR**, counts:",
-  "**MAJOR**, palm-beach-county-fl-11: the ZIP table mixes two bases in one row.",
-  "**MAJOR** (rater, scaled content): 56% of this page's prose is word for word on the Louisiana page (louisiana 8), including the triple purchase rule.",
-  "**MAJOR**, palm-beach-county-fl-01/19: the records are verified only at state level (\"with every record for Florida\"), and the page adds \"FEMA also publishes a "
+  "**BLOCKER** (misleading figure a shopper acts on). palm-beach-county-fl-12/13: \"a new one is priced at full risk: about $710 with fees\", and in the checker \"a f",
+  "**BLOCKER** (wrong rule, Florida). palm-beach-county-fl-00/01 tile: \"In Florida, homes insured by Citizens with wind cover need it in any zone.\" This is false t",
+  "**MAJOR** (gap vs #1). NerdWallet's Palm Beach figure is \"$528 avg\" (NFIP, includes commercial). Our \"Why do sites quote different prices for Palm Beach County?",
+  "**MAJOR** (extreme county figures, unverified). \"43.5% of claims here paid something (Florida: 69.9%)\", \"45.5% of the flood-insurance claim money … went to buil",
+  "**MAJOR** (NRI contradicts itself on one page). palm-beach-county-fl-16 calls it \"FEMA's plain risk rating\", while palm-beach-county-fl-19 calls the same rating",
+  "**MAJOR** (trust). palm-beach-county-fl-21: \"FEMA also publishes a separate official policy count, which we have not yet compared for Palm Beach County.\"",
+  "**MAJOR** (gap vs #1). The page lacks \"how to lower it\". The data is present and unused: 70.8% of policies carry the $1,250 deductible, and the elevated median ",
+  "**MAJOR** (scaled/templated). The same shared blocks as the Louisiana page appear word for word (purchase rule three times, waiting rule twice, cap, rebuild exp"
  ],
- "reviewer": "hater round 3 (fresh agent, docs/HATER-PROMPT.md)",
+ "reviewer": "hater round 5 (fresh agent, docs/HATER-PROMPT.md)",
  "notes": ""
 }

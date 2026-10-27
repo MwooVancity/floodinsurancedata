@@ -1,17 +1,16 @@
 {
  "slug": "louisiana",
  "verdict": "FAIL",
- "template": "a4f82d0f01244e42",
+ "template": "7a5cb23a4f52be5a",
  "defects": [
-  "**BLOCKER** (SEO): this page would not beat MoneyGeek or Insurify for \"flood insurance cost Louisiana\".",
-  "**MAJOR**, louisiana-00/04 and the checker: the headline \"$1,086 median\" mixes policy terms that began in 2025 with terms that began in 2026.",
-  "**MAJOR**, louisiana-10/11 and 12..16: medians cluster on one value, with no explanation.",
-  "**MAJOR**, louisiana-20: \"Each parish page lists its own towns.\"",
-  "**MAJOR**: the meta description, the thing the searcher sees on Google, says \"395,032 policies\". On the page that number is records; the page says \"407,916 poli",
-  "**MAJOR**, louisiana-09: \"Not in full for 21.5% of insured single-family homes here\".",
-  "**MAJOR**, louisiana-22/23: \"FEMA also publishes a separate official policy count, which we have not yet compared for Louisiana.\"",
-  "**MAJOR** (rater, scaled content):"
+  "**BLOCKER** (misleading figure a shopper acts on). louisiana-16/17 say: \"a new one is priced at full risk: about $1,466 with fees\", the row \"Full-risk premium p",
+  "**MAJOR** (analyst, true but misleading). \"Which floods paid out the biggest totals here?\" (louisiana-08) leaves out FEMA's catch-all \"Flooding\" label: 97,855 c",
+  "**MAJOR** (clustered medians, unexplained). Zone C, Zone A99 and Zone B all show \"$1,086\", the same as the state median (louisiana-10). The note says only: \"Som",
+  "**MAJOR** (trust). louisiana-24: \"FEMA also publishes a separate official policy count, which we have not yet compared for Louisiana.\" The page admits its headl",
+  "**MAJOR** (gap vs #1). Policygenius and Insurify cover price by zone and parish, which we match or beat. Both also cover how to lower the bill (deductible, elev",
+  "**MAJOR** (scaled/templated). The purchase rule appears three times: the screen-1 tile, the \"Am I required to buy it?\" card, and \"is under 'Am I required to buy",
+  "**MAJOR** (2025 vs 2026 pools). The headline $1,086 and the quote checker use the mixed pool. The 2026-term figure ($1,215, 170,190 policies) is the one a renew"
  ],
- "reviewer": "hater round 3 (fresh agent, docs/HATER-PROMPT.md)",
+ "reviewer": "hater round 5 (fresh agent, docs/HATER-PROMPT.md)",
  "notes": ""
 }
