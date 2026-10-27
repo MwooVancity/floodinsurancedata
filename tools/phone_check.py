@@ -17,7 +17,7 @@ if "--base" in args:
 slugs = args
 if not slugs:
     cs = json.load(open(os.path.join(ROOT, "tools", "counties.json")))
-    u = {c["slug"]: json.load(open(os.path.join(ROOT, "data", c["slug"], "agg.json")))["policies"]["units"] for c in cs}
+    u = {c["slug"]: json.load(open(os.path.join(ROOT, "data", "c", c["slug"], "agg.json")))["policies"]["units"] for c in cs}
     big, small = max(u, key=u.get), min(u, key=u.get)
     parish = next((s for s in sorted(u, key=u.get, reverse=True) if "parish" in s), big)
     slugs = list(dict.fromkeys([big, parish, small]))
