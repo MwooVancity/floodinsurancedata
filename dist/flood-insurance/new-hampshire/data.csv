@@ -66,7 +66,7 @@ New Hampshire,pen_words,About 1 in 91 homes,pct,FEMA OpenFEMA — NFIP Residenti
 New Hampshire,pen_overall,1.1%,pct,FEMA OpenFEMA — NFIP Residential Penetration Rates,resPenetrationRate,"July 31, 2026"
 New Hampshire,pen_sfha,26.0%,pct,FEMA OpenFEMA — NFIP Residential Penetration Rates,resPenetrationRateSfha,"July 31, 2026"
 New Hampshire,pen_contracts,"4,490",count,FEMA OpenFEMA — NFIP Residential Penetration Rates,resContractsInForce,"July 31, 2026"
-New Hampshire,declarations,44,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
+New Hampshire,declarations,43,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
 New Hampshire,ia_paid,$14.2 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"July 31, 2026"
 New Hampshire,ia_per_reg,"$1,811",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"July 31, 2026"
 New Hampshire,records_total,"5,311",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"

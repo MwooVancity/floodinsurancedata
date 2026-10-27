@@ -67,7 +67,7 @@ Illinois,pen_words,About 1 in 200 homes,pct,FEMA OpenFEMA — NFIP Residential P
 Illinois,pen_overall,0.5%,pct,FEMA OpenFEMA — NFIP Residential Penetration Rates,resPenetrationRate,"July 31, 2026"
 Illinois,pen_sfha,25.0%,pct,FEMA OpenFEMA — NFIP Residential Penetration Rates,resPenetrationRateSfha,"July 31, 2026"
 Illinois,pen_contracts,"21,091",count,FEMA OpenFEMA — NFIP Residential Penetration Rates,resContractsInForce,"July 31, 2026"
-Illinois,declarations,40,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
+Illinois,declarations,39,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
 Illinois,ia_paid,$982.0 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"July 31, 2026"
 Illinois,ia_per_reg,"$2,915",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"July 31, 2026"
 Illinois,records_total,"24,012",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"

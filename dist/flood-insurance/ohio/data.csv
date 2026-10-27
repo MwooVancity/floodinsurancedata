@@ -67,7 +67,7 @@ Ohio,pen_words,About 1 in 250 homes,pct,FEMA OpenFEMA — NFIP Residential Penet
 Ohio,pen_overall,0.4%,pct,FEMA OpenFEMA — NFIP Residential Penetration Rates,resPenetrationRate,"July 31, 2026"
 Ohio,pen_sfha,16.5%,pct,FEMA OpenFEMA — NFIP Residential Penetration Rates,resPenetrationRateSfha,"July 31, 2026"
 Ohio,pen_contracts,"18,041",count,FEMA OpenFEMA — NFIP Residential Penetration Rates,resContractsInForce,"July 31, 2026"
-Ohio,declarations,42,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
+Ohio,declarations,41,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
 Ohio,ia_paid,$139.3 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"July 31, 2026"
 Ohio,ia_per_reg,"$1,376",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"July 31, 2026"
 Ohio,records_total,"21,479",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"

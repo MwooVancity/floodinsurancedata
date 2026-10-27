@@ -6,7 +6,7 @@ Alaska,cost_p75,$413,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCo
 Alaska,share_below,16.6%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"July 31, 2026"
 Alaska,pct_vs,65%,pct,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Alaska,us_p50,"$1,055",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
-Alaska,cost_rank,1st lowest,count,FEMA OpenFEMA — NFIP Policies,policyCost + censusGeoid,"July 31, 2026"
+Alaska,cost_rank,the lowest,count,FEMA OpenFEMA — NFIP Policies,policyCost + censusGeoid,"July 31, 2026"
 Alaska,rank_n,51,count,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Alaska,paid_share,68.2%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 Alaska,avg_paid,"$29,878",usd_claim_paid,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"

@@ -67,7 +67,7 @@ Alabama,pen_words,About 1 in 77 homes,pct,FEMA OpenFEMA — NFIP Residential Pen
 Alabama,pen_overall,1.3%,pct,FEMA OpenFEMA — NFIP Residential Penetration Rates,resPenetrationRate,"July 31, 2026"
 Alabama,pen_sfha,29.4%,pct,FEMA OpenFEMA — NFIP Residential Penetration Rates,resPenetrationRateSfha,"July 31, 2026"
 Alabama,pen_contracts,"25,579",count,FEMA OpenFEMA — NFIP Residential Penetration Rates,resContractsInForce,"July 31, 2026"
-Alabama,declarations,73,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
+Alabama,declarations,72,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
 Alabama,ia_paid,$423.1 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"July 31, 2026"
 Alabama,ia_per_reg,"$1,230",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"July 31, 2026"
 Alabama,records_total,"29,407",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"

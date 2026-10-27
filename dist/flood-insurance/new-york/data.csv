@@ -67,7 +67,7 @@ New York,pen_words,About 1 in 40 homes,pct,FEMA OpenFEMA — NFIP Residential Pe
 New York,pen_overall,2.5%,pct,FEMA OpenFEMA — NFIP Residential Penetration Rates,resPenetrationRate,"July 31, 2026"
 New York,pen_sfha,75.5%,pct,FEMA OpenFEMA — NFIP Residential Penetration Rates,resPenetrationRateSfha,"July 31, 2026"
 New York,pen_contracts,"118,001",count,FEMA OpenFEMA — NFIP Residential Penetration Rates,resContractsInForce,"July 31, 2026"
-New York,declarations,67,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
+New York,declarations,66,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
 New York,ia_paid,$1.2 billion,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"July 31, 2026"
 New York,ia_per_reg,"$3,805",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"July 31, 2026"
 New York,records_total,"130,299",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"

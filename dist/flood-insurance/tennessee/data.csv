@@ -66,7 +66,7 @@ Tennessee,pen_words,About 1 in 143 homes,pct,FEMA OpenFEMA — NFIP Residential 
 Tennessee,pen_overall,0.7%,pct,FEMA OpenFEMA — NFIP Residential Penetration Rates,resPenetrationRate,"July 31, 2026"
 Tennessee,pen_sfha,24.5%,pct,FEMA OpenFEMA — NFIP Residential Penetration Rates,resPenetrationRateSfha,"July 31, 2026"
 Tennessee,pen_contracts,"18,014",count,FEMA OpenFEMA — NFIP Residential Penetration Rates,resContractsInForce,"July 31, 2026"
-Tennessee,declarations,59,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
+Tennessee,declarations,58,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
 Tennessee,ia_paid,$310.6 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"July 31, 2026"
 Tennessee,ia_per_reg,"$2,462",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"July 31, 2026"
 Tennessee,records_total,"21,791",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"

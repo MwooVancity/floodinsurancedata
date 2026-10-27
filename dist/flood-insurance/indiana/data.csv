@@ -67,7 +67,7 @@ Indiana,pen_words,About 1 in 200 homes,pct,FEMA OpenFEMA — NFIP Residential Pe
 Indiana,pen_overall,0.5%,pct,FEMA OpenFEMA — NFIP Residential Penetration Rates,resPenetrationRate,"July 31, 2026"
 Indiana,pen_sfha,16.6%,pct,FEMA OpenFEMA — NFIP Residential Penetration Rates,resPenetrationRateSfha,"July 31, 2026"
 Indiana,pen_contracts,"13,093",count,FEMA OpenFEMA — NFIP Residential Penetration Rates,resContractsInForce,"July 31, 2026"
-Indiana,declarations,39,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
+Indiana,declarations,38,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
 Indiana,ia_paid,$274.1 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"July 31, 2026"
 Indiana,ia_per_reg,"$2,499",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"July 31, 2026"
 Indiana,records_total,"15,257",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"

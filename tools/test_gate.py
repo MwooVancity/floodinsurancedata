@@ -8,7 +8,7 @@ sys.path.insert(0, T)
 import metrics as MX
 
 SLUG = "brevard-county-fl"
-src_dir = os.path.join(ROOT, "data", SLUG)
+src_dir = os.path.join(ROOT, "data", "c", SLUG) if os.path.isdir(os.path.join(ROOT, "data", "c", SLUG)) else os.path.join(ROOT, "data", SLUG)
 if not os.path.exists(os.path.join(src_dir, "agg.json")):
     print("test_gate: skipped (no data for", SLUG + ")"); sys.exit(0)
 tmp = tempfile.mkdtemp(); d = os.path.join(tmp, SLUG); shutil.copytree(src_dir, d)   # named like data/<slug>, so the gate finds its extras
@@ -91,7 +91,7 @@ MUTATIONS = [   # (defect class from THE EVIDENCE table, what we reintroduce, ex
     ("reader text", "county shown as its code", "H1", sub("</main>", '<div id="counties"><table><tbody><tr><td>12009</td></tr></tbody></table></div></main>'), None),
     ("reader text", "points to county pages it does not link", "H2", sub('<p class="stand">', '<p class="stand">Open a county below for its own figures. '), None),
     ("reader text", "percentile code in a chart label", "H3", sub("<b>Typical</b>", "<b>p25 median</b>"), None),
-    ("reader text", "effective date is the download day", "H4", sub("Data effective July 31, 2026; retrieved October 22, 2026", "Data effective October 22, 2026; retrieved October 22, 2026"), None),
+    ("reader text", "effective date is the download day", "H4", re.sub(r"Data effective July 31, 2026; retrieved ([A-Z][a-z]+ \d{1,2}, \d{4})", r"Data effective \1; retrieved \1", PAGE, count=1), None),
     ("numbers", "hand-typed figure in a lead", "V1", sub('<p class="stand">', '<p class="stand">About 4,200 homes flooded here. '), None),
     ("numbers", "table cell differs from its data", "V2",
      re.sub(r'(<span data-m="zone_cost" data-q="X" data-p="[^"]+">)\$[\d,]+', r"\g<1>$999", PAGE), None),

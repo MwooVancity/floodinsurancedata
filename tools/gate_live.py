@@ -5,7 +5,7 @@ T = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(T)
 BASE = "https://floodinsurancedata.com"
 pages = [(s["slug"], os.path.join(ROOT, "data", "states", s["slug"], "agg.json"))
          for s in json.load(open(os.path.join(ROOT, "data", "states", "built.json")))]
-pages += [(p["slug"], os.path.join(ROOT, "data", p["slug"], "agg.json")) for p in json.load(open(os.path.join(ROOT, "places.json")))]
+pages += [(p["slug"], os.path.join(ROOT, "data", "c", p["slug"], "agg.json")) for p in json.load(open(os.path.join(ROOT, "places.json")))]
 bad, tmp = [], tempfile.mkdtemp()
 for slug, agg in pages:
     body = urllib.request.urlopen(urllib.request.Request(f"{BASE}/flood-insurance/{slug}/", headers={"User-Agent": "Mozilla/5.0 (gate-live)"}),

@@ -67,7 +67,7 @@ Virginia,pen_words,About 1 in 37 homes,pct,FEMA OpenFEMA — NFIP Residential Pe
 Virginia,pen_overall,2.7%,pct,FEMA OpenFEMA — NFIP Residential Penetration Rates,resPenetrationRate,"July 31, 2026"
 Virginia,pen_sfha,99.6%,pct,FEMA OpenFEMA — NFIP Residential Penetration Rates,resPenetrationRateSfha,"July 31, 2026"
 Virginia,pen_contracts,"72,514",count,FEMA OpenFEMA — NFIP Residential Penetration Rates,resContractsInForce,"July 31, 2026"
-Virginia,declarations,49,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
+Virginia,declarations,48,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
 Virginia,ia_paid,$98.9 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"July 31, 2026"
 Virginia,ia_per_reg,"$1,033",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"July 31, 2026"
 Virginia,records_total,"78,040",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"

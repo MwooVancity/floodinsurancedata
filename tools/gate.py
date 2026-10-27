@@ -87,7 +87,7 @@ def _parse(shown):
     return float(mm.group(1)) * mult, 0.5 * 10 ** -len(mm.group(2) or "") * mult
 _rest = re.sub(r"<(script|style|head|title)\b.*?</\1>", " ", page, flags=re.S)
 _rest = re.sub(r'<p class="src".*?</p>|<ul class="srclist">.*?</ul>|<footer.*?</footer>', " ", _rest, flags=re.S)
-_rest = re.sub(r'<span data-m="\w+"[^>]*>.*?</span>|<(span|div) data-rule="\w+">.*?</\1>', " ", _rest, flags=re.S)
+_rest = re.sub(r'<span data-m="\w+"[^>]*>.*?</span>|<span data-name>.*?</span>|<(span|div) data-rule="\w+">.*?</\1>', " ", _rest, flags=re.S)
 _rest = norm(re.sub(r"<[^>]+>", " ", _rest))
 _rest = re.sub(r"\b(January|February|March|April|May|June|July|August|September|October|November|December) \d{1,2}(, \d{4})?\b", " ", _rest)
 _free = [mm for mm in re.finditer(r"(?<![\w.])\$?(?:\d{1,3}(?:,\d{3})+|\d+)(?:\.\d+)?%?(?![\w])", _rest)
@@ -107,7 +107,7 @@ for k, attrs, shown in SPANS3:
     except (KeyError, IndexError, TypeError, ValueError): fail("V2", f"{k}: path {pm.group(1)} not in the data"); continue
     got, tol = _parse(shown)
     if isinstance(want, str): want = _parse(want)[0]   # FEMA stores some rates as text ("20%")
-    if got is None or not isinstance(want, (int, float)) or abs(got - float(want)) > tol + 1e-9:
+    if got is None or not isinstance(want, (int, float)) or abs(got - float(want)) > tol * (1 + 1e-9) + 1e-9:   # exactly half a unit rounds either way
         fail("V2", f"{k} shows '{s_}' but {pm.group(1)} = {want}")
 for _k, _ds in (("records_policies", "policies"), ("records_claims", "claims")):   # the full download is stated
     _mm = mani.get(_ds) or {}
@@ -146,7 +146,7 @@ for attr, body in re.findall(r'<span data-claim="([^"]*)">(.*?)</span>', page, r
     c = json.loads(H.unescape(attr))
     if not re.search(rf"\b{re.escape(c['word'])}\b", norm(re.sub(r'<[^>]+>', '', body)), re.I): fail("B1", f"claim word '{c['word']}' not in its sentence")
     if not MX.holds(c["cond"], VALS): fail("B1", f"claim '{c['word']}' is false: {c['cond']} with {VALS.get(c['cond'][0])}")
-OUTSIDE = visible(skip_attrs=("data-claim", "data-rule"))
+OUTSIDE = visible(skip_attrs=("data-claim", "data-rule", "data-name"))   # a place name ("Rising Sun") is not a claim
 for w in MX.QUANT:
     hit = re.search(rf"\b{re.escape(w)}\b", OUTSIDE, re.I)
     if hit: fail("B2", f"'{w}' used without a checked claim: …{OUTSIDE[max(0, hit.start()-50):hit.end()+40]}…")

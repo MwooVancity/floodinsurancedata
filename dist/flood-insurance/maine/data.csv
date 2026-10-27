@@ -66,7 +66,7 @@ Maine,pen_words,About 1 in 83 homes,pct,FEMA OpenFEMA — NFIP Residential Penet
 Maine,pen_overall,1.2%,pct,FEMA OpenFEMA — NFIP Residential Penetration Rates,resPenetrationRate,"July 31, 2026"
 Maine,pen_sfha,78.5%,pct,FEMA OpenFEMA — NFIP Residential Penetration Rates,resPenetrationRateSfha,"July 31, 2026"
 Maine,pen_contracts,"6,651",count,FEMA OpenFEMA — NFIP Residential Penetration Rates,resContractsInForce,"July 31, 2026"
-Maine,declarations,46,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
+Maine,declarations,45,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
 Maine,ia_paid,$16.8 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"July 31, 2026"
 Maine,ia_per_reg,$250,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"July 31, 2026"
 Maine,records_total,"7,549",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"

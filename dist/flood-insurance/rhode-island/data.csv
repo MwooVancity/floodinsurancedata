@@ -67,7 +67,7 @@ Rhode Island,pen_words,About 1 in 37 homes,pct,FEMA OpenFEMA — NFIP Residentia
 Rhode Island,pen_overall,2.7%,pct,FEMA OpenFEMA — NFIP Residential Penetration Rates,resPenetrationRate,"July 31, 2026"
 Rhode Island,pen_sfha,49.0%,pct,FEMA OpenFEMA — NFIP Residential Penetration Rates,resPenetrationRateSfha,"July 31, 2026"
 Rhode Island,pen_contracts,"8,360",count,FEMA OpenFEMA — NFIP Residential Penetration Rates,resContractsInForce,"July 31, 2026"
-Rhode Island,declarations,16,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
+Rhode Island,declarations,15,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
 Rhode Island,ia_paid,$56.3 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"July 31, 2026"
 Rhode Island,ia_per_reg,"$1,934",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"July 31, 2026"
 Rhode Island,records_total,"9,506",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"

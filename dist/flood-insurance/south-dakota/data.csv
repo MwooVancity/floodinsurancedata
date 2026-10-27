@@ -66,7 +66,7 @@ South Dakota,pen_words,About 1 in 200 homes,pct,FEMA OpenFEMA — NFIP Residenti
 South Dakota,pen_overall,0.5%,pct,FEMA OpenFEMA — NFIP Residential Penetration Rates,resPenetrationRate,"July 31, 2026"
 South Dakota,pen_sfha,14.3%,pct,FEMA OpenFEMA — NFIP Residential Penetration Rates,resPenetrationRateSfha,"July 31, 2026"
 South Dakota,pen_contracts,"2,012",count,FEMA OpenFEMA — NFIP Residential Penetration Rates,resContractsInForce,"July 31, 2026"
-South Dakota,declarations,51,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
+South Dakota,declarations,50,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
 South Dakota,ia_paid,$32.3 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"July 31, 2026"
 South Dakota,ia_per_reg,"$2,410",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"July 31, 2026"
 South Dakota,records_total,"2,558",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"

@@ -67,7 +67,7 @@ Georgia,pen_words,About 1 in 62 homes,pct,FEMA OpenFEMA — NFIP Residential Pen
 Georgia,pen_overall,1.6%,pct,FEMA OpenFEMA — NFIP Residential Penetration Rates,resPenetrationRate,"July 31, 2026"
 Georgia,pen_sfha,43.4%,pct,FEMA OpenFEMA — NFIP Residential Penetration Rates,resPenetrationRateSfha,"July 31, 2026"
 Georgia,pen_contracts,"58,579",count,FEMA OpenFEMA — NFIP Residential Penetration Rates,resContractsInForce,"July 31, 2026"
-Georgia,declarations,40,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
+Georgia,declarations,39,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
 Georgia,ia_paid,$383.9 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"July 31, 2026"
 Georgia,ia_per_reg,$740,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"July 31, 2026"
 Georgia,records_total,"64,096",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"

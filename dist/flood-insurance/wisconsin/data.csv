@@ -67,7 +67,7 @@ Wisconsin,pen_words,About 1 in 200 homes,pct,FEMA OpenFEMA — NFIP Residential 
 Wisconsin,pen_overall,0.5%,pct,FEMA OpenFEMA — NFIP Residential Penetration Rates,resPenetrationRate,"July 31, 2026"
 Wisconsin,pen_sfha,19.3%,pct,FEMA OpenFEMA — NFIP Residential Penetration Rates,resPenetrationRateSfha,"July 31, 2026"
 Wisconsin,pen_contracts,"8,947",count,FEMA OpenFEMA — NFIP Residential Penetration Rates,resContractsInForce,"July 31, 2026"
-Wisconsin,declarations,42,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
+Wisconsin,declarations,41,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
 Wisconsin,ia_paid,$311.9 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"July 31, 2026"
 Wisconsin,ia_per_reg,"$3,583",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"July 31, 2026"
 Wisconsin,records_total,"10,642",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"

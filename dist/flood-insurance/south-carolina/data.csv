@@ -67,7 +67,7 @@ South Carolina,pen_words,About 1 in 16 homes,pct,FEMA OpenFEMA — NFIP Resident
 South Carolina,pen_overall,6.1%,pct,FEMA OpenFEMA — NFIP Residential Penetration Rates,resPenetrationRate,"July 31, 2026"
 South Carolina,pen_sfha,85.0%,pct,FEMA OpenFEMA — NFIP Residential Penetration Rates,resPenetrationRateSfha,"July 31, 2026"
 South Carolina,pen_contracts,"121,417",count,FEMA OpenFEMA — NFIP Residential Penetration Rates,resContractsInForce,"July 31, 2026"
-South Carolina,declarations,25,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
+South Carolina,declarations,24,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
 South Carolina,ia_paid,$384.8 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"July 31, 2026"
 South Carolina,ia_per_reg,$945,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"July 31, 2026"
 South Carolina,records_total,"130,292",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"

@@ -67,7 +67,7 @@ Washington,pen_words,About 1 in 111 homes,pct,FEMA OpenFEMA — NFIP Residential
 Washington,pen_overall,0.9%,pct,FEMA OpenFEMA — NFIP Residential Penetration Rates,resPenetrationRate,"July 31, 2026"
 Washington,pen_sfha,40.3%,pct,FEMA OpenFEMA — NFIP Residential Penetration Rates,resPenetrationRateSfha,"July 31, 2026"
 Washington,pen_contracts,"23,122",count,FEMA OpenFEMA — NFIP Residential Penetration Rates,resContractsInForce,"July 31, 2026"
-Washington,declarations,52,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
+Washington,declarations,51,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
 Washington,ia_paid,$58.8 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"July 31, 2026"
 Washington,ia_per_reg,"$3,322",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"July 31, 2026"
 Washington,records_total,"26,947",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"

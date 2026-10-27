@@ -66,7 +66,7 @@ Colorado,pen_words,About 1 in 167 homes,pct,FEMA OpenFEMA — NFIP Residential P
 Colorado,pen_overall,0.6%,pct,FEMA OpenFEMA — NFIP Residential Penetration Rates,resPenetrationRate,"July 31, 2026"
 Colorado,pen_sfha,23.9%,pct,FEMA OpenFEMA — NFIP Residential Penetration Rates,resPenetrationRateSfha,"July 31, 2026"
 Colorado,pen_contracts,"11,283",count,FEMA OpenFEMA — NFIP Residential Penetration Rates,resContractsInForce,"July 31, 2026"
-Colorado,declarations,17,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
+Colorado,declarations,16,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
 Colorado,ia_paid,$57.6 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"July 31, 2026"
 Colorado,ia_per_reg,"$2,164",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"July 31, 2026"
 Colorado,records_total,"13,402",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"

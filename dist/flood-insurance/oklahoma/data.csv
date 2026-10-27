@@ -67,7 +67,7 @@ Oklahoma,pen_words,About 1 in 200 homes,pct,FEMA OpenFEMA — NFIP Residential P
 Oklahoma,pen_overall,0.5%,pct,FEMA OpenFEMA — NFIP Residential Penetration Rates,resPenetrationRate,"July 31, 2026"
 Oklahoma,pen_sfha,12.5%,pct,FEMA OpenFEMA — NFIP Residential Penetration Rates,resPenetrationRateSfha,"July 31, 2026"
 Oklahoma,pen_contracts,"6,994",count,FEMA OpenFEMA — NFIP Residential Penetration Rates,resContractsInForce,"July 31, 2026"
-Oklahoma,declarations,66,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
+Oklahoma,declarations,65,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
 Oklahoma,ia_paid,$106.4 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"July 31, 2026"
 Oklahoma,ia_per_reg,"$2,205",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"July 31, 2026"
 Oklahoma,records_total,"8,499",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"

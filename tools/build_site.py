@@ -16,6 +16,10 @@ if pub_path and os.path.exists(pub_path):
     published = set(json.load(open(pub_path)))
     places = [p for p in places if p.get("slug") in published]
 places.sort(key=lambda p: -(p.get("units") or 0))
+# hidden counties (noindex until Search Console watches them) are linked for readers but never sent to search engines
+indexable = [p for p in places if p.get("indexable", True)]
+def cdir(slug):   # county data lives in data/c/<slug> (one pipeline); older builds in data/<slug>
+    return os.path.join(DATADIR, "c", slug) if os.path.isdir(os.path.join(DATADIR, "c", slug)) else os.path.join(DATADIR, slug)
 
 def money(n): return "$" + format(int(round(n)), ",") if n is not None else "—"
 def wr(path, s):
@@ -23,7 +27,7 @@ def wr(path, s):
     open(path, "w", encoding="utf-8").write(s)
 
 HEAD = """<!doctype html><html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1"><title>{title}</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"><meta name="google-site-verification" content="geYcfFcAsSIVIT2iHnH60suuJ4t3fx7unryWmcbos6A"><title>{title}</title>
 <meta name="description" content="{desc}"><link rel="canonical" href="{canon}">
 <style>:root{{--bg:#f4f7f8;--surface:#fff;--ink:#132029;--mut:#55656f;--faint:#7d8c96;--line:#dbe3e7;--brand:#15617f;--brand-d:#0e4a61;--accent:#c2591f;--r:12px;--gut:20px;
  --serif:"Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;--mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;--shadow:none}}
@@ -64,7 +68,10 @@ _bp = os.path.join(DATADIR, "states", "built.json")
 states = json.load(open(_bp)) if os.path.exists(_bp) else []
 rows = "".join(f'<tr data-k="{html.escape((p["short"]+" "+(p.get("state") or "")).lower())}">'
                f'<td><a href="/flood-insurance/{p["slug"]}/">{html.escape(p["short"])}</a></td>'
-               f'<td>{money(p.get("median"))}</td><td>{format(p.get("units") or 0, ",")}</td></tr>' for p in places)
+               f'<td>{money(p.get("median"))}</td><td>{format(p.get("units") or 0, ",")}</td></tr>' for p in indexable)
+hrows = "".join(f'<tr data-k="{html.escape((p["short"]+" "+(p.get("state") or "")).lower())}">'
+                f'<td><a href="/flood-insurance/{p["slug"]}/">{html.escape(p["short"])}, {html.escape(p.get("state") or "")}</a></td>'
+                f'<td>{money(p.get("median"))}</td><td>{format(p.get("units") or 0, ",")}</td></tr>' for p in places)
 srows = "".join(f'<tr data-k="{html.escape((s["name"] + " " + s["abbr"]).lower())}"><td><a href="/flood-insurance/{s["slug"]}/">{html.escape(s["name"])}</a></td>'
                 f'<td>{money(s["median"])}</td><td>{format(s["units"], ",")}</td></tr>' for s in sorted(states, key=lambda s: -s["units"]))
 national = ""
@@ -125,7 +132,7 @@ hub = HEAD.format(title="Flood insurance by state and county (FEMA data)",
 <tbody>{srows or '<tr><td colspan=3 class=mut>State pages are being built.</td></tr>'}</tbody></table></div>
 <div class="card"><h2>Counties</h2>
 <table id="t"><thead><tr><th>County</th><th>Median / yr</th><th>Insured units</th></tr></thead>
-<tbody>{rows or '<tr><td colspan=3 class=mut>No counties published yet.</td></tr>'}</tbody></table></div>
+<tbody>{hrows or '<tr><td colspan=3 class=mut>No counties published yet.</td></tr>'}</tbody></table></div>
 <script>
 var s=document.getElementById('s');
 s.addEventListener('input',function(){{var q=s.value.toLowerCase();
@@ -257,10 +264,10 @@ with open(csv_path, "w", newline="", encoding="utf-8") as f:
                 "nfip_takeup_pct", "nfip_takeup_sfha_pct", "avg_paid_claim_usd", "closed_no_payment_pct",
                 "paid_outside_sfha_pct", "noaa_flood_events_1996_2025", "noaa_flood_damage_usd"])
     for p in places:
-        ap = os.path.join(DATADIR, p["slug"], "agg.json")
+        ap = os.path.join(cdir(p["slug"]), "agg.json")
         if not os.path.exists(ap): continue
         a = json.load(open(ap)); P = a["policies"]; C = a["claims"]
-        dp = os.path.join(DATADIR, p["slug"], "data.json")
+        dp = os.path.join(cdir(p["slug"]), "data.json")
         d = json.load(open(dp)) if os.path.exists(dp) else {}
         pen, cx, se = d.get("penetration") or {}, d.get("claims_extra") or {}, d.get("storm_events") or {}
         w.writerow([p["slug"], p["short"], p.get("geoid"), P["units"], P["p50"], P["p25"], P["p75"], P["p90"],
@@ -277,12 +284,12 @@ wr(os.path.join(DIST, "data", "index.html"), data)
 # ---- sitemap, robots, llms.txt ----
 # lastmod = the data's effective date (real data change), per-county from its agg; site pages use the max.
 def county_lastmod(slug):
-    ap = os.path.join(DATADIR, slug, "agg.json")
+    ap = os.path.join(cdir(slug) if "/" not in slug and "\\" not in slug else os.path.join(DATADIR, slug), "agg.json")
     if os.path.exists(ap):
         a = json.load(open(ap))
         return (a.get("policies") or {}).get("asof") or "2026-07-31"
     return "2026-07-31"
-county_urls = [(BASE + f"/flood-insurance/{p['slug']}/", county_lastmod(p["slug"])) for p in places]
+county_urls = [(BASE + f"/flood-insurance/{p['slug']}/", county_lastmod(p["slug"])) for p in indexable]
 # county pages carry lastmod = their data's effective date (a real data change); home/methodology/data
 # have no trustworthy per-content modification date, so they omit lastmod rather than inherit a false one.
 urls = [(BASE + "/", None), (BASE + "/flood-insurance/", None), (BASE + "/about/", None),
@@ -298,7 +305,7 @@ wr(os.path.join(DIST, "llms.txt"),
    "# Flood insurance data\n\n> Per-county NFIP flood-insurance statistics from public FEMA data: what "
    "policyholders pay, the gap to FEMA's full-risk price, claims history, flood risk, and CRS discounts.\n\n"
    "## States\n" + "".join(f"- [{s['name']}]({BASE}/flood-insurance/{s['slug']}/): median {money(s['median'])}\n" for s in states) +
-   "\n## Counties\n" + "".join(f"- [{p['short']}]({BASE}/flood-insurance/{p['slug']}/): median {money(p.get('median'))}\n" for p in places) +
+   "\n## Counties\n" + "".join(f"- [{p['short']}]({BASE}/flood-insurance/{p['slug']}/): median {money(p.get('median'))}\n" for p in indexable) +
    f"- [Methodology]({BASE}/methodology/)\n- [Data CSV]({BASE}/data/counties.csv)\n\n"
    "Source: FEMA OpenFEMA. Not endorsed by FEMA. Aggregates only.\n")
 

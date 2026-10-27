@@ -67,7 +67,7 @@ North Carolina,pen_words,About 1 in 38 homes,pct,FEMA OpenFEMA — NFIP Resident
 North Carolina,pen_overall,2.6%,pct,FEMA OpenFEMA — NFIP Residential Penetration Rates,resPenetrationRate,"July 31, 2026"
 North Carolina,pen_sfha,53.3%,pct,FEMA OpenFEMA — NFIP Residential Penetration Rates,resPenetrationRateSfha,"July 31, 2026"
 North Carolina,pen_contracts,"106,561",count,FEMA OpenFEMA — NFIP Residential Penetration Rates,resContractsInForce,"July 31, 2026"
-North Carolina,declarations,50,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
+North Carolina,declarations,49,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
 North Carolina,ia_paid,$744.7 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"July 31, 2026"
 North Carolina,ia_per_reg,"$1,898",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"July 31, 2026"
 North Carolina,records_total,"116,687",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"

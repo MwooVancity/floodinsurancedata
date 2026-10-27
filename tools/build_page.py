@@ -77,7 +77,12 @@ h_disasters = len(set(r.get("disasterNumber") for r in h_rows))
 
 # ---- declarations: distinct flood/storm events (by disasterNumber), not records ----
 decl = data.get("declarations", [])
-fh = [d for d in decl if d.get("incidentType") in ("Flood", "Hurricane", "Tropical Storm", "Tropical Depression", "Coastal Storm", "Severe Storm")]
+fh = [d for d in decl if d.get("incidentType") in ("Flood", "Hurricane", "Tropical Storm", "Tropical Depression", "Coastal Storm", "Severe Storm")
+      and "EVACUAT" not in (d.get("declarationTitle") or "").upper()]   # "Hurricane Katrina Evacuation" hosted evacuees; it was not a flood here
+def _dtitle(d):   # "KS-FLOODING 10/31/98" / "NY - SEVERE WX, SEPT 7, 1998" -> "Flooding" / "Severe Wx" (the year is shown beside it)
+    t = re.sub(r"^[A-Z]{2}\s*-\s*", "", (d.get("declarationTitle") or d.get("incidentType") or "").strip())
+    t = re.sub(r",?\s*\b\d{1,2}/\d{1,2}(/\d{2,4})?\b|,?\s*\b(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEPT?|OCT|NOV|DEC)[A-Z]*\.?\s+\d{1,2}(,\s*\d{4})?", "", t, flags=re.I)
+    return t.strip(" ,-").title()
 def cal_year(d):
     # CALENDAR year from declarationDate — NOT fyDeclared (FEMA's federal fiscal year, which rolls to
     # the next year on Oct 1 and would mislabel an Oct 2026 event as "2027").
@@ -297,9 +302,12 @@ HAS_CPAGES = any(str(p.get("geoid") or "")[:2] == os.environ.get("FF_GEOID", "12
 MIN_PRICED = 30   # a county median is shown from 30 priced policies (with its count); never a dash for a real number
 _LEGAL = r",\s*(city|town|village|borough|township|county|parish)\s+of\s*$"
 def _short(c):   # FEMA admin notes ("HOUMA, CITY OF-USE CID 225206": file under another community number) are not part of the name
-    n = re.sub(r"\s*-\s*USE\s+CID\s*\d+.*$", "", c['communityName'].replace('*', '').strip(), flags=re.I)
-    return re.sub(_LEGAL, "", n, flags=re.I).title()
-def _cname(c):
+    n = re.sub(r"\s*-\s*(USE\s+CID\s*)?\d{6}.*$", "", c['communityName'].replace('*', '').strip(), flags=re.I)
+    prob = bool(re.search(r"\bON PROBATION\b", n, re.I))
+    n = re.sub(r"\s+ON PROBATION\b.*$", "", n, flags=re.I)
+    return re.sub(_LEGAL, "", n, flags=re.I).title() + (" (on probation)" if prob else "")
+def _cname(c): return f"<span data-name>{_cname_plain(c)}</span>"
+def _cname_plain(c):
     """FEMA's 'CAPE CANAVERAL, CITY OF' -> 'Cape Canaveral' (the reader looks for their town's name, not the legal form);
     two communities with one name keep their form: 'Stonington (town)', 'Stonington (borough)'."""
     n = _short(c)
@@ -315,8 +323,8 @@ def _tagd(key, shown, q):   # a table cell: tag it when it is a figure (not "No 
 def _dnum(c): return int((_pct(c.get("sfhaDiscount")) or "0%").rstrip("%"))
 _shown_disc = sorted(_has_disc, key=lambda c: -_dnum(c))[:15] if IS_STATE else _has_disc   # a state can have hundreds
 crs_rows = "".join(f"<tr><td>{_cname(c)}" + (f" ({html.escape(str(c.get('county') or '').title())})" if IS_STATE and c.get('county') else "") + "</td>"
-                   f"<td>{_tagd('crs_discount', _disc(c.get('sfhaDiscount')), _cname(c) + ':sfha')}</td><td>{_tagd('crs_discount', _disc(c.get('nonSfhaDiscount')), _cname(c) + ':other')}</td>"
-                   f"<td>{_tagd('crs_class', _cls(c.get('classRating')), _cname(c))}</td></tr>" for c in _shown_disc)
+                   f"<td>{_tagd('crs_discount', _disc(c.get('sfhaDiscount')), _cname_plain(c) + ':sfha')}</td><td>{_tagd('crs_discount', _disc(c.get('nonSfhaDiscount')), _cname_plain(c) + ':other')}</td>"
+                   f"<td>{_tagd('crs_class', _cls(c.get('classRating')), _cname_plain(c))}</td></tr>" for c in _shown_disc)
 crs_none_note = ((f"<p class='note'>The {m('crs_count', str(len(_shown_disc)), q='shown')} largest discounts of {m('crs_count', str(len(_has_disc)), q='discounted')} discounted communities are shown; "
                   f"{m('crs_count', str(len(_no_disc)), q='none')} communities here have no CRS discount." + (f" Each {UNIT} page lists its own towns." if HAS_CPAGES else "") + "</p>")
                  if IS_STATE else
@@ -326,7 +334,7 @@ if _disc_communities:
     top = max(_disc_communities, key=lambda c: int(_pct(c["sfhaDiscount"]).rstrip("%")))
     crs_lead = (claim("Yes", "yes", ("crs_discount_communities", ">", 0))
                 + f", in {m('crs_count', str(len(_disc_communities)), q='sfha_discounted')} of the {m('crs_count', str(len(crs)), q='all')} towns here: up to "
-                f"{m('crs_discount', _pct(top['sfhaDiscount']), q=html.unescape(_cname(top)) + ':sfha')} off in {_cname(top)}. "
+                f"{m('crs_discount', _pct(top['sfhaDiscount']), q=html.unescape(_cname_plain(top)) + ':sfha')} off in {_cname(top)}. "
                 + rule("crs_auto") + " Find your town below.")
 else:
     crs_lead = ("Not through a community discount: " +
@@ -343,7 +351,7 @@ howto_card = card("How do I actually get covered — and how fast?",
     src_rules(_HOWTO), id="covered")
 
 recent_li = "".join(
-    f"<li>{html.escape(cal_year(d))} — {html.escape((d.get('declarationTitle') or d.get('incidentType') or '').title())}</li>" for d in recent)
+    f"<li>{html.escape(cal_year(d))} — {html.escape(_dtitle(d))}</li>" for d in recent)
 
 # ---- take-up: how common NFIP coverage is here (policy units vs Census housing units) ----
 hu = data.get("housing_units")
@@ -364,7 +372,7 @@ if hu and P.get("units") and (data.get("penetration") or {}).get("overall_pct") 
 else:
     takeup_card = card("How common is flood insurance here?",
         f"Not shown — Census housing-unit data was not available for this {UNIT}.",
-        "<p class='gap'>Gap: U.S. Census ACS 5-year B25001 housing units, to divide into NFIP policy units.</p>")
+        "<p class='gap'>Gap: U.S. Census ACS five-year housing units (table B25001), to divide into NFIP policy units.</p>")
 
 # ---- state flood-risk table (every county in the state by FEMA rating, this one in bold) ----
 GEOID_SELF = os.environ.get("FF_GEOID", "12071")
@@ -662,7 +670,7 @@ META_DESC = (f"Median NFIP flood insurance cost in {CS} is {money(P['p50'])} a y
 PLACES = os.environ.get("FF_PLACES", os.path.join(HERE, "places.json"))
 try: places = json.load(open(PLACES))
 except Exception: places = []
-if not IS_STATE:   # places.json lists county pages; state pages are listed by build_states.py
+if not IS_STATE and os.environ.get("FF_PLACES_RO") != "1":   # places.json lists county pages; build_counties.py writes it itself (parallel builds must not)
     places = [p for p in places if p.get("slug") != SLUG]
     places.append({"slug": SLUG, "label": CL, "short": CS, "geoid": GEOID,
                    "units": P["units"], "median": P["p50"], "state": agg.get("nri", {}).get("state") if agg.get("nri") else None})
@@ -672,7 +680,7 @@ from agg_raw import NAMES as STATE_NAMES, slug as state_slug
 # siblings must be ACTUAL neighbours: same-state BUILT pages (never the global top-5 by policy count,
 # which just funnelled every page to the same mega-counties and orphaned the tail). No same-state page
 # built yet -> link to the full directory, not a false "nearby".
-_state = agg.get("nri", {}).get("state") if agg.get("nri") else None
+_state = agg.get("state") if agg.get("level") == "county" else (agg.get("nri", {}).get("state") if agg.get("nri") else None)
 _others = [p for p in places if p.get("slug") != SLUG]
 _same = [p for p in _others if _state and p.get("state") == _state]
 # guarantee >=3 links: same-state first; if fewer than 3, fill with the nearest-by-size other counties
@@ -704,7 +712,8 @@ def ordinal(n): return f"{n}{'th' if 10 <= n % 100 <= 20 else {1: 'st', 2: 'nd',
 _ab = agg.get("state") if IS_STATE else _state
 _sp = os.path.join(_DD, "states", state_slug(_ab), "agg.json") if _ab in STATE_NAMES else ""
 _sagg = json.load(open(_sp)) if _sp and os.path.exists(_sp) else None
-def _rank(r, n): return f"{ordinal(r)} highest" if r <= (n + 1) // 2 else f"{ordinal(n - r + 1)} lowest"   # say the short end
+def _rank(r, n):   # say the short end; "1st highest" reads as "the highest"
+    return "the highest" if r == 1 else "the lowest" if r == n else f"{ordinal(r)} highest" if r <= (n + 1) // 2 else f"{ordinal(n - r + 1)} lowest"
 def _pct_vs(a, b, q):
     d = round(100 * (a - b) / b)
     return "the same as" if d == 0 else f"{m('pct_vs', str(abs(d)) + '%', q=q)} {'above' if d > 0 else 'below'}"
@@ -727,7 +736,7 @@ elif _sagg and not IS_STATE:
     _sn = html.escape(STATE_NAMES[_ab])
     cmp_line = (f'<p class="cmp">That is {_pct_vs(P["p50"], _sagg["policies"]["p50"], "state")} the {_sn} median of {m("state_p50", money(_sagg["policies"]["p50"]))}'
                 + (f' and {_pct_vs(P["p50"], US_P50, "us")} the U.S. median of {m("us_p50", money(US_P50))}' if US_P50 else "")
-                + (f'; {m("cost_rank", _rank(_r, len(_sc)))} of {m("rank_n", str(len(_sc)))} {_sn} {UNITS}' if _r else "") + ".</p>")
+                + (f'; {m("cost_rank", _rank(_r, len(_sc)))} of {m("rank_n", str(len(_sc)))} {_sn} {UNITS} with {tp("threshold", "const.rank_min", q="rank_min")}+ priced policies' if _r else "") + ".</p>")
 if IS_STATE:
     _st_all = sorted(STATE_NAMES.items(), key=lambda kv: kv[1])
     _i = next((i for i, (a, n) in enumerate(_st_all) if n == CS), 0)
@@ -783,8 +792,9 @@ _mp, _mc = _man.get("policies") or {}, _man.get("claims") or {}
 _pulled = pretty_date(_mp["pulled"]) if _mp.get("pulled") else RETR
 PROV_OK = bool(_mp.get("complete") and _mc.get("complete") and not _mp.get("missing") and not _mc.get("missing"))
 prov_line = (f'<p class="prov">Built from all {tp("records_policies", "manifest.policies.unique_fetched")} in-force NFIP policy records and '
-             f'{tp("records_claims", "manifest.claims.unique_fetched")} claim records FEMA publishes for {CS}, downloaded {_pulled} and '
-             f'matched to FEMA\'s own count, none missing. <a href="data.csv">Download the figures on this page (CSV)</a> · '
+             f'{tp("records_claims", "manifest.claims.unique_fetched")} claim records FEMA publishes for {CS}, downloaded {_pulled} '
+             + (f'with every record for {html.escape(STATE_NAMES.get(agg.get("state"), "the state"))}, matched to FEMA\'s own count for the state, none missing.'
+                if _mp.get("scope") == "state" else "and matched to FEMA\'s own count, none missing.") + f' <a href="data.csv">Download the figures on this page (CSV)</a> · '
              f'<a href="../../methodology/">How we check them</a></p>') if PROV_OK else ""
 jsonld = json.dumps([
     {"@context": "https://schema.org", "@type": "Dataset",
@@ -859,7 +869,7 @@ _og_meta = (f'<meta property="og:image" content="{CANON}og.png">'
             '<meta name="twitter:card" content="summary_large_image">') if OG else '<meta name="twitter:card" content="summary">'
 
 HTML = f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">{'<meta name="robots" content="noindex,follow">' if os.environ.get("FF_NOINDEX") == "1" else ""}
 <title>Flood insurance cost in {CL}: {money(P['p50'])} median a year (FEMA data)</title>
 <meta name="description" content="{html.escape(META_DESC)}">
 <link rel="canonical" href="{CANON}">

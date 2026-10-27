@@ -65,7 +65,7 @@ California,pen_words,About 1 in 77 homes,pct,FEMA OpenFEMA — NFIP Residential 
 California,pen_overall,1.3%,pct,FEMA OpenFEMA — NFIP Residential Penetration Rates,resPenetrationRate,"July 31, 2026"
 California,pen_sfha,30.5%,pct,FEMA OpenFEMA — NFIP Residential Penetration Rates,resPenetrationRateSfha,"July 31, 2026"
 California,pen_contracts,"140,683",count,FEMA OpenFEMA — NFIP Residential Penetration Rates,resContractsInForce,"July 31, 2026"
-California,declarations,62,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
+California,declarations,61,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
 California,ia_paid,$348.1 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"July 31, 2026"
 California,ia_per_reg,"$1,093",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"July 31, 2026"
 California,records_total,"158,060",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"

@@ -65,7 +65,7 @@ Florida,pen_words,About 1 in 7 homes,pct,FEMA OpenFEMA — NFIP Residential Pene
 Florida,pen_overall,13.7%,pct,FEMA OpenFEMA — NFIP Residential Penetration Rates,resPenetrationRate,"July 31, 2026"
 Florida,pen_sfha,67.0%,pct,FEMA OpenFEMA — NFIP Residential Penetration Rates,resPenetrationRateSfha,"July 31, 2026"
 Florida,pen_contracts,"1,040,662",count,FEMA OpenFEMA — NFIP Residential Penetration Rates,resContractsInForce,"July 31, 2026"
-Florida,declarations,86,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
+Florida,declarations,85,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
 Florida,ia_paid,$4.2 billion,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"July 31, 2026"
 Florida,ia_per_reg,"$1,041",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"July 31, 2026"
 Florida,records_total,"1,130,989",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
