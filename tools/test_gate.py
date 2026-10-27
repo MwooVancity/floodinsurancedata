@@ -47,6 +47,11 @@ assert _pulled == set(_NAMES), f"pull_raw.STATES differs from the 51 names: miss
 _imported = {a.name.split(".")[0] for f in os.listdir(T) if f.endswith(".py")
              for n in ast.walk(ast.parse(open(os.path.join(T, f), encoding="utf-8").read()))
              if isinstance(n, (ast.Import, ast.ImportFrom)) for a in (n.names if isinstance(n, ast.Import) else [ast.alias(n.module or "")])}
+from agg_raw import FIPS as _FIPS   # every county file belongs to its own state (a stray LA record once overwrote Broward)
+_acd = os.path.join(ROOT, "data", "all-counties")
+_wrong = [f for f in (os.listdir(_acd) if os.path.isdir(_acd) else [])
+          if _FIPS.get(json.load(open(os.path.join(_acd, f))).get("state")) != f[:2]]
+assert not _wrong, f"{len(_wrong)} county files hold another state's records, e.g. {_wrong[:5]} (rerun agg_raw.py + extras_raw.py)"
 _IO = {"print", "urlopen", "dump", "write", "makedirs", "run", "remove", "rmtree", "copytree", "system"}   # a side effect
 for _mod in sorted(_imported):
     _fp = os.path.join(T, _mod + ".py")

@@ -8,7 +8,7 @@ import collections, csv, glob, gzip, json, os, statistics, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import ffcalc
 from codes import NONPAY_REASON, CAUSE, DEDUCTIBLE, truthy
-from agg_raw import NAMES, slug, RAW, ROOT
+from agg_raw import NAMES, slug, RAW, ROOT, FIPS
 
 RR2_NEW = "2021-10-01"     # new NFIP policies from this date are rated under Risk Rating 2.0 (rules_registry: rr2_start)
 
@@ -33,7 +33,7 @@ def policies(st):
     acc = collections.defaultdict(new_acc)
     for r in rows("NfipPolicies", st):
         u = int(f(r["policyCount"]) or 0)
-        keys = ["ST", (r["censusGeoid"] or "")[:5]]
+        keys = ["ST"] + [g for g in [(r["censusGeoid"] or "")[:5]] if g[:2] == FIPS[st]]   # never another state's county
         sf = ffcalc.isone(r["occupancyType"]) and ffcalc.istrue(r["primaryResidenceIndicator"])
         prem, cost = f(r[ffcalc.PREM]), f(r["policyCost"])
         for k in keys:
@@ -95,7 +95,7 @@ def claims(st):
                                            "dmg": [], "paid_b": [], "over_cov": 0, "dmg_n": 0, "elev_paid": [], "low_paid": []})
     for r in rows("NfipClaims", st):
         paid = net(r)
-        for k in ("ST", r["countyCode"] or ""):
+        for k in ["ST"] + [g for g in [r["countyCode"] or ""] if g[:2] == FIPS[st]]:
             if len(k) not in (2, 5): continue
             a = acc[k]; a["n"] += 1
             if paid <= 0:

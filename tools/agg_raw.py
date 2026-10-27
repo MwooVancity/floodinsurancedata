@@ -19,6 +19,12 @@ NAMES = {"AL": "Alabama", "AK": "Alaska", "AZ": "Arizona", "AR": "Arkansas", "CA
          "OK": "Oklahoma", "OR": "Oregon", "PA": "Pennsylvania", "RI": "Rhode Island", "SC": "South Carolina",
          "SD": "South Dakota", "TN": "Tennessee", "TX": "Texas", "UT": "Utah", "VT": "Vermont", "VA": "Virginia",
          "WA": "Washington", "WV": "West Virginia", "WI": "Wisconsin", "WY": "Wyoming"}
+FIPS = {"AL": "01", "AK": "02", "AZ": "04", "AR": "05", "CA": "06", "CO": "08", "CT": "09", "DE": "10", "DC": "11", "FL": "12",
+        "GA": "13", "HI": "15", "ID": "16", "IL": "17", "IN": "18", "IA": "19", "KS": "20", "KY": "21", "LA": "22", "ME": "23",
+        "MD": "24", "MA": "25", "MI": "26", "MN": "27", "MS": "28", "MO": "29", "MT": "30", "NE": "31", "NV": "32", "NH": "33",
+        "NJ": "34", "NM": "35", "NY": "36", "NC": "37", "ND": "38", "OH": "39", "OK": "40", "OR": "41", "PA": "42", "RI": "44",
+        "SC": "45", "SD": "46", "TN": "47", "TX": "48", "UT": "49", "VT": "50", "VA": "51", "WA": "53", "WV": "54", "WI": "55", "WY": "56"}
+
 def slug(st): return NAMES[st].lower().replace(" ", "-")
 
 # only the columns a figure needs, numbers parsed; everything else stays in the raw file for later metrics
@@ -72,11 +78,12 @@ def run(st):
     by_c = {}
     for r in pol:
         g = (r["censusGeoid"] or "")[:5]
-        if len(g) == 5: by_c.setdefault(g, []).append(r)
+        # a record coded to another state's county must not create (and overwrite) that county's file
+        if len(g) == 5 and g[:2] == FIPS[st]: by_c.setdefault(g, []).append(r)
     cl_c = {}
     for r in clm:
         g = r["countyCode"] or ""
-        if len(g) == 5: cl_c.setdefault(g, []).append(r)
+        if len(g) == 5 and g[:2] == FIPS[st]: cl_c.setdefault(g, []).append(r)
     os.makedirs(os.path.join(ROOT, "data", "all-counties"), exist_ok=True)
     rollup = {}
     for g in sorted(set(by_c) | set(cl_c)):
