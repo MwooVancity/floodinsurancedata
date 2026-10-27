@@ -18,3 +18,8 @@ for s, r in keep.items():   # restore whatever was there
 os.remove(p)
 assert got == {"home": "PASS", "louisiana": "FAIL", "palm-beach-county-fl": "FAIL"}, got
 print("hater record self-test OK", got)
+# template review + code flags: a county far from its state is flagged; an ordinary one is not
+assert RV.flags("palm-beach-county-fl"), "Palm Beach (56.5% unpaid vs Florida 30.1%) must be flagged"
+assert not RV.flags("lee-county-fl"), RV.flags("lee-county-fl")
+assert RV.flags("home") == [] and RV.flags("louisiana") == []
+print("flag self-test OK")

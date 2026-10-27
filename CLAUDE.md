@@ -134,11 +134,17 @@ Next layer (ZIP pages, ~2,500 with 100+ priced policies) waits until county page
 ## Nothing goes live without a hater review (HARD, owner 2026-10-27: "we are not going to put out any pages live unless it's scrutinized like the worst hater in the world")
 The code gates check only what someone thought to code; they passed "since None" and a false "Yes". So every page
 (home, each state, each county) ships only with a current PASS in `state/reviews/<slug>.json` (`tools/review.py`):
-- The reviewer is hostile and was not the builder: an agent given the rendered phone screenshots, the page text and its
-  data files, told to find every reason a frightened reader, a FEMA analyst, a competitor or a Google rater would call
-  the page wrong, misleading, confusing, padded or untrustworthy. Defects first, worst first; PASS only with zero.
-- A review is tied to the template hash (build_page, build_site, metrics, rules_registry): any template change makes
-  every review stale and every page is reviewed again before the next deploy.
+- The reviewer is hostile and was not the builder: a fresh agent running `docs/HATER-PROMPT.md` (six judges: frightened
+  reader, FEMA analyst, competitor, Google rater, copy editor, and an SEO strategist who searches the page's real
+  query and must show it beats today's #1 result). PASS only with zero BLOCKER and zero MAJOR.
+- Steps: `python -I tools/hater.py prep <round> <slugs>` (live phone screenshots + filled brief), run the brief in a
+  fresh agent, `python -I tools/hater.py record <round>` (writes the verdicts). Fix every defect at its source, gate it,
+  and run the next round on the same pages until they pass.
+- Review the TEMPLATE, not every page (owner 2026-10-27, Musk steps): the hater reads 3 samples in depth (home,
+  louisiana, palm-beach-county-fl). When all 3 PASS under the current template hash, every page built from it may ship,
+  except pages `review.flags()` marks (unpaid share 20+ points from the state's, claims per policy under 0.2x or over 5x
+  the state's): each of those needs its own quick look and PASS. Any template change resets only the 3 samples.
+  After a small fix, re-check only the changed cards on the samples (cheap model), never a full round.
 - Enforced: `google_gate.py` S12 fails a release with any indexable page lacking a current PASS, and `add_counties.py`
   (the daily GitHub job) only queues reviewed counties. Every defect class found becomes a builder rule or gate check.
 
