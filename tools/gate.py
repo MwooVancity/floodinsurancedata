@@ -183,6 +183,14 @@ for keys, body in re.findall(r'<p class="src" data-src="([^"]*)">(.*?)</p>', pag
         if "OpenFEMA API" in body: fail("A1", f"OpenFEMA credit repeated under the panel citing {keys} (it belongs once, in the footer)")
         if MX.needs_openfema_attr(ks): _needs_attr = True
     if not body.startswith(want): fail("A1", f"source line for [{keys}] reads '{body[:70]}', registry says '{want[:70]}'")
+# C5 a chart draws the measure its caption names: claims-per-year bar heights are proportional to dollars paid
+_bars = [(float(h), float(d.replace(",", ""))) for h, d in re.findall(r'height="([\d.]+)"[^>]*><title>\d{4}: [\d,]+ claims, \$([\d,]+)</title>', page)]
+if _bars and max(d for _, d in _bars) > 0:
+    _k = max(h for h, _ in _bars) / max(d for _, d in _bars)
+    for h, d in _bars:
+        if abs(h - d * _k) > 1.0: fail("C5", f"claims chart bar height {h} is not dollars ({d:,.0f}); the caption says bars are dollars"); break
+# C6 CRS discounts under Risk Rating 2.0 are one rate for every zone: no separate "other areas" rate
+if re.search(r"<th>Other areas</th>", page): fail("C6", "CRS table shows a separate non-high-risk discount (pre-2021 rule; Risk Rating 2.0 is one rate in every zone)")
 _foot = re.search(r"<footer>(.*?)</footer>", page, re.S)
 if globals().get("_needs_attr") and not (_foot and "OpenFEMA API, but is not endorsed by FEMA" in _foot.group(1)):
     fail("A1", "page shows OpenFEMA data but its footer lacks FEMA's required credit")

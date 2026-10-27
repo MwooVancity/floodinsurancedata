@@ -78,7 +78,7 @@ MUTATIONS = [   # (defect class from THE EVIDENCE table, what we reintroduce, ex
     ("2 prose vs numbers", "free-typed 'climb toward'", "B2", sub("(premiums only, before fees)", "(premiums only, before fees). Bills climb toward it"), None),
     ("3 rows called homes", "IA records labelled homes", "A2", sub("</span> flood-damage applications", "</span> homes"), None),
     ("4 cross-panel", "filed count called 'paid'", "C3", sub("</span> NFIP flood claims and", "</span> paid NFIP flood claims and"), None),
-    ("5 rating vs percentile", "percentile without its basis", "A4", PAGE.replace("expected annual flood loss above about", "higher flood risk than about"), None),
+    ("5 rating vs percentile", "percentile without its basis", "A4", PAGE.replace("per dollar of building value, that loss is higher than in about", "flood risk is higher than in about"), None),
     ("6 attribution", "NOAA panel credited to FEMA", "A1", sub(STORM, '<p class="src" data-src="storm_events,storm_damage">Source: FEMA OpenFEMA.'), None),
     ("6 attribution", "hand-typed source line", "A1", re.sub(r'<p class="src" data-src="ml_total">', '<p class="src">', PAGE, count=1), None),
     ("8 law wording", "purchase rule narrowed", "E1", sub("federally regulated lender, or federal", "federally backed lender, or federal"), None),
@@ -102,6 +102,10 @@ MUTATIONS = [   # (defect class from THE EVIDENCE table, what we reintroduce, ex
     ("legacy L6", "all OpenFEMA attribution removed", "A1", PAGE.replace("This product uses the Federal Emergency Management Agency's OpenFEMA API, but is not endorsed by FEMA.", ""), None),
     ("2 numbers", "state figure beside a county tile is wrong", "V2",
      re.sub(r'(data-p="state\.data\.claims_extra\.avg_paid">)\$[\d,]+', r"\g<1>$1", PAGE, count=1) if 'data-p="state.data.claims_extra.avg_paid"' in PAGE else "anchor missing", None),
+    # hater round 1 (2026-10-27) BLOCKERs, each now a check
+    ("hater r1", "claims chart drawn as claim counts", "C5",
+     re.sub(r'height="([\d.]+)"(?=[^>]*><title>\d{4}: [\d,]+ claims, \$[\d,]+</title>)', lambda mm: f'height="{float(mm.group(1)) * 0.5 + 3:.1f}"', PAGE, count=3), None),
+    ("hater r1", "pre-2021 'other areas' CRS discount column", "C6", sub("<th>Discount</th>", "<th>Discount</th><th>Other areas</th>"), None),
     ("legacy L12b", "'other zones' row dropped", "C4", re.sub(r"<tr><td>Other or unclassified zones</td>.*?</tr>", "", PAGE, count=1), None),
 ]
 table, ok = [], True

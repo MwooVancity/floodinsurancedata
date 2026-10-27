@@ -89,7 +89,7 @@ RULES = {
         "sources": [(FS + "/premiumcosts", "Limits annual premium increases to a set percentage.", "curl"),
                     ("https://www.fema.gov/flood-insurance/risk-rating", "most rates not increase more than 18% per year", "manual")]},
     "crs_auto": {
-        "text": "It applies to every eligible policy there.",
+        "text": "It is automatic, already in these prices, and the same in every flood zone.",
         "sources": [(FS + "/premiumcosts", "Applies to all eligible policies within the community, regardless of flood zone.", "curl")]},
     "cwop": {
         "text": "FEMA lists reasons a claim closes without payment, such as damage below the deductible, no flood as "

@@ -118,12 +118,13 @@ def claims_svg():
     y0, y1 = years[0], years[-1]; W, H, pad = 360, 170, 18; span = max(1, y1 - y0)
     bw = max(2.0, (W - 2 * pad) / (span + 1) * 0.7)
     bars = []
+    maxp = max(by[str(y)][1] for y in years) or 1   # bar height = dollars paid, the measure the caption and orange bars name
     for y in years:
-        c = by[str(y)][0]; x = pad + (y - y0) / span * (W - 2 * pad - bw); bh = (c / maxc) * (H - 2 * pad - 8)
+        c = by[str(y)][0]; x = pad + (y - y0) / span * (W - 2 * pad - bw); bh = (by[str(y)][1] / maxp) * (H - 2 * pad - 8)
         col = "var(--accent)" if any(y == ty for ty, _ in top_paid) else "var(--bar)"
         bars.append(f'<rect x="{x:.1f}" y="{H-pad-bh:.1f}" width="{bw:.1f}" height="{bh:.1f}" fill="{col}"><title>{y}: {num(c)} claims, {money(by[str(y)][1])}</title></rect>')
     labs = "".join(f'<text x="{pad+(y-y0)/span*(W-2*pad-bw):.1f}" y="{H-2}" class="ax">{y}</text>' for y in range(((y0+9)//10)*10, y1+1, 10))
-    return (f'<svg viewBox="0 0 {W} {H}" width="100%" role="img" aria-label="NFIP claims per year">'
+    return (f'<svg viewBox="0 0 {W} {H}" width="100%" role="img" aria-label="NFIP claim dollars paid per year">'
             f'{"".join(bars)}<line x1="{pad}" y1="{H-pad}" x2="{W-pad}" y2="{H-pad}" stroke="var(--line)"/>{labs}</svg>')
 
 def spread_svg():
@@ -185,13 +186,14 @@ if have_risk:
         pctl, eald = block.get("eal_national_pctl"), block.get("eal_total_usd")
         if not _present(block.get("risk_rating")): return ""
         bits = []
-        if isinstance(pctl, (int, float)): bits.append(f"expected annual flood loss above about {m('nri_eal_pctl_' + label.lower(), str(round(pctl)) + '%')} of U.S. counties")
-        if isinstance(eald, (int, float)) and eald > 0: bits.append(f"FEMA models roughly {tp('nri_eal_usd', 'nri.' + label.lower() + '.eal_total_usd', money, q=label.lower())} of flood loss a year across all its buildings")
+        # NRI's *_ALR_NPCTL is the loss RATE percentile (loss per dollar of building value), not total loss: say so
+        if isinstance(eald, (int, float)) and eald > 0: bits.append(f"FEMA models roughly {tp('nri_eal_usd', 'nri.' + label.lower() + '.eal_total_usd', big, q=label.lower())} of flood loss a year across all its buildings")
+        if isinstance(pctl, (int, float)): bits.append(f"per dollar of building value, that loss is higher than in about {m('nri_eal_pctl_' + label.lower(), str(round(pctl)) + '%')} of U.S. counties")
         return (f" {label}: " + "; ".join(bits) + ".") if bits else ""
     risk_body = ("<ul class='kv'>" + rating_row(cf, "Coastal") + rating_row(inl, "Inland") + "</ul>"
                  "<p class='note'>This is FEMA's plain risk rating for the " + UNIT + ", a comparison — not a prediction "
-                 "for your home. The rating multiplies expected flood loss by a community factor for social "
-                 "vulnerability and resilience; the percentile below is expected loss alone, so the two can differ."
+                 "for your home. A place with many valuable buildings can have a large total loss and a low "
+                 "loss per dollar, so the rating and the percentile below can differ."
                  + _detail(cf, "Coastal") + _detail(inl, "Inland") +
                  " Any loss figure is a whole-" + UNIT + " estimate across all buildings, never one home's expected loss or premium.</p>")
     parts = []
@@ -334,7 +336,7 @@ def _tagd(key, shown, q):   # a table cell: tag it when it is a figure (not "No 
 def _dnum(c): return int((_pct(c.get("sfhaDiscount")) or "0%").rstrip("%"))
 _shown_disc = sorted(_has_disc, key=lambda c: -_dnum(c))[:15] if IS_STATE else _has_disc   # a state can have hundreds
 crs_rows = "".join(f"<tr><td>{_cname(c)}" + (f" ({html.escape(str(c.get('county') or '').title())})" if IS_STATE and c.get('county') else "") + "</td>"
-                   f"<td>{_tagd('crs_discount', _disc(c.get('sfhaDiscount')), _cname_plain(c) + ':sfha')}</td><td>{_tagd('crs_discount', _disc(c.get('nonSfhaDiscount')), _cname_plain(c) + ':other')}</td>"
+                   f"<td>{_tagd('crs_discount', _disc(c.get('sfhaDiscount')), _cname_plain(c) + ':sfha')}</td>"   # Risk Rating 2.0: one rate for every zone; FEMA's separate non-SFHA column is pre-2021
                    f"<td>{_tagd('crs_class', _cls(c.get('classRating')), _cname_plain(c))}</td></tr>" for c in _shown_disc)
 crs_none_note = ((f"<p class='note'>The {m('crs_count', str(len(_shown_disc)), q='shown')} largest discounts of {m('crs_count', str(len(_has_disc)), q='discounted')} discounted communities are shown; "
                   f"{m('crs_count', str(len(_no_disc)), q='none')} communities here have no CRS discount." + (f" Each {UNIT} page lists its own towns." if HAS_CPAGES else "") + "</p>")
@@ -343,10 +345,11 @@ crs_none_note = ((f"<p class='note'>The {m('crs_count', str(len(_shown_disc)), q
 _disc_communities = [c for c in crs if _pct(c.get("sfhaDiscount"))]
 if _disc_communities:
     top = max(_disc_communities, key=lambda c: int(_pct(c["sfhaDiscount"]).rstrip("%")))
+    _topd = m('crs_discount', _pct(top['sfhaDiscount']), q=html.unescape(_cname_plain(top)) + ':sfha')
     crs_lead = (claim("Yes", "yes", ("crs_discount_communities", ">", 0))
-                + f", in {m('crs_count', str(len(_disc_communities)), q='sfha_discounted')} of the {m('crs_count', str(len(crs)), q='all')} towns here: up to "
-                f"{m('crs_discount', _pct(top['sfhaDiscount']), q=html.unescape(_cname_plain(top)) + ':sfha')} off in {_cname(top)}. "
-                + rule("crs_auto") + " Find your town below.")
+                + (f": {_cname(top)}, the only NFIP community here, gets {_topd}. " if len(crs) == 1 else
+                   f", in {m('crs_count', str(len(_disc_communities)), q='sfha_discounted')} of the {m('crs_count', str(len(crs)), q='all')} NFIP communities here: up to {_topd} in {_cname(top)}. ")
+                + rule("crs_auto"))
 else:
     crs_lead = ("Not through a community discount: " +
                 (f"none of {CS}'s {m('crs_count', str(len(crs)), q='all')} NFIP communities has one." if len(crs) != 1 else f"{CS}'s only NFIP community has none."))
@@ -977,7 +980,7 @@ table{{width:100%}}}}
 {howto_card}
 
 {card("What do floods actually pay out here?", claims_lead, claims_svg() +
-  f"<p class='note'>Orange bars are the three costliest years: " + ", ".join(f"{y} ({tp('claims_year_paid', f'claims.by_year.{y}.1', money, q=str(y))})" for y, p in top_paid) +
+  f"<p class='note'>Bar height is dollars paid that year. Orange bars are the three costliest years: " + ", ".join(f"{y} ({tp('claims_year_paid', f'claims.by_year.{y}.1', money, q=str(y))})" for y, p in top_paid) +
   f". Total paid {tp('claims_total', 'claims.total_paid', money, q='exact')}: net building + contents payments by year of loss. Claims are matched by the claims dataset's county code, which may not exactly match a policy's property county.</p>" + claims_ratio_note,
   src(["claims_filed", "claims_total"], f"{C['year_min']}–{C['year_max']}", RETR))}
 
@@ -1005,10 +1008,10 @@ table{{width:100%}}}}
 
 {state_trend_card}
 
-{card("Can I pay less than the sticker price?", crs_lead,
-  (f"<table><thead><tr><th>Community</th><th>High-risk zone</th><th>Other areas</th><th>CRS class</th></tr></thead><tbody>{crs_rows}</tbody></table>" if crs_rows else "")
+{card("Does my town get a community discount?", crs_lead,
+  (f"<table><thead><tr><th>Community</th><th>Discount</th><th>CRS class</th></tr></thead><tbody>{crs_rows}</tbody></table>" if crs_rows else "")
   + crs_none_note +
-  "<p class='note'>The Community Rating System cuts NFIP premiums for every eligible policy in a community that does extra flood work. The discount shown is the community's rate; what share of its policies currently receive it is not in this data. Confirm with your agent.</p>",
+  "<p class='note'>The Community Rating System cuts NFIP premiums in communities that do extra flood work. A community named for the county covers its unincorporated area only.</p>",
   src(["crs_discount"], "current Community Status Book", RETR))}
 
 {risk}
