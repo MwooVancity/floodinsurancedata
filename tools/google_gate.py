@@ -1,0 +1,145 @@
+"""THE Google gate: the whole site checked against Google's spam policies and structured-data rules before a deploy.
+gate.py asks "is each page true and readable?"; this asks "could Google read the site as spam?". Exit 1 blocks ship.
+Usage: python -I tools/google_gate.py [--root dist] [--live]
+  S1 structured data   markup claims only what the page shows (no FAQ/Review/Rating markup; dateModified = the data's date)
+  S2 scaled content    no indexable page is a near-copy of another in its state (numbers and place names masked)
+  S3 thin pages        every indexable county page carries its own data (enough figures read from its own records)
+  S4 doorway signals   titles and descriptions unique across the site, no repeated keywords in a title
+  S5 hidden text       no text hidden with inline CSS (display:none, visibility:hidden, font-size:0, off-screen)
+  S6 index hygiene     sitemap = exactly the indexable pages; canonicals self-referential; robots allows crawling
+  S7 rollout pace      at most 25 newly indexable pages per release (owner 2026-10-26: no bulk publishing)
+  S8 broken links      every internal link resolves to a built page
+  S9 page weight       every page under 400 KB of HTML
+  S10 cloaking (--live) Googlebot and a browser get the same page"""
+import json, os, re, subprocess, sys, urllib.request
+from collections import defaultdict
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DIST = os.path.join(ROOT, sys.argv[sys.argv.index("--root") + 1]) if "--root" in sys.argv else os.path.join(ROOT, "dist")
+BASE = "https://floodinsurancedata.com"
+MAX_NEW_INDEXABLE, DUP_MAX, MIN_OWN_FIGURES = 25, 0.80, 40
+fails = []
+def fail(cid, msg): fails.append(f"[{cid}] {msg}")
+def text(h): return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", re.sub(r"<(script|style|head)\b.*?</\1>", " ", h, flags=re.S))).strip()
+
+pages = {}   # url path -> html
+for d, _, fs in os.walk(DIST):
+    for f in fs:
+        if f.endswith(".html"):
+            rel = os.path.relpath(os.path.join(d, f), DIST).replace("\\", "/")
+            path = "/" + (rel[:-len("index.html")] if rel.endswith("index.html") else rel)
+            pages[path] = open(os.path.join(d, f), encoding="utf-8").read()
+indexable = {p for p, h in pages.items() if 'name="robots" content="noindex' not in h}
+
+# S1 structured data claims only what the page shows
+for p, h in pages.items():
+    for blk in re.findall(r'<script type="application/ld\+json">(.*?)</script>', h, re.S):
+        for o in (lambda x: x if isinstance(x, list) else [x])(json.loads(blk)):
+            t = o.get("@type")
+            if t in ("FAQPage", "QAPage", "Review", "AggregateRating", "HowTo", "Product", "JobPosting", "Event"):
+                fail("S1", f"{p}: {t} markup (must match visible content; we show none)")
+            if t == "Dataset" and o.get("dateModified") and not re.match(r"\d{4}-\d{2}-\d{2}$", str(o["dateModified"])):
+                fail("S1", f"{p}: Dataset dateModified not a date")
+
+# S2 scaled content: masked 8-gram similarity among indexable county pages of the same state (and against the state page)
+# Names are masked (a name swap is the doorway pattern); numbers are KEPT, because each county's own figures are the
+# page's content. The number-masked prose figure is printed every run (not failing) so template sameness stays visible.
+def shingles(h, own, mask_nums=False):
+    t = text(h).lower()
+    for w in sorted(own, key=len, reverse=True): t = t.replace(w.lower(), " X ")
+    w = re.findall(r"[a-z0-9]+", re.sub(r"\d[\d,.]*", " 0 ", t) if mask_nums else t)
+    return {" ".join(w[i:i + 8]) for i in range(max(0, len(w) - 7))}
+places = json.load(open(os.path.join(DIST, "..", "places.json") if os.path.exists(os.path.join(DIST, "..", "places.json")) else os.path.join(ROOT, "places.json")))
+states = json.load(open(os.path.join(ROOT, "data", "states", "built.json")))
+st_slug = {s["abbr"]: s["slug"] for s in states}; st_name = {s["abbr"]: s["name"] for s in states}
+by_state, sims, msims = defaultdict(list), [], []
+for c in places:
+    p = f"/flood-insurance/{c['slug']}/"
+    if p in pages and p in indexable: by_state[c["state"]].append((p, c))
+for st, items in by_state.items():
+    sh = {p: shingles(pages[p], [c["short"], c["label"], st_name.get(st, ""), c["short"].split(" ")[0]]) for p, c in items}
+    sp = f"/flood-insurance/{st_slug.get(st, '')}/"
+    if sp in pages: sh[sp] = shingles(pages[sp], [st_name.get(st, "")])
+    keys = list(sh)
+    for i in range(len(keys)):
+        for j in range(i + 1, len(keys)):
+            a, b = sh[keys[i]], sh[keys[j]]
+            if not a or not b: continue
+            s = len(a & b) / len(a | b); sims.append(s)
+            if s > DUP_MAX: fail("S2", f"{keys[i]} and {keys[j]} are {s:.0%} the same text with place names masked (max {DUP_MAX:.0%})")
+    shm = {p: shingles(pages[p], [c["short"], c["label"], st_name.get(st, ""), c["short"].split(" ")[0]], True) for p, c in items}
+    for x, y in [(a, b) for i, a in enumerate(shm) for b in list(shm)[i + 1:]]:
+        msims.append(len(shm[x] & shm[y]) / len(shm[x] | shm[y]))
+
+# S3 thin: an indexable county page carries enough figures read from its own records (not constants, not the state's)
+for st, items in by_state.items():
+    for p, c in items:
+        own = len(re.findall(r'data-p="(?!const\.)[^"]+"', pages[p]))
+        if own < MIN_OWN_FIGURES: fail("S3", f"{p}: only {own} figures from its own data (min {MIN_OWN_FIGURES})")
+
+# S4 doorway signals
+seen_t, seen_d = {}, {}
+for p in sorted(indexable):
+    h = pages[p]; t = (re.search(r"<title>(.*?)</title>", h, re.S) or [None, ""])[1].strip()
+    d = (re.search(r'<meta name="description" content="([^"]*)"', h) or [None, ""])[1].strip()
+    if t in seen_t: fail("S4", f"{p}: same title as {seen_t[t]}: {t[:60]}")
+    if d and d in seen_d: fail("S4", f"{p}: same description as {seen_d[d]}")
+    seen_t.setdefault(t, p); seen_d.setdefault(d, p)
+    words = [w for w in re.findall(r"[a-z]+", t.lower()) if len(w) > 3]
+    for w in set(words):
+        if words.count(w) > 2: fail("S4", f"{p}: '{w}' repeated {words.count(w)} times in the title")
+
+# S5 hidden text
+for p, h in pages.items():
+    body = re.sub(r"<(script|style|head)\b.*?</\1>", " ", h, flags=re.S)
+    for m in re.finditer(r'<(\w+)[^>]*style="[^"]*(display:\s*none|visibility:\s*hidden|font-size:\s*0[^.\d]|text-indent:\s*-\d{3,})[^"]*"[^>]*>([^<]{3,})', body):
+        fail("S5", f"{p}: text hidden with inline CSS: {m.group(3)[:50]}")
+
+# S6 index hygiene
+sm = open(os.path.join(DIST, "sitemap.xml"), encoding="utf-8").read()
+sm_paths = {re.sub(r"^https?://[^/]+", "", u) for u in re.findall(r"<loc>(.*?)</loc>", sm)}
+for p in sm_paths - set(pages): fail("S6", f"sitemap lists {p}, which is not built")
+for p in sm_paths & (set(pages) - indexable): fail("S6", f"sitemap lists {p}, which is noindex")
+for p in {q for q in indexable if q.startswith("/flood-insurance/")} - sm_paths: fail("S6", f"{p} is indexable but missing from the sitemap")
+for p, h in pages.items():
+    c = re.search(r'<link rel="canonical" href="([^"]+)"', h)
+    if p in indexable and (not c or re.sub(r"^https?://[^/]+", "", c.group(1)) != p): fail("S6", f"{p}: canonical is {c.group(1) if c else 'missing'}")
+rb = open(os.path.join(DIST, "robots.txt"), encoding="utf-8").read()
+if re.search(r"^Disallow:\s*/\s*$", rb, re.M) or "Sitemap:" not in rb: fail("S6", "robots.txt blocks the site or names no sitemap")
+
+# S7 rollout pace: newly indexable pages vs the last released sitemap (git HEAD)
+try:
+    prev = subprocess.run(["git", "show", "HEAD:dist/sitemap.xml"], cwd=ROOT, capture_output=True, text=True).stdout
+    prev_paths = {re.sub(r"^https?://[^/]+", "", u) for u in re.findall(r"<loc>(.*?)</loc>", prev)}
+    new = sorted(sm_paths - prev_paths) if prev_paths else []
+    if len(new) > MAX_NEW_INDEXABLE: fail("S7", f"{len(new)} newly indexable pages in one release (max {MAX_NEW_INDEXABLE}): {new[:5]}...")
+except Exception as e: fail("S7", f"could not read the last released sitemap: {e}")
+
+# S8 broken internal links
+for p, h in pages.items():
+    for href in re.findall(r'href="([^"#?]+)"', h):
+        if href.startswith(("http", "mailto:", "//")) or href.endswith((".csv", ".png", ".xml", ".txt", ".json")): continue
+        tgt = os.path.normpath(os.path.join(p if p.endswith("/") else os.path.dirname(p) + "/", href)).replace("\\", "/")
+        tgt = tgt if tgt.endswith((".html", "/")) else tgt + "/"
+        if tgt not in pages and tgt.rstrip("/") + "/" not in pages: fail("S8", f"{p} links to {href}, which is not built")
+
+# S9 page weight
+for p, h in pages.items():
+    if len(h.encode()) > 400_000: fail("S9", f"{p}: {len(h.encode()) // 1000} KB of HTML (max 400)")
+
+# S10 cloaking (live): Googlebot and a browser get the same page
+if "--live" in sys.argv:
+    for p in sorted(indexable)[:: max(1, len(indexable) // 12)]:
+        get = lambda ua: urllib.request.urlopen(urllib.request.Request(BASE + p, headers={"User-Agent": ua}), timeout=60).read()
+        a = get("Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"); b = get("Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/130.0")
+        if a != b: fail("S10", f"{p}: Googlebot gets a different page than a browser")
+
+sims.sort(); msims.sort()
+print(f"google gate: {len(pages)} pages, {len(indexable)} indexable; same-state similarity (names masked) "
+      + (f"median {sims[len(sims) // 2]:.0%}, max {sims[-1]:.0%} over {len(sims)} pairs; "
+         f"template sameness (numbers masked too, report only) median {msims[len(msims) // 2]:.0%}" if sims else "n/a (fewer than 2 pages in any state)"))
+show = len(fails) if os.environ.get("GATE_ALL") else 25
+for f in fails[:show]: print("  -", f)
+if len(fails) > show: print(f"  ... and {len(fails) - show} more")
+print("GOOGLE GATE " + ("FAIL" if fails else "PASS"))
+sys.exit(1 if fails else 0)

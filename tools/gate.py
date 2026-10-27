@@ -150,6 +150,8 @@ OUTSIDE = visible(skip_attrs=("data-claim", "data-rule", "data-name"))   # a pla
 for w in MX.QUANT:
     hit = re.search(rf"\b{re.escape(w)}\b", OUTSIDE, re.I)
     if hit: fail("B2", f"'{w}' used without a checked claim: …{OUTSIDE[max(0, hit.start()-50):hit.end()+40]}…")
+for _mm in re.finditer(r"\b(None|nan|NaN|undefined)\b(?!\s+(of|were|was|have|has|is|are)\b)", page):   # B3 a missing value printed as text
+    fail("B3", f"missing value printed as '{_mm.group(1)}': …{page[max(0, _mm.start()-50):_mm.end()+20]}…")
 for _mm in re.finditer(r"(\d+(?:\.\d+)?)%(.{0,40})", READ):   # H6 a share is never over 100% unless explained
     if float(_mm.group(1)) > 100 and not re.match(r"\s*(above|below|more|higher|lower|difference)", _mm.group(2)) \
             and "exact share is unknown" not in _mm.group(2) + READ[_mm.end():_mm.end() + 120]:
@@ -173,8 +175,12 @@ for keys, body in re.findall(r'<p class="src" data-src="([^"]*)">(.*?)</p>', pag
         want = "Source: " + ", ".join(hosts)
     else:
         ks = keys.split(","); want = "Source: " + "; ".join(MX.sources_for(ks))
-        if MX.needs_openfema_attr(ks) != ("OpenFEMA API" in body): fail("A1", f"OpenFEMA attribution wrong for a panel citing {keys}")
+        if "OpenFEMA API" in body: fail("A1", f"OpenFEMA credit repeated under the panel citing {keys} (it belongs once, in the footer)")
+        if MX.needs_openfema_attr(ks): _needs_attr = True
     if not body.startswith(want): fail("A1", f"source line for [{keys}] reads '{body[:70]}', registry says '{want[:70]}'")
+_foot = re.search(r"<footer>(.*?)</footer>", page, re.S)
+if globals().get("_needs_attr") and not (_foot and "OpenFEMA API, but is not endorsed by FEMA" in _foot.group(1)):
+    fail("A1", "page shows OpenFEMA data but its footer lacks FEMA's required credit")
 for _e, _r in re.findall(r"Data effective ([A-Z][a-z]+ \d{1,2}, \d{4}); retrieved ([A-Z][a-z]+ \d{1,2}, \d{4})", READ):
     if _e == _r: fail("H4", f"data effective date is only the retrieval day ({_e})")
 blk = re.search(r'srclist">(.*?)</ul>', page, re.S)

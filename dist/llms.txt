@@ -60,18 +60,28 @@
 - [Broward County](https://floodinsurancedata.com/flood-insurance/broward-county-fl/): median $831
 - [Harris County](https://floodinsurancedata.com/flood-insurance/harris-county-tx/): median $1,084
 - [Lee County](https://floodinsurancedata.com/flood-insurance/lee-county-fl/): median $1,658
+- [Palm Beach County](https://floodinsurancedata.com/flood-insurance/palm-beach-county-fl/): median $670
 - [Pinellas County](https://floodinsurancedata.com/flood-insurance/pinellas-county-fl/): median $1,442
 - [Collier County](https://floodinsurancedata.com/flood-insurance/collier-county-fl/): median $1,265
 - [Jefferson Parish](https://floodinsurancedata.com/flood-insurance/jefferson-parish-la/): median $1,172
 - [Orleans Parish](https://floodinsurancedata.com/flood-insurance/orleans-parish-la/): median $1,093
+- [Hillsborough County](https://floodinsurancedata.com/flood-insurance/hillsborough-county-fl/): median $1,117
 - [Sarasota County](https://floodinsurancedata.com/flood-insurance/sarasota-county-fl/): median $1,084
 - [Galveston County](https://floodinsurancedata.com/flood-insurance/galveston-county-tx/): median $1,101
 - [Charleston County](https://floodinsurancedata.com/flood-insurance/charleston-county-sc/): median $978
 - [Horry County](https://floodinsurancedata.com/flood-insurance/horry-county-sc/): median $583
+- [Cape May County](https://floodinsurancedata.com/flood-insurance/cape-may-county-nj/): median $1,200
+- [Sacramento County](https://floodinsurancedata.com/flood-insurance/sacramento-county-ca/): median $832
+- [Volusia County](https://floodinsurancedata.com/flood-insurance/volusia-county-fl/): median $861
+- [Beaufort County](https://floodinsurancedata.com/flood-insurance/beaufort-county-sc/): median $864
+- [Honolulu County](https://floodinsurancedata.com/flood-insurance/honolulu-county-hi/): median $1,510
 - [Brevard County](https://floodinsurancedata.com/flood-insurance/brevard-county-fl/): median $865
 - [St. Tammany Parish](https://floodinsurancedata.com/flood-insurance/st-tammany-parish-la/): median $1,212
+- [Fort Bend County](https://floodinsurancedata.com/flood-insurance/fort-bend-county-tx/): median $964
 - [Nassau County](https://floodinsurancedata.com/flood-insurance/nassau-county-ny/): median $1,470
 - [Ocean County](https://floodinsurancedata.com/flood-insurance/ocean-county-nj/): median $1,146
+- [Charlotte County](https://floodinsurancedata.com/flood-insurance/charlotte-county-fl/): median $1,976
+- [East Baton Rouge Parish](https://floodinsurancedata.com/flood-insurance/east-baton-rouge-parish-la/): median $611
 - [Monroe County](https://floodinsurancedata.com/flood-insurance/monroe-county-fl/): median $1,915
 - [Suffolk County](https://floodinsurancedata.com/flood-insurance/suffolk-county-ny/): median $1,232
 - [Duval County](https://floodinsurancedata.com/flood-insurance/duval-county-fl/): median $1,034

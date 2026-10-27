@@ -318,5 +318,105 @@
   "label": "St. Louis County, Missouri",
   "short": "St. Louis County",
   "official": 0
+ },
+ {
+  "slug": "palm-beach-county-fl",
+  "state": "FL",
+  "geoid": "12099",
+  "county": "PALM BEACH",
+  "countytitle": "Palm Beach",
+  "label": "Palm Beach County, Florida",
+  "short": "Palm Beach County",
+  "official": 0
+ },
+ {
+  "slug": "hillsborough-county-fl",
+  "state": "FL",
+  "geoid": "12057",
+  "county": "HILLSBOROUGH",
+  "countytitle": "Hillsborough",
+  "label": "Hillsborough County, Florida",
+  "short": "Hillsborough County",
+  "official": 0
+ },
+ {
+  "slug": "cape-may-county-nj",
+  "state": "NJ",
+  "geoid": "34009",
+  "county": "CAPE MAY",
+  "countytitle": "Cape May",
+  "label": "Cape May County, New Jersey",
+  "short": "Cape May County",
+  "official": 0
+ },
+ {
+  "slug": "sacramento-county-ca",
+  "state": "CA",
+  "geoid": "06067",
+  "county": "SACRAMENTO",
+  "countytitle": "Sacramento",
+  "label": "Sacramento County, California",
+  "short": "Sacramento County",
+  "official": 0
+ },
+ {
+  "slug": "volusia-county-fl",
+  "state": "FL",
+  "geoid": "12127",
+  "county": "VOLUSIA",
+  "countytitle": "Volusia",
+  "label": "Volusia County, Florida",
+  "short": "Volusia County",
+  "official": 0
+ },
+ {
+  "slug": "beaufort-county-sc",
+  "state": "SC",
+  "geoid": "45013",
+  "county": "BEAUFORT",
+  "countytitle": "Beaufort",
+  "label": "Beaufort County, South Carolina",
+  "short": "Beaufort County",
+  "official": 0
+ },
+ {
+  "slug": "honolulu-county-hi",
+  "state": "HI",
+  "geoid": "15003",
+  "county": "HONOLULU",
+  "countytitle": "Honolulu",
+  "label": "Honolulu County, Hawaii",
+  "short": "Honolulu County",
+  "official": 0
+ },
+ {
+  "slug": "fort-bend-county-tx",
+  "state": "TX",
+  "geoid": "48157",
+  "county": "FORT BEND",
+  "countytitle": "Fort Bend",
+  "label": "Fort Bend County, Texas",
+  "short": "Fort Bend County",
+  "official": 0
+ },
+ {
+  "slug": "charlotte-county-fl",
+  "state": "FL",
+  "geoid": "12015",
+  "county": "CHARLOTTE",
+  "countytitle": "Charlotte",
+  "label": "Charlotte County, Florida",
+  "short": "Charlotte County",
+  "official": 0
+ },
+ {
+  "slug": "east-baton-rouge-parish-la",
+  "state": "LA",
+  "geoid": "22033",
+  "county": "EAST BATON ROUGE",
+  "countytitle": "East Baton Rouge",
+  "label": "East Baton Rouge Parish, Louisiana",
+  "short": "East Baton Rouge Parish",
+  "official": 0
  }
 ]

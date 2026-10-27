@@ -10,9 +10,13 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from agg_raw import NAMES, slug as state_slug, FIPS
 
 T = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(T)
-DATA, DIST = os.path.join(ROOT, "data"), os.path.join(ROOT, "dist", "flood-insurance")
+REVIEW = "--all" in sys.argv   # every eligible county, built into review/ (git-ignored, never deployed) to prove the gate at scale
+DATA = os.path.join(ROOT, "data")
+DIST = os.path.join(ROOT, "review" if REVIEW else "dist", "flood-insurance")
+PLACES = os.path.join(ROOT, "review", "places.json") if REVIEW else os.path.join(ROOT, "places.json")
+CDATA = os.path.join(ROOT, "review", "c") if REVIEW else os.path.join(DATA, "c")   # unpublished county data never enters git
 BASE = os.environ.get("FF_BASEURL", "https://floodinsurancedata.com")
-MIN_PRICED = 100
+MIN_PRICED = 30   # a median from 30+ priced policies, with its small-sample caveat (no spread chart under 100); fewer = no honest median
 ST_OF = {v: k for k, v in FIPS.items()}
 INDEXED = {c["geoid"]: c for c in json.load(open(os.path.join(T, "counties.json")))}   # live and indexed before 2026-10-26
 NAMES_CEN = json.load(open(os.path.join(DATA, "us", "county_names.json")))
@@ -56,10 +60,10 @@ def assemble(g, raw):
 
 def build_one(item):
     g, st, name, sl = item
-    d = os.path.join(DATA, "c", sl); out = os.path.join(DIST, sl, "index.html"); os.makedirs(os.path.dirname(out), exist_ok=True)
+    d = os.path.join(CDATA, sl); out = os.path.join(DIST, sl, "index.html"); os.makedirs(os.path.dirname(out), exist_ok=True)
     off = str(INDEXED.get(g, {}).get("official", 0))
     env = dict(os.environ, FF_DIR=d, OUT_HTML=out, FF_GEOID=g, FF_SLUG=sl, FF_COUNTYLABEL=f"{name}, {NAMES[st]}", FF_COUNTYSHORT=name,
-               FF_OFFICIAL=off, FF_BASEURL=BASE, FF_PLACES=os.path.join(ROOT, "places.json"), FF_PLACES_RO="1", FF_NOINDEX="0" if g in INDEXED else "1")
+               FF_OFFICIAL=off, FF_BASEURL=BASE, FF_PLACES=PLACES, FF_PLACES_RO="1", FF_NOINDEX="0" if g in INDEXED else "1")
     r = subprocess.run([sys.executable, "-I", os.path.join(T, "build_page.py")], env=env, cwd=T, capture_output=True, text=True)
     if r.returncode: return sl, "build: " + (r.stderr.strip().splitlines() or ["?"])[-1][:200]
     r = subprocess.run([sys.executable, "-I", os.path.join(T, "gate.py"), os.path.join(d, "agg.json"), out, off], capture_output=True, text=True)
@@ -74,6 +78,7 @@ if __name__ == "__main__":
     for f in sorted(os.listdir(os.path.join(DATA, "all-counties"))):
         g = f[:5]; raw = json.load(open(os.path.join(DATA, "all-counties", f)))
         if g[:2] not in ST_OF or g not in NAMES_CEN or (raw["policies"].get("cost_n") or 0) < MIN_PRICED: continue
+        if not raw.get("claims", {}).get("rows"): continue   # no NFIP claim ever filed: the claim-history half of the page would be empty
         if ST_OF[g[:2]] == "DC": continue   # one county = the state page; a second copy would be a duplicate
         # publish only the counties listed in counties.json (live and indexed). New counties are added there a few at a
         # time, each read as a reader first; publishing ~1,000 at once on a new domain risks a scaled-content verdict
@@ -82,18 +87,21 @@ if __name__ == "__main__":
         st, name, agg, data = assemble(g, raw)
         sl = page_slug(name, st)
         if only and sl not in only: continue
-        d = os.path.join(DATA, "c", sl); os.makedirs(d, exist_ok=True)
+        d = os.path.join(CDATA, sl); os.makedirs(d, exist_ok=True)
         json.dump(agg, open(os.path.join(d, "agg.json"), "w")); json.dump(data, open(os.path.join(d, "data.json"), "w"))
         json.dump(raw.get("extras") or {}, open(os.path.join(d, "extras.json"), "w"))   # read by build_page and the gate from the page folder
         items.append((g, st, name, sl))
         places.append({"slug": sl, "label": f"{name}, {NAMES[st]}", "short": name, "geoid": g, "state": st,
                        "units": agg["policies"]["units"], "median": agg["policies"]["p50"], "indexable": g in INDEXED})
     places.sort(key=lambda p: -p["units"])
-    json.dump(places, open(os.path.join(ROOT, "places.json"), "w"), indent=0)   # before the builds: sibling links and the gate read it
+    if only and os.path.exists(PLACES):   # a partial build keeps every other published county in the list
+        places = [p for p in json.load(open(PLACES)) if p["slug"] not in {q["slug"] for q in places}] + places
+        places.sort(key=lambda p: -p["units"])
+    json.dump(places, open(PLACES, "w"), indent=0)   # before the builds: sibling links and the gate read it
     with ThreadPoolExecutor(6) as ex: res = list(ex.map(build_one, items))
     bad = [(s, e) for s, e in res if e]
-    built = {s for s, e in res if not e}
-    json.dump([p for p in places if p["slug"] in built], open(os.path.join(ROOT, "places.json"), "w"), indent=0)   # only what passed
+    built = {s for s, e in res if not e} | ({p["slug"] for p in places} - {it[3] for it in items} if only else set())
+    json.dump([p for p in places if p["slug"] in built], open(PLACES, "w"), indent=0)   # only what passed
     for s in sorted(built): print("GATE PASS", s)
     for s, e in bad: print("COUNTY BLOCKED", s, e)
     print(f"counties built: {len(built)} ({sum(1 for p in places if p['slug'] in built and p['indexable'])} indexable), blocked: {len(bad)}")

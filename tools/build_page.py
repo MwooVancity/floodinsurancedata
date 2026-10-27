@@ -54,9 +54,9 @@ def src(keys, effective, retrieved):
     """A panel's source line, built from the metrics it shows (metrics.py), never typed by hand."""
     USED.extend(keys)
     effective, retrieved = pretty_date(effective), pretty_date(retrieved)
-    attr = (" " + ATTR) if MX.needs_openfema_attr(keys) else ""
+    # the OpenFEMA credit is printed once, in the footer, not under every card (it was ~9 identical copies per page)
     return (f'<p class="src" data-src="{",".join(keys)}">Source: {"; ".join(MX.sources_for(keys))}. '
-            f'Data effective {effective}; retrieved {retrieved}.{attr}</p>')
+            f'Data effective {effective}; retrieved {retrieved}.</p>')
 def src_rules(keys):
     """Source line for a panel of program/legal rules: the official hosts behind each rule (rules_registry.py)."""
     hosts = []
@@ -82,6 +82,7 @@ fh = [d for d in decl if d.get("incidentType") in ("Flood", "Hurricane", "Tropic
 def _dtitle(d):   # "KS-FLOODING 10/31/98" / "NY - SEVERE WX, SEPT 7, 1998" -> "Flooding" / "Severe Wx" (the year is shown beside it)
     t = re.sub(r"^[A-Z]{2}\s*-\s*", "", (d.get("declarationTitle") or d.get("incidentType") or "").strip())
     t = re.sub(r",?\s*\b\d{1,2}/\d{1,2}(/\d{2,4})?\b|,?\s*\b(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEPT?|OCT|NOV|DEC)[A-Z]*\.?\s+\d{1,2}(,\s*\d{4})?", "", t, flags=re.I)
+    t = re.sub(r"\s*\b(of\s+)?'?\d{2,4}\b", "", t, flags=re.I)   # stray years ("1996", "Blizzard Of 96"); the year is shown beside it
     return t.strip(" ,-").title()
 def cal_year(d):
     # CALENDAR year from declarationDate — NOT fyDeclared (FEMA's federal fiscal year, which rolls to
@@ -590,10 +591,14 @@ if cx.get("outside_sfha_pct") is not None and P.get("sfha_share_units") is not N
             else claim("at least as much per policy as inside the high-risk zone", "as much per policy",
                        ("outside_sfha_dollars", ">=", "outside_sfha_policies")))
     _xmed = (czone.get("X") or {}).get("median")
-    outside_note = card("I'm outside the high-risk zone. Do floods happen there?",
-        claim("Yes", "yes", ("outside_sfha_dollars", ">", 0))
+    _lead = (claim("Yes", "yes", ("outside_sfha_dollars", ">", 0))
         + f". {m('outside_sfha_dollars', str(cx['outside_sfha_pct']) + '%')} of the flood-insurance claim money paid in {CS} went to homes "
-        f"outside the high-risk zones, which hold {m('outside_sfha_policies', str(_out_pol) + '%')} of policies here: {_per}.",
+        f"outside the high-risk zones, which hold {m('outside_sfha_policies', str(_out_pol) + '%')} of policies here: {_per}."
+        if cx["outside_sfha_pct"] > 0 else
+        f"Not in these records: {m('outside_sfha_dollars', str(cx['outside_sfha_pct']) + '%')} of the flood-insurance claim money paid in {CS} went to homes "
+        f"outside the high-risk zones, though they hold {m('outside_sfha_policies', str(_out_pol) + '%')} of policies here. "
+        "Uninsured damage is not counted.")
+    outside_note = card("I'm outside the high-risk zone. Do floods happen there?", _lead,
         f"<ul class='kv'><li><b>Claim dollars paid outside A/V zones</b><span>{m('outside_sfha_dollars', str(cx['outside_sfha_pct']) + '%')}</span></li>"
         f"<li><b>Policies outside A/V zones</b><span>{m('outside_sfha_policies', str(_out_pol) + '%')}</span></li>"
         + (f"<li><b>Zone X median cost</b><span>{tp('zone_cost', 'policies.cost_by_zone.X.median', money, q='X')}</span></li>" if _xmed else "")
@@ -764,17 +769,7 @@ def page_sources():
         if ds not in seen: seen.append(ds)
     return [MX.DATASETS[d][:2] for d in MX.DATASETS if d in seen]
 sources_li = "@@SOURCES_LI@@"
-# JSON-LD: Dataset + Place + FAQPage + Breadcrumb
-_faq = [
-    (f"How much is flood insurance in {CS}?",
-     f"Existing single-family NFIP policyholders pay a median {money(P['p50'])} a year, with the middle "
-     f"half between {money(P['p25'])} and {money(P['p75'])}. This is what current policies cost, not a quote."),
-    (f"Is {CS} flood insurance below FEMA's full-risk price?",
-     f"{P['share_below']}% of single-family policies pay a premium below FEMA's full-risk premium "
-     f"(median full-risk {money(P['frp_median'])} vs median premium {money(PREM_MED)}, premiums only)."),
-    (f"How many flood claims has {CS} had?",
-     f"{num(C['rows'])} NFIP flood claims between {C['year_min']} and {C['year_max']}, which paid {money(C['total_paid'])} in total."),
-]
+# JSON-LD: Dataset + Place + Breadcrumb (no FAQ markup: Google requires it to match visible Q&A)
 _qa = [f'<a href="#required"><b>Am I required to buy it?</b> {rule("purchase_answer")}</a>',
        f'<a href="#covered"><b>How fast does it start?</b> {rule("howto_answer")}</a>']
 _cxq = data.get("claims_extra") or {}
@@ -810,13 +805,11 @@ jsonld = json.dumps([
      "keywords": ["flood insurance", "NFIP", "FEMA", CS],
      "creator": {"@type": "Organization", "name": "FEMA OpenFEMA"},
      "publisher": {"@type": "Organization", "name": "Flood Insurance Data", "url": BASE_URL},
-     "dateModified": ISO_DATE, "datePublished": ISO_DATE,
+     "dateModified": ISO_DATE,   # the data's real change date; no datePublished (it would move with every refresh)
      "citation": "@@CITATION@@",
      "isBasedOn": "https://www.fema.gov/about/openfema/data-sets", "license": "https://www.fema.gov/about/openfema/terms-conditions"},
     {"@context": "https://schema.org", "@type": "Place", "name": CL,
-     "address": {"@type": "PostalAddress", "addressRegion": agg.get("nri", {}).get("state") if agg.get("nri") else None, "addressCountry": "US"}},
-    {"@context": "https://schema.org", "@type": "FAQPage",
-     "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in _faq]},
+     "address": {"@type": "PostalAddress", "addressRegion": agg.get("state") or ((agg.get("nri") or {}).get("state")), "addressCountry": "US"}},
     {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
         {"@type": "ListItem", "position": 1, "name": "Flood insurance", "item": f"{BASE_URL}/flood-insurance/"},
         {"@type": "ListItem", "position": 2, "name": CS, "item": CANON}]},
@@ -1020,7 +1013,7 @@ table{{width:100%}}}}
 
 {card(f"How often is {CS} a flood disaster?" if IS_STATE else f"How often is this {UNIT} a flood disaster?",
   f"{m('declarations', str(len(fh_events)))} federal disasters for floods or storms here"
-  + (f"; the latest was {html.escape((recent[0].get('declarationTitle') or '').title())} ({html.escape(cal_year(recent[0]))})." if recent else "."),
+  + (f"; the latest was {html.escape(_dtitle(recent[0]))} ({html.escape(cal_year(recent[0]))})." if recent else "."),
   f"<ul>{recent_li}</ul><p class='note'>Distinct storms by calendar year (one storm's emergency and major-disaster declarations are counted once), not individual declaration records.</p>",
   src(["declarations"], "declarations through 2026", RETR))}
 

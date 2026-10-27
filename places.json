@@ -40,6 +40,16 @@
 "indexable": true
 },
 {
+"slug": "palm-beach-county-fl",
+"label": "Palm Beach County, Florida",
+"short": "Palm Beach County",
+"geoid": "12099",
+"state": "FL",
+"units": 132945,
+"median": 670,
+"indexable": true
+},
+{
 "slug": "pinellas-county-fl",
 "label": "Pinellas County, Florida",
 "short": "Pinellas County",
@@ -77,6 +87,16 @@
 "state": "LA",
 "units": 67988,
 "median": 1093,
+"indexable": true
+},
+{
+"slug": "hillsborough-county-fl",
+"label": "Hillsborough County, Florida",
+"short": "Hillsborough County",
+"geoid": "12057",
+"state": "FL",
+"units": 65247,
+"median": 1117,
 "indexable": true
 },
 {
@@ -120,6 +140,56 @@
 "indexable": true
 },
 {
+"slug": "cape-may-county-nj",
+"label": "Cape May County, New Jersey",
+"short": "Cape May County",
+"geoid": "34009",
+"state": "NJ",
+"units": 48473,
+"median": 1200,
+"indexable": true
+},
+{
+"slug": "sacramento-county-ca",
+"label": "Sacramento County, California",
+"short": "Sacramento County",
+"geoid": "06067",
+"state": "CA",
+"units": 48307,
+"median": 832,
+"indexable": true
+},
+{
+"slug": "volusia-county-fl",
+"label": "Volusia County, Florida",
+"short": "Volusia County",
+"geoid": "12127",
+"state": "FL",
+"units": 48099,
+"median": 861,
+"indexable": true
+},
+{
+"slug": "beaufort-county-sc",
+"label": "Beaufort County, South Carolina",
+"short": "Beaufort County",
+"geoid": "45013",
+"state": "SC",
+"units": 46831,
+"median": 864,
+"indexable": true
+},
+{
+"slug": "honolulu-county-hi",
+"label": "Honolulu County, Hawaii",
+"short": "Honolulu County",
+"geoid": "15003",
+"state": "HI",
+"units": 45987,
+"median": 1510,
+"indexable": true
+},
+{
 "slug": "brevard-county-fl",
 "label": "Brevard County, Florida",
 "short": "Brevard County",
@@ -140,6 +210,16 @@
 "indexable": true
 },
 {
+"slug": "fort-bend-county-tx",
+"label": "Fort Bend County, Texas",
+"short": "Fort Bend County",
+"geoid": "48157",
+"state": "TX",
+"units": 41452,
+"median": 964,
+"indexable": true
+},
+{
 "slug": "nassau-county-ny",
 "label": "Nassau County, New York",
 "short": "Nassau County",
@@ -157,6 +237,26 @@
 "state": "NJ",
 "units": 41040,
 "median": 1146,
+"indexable": true
+},
+{
+"slug": "charlotte-county-fl",
+"label": "Charlotte County, Florida",
+"short": "Charlotte County",
+"geoid": "12015",
+"state": "FL",
+"units": 40832,
+"median": 1976,
+"indexable": true
+},
+{
+"slug": "east-baton-rouge-parish-la",
+"label": "East Baton Rouge Parish, Louisiana",
+"short": "East Baton Rouge Parish",
+"geoid": "22033",
+"state": "LA",
+"units": 40683,
+"median": 611,
 "indexable": true
 },
 {
