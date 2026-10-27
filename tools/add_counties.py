@@ -13,7 +13,8 @@ path = os.path.join(ROOT, "tools", "counties.json")
 cur = json.load(open(path, encoding="utf-8"))
 have = {c["geoid"] for c in cur}
 passed = json.load(open(QUEUE, encoding="utf-8"))
-new = [p for p in passed if p["geoid"] not in have][:N]
+sys.path.insert(0, os.path.join(ROOT, "tools")); import review as RV
+new = [p for p in passed if p["geoid"] not in have and RV.ok(p["slug"])][:N]   # only pages a hater review passed
 for p in new:
     t = p["short"].rsplit(" ", 1)[0] if p["short"].split(" ")[-1] in ("County", "Parish", "Borough") else p["short"]
     cur.append({"slug": p["slug"], "state": p["state"], "geoid": p["geoid"], "county": t.upper(), "countytitle": t,

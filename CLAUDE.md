@@ -112,6 +112,17 @@ with NO `$orderby` (orderby forces a server sort of the filtered set and 503s), 
 negative premiums are refunds; claims `countyCode` may not match property county; suppress cost charts
 under 100 cohort policies, ZIP under 20.
 
+## Nothing goes live without a hater review (HARD, owner 2026-10-27: "we are not going to put out any pages live unless it's scrutinized like the worst hater in the world")
+The code gates check only what someone thought to code; they passed "since None" and a false "Yes". So every page
+(home, each state, each county) ships only with a current PASS in `state/reviews/<slug>.json` (`tools/review.py`):
+- The reviewer is hostile and was not the builder: an agent given the rendered phone screenshots, the page text and its
+  data files, told to find every reason a frightened reader, a FEMA analyst, a competitor or a Google rater would call
+  the page wrong, misleading, confusing, padded or untrustworthy. Defects first, worst first; PASS only with zero.
+- A review is tied to the template hash (build_page, build_site, metrics, rules_registry): any template change makes
+  every review stale and every page is reviewed again before the next deploy.
+- Enforced: `google_gate.py` S12 fails a release with any indexable page lacking a current PASS, and `add_counties.py`
+  (the daily GitHub job) only queues reviewed counties. Every defect class found becomes a builder rule or gate check.
+
 ## The gate — one, small, nothing unchecked (2026-10-26; why: docs/GATE-PROMPT.md)
 Two rounds proved a big gate misses things: 29 checks passed 9 shipped defect classes, then 45 checks passed a page a
 reader found 15 defects on. So correctness lives in the BUILDER, and the gate asks 9 questions:

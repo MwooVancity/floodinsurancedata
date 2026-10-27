@@ -149,6 +149,15 @@ _us = re.search(r'<div class="n">(\$[\d,]+)</div><div class="l">U\.S\. median', 
 _seen = {re.sub(r"<[^>]+>", "", v) for h in pages.values() for v in re.findall(r'<span data-m="us_p50"[^>]*>(.*?)</span>', h)}
 if _us and _seen - {_us.group(1)}: fail("S11", f"home U.S. median {_us.group(1)} but pages print {sorted(_seen)}")
 
+# S12 hater review: every indexable page (home, states, counties) has a current PASS from a hostile reader (tools/review.py)
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import review as RV
+_th = RV.template_hash()
+for p in sorted(indexable):
+    m_ = re.fullmatch(r"/flood-insurance/([^/]+)/", p)
+    slug = "home" if p == "/" else m_.group(1) if m_ else None
+    if slug and not RV.ok(slug, _th):
+        fail("S12", f"{p}: no current hater-review PASS (template {_th}; state/reviews/{slug}.json is {(RV.get(slug) or {}).get('verdict') or 'missing'})")
+
 # S10 cloaking (live): Googlebot and a browser get the same page
 if "--live" in sys.argv:
     for p in sorted(indexable)[:: max(1, len(indexable) // 12)]:
