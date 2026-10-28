@@ -13,7 +13,8 @@ from rules_registry import RULES
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 API = "https://www.fema.gov/api/open/v3/"
-ASOF = "2026-07-31T00:00:00.000z"
+from agg_raw import asof as _asof
+ASOF = _asof() + "T00:00:00.000z"
 args = sys.argv[1:]
 base = None
 RULES_ONLY = "--rules-only" in args   # release.py step: every rule's official wording is still on its source (seconds, not minutes)

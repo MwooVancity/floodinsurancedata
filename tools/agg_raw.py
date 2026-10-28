@@ -26,6 +26,9 @@ FIPS = {"AL": "01", "AK": "02", "AZ": "04", "AR": "05", "CA": "06", "CO": "08", 
         "SC": "45", "SD": "46", "TN": "47", "TX": "48", "UT": "49", "VT": "50", "VA": "51", "WA": "53", "WV": "54", "WI": "55", "WY": "56"}
 
 def slug(st): return NAMES[st].lower().replace(" ", "-")
+ASOF_FILE = os.path.join(ROOT, "data", "us", "asof.json")
+def asof():   # the as-of date of the policies in data/ (set by the pull; every script reads it here)
+    return json.load(open(ASOF_FILE))["asof"]
 
 # only the columns a figure needs, numbers parsed; everything else stays in the raw file for later metrics
 POL_NUM = ("policyCount", "policyCost", ffcalc.PREM, "fullRiskPremium", "totalBuildingInsuranceCoverage", "totalContentsInsuranceCoverage")
@@ -71,6 +74,8 @@ def manifest(ds, st):
 def run(st):
     if not all(os.path.exists(os.path.join(RAW, ds, st + ".done")) for ds in ("NfipPolicies", "NfipClaims")):
         print(st, "skipped: pull not finished"); return
+    if os.path.exists(os.path.join(RAW, "asof.txt")):
+        json.dump({"asof": open(os.path.join(RAW, "asof.txt")).read().strip()}, open(ASOF_FILE, "w"))
     pol = load("NfipPolicies", st, POL_NUM, POL_STR)
     clm = load("NfipClaims", st, CLM_NUM, CLM_STR)
     P = ffcalc.aggregate_policies(pol)
@@ -99,7 +104,7 @@ def run(st):
                      "claims": cc["rows"], "paid": cc["total_paid"], "cwop_share": (cx or {}).get("cwop_share")}
     unassigned = sum(1 for r in pol if len((r["censusGeoid"] or "")[:5]) != 5)
     agg = {"level": "state", "state": st, "name": NAMES[st],
-           "policies": dict(P, asof="2026-07-31", retrieved=manifest("NfipPolicies", st)["pulled"], unassigned_rows=unassigned),
+           "policies": dict(P, asof=asof(), retrieved=manifest("NfipPolicies", st)["pulled"], unassigned_rows=unassigned),
            "claims": dict(C, retrieved=manifest("NfipClaims", st)["pulled"]),
            "claims_extra": claims_extra(clm), "counties": rollup,
            "manifest": {"policies": manifest("NfipPolicies", st), "claims": manifest("NfipClaims", st)}, "complete": True}

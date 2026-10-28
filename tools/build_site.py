@@ -61,9 +61,11 @@ FOOT = ('<footer class="mut" style="margin:28px 0;border-top:1px solid var(--lin
         ' · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a></footer></main></body></html>')
 
 # ---- home: the reader's first questions answered, then find your state or county ----
-import sys as _sys
+import sys as _sys, datetime as _dtm
 _sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from rules_registry import rule
+from agg_raw import asof as _asof   # the data's as-of date, set by the pull (one place)
+_ASOF_TXT = _dtm.date.fromisoformat(_asof()).strftime("%B %d, %Y").replace(" 0", " ")
 _bp = os.path.join(DATADIR, "states", "built.json")
 states = json.load(open(_bp)) if os.path.exists(_bp) else []
 rows = "".join(f'<tr data-k="{html.escape((p["short"]+" "+(p.get("state") or "")).lower())}">'
@@ -105,7 +107,7 @@ if len(states) == 51:   # U.S. figures only once every state is built and gated:
     national = (f'<div class="stats"><div class="stat"><div class="n">{money(_med)}</div><div class="l">U.S. median a year</div></div>'
                 f'<div class="stat"><div class="n">{money(_med / 12)}</div><div class="l">Per month</div></div>'
                 f'<div class="stat"><div class="n">{_units / 1e6:.1f}M</div><div class="l">Insured units in force</div></div></div>'
-                '<p class="mut">Median and per month: what existing single-family primary-home policies pay, premium plus fees. Insured units: every NFIP policy unit in force on July 31, 2026, including condos, rentals and businesses.</p>'
+                f'<p class="mut">Median and per month: what existing single-family primary-home policies pay, premium plus fees. Insured units: every NFIP policy unit in force on {_ASOF_TXT}, including condos, rentals and businesses.</p>'
                 f'<p class="cmp"><b>Buying?</b> Policies first bought in the past year typically pay {money(_new_med)} ({_new_n:,} policies). <a href="#prices">Why sites differ</a>.</p>')
     # hater r5 (home): price drivers, ways to pay less, a quote check and the averages other sites quote, all from the same records
     home_cards = (f'<div class="card" id="check"><h2>Is my quote normal?</h2><p class="stand">Type your yearly cost (premium plus fees) to see where it '
@@ -122,7 +124,7 @@ if len(states) == 51:   # U.S. figures only once every state is built and gated:
         f'<tr><td>Average (mean) cost, single-family homes</td><td>{money(_sf_mean)}</td></tr>'
         f'<tr><td>Average cost, every policy type (adds condos, rentals, businesses)</td><td>{money(_all_mean)}</td></tr>'
         f'<tr><td>Average premium alone, single-family homes (before the federal fees)</td><td>{money(_wmean("sf_prem_mean", "sf_prem_n"))}</td></tr></tbody></table>'
-        '<p class="mut">Premium plus fees except the last row, NFIP policies in force on July 31, 2026. A figure quoted without fees, or '
+        f'<p class="mut">Premium plus fees except the last row, NFIP policies in force on {_ASOF_TXT}. A figure quoted without fees, or '
         'for a different mix of policies, lands lower or higher than ours. Private flood insurance is not in this data.</p></div>'
         f'<script>var qv=document.getElementById("qv"),qo=document.getElementById("qo");qv.addEventListener("input",function(){{'
         f'var v=+qv.value.replace(/[^0-9.]/g,"");if(!v){{qo.textContent="";return;}}'
@@ -330,8 +332,8 @@ def county_lastmod(slug):
     ap = os.path.join(cdir(slug) if "/" not in slug and "\\" not in slug else os.path.join(DATADIR, slug), "agg.json")
     if os.path.exists(ap):
         a = json.load(open(ap))
-        return (a.get("policies") or {}).get("asof") or "2026-07-31"
-    return "2026-07-31"
+        return (a.get("policies") or {}).get("asof") or _asof()
+    return _asof()
 county_urls = [(BASE + f"/flood-insurance/{p['slug']}/", county_lastmod(p["slug"])) for p in indexable]
 # county pages carry lastmod = their data's effective date (a real data change); home/methodology/data
 # have no trustworthy per-content modification date, so they omit lastmod rather than inherit a false one.

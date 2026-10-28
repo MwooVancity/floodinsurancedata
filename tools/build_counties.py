@@ -39,11 +39,11 @@ def assemble(g, raw):
     st = ST_OF[g[:2]]; name = NAMES_CEN[g]; sagg, sdata, sdet = state_files(st)
     det, k = sdet.get(g, {}), key(name)
     sm = sagg["manifest"]
-    def man(ds, rows): return {"reported_total": rows, "recheck_total": rows, "unique_fetched": rows, "missing": 0, "complete": bool(sm[ds]["complete"]),
-                               "stable": True, "provisional": False, "pulled": sm[ds]["pulled"], "scope": "state",
+    def man(ds, rows): return {"reported_total": rows, "unique_fetched": rows, "missing": 0, "complete": bool(sm[ds]["complete"]),
+                               "provisional": False, "pulled": sm[ds]["pulled"], "scope": "state",
                                "state_total": sm[ds]["unique_fetched"]}   # every record of the state was downloaded and matched
     agg = {"level": "county", "geoid": g, "state": st, "complete": True,
-           "policies": dict(raw["policies"], asof="2026-07-31", retrieved=sagg["policies"]["retrieved"]),
+           "policies": dict(raw["policies"], asof=sagg["policies"]["asof"], retrieved=sagg["policies"]["retrieved"]),
            "claims": dict(raw["claims"], retrieved=sagg["claims"]["retrieved"]),
            "nri": det.get("nri"), "state_risk": [{"fips": c["fips"], "county": c["county"], "rating": c["rating"]} for c in sdata.get("nri_counties", [])],
            "manifest": {"policies": man("policies", raw["policies"]["rows"]), "claims": man("claims", raw["claims"]["rows"])}}

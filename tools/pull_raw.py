@@ -10,7 +10,15 @@ from concurrent.futures import ThreadPoolExecutor
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RAW = os.path.join(ROOT, ".cache", "raw")
 API = "https://www.fema.gov/api/open/v3/"
-ASOF = "2026-07-31T00:00:00.000z"
+os.makedirs(RAW, exist_ok=True)
+def _asof():   # end of the month 3 months back (FEMA updates monthly, with a lag); a resumed pull keeps the date it started with
+    p = os.path.join(RAW, "asof.txt")
+    if os.path.exists(p): return open(p).read().strip()
+    t = datetime.date.today().replace(day=1)
+    for _ in range(2): t = (t - datetime.timedelta(days=1)).replace(day=1)
+    d = str(t - datetime.timedelta(days=1)); open(p, "w").write(d); return d
+ASOF_DATE = datetime.date.fromisoformat(_asof())
+ASOF = f"{ASOF_DATE}T00:00:00.000z"
 STATES = ("DC HI WY SD AK MT VT ND NH NE UT ID NM KS NV IA ME WV OK OR CO KY AR RI MN WI TN IN MO MI AZ WA MS DE CT "
           "OH IL AL MD PA GA MA VA NC SC NY NJ CA LA TX FL").split()          # smallest first
 POL_FIELDS = ("id propertyState censusGeoid reportedZipCode reportedCity nfipCommunityNumberCurrent ratedFloodZone floodZoneCurrent "
@@ -52,13 +60,13 @@ def slices(ds, st):
         base = f"propertyState eq '{st}' and policyEffectiveDate le '{ASOF}' and policyTerminationDate ge '{ASOF}'"
         out = [("pre2020", base + " and policyEffectiveDate lt '2020-01-01T00:00:00.000z'")]
         d = datetime.date(2020, 1, 1)
-        while d <= datetime.date(2026, 7, 1):
+        while d <= ASOF_DATE.replace(day=1):
             n = (d.replace(day=28) + datetime.timedelta(days=4)).replace(day=1)
             out.append((f"{d:%Y%m}", base + f" and policyEffectiveDate ge '{d}T00:00:00.000z' and policyEffectiveDate lt '{n}T00:00:00.000z'"))
             d = n
         return base, out
     base = f"state eq '{st}'"
-    return base, [("noyear", base + " and yearOfLoss eq null")] + [(str(y), base + f" and yearOfLoss eq {y}") for y in range(1970, 2027)]
+    return base, [("noyear", base + " and yearOfLoss eq null")] + [(str(y), base + f" and yearOfLoss eq {y}") for y in range(1970, ASOF_DATE.year + 1)]
 
 def pull_slice(ds, st, name, filt, fields):
     d = os.path.join(RAW, ds, st); os.makedirs(d, exist_ok=True)

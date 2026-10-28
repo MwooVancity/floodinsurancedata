@@ -45,9 +45,10 @@ _st = next(n.value for n in _pull.body if isinstance(n, ast.Assign) and getattr(
 _pulled = set(ast.literal_eval(_st.func.value).split()) if isinstance(_st, ast.Call) else set()
 assert _pulled == set(_NAMES), f"pull_raw.STATES differs from the 51 names: missing {set(_NAMES) - _pulled}, extra {_pulled - set(_NAMES)}"
 import datetime as _dt, extras_raw as _XR   # "last 12 months" means 12 months to the pull's as-of date, not a stale constant
-_asof = _dt.date.fromisoformat(next(n.value.value for n in _pull.body if isinstance(n, ast.Assign) and getattr(n.targets[0], "id", "") == "ASOF")[:10])
-for _f in ("agg_raw.py", "recheck.py"):   # code review 2026-10-28: the as-of date was typed in three files
-    assert str(_asof) in open(os.path.join(T, _f), encoding="utf-8").read(), f"{_f} does not use pull_raw.ASOF {_asof}"
+from agg_raw import asof as _asof_fn   # one as-of date (data/us/asof.json, set by the pull): no script may type its own
+_asof = _dt.date.fromisoformat(_asof_fn())
+for _f in ("agg_raw.py", "recheck.py", "extras_raw.py", "build_counties.py", "build_site.py", "pull_raw.py"):
+    assert not re.search(r"asof=\"20\d\d|ASOF = \"20\d\d|NB_FROM = \"20\d\d", open(os.path.join(T, _f), encoding="utf-8").read()), f"{_f} types an as-of date"
 assert _XR.NB_FROM ==str(_asof.replace(year=_asof.year - 1) + _dt.timedelta(days=1)), \
     f"extras_raw.NB_FROM {_XR.NB_FROM} is not 12 months before pull_raw.ASOF {_asof}"
 from rules_registry import RULES as _RULES   # a date a rule's source states must appear in the rule text (Citizens 2023 was left out)

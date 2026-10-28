@@ -10,8 +10,8 @@ import hashlib, json, os, re, sys, urllib.parse, urllib.request
 
 OPENFEMA = "openfema"
 DATASETS = {   # display name, citation URL, whether the OpenFEMA attribution applies
-    "NfipPolicies": ("FEMA OpenFEMA — NFIP Policies", "https://www.fema.gov/api/open/v3/NfipPolicies", OPENFEMA),
-    "NfipClaims": ("FEMA OpenFEMA — NFIP Claims", "https://www.fema.gov/api/open/v3/NfipClaims", OPENFEMA),
+    "NfipPolicies": ("FEMA OpenFEMA — NFIP Policies", "https://www.fema.gov/openfema-data-page/nfip-redacted-policies-v3", OPENFEMA),
+    "NfipClaims": ("FEMA OpenFEMA — NFIP Claims", "https://www.fema.gov/openfema-data-page/nfip-redacted-claims-v3", OPENFEMA),
     "NRI": ("FEMA — National Risk Index (flood)", "https://www.fema.gov/flood-maps/products-tools/national-risk-index", "fema"),
     "NfipCommunityStatusBook": ("FEMA OpenFEMA — NFIP Community Status Book (CRS)", "https://www.fema.gov/openfema-data-page/nfip-community-status-book-v1", OPENFEMA),
     "DisasterDeclarationsSummaries": ("FEMA OpenFEMA — Disaster Declarations Summaries", "https://www.fema.gov/openfema-data-page/disaster-declarations-summaries-v2", OPENFEMA),

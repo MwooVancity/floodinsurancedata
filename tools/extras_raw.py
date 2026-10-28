@@ -11,7 +11,10 @@ from codes import NONPAY_REASON, CAUSE, DEDUCTIBLE, truthy
 from agg_raw import NAMES, slug, RAW, ROOT, FIPS
 
 RR2_NEW = "2021-10-01"     # new NFIP policies from this date are rated under Risk Rating 2.0 (rules_registry: rr2_start)
-NB_FROM = "2025-08-01"     # first written in the 12 months to the pull's as-of date (pull_raw.ASOF 2026-07-31; test_gate checks they agree)
+import datetime
+from agg_raw import asof as _asof
+_A = datetime.date.fromisoformat(_asof())
+NB_FROM = str(_A.replace(year=_A.year - 1) + datetime.timedelta(days=1))   # first written in the 12 months to the as-of date
 
 def f(v):
     try: return float(v) if v not in ("", None) else None
