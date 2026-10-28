@@ -1,6 +1,6 @@
 """THE Google gate: the whole site checked against Google's spam policies and structured-data rules before a deploy.
 gate.py asks "is each page true and readable?"; this asks "could Google read the site as spam?". Exit 1 blocks ship.
-Usage: python -I tools/google_gate.py [--root dist] [--live]
+Usage: python -I tools/google_gate.py [--root dist] [--skip-review]
   S1 structured data   markup claims only what the page shows (no FAQ/Review/Rating markup; dateModified = the data's date)
   S2 scaled content    no indexable page is a near-copy of another in its state (numbers and place names masked)
   S3 thin pages        every indexable county page carries its own data (enough figures read from its own records)
@@ -10,13 +10,13 @@ Usage: python -I tools/google_gate.py [--root dist] [--live]
   S7 rollout pace      at most 25 newly indexable pages per release (owner 2026-10-26: no bulk publishing)
   S8 broken links      every internal link resolves to a built page
   S9 page weight       every page under 400 KB of HTML
-  S10 cloaking (--live) Googlebot and a browser get the same page"""
-import json, os, re, subprocess, sys, urllib.request
+  S10 cloaking         in gate_live.py: every live page fetched as Googlebot equals the built page"""
+import json, os, re, subprocess, sys
+sys.stdout.reconfigure(encoding="utf-8", errors="replace")   # a failure quoting "→" must print, not crash the gate
 from collections import defaultdict
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DIST = os.path.join(ROOT, sys.argv[sys.argv.index("--root") + 1]) if "--root" in sys.argv else os.path.join(ROOT, "dist")
-BASE = "https://floodinsurancedata.com"
 MAX_NEW_INDEXABLE, DUP_MAX, MIN_OWN_FIGURES = 25, 0.80, 40
 fails = []
 def fail(cid, msg): fails.append(f"[{cid}] {msg}")
@@ -44,15 +44,15 @@ for p, h in pages.items():
 # S2 scaled content: masked 8-gram similarity among indexable county pages of the same state (and against the state page)
 # Names are masked (a name swap is the doorway pattern); numbers are KEPT, because each county's own figures are the
 # page's content. The number-masked prose figure is printed every run (not failing) so template sameness stays visible.
-def shingles(h, own, mask_nums=False):
+def shingles(h, own):
     t = text(h).lower()
     for w in sorted(own, key=len, reverse=True): t = t.replace(w.lower(), " X ")
-    w = re.findall(r"[a-z0-9]+", re.sub(r"\d[\d,.]*", " 0 ", t) if mask_nums else t)
+    w = re.findall(r"[a-z0-9]+", t)
     return {" ".join(w[i:i + 8]) for i in range(max(0, len(w) - 7))}
 places = json.load(open(os.path.join(DIST, "..", "places.json") if os.path.exists(os.path.join(DIST, "..", "places.json")) else os.path.join(ROOT, "places.json")))
 states = json.load(open(os.path.join(ROOT, "data", "states", "built.json")))
 st_slug = {s["abbr"]: s["slug"] for s in states}; st_name = {s["abbr"]: s["name"] for s in states}
-by_state, sims, msims = defaultdict(list), [], []
+by_state, sims = defaultdict(list), []
 for c in places:
     p = f"/flood-insurance/{c['slug']}/"
     if p in pages and p in indexable: by_state[c["state"]].append((p, c))
@@ -67,9 +67,6 @@ for st, items in by_state.items():
             if not a or not b: continue
             s = len(a & b) / len(a | b); sims.append(s)
             if s > DUP_MAX: fail("S2", f"{keys[i]} and {keys[j]} are {s:.0%} the same text with place names masked (max {DUP_MAX:.0%})")
-    shm = {p: shingles(pages[p], [c["short"], c["label"], st_name.get(st, ""), c["short"].split(" ")[0]], True) for p, c in items}
-    for x, y in [(a, b) for i, a in enumerate(shm) for b in list(shm)[i + 1:]]:
-        msims.append(len(shm[x] & shm[y]) / len(shm[x] | shm[y]))
 
 # S3 thin: an indexable county page carries enough figures read from its own records (not constants, not the state's)
 for st, items in by_state.items():
@@ -158,19 +155,29 @@ for p in ([] if "--skip-review" in sys.argv else sorted(indexable)):   # skipped
     if slug and not RV.ok(slug, _th):
         fail("S12", f"{p}: no current hater-review PASS (template {_th}; state/reviews/{slug}.json is {(RV.get(slug) or {}).get('verdict') or 'missing'})")
 
-# S10 cloaking (live): Googlebot and a browser get the same page
-if "--live" in sys.argv:
-    for p in sorted(indexable)[:: max(1, len(indexable) // 12)]:
-        get = lambda ua: urllib.request.urlopen(urllib.request.Request(BASE + p, headers={"User-Agent": ua}), timeout=60).read()
-        a = get("Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"); b = get("Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/130.0")
-        if a != b: fail("S10", f"{p}: Googlebot gets a different page than a browser")
+# S13 boilerplate share (hater r5: shared paragraphs = scaled content). A caveat belongs beside its figure, so a shared
+# sentence is allowed; a county page whose prose is MOSTLY sentences found on over half the county pages is templated.
+# Prose = <p> text, not menus, source lines or rule() text (rules are one registry text with their source, by design).
+_cp = {p: pages[p] for items in by_state.values() for p, _ in items}
+_share = {}
+if len(_cp) >= 5:
+    _sents, _cnt = {}, defaultdict(int)
+    for p, h in _cp.items():
+        h = re.sub(r'<(span|div) data-rule="\w+">.*?</\1>', " ", h, flags=re.S)
+        t = " ".join(text(x) for x in re.findall(r'<p(?! class="(?:src|prov)")[^>]*>(.*?)</p>', h, re.S))
+        _sents[p] = [" ".join(s.split()) for s in re.split(r"(?<=[.!?])\s+", t) if s.split()]
+        for s_ in set(_sents[p]): _cnt[s_] += 1
+    for p, ss in _sents.items():
+        tot = sum(len(s.split()) for s in ss) or 1
+        _share[p] = sum(len(s.split()) for s in ss if _cnt[s] > len(_cp) / 2) / tot
+        if _share[p] > 0.5: fail("S13", f"{p}: {_share[p]:.0%} of its prose is shared with most county pages (max 50%)")
 
-sims.sort(); msims.sort()
+# S10 cloaking: gate_live.py fetches every page as Googlebot and requires it byte-identical to the built page
+
+sims.sort()
 print(f"google gate: {len(pages)} pages, {len(indexable)} indexable; same-state similarity (names masked) "
-      + (f"median {sims[len(sims) // 2]:.0%}, max {sims[-1]:.0%} over {len(sims)} pairs; "
-         f"template sameness (numbers masked too, report only) median {msims[len(msims) // 2]:.0%}" if sims else "n/a (fewer than 2 pages in any state)"))
-show = len(fails) if os.environ.get("GATE_ALL") else 25
-for f in fails[:show]: print("  -", f)
-if len(fails) > show: print(f"  ... and {len(fails) - show} more")
+      + (f"median {sims[len(sims) // 2]:.0%}, max {sims[-1]:.0%} over {len(sims)} pairs" if sims else "n/a (fewer than 2 pages in any state)")
+      + (f"; shared prose per county page median {sorted(_share.values())[len(_share) // 2]:.0%}, max {max(_share.values()):.0%}" if _share else ""))
+for f in fails: print("  -", f)
 print("GOOGLE GATE " + ("FAIL" if fails else "PASS"))
 sys.exit(1 if fails else 0)

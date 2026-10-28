@@ -21,7 +21,7 @@ indexable = [p for p in places if p.get("indexable", True)]
 def cdir(slug):   # county data lives in data/c/<slug> (one pipeline); older builds in data/<slug>
     return os.path.join(DATADIR, "c", slug) if os.path.isdir(os.path.join(DATADIR, "c", slug)) else os.path.join(DATADIR, slug)
 
-def money(n): return "$" + format(int(round(n)), ",") if n is not None else "—"
+def money(n): return "$" + format(int(n + 0.5) if n >= 0 else -int(-n + 0.5), ",") if n is not None else "—"   # half rounds up, same as build_page
 def wr(path, s):
     os.makedirs(os.path.dirname(path), exist_ok=True)
     open(path, "w", encoding="utf-8").write(s)
@@ -86,16 +86,47 @@ prov = (f'<p class="mut" style="font-size:14px">Built from {_tp:,} NFIP policy r
         f'every record the download listed for each state, none missing. <a href="/methodology/">How we check them</a></p>') if states else ""
 if len(states) == 51:   # U.S. figures only once every state is built and gated: never a partial total called national
     _h = json.load(open(os.path.join(DATADIR, "us", "cost_hist.json")))
-    _all = sorted((int(v), c) for st in _h.values() for v, c in st.items())
-    _n = sum(c for _, c in _all); _acc = 0; _med = None
-    for v, c in _all:
-        _acc += c
-        if _acc >= _n / 2: _med = v; break
     _units = sum(s["units"] for s in states)
+    def _hq(h, q):   # q-quantile of a {cost: count} histogram summed over every state
+        vs = sorted((int(v), c) for st in h.values() for v, c in st.items()); n = sum(c for _, c in vs); acc = 0
+        for v, c in vs:
+            acc += c
+            if acc >= n * q: return v
+    _hn = json.load(open(os.path.join(DATADIR, "us", "cost_hist_new.json")))
+    _new_med, _new_n = _hq(_hn, 0.5), sum(c for st in _hn.values() for c in st.values())
+    _med = _hq(_h, 0.5); _q = {k: _hq(_h, k) for k in (0.25, 0.75, 0.9)}
+    _ex = [json.load(open(os.path.join(DATADIR, "states", s["slug"], "extras.json")))["policies"] for s in states]
+    _wmean = lambda mk, nk: round(sum((e["averages"][mk] or 0) * e["averages"][nk] for e in _ex) / sum(e["averages"][nk] for e in _ex))
+    _sf_mean, _all_mean = _wmean("sf_cost_mean", "sf_n"), _wmean("all_cost_mean", "all_n")
+    _dc = {}
+    for e in _ex:
+        for d, c in (e.get("ded_counts") or {}).items(): _dc[d] = _dc.get(d, 0) + c
+    _dtop = max(_dc, key=_dc.get); _dshare = round(100 * _dc[_dtop] / sum(_dc.values()), 1)
     national = (f'<div class="stats"><div class="stat"><div class="n">{money(_med)}</div><div class="l">U.S. median a year</div></div>'
-                f'<div class="stat"><div class="n">{money(round(_med / 12))}</div><div class="l">Per month</div></div>'
+                f'<div class="stat"><div class="n">{money(_med / 12)}</div><div class="l">Per month</div></div>'
                 f'<div class="stat"><div class="n">{_units / 1e6:.1f}M</div><div class="l">Insured units in force</div></div></div>'
-                '<p class="mut">Median and per month: what existing single-family primary-home policies pay, premium plus fees. Insured units: every NFIP policy unit in force on July 31, 2026, including condos, rentals and businesses.</p>')
+                '<p class="mut">Median and per month: what existing single-family primary-home policies pay, premium plus fees. Insured units: every NFIP policy unit in force on July 31, 2026, including condos, rentals and businesses.</p>'
+                f'<p class="cmp"><b>Buying?</b> Policies first bought in the past year typically pay {money(_new_med)} ({_new_n:,} policies). <a href="#prices">Why sites differ</a>.</p>')
+    # hater r5 (home): price drivers, ways to pay less, a quote check and the averages other sites quote, all from the same records
+    home_cards = (f'<div class="card" id="check"><h2>Is my quote normal?</h2><p class="stand">Type your yearly cost (premium plus fees) to see where it '
+        f'sits among U.S. single-family policies; your state page compares it with your area.</p>'
+        f'<input id="qv" inputmode="numeric" placeholder="e.g. 1200" aria-label="Your yearly flood insurance cost"><p id="qo" class="mut"></p></div>'
+        f'<div class="card"><h2>What sets the price, and how do I pay less?</h2><p class="stand">{rule("price_drivers")}</p>'
+        f'<p class="stand">{rule("save_ways")} The usual building deductible on U.S. single-family policies is {money(int(float(_dtop)))} '
+        f'({_dshare}% of them); your state page lists the mix there and any community discount.</p></div>'
+        f'<div class="card" id="prices"><h2>Why do sites quote different prices?</h2><p class="stand">Because they measure different things: '
+        f'each row below is the same FEMA records counted another way.</p>'
+        f'<table><thead><tr><th>Measure</th><th>Amount</th></tr></thead><tbody>'
+        f'<tr><td>Typical cost, existing single-family homes (median)</td><td>{money(_med)}</td></tr>'
+        f'<tr><td>Typical cost, policies first bought in the past year</td><td>{money(_new_med)}</td></tr>'
+        f'<tr><td>Average (mean) cost, single-family homes</td><td>{money(_sf_mean)}</td></tr>'
+        f'<tr><td>Average cost, every policy type (adds condos, rentals, businesses)</td><td>{money(_all_mean)}</td></tr></tbody></table>'
+        '<p class="mut">All premium plus fees, NFIP policies in force on July 31, 2026. Private flood insurance is not in this data.</p></div>'
+        f'<script>var qv=document.getElementById("qv"),qo=document.getElementById("qo");qv.addEventListener("input",function(){{'
+        f'var v=+qv.value.replace(/[^0-9.]/g,"");if(!v){{qo.textContent="";return;}}'
+        f'qo.textContent="$"+v.toLocaleString()+" is "+(v<{_q[0.25]}?"in the lowest quarter":v<{_med}?"below the middle":v<{_q[0.75]}?"above the middle":v<{_q[0.9]}?"in the top quarter":"in the top tenth")'
+        f'+" of U.S. single-family policies (half pay {money(_q[0.25])} to {money(_q[0.75])}).";}});</script>')
+else: home_cards = ""
 home = HEAD.format(title="Flood insurance cost by state and county (FEMA data)",
     desc="What flood insurance actually costs where you live, from FEMA's own policy and claim records: typical cost, whether you're required to buy it, how fast it starts, and what floods have paid out.",
     canon=BASE + "/") + f"""
@@ -109,13 +140,11 @@ home = HEAD.format(title="Flood insurance cost by state and county (FEMA data)",
 <p class="stand"><b>How fast does it start?</b> {rule("howto_answer")}</p>
 <p class="stand"><b>Am I required to buy it?</b> {rule("purchase_answer")} {rule("lender_any_zone")} {rule("fl_citizens_short")} Check your zone on <a href="https://msc.fema.gov/portal/home" rel="noopener" target="_blank">FEMA's flood map</a>.</p>
 <p class="stand"><b>Does my homeowners policy cover floods?</b> {rule("homeowners_excl")}</p></div>
-<div class="card"><h2>Why our prices differ from other sites</h2><p class="stand">These are what existing single-family
-policies pay today, premium plus fees, as a median (the middle policy). Sites that quote an average premium, a single year, or
-every policy type get a lower or higher number from the same records; each state page shows them side by side.</p></div>
+{home_cards}
 <div class="card"><h2>Flood insurance by state</h2>{extremes}
 <table id="st"><thead><tr><th>State</th><th>Median / yr</th><th>Insured units</th></tr></thead>
 <tbody>{srows or '<tr><td colspan=3 class=mut>State pages are being built.</td></tr>'}</tbody></table></div>
-<div class="card"><h2>County pages</h2><p class="stand">{len(places)} counties so far, the ones with the most policies first; more are added as each passes review. Every county's figures also sit in its state page's county table.</p>
+<div class="card"><h2>County pages</h2><p class="stand">{len(places)} counties so far, listed by number of policies; more are added as each passes review. Every county's figures also sit in its state page's county table.</p>
 <table id="t"><thead><tr><th>County</th><th>Median / yr</th><th>Insured units</th></tr></thead>
 <tbody>{rows or '<tr><td colspan=3 class=mut>No counties published yet.</td></tr>'}</tbody></table></div>
 <script>
@@ -148,6 +177,8 @@ s.addEventListener('input',function(){{var q=s.value.toLowerCase();
 wr(os.path.join(DIST, "flood-insurance", "index.html"), hub)
 
 # ---- methodology ----
+from notes import NOTES   # each page card links here ("How this is counted") instead of repeating the note
+_notes_html = "".join(f'<h3 id="{k}">{html.escape(h)}</h3><p>{html.escape(t)}</p>' for k, (h, t) in NOTES.items())
 meth = HEAD.format(title="Methodology — flood insurance data", desc="Definitions, sources, dates, cohort rules and reconciliation for the flood-insurance data.", canon=BASE + "/methodology/") + f"""
 <h1>Methodology</h1>
 <div class="card"><h2>What we downloaded</h2><p>We do not use FEMA's summary tables. For every state page we download every NFIP policy record in force and every NFIP claim record FEMA publishes for that state, check the count against the API's own record total (a page is blocked if any record is missing), and compute every figure ourselves. So far: {_tp:,} policy records and {_tc:,} claim records. Each page states its own counts and offers its figures as a CSV.</p></div>
@@ -172,11 +203,12 @@ meth = HEAD.format(title="Methodology — flood insurance data", desc="Definitio
 <li><b>Minimum sizes</b>: a cost spread needs 100 or more priced single-family policies; a flood-zone median 50; a county median 30; a ZIP median 25. Smaller medians move more from year to year, and the count is shown beside each.</li>
 <li><b>Dates</b>: each figure shows its effective date and retrieval date; policy snapshot differs from other datasets' retrieval dates.</li></ul></div>
 <div class="card" id="limits"><h2>What the data cannot tell you</h2><ul>
-<li>Your own premium: it depends on your building's elevation, foundation, coverage and deductible. The pages show where existing policies fall, and what a new full-risk policy typically costs.</li>
+<li>Your own premium: it depends on your building's elevation, foundation, coverage and deductible. The pages show where existing policies fall, and what policies first bought in the past year typically cost.</li>
 <li>Private (non-NFIP) flood insurance prices.</li>
 <li>Your address's exact flood zone: use FEMA's Flood Map Service Center.</li>
 <li>Why any one premium changes: the pages show the gap to FEMA's full-risk price, not the cause.</li>
 <li>A long premium trend: the in-force records hold only current-term policies, so only the last two policy years can be compared.</li></ul></div>
+<div class="card"><h2>How each figure is counted</h2>{_notes_html}</div>
 {FOOT}"""
 wr(os.path.join(DIST, "methodology", "index.html"), meth)
 

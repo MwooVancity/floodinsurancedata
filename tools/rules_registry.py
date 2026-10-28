@@ -82,6 +82,21 @@ RULES = {
                      "located within the special flood hazard area defined by the Federal Emergency Management Agency must have flood coverage in place", "curl"),
                     ("https://www.flsenate.gov/Laws/Statutes/2025/627.351",
                      "January 1, 2027, for all other personal lines residential property insured by the corporation", "curl")]},
+    "save_ways": {   # hater r5: every top result answers "how do I pay less"; FEMA's own list
+        "text": "FEMA's ways to lower an NFIP bill: a higher deductible (you pay more of any loss), work that lowers "
+                "the building's flood risk, and an Elevation Certificate.",
+        "sources": [("https://agents.floodsmart.gov/articles/paying-less-flood-insurance",
+                     "Higher Deductibles, Risk Mitigation, and Elevation Certificates Can Lower", "curl"),
+                    (FS + "/premiumcosts", "In return, your overall flood insurance premium may be lower.", "curl")]},
+    "price_drivers": {   # hater r5 (home): every top result says what drives the price
+        "text": "FEMA prices each building from where it is (distance to the coast, rivers and other flood sources, and how high "
+                "the ground sits), how it is built (foundation type, first-floor height) and what the policy covers (coverage "
+                "amounts and deductibles).",
+        "sources": [(FS + "/premiumcosts", "distance to flooding sources, including the distance to the coast", "curl"),
+                    (FS + "/premiumcosts", "The elevation of the ground where the building is located", "curl"),
+                    (FS + "/premiumcosts", "Foundation Type: The building", "curl"),
+                    (FS + "/premiumcosts", "Buildings whose first floor is higher off the ground generally have", "curl"),
+                    (FS + "/premiumcosts", "Choosing a higher deductible means you will need to cover more out of pocket", "curl")]},
     "purchase_short": {   # the screen-1 summary; the full rule sits in its card (no sentence printed twice)
         "text": "Federal law requires it in a high-risk zone with a federally regulated or backed mortgage or federal "
                 "building help; a lender or insurer can require it anywhere.",

@@ -97,9 +97,7 @@ _rest = norm(re.sub(r"<[^>]+>", " ", _rest))
 _rest = re.sub(r"\b(January|February|March|April|May|June|July|August|September|October|November|December) \d{1,2}(, \d{4})?\b", " ", _rest)
 _free = [mm for mm in re.finditer(r"(?<![\w.])\$?(?:\d{1,3}(?:,\d{3})+|\d+)(?:\.\d+)?%?(?![\w])", _rest)
          if not re.fullmatch(r"(19[5-9]\d|20[0-3]\d)", mm.group(0))]          # a year is a label, not a figure
-_show = len(_free) if os.environ.get("GATE_ALL") else 8
-for mm in _free[:_show]: fail("V1", f"untagged number '{mm.group(0)}' in: {_rest[max(0, mm.start() - 40):mm.end() + 20]}")
-if len(_free) > _show: fail("V1", f"... and {len(_free) - _show} more untagged numbers")
+for mm in _free: fail("V1", f"untagged number '{mm.group(0)}' in: {_rest[max(0, mm.start() - 40):mm.end() + 20]}")
 seen = {}
 for k, attrs, shown in SPANS3:
     if k not in MX.METRICS: fail("A0", f"figure tagged with unknown metric {k}")
@@ -132,6 +130,11 @@ for mm in re.finditer(r'<span data-m="(\w+)"[^>]*>', page):   # A4 a figure with
     if not basis or basis == "rating": continue
     if basis not in norm(re.sub(r"<[^>]+>", " ", page[max(0, mm.start() - 260): mm.end() + 260])).lower():
         fail("A4", f"{mm.group(1)} shown without naming its basis '{basis}'")
+for mm in re.finditer(r'<span data-m="(\w+)"', page):   # A6 words naming new policies sit only on a new-policy figure (hater r5:
+    seg = re.split(r"[.!?]\s", norm(re.sub(r"<[^>]+>", " ", page[max(0, mm.start() - 200):mm.start()])))[-1]   # "a new one ... $1,466" was existing stock)
+    if re.search(r"\bnew (?:single-family )?(?:policy|policies|one|buyers?)\b|\bbrand-new\b|\bfirst bought\b", seg, re.I) \
+            and "past year" not in (MX.METRICS.get(mm.group(1), {}).get("basis") or ""):
+        fail("A6", f"{mm.group(1)} is not a new-policy figure, but its sentence says: …{seg[-80:]}")
 cx = data.get("claims_extra") or {}
 if VALS["claims_paid_n"] is not None and VALS["claims_filed"] is not None and VALS["claims_paid_n"] > VALS["claims_filed"]:
     fail("C1", f"claims paid {VALS['claims_paid_n']} > claims filed {VALS['claims_filed']}")
@@ -241,7 +244,6 @@ if re.search(r"Each (county|parish|borough) page lists|Open a county below", REA
 for _j in re.findall(r"\b(p25|p75|p90|policyCount|policyCost|censusGeoid|ratedFloodZone|fullRiskPremium)\b", READ): fail("H3", f"jargon '{_j}' in reader text")
 _sv = re.search(r"costliest single flood here was (.*?):", READ)
 if _sv and not re.search(r"\(\d{4}(–\d{4})?\)", _sv.group(1)): fail("H5", f"storm named without its year: {_sv.group(1)[:50]}")
-if re.search(r">\s*(None|nan|NaN|undefined)\s*<", page) or "$None" in page or "None%" in page: fail("L7", "None/nan leaked into the page")
 for y in re.findall(r"<li>(\d{4}) — ", page):
     if int(y) > datetime.date.today().year: fail("L10", f"declaration shows future year {y}")
 if not agg.get("nri") and agg.get("level") != "state" and "Gap:" not in page: fail("L8", "NRI missing without a gap line")

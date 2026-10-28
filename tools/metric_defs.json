@@ -94,6 +94,10 @@
   }
  },
  "NfipPolicies": {
+  "buildingDeductibleCode": {
+   "def": "The total deductible amount in dollars for buildings, both main and appurtenant, that can be applied against the loss.                                                                                                                                                                          Standard Deductibles: \n \n0 - $500;\n1 - $1,000;\n2 - $2,000;\n3 - $3,000;\n4 - $4,000;\n5 - $5,000;\n9 - $750;\nA - $10,000;\nB - $15,000;\nC - $20,000;\nD - $25,000;\nE - $50,000;\nF - $1,250;\nG - $1,500;\nH - $200 - Used only in Group Flood Insurance Policies",
+   "sha256": "d499c72f2c9caaf61bec88cc075e11bde70b3047eba4258c9888dbe9751a93f4"
+  },
   "buildingReplacementCost": {
    "def": "Estimated cost in whole dollars to replace the building as reported by the insurer. \nNOTE: Replacement cost is not market value, and it does not include the cost of the land or contents. It is strictly the estimated cost to reconstruct the building",
    "sha256": "76997b84a764ae5aabe4969ec4923442192caeb03a8f712bfd927a7ebdb16ffe"
@@ -101,6 +105,10 @@
   "censusGeoid": {
    "def": "Numeric code that uniquely identifies all administrative/legal and statistical geographic areas for which the Census Bureau tabulates data. In this instance, the Census GeoID is presented at the Census Block Group level. This is an address-based 12-character code that is the concatenation of fields consisting of the 2-character state FIPS code, the 3-character county FIPS code, the 6-character census tract code, and the 1-character block group code. Block numbers beginning with a zero are associated with water-only areas. Please see: https://www.census.gov/programs-surveys/geography/guidance/geo-identifiers.html",
    "sha256": "0d361dd30ac1ed0333dc989a6a219d329578581c70e9dccaa22bdad3cfc83807"
+  },
+  "elevatedBuildingIndicator": {
+   "def": "Indicates whether a building meets the NFIP definition of an elevated building. Yes is indicated with either a 'true' or '1'. No is indicated with either a 'false' or '0'.  An elevated building is a no-basement building that was constructed so as to meet the following criteria: \n1. The top of the elevated floor (all A zones) or the bottom of the lowest horizontal structural member of the lowest floor (all V zones) is above ground level;\n2. The building is adequately anchored;\n3. The method of elevation is pilings, columns (posts and piers), shear walls (not in V zones), or solid foundation perimeter walls (not in V zones);",
+   "sha256": "61e51661c33fbac48826bf488ec324176da3c5f37db483b5beb30ebdb9bfef5a"
   },
   "federalPolicyFee": {
    "def": "Dollar amount of the Federal Policy Fee of the policy",
@@ -121,6 +129,10 @@
   "occupancyType": {
    "def": "Code indicating the use and occupancy type of the insured structure. Note, 2-digit codes are for Risk Rating 2.0 policies.  1 = Single family residence; 2 = 2 to 4 Unit residential building; 3 = Residential building with more than 4 units; 4 = Non-residential building; 6 = Non-Residential Business; 11 = Single-family residential building with the exception of a mobile home or a single residential unit within a multi unit building; 12 = A residential non-condo building with 2, 3, or 4  units seeking insurance on all units; 13 = A residential non-condo building with 5 or more units seeking insurance on all units; 14 = Residential mobile/manufactured home; 15 = Residential condo association seeking coverage on a building with one or more units; 16 = Single residential unit within a multi-unit building; 17 = Non-residential mobile/manufactured home; 18 = A non-residential building; 19 = A non-residential unit within a multi-unit building;",
    "sha256": "742a6d3d45501bcd930cfb1a7fef2e8e582845dbe712c45847600e5a987a854d"
+  },
+  "originalNBDate": {
+   "def": "The original date of the flood policy.",
+   "sha256": "5a56846c8615bf6f04fcb4a79b6fe406f92b6f4d76a8c3c5f64b083faa31dc4d"
   },
   "policyCost": {
    "def": "Calculated in dollars by adding together calculated premium, reserve fund assessment, federal policy fee, and HFIAA surcharge",

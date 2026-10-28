@@ -28,7 +28,7 @@ API_VERSION = {"NfipPolicies": 3, "NfipClaims": 3, "NfipCommunityStatusBook": 1,
 # unit: closed set — compare() only allows equal units. counts: what ONE counted item is; NOUN_REQUIRED is the noun
 # that must name it in the words right after the number (or in its tile label). A FEMA IA row is one property PER
 # disaster, so "1,133 homes" fails and "1,133 flood-damage applications" passes. (A positive rule, not a ban list.)
-UNITS = {"usd_cost_with_fees", "usd_premium_only", "usd_claim_paid", "usd_aid_paid", "usd_coverage", "usd_modeled_loss",
+UNITS = {"usd_cost_with_fees", "usd_deductible", "usd_premium_only", "usd_claim_paid", "usd_aid_paid", "usd_coverage", "usd_modeled_loss",
          "usd_reported_damage", "pct", "count", "rating"}
 NOUN_REQUIRED = {"ia_damage_record": r"records?|applications?", "policy_record": r"polic(y|ies)|records?",
                  "claim_record": r"claims?|NFIP flood claims",
@@ -80,6 +80,14 @@ METRICS = {
     "cost_mean": _m(POL, ["policyCost"], "usd_cost_with_fees"),
     "cost_year": _m(POL, ["policyCost", "policyEffectiveDate"], "usd_cost_with_fees"),
     "cost_year_n": _m(POL, ["policyCost", "policyEffectiveDate"], "count"),
+    "ded_amount": _m(POL, ["buildingDeductibleCode"], "usd_deductible"),   # FEMA's code label, e.g. code 0 = $500 (codes.DEDUCTIBLE)
+    "ded_share": _m(POL, ["buildingDeductibleCode", "occupancyType"], "pct"),   # share of single-family primary policies at each building deductible
+    "prem_elevated": _m(POL, ["totalInsurancePremiumOfThePolicy", "elevatedBuildingIndicator"], "usd_premium_only"),
+    "prem_not_elevated": _m(POL, ["totalInsurancePremiumOfThePolicy", "elevatedBuildingIndicator"], "usd_premium_only"),
+    "prem_elevated_n": _m(POL, ["totalInsurancePremiumOfThePolicy", "elevatedBuildingIndicator"], "count"),
+    "prem_not_elevated_n": _m(POL, ["totalInsurancePremiumOfThePolicy", "elevatedBuildingIndicator"], "count"),
+    "cost_new": _m(POL, ["policyCost", "originalNBDate"], "usd_cost_with_fees", basis="past year"),   # single-family primary, first written in the 12 months to the as-of date
+    "cost_new_n": _m(POL, ["policyCost", "originalNBDate"], "count", basis="past year"),
     "frp_plus_fees": _m(POL, ["fullRiskPremium", "federalPolicyFee", "hfiaaSurcharge", "reserveFundAssessment"], "usd_cost_with_fees"),
     "cost_all_median": _m(POL, ["policyCost", "occupancyType"], "usd_cost_with_fees"),
     "cost_all_mean": _m(POL, ["policyCost", "occupancyType"], "usd_cost_with_fees"),

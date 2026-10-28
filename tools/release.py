@@ -1,8 +1,8 @@
 """One command for a release, in order; stops at the first failure.
   python -I tools/release.py          build all pages + gate 2 on each, unit tests, mutation suite, phone check (dist)
-  python -I tools/release.py --live   after deploy: phone check + body check on the live site
+  python -I tools/release.py --live   after deploy: phone check + every live page byte-equal to the built page
 recheck.py (network, minutes) runs separately as its own background job before a release is called verified."""
-import os, re, subprocess, sys, urllib.request
+import os, re, subprocess, sys
 
 T = os.path.dirname(os.path.abspath(__file__))
 def step(name, *cmd):
@@ -13,15 +13,7 @@ def step(name, *cmd):
 if "--live" in sys.argv:
     base = "https://floodinsurancedata.com"
     step("phone check (live)", os.path.join(T, "phone_check.py"), "--base", base)
-    import json   # every state the home page links to must be live, not just three counties
-    states = [s["slug"] for s in json.load(open(os.path.join(os.path.dirname(T), "data", "states", "built.json")))]
-    for s in ("brevard-county-fl", "jefferson-parish-la", "kanawha-county-wv", *states):
-        req = urllib.request.Request(f"{base}/flood-insurance/{s}/", headers={"User-Agent": "Mozilla/5.0 (release-check)"})
-        body = urllib.request.urlopen(req, timeout=60).read().decode()   # Cloudflare 403s Python's default UA
-        ok = 'data-m="cost_p50"' in body and "srclist" in body and len(body) > 30000
-        print(f"live body {s}: {'ok' if ok else 'BAD'} ({len(body)} bytes)")
-        if not ok: sys.exit("RELEASE STOPPED at: live body")
-    step("gate on every live page", os.path.join(T, "gate_live.py"))
+    step("every live page = the built page that passed (as Googlebot)", os.path.join(T, "gate_live.py"))
     print("LIVE OK")
 else:
     out = subprocess.run([sys.executable, "-I", os.path.join(T, "build_all.py")], cwd=os.path.dirname(T),
@@ -36,6 +28,15 @@ else:
     # Google gate; S12 (hater review) is skipped only by --hotfix "<reason>", for a fix that removes wrong text from live pages
     hot = sys.argv[sys.argv.index("--hotfix") + 1] if "--hotfix" in sys.argv else ""
     step("google gate", os.path.join(T, "google_gate.py"), *(["--skip-review"] if hot else []))
+    if hot:   # a hotfix only removes or corrects text: no page may gain a figure it did not have in the last release
+        R_ = os.path.dirname(T); grew = []
+        for d, _, fs in os.walk(os.path.join(R_, "dist")):
+            for f in (x for x in fs if x.endswith(".html")):
+                rel = os.path.relpath(os.path.join(d, f), R_).replace("\\", "/")
+                old = subprocess.run(["git", "show", "HEAD:" + rel], cwd=R_, capture_output=True, text=True, encoding="utf-8").stdout
+                new_keys = set(re.findall(r'data-m="(\w+)"', open(os.path.join(d, f), encoding="utf-8").read())) - set(re.findall(r'data-m="(\w+)"', old))
+                if old and new_keys: grew.append(f"{rel}: {sorted(new_keys)}")
+        if grew: sys.exit("RELEASE STOPPED at: hotfix adds figures (needs a hater review): " + "; ".join(grew[:5]))
     if "--ship" not in sys.argv: sys.exit(print("READY TO SHIP: release.py --ship [--hotfix \"reason\"]"))
     # every push to master redeploys the COMMITTED dist (deploy.yml), so commit the built pages before anything ships
     R = os.path.dirname(T); g = lambda *a: subprocess.run(["git", *a], cwd=R, check=True)

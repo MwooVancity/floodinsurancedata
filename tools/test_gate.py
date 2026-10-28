@@ -44,6 +44,15 @@ _pull = ast.parse(open(os.path.join(T, "pull_raw.py"), encoding="utf-8").read())
 _st = next(n.value for n in _pull.body if isinstance(n, ast.Assign) and getattr(n.targets[0], "id", "") == "STATES")
 _pulled = set(ast.literal_eval(_st.func.value).split()) if isinstance(_st, ast.Call) else set()
 assert _pulled == set(_NAMES), f"pull_raw.STATES differs from the 51 names: missing {set(_NAMES) - _pulled}, extra {_pulled - set(_NAMES)}"
+import datetime as _dt, extras_raw as _XR   # "last 12 months" means 12 months to the pull's as-of date, not a stale constant
+_asof = _dt.date.fromisoformat(next(n.value.value for n in _pull.body if isinstance(n, ast.Assign) and getattr(n.targets[0], "id", "") == "ASOF")[:10])
+assert _XR.NB_FROM == str(_asof.replace(year=_asof.year - 1) + _dt.timedelta(days=1)), \
+    f"extras_raw.NB_FROM {_XR.NB_FROM} is not 12 months before pull_raw.ASOF {_asof}"
+from rules_registry import RULES as _RULES   # a date a rule's source states must appear in the rule text (Citizens 2023 was left out)
+for _k, _r in _RULES.items():
+    for _u, _ex, _ in _r["sources"]:
+        for _y in re.findall(r"\b(?:January|February|March|April|May|June|July|August|September|October|November|December) \d{1,2}, (\d{4})", _ex):
+            assert _y in _r["text"], f"rule {_k}: its source says {_y} ({_ex[:60]}...) but the rule text never mentions {_y}"
 _imported = {a.name.split(".")[0] for f in os.listdir(T) if f.endswith(".py")
              for n in ast.walk(ast.parse(open(os.path.join(T, f), encoding="utf-8").read()))
              if isinstance(n, (ast.Import, ast.ImportFrom)) for a in (n.names if isinstance(n, ast.Import) else [ast.alias(n.module or "")])}
@@ -112,6 +121,10 @@ MUTATIONS = [   # (defect class from THE EVIDENCE table, what we reintroduce, ex
     ("hater r1", "a rule printed twice on the page", "E2",
      PAGE.replace("<p class='note'>Every zone starting", "<p class='note'>Standard homeowners insurance does not cover flood damage; flood insurance is bought separately, through the federal NFIP or a private insurer. Every zone starting", 1), None),
     ("legacy L12b", "'other zones' row dropped", "C4", re.sub(r"<tr><td>Other[^<]*</td>.*?</tr>", "", PAGE, count=1), None),
+    # hater round 5 (2026-10-27): existing stock's full-risk price sold as what a new policy costs
+    ("hater r5", "existing-policy figure called a new policy's price", "A6",
+     sub("; other sites count other policies", ", but a new one is priced at full risk: about "
+         + re.search(r'<span data-m="frp_plus_fees">[^<]*</span>', PAGE).group() + " with fees; other sites count other policies"), None),
 ]
 table, ok = [], True
 for cls, what, want, html, agg in MUTATIONS:

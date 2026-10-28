@@ -8,6 +8,7 @@ import ffcalc
 import metrics as MX
 from metrics import m
 from rules_registry import RULES, rule
+from notes import how
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DIR = os.environ.get("FF_DIR", HERE)
@@ -27,7 +28,7 @@ POL_ASOF = "July 31, 2026"; RETR = "October 22, 2026"
 ATTR = ("This product uses the Federal Emergency Management Agency's OpenFEMA API, "
         "but is not endorsed by FEMA.")
 
-def money(n): return "$" + format(int(round(n)), ",") if n is not None else "—"
+def money(n): return "$" + format(int(n + 0.5) if n >= 0 else -int(-n + 0.5), ",") if n is not None else "—"   # half rounds up ($90.50 -> $91), not Python's half-to-even
 def big(n):
     """Readable large amounts for sentences: $68.9 million / $1.2 billion (exact figures stay in the details)."""
     if n is None: return "—"
@@ -206,15 +207,13 @@ if have_risk:
         if isinstance(pctl, (int, float)): bits.append(f"per dollar of building value, that loss is higher than in about {m('nri_eal_pctl_' + label.lower(), str(round(pctl)) + '%')} of U.S. counties")
         return (f" {label}: " + "; ".join(bits) + ".") if bits else ""
     risk_body = ("<ul class='kv'>" + rating_row(cf, "Coastal") + rating_row(inl, "Inland") + "</ul>"
-                 "<p class='note'>This is FEMA's plain risk rating for the " + UNIT + ", a comparison — not a prediction "
-                 "for your home. A place with many valuable buildings can have a large total loss and a low "
-                 "loss per dollar, so the rating and the percentile below can differ."
+                 "<p class='note'>FEMA's rating weighs modeled loss with social vulnerability and community resilience; it is not a "
+                 "prediction for your home, and it can differ from the loss percentile below."
                  + _detail(cf, "Coastal") + _detail(inl, "Inland") +
-                 " Any loss figure is a whole-" + UNIT + " model estimate of all flood loss, insured or not, averaged per year, so it runs far above the "
-                 "insurance payouts shown elsewhere on this page; it is never one home's expected loss or premium.</p>")
+                 " Loss figures model all flood loss, insured or not, so they run far above insurance payouts." + how("nri") + "</p>")
     parts = []
-    if _present(inl.get("risk_rating")): parts.append(f"{html.escape(str(inl['risk_rating']))} for river flooding")
-    if _present(cf.get("risk_rating")): parts.append(f"{html.escape(str(cf['risk_rating']))} for coastal flooding")
+    if _present(cf.get("risk_rating")): parts.append(f"{html.escape(str(cf['risk_rating']))} for coastal flooding")   # same order as the tiles
+    if _present(inl.get("risk_rating")): parts.append(f"{html.escape(str(inl['risk_rating']))} for inland (river) flooding")
     risk = card("How much flood risk is here?",
                 " and ".join(parts) + f", by FEMA's {UNIT} rating. That compares this {UNIT} with others; it is not a forecast for your address.",
                 risk_body, src(["nri_rating", "nri_eal_usd"], "NRI 2023 release", RETR))
@@ -257,7 +256,7 @@ if SMALL_COHORT:
                  f"<li><b>Median annual cost</b><span>{m('cost_p50', money(P['p50']))}</span></li></ul>"
                  f"<p class='note'>Suppressed percentile spread: fewer than {tp('threshold', 'const.spread_min', q='spread_min')} policies with a valid recorded cost.</p>")
 else:
-    cost_lead = (f"Typically about {m('cost_p50', money(P['p50']))} a year ({m('cost_mo', money(round(P['p50'] / 12)))} a month), "
+    cost_lead = (f"Typically about {m('cost_p50', money(P['p50']))} a year ({m('cost_mo', money(P['p50'] / 12))} a month), "
                  f"fees included. Half of homeowners here pay between {m('cost_p25', money(P['p25']))} and "
                  f"{m('cost_p75', money(P['p75']))}. To check a quote, use the checker at the top.")
     cost_body = (spread_svg() + "<p class='note'>Each policy's annual cost (premium plus the federal policy fee, "
@@ -269,7 +268,7 @@ if P.get("coverage_building"):
     cost_body += (f"<p class='note'><b>Coverage in force:</b> {tp('coverage', 'policies.coverage_building', big, q='building')} of building and "
                   f"{tp('coverage', 'policies.coverage_contents', big, q='contents')} of contents coverage across all {CS} policies.</p>")
 # monthly framing for the median
-median_mo = money(round(P['p50'] / 12)) if P.get("p50") else None
+median_mo = money(P['p50'] / 12) if P.get("p50") else None
 
 # ---- cost by flood zone (median per zone) ----
 czone = P.get("cost_by_zone") or {}
@@ -283,7 +282,8 @@ if czone:
          f"(Zone {html.escape(_zhi[0])}) here. " if len(czone) > 1 else "")
         + "Your zone is on your lender's flood determination or FEMA's map; find its row below.",
         f"<table><thead><tr><th>Flood zone</th><th>Median / yr</th><th>Priced policies</th></tr></thead><tbody>{rows_}</tbody></table>"
-        + ("<p class='note'>Some zones share the same median; each is computed from that zone's own policy records.</p>" if len({d['median'] for d in czone.values()}) < len(czone) else "")
+        + ("<p class='note'>Some zones share the same median because many policies here are charged exactly the same amount, "
+           "so the middle policy in several zones lands on that one price. Each median is computed from that zone's own policy records.</p>" if len({d['median'] for d in czone.values()}) < len(czone) else "")
         + (("<p class='note'><b>" + claim("Why can a high-risk zone cost less than Zone X here?", "cost less than",
                                            ("zone_inversion", "==", 1)) + "</b> " + rule("rr2_zone") + "</p>")
            if VALS["zone_inversion"] else "")
@@ -380,8 +380,7 @@ howto_card = card("How do I actually get covered — and how fast?",   # limits 
     rule("howto_answer"),
     rule("howto_tiles")
     + f"<p class='note'>{rule('homeowners_excl')} {rule('wait_exceptions')} {rule('how_to_buy')}</p>"
-    + f"<p class='note'>{rule('already_flooded')} {rule('aid_insurance')} Past aid paid here is in "
-      "&ldquo;Did FEMA aid homeowners after floods and storms?&rdquo; below.</p>",
+    + f"<p class='note'>{rule('already_flooded')} {rule('aid_insurance')}</p>",
     src_rules(_HOWTO), id="covered")
 
 recent_li = "".join(
@@ -426,8 +425,7 @@ if len(state_risk) >= 4:
                      + (f" and {m('county_count', str(len(_by[o]) - 12), q=lab + ':more')} more" if len(_by.get(o, [])) > 12 else "") if o >= 3 or any(c.get("fips") == GEOID_SELF for c in _by.get(o, [])) else "")
                   + "</td></tr>" for lab, o in [("Very High", 4), ("Relatively High", 3), ("Relatively Moderate", 2), ("Relatively Low", 1), ("Very Low", 0)])
     tiles_body = (f"<table><thead><tr><th>FEMA flood-risk rating</th><th>{UNITS.title()}</th><th class='t'>Which</th></tr></thead><tbody>{_rt}</tbody></table>"
-                  "<p class='note'>FEMA's National Risk Index rating (coastal and inland flooding, the worse of the two): FEMA's model of expected loss, adjusted for social vulnerability and community resilience. "
-                  "Names are listed for the two highest ratings" + ("" if IS_STATE else f" and for this {UNIT}, in bold") + ".</p>")
+                  "<p class='note'>FEMA's National Risk Index rating, the worse of coastal and inland." + how("nri") + "</p>")
     _high = sum(1 for c in state_risk if _ord(c.get("rating")) >= 3)
     tilemap_card = card(f"How {CS} {UNITS} compare" if IS_STATE else f"How {CS} compares across the state",
         ((f"{m('county_count', str(_high), q='high')} of" if _high else "None of") + f" {CS}'s {m('county_count', str(len(state_risk)), q='all')} {UNITS} "
@@ -464,9 +462,7 @@ if bz:
         f'<p id="zout" class="note" style="margin-top:10px">Enter a five-digit ZIP above.</p>'
         f'<table style="margin-top:12px"><thead><tr><th>ZIP</th><th>Median / yr</th><th>Priced policies</th><th>Policy units</th></tr></thead>'
         f'<tbody>{toprows}</tbody></table>'
-        f'<p class="note">The eight ZIPs with the largest number of priced single-family policies. A median is shown for a ZIP with '
-        f'{tp("threshold", "const.zip_min", q="zip_min")} or more priced single-family policies; otherwise the lookup gives its policy count. '
-        f'Policy units also count condo units, so they can be far more than the priced policies. Each town name is the Census place with the largest share of that ZIP code area.</p>'
+        f'<p class="note">The eight ZIPs with the largest number of priced single-family policies.{how("zip")}</p>'
         f'<script>var ZD={data_js};var zi=document.getElementById("zq"),zo=document.getElementById("zout");'
         'zi.addEventListener("input",function(){var z=zi.value.trim();var d=ZD[z];'
         'if(!d){zo.textContent=z.length>=5?"No NFIP policy in this ' + UNIT + ' lists ZIP "+z+"; it may belong to a neighboring ' + UNIT + '.":"Enter a five-digit ZIP above.";return;}'
@@ -486,6 +482,10 @@ _avrows = [("Typical cost, single-family homes (median)", m("cost_p50", money(P[
 for _y in _yrs_cb[-2:]:
     _avrows.append((f"Typical cost, policies whose term began in {_y}", tp("cost_year", f"policies.cost_by_year.{_y}.median", money, q=_y),
                     f"{tp('cost_year_n', f'policies.cost_by_year.{_y}.n', num, q=_y)} policies"))
+_new_ok = (_xpp.get("cost_new_n") or 0) >= MX.CONST["year_min"]   # hater r5: what policies first bought this past year really cost
+if _new_ok:
+    _avrows.append(("Typical cost, policies first bought in the past year", tp("cost_new", "extras.policies.cost_new_median", money),
+                    f"{tp('cost_new_n', 'extras.policies.cost_new_n', num)} policies, past year"))
 if P.get("frp_median"):
     _avrows.append(("FEMA's full-risk premium (median)", m("frp_median", money(P["frp_median"])), "the price FEMA's model sets for these existing policies"))
     if _fees:
@@ -495,13 +495,35 @@ if _av.get("sf_cost_mean"):
                 ("Average cost, every policy type", tp("cost_all_mean", "extras.policies.averages.all_cost_mean", money), "adds condos, rentals and businesses")]
 averages_card = card(f"Why do sites quote different prices for {CS}?",
     f"Because they measure different things. Existing single-family policies here typically cost {m('cost_p50', money(P['p50']))} a year"
+    + (f", and policies first bought in the past year {tp('cost_new', 'extras.policies.cost_new_median', money)}" if _new_ok else "")
     + "; other sites count other policies, years or averages.",
     "<table><thead><tr><th>Measure</th><th>Amount</th><th>What it counts</th></tr></thead><tbody>"
     + "".join(f"<tr><td>{a_}</td><td>{b_}</td><td>{c_}</td></tr>" for a_, b_, c_ in _avrows) + "</tbody></table>"
-    f"<p class='note'>All from the NFIP policies in force on {POL_ASOF}. Published figures rarely say which of these they are, "
-    "or which year; private flood insurance is not in this data. Policies renew on their own anniversaries, so the "
-    "latest year shows where renewals are heading.</p>",
-    src(["cost_p50", "prem_median", "frp_median", "cost_year"] + (["cost_mean", "cost_all_mean"] if _av.get("sf_cost_mean") else []), POL_ASOF, RETR), id="prices")
+    f"<p class='note'>All from the NFIP policies in force on {POL_ASOF}.{how('averages')}</p>",
+    src(["cost_p50", "prem_median", "frp_median", "cost_year"] + (["cost_new"] if _new_ok else []) + (["cost_mean", "cost_all_mean"] if _av.get("sf_cost_mean") else []), POL_ASOF, RETR), id="prices")
+
+# ---- can I pay less? (hater r5: every top result answers it; the deductible mix and elevated premiums are in the data) ----
+save_card = ""
+_ded = _xpp.get("deductibles") or {}
+if _ded or _xpp.get("prem_elevated_n"):
+    _top = max(_ded, key=lambda d: _ded[d]) if _ded else None
+    _dl = lambda d: m("ded_amount", money(int(float(d))), q=d)   # a FEMA code label, tagged so the gate sees no loose number
+    _rows = "".join(f"<tr><td>{_dl(d)}</td><td>{tp('ded_share', f'extras.policies.deductibles.{d}', pct, q=d)}</td></tr>"
+                    for d in sorted(_ded, key=lambda d: float(d)))
+    _elev_ok = min(_xpp.get("prem_elevated_n") or 0, _xpp.get("prem_not_elevated_n") or 0) >= MX.CONST["year_min"]
+    save_card = card("Can I pay less?",
+        (f"The usual building deductible here is {_dl(_top)} ({tp('ded_share', f'extras.policies.deductibles.{_top}', pct, q=_top)} "
+         "of single-family policies). " if _top else "") + rule("save_ways"),
+        (f"<table><thead><tr><th>Building deductible</th><th>Share of policies</th></tr></thead><tbody>{_rows}</tbody></table>"
+         "<p class='note'>Single-family primary homes; the four commonest deductibles. Your lender may limit how high you can go.</p>" if _rows else "")
+        + (f"<ul class='kv'><li><b>Median premium, elevated buildings</b><span>{tp('prem_elevated', 'extras.policies.prem_elevated_median', money)} "
+           f"({tp('prem_elevated_n', 'extras.policies.prem_elevated_n')} policies)</span></li>"
+           f"<li><b>Median premium, not elevated</b><span>{tp('prem_not_elevated', 'extras.policies.prem_not_elevated_median', money)} "
+           f"({tp('prem_not_elevated_n', 'extras.policies.prem_not_elevated_n')} policies)</span></li></ul>"
+           "<p class='note'>Premium before fees, single-family primary homes. Elevated and other buildings here differ in flood zone, age "
+           "and location, so this gap is not what raising one home would save.</p>" if _elev_ok else "")
+        + "<p class='note'>Community discount: see <a href='#crs'>Does my town get a community discount?</a></p>",
+        src(["ded_share"] + (["prem_elevated"] if _elev_ok else []), POL_ASOF, RETR) + src_rules(["save_ways"]), id="save")
 
 # ---- STATE-ONLY blocks: cost by county (the hub), why published averages differ, policies-in-force trend ----
 state_trend_card = ""
@@ -561,9 +583,7 @@ if (_xp.get("replacement_n") or 0) >= 30 and _xp.get("replacement_over_250k_pct"
         + (f"<li><b>Single-family policies insured to the building maximum (all of them, not only those above)</b><span>{tp('at_cap_pct', 'extras.policies.at_building_max_pct', pct)}</span></li>" if _xp.get("at_building_max_pct") is not None else "")
         + (f"<li><b>Damage was more than the coverage (of {tp('damage_n', 'extras.claims.damage_n')} claims paid with a damage figure)</b><span>{tp('damage_over_cov_pct', 'extras.claims.damage_over_coverage_pct', pct)}</span></li>"
            if _xc.get("damage_over_coverage_pct") is not None and (_xc.get("damage_n") or 0) >= 30 else "")
-        + f"</ul><p class='note'>Rebuilding cost is the replacement-cost figure on single-family primary-home policies that "
-          "report one; many owners insure to the building maximum even when that figure is lower, so the two shares "
-          "measure different things. The damage share counts every paid claim with a damage figure, all building types.</p>",
+        + f"</ul><p class='note'>The rebuilding-cost share and the insured-to-the-maximum share count different policies.{how('rebuild')}</p>",
         src(["rebuild_over_cap_pct", "at_cap_pct", "damage_over_cov_pct"], POL_ASOF, RETR) + src_rules(["building_cap"]))
 _whyall = [dict(r, i=i) for i, r in enumerate(_xc.get("unpaid_reasons") or [])]
 _why = [r for r in _whyall if r["code"] not in ("97", "98", "99")]   # the lead names a real reason: 97 "other", 98/99 entered in error are not one
@@ -575,9 +595,7 @@ if _why and (_xc.get("unpaid_n") or 0) >= 10:
         "<table><thead><tr><th>Reason recorded</th><th>Claims</th></tr></thead><tbody>"
         + "".join(f"<tr><td>{html.escape(r['label'])}</td><td>{tp('unpaid_reason_n', f'extras.claims.unpaid_reasons.{r[chr(105)]}.n', q=r['code'])}</td></tr>" for r in _whyall)
         + (f"<tr><td>Smaller reasons, or none recorded</td><td>{m('unpaid_reason_n', num(_why_rest), q='rest')}</td></tr>" if _why_rest > 0 else "")
-        + "</tbody></table><p class='note'>The building non-payment reason on each NFIP claim closed with nothing paid, "
-        "every claim counted once. “Assigned in error” and “Other” are FEMA's own labels; some closed claims are "
-        "paperwork, not a denied flood.</p>",
+        + f"</tbody></table><p class='note'>Some closed claims are paperwork, not a denied flood.{how('unpaid')}</p>",
         src(["unpaid_n", "unpaid_reason_n"], f"{C['year_min']}–{C['year_max']}", RETR))
 def _evname(e):   # FEMA's event name plus its year(s) of loss: "Vermont/New York Flooding (2023)"
     y = e.get("years") or []
@@ -590,6 +608,10 @@ def _evname(e):   # FEMA's event name plus its year(s) of loss: "Vermont/New Yor
 _ev = [dict(e, i=i) for i, e in enumerate(_xc.get("events") or [])
        if e.get("years") and int(e["years"][-1]) - int(e["years"][0]) <= 1
        and (e.get("claims") or 0) >= 20]   # a handful of claims under a far-away storm's name is a coding slip, not a flood here
+_ev_years = {int(y) for e in _ev for y in e["years"]}   # hater r5: Louisiana's 1995 (4th costliest year) sat under the catch-all label
+_unnamed = [(y, p) for y, p in top_paid if int(y) not in _ev_years]
+_unnamed_note = ("<p class='note'>Costly years with no named event in this table, because FEMA filed their claims under a general label: "
+                 + ", ".join(str(y) for y, _ in _unnamed) + " (their totals are in the yearly chart above).</p>") if _unnamed else ""
 if len(_ev) >= 2:
     events_card = card("Which floods paid out the biggest totals here?",
         f"The costliest single flood here was {_evname(_ev[0])}: {tp('event_paid', f'extras.claims.events.{_ev[0][chr(105)]}.paid', big, q=_ev[0]['name'])} across "
@@ -598,9 +620,7 @@ if len(_ev) >= 2:
         + "".join(f"<tr><td>{_evname(e)}</td><td>{tp('event_claims', f'extras.claims.events.{e[chr(105)]}.claims', q=e['name'])}</td>"
                   f"<td>{tp('event_paid', f'extras.claims.events.{e[chr(105)]}.paid', big, q=e['name'])}</td>"
                   f"<td>{tp('event_avg', f'extras.claims.events.{e[chr(105)]}.avg', money, q=e['name'])}</td></tr>" for e in _ev)
-        + "</tbody></table><p class='note'>NFIP claims that were paid, grouped by the flood event FEMA assigned (FEMA's name). "
-        "Claims with no event, or a catch-all label spanning many years, are left out. Event totals include code-upgrade (ICC) "
-        "payments, which the yearly totals in the chart above leave out.</p>",
+        + f"</tbody></table><p class='note'>Grouped by the flood event FEMA named; only claims that paid something.{how('events')}</p>" + _unnamed_note,
         src(["event_paid", "event_claims"], f"{C['year_min']}–{C['year_max']}", RETR))
 
 # ---- repetitive-loss properties (FEMA IA multiple-loss; a chronic repeat-flood signal, distinct from
@@ -619,9 +639,7 @@ if ml.get("total") is not None:   # 0 is a real, reassuring finding (no chronic 
     multiloss_card = card("Do the same homes flood again here?", _ml_lead,
         f"<ul class='kv'><li><b>Repeat-flood damage records</b><span>{tp('ml_total', 'data.multiloss.total')}</span></li>"
         + (f"<li><b>Records from homes on the severe repetitive loss list</b><span>{tp('ml_srl', 'data.multiloss.srl')}</span></li>" if _srl else "")
-        + "</ul><p class='note'>One home appears once for each declared disaster that damaged it, so this counts "
-        "damage events on repeat-flooded homes, not distinct homes (FEMA says these records cannot be totaled by "
-        "property). Disaster-aid records since 2002, separate from NFIP insurance claims.</p>",
+        + f"</ul><p class='note'>These count damage events on repeat-flooded homes, not distinct homes.{how('multiloss')}</p>",
         src(["ml_total"], "FEMA's current multiple-loss list", _mldate))
 
 # ---- payout reality (avg paid + closed-without-payment share) ----
@@ -683,9 +701,7 @@ if pen.get("overall_pct") is not None:
            if pen.get("sfha_pct") is not None and pen["sfha_pct"] <= 100 else "")   # over 100%: explained in the lead, never a bare tile
         + f""
         f"<li><b>Residential policies in FEMA's insured-homes count (each condo building counts once)</b><span>{tp('pen_contracts', 'data.penetration.contracts')}</span></li></ul>"
-        "<p class='note'>FEMA's NFIP residential take-up rate — share of residential structures with an NFIP "
-        "policy, overall and inside the Special Flood Hazard Area. NFIP only (excludes private flood insurance); "
-        "the structure count is a FEMA estimate.</p>",
+        f"<p class='note'>NFIP only; private flood insurance is not counted.{how('takeup')}</p>",
         src(["pen_overall", "pen_sfha"], pretty_date(pen.get("asof", RETR)), RETR))
 # (else: the Census-based takeup_card defined earlier stands)
 
@@ -698,9 +714,7 @@ if se.get("events"):
         + (f", with about {m('storm_damage', big(se['damage']))} in property damage the weather service estimated (all buildings, insured or not; not NFIP payouts)" if se.get("damage") else "") + ".",
         f"<ul class='kv'><li><b>Flood events logged</b><span>{m('storm_events', num(se['events']))}</span></li>"
         + (f"<li><b>Reported property damage</b><span>{m('storm_damage', big(se['damage']))}</span></li>" if se.get("damage") else "")
-        + "</ul><p class='note'>Physical flood events recorded by the National Weather Service for this " + UNIT + " "
-        "(1996 on), separate from insured NFIP claims — it counts floods that happened, insured or not. Damage "
-        "figures are NWS field estimates, not audited, and undercount in early years.</p>",
+        + f"</ul><p class='note'>Floods that happened, insured or not; damage is a weather-service estimate, not audited.{how('noaa')}</p>",
         src(["storm_events", "storm_damage"], se.get("period", "1996-2025"), se.get("retrieved", RETR)))
 
 # ---- premium trend: median cost by the YEAR a policy was written (cohort-mix caveat, not a like-for-like index) ----
@@ -800,8 +814,11 @@ def _pct_vs(a, b, q):
 cmp_line = ""
 _cby1 = P.get("cost_by_year") or {}
 _ly = max((y for y, d in _cby1.items() if (d.get("n") or 0) >= MX.CONST["year_min"]), default=None)
-_renew_line = (f'<p class="cmp">Policies whose term began in {_ly} typically pay {tp("cost_year", f"policies.cost_by_year.{_ly}.median", money, q=_ly)}; '
-               f'<a href="#prices">why prices differ</a>.</p>') if _ly and len(_cby1) > 1 else ""
+_renew_line = ('<p class="cmp">'   # hater r5: the renewing and the buying reader each get their own figure on screen 1
+               + (f'<b>Renewing?</b> Policies whose term began in {_ly} typically pay {tp("cost_year", f"policies.cost_by_year.{_ly}.median", money, q=_ly)}. '
+                  if _ly and len(_cby1) > 1 else "")
+               + (f'<b>Buying?</b> Policies first bought in the past year typically pay {tp("cost_new", "extras.policies.cost_new_median", money)}. ' if _new_ok else "")
+               + '<a href="#prices">Why prices differ</a>.</p>') if (_ly and len(_cby1) > 1) or _new_ok else ""
 if IS_STATE and US_P50:
     _ranked = []
     for _a in STATE_NAMES:
@@ -1039,7 +1056,7 @@ table{{width:100%}}}}
 {cmp_line}{_renew_line}
 <a class="btn" href="https://msc.fema.gov/portal/home" rel="noopener" target="_blank">Check your address on FEMA's flood map →</a>
 {quick_answers}
-<p class="note">Your flood zone is set at your exact address and decides whether a lender must require coverage; your price comes mainly from your own building's flood risk. Look up your zone, then see "What does it cost in my flood zone?" below.</p>
+<p class="note">Your flood zone is set at your exact address and decides whether a lender must require coverage; your price comes mainly from your own building's flood risk.</p>
 {prov_line}
 </section>
 
@@ -1049,7 +1066,7 @@ table{{width:100%}}}}
   rule("purchase_answer") + " " + rule("lender_any_zone"),
   (f"<p class='note'><b>{rule('fl_citizens')}</b></p>" if agg.get("state") == "FL" else "") +
   f"<p class='note'>{m('sfha_share', str(P['sfha_share_units']) + '%')} of {CS}'s NFIP policy units are in high-risk zones (not {tp('sfha_share', 'policies.sfha_share_units', pct)} of all buildings, and not an answer about your own home).</p>"
-  f"{zone_body}<p class='note'>Insured units by the flood zone each policy is rated in (a condo-building policy counts each unit).</p>",
+  f"{zone_body}<p class='note'>Insured units by the zone each policy is rated in.{how('zones')}</p>",
   src(["units", "sfha_share"], POL_ASOF, RETR) + src_rules(["purchase_answer", "lender_any_zone"] + (["fl_citizens"] if agg.get("state") == "FL" else [])), id="required")}
 
 {outside_note}
@@ -1060,7 +1077,7 @@ table{{width:100%}}}}
 
 {card("What do floods actually pay out here?", claims_lead, claims_svg() +
   f"<p class='note'>Bar height is dollars paid that year. Orange bars are the three costliest years: " + ", ".join(f"{y} ({tp('claims_year_paid', f'claims.by_year.{y}.1', money, q=str(y))})" for y, p in top_paid) +
-  f". Total paid {tp('claims_total', 'claims.total_paid', money, q='exact')}: net building + contents payments by year of loss. Claims are matched by the claims dataset's county code, which may not exactly match a policy's property county.</p>" + claims_ratio_note,
+  f". Total paid {tp('claims_total', 'claims.total_paid', money, q='exact')}.{how('claims')}</p>" + claims_ratio_note,
   src(["claims_filed", "claims_total"], f"{C['year_min']}–{C['year_max']}", RETR))}
 
 {payout_card}
@@ -1087,11 +1104,13 @@ table{{width:100%}}}}
 
 {state_trend_card}
 
+{save_card}
+
 {card("Does my town get a community discount?", crs_lead,
   (f"<table><thead><tr><th>Community</th><th>Discount</th><th>CRS class</th></tr></thead><tbody>{crs_rows}</tbody></table>" if crs_rows else "")
   + crs_none_note +
   "<p class='note'>The Community Rating System cuts NFIP premiums in communities that do extra flood work. A community named for the " + UNIT + " covers its unincorporated area only.</p>",
-  src(["crs_discount"], "FEMA's current Community Status Book", RETR))}
+  src(["crs_discount"], "FEMA's current Community Status Book", RETR), id="crs")}
 
 {risk}
 
@@ -1107,7 +1126,7 @@ table{{width:100%}}}}
 {card(f"How often is {CS} a flood disaster?" if IS_STATE else f"How often is this {UNIT} a flood disaster?",
   f"{m('declarations', str(len(fh_events)))} federal disasters for floods or storms here"
   + (f"; the latest was {html.escape(_dtitle(recent[0]))} ({html.escape(cal_year(recent[0]))})." if recent else "."),
-  f"<ul>{recent_li}</ul><p class='note'>Distinct storms by calendar year (one storm's emergency and major-disaster declarations are counted once), not individual declaration records.</p>",
+  f"<ul>{recent_li}</ul><p class='note'>Distinct storms by calendar year.{how('declarations')}</p>",
   src(["declarations"], "declarations through 2026", RETR))}
 
 {card("Did FEMA aid homeowners after floods and storms?",
@@ -1121,7 +1140,7 @@ table{{width:100%}}}}
       "homeowner aid by disaster", RETR))}
 
 {card("Are these counts complete?", ("Our counts are checked against FEMA's official figure and the download's own record total." if OFFICIAL
-  else "Every record FEMA's download lists was received and counted. FEMA also publishes a separate official policy count, which we have not yet compared for " + CS + "."),
+  else "Every record FEMA's download lists was received and counted."),
   f"<p class='note'>In-force count: {tp('units', 'policies.units')} policy units (from {tp('records_total', 'policies.rows', q='rows')} API records; condo-association records carry more than one unit). " +
   (f"FEMA's official count for July 31, 2026 was {m('official_count', num(OFFICIAL))}: a {m('official_diff', str(round(abs(P['units']-OFFICIAL)/OFFICIAL*100,1)) + '%')} difference. " if OFFICIAL else "") +
   f"Download check: {mani_line}.</p>")}

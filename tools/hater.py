@@ -1,5 +1,5 @@
 """The hater gate's mechanical half. The judging half is a fresh agent running docs/HATER-PROMPT.md.
-  python -I tools/hater.py prep <round> <slug> [<slug> ...]   phone screenshots of the LIVE pages + the filled brief
+  python -I tools/hater.py prep <round> <slug> [<slug> ...] [--local]   phone screenshots of the LIVE pages (or of dist/) + the filled brief
   python -I tools/hater.py record <round>                     read the review, write state/reviews/<slug>.json
 A slug is "home", a state slug or a county slug. record writes PASS only for a section ending "Verdict: PASS" with
 no BLOCKER or MAJOR in it; google_gate.py S12 refuses any indexable page without a current PASS (tools/review.py)."""
@@ -9,7 +9,11 @@ sys.path.insert(0, T); import review as RV
 BASE = "https://floodinsurancedata.com"
 DIR = os.path.join(ROOT, "state", "reviews")
 
-def url(slug): return BASE + "/" if slug == "home" else f"{BASE}/flood-insurance/{slug}/"
+LOCAL = "--local" in sys.argv   # review the new build in dist/ before it ships (the live site still has the old pages)
+if LOCAL: sys.argv.remove("--local")
+def url(slug):
+    if LOCAL: return "file:///" + html_path(slug).replace("\\", "/")
+    return BASE + "/" if slug == "home" else f"{BASE}/flood-insurance/{slug}/"
 def html_path(slug): return os.path.join(ROOT, "dist", "index.html") if slug == "home" else os.path.join(ROOT, "dist", "flood-insurance", slug, "index.html")
 def data_dir(slug):
     for d in (os.path.join(ROOT, "data", "states", slug), os.path.join(ROOT, "data", "c", slug)):
@@ -30,7 +34,7 @@ def prep(rnd, slugs):
         pg = b.new_page(viewport={"width": 390, "height": 844}, is_mobile=True,
                         user_agent="Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) Mobile/15E148")
         for s in slugs:
-            pg.goto(url(s) + "?hater=" + str(rnd), wait_until="networkidle")   # the live page, past any cache
+            pg.goto(url(s) + ("" if LOCAL else "?hater=" + str(rnd)), wait_until="networkidle")   # the live page, past any cache
             n = -(-pg.evaluate("document.documentElement.scrollHeight") // 844)
             for i in range(n):
                 pg.evaluate(f"window.scrollTo(0,{i * 844})"); pg.screenshot(path=os.path.join(shots, f"{s}-{i:02d}.png"))

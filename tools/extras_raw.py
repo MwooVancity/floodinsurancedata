@@ -11,6 +11,7 @@ from codes import NONPAY_REASON, CAUSE, DEDUCTIBLE, truthy
 from agg_raw import NAMES, slug, RAW, ROOT, FIPS
 
 RR2_NEW = "2021-10-01"     # new NFIP policies from this date are rated under Risk Rating 2.0 (rules_registry: rr2_start)
+NB_FROM = "2025-08-01"     # first written in the 12 months to the pull's as-of date (pull_raw.ASOF 2026-07-31; test_gate checks they agree)
 
 def f(v):
     try: return float(v) if v not in ("", None) else None
@@ -27,7 +28,7 @@ def new_acc():
     return {"units": 0, "mand_units": 0, "tenant_units": 0, "condo_unit_units": 0, "rcbap_units": 0, "elev_units": 0,
             "gf_units": 0, "prem_new": [], "prem_old": [], "prem_elev": [], "prem_low": [], "sf_n": 0, "sf_max_cov": 0,
             "rc_n": 0, "rc_over": 0, "fee": [], "hfiaa": [], "reserve": [], "icc": [], "ded": collections.Counter(),
-            "cost_hist": collections.Counter(), "all_cost": [], "sf_cost": [], "sf_prem": []}
+            "cost_hist": collections.Counter(), "cost_hist_new": collections.Counter(), "all_cost": [], "sf_cost": [], "sf_prem": [], "sf_new_cost": []}
 
 def policies(st):
     acc = collections.defaultdict(new_acc)
@@ -45,13 +46,14 @@ def policies(st):
             if r["condominiumCoverageTypeCode"] in ("H", "L"): a["rcbap_units"] += u
             if truthy(r["elevatedBuildingIndicator"]): a["elev_units"] += u
             if r["grandfatheringTypeCode"] in ("2", "3"): a["gf_units"] += u
-            if k == "ST" and cost and cost > 0: a["all_cost"].append(cost)    # every policy type: the "all policies" average
+            if cost and cost > 0: a["all_cost"].append(cost)    # every policy type: the "all policies" average (county too: hater r5)
             if not sf: continue
             a["sf_n"] += 1
             if cost and cost > 0:
                 a["cost_hist"][round(cost)] += 1
-                if k == "ST": a["sf_cost"].append(cost)
-            if k == "ST" and prem and prem > 0: a["sf_prem"].append(prem)
+                if (r["originalNBDate"] or "")[:10] >= NB_FROM: a["sf_new_cost"].append(cost); a["cost_hist_new"][round(cost)] += 1
+                a["sf_cost"].append(cost)
+            if prem and prem > 0: a["sf_prem"].append(prem)
             if prem and prem > 0:
                 (a["prem_new"] if (r["originalNBDate"] or "")[:10] >= RR2_NEW else a["prem_old"]).append(prem)
                 (a["prem_elev"] if truthy(r["elevatedBuildingIndicator"]) else a["prem_low"]).append(prem)
@@ -71,6 +73,7 @@ def policies(st):
                   "elevated_pct": pct(a["elev_units"], a["units"]), "grandfathered_pct": pct(a["gf_units"], a["units"]),
                   "prem_new_median": med(a["prem_new"]), "prem_new_n": len(a["prem_new"]),
                   "prem_old_median": med(a["prem_old"]), "prem_old_n": len(a["prem_old"]),
+                  "cost_new_median": med(a["sf_new_cost"]), "cost_new_n": len(a["sf_new_cost"]),
                   "prem_elevated_median": med(a["prem_elev"]), "prem_elevated_n": len(a["prem_elev"]),
                   "prem_not_elevated_median": med(a["prem_low"]), "prem_not_elevated_n": len(a["prem_low"]),
                   "at_building_max_pct": pct(a["sf_max_cov"], a["sf_n"]), "replacement_over_250k_pct": pct(a["rc_over"], a["rc_n"]),
@@ -79,12 +82,13 @@ def policies(st):
                   "reserve_mean": round(statistics.mean(a["reserve"])) if a["reserve"] else None,
                   "icc_premium_mean": round(statistics.mean(a["icc"])) if a["icc"] else None,
                   "deductibles": {str(d): pct(c, n_ded) for d, c in a["ded"].most_common(4)}, "sf_n": a["sf_n"]}
-        if k == "ST":
-            out[k]["cost_hist"] = dict(a["cost_hist"])
-            out[k]["averages"] = {"sf_cost_median": med(a["sf_cost"]), "sf_cost_mean": round(statistics.mean(a["sf_cost"])) if a["sf_cost"] else None,
-                                  "sf_prem_median": med(a["sf_prem"]), "sf_prem_mean": round(statistics.mean(a["sf_prem"])) if a["sf_prem"] else None,
-                                  "all_cost_median": med(a["all_cost"]), "all_cost_mean": round(statistics.mean(a["all_cost"])) if a["all_cost"] else None,
-                                  "sf_n": len(a["sf_cost"]), "all_n": len(a["all_cost"])}
+        if k == "ST":   # histograms and counts the home page sums into exact U.S. figures
+            out[k]["cost_hist"] = dict(a["cost_hist"]); out[k]["cost_hist_new"] = dict(a["cost_hist_new"])
+            out[k]["ded_counts"] = {str(d): c for d, c in a["ded"].items()}
+        out[k]["averages"] = {"sf_cost_median": med(a["sf_cost"]), "sf_cost_mean": round(statistics.mean(a["sf_cost"])) if a["sf_cost"] else None,   # every state and county (hater r5)
+                              "sf_prem_median": med(a["sf_prem"]), "sf_prem_mean": round(statistics.mean(a["sf_prem"])) if a["sf_prem"] else None,
+                              "all_cost_median": med(a["all_cost"]), "all_cost_mean": round(statistics.mean(a["all_cost"])) if a["all_cost"] else None,
+                              "sf_n": len(a["sf_cost"]), "all_n": len(a["all_cost"])}
     return out
 
 def net(r): return sum(f(r[c]) or 0 for c in ("netBuildingPaymentAmount", "netContentsPaymentAmount", "netIccPaymentAmount"))
@@ -138,11 +142,11 @@ def run(st):
         print(st, "skipped: pull not finished"); return
     p, c = policies(st), claims(st)
     d = os.path.join(ROOT, "data", "states", slug(st)); os.makedirs(d, exist_ok=True)
-    hist = p["ST"].pop("cost_hist")
     os.makedirs(os.path.join(ROOT, "data", "us"), exist_ok=True)
-    hp = os.path.join(ROOT, "data", "us", "cost_hist.json")
-    allh = json.load(open(hp)) if os.path.exists(hp) else {}
-    allh[st] = hist; json.dump(allh, open(hp, "w"))
+    for key in ("cost_hist", "cost_hist_new"):   # all single-family policies / those first bought in the past year
+        hp = os.path.join(ROOT, "data", "us", key + ".json")
+        allh = json.load(open(hp)) if os.path.exists(hp) else {}
+        allh[st] = p["ST"].pop(key); json.dump(allh, open(hp, "w"))
     json.dump({"policies": p["ST"], "claims": c.get("ST", {})}, open(os.path.join(d, "extras.json"), "w"))
     for g in set(p) | set(c):
         if g == "ST": continue
