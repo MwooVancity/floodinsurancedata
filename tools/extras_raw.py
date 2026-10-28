@@ -88,7 +88,7 @@ def policies(st):
         out[k]["averages"] = {"sf_cost_median": med(a["sf_cost"]), "sf_cost_mean": round(statistics.mean(a["sf_cost"])) if a["sf_cost"] else None,   # every state and county (hater r5)
                               "sf_prem_median": med(a["sf_prem"]), "sf_prem_mean": round(statistics.mean(a["sf_prem"])) if a["sf_prem"] else None,
                               "all_cost_median": med(a["all_cost"]), "all_cost_mean": round(statistics.mean(a["all_cost"])) if a["all_cost"] else None,
-                              "sf_n": len(a["sf_cost"]), "all_n": len(a["all_cost"])}
+                              "sf_n": len(a["sf_cost"]), "sf_prem_n": len(a["sf_prem"]), "all_n": len(a["all_cost"])}
     return out
 
 def net(r): return sum(f(r[c]) or 0 for c in ("netBuildingPaymentAmount", "netContentsPaymentAmount", "netIccPaymentAmount"))

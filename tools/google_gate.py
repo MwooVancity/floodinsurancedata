@@ -155,6 +155,13 @@ for p in ([] if "--skip-review" in sys.argv else sorted(indexable)):   # skipped
     if slug and not RV.ok(slug, _th):
         fail("S12", f"{p}: no current hater-review PASS (template {_th}; state/reviews/{slug}.json is {(RV.get(slug) or {}).get('verdict') or 'missing'})")
 
+# S14 a ranked gap blocks once it is 3 review rounds old (2026-10-28: "gaps never block" became "gaps never get done")
+_bl = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "state", "reviews", "backlog.md")
+_rounds = [int(x) for x in re.findall(r"hater-round(\d+)\.md", " ".join(os.listdir(os.path.dirname(_bl))))]
+if "--skip-review" not in sys.argv and os.path.exists(_bl) and _rounds:
+    for _item, _since in re.findall(r"(?m)^\d+\. (.*?) \(since round (\d+)\)$", open(_bl, encoding="utf-8").read()):
+        if max(_rounds) - int(_since) >= 3: fail("S14", f"gap open since round {_since} (now round {max(_rounds)}): {_item[:80]}")
+
 # S13 boilerplate share (hater r5: shared paragraphs = scaled content). A caveat belongs beside its figure, so a shared
 # sentence is allowed; a county page whose prose is MOSTLY sentences found on over half the county pages is templated.
 # Prose = <p> text, not menus, source lines or rule() text (rules are one registry text with their source, by design).

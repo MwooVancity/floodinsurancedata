@@ -109,3 +109,4 @@ with ThreadPoolExecutor(max_workers=3) as ex:
     list(ex.map(lambda j: pull_state(*j), jobs))
 left = [f"{ds} {s}" for ds, s, _ in jobs if not os.path.exists(os.path.join(RAW, ds, s + ".done"))]
 log("ALL DONE" if not left else f"FINISHED WITH {len(left)} UNFINISHED: {left}")
+sys.exit(1 if left else 0)   # a partial pull must stop the refresh job before agg_raw writes half a country

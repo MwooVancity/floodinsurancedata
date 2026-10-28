@@ -352,7 +352,7 @@ def _cname_plain(c):
     return html.escape(n)
 # table only for communities with a discount; the rest fold into one named line (a screen of "No discount" rows helps no one)
 _has_disc = [c for c in crs if _pct(c.get("sfhaDiscount")) or _pct(c.get("nonSfhaDiscount"))]
-_no_disc = [c for c in crs if c not in _has_disc]
+_no_disc = sorted((c for c in crs if c not in _has_disc), key=lambda c: html.unescape(_cname_plain(c)).casefold())   # A to Z as shown (gate H8)
 def _tagd(key, shown, q):   # a table cell: tag it when it is a figure (not "No discount" / a dash)
     return m(key, shown, q=html.unescape(q).replace('"', "")) if re.search(r"\d", shown) else shown
 def _dnum(c): return int((_pct(c.get("sfhaDiscount")) or "0%").rstrip("%"))
@@ -546,7 +546,7 @@ if IS_STATE:
     _rows = "".join(f"<tr><td>{_clink(g)}</td><td>{tp('county_units', f'counties.{g}.units', num, q=g)}</td>"
                     f"<td>{tp('county_cost', f'counties.{g}.p50', money, q=g) if _ok(r) else '—'}</td>"
                     f"<td>{tp('county_share_below', f'counties.{g}.share_below', pct, q=g) if _ok(r) and r.get('share_below') is not None else '—'}</td>"
-                    f"<td>{tp('county_claims', f'counties.{g}.claims', num, q=g)}</td></tr>" for g, r in sorted(_cty, key=lambda kv: _cn(kv[0])))   # every one, A to Z: the reader is finding theirs
+                    f"<td>{tp('county_claims', f'counties.{g}.claims', num, q=g)}</td></tr>" for g, r in sorted(_cty, key=lambda kv: _cn(kv[0]).casefold()))   # every one, A to Z: the reader is finding theirs
     _cheap = sorted(_priced, key=lambda kv: kv[1]["p50"])[:5]; _dear = sorted(_priced, key=lambda kv: -kv[1]["p50"])[:5]
     zip_card = "" if len(_cty) < 2 else card(f"What does it cost in my {UNIT}?",
         (f"From about {tp('county_cost', f'counties.{_cheap[0][0]}.p50', money, q=_cheap[0][0])} a year in {_cn(_cheap[0][0])} to "
@@ -632,7 +632,7 @@ if len(_ev) >= 2:
         + "".join(f"<tr><td>{_evname(e)}: FEMA's general label, many separate floods</td><td>{tp('event_claims', f'extras.claims.events.{e[chr(105)]}.claims', q=e['name'])}</td>"
                   f"<td>{tp('event_paid', f'extras.claims.events.{e[chr(105)]}.paid', big, q=e['name'])}</td>"
                   f"<td>{tp('event_avg', f'extras.claims.events.{e[chr(105)]}.avg', money, q=e['name'])}</td></tr>" for e in _ev_all)
-        + f"</tbody></table><p class='note'>Grouped by the flood event FEMA named; only claims that paid something.{how('events')}</p>" + _unnamed_note,
+        + f"</tbody></table><p class='note'>Grouped by the flood event FEMA named; only claims that paid something. Totals include code-upgrade (ICC) payments, which the yearly chart leaves out.{how('events')}</p>" + _unnamed_note,
         src(["event_paid", "event_claims"], f"{C['year_min']}–{C['year_max']}", RETR))
 
 # ---- repetitive-loss properties (FEMA IA multiple-loss; a chronic repeat-flood signal, distinct from
@@ -709,7 +709,7 @@ def _share_words(p):   # the words must match the number: 64.9% is "about 6 in 1
     return "Almost every home" if p >= 95 else f"About {round(p / 10)} in 10 homes" if p >= 15 else f"About 1 in {round(100 / p)} homes"
 if pen.get("overall_pct") is not None:
     takeup_card = card("How many homes here carry flood insurance?",
-        (f"{m('pen_words', _share_words(pen['overall_pct']))} here {'has' if pen['overall_pct'] < 20 else 'have'} flood insurance ({m('pen_overall', str(pen['overall_pct']) + '%')}). "
+        (f"{m('pen_words', _share_words(pen['overall_pct']))} here {'has' if _share_words(pen['overall_pct']).startswith(('About 1 in', 'Almost')) else 'have'} flood insurance ({m('pen_overall', str(pen['overall_pct']) + '%')}). "
          if pen["overall_pct"] else f"Almost no homes here have NFIP flood insurance ({m('pen_overall', str(pen['overall_pct']) + '%')}). ")
         + ((f"Inside the high-risk zone it's {m('pen_sfha', str(pen['sfha_pct']) + '%')}." if pen["sfha_pct"] <= 100 else
             f"Inside the high-risk zone FEMA's rate is {m('pen_sfha', str(pen['sfha_pct']) + '%')}: it counts more policies there than its own "

@@ -16,6 +16,8 @@ API = "https://www.fema.gov/api/open/v3/"
 ASOF = "2026-07-31T00:00:00.000z"
 args = sys.argv[1:]
 base = None
+RULES_ONLY = "--rules-only" in args   # release.py step: every rule's official wording is still on its source (seconds, not minutes)
+if RULES_ONLY: args.remove("--rules-only")
 if "--base" in args:
     i = args.index("--base"); base = args[i + 1]; del args[i:i + 2]
 counties = {c["slug"]: c for c in json.load(open(os.path.join(ROOT, "tools", "counties.json")))}
@@ -48,7 +50,7 @@ def page_figures(slug):
                                   headers={"User-Agent": "Mozilla/5.0 (recheck)"}), timeout=60).read().decode() if base
            else open(path, encoding="utf-8").read())
     out = {}
-    for k, v in re.findall(r'<span data-m="(\w+)"[^>]*>([^<]*)</span>', src):
+    for k, v in re.findall(r'<span data-m="(\w+)"(?![^>]*data-q=)[^>]*>([^<]*)</span>', src):
         try: out.setdefault(k, float(v.replace("$", "").replace(",", "").replace("%", "")))
         except ValueError: pass   # a text figure ("16th highest" rank); recheck compares numbers only
     return out
@@ -57,7 +59,7 @@ def recompute(c):
     sfh = lambda r: str(r.get("occupancyType")) in ("1", "11") and str(r.get("primaryResidenceIndicator")) in ("True", "true", "1")
     pol = pull("NfipPolicies", f"propertyState eq '{c['state']}' and startswith(censusGeoid,'{c['geoid']}') and "
                f"policyEffectiveDate le '{ASOF}' and policyTerminationDate ge '{ASOF}'",
-               "id,policyCost,totalInsurancePremiumOfThePolicy,fullRiskPremium,occupancyType,primaryResidenceIndicator,policyCount,ratedFloodZone")
+               "id,policyCost,totalInsurancePremiumOfThePolicy,fullRiskPremium,occupancyType,primaryResidenceIndicator,policyCount,ratedFloodZone,originalNBDate")
     units = sum(int(r.get("policyCount") or 0) for r in pol)
     hi = sum(int(r.get("policyCount") or 0) for r in pol if (r.get("ratedFloodZone") or "")[:1] in ("A", "V"))
     coh = [r for r in pol if sfh(r)]
@@ -65,33 +67,46 @@ def recompute(c):
     pairs = [(r["totalInsurancePremiumOfThePolicy"], r["fullRiskPremium"]) for r in coh
              if all(isinstance(r.get(f), (int, float)) and r[f] > 0 for f in ("totalInsurancePremiumOfThePolicy", "fullRiskPremium"))]
     clm = pull("NfipClaims", f"state eq '{c['state']}' and countyCode eq '{c['geoid']}'",
-               "id,netBuildingPaymentAmount,netContentsPaymentAmount,netIccPaymentAmount")
-    paid = sum(1 for r in clm if sum((r.get(f) or 0) for f in ("netBuildingPaymentAmount", "netContentsPaymentAmount", "netIccPaymentAmount")) > 0)
+               "id,netBuildingPaymentAmount,netContentsPaymentAmount,netIccPaymentAmount,yearOfLoss")
+    ispaid = lambda r: sum((r.get(f) or 0) for f in ("netBuildingPaymentAmount", "netContentsPaymentAmount", "netIccPaymentAmount")) > 0
+    paid = sum(1 for r in clm if ispaid(r))
+    # extras_raw figures (code review 2026-10-28: nothing recomputed them): past-year buyers' cost, latest decade's paid share
+    nb = str(datetime.date.fromisoformat(ASOF[:10]).replace(year=int(ASOF[:4]) - 1) + datetime.timedelta(days=1))
+    new = [r["policyCost"] for r in coh if isinstance(r.get("policyCost"), (int, float)) and r["policyCost"] > 0 and (r.get("originalNBDate") or "")[:10] >= nb]
+    dec = [r for r in clm if str(r.get("yearOfLoss") or "")[:3] == "202"]
     return {"units": units, "cost_p50": round(statistics.median(costs)), "sfha_share": round(100 * hi / units, 1),
             "share_below": round(100 * sum(1 for a, b in pairs if a < b) / len(pairs), 1),
             "prem_median": round(statistics.median(a for a, _ in pairs)), "frp_median": round(statistics.median(b for _, b in pairs)),
-            "claims_filed": len(clm), "claims_paid_n": paid}
+            "claims_filed": len(clm), "claims_paid_n": paid,
+            "x_cost_new": round(statistics.median(new)) if new else None,
+            "x_paid_2020s": round(100 * sum(1 for r in dec if ispaid(r)) / len(dec), 1) if dec else None}
+
+def extras_figures(c):   # what extras_raw wrote for this county (the page prints these; gate V2 ties page to file)
+    x = json.load(open(os.path.join(ROOT, "data", "all-counties", c["geoid"] + ".json"))).get("extras") or {}
+    return {"x_cost_new": (x.get("policies") or {}).get("cost_new_median"),
+            "x_paid_2020s": (((x.get("claims") or {}).get("by_decade") or {}).get("2020s") or {}).get("paid_pct")}
 
 # tolerance: the API keeps receiving late records, so counts may drift ~1% between the pull and the check
 TOL = {"units": 0.01, "claims_filed": 0.01, "claims_paid_n": 0.01, "cost_p50": 0.01, "prem_median": 0.01,
-       "frp_median": 0.01, "share_below": 1.0, "sfha_share": 1.0}   # pct metrics: points; others: relative
+       "frp_median": 0.01, "share_below": 1.0, "sfha_share": 1.0, "x_cost_new": 0.01, "x_paid_2020s": 1.0}   # pct metrics: points; others: relative
 problems, log = [], {"date": str(datetime.date.today()), "base": base or "dist"}
 
-slugs = args or random.sample([s for s in counties if json.load(open(os.path.join(ROOT, "data", s, "agg.json")))["policies"]["units"] < 25000], 2)
+_built = [s for s in counties if os.path.exists(os.path.join(ROOT, "data", "c", s, "agg.json"))]
+slugs = [] if RULES_ONLY else args or random.sample([s for s in _built if json.load(open(os.path.join(ROOT, "data", "c", s, "agg.json")))["policies"]["units"] < 25000], 2)
 log["counties"] = {}
 for s in slugs:
-    mine, shown = recompute(counties[s]), page_figures(s)
+    mine, shown = recompute(counties[s]), dict(page_figures(s), **extras_figures(counties[s]))
     rows = {}
     for k, v in mine.items():
         p = shown.get(k)
-        ok = p is not None and (abs(v - p) <= TOL[k] if TOL[k] >= 1 else abs(v - p) <= TOL[k] * max(abs(v), 1))
+        ok = (v is None and p is None) or v is not None and p is not None and (abs(v - p) <= TOL[k] if TOL[k] >= 1 else abs(v - p) <= TOL[k] * max(abs(v), 1))
         rows[k] = {"recomputed": v, "page": p, "ok": ok}
         if not ok: problems.append(f"{s} {k}: recomputed {v}, page shows {p}")
     log["counties"][s] = rows
     print(f"{s}: " + ", ".join(f"{k} {'ok' if r['ok'] else 'MISMATCH'} ({r['recomputed']} vs {r['page']})" for k, r in rows.items()))
 
 stored = json.load(open(MX.DEFS))
-now = MX.fetch_defs()
+now = {} if RULES_ONLY else MX.fetch_defs()
 for ds, fields in now.items():
     for f, v in fields.items():
         old = (stored.get(ds) or {}).get(f)

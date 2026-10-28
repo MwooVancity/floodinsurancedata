@@ -92,7 +92,7 @@ RULES = {
         "text": "FEMA's ways to lower an NFIP bill: a higher deductible (you pay more of any loss), work that lowers "
                 "the building's flood risk, and an Elevation Certificate.",
         "sources": [("https://agents.floodsmart.gov/articles/paying-less-flood-insurance",
-                     "Higher Deductibles, Risk Mitigation, and Elevation Certificates Can Lower", "curl"),
+                     "Choose a Higher Deductible", "curl"),   # 2026-10-28: FEMA moved the old headline into page metadata
                     (FS + "/premiumcosts", "In return, your overall flood insurance premium may be lower.", "curl")]},
     "price_drivers": {   # hater r5 (home): every top result says what drives the price
         "text": "FEMA prices each building from where it is (distance to the coast, rivers and other flood sources, and how high "

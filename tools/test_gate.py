@@ -46,7 +46,9 @@ _pulled = set(ast.literal_eval(_st.func.value).split()) if isinstance(_st, ast.C
 assert _pulled == set(_NAMES), f"pull_raw.STATES differs from the 51 names: missing {set(_NAMES) - _pulled}, extra {_pulled - set(_NAMES)}"
 import datetime as _dt, extras_raw as _XR   # "last 12 months" means 12 months to the pull's as-of date, not a stale constant
 _asof = _dt.date.fromisoformat(next(n.value.value for n in _pull.body if isinstance(n, ast.Assign) and getattr(n.targets[0], "id", "") == "ASOF")[:10])
-assert _XR.NB_FROM == str(_asof.replace(year=_asof.year - 1) + _dt.timedelta(days=1)), \
+for _f in ("agg_raw.py", "recheck.py"):   # code review 2026-10-28: the as-of date was typed in three files
+    assert str(_asof) in open(os.path.join(T, _f), encoding="utf-8").read(), f"{_f} does not use pull_raw.ASOF {_asof}"
+assert _XR.NB_FROM ==str(_asof.replace(year=_asof.year - 1) + _dt.timedelta(days=1)), \
     f"extras_raw.NB_FROM {_XR.NB_FROM} is not 12 months before pull_raw.ASOF {_asof}"
 from rules_registry import RULES as _RULES   # a date a rule's source states must appear in the rule text (Citizens 2023 was left out)
 for _k, _r in _RULES.items():
@@ -125,6 +127,13 @@ MUTATIONS = [   # (defect class from THE EVIDENCE table, what we reintroduce, ex
     ("hater r5", "existing-policy figure called a new policy's price", "A6",
      sub("; other sites count other policies", ", but a new one is priced at full risk: about "
          + re.search(r'<span data-m="frp_plus_fees">[^<]*</span>', PAGE).group() + " with fees; other sites count other policies"), None),
+    # mined from hater rounds 5-9 (tools/mine_reviews.py, 2026-10-28): types no check covered
+    ("mined", "flood event in the data dropped from the table", "C9",
+     re.sub(r"(<th>Flood \(FEMA's name\)</th>.*?<tbody>)<tr>.*?</tr>", r"\1", PAGE, count=1, flags=re.S) if "<th>Flood (FEMA's name)</th>" in PAGE else "anchor missing", None),
+    ("mined", "list not A to Z (case-sensitive sort)", "H8", sub("</main>", "<p class='note'><b>No CRS discount (2):</b> Westlake; Atlantis.</p></main>"), None),
+    ("mined", "structured data names v3, links v2", "H9",
+     sub("</main>", '<script type="application/ld+json">{"d": "OpenFEMA NfipPolicies v3", "u": "https://x/fima-nfip-redacted-policies-v2"}</script></main>'), None),
+    ("mined", "'2 in 10 homes has'", "H11", sub('<p class="stand">', '<p class="stand">About 2 in 10 homes here has flood insurance (20.0%). '), None),
 ]
 table, ok = [], True
 for cls, what, want, html, agg in MUTATIONS:

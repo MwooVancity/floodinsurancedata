@@ -22,6 +22,7 @@ else:
     print(f"== build + gate: {n_pass} pages pass"); [print("  ", b) for b in bad[:30]]
     if bad or not n_pass: sys.exit("RELEASE STOPPED at: build + gate")
     step("truth proof: every fixed defect is fixed on the built pages", os.path.join(T, "test_truth.py"))
+    step("rule sources: every rule's quoted wording is still on its official page", os.path.join(T, "recheck.py"), "--rules-only")
     step("unit tests", os.path.join(T, "test_calc.py"))
     step("mutation suite", os.path.join(T, "test_gate.py"))
     step("hater verdict parser", os.path.join(T, "test_hater.py"))

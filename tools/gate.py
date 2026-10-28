@@ -208,6 +208,14 @@ if _ut and (EXTRAS.get("claims") or {}).get("unpaid_n"):
 _sent = collections.Counter(" ".join(s.split()[-12:]) for s in re.split(r"(?<=[.!?])\s+", TEXT) if len(s.split()) >= 12)
 for _s, _c in _sent.items():
     if _c > 1: fail("E2", f"sentence printed {_c} times: {_s[:80]}"); break
+# C9 every flood event the data holds (20+ paid claims) has its row: hater r6 found FEMA's catch-all "Flooding" and
+# Louisiana's 1995 dropped without a word (mined from the reviews, 2026-10-28)
+_et = re.search(r"<th>Flood \(FEMA's name\)</th>.*?<tbody>(.*?)</tbody>", page, re.S)
+if _et:
+    _shown = set(re.findall(r'data-p="extras\.claims\.events\.(\d+)\.claims"', _et.group(1)))
+    for _i, _e in enumerate((EXTRAS.get("claims") or {}).get("events") or []):
+        if (_e.get("claims") or 0) >= 20 and _e.get("years") and str(_i) not in _shown:
+            fail("C9", f"flood event '{_e['name']}' ({_e['claims']} paid claims) is in the data but not in the events table")
 # C6 CRS discounts under Risk Rating 2.0 are one rate for every zone: no separate "other areas" rate
 if re.search(r"<th>Other areas</th>", page): fail("C6", "CRS table shows a separate non-high-risk discount (pre-2021 rule; Risk Rating 2.0 is one rate in every zone)")
 _foot = re.search(r"<footer>(.*?)</footer>", page, re.S)
@@ -246,6 +254,20 @@ _sv = re.search(r"costliest single flood here was (.*?):", READ)
 if _sv and not re.search(r"\(\d{4}(–\d{4})?\)", _sv.group(1)): fail("H5", f"storm named without its year: {_sv.group(1)[:50]}")
 for y in re.findall(r"<li>(\d{4}) — ", page):
     if int(y) > datetime.date.today().year: fail("L10", f"declaration shows future year {y}")
+# H8 a list a reader scans for their place is A to Z ignoring case (hater r6: "Jefferson Davis" before "Jefferson")
+_lists = [re.findall(r"<tr><td>(?:<a [^>]*>)?([^<]+)", _ct.group(1))] if _ct else []
+for _nd in re.finditer(r"<b>No CRS discount \([^)]*\):</b>(.*?)</p>", page, re.S):
+    _lists.append(norm(re.sub(r"<[^>]+>", "", _nd.group(1))).rstrip(". ").split(";"))   # unescape first: "Hunter&#x27;s" holds a ";"
+for _l in _lists:
+    _l = [norm(x) for x in _l if norm(x)]
+    _bad = next(((a, b) for a, b in zip(_l, _l[1:]) if a.casefold() > b.casefold()), None)
+    if _bad: fail("H8", f"list not A to Z: '{_bad[0]}' before '{_bad[1]}'")
+# H9 the structured data names the same dataset versions its citation links point to (hater r5-r9: "v3" text, "-v2" URLs)
+for _ld in re.findall(r'<script type="application/ld\+json">(.*?)</script>', page, re.S):
+    _tv, _uv = set(re.findall(r"\b(?:NfipPolicies|NfipClaims) v(\d)\b", _ld)), set(re.findall(r"(?:policies|claims)-v(\d)\b", _ld))
+    if _tv and _uv and _tv != _uv: fail("H9", f"structured data says dataset version v{'/v'.join(sorted(_tv))} but links v{'/v'.join(sorted(_uv))}")
+# H11 "N in 10 homes" takes a plural verb (hater r9: "About 2 in 10 homes here has")
+for _mm in re.finditer(r"\b(?:[2-9]|\d{2,}) in \d+ homes(?: here)? has\b", READ): fail("H11", f"plural count with 'has': {_mm.group(0)}")
 if not agg.get("nri") and agg.get("level") != "state" and "Gap:" not in page: fail("L8", "NRI missing without a gap line")
 if P.get("spread_ok", (P.get("cost_n") or 0) >= 100) != ("Annual NFIP cost spread" in page): fail("L9", "cost spread shown for a small cohort (or hidden for a large one)")
 if P.get("sfha_units") is not None and units and "of all buildings" not in page: fail("L12", "SFHA share shown without its denominator disclosure")

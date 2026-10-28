@@ -65,8 +65,8 @@ def claims_extra(rows):
 
 def manifest(ds, st):
     m = json.load(open(os.path.join(RAW, ds, st + ".done")))
-    return {"reported_total": m["n"], "recheck_total": m["n"], "unique_fetched": m["n"], "missing": 0,
-            "complete": True, "stable": True, "provisional": False, "pulled": m["at"][:10]}
+    return {"reported_total": m["n"], "unique_fetched": m["n"], "missing": 0,   # FEMA's count at pull time; no second count was taken
+            "complete": True, "provisional": False, "pulled": m["at"][:10]}
 
 def run(st):
     if not all(os.path.exists(os.path.join(RAW, ds, st + ".done")) for ds in ("NfipPolicies", "NfipClaims")):

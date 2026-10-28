@@ -121,7 +121,7 @@ if len(states) == 51:   # U.S. figures only once every state is built and gated:
         f'<tr><td>Typical cost, policies first bought in the past year</td><td>{money(_new_med)}</td></tr>'
         f'<tr><td>Average (mean) cost, single-family homes</td><td>{money(_sf_mean)}</td></tr>'
         f'<tr><td>Average cost, every policy type (adds condos, rentals, businesses)</td><td>{money(_all_mean)}</td></tr>'
-        f'<tr><td>Average premium alone, single-family homes (before the federal fees)</td><td>{money(_wmean("sf_prem_mean", "sf_n"))}</td></tr></tbody></table>'
+        f'<tr><td>Average premium alone, single-family homes (before the federal fees)</td><td>{money(_wmean("sf_prem_mean", "sf_prem_n"))}</td></tr></tbody></table>'
         '<p class="mut">Premium plus fees except the last row, NFIP policies in force on July 31, 2026. A figure quoted without fees, or '
         'for a different mix of policies, lands lower or higher than ours. Private flood insurance is not in this data.</p></div>'
         f'<script>var qv=document.getElementById("qv"),qo=document.getElementById("qo");qv.addEventListener("input",function(){{'

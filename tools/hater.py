@@ -25,6 +25,11 @@ def query(slug):   # the query a real reader types for this page
            f"flood insurance cost {slug.rsplit('-', 1)[0].replace('-', ' ')} {a.get('state', '')}"
 
 def prep(rnd, slugs):
+    # 2 random pages each round beside the samples: findings came only from the same 3-4 pages (2026-10-28)
+    import random
+    pool = [p["slug"] for p in json.load(open(os.path.join(ROOT, "places.json")))] + \
+           [s["slug"] for s in json.load(open(os.path.join(ROOT, "data", "states", "built.json")))]
+    slugs = list(slugs) + random.Random(int(rnd)).sample(sorted(set(pool) - set(slugs)), 2)
     from playwright.sync_api import sync_playwright
     shots = os.path.join(DIR, f"round{rnd}"); os.makedirs(shots, exist_ok=True)
     listing = []
@@ -56,7 +61,8 @@ def prep(rnd, slugs):
 def record(rnd):
     txt = open(os.path.join(DIR, f"hater-round{rnd}.md"), encoding="utf-8").read()
     tf = os.path.join(DIR, f"round{rnd}-template.txt")
-    th = open(tf).read().strip() if os.path.exists(tf) else None   # a PASS covers only the template the reviewer saw
+    if not os.path.exists(tf): sys.exit(f"no {tf}: run prep {rnd} first (a PASS covers only the template the reviewer saw)")
+    th = open(tf).read().strip()
     if th and th != RV.template_hash(): print(f"template changed since round {rnd} prep: its PASS will not cover the current build")
     for slug, sec in re.findall(r"^## (\S+)[^\n]*\n(.*?)(?=^## |\Z)", txt, re.S | re.M):
         slug = slug.strip("`/").split("/")[-1] or "home"

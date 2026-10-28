@@ -9,13 +9,17 @@ open(p, "w", encoding="utf-8").write(
     "## palm-beach-county-fl\n1. **BLOCKER** wrong\nVerdict: FAIL\n"
     "## Classes\n**MAJOR** everywhere\n")
 keep = {s: RV.get(s) for s in ("home", "louisiana", "palm-beach-county-fl")}
+tf = os.path.join(hater.DIR, "round99-template.txt"); open(tf, "w").write("seenbyreviewer99")   # the hash prep saved
 hater.record(99)
 got = {s: RV.get(s)["verdict"] for s in keep}
+stamped = {RV.get(s)["template"] for s in keep}   # a PASS carries the template the reviewer saw, not today's
+
 for s, r in keep.items():   # restore whatever was there
     f = os.path.join(RV.DIR, s + ".json")
     if r: json.dump(r, open(f, "w", encoding="utf-8"), indent=1)
     elif os.path.exists(f): os.remove(f)
-os.remove(p)
+os.remove(p); os.remove(tf)
+assert stamped == {"seenbyreviewer99"}, stamped
 assert got == {"home": "PASS", "louisiana": "FAIL", "palm-beach-county-fl": "FAIL"}, got
 print("hater record self-test OK", got)
 # template review + code flags: a county far from its state is flagged; an ordinary one is not

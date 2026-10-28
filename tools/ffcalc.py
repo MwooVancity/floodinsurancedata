@@ -66,11 +66,11 @@ def aggregate_policies(rows):
     # per-ZIP: units (all policies) + cohort median cost where enough valid observations (>=25)
     zu_zip = defaultdict(int); zc_zip = defaultdict(list)
     for r in rows:
-        z = (str(r.get("reportedZipCode") or "")).strip()
+        z = (str(r.get("reportedZipCode") or "")).strip()[:5]   # ZIP+4 ("33418-4628") counts toward 33418 (code review 2026-10-28)
         if z: zu_zip[z] += int(r.get("policyCount") or 0)
     for r in coh:
         if _valid_cost(r):
-            z = (str(r.get("reportedZipCode") or "")).strip()
+            z = (str(r.get("reportedZipCode") or "")).strip()[:5]   # ZIP+4 ("33418-4628") counts toward 33418 (code review 2026-10-28)
             if z: zc_zip[z].append(r["policyCost"])
     by_zip = sorted(
         ({"zip": z, "units": zu_zip[z], "cost_n": len(zc_zip[z]),

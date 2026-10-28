@@ -1,0 +1,41 @@
+name: refresh-data
+# Owner 2026-10-28: "delete it all" off the laptop. The full FEMA download (every in-force policy and claim, ~250 MB)
+# and the number crunching run here, not on the laptop. The raw files live in the Actions cache between runs; only the
+# computed data/ files are committed. Nothing ships from here: a release still needs the gates and a hater review.
+# Run it when pull_raw.ASOF moves to a new month (a new as-of date = a new cache key = a fresh download).
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency: refresh-data
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/cache@v4
+        with:
+          path: .cache/raw
+          key: fema-raw-${{ hashFiles('tools/pull_raw.py') }}
+      - name: Download every FEMA policy and claim (resumable; skips finished slices)
+        run: python -I tools/pull_raw.py
+      - name: Compute state, county and extras figures
+        run: |
+          set -e
+          python -I tools/agg_raw.py
+          python -I tools/extras_raw.py
+      - name: Commit the computed data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898+github-actions[bot]@users.noreply.github.com"
+          git add -A data/states data/all-counties data/us
+          git diff --cached --quiet && { echo "no data change"; exit 0; }
+          git commit -m "data: refresh from FEMA (pull_raw.ASOF $(grep -oP '^ASOF = "\K[0-9-]+' tools/pull_raw.py))"
+          git push
