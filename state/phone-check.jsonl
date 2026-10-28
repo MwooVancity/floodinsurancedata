@@ -570,3 +570,77 @@
 {"date": "2026-10-27", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "kanawha-county-wv", "height": 18087, "pass": true, "fails": []}
 {"date": "2026-10-27", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "florida", "height": 21773, "pass": true, "fails": []}
 {"date": "2026-10-27", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "wyoming", "height": 17193, "pass": true, "fails": []}
+{"date": "2026-10-27", "base": "https://floodinsurancedata.com", "slug": "miami-dade-county-fl", "height": 19918, "pass": true, "fails": []}
+{"date": "2026-10-27", "base": "https://floodinsurancedata.com", "slug": "jefferson-parish-la", "height": 18539, "pass": true, "fails": []}
+{"date": "2026-10-27", "base": "https://floodinsurancedata.com", "slug": "kanawha-county-wv", "height": 18087, "pass": true, "fails": []}
+{"date": "2026-10-27", "base": "https://floodinsurancedata.com", "slug": "florida", "height": 21773, "pass": true, "fails": []}
+{"date": "2026-10-27", "base": "https://floodinsurancedata.com", "slug": "wyoming", "height": 17193, "pass": true, "fails": []}
+{"date": "2026-10-27", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpqpd23vs_/site", "slug": "brevard-county-fl", "height": 19410, "pass": true, "fails": []}
+{"date": "2026-10-27", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpqpd23vs_/site", "slug": "brevard-county-fl", "height": 18362, "pass": false, "fails": ["P5 1 collapsed <details> hide data"]}
+{"date": "2026-10-27", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpqpd23vs_/site", "slug": "brevard-county-fl", "height": 19410, "pass": false, "fails": ["P4 quote checker not within screen 2 (top 19130.53125)"]}
+{"date": "2026-10-27", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpqpd23vs_/site", "slug": "brevard-county-fl", "height": 19410, "pass": false, "fails": ["P2 text under 11px: ['text 3.5px \"1980\"', 'text 3.5px \"1990\"', 'text 3.5px \"2000\"', 'text 3.5px \"2010\"']"]}
+{"date": "2026-10-27", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpqpd23vs_/site", "slug": "brevard-county-fl", "height": 19438, "pass": false, "fails": ["P1 wider than screen: ['page is 921px wide', 'DIV.']"]}
+{"date": "2026-10-27", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpqpd23vs_/site", "slug": "brevard-county-fl", "height": 19455, "pass": false, "fails": ["P6 chart labels overlap: ['\"$1,008\" / \"$1,172\"']"]}
+{"date": "2026-10-27", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmp0iopivgg/site", "slug": "brevard-county-fl", "height": 20490, "pass": true, "fails": []}
+{"date": "2026-10-27", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmp0iopivgg/site", "slug": "brevard-county-fl", "height": 19442, "pass": false, "fails": ["P5 1 collapsed <details> hide data"]}
+{"date": "2026-10-27", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmp0iopivgg/site", "slug": "brevard-county-fl", "height": 20490, "pass": false, "fails": ["P4 quote checker not within screen 2 (top 20210.515625)"]}
+{"date": "2026-10-27", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmp0iopivgg/site", "slug": "brevard-county-fl", "height": 20490, "pass": false, "fails": ["P2 text under 11px: ['text 3.5px \"1980\"', 'text 3.5px \"1990\"', 'text 3.5px \"2000\"', 'text 3.5px \"2010\"']"]}
+{"date": "2026-10-27", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmp0iopivgg/site", "slug": "brevard-county-fl", "height": 20518, "pass": false, "fails": ["P1 wider than screen: ['page is 921px wide', 'DIV.']"]}
+{"date": "2026-10-27", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmp0iopivgg/site", "slug": "brevard-county-fl", "height": 20535, "pass": false, "fails": ["P6 chart labels overlap: ['\"$1,008\" / \"$1,172\"']"]}
+{"date": "2026-10-27", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpc9je69g9/site", "slug": "brevard-county-fl", "height": 19441, "pass": true, "fails": []}
+{"date": "2026-10-27", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpc9je69g9/site", "slug": "brevard-county-fl", "height": 18393, "pass": false, "fails": ["P5 1 collapsed <details> hide data"]}
+{"date": "2026-10-27", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpc9je69g9/site", "slug": "brevard-county-fl", "height": 19441, "pass": false, "fails": ["P4 quote checker not within screen 2 (top 19161.265625)"]}
+{"date": "2026-10-27", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpc9je69g9/site", "slug": "brevard-county-fl", "height": 19441, "pass": false, "fails": ["P2 text under 11px: ['text 3.5px \"1980\"', 'text 3.5px \"1990\"', 'text 3.5px \"2000\"', 'text 3.5px \"2010\"']"]}
+{"date": "2026-10-27", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpc9je69g9/site", "slug": "brevard-county-fl", "height": 19469, "pass": false, "fails": ["P1 wider than screen: ['page is 921px wide', 'DIV.']"]}
+{"date": "2026-10-27", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpc9je69g9/site", "slug": "brevard-county-fl", "height": 19486, "pass": false, "fails": ["P6 chart labels overlap: ['\"$1,008\" / \"$1,172\"']"]}
+{"date": "2026-10-27", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "miami-dade-county-fl", "height": 20151, "pass": true, "fails": []}
+{"date": "2026-10-27", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "jefferson-parish-la", "height": 18800, "pass": true, "fails": []}
+{"date": "2026-10-27", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "kanawha-county-wv", "height": 18453, "pass": true, "fails": []}
+{"date": "2026-10-27", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "florida", "height": 22058, "pass": true, "fails": []}
+{"date": "2026-10-27", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "wyoming", "height": 17592, "pass": true, "fails": []}
+{"date": "2026-10-27", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "louisiana", "height": 22112, "pass": true, "fails": []}
+{"date": "2026-10-27", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "palm-beach-county-fl", "height": 19946, "pass": true, "fails": []}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpt8kzmvn3/site", "slug": "brevard-county-fl", "height": 20023, "pass": true, "fails": []}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpt8kzmvn3/site", "slug": "brevard-county-fl", "height": 18931, "pass": false, "fails": ["P5 1 collapsed <details> hide data"]}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpt8kzmvn3/site", "slug": "brevard-county-fl", "height": 20023, "pass": false, "fails": ["P4 quote checker not within screen 2 (top 19742.796875)"]}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpt8kzmvn3/site", "slug": "brevard-county-fl", "height": 20023, "pass": false, "fails": ["P2 text under 11px: ['text 3.5px \"1980\"', 'text 3.5px \"1990\"', 'text 3.5px \"2000\"', 'text 3.5px \"2010\"']"]}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpt8kzmvn3/site", "slug": "brevard-county-fl", "height": 20050, "pass": false, "fails": ["P1 wider than screen: ['page is 921px wide', 'DIV.']"]}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpt8kzmvn3/site", "slug": "brevard-county-fl", "height": 20068, "pass": false, "fails": ["P6 chart labels overlap: ['\"$1,008\" / \"$1,172\"']"]}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "miami-dade-county-fl", "height": 20659, "pass": true, "fails": []}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "jefferson-parish-la", "height": 19308, "pass": true, "fails": []}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "kanawha-county-wv", "height": 18939, "pass": true, "fails": []}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "florida", "height": 22464, "pass": true, "fails": []}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "wyoming", "height": 17977, "pass": true, "fails": []}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmp77tj94hh/site", "slug": "brevard-county-fl", "height": 20361, "pass": true, "fails": []}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmp77tj94hh/site", "slug": "brevard-county-fl", "height": 19270, "pass": false, "fails": ["P5 1 collapsed <details> hide data"]}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmp77tj94hh/site", "slug": "brevard-county-fl", "height": 20361, "pass": false, "fails": ["P4 quote checker not within screen 2 (top 20081.359375)"]}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmp77tj94hh/site", "slug": "brevard-county-fl", "height": 20361, "pass": false, "fails": ["P2 text under 11px: ['text 3.5px \"1980\"', 'text 3.5px \"1990\"', 'text 3.5px \"2000\"', 'text 3.5px \"2010\"']"]}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmp77tj94hh/site", "slug": "brevard-county-fl", "height": 20389, "pass": false, "fails": ["P1 wider than screen: ['page is 921px wide', 'DIV.']"]}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmp77tj94hh/site", "slug": "brevard-county-fl", "height": 20406, "pass": false, "fails": ["P6 chart labels overlap: ['\"$1,008\" / \"$1,172\"']"]}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "miami-dade-county-fl", "height": 20975, "pass": true, "fails": []}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "jefferson-parish-la", "height": 19646, "pass": true, "fails": []}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "kanawha-county-wv", "height": 19275, "pass": true, "fails": []}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "florida", "height": 22757, "pass": true, "fails": []}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "wyoming", "height": 18206, "pass": true, "fails": []}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmp_h1ttsvz/site", "slug": "brevard-county-fl", "height": 20343, "pass": true, "fails": []}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmp_h1ttsvz/site", "slug": "brevard-county-fl", "height": 19252, "pass": false, "fails": ["P5 1 collapsed <details> hide data"]}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmp_h1ttsvz/site", "slug": "brevard-county-fl", "height": 20343, "pass": false, "fails": ["P4 quote checker not within screen 2 (top 20063.546875)"]}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmp_h1ttsvz/site", "slug": "brevard-county-fl", "height": 20343, "pass": false, "fails": ["P2 text under 11px: ['text 3.5px \"1980\"', 'text 3.5px \"1990\"', 'text 3.5px \"2000\"', 'text 3.5px \"2010\"']"]}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmp_h1ttsvz/site", "slug": "brevard-county-fl", "height": 20371, "pass": false, "fails": ["P1 wider than screen: ['page is 921px wide', 'DIV.']"]}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmp_h1ttsvz/site", "slug": "brevard-county-fl", "height": 20388, "pass": false, "fails": ["P6 chart labels overlap: ['\"$1,008\" / \"$1,172\"']"]}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "miami-dade-county-fl", "height": 20980, "pass": true, "fails": []}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "jefferson-parish-la", "height": 19628, "pass": true, "fails": []}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "kanawha-county-wv", "height": 19280, "pass": true, "fails": []}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "florida", "height": 22739, "pass": true, "fails": []}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "wyoming", "height": 18188, "pass": true, "fails": []}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpunu1_icc/site", "slug": "brevard-county-fl", "height": 20343, "pass": true, "fails": []}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpunu1_icc/site", "slug": "brevard-county-fl", "height": 19252, "pass": false, "fails": ["P5 1 collapsed <details> hide data"]}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpunu1_icc/site", "slug": "brevard-county-fl", "height": 20343, "pass": false, "fails": ["P4 quote checker not within screen 2 (top 20063.546875)"]}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpunu1_icc/site", "slug": "brevard-county-fl", "height": 20343, "pass": false, "fails": ["P2 text under 11px: ['text 3.5px \"1980\"', 'text 3.5px \"1990\"', 'text 3.5px \"2000\"', 'text 3.5px \"2010\"']"]}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpunu1_icc/site", "slug": "brevard-county-fl", "height": 20371, "pass": false, "fails": ["P1 wider than screen: ['page is 921px wide', 'DIV.']"]}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/AppData/Local/Temp/tmpunu1_icc/site", "slug": "brevard-county-fl", "height": 20388, "pass": false, "fails": ["P6 chart labels overlap: ['\"$1,008\" / \"$1,172\"']"]}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "miami-dade-county-fl", "height": 20980, "pass": true, "fails": []}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "jefferson-parish-la", "height": 19628, "pass": true, "fails": []}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "kanawha-county-wv", "height": 19280, "pass": true, "fails": []}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "florida", "height": 22739, "pass": true, "fails": []}
+{"date": "2026-10-28", "base": "file:///C:/Users/mwoo7/Desktop/floodinsurance/dist", "slug": "wyoming", "height": 18188, "pass": true, "fails": []}
