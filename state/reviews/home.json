@@ -1,13 +1,12 @@
 {
  "slug": "home",
  "verdict": "FAIL",
- "template": "7a5cb23a4f52be5a",
+ "template": "bfc922c7c354cf1a",
  "defects": [
-  "**BLOCKER** (SEO, would not beat #1). NerdWallet and Kiplinger answer \"flood insurance cost\" with a national figure, a by-state table, what drives the price (zo",
-  "**BLOCKER** (wrong rule a reader can act on). home-01 says: \"In Florida, homes insured by Citizens with wind cover need it in any zone.\" As of today (Oct 2026) ",
-  "**MAJOR** (gap vs #1, expectations). Our \"$1,055 U.S. median\" sits beside every top result's \"$888 / $899 average\". The \"Why our prices differ\" card (home-01/02",
-  "**MAJOR** (thin/templated). Below the fold the page is \"Three things to know first\" (the same purchase, waiting-period and homeowners-exclusion text that appear"
+  "**BLOCKER** (would not beat #1).",
+  "**MAJOR** (templated).",
+  "**MAJOR** (gap vs #1, private flood)."
  ],
- "reviewer": "hater round 5 (fresh agent, docs/HATER-PROMPT.md)",
+ "reviewer": "hater round 6 (fresh agent, docs/HATER-PROMPT.md)",
  "notes": ""
 }
