@@ -62,18 +62,26 @@ RULES = {
         "sources": [(FS + "/contact", "Report your loss immediately to your insurance agent or carrier.", "curl"),
                     (IA_META, "in designated counties who sustained damage", "curl"),
                     (IA_META, "resulting from a federally declared disaster may apply", "curl")]},
-    "fl_citizens": {   # Florida only: the state's insurer of last resort requires flood cover in ANY zone (s. 627.351, F.S.)
-        "text": "In Florida, a home insured by Citizens Property Insurance with wind coverage must also carry flood insurance, "
-                "in any flood zone: from January 1, 2026 if it would cost $400,000 or more to rebuild, and from January 1, "
-                "2027 for all other Citizens homes. Condo-unit and no-wind policies are exempt.",
-        "sources": [("https://www.citizensfla.com/-/new-flood-requirements-begin-january-1",
-                     "January 1, 2026, for a structure with a dwelling replacement cost of $400,000 or more", "curl"),
+    "fl_citizens": {   # Florida only (s. 627.351(6), F.S.): SFHA homes since 2023 (para 2), everywhere else phased in by rebuild cost (para 1); round 5 blocker
+        "text": "In Florida, a home insured by Citizens Property Insurance with wind coverage must also carry flood insurance. "
+                "In a high-risk zone (A or V) this has applied since 2023 (new policies from April 1, renewals from July 1), "
+                "whatever the home is worth. Outside those zones it phases in by rebuilding cost: from January 1, 2026 at "
+                "$400,000 or more, and from January 1, 2027 for all other Citizens homes. Condo-unit and no-wind policies are exempt.",
+        "sources": [("https://www.flsenate.gov/Laws/Statutes/2025/627.351",
+                     "located within the special flood hazard area defined by the Federal Emergency Management Agency must have flood coverage in place", "curl"),
+                    ("https://www.flsenate.gov/Laws/Statutes/2025/627.351",
+                     "policies renewing on or after July 1, 2023", "curl"),
+                    ("https://www.flsenate.gov/Laws/Statutes/2025/627.351",
+                     "January 1, 2026, for a structure that has a dwelling replacement cost of $400,000 or more", "curl"),
                     ("https://www.flsenate.gov/Laws/Statutes/2025/627.351",
                      "January 1, 2027, for all other personal lines residential property insured by the corporation", "curl")]},
-    "fl_citizens_short": {
-        "text": "In Florida, homes insured by Citizens with wind cover need it in any zone.",
-        "sources": [("https://www.citizensfla.com/-/new-flood-requirements-begin-january-1",
-                     "January 1, 2026, for a structure with a dwelling replacement cost of $400,000 or more", "curl")]},
+    "fl_citizens_short": {   # must not contradict fl_citizens: same two tracks, no "now" that goes stale
+        "text": "In Florida, Citizens homes with wind cover need it in a high-risk zone since 2023; outside one, from 2026 "
+                "if they cost $400,000 or more to rebuild and from 2027 for all others.",
+        "sources": [("https://www.flsenate.gov/Laws/Statutes/2025/627.351",
+                     "located within the special flood hazard area defined by the Federal Emergency Management Agency must have flood coverage in place", "curl"),
+                    ("https://www.flsenate.gov/Laws/Statutes/2025/627.351",
+                     "January 1, 2027, for all other personal lines residential property insured by the corporation", "curl")]},
     "purchase_short": {   # the screen-1 summary; the full rule sits in its card (no sentence printed twice)
         "text": "Federal law requires it in a high-risk zone with a federally regulated or backed mortgage or federal "
                 "building help; a lender or insurer can require it anywhere.",

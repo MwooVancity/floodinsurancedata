@@ -263,7 +263,7 @@ else:
     cost_body = (spread_svg() + "<p class='note'>Each policy's annual cost (premium plus the federal policy fee, "
                  "reserve fund assessment and HFIAA surcharge), single-family primary residences. The bar is the middle "
                  "half of policies, from " + tp('cost_n', 'policies.cost_n') + " single-family primary-home policies. These are "
-                 "existing policies, many still below FEMA's full-risk price; a brand-new policy is priced at full risk.</p>")
+                 "existing policies, many still below FEMA's full-risk price.</p>")
 PREM_MED = P.get("prem_median")        # premium charged, before fees: the like-for-like comparator for full-risk
 if P.get("coverage_building"):
     cost_body += (f"<p class='note'><b>Coverage in force:</b> {tp('coverage', 'policies.coverage_building', big, q='building')} of building and "
@@ -487,15 +487,15 @@ for _y in _yrs_cb[-2:]:
     _avrows.append((f"Typical cost, policies whose term began in {_y}", tp("cost_year", f"policies.cost_by_year.{_y}.median", money, q=_y),
                     f"{tp('cost_year_n', f'policies.cost_by_year.{_y}.n', num, q=_y)} policies"))
 if P.get("frp_median"):
-    _avrows.append(("FEMA's full-risk premium (median)", m("frp_median", money(P["frp_median"])), "the price FEMA's model sets; new policies start here"))
+    _avrows.append(("FEMA's full-risk premium (median)", m("frp_median", money(P["frp_median"])), "the price FEMA's model sets for these existing policies"))
     if _fees:
-        _avrows.append(("Full-risk premium plus average fees", m("frp_plus_fees", money(P["frp_median"] + _fees)), "close to what a new single-family policy pays"))
+        _avrows.append(("Full-risk premium plus average fees", m("frp_plus_fees", money(P["frp_median"] + _fees)), "what these existing policies would cost at FEMA's full price"))
 if _av.get("sf_cost_mean"):
     _avrows += [("Average (mean) cost, single-family homes", tp("cost_mean", "extras.policies.averages.sf_cost_mean", money), "pulled up by a few expensive policies"),
                 ("Average cost, every policy type", tp("cost_all_mean", "extras.policies.averages.all_cost_mean", money), "adds condos, rentals and businesses")]
 averages_card = card(f"Why do sites quote different prices for {CS}?",
     f"Because they measure different things. Existing single-family policies here typically cost {m('cost_p50', money(P['p50']))} a year"
-    + (f", but a new one is priced at full risk: about {m('frp_plus_fees', money(P['frp_median'] + _fees))} with fees." if P.get("frp_median") and _fees else "."),
+    + "; other sites count other policies, years or averages.",
     "<table><thead><tr><th>Measure</th><th>Amount</th><th>What it counts</th></tr></thead><tbody>"
     + "".join(f"<tr><td>{a_}</td><td>{b_}</td><td>{c_}</td></tr>" for a_, b_, c_ in _avrows) + "</tbody></table>"
     f"<p class='note'>All from the NFIP policies in force on {POL_ASOF}. Published figures rarely say which of these they are, "
@@ -907,7 +907,7 @@ jsonld = json.dumps([
 ])
 # quote-compare widget (client-side; a position in the distribution, never a quote)
 quote_widget = f"""<section class="card" id="compare"><h2>Is my quote or renewal normal here?</h2>
-<p class="stand">Type your yearly cost (premium plus fees) to see where it sits among existing single-family policies here. A new policy is priced at FEMA's full-risk rate, so a fair new quote can land high.</p>
+<p class="stand">Type your yearly cost (premium plus fees) to see where it sits among existing single-family policies here.</p>
 <input id="q" type="number" inputmode="numeric" placeholder="e.g. 1800" aria-label="Your annual premium in dollars"
  style="font-size:18px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:160px">
 <p id="qout" class="note" style="margin-top:10px">Enter an amount above.</p>
@@ -923,7 +923,7 @@ el.addEventListener('input',function(){{
   else if(v< P.p75) msg='in the upper-middle — more than about half of existing policies here.';
   else if(v< P.p90) msg='in the top quarter — more than about 75% of existing policies here.';
   else msg='higher than about 90% of existing policies here.';
-  out.textContent='$'+v.toLocaleString()+' is '+msg+' (half pay $'+P.p25.toLocaleString()+' to $'+P.p75.toLocaleString()+', typical $'+P.p50.toLocaleString()+'). If this is a new policy, it is priced at full risk, which is often higher.';
+  out.textContent='$'+v.toLocaleString()+' is '+msg+' (half pay $'+P.p25.toLocaleString()+' to $'+P.p75.toLocaleString()+', typical $'+P.p50.toLocaleString()+').';
 }});
 </script></section>"""
 

@@ -95,7 +95,7 @@ if len(states) == 51:   # U.S. figures only once every state is built and gated:
     national = (f'<div class="stats"><div class="stat"><div class="n">{money(_med)}</div><div class="l">U.S. median a year</div></div>'
                 f'<div class="stat"><div class="n">{money(round(_med / 12))}</div><div class="l">Per month</div></div>'
                 f'<div class="stat"><div class="n">{_units / 1e6:.1f}M</div><div class="l">Insured units in force</div></div></div>'
-                '<p class="mut">Median and per month: what existing single-family primary-home policies pay, premium plus fees (a new policy is priced at full risk). Insured units: every NFIP policy unit in force on July 31, 2026, including condos, rentals and businesses.</p>')
+                '<p class="mut">Median and per month: what existing single-family primary-home policies pay, premium plus fees. Insured units: every NFIP policy unit in force on July 31, 2026, including condos, rentals and businesses.</p>')
 home = HEAD.format(title="Flood insurance cost by state and county (FEMA data)",
     desc="What flood insurance actually costs where you live, from FEMA's own policy and claim records: typical cost, whether you're required to buy it, how fast it starts, and what floods have paid out.",
     canon=BASE + "/") + f"""
@@ -111,8 +111,7 @@ home = HEAD.format(title="Flood insurance cost by state and county (FEMA data)",
 <p class="stand"><b>Does my homeowners policy cover floods?</b> {rule("homeowners_excl")}</p></div>
 <div class="card"><h2>Why our prices differ from other sites</h2><p class="stand">These are what existing single-family
 policies pay today, premium plus fees, as a median (the middle policy). Sites that quote an average premium, a single year, or
-every policy type get a lower or higher number from the same records. A new policy is priced at FEMA's full-risk rate, often
-higher; each state page shows both side by side.</p></div>
+every policy type get a lower or higher number from the same records; each state page shows them side by side.</p></div>
 <div class="card"><h2>Flood insurance by state</h2>{extremes}
 <table id="st"><thead><tr><th>State</th><th>Median / yr</th><th>Insured units</th></tr></thead>
 <tbody>{srows or '<tr><td colspan=3 class=mut>State pages are being built.</td></tr>'}</tbody></table></div>
