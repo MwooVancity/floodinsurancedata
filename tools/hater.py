@@ -50,10 +50,14 @@ def prep(rnd, slugs):
     body = open(os.path.join(ROOT, "docs", "HATER-PROMPT.md"), encoding="utf-8").read().split("\n---\n", 1)[1]
     brief = re.sub(r"\{(\w+)\}", lambda mm: fill.get(mm.group(1), mm.group(0)), body)
     path = os.path.join(DIR, f"round{rnd}-brief.md"); open(path, "w", encoding="utf-8").write(brief)
+    open(os.path.join(DIR, f"round{rnd}-template.txt"), "w").write(RV.template_hash())   # the template this round reviews
     print("brief:", path)
 
 def record(rnd):
     txt = open(os.path.join(DIR, f"hater-round{rnd}.md"), encoding="utf-8").read()
+    tf = os.path.join(DIR, f"round{rnd}-template.txt")
+    th = open(tf).read().strip() if os.path.exists(tf) else None   # a PASS covers only the template the reviewer saw
+    if th and th != RV.template_hash(): print(f"template changed since round {rnd} prep: its PASS will not cover the current build")
     for slug, sec in re.findall(r"^## (\S+)[^\n]*\n(.*?)(?=^## |\Z)", txt, re.S | re.M):
         slug = slug.strip("`/").split("/")[-1] or "home"
         if not (slug == "home" or data_dir(slug)): continue   # "Classes", "Previous items"
@@ -61,7 +65,7 @@ def record(rnd):
         bad = re.findall(r"\*\*(BLOCKER|MAJOR)\*\*[^\n]*", sec)
         verdict = "PASS" if v and v.group(1) == "PASS" and not bad else "FAIL"
         RV.record(slug, verdict, [b[:160] for b in re.findall(r"\*\*(?:BLOCKER|MAJOR)\*\*[^\n]*", sec)][:60],
-                  reviewer=f"hater round {rnd} (fresh agent, docs/HATER-PROMPT.md)")
+                  reviewer=f"hater round {rnd} (fresh agent, docs/HATER-PROMPT.md)", template=th)
         gaps = re.findall(r"\*\*GAP[^*]*\*\*[^\n]*", sec)   # owner 2026-10-28: gaps never block; they go to the to-do list
         if gaps:
             with open(os.path.join(DIR, "backlog.md"), "a", encoding="utf-8") as f:

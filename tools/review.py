@@ -63,9 +63,10 @@ def ok(slug, th=None):
     th = th or template_hash()
     return own_pass(slug, th) or (template_ok(th) and not flags(slug))
 
-def record(slug, verdict, defects, reviewer, notes=""):
+def record(slug, verdict, defects, reviewer, notes="", template=None):
+    """template = the hash the reviewer saw (saved at prep); an edit made after the review must not inherit its PASS."""
     os.makedirs(DIR, exist_ok=True)
-    json.dump({"slug": slug, "verdict": verdict, "template": template_hash(), "defects": defects, "reviewer": reviewer,
+    json.dump({"slug": slug, "verdict": verdict, "template": template or template_hash(), "defects": defects, "reviewer": reviewer,
                "notes": notes}, open(os.path.join(DIR, slug + ".json"), "w", encoding="utf-8"), indent=1, ensure_ascii=False)
 
 if __name__ == "__main__" and sys.argv[1:2] == ["status"]:

@@ -1,13 +1,8 @@
 {
  "slug": "palm-beach-county-fl",
- "verdict": "FAIL",
- "template": "bd92c48b7de2a2c7",
- "defects": [
-  "**BLOCKER** (same template rule as Louisiana). On palm-beach-county-fl-05, \"or change coverage at renewal\" is not in 44 CFR \u00a761.11, which says increases wait 30",
-  "**MAJOR** (wrong count, broken lookup).",
-  "**MAJOR** (misleading reassurance on rebuild; same template as Louisiana).",
-  "**MAJOR** (scary screen-1 figure, carried over from round 6)."
- ],
- "reviewer": "hater round 7 (fresh agent, docs/HATER-PROMPT.md)",
+ "verdict": "PASS",
+ "template": "79cbd1b5a1a55b0c",
+ "defects": [],
+ "reviewer": "hater round 9 (fresh agent, docs/HATER-PROMPT.md)",
  "notes": ""
 }

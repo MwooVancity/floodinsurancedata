@@ -25,7 +25,7 @@ HAS = [   # (page, phrase, why): a fix that must be visible where the reviewer f
     ("louisiana", "insured for at least 80% of its full rebuilding cost", "r6 the 80% rebuild rule was missing"),
     ("palm-beach-county-fl", "Top reason for unpaid claims", "r6 43.5% paid had no context on screen 1"),
     ("palm-beach-county-fl", "since January 2026", "r6 Citizens tense"),
-    ("palm-beach-county-fl", "Claims that paid something, by decade of the flood", "r6/r7 43.5% paid had no era breakdown"),
+    ("palm-beach-county-fl", "Share that paid something", "r6/r7 43.5% paid had no era breakdown (r8: header named the wrong column)"),
     ("louisiana", "Not in full for at least", "r7 rebuild lead ignored under-insurance"),
     ("home", "Average premium alone, single-family homes", "r6 home headline not reconciled with premium-only figures"),
 ]
