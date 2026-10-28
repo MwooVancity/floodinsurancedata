@@ -36,7 +36,8 @@ Pages under review: {pages}
    - Does anything look like scaled, templated or doorway content that Google demotes (name-swapped text,
      the same sentences on every page, thin cards)?
    - Trust and authorship signals #1 has and we lack.
-   A page that would not beat #1 for its own query FAILS, even if every number is right.
+   Each gap vs #1 is tagged **GAP** (owner 2026-10-28: gaps go to a ranked to-do list; they never block a ship,
+   because six rounds of open-ended gaps never ended). Only wrong, misleading, confusing or broken things block.
    Not defects (owner 2026-10-27): the site is anonymous by choice, so no named author or contact; and data that no
    public U.S. dataset holds (private flood prices, cost by home value, one home's own premium) when the page says so.
 
@@ -50,9 +51,10 @@ Pages under review: {pages}
 
 ## Output
 Write {out}. For EACH page a section headed exactly `## <slug>` (slugs: {slugs}), with:
-- defects worst-first, each tagged **BLOCKER** (wrong or misleading info a reader could act on, or a page that
-  would not beat #1 for its query), **MAJOR** (confusing, untrustworthy, broken, or a clear gap vs #1), or
-  **MINOR** (polish); the screenshot or exact quoted text; what is wrong; why the reader (or the ranking) is hurt;
+- defects worst-first, each tagged **BLOCKER** (wrong or misleading info a reader could act on), **MAJOR**
+  (confusing, untrustworthy or broken: a figure or sentence that a reader would misread), **GAP** (something #1 has
+  that we do not; ranked, never blocking) or **MINOR** (polish); the screenshot or exact quoted text; what is wrong;
+  why the reader is hurt. A missing feature is a GAP, never a MAJOR;
 - a last line exactly `Verdict: PASS` or `Verdict: FAIL`. PASS only with zero BLOCKER and zero MAJOR.
 Then a "Classes" section: defects likely on every page of that template (home / state / county).
 Edit no other file. Reply with per-page counts, the 10 worst defects one line each, and the previous-items tally.

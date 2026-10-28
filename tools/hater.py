@@ -10,7 +10,6 @@ BASE = "https://floodinsurancedata.com"
 DIR = os.path.join(ROOT, "state", "reviews")
 
 LOCAL = "--local" in sys.argv   # review the new build in dist/ before it ships (the live site still has the old pages)
-if LOCAL: sys.argv.remove("--local")
 def url(slug):
     if LOCAL: return "file:///" + html_path(slug).replace("\\", "/")
     return BASE + "/" if slug == "home" else f"{BASE}/flood-insurance/{slug}/"
@@ -63,9 +62,13 @@ def record(rnd):
         verdict = "PASS" if v and v.group(1) == "PASS" and not bad else "FAIL"
         RV.record(slug, verdict, [b[:160] for b in re.findall(r"\*\*(?:BLOCKER|MAJOR)\*\*[^\n]*", sec)][:60],
                   reviewer=f"hater round {rnd} (fresh agent, docs/HATER-PROMPT.md)")
-        print(f"{slug}: {verdict} ({len(bad)} blocker/major)")
+        gaps = re.findall(r"\*\*GAP\*\*[^\n]*", sec)   # owner 2026-10-28: gaps never block; they go to the to-do list
+        if gaps:
+            with open(os.path.join(DIR, "backlog.md"), "a", encoding="utf-8") as f:
+                f.write(f"\n## {slug} (round {rnd})\n" + "".join(f"- {g[8:].strip()}\n" for g in gaps))
+        print(f"{slug}: {verdict} ({len(bad)} blocker/major, {len(gaps)} gaps to backlog.md)")
 
 if __name__ == "__main__":
-    if sys.argv[1:2] == ["prep"]: prep(sys.argv[2], sys.argv[3:])
+    if sys.argv[1:2] == ["prep"]: prep(sys.argv[2], [a for a in sys.argv[3:] if a != "--local"])
     elif sys.argv[1:2] == ["record"]: record(sys.argv[2])
     else: print(__doc__)

@@ -76,12 +76,19 @@ RULES = {
                     ("https://www.flsenate.gov/Laws/Statutes/2025/627.351",
                      "January 1, 2027, for all other personal lines residential property insured by the corporation", "curl")]},
     "fl_citizens_short": {   # must not contradict fl_citizens: same two tracks, no "now" that goes stale
-        "text": "In Florida, Citizens homes with wind cover need it in a high-risk zone since 2023; outside one, from 2026 "
-                "if they cost $400,000 or more to rebuild and from 2027 for all others.",
+        "text": "In Florida, Citizens homes with wind cover need it in a high-risk zone since 2023; outside one, since January 2026 "
+                "if they cost $400,000 or more to rebuild, and from January 2027 for all others.",
         "sources": [("https://www.flsenate.gov/Laws/Statutes/2025/627.351",
                      "located within the special flood hazard area defined by the Federal Emergency Management Agency must have flood coverage in place", "curl"),
                     ("https://www.flsenate.gov/Laws/Statutes/2025/627.351",
                      "January 1, 2027, for all other personal lines residential property insured by the corporation", "curl")]},
+    "rcv_80": {   # hater r6: the real answer to "would it pay to rebuild" (SFIP Dwelling Form, 44 CFR 61 App. A(1), Art. VII)
+        "text": "The NFIP pays the cost to rebuild (not a depreciated value) only for a single-family home that is your "
+                "principal residence and is insured for at least 80% of its full rebuilding cost, or for the $250,000 maximum.",
+        "sources": [("https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=61",
+                     "the amount of insurance in this policy that applies to the dwelling is 80 percent or more of its full replacement cost immediately before the loss, or is the maximum amount of insurance available under the NFIP", "curl"),
+                    ("https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=61",
+                     "It is your principal residence", "curl")]},
     "save_ways": {   # hater r5: every top result answers "how do I pay less"; FEMA's own list
         "text": "FEMA's ways to lower an NFIP bill: a higher deductible (you pay more of any loss), work that lowers "
                 "the building's flood risk, and an Elevation Certificate.",

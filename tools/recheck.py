@@ -104,7 +104,7 @@ for k, r in RULES.items():
     for url, ex, method in r["sources"]:
         if method != "curl": continue
         if url not in cache:
-            raw = subprocess.run(["curl", "-sL", "-A", "Mozilla/5.0", "--max-time", "60", url], capture_output=True).stdout.decode("utf-8", "replace")
+            raw = subprocess.run(["curl", "-sL", "--compressed", "-A", "Mozilla/5.0", "--max-time", "60", url], capture_output=True).stdout.decode("utf-8", "replace")
             raw = re.sub(r"<(script|style)[^>]*>.*?</\1>", " ", raw, flags=re.S)
             cache[url] = re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", raw)))
         if ex not in cache[url]: problems.append(f"rule {k}: excerpt no longer on {url}: {ex!r}")
