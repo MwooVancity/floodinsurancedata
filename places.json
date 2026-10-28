@@ -260,6 +260,36 @@
 "indexable": true
 },
 {
+"slug": "manatee-county-fl",
+"label": "Manatee County, Florida",
+"short": "Manatee County",
+"geoid": "12081",
+"state": "FL",
+"units": 38100,
+"median": 828,
+"indexable": true
+},
+{
+"slug": "st-johns-county-fl",
+"label": "St. Johns County, Florida",
+"short": "St. Johns County",
+"geoid": "12109",
+"state": "FL",
+"units": 32726,
+"median": 1084,
+"indexable": true
+},
+{
+"slug": "bay-county-fl",
+"label": "Bay County, Florida",
+"short": "Bay County",
+"geoid": "12005",
+"state": "FL",
+"units": 31958,
+"median": 877,
+"indexable": true
+},
+{
 "slug": "monroe-county-fl",
 "label": "Monroe County, Florida",
 "short": "Monroe County",
@@ -267,6 +297,26 @@
 "state": "FL",
 "units": 31747,
 "median": 1915,
+"indexable": true
+},
+{
+"slug": "worcester-county-md",
+"label": "Worcester County, Maryland",
+"short": "Worcester County",
+"geoid": "24047",
+"state": "MD",
+"units": 29373,
+"median": 994,
+"indexable": true
+},
+{
+"slug": "brazoria-county-tx",
+"label": "Brazoria County, Texas",
+"short": "Brazoria County",
+"geoid": "48039",
+"state": "TX",
+"units": 29360,
+"median": 1082,
 "indexable": true
 },
 {
@@ -310,6 +360,26 @@
 "indexable": true
 },
 {
+"slug": "pasco-county-fl",
+"label": "Pasco County, Florida",
+"short": "Pasco County",
+"geoid": "12101",
+"state": "FL",
+"units": 25176,
+"median": 834,
+"indexable": true
+},
+{
+"slug": "hudson-county-nj",
+"label": "Hudson County, New Jersey",
+"short": "Hudson County",
+"geoid": "34017",
+"state": "NJ",
+"units": 24445,
+"median": 1670,
+"indexable": true
+},
+{
 "slug": "chatham-county-ga",
 "label": "Chatham County, Georgia",
 "short": "Chatham County",
@@ -327,6 +397,36 @@
 "state": "NJ",
 "units": 23137,
 "median": 1246,
+"indexable": true
+},
+{
+"slug": "montgomery-county-tx",
+"label": "Montgomery County, Texas",
+"short": "Montgomery County",
+"geoid": "48339",
+"state": "TX",
+"units": 22513,
+"median": 1001,
+"indexable": true
+},
+{
+"slug": "sussex-county-de",
+"label": "Sussex County, Delaware",
+"short": "Sussex County",
+"geoid": "10005",
+"state": "DE",
+"units": 22022,
+"median": 880,
+"indexable": true
+},
+{
+"slug": "brunswick-county-nc",
+"label": "Brunswick County, North Carolina",
+"short": "Brunswick County",
+"geoid": "37019",
+"state": "NC",
+"units": 21091,
+"median": 756,
 "indexable": true
 },
 {

@@ -418,5 +418,105 @@
   "label": "East Baton Rouge Parish, Louisiana",
   "short": "East Baton Rouge Parish",
   "official": 0
+ },
+ {
+  "slug": "manatee-county-fl",
+  "state": "FL",
+  "geoid": "12081",
+  "county": "MANATEE",
+  "countytitle": "Manatee",
+  "label": "Manatee County, Florida",
+  "short": "Manatee County",
+  "official": 0
+ },
+ {
+  "slug": "st-johns-county-fl",
+  "state": "FL",
+  "geoid": "12109",
+  "county": "ST. JOHNS",
+  "countytitle": "St. Johns",
+  "label": "St. Johns County, Florida",
+  "short": "St. Johns County",
+  "official": 0
+ },
+ {
+  "slug": "bay-county-fl",
+  "state": "FL",
+  "geoid": "12005",
+  "county": "BAY",
+  "countytitle": "Bay",
+  "label": "Bay County, Florida",
+  "short": "Bay County",
+  "official": 0
+ },
+ {
+  "slug": "worcester-county-md",
+  "state": "MD",
+  "geoid": "24047",
+  "county": "WORCESTER",
+  "countytitle": "Worcester",
+  "label": "Worcester County, Maryland",
+  "short": "Worcester County",
+  "official": 0
+ },
+ {
+  "slug": "brazoria-county-tx",
+  "state": "TX",
+  "geoid": "48039",
+  "county": "BRAZORIA",
+  "countytitle": "Brazoria",
+  "label": "Brazoria County, Texas",
+  "short": "Brazoria County",
+  "official": 0
+ },
+ {
+  "slug": "pasco-county-fl",
+  "state": "FL",
+  "geoid": "12101",
+  "county": "PASCO",
+  "countytitle": "Pasco",
+  "label": "Pasco County, Florida",
+  "short": "Pasco County",
+  "official": 0
+ },
+ {
+  "slug": "hudson-county-nj",
+  "state": "NJ",
+  "geoid": "34017",
+  "county": "HUDSON",
+  "countytitle": "Hudson",
+  "label": "Hudson County, New Jersey",
+  "short": "Hudson County",
+  "official": 0
+ },
+ {
+  "slug": "montgomery-county-tx",
+  "state": "TX",
+  "geoid": "48339",
+  "county": "MONTGOMERY",
+  "countytitle": "Montgomery",
+  "label": "Montgomery County, Texas",
+  "short": "Montgomery County",
+  "official": 0
+ },
+ {
+  "slug": "sussex-county-de",
+  "state": "DE",
+  "geoid": "10005",
+  "county": "SUSSEX",
+  "countytitle": "Sussex",
+  "label": "Sussex County, Delaware",
+  "short": "Sussex County",
+  "official": 0
+ },
+ {
+  "slug": "brunswick-county-nc",
+  "state": "NC",
+  "geoid": "37019",
+  "county": "BRUNSWICK",
+  "countytitle": "Brunswick",
+  "label": "Brunswick County, North Carolina",
+  "short": "Brunswick County",
+  "official": 0
  }
 ]
