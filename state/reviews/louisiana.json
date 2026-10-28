@@ -1,16 +1,11 @@
 {
  "slug": "louisiana",
  "verdict": "FAIL",
- "template": "bfc922c7c354cf1a",
+ "template": "bd92c48b7de2a2c7",
  "defects": [
-  "**MAJOR** (true but misleading; round-5 item claimed fixed, not fixed).",
-  "**MAJOR** (gap vs #2, unreconciled).",
-  "**MAJOR** (reader cannot find their parish).",
-  "**MAJOR** (confusing, contradicts itself).",
-  "**MAJOR** (analyst, misleading reassurance).",
-  "**MAJOR** (stale headline pool; round-5 item partly fixed).",
-  "**MAJOR** (scaled, partly fixed)."
+  "**BLOCKER** (rule misstated; reader can act on it and be uncovered).",
+  "**MAJOR** (misleading reassurance on \"would it pay to rebuild\")."
  ],
- "reviewer": "hater round 6 (fresh agent, docs/HATER-PROMPT.md)",
+ "reviewer": "hater round 7 (fresh agent, docs/HATER-PROMPT.md)",
  "notes": ""
 }

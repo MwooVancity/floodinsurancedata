@@ -15,6 +15,9 @@ GONE = {   # wrong or misleading text (hater round): must be on no page
     "brand-new policy is priced at full risk": "r5 false price claim",
     'placeholder="e.g. 1800"': "r6 checker example was a constant",
     "Below full-risk price: bills step up yearly": "r6 jargon on screen 1",
+    "change coverage at renewal": "r7 44 CFR 61.11 says a coverage increase waits 30 days",
+    "A policy can carry the full limit": "r7 unsourced program claim",
+    "upper-middle": "r7 checker called the median itself above the middle",
 }
 HAS = [   # (page, phrase, why): a fix that must be visible where the reviewer found the defect
     ("louisiana", "1995", "r5/r6 Louisiana's 1995 flood year was hidden"),
@@ -22,6 +25,8 @@ HAS = [   # (page, phrase, why): a fix that must be visible where the reviewer f
     ("louisiana", "insured for at least 80% of its full rebuilding cost", "r6 the 80% rebuild rule was missing"),
     ("palm-beach-county-fl", "Top reason for unpaid claims", "r6 43.5% paid had no context on screen 1"),
     ("palm-beach-county-fl", "since January 2026", "r6 Citizens tense"),
+    ("palm-beach-county-fl", "Claims that paid something, by decade of the flood", "r6/r7 43.5% paid had no era breakdown"),
+    ("louisiana", "Not in full for at least", "r7 rebuild lead ignored under-insurance"),
     ("home", "Average premium alone, single-family homes", "r6 home headline not reconciled with premium-only figures"),
 ]
 bad = []

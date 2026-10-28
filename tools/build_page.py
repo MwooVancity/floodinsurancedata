@@ -439,7 +439,7 @@ if len(state_risk) >= 4:
         src(["nri_rating"], "NRI 2023 release", RETR))
 
 # ---- ZIP lookup inside the county (your-place flow): every ZIP, with the town the reader knows it by ----
-bz = [z for z in (agg["policies"].get("by_zip") or []) if z.get("units")]
+bz = [z for z in (agg["policies"].get("by_zip") or []) if z.get("units") and re.fullmatch(r"\d{5}", str(z.get("zip")))]   # hater r7: ZIP+4 strings are not ZIPs
 try: ZIPTOWN = json.load(open(os.path.join(os.path.dirname(HERE), "data", "us", "zip_places.json"), encoding="utf-8"))
 except Exception: ZIPTOWN = {}
 def _zl(z): return html.escape(z) + (f" <span data-name>{html.escape(ZIPTOWN[z])}</span>" if z in ZIPTOWN else "")
@@ -457,10 +457,11 @@ if bz:
     zip_card = card(f"Find your ZIP in this {UNIT}",
         (f"Typical costs run from {tp('zip_cost', _zp(_lo, 'median'), money, q=_lo['zip'])} a year in {m('zip', _zl(_lo['zip']), q=_lo['zip'])} to "
          f"{tp('zip_cost', _zp(_hi, 'median'), money, q=_hi['zip'])} in {m('zip', _zl(_hi['zip']), q=_hi['zip'])}. " if _lo else "")
-        + f"All {m('zip_count', str(len(bz)), q='all')} ZIPs with NFIP policies here are in the lookup.",
+        + f"All {m('zip_count', str(len(bz)), q='all')} ZIPs on NFIP policy records here are in the lookup.",
         f'<input id="zq" inputmode="numeric" maxlength="5" placeholder="e.g. {bz[0]["zip"]}" aria-label="Your ZIP code" '
         f'style="font-size:18px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;width:160px">'
         f'<p id="zout" class="note" style="margin-top:10px">Enter a five-digit ZIP above.</p>'
+        '<p class="note">ZIPs exactly as FEMA recorded them on policies here; a ZIP with only a policy or two may mostly lie in a neighboring county.</p>'
         f'<table style="margin-top:12px"><thead><tr><th>ZIP</th><th>Median / yr</th><th>Priced policies</th><th>Policy units</th></tr></thead>'
         f'<tbody>{toprows}</tbody></table>'
         f'<p class="note">The eight ZIPs with the largest number of priced single-family policies.{how("zip")}</p>'
@@ -579,7 +580,7 @@ rebuild_card = unpaid_card = events_card = ""
 if (_xp.get("replacement_n") or 0) >= 30 and _xp.get("replacement_over_250k_pct") is not None:
     _ro = _xp["replacement_over_250k_pct"]
     rebuild_card = card("Would a policy here pay to rebuild my home?",
-        f"Not in full for {tp('rebuild_over_cap_pct', 'extras.policies.replacement_over_250k_pct', pct)} of the {tp('rebuild_n', 'extras.policies.replacement_n')} single-family policies here that report a rebuilding cost: FEMA's records put it "
+        f"Not in full for at least {tp('rebuild_over_cap_pct', 'extras.policies.replacement_over_250k_pct', pct)} of the {tp('rebuild_n', 'extras.policies.replacement_n')} single-family policies here that report a rebuilding cost: FEMA's records put it "
         f"above {rule('building_cap')}",
         f"<ul class='kv'><li><b>Rebuilding cost above the building limit (of {tp('rebuild_n', 'extras.policies.replacement_n')} policies reporting one)</b><span>{tp('rebuild_over_cap_pct', 'extras.policies.replacement_over_250k_pct', pct)}</span>{vs_state('rebuild_over_cap_pct', 'extras.policies.replacement_over_250k_pct', pct)}</li>"
         + (f"<li><b>Single-family policies insured to the building maximum (all of them, not only those above)</b><span>{tp('at_cap_pct', 'extras.policies.at_building_max_pct', pct)}</span></li>" if _xp.get("at_building_max_pct") is not None else "")
@@ -587,8 +588,7 @@ if (_xp.get("replacement_n") or 0) >= 30 and _xp.get("replacement_over_250k_pct"
            if _xc.get("damage_over_coverage_pct") is not None and (_xc.get("damage_n") or 0) >= 30 else "")
         + f"</ul><p class='note'>The two shares have different bases: insured-to-the-maximum counts every single-family policy "
           f"with the full building limit; the rebuilding-cost share counts only the policies that report a rebuilding cost. "
-          f"A policy can carry the full limit on a home whose reported rebuilding cost is lower, and the NFIP never pays more "
-          f"than the cost to repair or rebuild.{how('rebuild')}</p><p class='note'><b>{rule('rcv_80')}</b></p>",
+          f"Homes insured for less than their own rebuilding cost can also fall short.{how('rebuild')}</p><p class='note'><b>{rule('rcv_80')}</b></p>",
         src(["rebuild_over_cap_pct", "at_cap_pct", "damage_over_cov_pct"], POL_ASOF, RETR) + src_rules(["building_cap", "rcv_80"]))
 _whyall = [dict(r, i=i) for i, r in enumerate(_xc.get("unpaid_reasons") or [])]
 _why = [r for r in _whyall if r["code"] not in ("97", "98", "99")]   # the lead names a real reason: 97 "other", 98/99 entered in error are not one
@@ -657,6 +657,7 @@ if ml.get("total") is not None:   # 0 is a real, reassuring finding (no chronic 
 # ---- payout reality (avg paid + closed-without-payment share) ----
 cx = data.get("claims_extra") or {}
 payout_card = ""
+_decs = [d for d, v in (_xc.get("by_decade") or {}).items() if (v.get("n") or 0) >= 30 and v.get("paid_pct") is not None]   # hater r6/r7: one bad era or every era?
 if cx.get("claims"):
     _paid_pct = round(100 - cx["cwop_share"], 1)
     _ans = (claim("Most do", "most", ("cwop_share", "<", 50)) + f": {m('paid_share', str(_paid_pct) + '%')} of claims here paid something"
@@ -669,7 +670,11 @@ if cx.get("claims"):
         f"<ul class='kv'><li><b>Average paid claim, incl. code-upgrade (ICC) pay</b><span>{tp('avg_paid', 'data.claims_extra.avg_paid', money)}</span>{vs_state('avg_paid', 'data.claims_extra.avg_paid', money)}</li>"
         f"<li><b>Closed with no payment</b><span>{tp('cwop_share', 'data.claims_extra.cwop_share', pct)}</span>{vs_state('cwop_share', 'data.claims_extra.cwop_share', pct)}</li>"
         f"<li><b>Claims that paid</b><span>{tp('claims_paid_n', 'data.claims_extra.paid_n')}</span></li></ul>"
-        f"<p class='note'>{rule('cwop')} The average is over claims that paid something and includes Increased Cost of "
+        + (("<table><thead><tr><th>Claims that paid something, by decade of the flood</th><th>Claims</th><th>Paid something</th></tr></thead><tbody>"
+            + "".join(f"<tr><td>{m('decade', html.escape(d), q=d)}</td><td>{tp('decade_claims', f'extras.claims.by_decade.{d}.n', q=d)}</td>"
+                      f"<td>{tp('decade_paid_share', f'extras.claims.by_decade.{d}.paid_pct', pct, q=d)}</td></tr>" for d in _decs)
+            + "</tbody></table>") if len(_decs) > 1 else "")
+        + f"<p class='note'>{rule('cwop')} The average is over claims that paid something and includes Increased Cost of "
         "Compliance payments (help to elevate or rebuild to code), which the yearly totals above leave out. Dollars are "
         "as paid at the time, not adjusted for inflation; a single home can file across several floods over the years.</p>",
         src(["claims_filed", "avg_paid", "cwop_share"], f"{C['year_min']}–{C['year_max']}", cx.get("retrieved", RETR)), id="payout")
@@ -897,6 +902,8 @@ if _cxq.get("claims") and _cxq.get("avg_paid") and P.get("p50"):
                + (f'something ({html.escape(STATE_NAMES[agg["state"]])}: {m("paid_share", str(round(100 - _scx["cwop_share"], 1)) + "%", q="state")}); '
                   if _scx.get("cwop_share") is not None else 'something; ')
                + f'the average paid claim was {tp("avg_paid", "data.claims_extra.avg_paid", money)}.'
+               + (f' Claims from floods in the {m("decade", html.escape(_decs[-1]), q=_decs[-1])}: '
+                  f'{tp("decade_paid_share", f"extras.claims.by_decade.{_decs[-1]}.paid_pct", pct, q=_decs[-1])} paid something.' if len(_decs) > 1 else '')
                + (f' Top reason for unpaid claims: “{html.escape(_why[0]["label"]).lower()}”.' if _why else '') + '</a>')
 _qa.append('<a href="#covered"><b>Already flooded?</b> What to do now, and what FEMA aid covers.</a>')
 _qa.append('<a href="#compare"><b>Is my quote normal?</b> These are existing policies, not a quote; type yours in to see where it sits.</a>')
@@ -950,11 +957,12 @@ el.addEventListener('input',function(){{
   var v=parseFloat(el.value);
   if(!v||v<=0){{out.textContent='Enter an amount above.';return;}}
   var msg;
-  if(v< P.p25) msg='below the lowest quarter — cheaper than about 75% of existing policies here.';
-  else if(v< P.p50) msg='in the lower-middle — cheaper than about half of existing policies here.';
-  else if(v< P.p75) msg='in the upper-middle — more than about half of existing policies here.';
-  else if(v< P.p90) msg='in the top quarter — more than about 75% of existing policies here.';
-  else msg='higher than about 90% of existing policies here.';
+  if(v< P.p25) msg='in the cheapest quarter of existing policies here';
+  else if(v< P.p50) msg='below the typical cost, cheaper than about half of existing policies here';
+  else if(v==P.p50) msg='the typical cost here';
+  else if(v< P.p75) msg='above the typical cost, more than about half of existing policies here';
+  else if(v< P.p90) msg='in the top quarter, more than about 75% of existing policies here';
+  else msg='higher than about 90% of existing policies here';
   out.textContent='$'+v.toLocaleString()+' is '+msg+' (half pay $'+P.p25.toLocaleString()+' to $'+P.p75.toLocaleString()+', typical $'+P.p50.toLocaleString()+').'+R;
 }});
 </script></section>"""

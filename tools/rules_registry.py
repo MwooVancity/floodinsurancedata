@@ -19,8 +19,7 @@ RULES = {
                 "flood this week.",
         "sources": [(FS + "/get-insured/buy-a-policy", "will go into effect 30 days after your date of purchase", "curl")]},
     "wait_exceptions": {
-        "text": "Exceptions: no wait if you buy while making, increasing, extending or renewing a mortgage, or change "
-                "coverage at renewal; a one-day wait if a map revision puts the property in a high-risk zone and you buy "
+        "text": "Exceptions: no wait if you buy while making, increasing, extending or renewing a mortgage; a one-day wait if a map revision puts the property in a high-risk zone and you buy "
                 "within 13 months of the revision (44 CFR §61.11).",
         # FloodSmart's consumer page rounds this to "12 months"; the regulation says 13 — the regulation is cited.
         "sources": [(FS + "/get-insured/buy-a-policy", "while making, increasing, extending or renewing a mortgage", "curl"),

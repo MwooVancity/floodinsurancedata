@@ -126,7 +126,7 @@ if len(states) == 51:   # U.S. figures only once every state is built and gated:
         'for a different mix of policies, lands lower or higher than ours. Private flood insurance is not in this data.</p></div>'
         f'<script>var qv=document.getElementById("qv"),qo=document.getElementById("qo");qv.addEventListener("input",function(){{'
         f'var v=+qv.value.replace(/[^0-9.]/g,"");if(!v){{qo.textContent="";return;}}'
-        f'qo.textContent="$"+v.toLocaleString()+" is "+(v<{_q[0.25]}?"in the lowest quarter":v<{_med}?"below the middle":v<{_q[0.75]}?"above the middle":v<{_q[0.9]}?"in the top quarter":"in the top tenth")'
+        f'qo.textContent="$"+v.toLocaleString()+" is "+(v<{_q[0.25]}?"in the lowest quarter":v<{_med}?"below the middle":v=={_med}?"the U.S. typical cost":v<{_q[0.75]}?"above the middle":v<{_q[0.9]}?"in the top quarter":"in the top tenth")'
         f'+" of U.S. single-family policies (half pay {money(_q[0.25])} to {money(_q[0.75])}).";}});</script>')
 else: home_cards = ""
 home = HEAD.format(title="Flood insurance cost by state and county (FEMA data)",

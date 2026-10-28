@@ -136,6 +136,9 @@ METRICS.update({   # every other figure a page prints; q (data-q) names the row 
     "claims_year_paid": _m(CLM, ["yearOfLoss", "netBuildingPaymentAmount", "netContentsPaymentAmount"], "usd_claim_paid"),
     "claims_span_years": _m(CLM, ["yearOfLoss"], "count"),
     "paid_share": _m(CLM, ["netBuildingPaymentAmount", "netContentsPaymentAmount", "netIccPaymentAmount"], "pct", of="claims filed"),
+    "decade": _m(CLM, ["yearOfLoss"], "count"),   # a label like "1990s", tagged so the gate sees no loose number
+    "decade_claims": _m(CLM, ["yearOfLoss"], "count", counts="claim_record"),
+    "decade_paid_share": _m(CLM, ["yearOfLoss", "netBuildingPaymentAmount", "netContentsPaymentAmount", "netIccPaymentAmount"], "pct", of="claims filed"),
     "event_avg": _m(CLM, ["floodEvent", "netBuildingPaymentAmount", "netContentsPaymentAmount", "netIccPaymentAmount"], "usd_claim_paid"),
     "damage_n": _m(CLM, ["buildingDamageAmount"], "count"),
     "crs_count": _m(_CSB, ["communityName", "sfhaDiscount"], "count"),

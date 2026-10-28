@@ -96,12 +96,15 @@ def net(r): return sum(f(r[c]) or 0 for c in ("netBuildingPaymentAmount", "netCo
 def claims(st):
     acc = collections.defaultdict(lambda: {"n": 0, "unpaid": 0, "reason": collections.Counter(), "cause": collections.Counter(),
                                            "depth": [], "event": collections.defaultdict(lambda: [0, 0.0, collections.Counter()]), "icc_n": 0, "icc": [],
-                                           "dmg": [], "paid_b": [], "over_cov": 0, "dmg_n": 0, "elev_paid": [], "low_paid": []})
+                                           "dmg": [], "paid_b": [], "over_cov": 0, "dmg_n": 0, "elev_paid": [], "low_paid": [],
+                                           "dec": collections.defaultdict(lambda: [0, 0])})   # decade of loss: [claims, paid something]
     for r in rows("NfipClaims", st):
         paid = net(r)
         for k in ["ST"] + [g for g in [r["countyCode"] or ""] if g[:2] == FIPS[st]]:
             if len(k) not in (2, 5): continue
             a = acc[k]; a["n"] += 1
+            if r["yearOfLoss"]:   # hater r6/r7: is a low paid share one era or every era?
+                dc = a["dec"][str(r["yearOfLoss"])[:3] + "0s"]; dc[0] += 1; dc[1] += paid > 0
             if paid <= 0:
                 a["unpaid"] += 1
                 if r["nonPaymentReasonBuilding"] in NONPAY_REASON: a["reason"][r["nonPaymentReasonBuilding"]] += 1
@@ -134,7 +137,8 @@ def claims(st):
                   "damage_over_coverage_pct": pct(a["over_cov"], a["dmg_n"]), "damage_n": a["dmg_n"],
                   "avg_paid_elevated": round(statistics.mean(a["elev_paid"])) if len(a["elev_paid"]) >= 30 else None,
                   "avg_paid_not_elevated": round(statistics.mean(a["low_paid"])) if len(a["low_paid"]) >= 30 else None,
-                  "elevated_paid_n": len(a["elev_paid"]), "paid_n": paid_n}
+                  "elevated_paid_n": len(a["elev_paid"]), "paid_n": paid_n,
+                  "by_decade": {d: {"n": v[0], "paid_pct": pct(v[1], v[0])} for d, v in sorted(a["dec"].items())}}
     return out
 
 def run(st):

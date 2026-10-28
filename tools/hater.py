@@ -62,10 +62,10 @@ def record(rnd):
         verdict = "PASS" if v and v.group(1) == "PASS" and not bad else "FAIL"
         RV.record(slug, verdict, [b[:160] for b in re.findall(r"\*\*(?:BLOCKER|MAJOR)\*\*[^\n]*", sec)][:60],
                   reviewer=f"hater round {rnd} (fresh agent, docs/HATER-PROMPT.md)")
-        gaps = re.findall(r"\*\*GAP\*\*[^\n]*", sec)   # owner 2026-10-28: gaps never block; they go to the to-do list
+        gaps = re.findall(r"\*\*GAP[^*]*\*\*[^\n]*", sec)   # owner 2026-10-28: gaps never block; they go to the to-do list
         if gaps:
             with open(os.path.join(DIR, "backlog.md"), "a", encoding="utf-8") as f:
-                f.write(f"\n## {slug} (round {rnd})\n" + "".join(f"- {g[8:].strip()}\n" for g in gaps))
+                f.write(f"\n## {slug} (round {rnd})\n" + "".join(f"- {re.sub(r'^[*]{2}GAP[^*]*[*]{2}', '', g).strip()}\n" for g in gaps))
         print(f"{slug}: {verdict} ({len(bad)} blocker/major, {len(gaps)} gaps to backlog.md)")
 
 if __name__ == "__main__":

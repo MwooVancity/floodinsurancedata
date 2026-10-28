@@ -1,12 +1,8 @@
 {
  "slug": "home",
- "verdict": "FAIL",
- "template": "bfc922c7c354cf1a",
- "defects": [
-  "**BLOCKER** (would not beat #1).",
-  "**MAJOR** (templated).",
-  "**MAJOR** (gap vs #1, private flood)."
- ],
- "reviewer": "hater round 6 (fresh agent, docs/HATER-PROMPT.md)",
+ "verdict": "PASS",
+ "template": "bd92c48b7de2a2c7",
+ "defects": [],
+ "reviewer": "hater round 7 (fresh agent, docs/HATER-PROMPT.md)",
  "notes": ""
 }

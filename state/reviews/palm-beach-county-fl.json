@@ -1,13 +1,13 @@
 {
  "slug": "palm-beach-county-fl",
  "verdict": "FAIL",
- "template": "bfc922c7c354cf1a",
+ "template": "bd92c48b7de2a2c7",
  "defects": [
-  "**MAJOR** (scary figure on screen 1, unexplained).",
-  "**MAJOR** (analyst, misleading reassurance).",
-  "**MAJOR** (scaled, partly fixed). The same shared paragraphs appear word for word as on the Louisiana page: \"Already flooded?\", \"Yearly cap\", the waiting-period",
-  "**MAJOR** (gap vs #1, private flood and Citizens context)."
+  "**BLOCKER** (same template rule as Louisiana). On palm-beach-county-fl-05, \"or change coverage at renewal\" is not in 44 CFR \u00a761.11, which says increases wait 30",
+  "**MAJOR** (wrong count, broken lookup).",
+  "**MAJOR** (misleading reassurance on rebuild; same template as Louisiana).",
+  "**MAJOR** (scary screen-1 figure, carried over from round 6)."
  ],
- "reviewer": "hater round 6 (fresh agent, docs/HATER-PROMPT.md)",
+ "reviewer": "hater round 7 (fresh agent, docs/HATER-PROMPT.md)",
  "notes": ""
 }
