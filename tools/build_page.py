@@ -1122,7 +1122,9 @@ table{{width:100%}}}}
 SOURCES = page_sources()
 HTML = (HTML.replace("@@SOURCES_LI@@", "".join(f'<li><a href="{u}">{html.escape(n)}</a></li>' for n, u in SOURCES))
             .replace("@@N_SOURCES@@", str(len(SOURCES)))
-            .replace('"@@CITATION@@"', json.dumps([{"@type": "Dataset", "name": n, "url": u} for n, u in SOURCES])))
+            # Search Console 2026-10-29: nested Dataset objects were checked as Datasets (no description/license/creator);
+            # Google's Dataset citation takes text, so each source is one reference string
+            .replace('"@@CITATION@@"', json.dumps([f"{n}. {u}" for n, u in SOURCES])))
 open(OUT_HTML, "w", encoding="utf-8").write(HTML)
 # data.csv next to the page: exactly the tagged figures the page shows, each with its dataset and FEMA fields
 import csv

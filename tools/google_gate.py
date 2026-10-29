@@ -40,6 +40,11 @@ for p, h in pages.items():
                 fail("S1", f"{p}: {t} markup (must match visible content; we show none)")
             if t == "Dataset" and o.get("dateModified") and not re.match(r"\d{4}-\d{2}-\d{2}$", str(o["dateModified"])):
                 fail("S1", f"{p}: Dataset dateModified not a date")
+            if t == "Dataset":   # Search Console 2026-10-29: missing description/license/creator, citation of objects
+                for k in ("name", "description", "license", "creator"):
+                    if not o.get(k): fail("S1", f"{p}: Dataset missing {k}")
+                if any(not isinstance(c, str) for c in (o.get("citation") or [])):
+                    fail("S1", f"{p}: Dataset citation must be text, not objects (Google checks nested Datasets)")
 
 # S2 scaled content: masked 8-gram similarity among indexable county pages of the same state (and against the state page)
 # Names are masked (a name swap is the doorway pattern); numbers are KEPT, because each county's own figures are the
