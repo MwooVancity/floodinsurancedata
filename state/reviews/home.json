@@ -1,8 +1,11 @@
 {
  "slug": "home",
- "verdict": "PASS",
+ "verdict": "FAIL",
  "template": "408fc1089834322b",
- "defects": [],
- "reviewer": "hater round 15 (fresh agent, docs/HATER-PROMPT.md)",
+ "defects": [
+  "**MAJOR** Quote checker compares a quote with existing policies. \"Is my quote normal? Type your yearly cost... to see where it sits among U.S. single-family pol",
+  "**MAJOR** \"Built from 3,490,299 NFIP policy records\" next to the hero card \"4.6M INSURED UNITS IN FORCE\" (home-00). To a newcomer, 3.5M records next to 4.6M uni"
+ ],
+ "reviewer": "hater round 16 (fresh agent, docs/HATER-PROMPT.md)",
  "notes": ""
 }

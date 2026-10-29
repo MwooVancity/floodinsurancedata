@@ -199,3 +199,29 @@ Ranked by reader value. hater.py record appends each round's **GAP** lines below
 - Quote checker: clearing the amount leaves the old zone line (zq must clear when the amount is empty).
 - Zone dropdown lists thin zones (Louisiana A12, 53 policies); consider the zone card's own floor.
 - Condo note prints "0.0%" for condo buildings; say "none" or drop the clause at 0.
+
+## home (round 16)
+- No buying step anywhere on home: no NFIP phone (877) 336-2627, no FloodSmart link, no 30-day/60-day deadline line beyond "30 days". NerdWallet and Bankrate give "how to buy" on the page. The only next step is "Check your zone on FEMA's flood map".
+- No Spanish (L, OPEN); no error-report route (I, OPEN); no print stylesheet (K, OPEN).
+- NerdWallet/Bankrate show a "cheapest/most expensive" narrative and private-market context; we say only "Private flood insurance is not in this data". That is acceptable per the brief. Noted, not counted.
+
+## louisiana (round 16)
+- The 64-row parish table has no search or filter; only the county page has a lookup (G: long tables searchable). There is also no back-to-top link on a 27-screen page (G).
+- Data already held but not shown: residential take-up (penetration 22.0% overall, 73.1% in high-risk zones, data.json) and the share of claims from outside high-risk zones (21.4%, claims_extra.outside_sfha_pct). WABI ranks for "only 1% of Maine households"; this is the same reader question. These were cut earlier as "take-up"; the cut should be revisited.
+- No Spanish (L, OPEN). No state insurance department or floodplain office contact (F, OPEN). Renter, landlord/second home and business readers get no line (B).
+- MoneyGeek has a parish table with averages; ours is better (medians, n, claims). We have no "how to buy from a private insurer" line.
+
+## palm-beach-county-fl (round 16)
+- City-level costs (NerdWallet lists West Palm Beach $349): our ZIP lookup covers this, but town names are missing on most ZIPs (item 7).
+- The Miami Herald/Sun-Sentinel rank with "rates will double/triple near the coast" (Risk Rating 2.0 glide path by ZIP). We have share below full-risk only at county level, not by ZIP.
+- Take-up held but not shown (penetration 13.0% overall, 43.4% in high-risk zones). No Spanish (L, OPEN, FL). No county floodplain office contact (F, OPEN).
+
+## maine (round 16)
+- "Only 1% of Maine households have flood insurance" (WABI, ranking #6) answers "do my neighbours carry it?". We hold 1.2% overall and 78.5% in high-risk zones (data.json penetration) and do not show it.
+- Press Herald gives county averages; ours exist (PASS). The FEMA Maine state profile PDF has the official NFIP state figures; we do not link it.
+- No back-to-top; no state floodplain office (Maine Floodplain Management Program) contact (F, OPEN).
+
+## nebraska (round 16)
+- The 78-row county table has no search (G). No back-to-top.
+- StateCalc gives "median of the 1,000 most-recent real NFIP policies" ($744), a buyer-oriented figure; our $874 first-bought-in-past-year figure is better sourced but sits in the hero only as a "Buying?" line.
+- Take-up (0.7% overall, 15.3% in high-risk zones) and claims outside high-risk zones (21.3%) are held but not shown. Answering "most homes in the floodplain here are uninsured" is a strong information gain.

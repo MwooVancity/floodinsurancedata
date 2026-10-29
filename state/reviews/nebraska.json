@@ -1,0 +1,14 @@
+{
+ "slug": "nebraska",
+ "verdict": "FAIL",
+ "template": "408fc1089834322b",
+ "defects": [
+  "**MAJOR** Disaster list repeats \"2024 — Severe Storms, Straight-Line Winds, Tornadoes, and Flooding\" three times (nebraska-05; DR-4838, 4822, 4808). It reads as",
+  "**MAJOR** Quote checker and \"Renewing? Policies whose term began in 2026 typically pay $931\" (class). Here 2025-term $854 vs 2026-term $931 reads as a 9% renewa",
+  "**MAJOR** Hero card \"35.7% ... SO THEIR BILLS RISE EACH YEAR\" (class).",
+  "**MAJOR** County table: \"Keith County | 47 | — | —\" and \"Knox County | 76 | — | —\" sit beside \"Custer County | 44 | $695\" and \"Kearney County | 41 | $870\" (nebr",
+  "**MAJOR** \"Not in the NFIP (96 communities here): ... Box Butte County; ...\" while the county table lists \"Box Butte County | 5\" policy units (nebraska-01, -03)"
+ ],
+ "reviewer": "hater round 16 (fresh agent, docs/HATER-PROMPT.md)",
+ "notes": ""
+}
