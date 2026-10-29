@@ -1,12 +1,12 @@
 # Gap backlog (owner 2026-10-28: a gap does not block a ship until it is 3 review rounds old; google_gate S14)
 Ranked by reader value. hater.py record appends each round's **GAP** lines below.
 
-1. Years to full-risk price at the yearly cap (18% for a primary home): a "how much will my bill rise" calculator. Verify the cap against the statute first. (since round 12)
-2. Non-NFIP communities named on state pages (Louisiana 34, Oklahoma 122), not only counted. (since round 12)
-3. ZIP town labels from a USPS-preferred city name (77386 shows "Houston", USPS: Spring). (since round 12)
-4. Condo / RCBAP cost line (Horry: Little River condo owners see $2,000-$6,000 quotes). (since round 12)
+1. Non-NFIP communities named on state pages (Louisiana 34, Oklahoma 122), not only counted. (since round 12)
+2. ZIP town labels from a USPS-preferred city name (77386 shows "Houston", USPS: Spring). (since round 12)
+3. Condo / RCBAP cost line (Horry: Little River condo owners see $2,000-$6,000 quotes). (since round 12)
 
 ## Closed round-9 items (2026-10-28, round 12)
+- "Years to full-risk at 18% a year" / premium-rise calculator: DROPPED by the owner (2026-10-28: "no calc. way too risky"). A projection of one reader's own premium is the highest-risk thing on a money page. Reviewers: do not raise it again as a gap.
 - Cost by flood zone on home: DONE in code. extras_raw.py writes data/us/cost_hist_zone.json in the monthly cloud refresh; home shows the V / A / B-C-X table once all 51 states have it.
 - Private flood: DONE. Rule private_accept (12 CFR 339.3(c), eCFR excerpt) on every "Am I required" card.
 - "Find your county" link on screen 1 of state pages: DONE (_jump in build_page.py).

@@ -138,7 +138,8 @@ RULES = {
                 "and businesses, can rise up to 25%. The cap usually does not apply to new policies, and fees and "
                 "surcharges sit outside it.",
         "sources": [(FS + "/premiumcosts", "per year for most policyholders. This usually does not apply to new policies.", "curl"),
-                    ("https://www.fema.gov/flood-insurance/risk-rating", "most rates not increase more than 18% per year", "manual")]},
+                    ("https://www.fema.gov/flood-insurance/risk-rating", "most rates not increase more than 18% per year", "manual"),
+                    ("https://www.govinfo.gov/link/uscode/42/4015?link-type=html", "may not be increased by more than 18 percent each year", "curl")]},
     "rr2_zone": {
         "text": "Since FEMA's <a href='https://www.fema.gov/flood-insurance/risk-rating' rel='noopener' "
                 "target='_blank'>Risk Rating 2.0</a>, price is set from each building's own flood risk, not its zone, and "
