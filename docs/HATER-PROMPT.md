@@ -14,6 +14,12 @@ downloads. You did not build it and owe it nothing. Assume it is wrong until you
 
 Pages under review: {pages}
 
+## The checklist comes first (owner 2026-10-28: "user, not Google")
+Read the "User, not Google: the helpfulness checklist" section of C:\Users\mwoo7\Desktop\floodinsurance\PLAN.md
+(lines A-N). For EVERY line, on EVERY page, say PASS or name the defect, quoting the text or naming the screenshot.
+A line marked OPEN there is a known gap: tag it GAP, never MAJOR. Judge confusion for a newcomer who knows nothing
+about flood insurance: any word, code, number or layout that would make them misread, hesitate or give up.
+
 ## Judge as six people at once
 1. **A frightened homeowner on a phone**, just told they are in a flood zone or just flooded, with 30 seconds. What
    confuses, misleads, scares wrongly, buries the answer, or uses jargon? What would they do next, and does the page

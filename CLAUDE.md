@@ -5,6 +5,10 @@ Strategy and status: PLAN.md (read at session start, update after every batch).
 ## Reader
 A US homeowner or buyer at one place, on a phone, 30-60 seconds, days of urgency: at a closing with a flood-zone letter, a renewal that jumped, or a street that flooded last night. Page answers, in order, above the long tables: how risky here, am I required to buy it, what it costs (in my zone), is it rising, what floods pay out here, can I pay less; plus how urgent and what to do next (where to buy, 30-day wait, coverage limits). One static page per place from public federal data. Run flood sessions from this folder; calcscrape and river rules do not apply.
 
+**User, not Google (HARD, owner 2026-10-28).** Every choice is judged by the scared reader on a phone, never by
+what a crawler wants. If something helps SEO but confuses or slows the reader, the reader wins. The full
+helpfulness checklist is in PLAN.md; every review brief must judge every item on it.
+
 ## Hard rules
 - Owner is a non-coder: do the work, decide defaults, short plain replies, no "Next:" line.
 - Separate from calcscrape and river: own domain, Search Console and ad account; no shared template or links.
