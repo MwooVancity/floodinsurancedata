@@ -63,6 +63,16 @@ Before editing, write each item's likely failure and its pre-check. Then:
 - A template change no reader can see (markup, scripts): `hater.py carry <round> <last passed release> <samples>`
   keeps the PASS only if every sample's visible text is identical; any difference needs a light review.
 
+## Reader tools ship standard (HARD, owner 2026-10-29: "bugs or being wrong will destroy this site")
+A tool ships only when ALL hold: (1) a truth table written before code (inputs -> exact output, each tied to a
+rules_registry source; the finite set of output sentences reviewed once); (2) an independent Python oracle computes
+every expected answer and the page's JS output must equal it; (3) edge suites: dates (Feb 29 + 60, Dec 31 rollover,
+Hawaii/Guam time zones), numbers ($1,234.56, spaces, 0, negative, 1e9, letters, pasted text, monthly-for-yearly),
+data (all 1,803 queued counties: missing fields, one zone, zeros); (4) fuzz: thousands of random inputs, never a
+crash, never NaN/undefined/Infinity, never a verdict word; (5) Chromium + WebKit + JavaScript off; (6) a kill switch
+(`tools/tools_flags.json`, off = removed on the next hotfix); (7) staged: the 3 sample pages for 2 weeks, then all;
+(8) rule wording checked by a second model. Never generate a page per input pair (scaled-content abuse): one tool URL.
+
 ## Whole project: Musk's five steps toward #1 (HARD, owner 2026-10-28; strategy and scoreboard in PLAN.md)
 Before any task, name which scoreboard number it moves: pages indexed, impressions, clicks, page-1 queries,
 AI-answer citations. None = question it, then delete it. Order: question, delete, simplify, accelerate, automate last.

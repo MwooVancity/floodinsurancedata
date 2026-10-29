@@ -27,7 +27,7 @@ louisiana "Submitted and indexed". Top queries: Arkansas, Florida (position 19.5
    tiny, Maine duplicate disaster line, "Assigned in error" vs "Claim deleted in error", thin zones in the dropdown;
    (iii) glossary of terms used on the page (FEMA wording, sourced); (iv) one line each for renters, landlords,
    second homes and businesses; (v) ZIP names: "near <place>" fallback where no place covers 25%.
-3c. Reader tools (owner 2026-10-29 "do it all"), lowest risk first, each with a script that types edge cases into
+3c. Reader tools (owner 2026-10-29 "do it all"; ship standard in CLAUDE.md: oracle, edge suites, fuzz, kill switch, staged), lowest risk first, each with a script that types edge cases into
    the real page (permanent release check) and one light review. All: nothing leaves the phone, rules from
    rules_registry, numbers tagged, no verdict words, below the quote checker, readable without JavaScript.
    - Deadline planner (flood date in): proof of loss +60 days; FEMA aid window from the DECLARATION date (source first);
