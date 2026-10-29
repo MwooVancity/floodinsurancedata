@@ -53,7 +53,6 @@ Wyoming,frp_plus_fees,"$1,081",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policie
 Wyoming,cost_mean,"$1,156",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Wyoming,cost_all_mean,"$1,324",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + occupancyType,"July 31, 2026"
 Wyoming,condo_unit_pct,1.7%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
-Wyoming,condo_building_pct,0.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
 Wyoming,units_listed,895,count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"July 31, 2026"
 Wyoming,ded_amount,"$2,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"July 31, 2026"
 Wyoming,ded_share,37.0%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"July 31, 2026"

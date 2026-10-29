@@ -48,7 +48,6 @@ the District of Columbia,frp_plus_fees,$388,usd_cost_with_fees,FEMA OpenFEMA —
 the District of Columbia,cost_mean,$414,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 the District of Columbia,cost_all_mean,$854,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + occupancyType,"July 31, 2026"
 the District of Columbia,condo_unit_pct,7.3%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
-the District of Columbia,condo_building_pct,0.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
 the District of Columbia,units_listed,"1,035",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"July 31, 2026"
 the District of Columbia,ded_amount,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"July 31, 2026"
 the District of Columbia,ded_share,50.4%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"July 31, 2026"

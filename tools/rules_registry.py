@@ -55,12 +55,15 @@ RULES = {
     "already_flooded": {
         "text": "<b>Already flooded?</b> Insured: report the loss to your insurance agent or company now (FEMA's steps: "
                 "<a href='https://www.floodsmart.gov/recover/start-a-claim' rel='noopener' target='_blank'>how "
-                "to start a flood claim</a>). Not insured: a policy bought today will not cover a flood that already "
+                "to start a flood claim</a>), and send a signed proof of loss within 60 days of the flood (44 CFR 61, "
+                "App. A(1), Art. VII). Not insured: a policy bought today will not cover a flood that already "
                 "happened, and FEMA disaster aid is open to people in counties designated in a federally declared "
                 "disaster.",
         "sources": [(FS + "/contact", "Report your loss immediately to your insurance agent or carrier.", "curl"),
                     (IA_META, "in designated counties who sustained damage", "curl"),
-                    (IA_META, "resulting from a federally declared disaster may apply", "curl")]},
+                    (IA_META, "resulting from a federally declared disaster may apply", "curl"),
+                    ("https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=61",
+                     "Within 60 days after the loss, send us a proof of loss", "curl")]},
     "fl_citizens": {   # Florida only (s. 627.351(6), F.S.): SFHA homes since 2023 (para 2), everywhere else phased in by rebuild cost (para 1); round 5 blocker
         "text": "In Florida, a home insured by Citizens Property Insurance with wind coverage must also carry flood insurance. "
                 "In a high-risk zone (A or V) this has applied since 2023 (new policies from April 1, renewals from July 1), "

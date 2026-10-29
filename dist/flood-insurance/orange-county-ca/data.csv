@@ -57,7 +57,6 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Orange County, California",cost_mean,"$1,167",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 "Orange County, California",cost_all_mean,"$1,343",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + occupancyType,"July 31, 2026"
 "Orange County, California",condo_unit_pct,5.9%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
-"Orange County, California",condo_building_pct,0.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
 "Orange County, California",units_listed,"5,455",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"July 31, 2026"
 "Orange County, California",ded_amount,"$2,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"July 31, 2026"
 "Orange County, California",ded_share,49.6%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"July 31, 2026"

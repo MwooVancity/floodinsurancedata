@@ -1,9 +1,11 @@
 # Gap backlog (owner 2026-10-28: a gap does not block a ship until it is 3 review rounds old; google_gate S14)
 Ranked by reader value. hater.py record appends each round's **GAP** lines below.
 
-1. Non-NFIP communities named on state pages (Louisiana 34, Oklahoma 122), not only counted. (since round 12)
-2. ZIP town labels from a USPS-preferred city name (77386 shows "Houston", USPS: Spring). (since round 12)
-3. Condo / RCBAP cost line (Horry: Little River condo owners see $2,000-$6,000 quotes). (since round 12)
+
+## Closed round-12 items (2026-10-28, round 15)
+- Non-NFIP communities named on state pages: DONE (light round 13 checked Louisiana's 34 names).
+- ZIP town labels: DONE; a place must cover 25%+ of the ZIP's land (77386 no longer "Houston").
+- Condo line: DONE in the averages card (light round 13 checked the shares).
 
 ## Closed round-9 items (2026-10-28, round 12)
 - "Years to full-risk at 18% a year" / premium-rise calculator: DROPPED by the owner (2026-10-28: "no calc. way too risky"). A projection of one reader's own premium is the highest-risk thing on a money page. Reviewers: do not raise it again as a gap.

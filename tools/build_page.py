@@ -181,7 +181,9 @@ def vs_state(key, path, fmt=num):
     return f"<small class='vs'>{html.escape(STATE_NAMES[agg['state']])}: {tp(key, 'state.' + path, fmt, q='state')}</small>"
 
 def card(title, standfirst, body, source="", id=""):
-    _id = f' id="{id}"' if id else ""
+    # every card is linkable (the "On this page" menu): a given id, else one made from the title
+    id = id or "c-" + re.sub(r"[^a-z0-9]+", "-", html.unescape(re.sub("<[^>]+>", "", title)).lower()).strip("-")[:40]
+    _id = f' id="{id}"'
     return f'<section class="card"{_id}><h2>{title}</h2><p class="stand">{standfirst}</p>{body}{source}</section>'
 
 # ---- risk card (NRI or honest gap) ----
@@ -476,8 +478,9 @@ def card_averages():
         + "; other sites count other policies, years or averages.",
         "<table><thead><tr><th>Measure</th><th>Amount</th><th>What it counts</th></tr></thead><tbody>"
         + "".join(f"<tr><td>{a_}</td><td>{b_}</td><td>{c_}</td></tr>" for a_, b_, c_ in _avrows) + "</tbody></table>"
-        + (f"<p class='note'><b>Condo owners:</b> condo-unit policies are {tp('condo_unit_pct', 'extras.policies.condo_unit_pct', pct)} of NFIP policy units here "
-           f"and whole condo buildings {tp('condo_building_pct', 'extras.policies.condo_building_pct', pct)}. The single-family figures above leave both out; "
+        + (f"<p class='note'><b>Condo owners:</b> condo-unit policies are {tp('condo_unit_pct', 'extras.policies.condo_unit_pct', pct)} of NFIP policy units here"
+           + (f" and whole condo buildings {tp('condo_building_pct', 'extras.policies.condo_building_pct', pct)}" if _xpp.get('condo_building_pct') else "")
+           + f". The single-family figures above leave both out; "
            "only the every-policy-type average includes them.</p>" if (_xpp.get("condo_unit_pct") or 0) + (_xpp.get("condo_building_pct") or 0) >= 1 else "")
         + f"<p class='note'>All from the NFIP policies in force on {POL_ASOF}.{how('averages')}</p>",
         src(["cost_p50", "prem_median", "frp_median", "cost_year"] + (["cost_new"] if _new_ok else []) + (["cost_mean", "cost_all_mean"] if _av.get("sf_cost_mean") else []), POL_ASOF, RETR), id="prices")
@@ -855,8 +858,8 @@ jsonld = json.dumps([
 # plan item 1: compare the quote with the reader's own zone too (cost_by_zone medians; no estimate, no new figure on the page)
 _zsel = ("<select id='qzs' aria-label='Your flood zone' style='font-size:16px;padding:8px;border:1px solid var(--line);border-radius:8px;margin-left:6px'>"
          "<option value=''>My flood zone (optional)</option>"
-         + "".join(f"<option value='{html.escape(z)}'>Zone {html.escape(z)}</option>" for z in (P.get("cost_by_zone") or {}))
-         + "</select>") if len(P.get("cost_by_zone") or {}) > 1 else ""
+         + "".join(f"<option value='{html.escape(z)}'>Zone {html.escape(z)}</option>" for z, d in (P.get("cost_by_zone") or {}).items() if d["n"] >= MX.CONST["zone_min"])
+         + "</select>") if sum(d["n"] >= MX.CONST["zone_min"] for d in (P.get("cost_by_zone") or {}).values()) > 1 else ""
 quote_widget = f"""<section class="card" id="compare"><h2>Is my quote or renewal normal here?</h2>
 <p class="stand">Type your yearly cost (premium plus fees) to see where it sits among existing single-family policies here.</p>
 <input id="q" type="number" inputmode="numeric" placeholder="e.g. {int(round(P['p50'], -1))}" aria-label="Your annual premium in dollars"
@@ -871,7 +874,7 @@ var R={json.dumps(f" Renewing? Policies whose term began in {_ly} typically pay 
 var el=document.getElementById('q'),out=document.getElementById('qout');
 el.addEventListener('input',function(){{
   var v=parseFloat(el.value);
-  if(!v||v<=0){{out.textContent='Enter an amount above.';return;}}
+  if(!v||v<=0){{out.textContent='Enter an amount above.';zq();return;}}
   var msg;
   if(v<=P.p25) msg='in the cheapest quarter of existing policies here';
   else if(v< P.p50) msg='below the typical cost, cheaper than about half of existing policies here';
@@ -986,6 +989,10 @@ CARD_ORDER = [card_required, card_cost, card_howto, card_claims, card_payout, ca
               card_zone_cost, card_zip, card_averages, card_gap, card_save, card_crs, card_risk, card_multiloss,
               card_disasters, card_aid, card_counts]
 CARDS = "\n\n".join(h for h in (f() for f in CARD_ORDER) if h)
+# "On this page": pages run 20+ phone screens; one link per card, in page order (owner 2026-10-28)
+_toc = ('<nav class="toc card"><h2>On this page</h2><ul>'
+        + "".join(f'<li><a href="#{i}">{t}</a></li>' for i, t in re.findall(r'<section class="card" id="([^"]+)"><h2>(.*?)</h2>', CARDS))
+        + "</ul></nav>")
 # backlog 3: the county table is the state page's best tool and sits far down; screen 1 jumps to it
 _jump = f'<p class="cmp"><a href="#counties">Find your {UNIT} in the table ↓</a></p>' if IS_STATE and 'id="counties"' in CARDS else ""
 
@@ -1045,6 +1052,8 @@ td:nth-child(n+2),thead th:nth-child(n+2){{text-align:right;font-variant-numeric
 td.t,th.t{{text-align:left}}
 svg{{display:block;margin:6px 0}}
 .ax{{fill:var(--mut);font-size:13px;text-anchor:middle}}.ax2{{fill:var(--faint);font-size:13px}}
+nav.toc ul{{margin:0;padding-left:18px;columns:2;column-gap:20px;font-size:15px}}nav.toc li{{margin:3px 0;break-inside:avoid}}
+@media(max-width:520px){{nav.toc ul{{columns:1}}}}
 nav.jump{{font-size:14px;margin:0 0 12px;display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center}}
 nav.jump a{{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:5px 11px;text-decoration:none;font-weight:600}}
 nav.qa{{display:block;margin:8px 0 14px}}
@@ -1081,6 +1090,8 @@ table{{width:100%}}}}
 </section>
 
 {quote_widget}
+
+{_toc}
 
 {CARDS}
 

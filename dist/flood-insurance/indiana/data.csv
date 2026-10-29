@@ -56,7 +56,6 @@ Indiana,frp_plus_fees,"$1,005",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policie
 Indiana,cost_mean,"$1,093",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Indiana,cost_all_mean,"$1,315",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + occupancyType,"July 31, 2026"
 Indiana,condo_unit_pct,1.1%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
-Indiana,condo_building_pct,0.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
 Indiana,units_listed,"11,054",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"July 31, 2026"
 Indiana,ded_amount,"$2,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"July 31, 2026"
 Indiana,ded_share,41.9%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"July 31, 2026"

@@ -56,7 +56,6 @@ Ohio,frp_plus_fees,$952,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,fullR
 Ohio,cost_mean,"$1,067",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Ohio,cost_all_mean,"$1,462",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + occupancyType,"July 31, 2026"
 Ohio,condo_unit_pct,2.1%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
-Ohio,condo_building_pct,0.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
 Ohio,units_listed,"14,777",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"July 31, 2026"
 Ohio,ded_amount,"$2,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"July 31, 2026"
 Ohio,ded_share,38.6%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"July 31, 2026"

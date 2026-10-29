@@ -57,7 +57,6 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Jefferson Parish, Louisiana",cost_mean,"$1,290",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 "Jefferson Parish, Louisiana",cost_all_mean,"$1,403",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + occupancyType,"July 31, 2026"
 "Jefferson Parish, Louisiana",condo_unit_pct,1.5%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
-"Jefferson Parish, Louisiana",condo_building_pct,0.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
 "Jefferson Parish, Louisiana",units_listed,"62,806",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"July 31, 2026"
 "Jefferson Parish, Louisiana",ded_amount,"$2,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"July 31, 2026"
 "Jefferson Parish, Louisiana",ded_share,46.9%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"July 31, 2026"

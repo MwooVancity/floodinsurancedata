@@ -57,7 +57,6 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Pasco County, Florida",cost_mean,"$1,475",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 "Pasco County, Florida",cost_all_mean,"$1,717",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + occupancyType,"July 31, 2026"
 "Pasco County, Florida",condo_unit_pct,2.7%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
-"Pasco County, Florida",condo_building_pct,0.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
 "Pasco County, Florida",units_listed,"17,072",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"July 31, 2026"
 "Pasco County, Florida",ded_amount,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"July 31, 2026"
 "Pasco County, Florida",ded_share,46.1%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"July 31, 2026"

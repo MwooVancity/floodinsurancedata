@@ -53,7 +53,6 @@ Utah,frp_plus_fees,$639,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,fullR
 Utah,cost_mean,$753,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Utah,cost_all_mean,"$1,024",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + occupancyType,"July 31, 2026"
 Utah,condo_unit_pct,5.1%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
-Utah,condo_building_pct,0.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
 Utah,units_listed,"2,438",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"July 31, 2026"
 Utah,ded_amount,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"July 31, 2026"
 Utah,ded_share,58.2%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"July 31, 2026"
