@@ -225,3 +225,9 @@ Ranked by reader value. hater.py record appends each round's **GAP** lines below
 - The 78-row county table has no search (G). No back-to-top.
 - StateCalc gives "median of the 1,000 most-recent real NFIP policies" ($744), a buyer-oriented figure; our $874 first-bought-in-past-year figure is better sourced but sits in the hero only as a "Buying?" line.
 - Take-up (0.7% overall, 15.3% in high-risk zones) and claims outside high-risk zones (21.3%) are held but not shown. Answering "most homes in the floodplain here are uninsured" is a strong information gain.
+
+## light round 21 MINORs (deadline planner; next template batch)
+- Heading says "claim deadline" but computes only the NFIP proof-of-loss date.
+- "Your NFIP proof of loss" also reads to uninsured or private-policy readers; say "An NFIP proof of loss".
+- Past-date sentence: add that the insurer may have extended the date.
+- Spell out "NFIP" once inside the tool.

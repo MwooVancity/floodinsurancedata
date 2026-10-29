@@ -84,6 +84,15 @@ RULES = {
                      "located within the special flood hazard area defined by the Federal Emergency Management Agency must have flood coverage in place", "curl"),
                     ("https://www.flsenate.gov/Laws/Statutes/2025/627.351",
                      "January 1, 2027, for all other personal lines residential property insured by the corporation", "curl")]},
+    "aid_register_60": {   # deadline planner (2026-10-29): stated as a rule, never computed (the page cannot know the declaration date)
+        "text": "If the President declares a major disaster or emergency for your area, FEMA's standard window to register "
+                "for disaster aid is 60 days from that declaration date, and FEMA can extend it (44 CFR §206.112).",
+        "sources": [("https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=206&section=206.112",
+                     "The standard FEMA registration period is 60 days following the date that the President declares", "curl")]},
+    "private_deadlines": {
+        "text": "A private (non-NFIP) flood policy sets its own claim deadlines; they are in that policy.",
+        "sources": [("https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-12.xml?part=339&section=339.3",
+                     "must accept private flood insurance, as defined in § 339.2", "curl")]},
     "zone_codes": {   # round 16: B, C, A99, AH, A01-A30 shown with no plain words
         "text": "What the zone codes mean (44 CFR §64.3): A, AE and A1–A30 are high-risk; AO and AH are high-risk with "
                 "shallow flooding; A99 is high-risk behind a flood barrier FEMA treats as complete; V, VE and V1–V30 are "

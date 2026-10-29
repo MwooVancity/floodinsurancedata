@@ -397,9 +397,42 @@ def card_howto():
         rule("howto_answer"),
         rule("howto_tiles")
         + f"<p class='note'>{rule('homeowners_excl')} {rule('wait_exceptions')} {rule('how_to_buy')}</p>"
-        + f"<p class='note'>{rule('already_flooded')} {rule('aid_insurance')}</p>",
-        src_rules(_HOWTO), id="covered")
+        + f"<p class='note'>{rule('already_flooded')} {rule('aid_insurance')}</p>"
+        + (_deadline_tool() if _tool_on("deadline") else ""),
+        src_rules(_HOWTO + (["aid_register_60", "private_deadlines"] if _tool_on("deadline") else [])), id="covered")
     return howto_card
+
+def _tool_on(name):   # kill switch + staged launch: tools/tools_flags.json (CLAUDE.md reader tools ship standard)
+    try: on = json.load(open(os.path.join(HERE, "tools_flags.json"), encoding="utf-8")).get(name) or []
+    except Exception: return False
+    return on == "all" or SLUG in on
+
+def _deadline_tool():
+    # Deadline planner: only the proof-of-loss date is computed (flood date + 60 calendar days, local dates);
+    # the aid window is a rule, never a computed date. Every output sentence is listed in tools/test_tools.py.
+    return (f"<div class='tool' id='deadline'><p class='note'><b>Flooded? Work out your claim deadline.</b> "
+            f"{rule('aid_register_60')} {rule('private_deadlines')}</p>"
+            "<label class='note' for='dl'>Date the water came in:</label> "
+            "<input id='dl' type='date' style='font-size:16px;padding:8px 10px;border:1px solid var(--line);border-radius:8px'>"
+            "<p id='dlo' class='note' aria-live='polite'></p>" + _DEADLINE_JS + "</div>")
+
+_DEADLINE_JS = """<script>(function(){
+var M=['January','February','March','April','May','June','July','August','September','October','November','December'];
+var i=document.getElementById('dl'),o=document.getElementById('dlo');
+function fmt(d){return M[d.getMonth()]+' '+d.getDate()+', '+d.getFullYear();}
+function run(){
+  var m=/^(\\d{4})-(\\d{2})-(\\d{2})$/.exec(i.value||'');
+  if(!m){o.textContent=i.value?'That is not a date. Enter the day the water came in.':'';return;}
+  var y=+m[1],mo=+m[2]-1,da=+m[3],d=new Date(y,mo,da);
+  if(d.getFullYear()!==y||d.getMonth()!==mo||d.getDate()!==da){o.textContent='That is not a date. Enter the day the water came in.';return;}
+  var n=new Date(),t=new Date(n.getFullYear(),n.getMonth(),n.getDate());
+  if(d>t){o.textContent='That date is in the future. Enter the day the water came in.';return;}
+  var due=new Date(y,mo,da+60),left=Math.round((due-t)/864e5);
+  if(left>0)o.textContent='Your NFIP proof of loss is due by '+fmt(due)+' ('+left+(left===1?' day':' days')+' from today). Report the loss to your insurer now if you have not.';
+  else if(left===0)o.textContent='Your NFIP proof of loss is due today, '+fmt(due)+'. Contact your insurer now.';
+  else o.textContent='The 60-day NFIP proof-of-loss date was '+fmt(due)+'. Contact your insurer now.';
+}
+i.addEventListener('input',run);i.addEventListener('change',run);})();</script>"""
 
 _MONTHS = dict(zip([f"{i:02d}" for i in range(1, 13)], "January February March April May June July August September October November December".split()))
 def _recent_li():
