@@ -45,4 +45,4 @@ jobs:
           git add -A data/states data/all-counties data/us
           git diff --cached --quiet && { echo "no data change"; exit 0; }
           git commit -m "data: refresh from FEMA (policies as of $(cat .cache/raw/asof.txt))"
-          git push
+          git pull --rebase -X theirs origin master && git push   # others may push during the 2h run
