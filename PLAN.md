@@ -19,8 +19,7 @@ louisiana "Submitted and indexed". Top queries: Arkansas, Florida (position 19.5
 - Reviews: no wrong live figure in rounds 12-19 (round 19 caught an overstated new figure before release); open defects are wording and layout.
 
 ## Next moves, in order (each has a "done when")
-1. Search Console: DONE (the calcscrape service account already has owner access). Re-read weekly; owner clicks
-   "Validate fix" on the Datasets report (the citation fix shipped 10-29; louisiana was last crawled 10-26).
+1. Search Console: connected; re-read weekly. Owner: click "Validate fix" on the Datasets report.
 2. 2026-11-03 refresh run: check time, download size and all 51 states done. Done when the numbers are here.
 3. One batch after step 2, then one light check (≤ ~90k tokens) and release:
    - search boxes on tables with 16+ rows, with a "no matches" line;
@@ -49,6 +48,11 @@ louisiana "Submitted and indexed". Top queries: Arkansas, Florida (position 19.5
    links only to .gov or FloodSmart (gate); 3-5 related links per page chosen from data, never a fixed block; link
    text names the destination. Add: DisasterAssistance.gov beside the aid rule; FEMA's provider finder beside "how to
    buy"; state insurance department (needs a sourced list of 51); "compare with" a bordering county.
+3e. Two datasets that change the insurance decision (owner 10-29 API list; the rest are live conditions and belong
+   on riverwaterlevels.com, which stays separate). Verify the source first. (i) County flood-map dates: effective vs
+   preliminary labelled; a gap line where missing (check the Community Status Book fields we already pull).
+   (ii) NOAA sea-level trend for coastal counties: NOAA's published trend and period only, a gauge in or next to the
+   county (named), nothing for inland counties, "a county figure is not your property's risk" beside it.
 4. Links: build ONE data story from data we hold ("counties paying furthest below FEMA's full-risk price").
    Done when it is live. Pitching it to local news needs the owner (outreach is outbound).
 5. Pace: 20 a day now (owner). After 4 weeks of step-1 data: 25 if most pages are indexed; drop to 10 if not; stop if
