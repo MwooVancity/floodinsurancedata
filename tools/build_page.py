@@ -476,7 +476,10 @@ def card_averages():
         + "; other sites count other policies, years or averages.",
         "<table><thead><tr><th>Measure</th><th>Amount</th><th>What it counts</th></tr></thead><tbody>"
         + "".join(f"<tr><td>{a_}</td><td>{b_}</td><td>{c_}</td></tr>" for a_, b_, c_ in _avrows) + "</tbody></table>"
-        f"<p class='note'>All from the NFIP policies in force on {POL_ASOF}.{how('averages')}</p>",
+        + (f"<p class='note'><b>Condo owners:</b> condo-unit policies are {tp('condo_unit_pct', 'extras.policies.condo_unit_pct', pct)} of NFIP policy units here "
+           f"and whole condo buildings {tp('condo_building_pct', 'extras.policies.condo_building_pct', pct)}. The single-family figures above leave both out; "
+           "only the every-policy-type average includes them.</p>" if (_xpp.get("condo_unit_pct") or 0) + (_xpp.get("condo_building_pct") or 0) >= 1 else "")
+        + f"<p class='note'>All from the NFIP policies in force on {POL_ASOF}.{how('averages')}</p>",
         src(["cost_p50", "prem_median", "frp_median", "cost_year"] + (["cost_new"] if _new_ok else []) + (["cost_mean", "cost_all_mean"] if _av.get("sf_cost_mean") else []), POL_ASOF, RETR), id="prices")
     return averages_card
 
@@ -685,7 +688,12 @@ _same = [p for p in _others if _state and p.get("state") == _state]
 # guarantee >=3 links: same-state first; if fewer than 3, fill with the nearest-by-size other counties
 # (places.json is sorted by units desc). Never leave a page with 0 lateral links.
 _fill = [p for p in _others if p not in _same]
-siblings = _same[:6] if len(_same) >= 3 else (_same + _fill)[:5]
+# PLAN 5b: bordering published counties first (Census county adjacency, either state), then the state's biggest
+try: _adj = set(json.load(open(os.path.join(os.path.dirname(HERE), "data", "us", "county_adjacency.json"))).get(agg.get("geoid") or "", []))
+except Exception: _adj = set()
+_nbr = [p for p in _others if p.get("geoid") in _adj]
+_near = _nbr + [p for p in _same if p not in _nbr]
+siblings = _near[:6] if len(_near) >= 3 else (_near + [p for p in _fill if p not in _near])[:5]
 try: _built_states = {s["abbr"] for s in json.load(open(os.path.join(os.path.dirname(HERE), "data", "states", "built.json")))}
 except Exception: _built_states = set()
 _state_link = (f'<a href="../{state_slug(_state)}/">{html.escape(STATE_NAMES[_state])} overview</a> · '
@@ -770,7 +778,7 @@ if IS_STATE:
     sib_html = ("<nav class='sib'><b>Neighboring states:</b> " + " · ".join(f'<a href="../{state_slug(a)}/">{html.escape(n)}</a>' for a, n in _nb)
                 + ' · <a href="../../">all states</a></nav>')
 elif siblings:
-    _lbl = f"Other {html.escape(_state)} counties" if len(_same) >= 3 else "Compare other counties"
+    _lbl = "Bordering counties" if all(p in _nbr for p in siblings) else "Bordering and other counties" if _nbr else f"Other {html.escape(_state)} counties" if len(_same) >= 3 else "Compare other counties"
     sib_html = (f"<nav class='sib'>{_state_link}<b>{_lbl}:</b> " +
                 " · ".join(f'<a href="../{p["slug"]}/">{html.escape(p["short"])}</a>' for p in siblings) +
                 ' · <a href="../../">all places</a></nav>')
@@ -844,13 +852,21 @@ jsonld = json.dumps([
         {"@type": "ListItem", "position": 2, "name": CS, "item": CANON}]},
 ])
 # quote-compare widget (client-side; a position in the distribution, never a quote)
+# plan item 1: compare the quote with the reader's own zone too (cost_by_zone medians; no estimate, no new figure on the page)
+_zsel = ("<select id='qzs' aria-label='Your flood zone' style='font-size:16px;padding:8px;border:1px solid var(--line);border-radius:8px;margin-left:6px'>"
+         "<option value=''>My flood zone (optional)</option>"
+         + "".join(f"<option value='{html.escape(z)}'>Zone {html.escape(z)}</option>" for z in (P.get("cost_by_zone") or {}))
+         + "</select>") if len(P.get("cost_by_zone") or {}) > 1 else ""
 quote_widget = f"""<section class="card" id="compare"><h2>Is my quote or renewal normal here?</h2>
 <p class="stand">Type your yearly cost (premium plus fees) to see where it sits among existing single-family policies here.</p>
 <input id="q" type="number" inputmode="numeric" placeholder="e.g. {int(round(P['p50'], -1))}" aria-label="Your annual premium in dollars"
  style="font-size:18px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:160px">
+{_zsel}
 <p id="qout" class="note" style="margin-top:10px">Enter an amount above.</p>
+<p id="qz" class="note"></p>
 <script>
 var P={{p25:{P['p25']},p50:{P['p50']},p75:{P['p75']},p90:{P['p90']}}};
+var Z={json.dumps({z: [d['median'], d['n']] for z, d in (P.get('cost_by_zone') or {}).items()})};
 var R={json.dumps(f" Renewing? Policies whose term began in {_ly} typically pay {money(_cby1[_ly]['median'])}." if _ly and len(_cby1) > 1 else "")};
 var el=document.getElementById('q'),out=document.getElementById('qout');
 el.addEventListener('input',function(){{
@@ -864,7 +880,12 @@ el.addEventListener('input',function(){{
   else if(v< P.p90) msg='in the top quarter, more than about 75% of existing policies here';
   else msg='higher than about 90% of existing policies here';
   out.textContent='$'+v.toLocaleString()+' is '+msg+' (half pay $'+P.p25.toLocaleString()+' to $'+P.p75.toLocaleString()+', typical $'+P.p50.toLocaleString()+').'+R;
+  zq();
 }});
+function zq(){{var s=document.getElementById('qzs'),o=document.getElementById('qz'),v=parseFloat(el.value);
+  if(!s||!s.value||!(v>0)){{o.textContent='';return;}}var d=Z[s.value],p=Math.round(100*(v-d[0])/d[0]);
+  o.textContent='In Zone '+s.value+' here the typical cost is $'+d[0].toLocaleString()+' ('+d[1].toLocaleString()+' priced policies); $'+v.toLocaleString()+' is '+(p==0?'right at it':Math.abs(p)+'% '+(p>0?'above':'below')+' it')+'.';}}
+if(document.getElementById('qzs'))document.getElementById('qzs').addEventListener('change',zq);
 </script></section>"""
 
 # ---- OG social/citation card (PIL): branded 1200x630 PNG so shares + AI cards aren't blank ----
@@ -901,7 +922,7 @@ def card_required():
       f"<p class='note'>{m('sfha_share', str(P['sfha_share_units']) + '%')} of {CS}'s NFIP policy units are in high-risk zones (not {tp('sfha_share', 'policies.sfha_share_units', pct)} of all buildings, and not an answer about your own home).</p>"
       f"{_zone_body()}<p class='note'>Insured units by the zone each policy is rated in.{how('zones')}</p>"
       + (f"<p class='note'><b>Not in the NFIP ({m('crs_count', str(len(crs_out)), q='not_nfip')} communities here)"
-         + ("" if IS_STATE else ": " + "; ".join(sorted((_cname(c) for c in crs_out), key=lambda h: html.unescape(re.sub("<[^>]+>", "", h)).casefold())))
+         + (": " + "; ".join(sorted((_cname(c) for c in crs_out), key=lambda h: html.unescape(re.sub("<[^>]+>", "", h)).casefold())))
          + f".</b> {rule('nfip_not_sold')}</p>" if crs_out else ""),
       src(["units", "sfha_share"], POL_ASOF, RETR) + src_rules(["purchase_answer", "lender_any_zone", "private_accept"] + (["fl_citizens"] if agg.get("state") == "FL" else []) + (["nfip_not_sold"] if crs_out else [])), id="required")
 

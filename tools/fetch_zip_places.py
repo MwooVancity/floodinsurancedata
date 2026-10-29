@@ -11,6 +11,9 @@ best = {}
 for r in csv.DictReader(open(raw, encoding="utf-8-sig"), delimiter="|"):
     z, name, part = r["GEOID_ZCTA5_20"], r["NAMELSAD_PLACE_20"], int(r["AREALAND_PART"] or 0)
     if not z or not name: continue
+    # 2026-10-28 backlog: a place must cover at least a quarter of the ZIP's land, or the ZIP gets no name. 77386 is
+    # mostly unincorporated: Houston's 6% sliver made it "Houston" (USPS: Spring); Little River covers 32% of 29566.
+    if 4 * part < int(r["AREALAND_ZCTA5_20"] or 0): continue
     if part > best.get(z, ("", -1))[1]: best[z] = (name, part)
 # "Boca Raton city" -> "Boca Raton"; "Jupiter Farms CDP" -> "Jupiter Farms"
 strip = r"\s+(city|town|village|borough|CDP|municipality|city and borough|urban county|consolidated government.*|metro government.*|unified government.*|\(balance\))$"

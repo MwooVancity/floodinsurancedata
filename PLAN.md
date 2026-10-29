@@ -105,3 +105,12 @@ Ranking, beyond the page: data stories (rankings) for links; Search Console read
 - 2026-10-28 round 11: one flood-disaster rule for counts, aid and claim checks (1f638128).
 - 2026-10-28 stress test on 1,803 counties: repeated NRI sentence and FEMA sequence numbers fixed (d8e204f6).
 - 2026-10-28 published 10 more counties (514d1559).
+
+## Session 2026-10-28 (late): built in code, NOT yet built/gated/reviewed
+- Done in code: quote checker zone choice (item 1); condo line (item 4); non-NFIP names on state pages (item 5);
+  bordering-county sibling links from data/us/county_adjacency.json (5b); ZIP names need a place covering 25%+ of
+  the ZIP's land (77386 no longer "Houston").
+- Already on the page: elevated vs not elevated + Elevation Certificate (item 3).
+- Dropped on purpose: naming competitors' figures (item 2): not public data, changes without notice.
+- Left: run build_all + release.py gates once (fix anything they catch); light check of changed cards; ship;
+  cloud data job for the zone table; items 6-7; all-county scan; Search Console read (owner).

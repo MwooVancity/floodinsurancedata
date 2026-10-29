@@ -91,6 +91,8 @@ METRICS = {
     "frp_plus_fees": _m(POL, ["fullRiskPremium", "federalPolicyFee", "hfiaaSurcharge", "reserveFundAssessment"], "usd_cost_with_fees"),
     "cost_all_median": _m(POL, ["policyCost", "occupancyType"], "usd_cost_with_fees"),
     "cost_all_mean": _m(POL, ["policyCost", "occupancyType"], "usd_cost_with_fees"),
+    "condo_unit_pct": _m(POL, ["policyCount", "condominiumCoverageTypeCode"], "pct", of="policy units"),   # plan item 4: unit-owner condo policies (code U)
+    "condo_building_pct": _m(POL, ["policyCount", "condominiumCoverageTypeCode"], "pct", of="policy units"),   # whole condo buildings (RCBAP, codes H/L)
     "prem_mean": _m(POL, ["totalInsurancePremiumOfThePolicy"], "usd_premium_only"),
     "inforce": _m(POL, ["policyEffectiveDate", "policyTerminationDate"], "count", counts="policy_record"),
     "inforce_change_pct": _m(POL, ["policyEffectiveDate", "policyTerminationDate"], "pct", of="in-force policy records, 2022 to 2026"),
