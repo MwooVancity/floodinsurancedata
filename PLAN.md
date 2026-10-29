@@ -32,12 +32,13 @@ louisiana "Submitted and indexed". Top queries: Arkansas, Florida (position 19.5
    rules_registry, numbers tagged, no verdict words, below the quote checker, readable without JavaScript.
    - Deadline planner (flood date in): proof of loss +60 days; FEMA aid window from the DECLARATION date (source first);
      guards: future/empty date, local-date parsing, past 60 days, private policies set their own deadlines.
+   - (Ponytail 10-29: first try a "compare with" link that opens two county pages; build a tool only if that falls short.)
    - Compare two places: published places only, same level, base labelled, "too few", one lazy JSON (size cap),
      stacked on a phone, numbers only, no "safer/cheaper".
    - Decode my policy page: FEMA field names; clean $ and commas; flag monthly-for-yearly and out-of-range;
      premium vs premium-only median, deductible vs mix, coverage vs $250,000, zone in plain words; FEMA's own
      pay-less text only. Photo reading later, in-browser only, reader confirms each value.
-   - Renewal-jump check (last; drop if its review finds it misleading): premium only, reasons listed before any
+   - Renewal-jump check: DROPPED by the ponytail ladder (the cap rule is already on the page; risky). Was: premium only, reasons listed before any
      comparison (coverage change, lost discount, non-primary 25%, new map, lapse), never "illegal".
 4. Links: build ONE data story from data we hold ("counties paying furthest below FEMA's full-risk price").
    Done when it is live. Pitching it to local news needs the owner (outreach is outbound).

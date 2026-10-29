@@ -63,6 +63,12 @@ Before editing, write each item's likely failure and its pre-check. Then:
 - A template change no reader can see (markup, scripts): `hater.py carry <round> <last passed release> <samples>`
   keeps the PASS only if every sample's visible text is identical; any difference needs a light review.
 
+## Ponytail ladder before building anything (HARD, owner 2026-10-29)
+Stop at the first rung that holds: does it need to exist (does a sentence already on the page answer it?) ->
+already in this codebase -> Python stdlib -> what the browser already does (input type=date, two tabs, find-in-page)
+-> one line -> only then the minimum code. Tests scale with harm: logic that can hurt a reader gets one oracle
+check; nothing else gets a test suite. Reviews cost the tokens, code is cheap: never spend a review on a nice-to-have.
+
 ## Reader tools ship standard (HARD, owner 2026-10-29: "bugs or being wrong will destroy this site")
 A tool ships only when ALL hold: (1) a truth table written before code (inputs -> exact output, each tied to a
 rules_registry source; the finite set of output sentences reviewed once); (2) an independent Python oracle computes
