@@ -50,27 +50,28 @@ louisiana "Submitted and indexed". Top queries: Arkansas, Florida (position 19.5
 5. Pace: 20 a day now (owner). After 4 weeks of step-1 data: 25 if most pages are indexed; drop to 10 if not; stop if
    site-wide impressions fall. Done when the decision and its numbers are written here.
 
-## Deleted 2026-10-29 (Musk step 2)
-- Five dead tools with no callers: collect_county_small, collect_penetration, collect_stormevents, finish_states, gen_counties.
-- Full review rounds as the default: scripts first, then one light check per batch (CLAUDE.md budget).
-- The premium-rise calculator and the paid-referral idea (owner: too risky until a licensing check).
-- 140 lines of this plan (session logs and finished batches, now in docs/archive).
+## Every month, every year (edge cases first; the jobs run themselves, sessions check them)
+What can break, and the guard already in place (or OPEN):
+- FEMA API down, slow or renamed fields: pull_raw stops before agg_raw, so the site keeps last month's data and the
+  as-of date ages. OPEN: a month-over-month jump check (a median moving more than 25% holds that page for a look).
+- A state's count stops matching: that state's claims re-pull in full; still wrong = refresh stops, nothing half-written.
+- GitHub: the claims cache can be evicted (10 GB): the next run pulls in full (slow, not wrong). $12 compute: ~5 h/month used.
+- FEMA wording or rule pages change: recheck.py re-fetches every rule excerpt each release; a missing excerpt stops it.
+- A big storm: claims, events and disaster lists grow on their own; no code change. Check the events lead that week.
+- Congress lets the NFIP lapse (reauthorization deadlines, often Sep 30): OPEN, add a sourced "no new policies during a
+  lapse" rule the day it happens. January: year ranges, "since 1978" and decade labels roll over; check one page.
+Calendar:
+- Daily: 20 reviewed counties published (queue of 1,803 done about late January 2027); next session reports deploys.
+- Weekly: read Search Console (`tools/gsc_read.mjs`), write the numbers in the scoreboard.
+- Monthly, the 3rd: FEMA refresh; check time, size and 51 states done.
+- Quarterly: one light review of the template on the 3 samples; prune any line in this file that is done.
+- Yearly: domain renewal (owner); NRI and Community Status Book updates (refresh picks them up); NFIP lapse watch.
+Milestones: 2026-11-03 first refresh check -> 11-12 deadline planner to all pages -> 11-26 four weeks of Search Console
+data decide the pace -> late January 2027 queue done -> decide ZIP pages and AdSense from the numbers.
 
-## Helpfulness checklist A-N (every review judges every line; detail in docs/HATER-PROMPT.md)
-- A: screen 1 answers how much, am I required, how fast, does it pay out, is my quote normal. PASS (round 18).
-- B: every situation served (buyer, renewal, flooded, condo...). Renter, landlord, second home, business: OPEN.
-- C: truth (figures equal the source, bases named, no contradictions). PASS.
-- D: confusion traps (codes, bases, "too few"). PASS.
-- E: plain language. PASS.
-- F: action and contacts. Phone, claims, deadlines: PASS. State insurance department contacts: OPEN.
-- G: phone UI. Table search: OPEN (step 3). Everything else PASS.
-- H: accessibility. PASS (text check only; no screen-reader test run).
-- I: trust (anonymous by choice, sources, methodology). Error-report contact: OPEN, owner decision.
-- J: navigation (menu, breadcrumbs, bordering counties, 404). PASS.
-- K: speed. PASS. Print layout: OPEN.
-- L: Spanish. OPEN, large.
-- M: freshness. PASS.
-- N: consistency across pages. PASS.
+## Helpfulness checklist A-N (lines in docs/HATER-PROMPT.md; every review judges all 14)
+Round 18-21: A, C, D, E, H, J, M, N pass. OPEN: B renters/landlords/second homes/business lines; F state insurance
+department contacts; G table search; I error-report contact (owner); K print layout; L Spanish.
 
 ## Parked (not now, and why)
 - ZIP pages: only after counties index well (step 5).
