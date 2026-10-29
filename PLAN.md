@@ -5,11 +5,26 @@ The most helpful flood-insurance page for each US state and county, from public 
 
 ## Where we are (2026-10-28)
 - Built site: `dist/flood-insurance/` has 104 folders (51 states, 52 counties and parishes, index.html); `tools/counties.json` 52 counties; `state/county-queue.json` 1,803 counties queued. Last dist commit 514d1559 (publish: added 10).
-- Live: the round 9 release (home, 51 states, 52 counties) per the previous CLAUDE.md; rounds 10-12 fixes are committed, not live. Not read live this session: status unknown.
+- Live: rounds 10-12 fixes, shipped 2026-10-28 as a hotfix (commit 5a56b096): live gate 110 pages = build; horry-county-sc read live.
 - Data as-of: 2026-07-31 (`data/us/asof.json`).
 - Reviews (`state/reviews/*.json`): PASS home, orange-county-ca, atlantic-county-nj, broward-county-fl, palm-beach-county-fl; FAIL horry-county-sc, louisiana, montgomery-county-tx, nevada, oklahoma (round 12, wording MAJORs, fixed in code since). Round 13 not run.
 - Search Console: verified 2026-10-23, sitemap submitted (commit 289d7f3c). Traffic: not measured, status unknown.
-- Uncommitted local changes in `data/c/` and `dist/` (git status): status unknown, not part of any release.
+- The template has no current PASS, so the daily county job adds nothing until one light check passes (step 1).
+
+## Site structure (silo) — checked in the built HTML 2026-10-28
+- Tree: home `/` → hub `/flood-insurance/` → 51 state pages `/flood-insurance/<state>/` → county pages
+  `/flood-insurance/<county>-<st>/`. URLs are flat (state not in the path); the hierarchy lives in links and
+  BreadcrumbList schema (Home › State › County). Decision: keep flat URLs; moving them now costs redirects and gains nothing.
+- Down links: each state page's county table links every published county in that state (screen 1 jumps to it).
+- Up links: each county links its state in the breadcrumb and in the sibling bar.
+- Across: a state links its bordering states; a county links up to 6 published counties in the same state.
+- Weak spots as counties publish:
+  1. County siblings are the 6 BIGGEST in the state, so in Texas every page would link the same 6 and small
+     counties would get links only from the state table. Fix: neighbours first, from the Census county
+     adjacency file (public), then fill by size.
+  2. Under 3 published counties in a state, the bar fills with big out-of-state counties (Horry links Broward,
+     Harris, Miami-Dade). Fix with 1: no cross-state fill once neighbours exist.
+  3. One sitemap (110 URLs); an index is needed only past 50,000 URLs. `lastmod` must stay the real data date.
 
 ## What works
 - Builder rules make wrong text hard (`tp`, `m`, `claim`, `rule`); 9-question gate on built and live HTML; mutation suite of real shipped bugs.
@@ -22,11 +37,13 @@ The most helpful flood-insurance page for each US state and county, from public 
 - PIF workbook listed but pages are not checked against it.
 
 ## Next steps (in order)
-1. Hater round 13 on the round-12 FAIL pages (FIRST/light: changed cards only). Done when all 5 have PASS in `state/reviews/`.
-2. Ship rounds 10-13 via `python -I tools/release.py --ship`. Done when the live gate passes and a live page is read.
+1. Light check of the changed cards (median label, SRL label, unpaid lead, private-flood rule, county jump link, search message, home zone table) on 2-3 pages, cheap model, after the monthly data job lands. Done when the template has a PASS and the daily job publishes again.
+2. Add the data-triggered cases ("Other" is the top unpaid reason; single-family homes a small share of units) to the all-county stress scan. Done when the scan flags them.
 3. Read Search Console (impressions and queries per page). Done when numbers with a date are recorded here.
 4. Gap backlog top 3 (`state/reviews/backlog.md`): name non-NFIP communities on state pages; USPS-preferred ZIP town names; condo/RCBAP cost line. Done when each is a card or a printed gap and leaves the backlog.
 5. Official FEMA policy-count comparison (PIF workbook) on every page, or delete the "not yet compared" line. Done when the gate checks it.
+5b. Neighbour sibling links (Census county adjacency file) before counties publish in bulk. Done when a county's
+   bar lists its bordering published counties first and no page links out of state while neighbours exist.
 6. Keep the daily county job adding reviewed counties a few at a time. Done when published counties rise each day with PASS signatures.
 7. After four weeks of Search Console data: AdSense review. Done when the owner decides.
 
