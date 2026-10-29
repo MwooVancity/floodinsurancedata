@@ -3,8 +3,7 @@
 Static data site: for every US place, what NFIP flood-insurance policyholders actually pay, how far
 below FEMA's full-risk price, how often it floods, and how to pay less. Public federal data only.
 
-Read `CLAUDE.md` first (the whole spec). Owner decisions and status: `docs/OPEN-ITEMS.md`.
-Reader spec + verified dataset catalog: `docs/reader-spec.md`.
+Read `CLAUDE.md` (orders) and `PLAN.md` (strategy and status) first. Reviewer brief: `docs/HATER-PROMPT.md`.
 
 ## Build (one command)
 ```bash
