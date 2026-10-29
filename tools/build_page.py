@@ -410,7 +410,7 @@ def _tool_on(name):   # kill switch + staged launch: tools/tools_flags.json (CLA
 def _deadline_tool():
     # Deadline planner: only the proof-of-loss date is computed (flood date + 60 calendar days, local dates);
     # the aid window is a rule, never a computed date. Every output sentence is listed in tools/test_tools.py.
-    return (f"<div class='tool' id='deadline'><p class='note'><b>Flooded? Work out your claim deadline.</b> "
+    return (f"<div class='tool' id='deadline'><p class='note'><b>Flooded? Work out the proof-of-loss deadline for an NFIP (National Flood Insurance Program) policy.</b> "
             f"{rule('aid_register_60')} {rule('private_deadlines')}</p>"
             "<label class='note' for='dl'>Date the water came in:</label> "
             "<input id='dl' type='date' style='font-size:16px;padding:8px 10px;border:1px solid var(--line);border-radius:8px'>"
@@ -428,19 +428,24 @@ function run(){
   var n=new Date(),t=new Date(n.getFullYear(),n.getMonth(),n.getDate());
   if(d>t){o.textContent='That date is in the future. Enter the day the water came in.';return;}
   var due=new Date(y,mo,da+60),left=Math.round((due-t)/864e5);
-  if(left>0)o.textContent='Your NFIP proof of loss is due by '+fmt(due)+' ('+left+(left===1?' day':' days')+' from today). Report the loss to your insurer now if you have not.';
-  else if(left===0)o.textContent='Your NFIP proof of loss is due today, '+fmt(due)+'. Contact your insurer now.';
-  else o.textContent='The 60-day NFIP proof-of-loss date was '+fmt(due)+'. Contact your insurer now.';
+  if(left>0)o.textContent='An NFIP proof of loss is due by '+fmt(due)+' ('+left+(left===1?' day':' days')+' from today). Report the loss to your insurer now if you have not.';
+  else if(left===0)o.textContent='An NFIP proof of loss is due today, '+fmt(due)+'. Contact your insurer now.';
+  else o.textContent='The 60-day NFIP proof-of-loss date was '+fmt(due)+'. Contact your insurer now; it may have extended the date.';
 }
 i.addEventListener('input',run);i.addEventListener('change',run);})();</script>"""
 
 _MONTHS = dict(zip([f"{i:02d}" for i in range(1, 13)], "January February March April May June July August September October November December".split()))
+_WORDS = {2: "two", 3: "three", 4: "four", 5: "five", 6: "six"}
 def _recent_li():
-    recent_li = "".join(
-        # round 16: same-title disasters (Maine 2023 x3) told apart by month and declaration type
-        f"<li>{_MONTHS.get((d.get('declarationDate') or '')[5:7], '')} {html.escape(cal_year(d))} — {html.escape(_dtitle(d))}"
-        f"{' (emergency declaration)' if d.get('declarationType') == 'EM' else ''}</li>" for d in recent)
-    return recent_li
+    # round 16: same-title disasters told apart by month and declaration type; ones that still read the same (two
+    # declarations, same month and title: Maine Sep 2023) are one line saying how many (gate H15 bans repeated lines)
+    lines = [f"{_MONTHS.get((d.get('declarationDate') or '')[5:7], '')} {html.escape(cal_year(d))} — {html.escape(_dtitle(d))}"
+             f"{' (emergency declaration)' if d.get('declarationType') == 'EM' else ''}" for d in recent]
+    out = []
+    for ln in lines:
+        if out and out[-1][0] == ln: out[-1][1] += 1
+        else: out.append([ln, 1])
+    return "".join(f"<li>{ln}{f' ({_WORDS.get(n, str(n))} separate declarations)' if n > 1 else ''}</li>" for ln, n in out)
 
 GEOID_SELF = os.environ.get("FF_GEOID", "12071")   # this page's own county (state pages: any county in the state)
 # ---- ZIP lookup inside the county (your-place flow): every ZIP, with the town the reader knows it by ----
@@ -1005,7 +1010,7 @@ def card_disasters():
     return card(f"How often is {CS} a flood disaster?" if IS_STATE else f"How often is this {UNIT} a flood disaster?",
       f"{m('declarations', str(len(fh_events)))} federal disasters for floods or storms here"
       + (f"; the latest was {html.escape(_dtitle(recent[0]))} ({html.escape(cal_year(recent[0]))})." if recent else "."),
-      f"<ul>{_recent_li()}</ul><p class='note'>Only the latest are listed, newest first, one line per disaster; the count covers every flood, hurricane, tropical-storm and coastal-storm declaration FEMA lists here, plus severe-storm declarations whose title names flooding, including emergency declarations.{how('declarations')}</p>",
+      f"<ul>{_recent_li()}</ul><p class='note'>Only the latest are listed, newest first; disasters with the same month and title share one line, which says how many; the count covers every flood, hurricane, tropical-storm and coastal-storm declaration FEMA lists here, plus severe-storm declarations whose title names flooding, including emergency declarations.{how('declarations')}</p>",
       src(["declarations"], "declarations through " + max((cal_year(d) for d in fh), default="the latest on file"), RETR))
 
 def card_aid():

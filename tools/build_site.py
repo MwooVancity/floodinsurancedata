@@ -63,7 +63,10 @@ FOOT = ('<footer class="mut" style="margin:28px 0;border-top:1px solid var(--lin
 # ---- home: the reader's first questions answered, then find your state or county ----
 import sys as _sys, datetime as _dtm
 _sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from rules_registry import rule
+from rules_registry import rule, RULES
+def _rule_hosts(keys):   # the official sites behind these rules, from rules_registry sources
+    from urllib.parse import urlparse
+    return ", ".join(sorted({urlparse(u).netloc.replace('www.', '') for k in keys for u, *_ in RULES[k]['sources']}))
 from agg_raw import asof as _asof   # the data's as-of date, set by the pull (one place)
 _ASOF_TXT = _dtm.date.fromisoformat(_asof()).strftime("%B %d, %Y").replace(" 0", " ")
 _bp = os.path.join(DATADIR, "states", "built.json")

@@ -3,7 +3,7 @@
   python -I tools/hater.py record <round>                     read the review, write state/reviews/<slug>.json
 A slug is "home", a state slug or a county slug. record writes PASS only for a section ending "Verdict: PASS" with
 no BLOCKER or MAJOR in it; google_gate.py S12 refuses any indexable page without a current PASS (tools/review.py)."""
-import json, os, re, sys
+import json, os, re, shutil, sys
 T = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(T)
 sys.path.insert(0, T); import review as RV
 BASE = "https://floodinsurancedata.com"
@@ -24,9 +24,17 @@ def query(slug):   # the query a real reader types for this page
     return f"flood insurance cost {a.get('name') or slug.replace('-', ' ')}" if a.get("level") == "state" else \
            f"flood insurance cost {slug.rsplit('-', 1)[0].replace('-', ' ')} {a.get('state', '')}"
 
+SNAP = os.path.join(DIR, "snap")   # visible text the reviewer saw (prep) and the last text that PASSed (record)
+def vis_text(h):
+    h = re.sub(r"<script.*?</script>", "", h, flags=re.S)
+    return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", h)).strip()
+def snap(rnd, slugs):
+    d = os.path.join(SNAP, f"round{rnd}"); os.makedirs(d, exist_ok=True)
+    for s in slugs: open(os.path.join(d, s + ".txt"), "w", encoding="utf-8").write(vis_text(open(html_path(s), encoding="utf-8").read()))
+
 def prep(rnd, slugs):
     if "--light" in sys.argv:   # CLAUDE.md budget: changed cards only, page text, no screenshots, no random pages
-        open(os.path.join(DIR, f"round{rnd}-template.txt"), "w").write(RV.template_hash())
+        open(os.path.join(DIR, f"round{rnd}-template.txt"), "w").write(RV.template_hash()); snap(rnd, slugs)
         return print("light round: template", RV.template_hash(), "pages:", " ".join(html_path(s) for s in slugs))
     # 2 random pages each round beside the samples: findings came only from the same 3-4 pages (2026-10-28)
     import random
@@ -79,6 +87,9 @@ def record(rnd):
         if gaps:
             with open(os.path.join(DIR, "backlog.md"), "a", encoding="utf-8") as f:
                 f.write(f"\n## {slug} (round {rnd})\n" + "".join(f"- {re.sub(r'^[*]{2}GAP[^*]*[*]{2}', '', g).strip()}\n" for g in gaps))
+        sp = os.path.join(SNAP, f"round{rnd}", slug + ".txt")
+        if verdict == "PASS" and os.path.exists(sp):
+            os.makedirs(os.path.join(SNAP, "passed"), exist_ok=True); shutil.copy(sp, os.path.join(SNAP, "passed", slug + ".txt"))
         print(f"{slug}: {verdict} ({len(bad)} blocker/major, {len(gaps)} gaps to backlog.md)")
 
 def carry(rnd, prev, slugs):
@@ -91,8 +102,13 @@ def carry(rnd, prev, slugs):
     lines = []
     for s in slugs:
         rel = os.path.relpath(html_path(s), ROOT).replace("\\", "/")
-        old = subprocess.run(["git", "show", f"{prev}:{rel}"], capture_output=True, text=True, encoding="utf-8").stdout
-        if not old or vis(old) != vis(open(html_path(s), encoding="utf-8").read()):
+        if prev == "passed":
+            sp = os.path.join(SNAP, "passed", s + ".txt")
+            same = os.path.exists(sp) and open(sp, encoding="utf-8").read() == vis_text(open(html_path(s), encoding="utf-8").read())
+        else:
+            old = subprocess.run(["git", "show", f"{prev}:{rel}"], capture_output=True, text=True, encoding="utf-8").stdout
+            same = bool(old) and vis(old) == vis(open(html_path(s), encoding="utf-8").read())
+        if not same:
             sys.exit(f"carry refused: {s} visible text differs from {prev} (or no copy there); run a light review")
         lines.append(f"## {s}\nVisible text identical to release {prev} (scripts and tags stripped); no reader-visible change.\nVerdict: PASS\n")
     open(os.path.join(DIR, f"hater-round{rnd}.md"), "w", encoding="utf-8").write(f"# Round {rnd}: carried PASS (machine check)\n\n" + "\n".join(lines))

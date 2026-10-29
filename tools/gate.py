@@ -290,6 +290,18 @@ for _c in _CS:
     except Exception as _e: fail("H13", f"card '{_c['title']}' spec cannot read this page's data: {_e!r}"); continue
     if _want and not _hit: fail("H13", f"card '{_c['title']}' has data here but is not on the page")
 
+# rounds 16-19 defect classes made checks (CLAUDE.md: every defect class becomes a check with a mutation)
+if re.search(r"<td>Zone (B|C|X|D|A99|AH|AO|AR)\b", page) and 'data-rule="zone_codes"' not in page:
+    fail("H14", "zone codes shown without the plain-words rule (round 16: B, C, A99, AH unexplained)")
+for _ul in re.findall(r"<ul>(.*?)</ul>", page, re.S):
+    _li = [norm(re.sub(r"<[^>]+>", " ", x)) for x in re.findall(r"<li>(.*?)</li>", _ul, re.S)]
+    _dup = next((a for a, b in zip(_li, _li[1:]) if a and a == b), None)
+    if _dup: fail("H15", f"the same list line twice in a row: '{_dup[:60]}' (round 16: identical disaster lines)")
+_nn = re.search(r"Not in the NFIP \(.*?</b>", page, re.S)
+if _nn:
+    for _nm in re.findall(r"<span data-name>([^<]*(?:County|Parish|Borough))</span>(?! \(unincorporated area only\))", _nn.group(0)):
+        fail("H16", f"'{_nm}' in the not-in-NFIP list without 'unincorporated area only' (round 16: Box Butte)")
+
 # ---------------- 7 ANSWER first ----------------
 for stand in re.findall(r'<p class="stand">(.*?)</p>', page, re.S):
     words = norm(re.sub(r"<[^>]+>", " ", stand)).split()

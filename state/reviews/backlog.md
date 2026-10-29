@@ -231,3 +231,8 @@ Ranked by reader value. hater.py record appends each round's **GAP** lines below
 - "Your NFIP proof of loss" also reads to uninsured or private-policy readers; say "An NFIP proof of loss".
 - Past-date sentence: add that the insurer may have extended the date.
 - Spell out "NFIP" once inside the tool.
+
+## site-wide decisions (2026-10-29, after 3 light rounds on the home source line)
+- How the home "Three things to know first" card cites its rules: decide ONE format for the whole site (today county
+  pages name the official hosts; home names none). A per-claim link vs a host list; then apply everywhere at once.
+- Define "Citizens" (Florida's state-backed insurer) where the Florida rule appears; split its three dates.

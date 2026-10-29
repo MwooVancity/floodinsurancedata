@@ -15,10 +15,10 @@ def oracle(value, today):   # the full list of sentences the deadline planner ma
     except ValueError: return "That is not a date. Enter the day the water came in."
     if d > today: return "That date is in the future. Enter the day the water came in."
     due = d + datetime.timedelta(days=60); left = (due - today).days
-    if left > 0: return (f"Your NFIP proof of loss is due by {fmt(due)} ({left} {'day' if left == 1 else 'days'} from today). "
+    if left > 0: return (f"An NFIP proof of loss is due by {fmt(due)} ({left} {'day' if left == 1 else 'days'} from today). "
                          "Report the loss to your insurer now if you have not.")
-    if left == 0: return f"Your NFIP proof of loss is due today, {fmt(due)}. Contact your insurer now."
-    return f"The 60-day NFIP proof-of-loss date was {fmt(due)}. Contact your insurer now."
+    if left == 0: return f"An NFIP proof of loss is due today, {fmt(due)}. Contact your insurer now."
+    return f"The 60-day NFIP proof-of-loss date was {fmt(due)}. Contact your insurer now; it may have extended the date."
 
 flags = json.load(open(os.path.join(ROOT, "tools", "tools_flags.json"), encoding="utf-8"))
 on = flags.get("deadline") or []
