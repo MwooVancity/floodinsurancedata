@@ -47,6 +47,19 @@ helpfulness checklist is in PLAN.md; every review brief must judge every item on
 4. Beat #1: WebSearch the real query; show what the top 3 give from our data or print a gap line.
 5. Gates once. 6. Review only when the fixlog is complete. 7. Ship only on PASS.
 
+## One-shot a batch: failures first (HARD, owner 2026-10-29; each pre-check is a failure that happened)
+Before editing, write each item's likely failure and its pre-check. Then:
+- Edit through a script file or Edit, never a heredoc with quotes; `ast.parse` every edited file at once (an
+  apostrophe broke the build 3 times).
+- Screen 1 holds only the answers and their links; any new line goes below the quick answers (P3/P4 failed 4 times).
+- Words: read gate.py's word rules first (A6 new-policy words, B2 unchecked size words, E2 repeats, V1 untagged
+  numbers); every number through `tp`/`m`; a new metric field needs `metrics.py --refresh`.
+- A new figure: state its base and how blanks are handled, recompute it from raw before wording it (round 19:
+  blank zones were counted as "outside").
+- Fast loop on home, louisiana and palm-beach-county-fl (build, gate, phone check) until clean; then ONE full build
+  and ONE release.py run; then one light check; then ship and read one live page.
+- Never record a review for a template that changed after it; one writer per project; pull before work.
+
 ## Whole project: Musk's five steps toward #1 (HARD, owner 2026-10-28; strategy and scoreboard in PLAN.md)
 Before any task, name which scoreboard number it moves: pages indexed, impressions, clicks, page-1 queries,
 AI-answer citations. None = question it, then delete it. Order: question, delete, simplify, accelerate, automate last.
