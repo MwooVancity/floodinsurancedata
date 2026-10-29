@@ -1,11 +1,8 @@
 {
  "slug": "orange-county-ca",
- "verdict": "FAIL",
- "template": "69a297bf12a2b59a",
- "defects": [
-  "**MAJOR** (events table hides recent, larger floods; orange-county-ca-08).",
-  "**MAJOR** (NOAA card, same class as Palm Beach; orange-county-ca-16)."
- ],
- "reviewer": "hater round 10 (fresh agent, docs/HATER-PROMPT.md)",
+ "verdict": "PASS",
+ "template": "d8a0377441759423",
+ "defects": [],
+ "reviewer": "hater round 12 (fresh agent, docs/HATER-PROMPT.md)",
  "notes": ""
 }

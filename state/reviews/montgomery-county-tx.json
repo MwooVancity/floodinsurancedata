@@ -1,0 +1,10 @@
+{
+ "slug": "montgomery-county-tx",
+ "verdict": "FAIL",
+ "template": "d8a0377441759423",
+ "defects": [
+  "**MAJOR** (montgomery-county-tx-16/17). \"1,132 records are from homes on FEMA's severe repetitive loss list\". This is the same IA-flag vs NFIP-list mislabel as "
+ ],
+ "reviewer": "hater round 12 (fresh agent, docs/HATER-PROMPT.md)",
+ "notes": ""
+}

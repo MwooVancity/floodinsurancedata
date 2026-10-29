@@ -1,14 +1,20 @@
 # Gap backlog (owner 2026-10-28: a gap does not block a ship until it is 3 review rounds old; google_gate S14)
 Ranked by reader value. hater.py record appends each round's **GAP** lines below.
 
-1. Cost by flood zone on home (high-risk A/V vs X); every top result has it. (since round 9)
-2. Private flood: lenders must accept it (42 U.S.C. 4012a(b)); Florida readers shop it; no 30-day wait at some carriers. (since round 9)
-3. "Find your parish/county" link on screen 1 of state pages (the table sits about 11 phone screens down). (since round 9)
-4. Pages are 24-26 phone screens long; cut or reorder so the answers sit higher. (since round 9)
-5. County-level full-risk and mean figures, to reconcile competitor county numbers (Insurify Plaquemines $4,752). (since round 9)
-6. Same paragraphs word for word on every page (Already flooded, Yearly cap, waiting exceptions, claim-closure explainer). (since round 9)
-7. Per-parish take-up and multiple-loss counts on state pages; NOAA panel on state pages. (since round 9)
-8. What the search box does for the ~3,050 counties without a page. (since round 9)
+1. Years to full-risk price at the yearly cap (18% for a primary home): a "how much will my bill rise" calculator. Verify the cap against the statute first. (since round 12)
+2. Non-NFIP communities named on state pages (Louisiana 34, Oklahoma 122), not only counted. (since round 12)
+3. ZIP town labels from a USPS-preferred city name (77386 shows "Houston", USPS: Spring). (since round 12)
+4. Condo / RCBAP cost line (Horry: Little River condo owners see $2,000-$6,000 quotes). (since round 12)
+
+## Closed round-9 items (2026-10-28, round 12)
+- Cost by flood zone on home: DONE in code. extras_raw.py writes data/us/cost_hist_zone.json in the monthly cloud refresh; home shows the V / A / B-C-X table once all 51 states have it.
+- Private flood: DONE. Rule private_accept (12 CFR 339.3(c), eCFR excerpt) on every "Am I required" card.
+- "Find your county" link on screen 1 of state pages: DONE (_jump in build_page.py).
+- Page length: CLOSED. The owner rule is no caps on blocks; the answers (cost, required, quote check) are on screens 1-2, and state pages now jump to the county table.
+- County full-risk and mean figures: DONE earlier. Every county page carries the averages card (median, mean, premium-only, all-policy mean) and the full-risk gap.
+- Same paragraphs on every page: CLOSED. They are registry rule texts with their sources, by design; S13 fails a county page whose prose is mostly shared.
+- Per-parish take-up and the NOAA panel on state pages: CLOSED. Both card types were cut in the card review (tools/card_spec.py).
+- Search box with no match: DONE. The home and hub pages say no page matches and point to the state's county table.
 
 ## home (round 8)
 - No cost by flood zone on home, although every top result answers it second.
@@ -93,3 +99,96 @@ Ranked by reader value. hater.py record appends each round's **GAP** lines below
 - No cost by municipality. The CRS table lists the towns, and Brigantine, Margate, Ventnor and Longport are what searchers type.
 - Private flood.
 - No elevation-certificate or "elevated vs not" next step tied to the 2,478 elevated policies (median premium $894 against $1,051).
+
+## site review (2026-10-28, browser test)
+- ZIP town labels come from GeoNames and can name the metro, not the postal town: 77386 shows "Houston" (USPS: Spring). Source a USPS-preferred city name.
+- Home search with no match showed an empty table; patch ready (no-match message pointing to the state page), ships after round 11.
+
+## home (round 11)
+- NerdWallet, Policygenius and Insurify headline figures are not named in "Why do sites quote different prices?" (round-10 SERP).
+- No cost by flood zone nationally.
+- No private-flood acceptance rule.
+- No territories (PR, USVI).
+- No JSON-LD.
+
+## louisiana (round 11)
+- The "Not in the NFIP (34 communities here)" line does not name them (Vienna, Creola, Shongaloo, Atlanta and the rest), so a reader in one of those villages cannot tell that it applies to them. The brief says the line names them; it does not.
+- No "years to reach full risk at 18% a year".
+- No parish jump link on screen 1.
+- Insurify's Plaquemines figure is not reconciled with ours.
+- Private flood.
+
+## palm-beach-county-fl (round 11)
+- NerdWallet, MoneyGeek and Insurify county figures are not reconciled with ours.
+- No ZIP-level full-risk gap.
+- Private flood and Citizens' acceptance of it.
+- No cost by municipality.
+- The community names in the "Not in NFIP" line do not apply here (all 40 participate); nothing is missing.
+
+## orange-county-ca (round 11)
+- Insurify's $795 / $892 are not reconciled with ours.
+- Post-wildfire waiting-period exception and debris-flow risk.
+- No line on why cities without CRS get no discount.
+- Private flood.
+- No cost by city.
+
+## atlantic-county-nj (round 11)
+- Insurify $1,022 and Clovered $1,899 are not reconciled with ours.
+- No Risk Rating 2.0 transition pace.
+- No cost by municipality.
+- Private flood.
+- No Elevation Certificate next step tied to the elevated/not-elevated rows.
+
+## montgomery-county-tx (round 11)
+- MoneyGeek "$568 average" and Insurify "$1,040" (search results today) are not reconciled with our $1,001.
+- No 2018 Montgomery County map-change note (Community Impact covers the map dates).
+- No cost by city or The Woodlands.
+- Private flood.
+- No Spring/Lake Conroe dam-release context for 2017 (Harvey) claims.
+
+## oklahoma (round 11)
+- "Not in the NFIP (122 communities here)" names none (Greenfield, Osage, Springer, unincorporated McCurtain County and others). A reader in one cannot tell.
+- Kin's "NFIP median $793" and MoneyGeek's "$995 average" are not reconciled with our $1,047.
+- No Tulsa city figure. Tulsa, CRS class 1 with a 45% discount, is the state's best-known flood story, and searchers see "$892 in Tulsa".
+- Private flood.
+- No Oklahoma Insurance Department "Get Ready" next step.
+
+## home (round 12)
+- (SEO, "flood insurance cost").
+- #1-#3 give cost by flood zone nationally ("$560 in B/C/X, $2,795 in D"-style tables). The home page has no national zone table; it exists only on state pages.
+- No national private-flood figure. The page says so ("Private flood insurance is not in this data"), so this is allowed and is not a defect.
+
+## louisiana (round 12)
+- (SEO "flood insurance cost Louisiana": MoneyGeek $750, Insurify $1,470 "NFIP median, single-family" with a U.S. median of $1,290, Policygenius $752). Insurify's $1,470 vs our $1,086, both called NFIP medians, is not reconciled; a searcher will see both.
+- Insurify's Plaquemines $4,752 against our $1,231 (carried).
+- The NFIP-not-sold line counts 34 communities but does not name them (carried).
+- No parish jump on screen 1 (carried).
+- No years-to-full-risk at 18% a year (carried).
+- No NRI flood-risk card on the state page; county pages have one.
+
+## orange-county-ca (round 12)
+- (SEO "flood insurance cost orange county CA": Insurify CA guide with an OC row $795 / older $892; LendingTree CA; MoneyGeek CA $909).
+- County Public Works says unincorporated homeowners get 25% CRS. We show that (Orange County 25%, class 5), but not which cities' residents are "unincorporated".
+- No cost by city; the ZIP table covers it partly.
+
+## montgomery-county-tx (round 12)
+- (SEO "flood insurance cost montgomery county TX": MoneyGeek TX with a Montgomery row of $568, Insurify Houston guide $1,040, Community Impact).
+- No The Woodlands figure (three Woodlands ZIPs exist in the table, but no combined line).
+- No 2018/2014 map-change note.
+
+## oklahoma (round 12)
+- (SEO "flood insurance cost Oklahoma": OKCFox/QuoteWizard "ranks 23rd", MoneyGeek about $995, Jerry $937, Kin "$793 NFIP median").
+- The 122 non-NFIP communities are counted, not named (carried).
+- No Tulsa city figure (carried).
+- No OID "Get Ready" / FloodSmart OneStep next step.
+
+## nevada (round 12)
+- (SEO "flood insurance cost Nevada": MoneyGeek $799 with county rows, Nye $468 and Lander $1,421; 1-800 Insurance $1,038; StateCalc $696 "median of recent NFIP policies").
+- No Las Vegas / Clark County Regional Flood Control District context; the AO zone is 48% of units and is not explained.
+- The state's division-of-insurance note ("available in every county except Esmeralda") is not used. Our page says one community is non-NFIP but not which.
+
+## horry-county-sc (round 12)
+- (SEO "flood insurance cost horry county SC": WBTW, WMBF, MoneyGeek SC with a Horry row of $493, Policygenius SC $747 with "risk-based $929").
+- 1-800 Insurance's "$2,000–$6,000 for most Little River properties" (likely condo/VE) has no answer; our 29566 Little River median is $493 single-family. That is the same base problem as the MAJOR above.
+- No new-map (2003 FIRM, pending update) note; WBTW and WMBF both lead on it.
+- No condo/RCBAP cost line at all.

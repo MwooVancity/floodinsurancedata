@@ -1,0 +1,10 @@
+{
+ "slug": "oklahoma",
+ "verdict": "FAIL",
+ "template": "d8a0377441759423",
+ "defects": [
+  "**MAJOR** (oklahoma-20). \"23 records are from homes on FEMA's severe repetitive loss list\". The same IA-flag mislabel (class)."
+ ],
+ "reviewer": "hater round 12 (fresh agent, docs/HATER-PROMPT.md)",
+ "notes": ""
+}

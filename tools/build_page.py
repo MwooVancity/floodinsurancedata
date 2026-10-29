@@ -561,7 +561,7 @@ def card_unpaid():
     unpaid_card = ""
     if _why and (_xc.get("unpaid_n") or 0) >= 10:
         unpaid_card = card("Why do flood claims here go unpaid?",
-            f"Of the {tp('unpaid_n', 'extras.claims.unpaid_n')} claims here closed without payment, the top reason FEMA recorded was "
+            f"Of the {tp('unpaid_n', 'extras.claims.unpaid_n')} claims here closed without payment, the top specific reason FEMA recorded was "
             f"“{html.escape(_why[0]['label']).lower()}” ({tp('unpaid_reason_n', f'extras.claims.unpaid_reasons.{_why[0][chr(105)]}.n', q=_why[0]['code'])} claims).",
             "<table><thead><tr><th>Reason recorded</th><th>Claims</th></tr></thead><tbody>"
             + "".join(f"<tr><td>{html.escape(r['label'])}</td><td>{tp('unpaid_reason_n', f'extras.claims.unpaid_reasons.{r[chr(105)]}.n', q=r['code'])}</td></tr>" for r in _whyall)
@@ -617,12 +617,12 @@ def card_multiloss():
         # FEMA: one row per property PER declared disaster, and "there is not a way to aggregate by property" —
         # so the count is damage records on repeat-flooded homes, never a count of distinct homes.
         _ml_lead = (claim("Yes", "yes", ("ml_total", ">", 0)) + f": FEMA's disaster-aid records hold {m('ml_total', num(ml['total']))} damage records from homes here that flooded more than once"
-                    + (f"; {m('ml_srl', num(_srl))} records are from homes on FEMA's severe repetitive loss list" if _srl else "") + "."
+                    + (f"; {m('ml_srl', num(_srl))} records are from homes FEMA's disaster-aid data flags as severe repeat-loss (SRL)" if _srl else "") + "."
                     if ml["total"] else
                     f"Not in FEMA's disaster-aid records since 2002: no aid applications here came from homes that flooded more than once. NFIP insurance claims are counted separately.")
         multiloss_card = card("Do the same homes flood again here?", _ml_lead,
             f"<ul class='kv'><li><b>Repeat-flood damage records</b><span>{tp('ml_total', 'data.multiloss.total')}</span></li>"
-            + (f"<li><b>Records from homes on the severe repetitive loss list</b><span>{tp('ml_srl', 'data.multiloss.srl')}</span></li>" if _srl else "")
+            + (f"<li><b>Records from homes flagged severe repeat-loss (SRL)</b><span>{tp('ml_srl', 'data.multiloss.srl')}</span></li>" if _srl else "")
             + f"</ul><p class='note'>These count damage events on repeat-flooded homes, not distinct homes.{how('multiloss')}</p>",
             src(["ml_total"], "FEMA's current multiple-loss list", _mldate))
     return multiloss_card
@@ -635,7 +635,7 @@ def card_payout():
         _ans = (claim("Most do", "most", ("cwop_share", "<", 50)) + f": {m('paid_share', str(_paid_pct) + '%')} of claims here paid something"
                 if cx["cwop_share"] < 50 else
                 f"{m('cwop_share', str(cx['cwop_share']) + '%')} of claims here closed with no payment"
-                + (f"; the top reason FEMA recorded was “{html.escape(_why[0]['label']).lower()}” (all reasons below)" if _why else "")
+                + (f"; the top specific reason FEMA recorded was “{html.escape(_why[0]['label']).lower()}” (all reasons below)" if _why else "")
                 if cx["cwop_share"] > 50 else f"About half: {m('cwop_share', str(cx['cwop_share']) + '%')} of claims here closed with no payment")
         payout_card = card("Do flood claims here actually pay out?",
             f"{_ans}. The average paid claim was {tp('avg_paid', 'data.claims_extra.avg_paid', money)}.",
@@ -662,7 +662,7 @@ SLUG = os.environ.get("FF_SLUG", "lee-county-fl")
 BASE_URL = os.environ.get("FF_BASEURL", "https://floodinsurancedata.com").rstrip("/")   # never example.com
 CANON = f"{BASE_URL}/flood-insurance/{SLUG}/"
 GEOID = os.environ.get("FF_GEOID", "12071")
-META_DESC = (f"Median NFIP flood insurance cost in {CS} is {money(P['p50'])} a year "
+META_DESC = (f"Median NFIP flood insurance cost for a single-family primary home in {CS} is {money(P['p50'])} a year "
              f"(middle half {money(P['p25'])}–{money(P['p75'])}); {P['share_below']}% pay below FEMA's "
              f"full-risk price. {num(P['units'])} insured units, claims, flood risk and community discounts, from FEMA's own records.")
 # register this place so home/lookup/sitemap/siblings know it exists
@@ -804,7 +804,7 @@ if _cxq.get("claims") and _cxq.get("avg_paid") and P.get("p50"):
                + f'the average paid claim was {tp("avg_paid", "data.claims_extra.avg_paid", money)}.'
                + (f' Claims filed for losses in the {m("decade", html.escape(_decs[-1]), q=_decs[-1])}: '
                   f'{tp("decade_paid_share", f"extras.claims.by_decade.{_decs[-1]}.paid_pct", pct, q=_decs[-1])} paid something.' if len(_decs) > 1 else '')
-               + (f' Top reason for unpaid claims: “{html.escape(_why[0]["label"]).lower()}”.' if _why else '') + '</a>')
+               + (f' Top specific reason for unpaid claims: “{html.escape(_why[0]["label"]).lower()}”.' if _why else '') + '</a>')
 _qa.append('<a href="#covered"><b>Already flooded?</b> What to do now, and what FEMA aid covers.</a>')
 _qa.append('<a href="#compare"><b>Is my quote normal?</b> These are existing policies, not a quote; type yours in to see where it sits.</a>')
 quick_answers = '<nav class="jump qa">' + "".join(_qa) + "</nav>"
@@ -897,12 +897,13 @@ def card_required():
     return card("Am I required to buy it?",
       rule("purchase_answer") + " " + rule("lender_any_zone"),
       (f"<p class='note'><b>{rule('fl_citizens')}</b></p>" if agg.get("state") == "FL" else "") +
+      f"<p class='note'>{rule('private_accept')}</p>" +
       f"<p class='note'>{m('sfha_share', str(P['sfha_share_units']) + '%')} of {CS}'s NFIP policy units are in high-risk zones (not {tp('sfha_share', 'policies.sfha_share_units', pct)} of all buildings, and not an answer about your own home).</p>"
       f"{_zone_body()}<p class='note'>Insured units by the zone each policy is rated in.{how('zones')}</p>"
       + (f"<p class='note'><b>Not in the NFIP ({m('crs_count', str(len(crs_out)), q='not_nfip')} communities here)"
          + ("" if IS_STATE else ": " + "; ".join(sorted((_cname(c) for c in crs_out), key=lambda h: html.unescape(re.sub("<[^>]+>", "", h)).casefold())))
          + f".</b> {rule('nfip_not_sold')}</p>" if crs_out else ""),
-      src(["units", "sfha_share"], POL_ASOF, RETR) + src_rules(["purchase_answer", "lender_any_zone"] + (["fl_citizens"] if agg.get("state") == "FL" else []) + (["nfip_not_sold"] if crs_out else [])), id="required")
+      src(["units", "sfha_share"], POL_ASOF, RETR) + src_rules(["purchase_answer", "lender_any_zone", "private_accept"] + (["fl_citizens"] if agg.get("state") == "FL" else []) + (["nfip_not_sold"] if crs_out else [])), id="required")
 
 def card_cost():
     cost_lead, cost_body = _cost_parts()
@@ -964,10 +965,12 @@ CARD_ORDER = [card_required, card_cost, card_howto, card_claims, card_payout, ca
               card_zone_cost, card_zip, card_averages, card_gap, card_save, card_crs, card_risk, card_multiloss,
               card_disasters, card_aid, card_counts]
 CARDS = "\n\n".join(h for h in (f() for f in CARD_ORDER) if h)
+# backlog 3: the county table is the state page's best tool and sits far down; screen 1 jumps to it
+_jump = f'<p class="cmp"><a href="#counties">Find your {UNIT} in the table ↓</a></p>' if IS_STATE and 'id="counties"' in CARDS else ""
 
 HTML = f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">{'<meta name="robots" content="noindex,follow">' if os.environ.get("FF_NOINDEX") == "1" else ""}
-<title>Flood insurance cost in {CL}: {money(P['p50'])} median a year (FEMA data)</title>
+<title>Flood insurance cost in {CL}: {money(P['p50'])} median a year, single-family homes (FEMA data)</title>
 <meta name="description" content="{html.escape(META_DESC)}">
 <link rel="canonical" href="{CANON}">
 <meta property="og:type" content="website"><meta property="og:title" content="Flood insurance in {html.escape(CL)}">
@@ -1044,12 +1047,12 @@ table{{width:100%}}}}
 <p class="kicker">NFIP records · {CS} · policies as of {POL_ASOF}</p>
 <h1>Flood insurance in {CL}</h1>
 <div class="stats">
-<div class="stat"><div class="n">{m('cost_p50', money(P['p50']))}</div><div class="l">Median / yr</div></div>
+<div class="stat"><div class="n">{m('cost_p50', money(P['p50']))}</div><div class="l">Median / yr, single-family primary home</div></div>
 <div class="stat"><div class="n">{m('cost_mo', median_mo)}</div><div class="l">A month, spread over the year</div></div>
 <div class="stat"><div class="n">{m('cost_p25', money(P['p25']))}–{m('cost_p75', money(P['p75']))}</div><div class="l">Half pay between</div></div>
 <div class="stat"><div class="n">{m('share_below', str(P['share_below']) + '%')}</div><div class="l">Pay less than FEMA's full-risk price, so {claim("their bills rise each year", "rise", ("share_below", ">", 0))}</div></div>
 </div>
-{cmp_line}{_renew_line}
+{cmp_line}{_renew_line}{_jump}
 <a class="btn" href="https://msc.fema.gov/portal/home" rel="noopener" target="_blank">Check your address on FEMA's flood map →</a>
 {quick_answers}
 <p class="note">Your flood zone is set at your exact address and decides whether a lender must require coverage; your price comes mainly from your own building's flood risk.</p>

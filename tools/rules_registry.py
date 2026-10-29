@@ -81,6 +81,12 @@ RULES = {
                      "located within the special flood hazard area defined by the Federal Emergency Management Agency must have flood coverage in place", "curl"),
                     ("https://www.flsenate.gov/Laws/Statutes/2025/627.351",
                      "January 1, 2027, for all other personal lines residential property insured by the corporation", "curl")]},
+    "private_accept": {   # backlog 2: lenders must take a qualifying private policy (FDIC rule; OCC, Fed, NCUA, FCA rules match)
+        "text": "A private flood policy can meet a lender's flood requirement: federally regulated lenders must accept a private "
+                "policy that meets the federal definition of private flood insurance and covers at least what the loan requires "
+                "(12 CFR §339.3(c)). Its price is not in FEMA's records.",
+        "sources": [("https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-12.xml?part=339&section=339.3",
+                     "must accept private flood insurance, as defined in § 339.2, in satisfaction of the flood insurance purchase requirement", "curl")]},
     "rcv_80": {   # hater r6: the real answer to "would it pay to rebuild" (SFIP Dwelling Form, 44 CFR 61 App. A(1), Art. VII)
         "text": "The NFIP pays the cost to rebuild (not a depreciated value) only for a single-family home that is your "
                 "principal residence and is insured for at least 80% of its full rebuilding cost, or for the $250,000 maximum.",

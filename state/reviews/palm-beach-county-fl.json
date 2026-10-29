@@ -1,11 +1,8 @@
 {
  "slug": "palm-beach-county-fl",
- "verdict": "FAIL",
- "template": "69a297bf12a2b59a",
- "defects": [
-  "**MAJOR** (NOAA card mislabels its scope; palm-beach-county-fl-16).",
-  "**MAJOR** (events table and its footnote; palm-beach-county-fl-08)."
- ],
- "reviewer": "hater round 10 (fresh agent, docs/HATER-PROMPT.md)",
+ "verdict": "PASS",
+ "template": "490703f86a518d8d",
+ "defects": [],
+ "reviewer": "hater round 11 (fresh agent, docs/HATER-PROMPT.md)",
  "notes": ""
 }

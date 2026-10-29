@@ -104,6 +104,20 @@ if len(states) == 51:   # U.S. figures only once every state is built and gated:
     for e in _ex:
         for d, c in (e.get("ded_counts") or {}).items(): _dc[d] = _dc.get(d, 0) + c
     _dtop = max(_dc, key=_dc.get); _dshare = round(100 * _dc[_dtop] / sum(_dc.values()), 1)
+    # backlog 1: U.S. cost by flood zone, summed from every state's zone histograms (extras_raw); shown once all 51 have one
+    _zp = os.path.join(DATADIR, "us", "cost_hist_zone.json")
+    _zh = json.load(open(_zp)) if os.path.exists(_zp) else {}
+    _zone_card = ""
+    if len(_zh) == 51:
+        _zrows = "".join(f'<tr><td>{lab}</td><td>{money(_hq({s: h.get(g) or {} for s, h in _zh.items()}, 0.5))}</td>'
+                         f'<td>{sum(sum(h.get(g, {}).values()) for h in _zh.values()):,}</td></tr>'
+                         for g, lab in (("V", "Coastal high-risk (V zones)"), ("A", "High-risk (A zones)"), ("X", "Moderate or low risk (B, C, X zones)"))
+                         if any(h.get(g) for h in _zh.values()))
+        _zone_card = (f'<div class="card" id="zones"><h2>What does it cost by flood zone?</h2><p class="stand">Typical yearly cost '
+                      f'(premium plus fees) of existing single-family primary-home policies, by the zone each policy is rated in.</p>'
+                      f'<table><thead><tr><th>Flood zone</th><th>Median / yr</th><th>Policies</th></tr></thead><tbody>{_zrows}</tbody></table>'
+                      f'<p class="mut">NFIP policies in force on {_ASOF_TXT}; zone D and policies with no zone are left out. Your state page '
+                      'breaks this down by every zone code.</p></div>')
     national = (f'<div class="stats"><div class="stat"><div class="n">{money(_med)}</div><div class="l">U.S. median a year</div></div>'
                 f'<div class="stat"><div class="n">{money(_med / 12)}</div><div class="l">Per month</div></div>'
                 f'<div class="stat"><div class="n">{_units / 1e6:.1f}M</div><div class="l">Insured units in force</div></div></div>'
@@ -126,6 +140,7 @@ if len(states) == 51:   # U.S. figures only once every state is built and gated:
         f'<tr><td>Average premium alone, single-family homes (before the federal fees)</td><td>{money(_wmean("sf_prem_mean", "sf_prem_n"))}</td></tr></tbody></table>'
         f'<p class="mut">Premium plus fees except the last row, NFIP policies in force on {_ASOF_TXT}. A figure quoted without fees, or '
         'for a different mix of policies, lands lower or higher than ours. Private flood insurance is not in this data.</p></div>'
+        + _zone_card +
         f'<script>var qv=document.getElementById("qv"),qo=document.getElementById("qo");qv.addEventListener("input",function(){{'
         f'var v=+qv.value.replace(/[^0-9.]/g,"");if(!v){{qo.textContent="";return;}}'
         f'qo.textContent="$"+v.toLocaleString()+" is "+(v<={_q[0.25]}?"in the lowest quarter":v<{_med}?"below the middle":v=={_med}?"right at the middle":v<{_q[0.75]}?"above the middle":v<{_q[0.9]}?"in the top quarter":"in the top tenth")'
@@ -139,7 +154,7 @@ home = HEAD.format(title="Flood insurance cost by state and county (FEMA data)",
 <p class="lede">From FEMA's own records of existing policies and claims, not quotes: what policyholders pay, whether you're required to buy it, and how fast it starts.</p>
 {national}
 {prov}
-<input id="s" placeholder="Type your state or county…" aria-label="Find your state or county" autocomplete="off"></section>
+<input id="s" placeholder="Type your state or county…" aria-label="Find your state or county" autocomplete="off"><p id="nomatch" class="mut" aria-live="polite"></p></section>
 <div class="card"><h2>Three things to know first</h2>
 <p class="stand"><b>How fast does it start?</b> {rule("howto_answer")}</p>
 <p class="stand"><b>Am I required to buy it?</b> {rule("purchase_answer")} {rule("lender_any_zone")} {rule("fl_citizens_short")} Check your zone on <a href="https://msc.fema.gov/portal/home" rel="noopener" target="_blank">FEMA's flood map</a>.</p>
@@ -155,7 +170,9 @@ home = HEAD.format(title="Flood insurance cost by state and county (FEMA data)",
 var s=document.getElementById('s');
 s.addEventListener('input',function(){{var q=s.value.toLowerCase();
  ['st','t'].forEach(function(id){{[].forEach.call(document.getElementById(id).tBodies[0].rows,function(r){{
-   r.style.display=(!q||(r.dataset.k||'').indexOf(q)>-1)?'':'none';}});}});}});
+   r.style.display=(!q||(r.dataset.k||'').indexOf(q)>-1)?'':'none';}});}});
+ var n=[].filter.call(document.querySelectorAll('#st tbody tr,#t tbody tr'),function(r){{return r.style.display!=='none';}}).length;
+ document.getElementById('nomatch').textContent=(q&&!n)?"No page matches yet. Every county's typical cost is in its state page's county table: find your state below.":'';}});
 </script>{FOOT}"""
 wr(os.path.join(DIST, "index.html"), home)
 
@@ -165,7 +182,7 @@ hub = HEAD.format(title="Flood insurance by state and county (FEMA data)",
     canon=BASE + "/flood-insurance/") + f"""
 <section class="hero"><p class="kicker">{len(states)} state{"" if len(states) == 1 else "s"} · {len(places)} counties</p><h1>Flood insurance by state and county</h1>
 <p class="lede">Find your state or county for what people there pay, whether you're required to buy it, and what floods have paid out.</p>
-<input id="s" placeholder="Type your state or county…" aria-label="Find your state or county" autocomplete="off"></section>
+<input id="s" placeholder="Type your state or county…" aria-label="Find your state or county" autocomplete="off"><p id="nomatch" class="mut" aria-live="polite"></p></section>
 <div class="card"><h2>States</h2>
 <table id="st"><thead><tr><th>State</th><th>Median / yr</th><th>Insured units</th></tr></thead>
 <tbody>{srows or '<tr><td colspan=3 class=mut>State pages are being built.</td></tr>'}</tbody></table></div>
@@ -176,7 +193,9 @@ hub = HEAD.format(title="Flood insurance by state and county (FEMA data)",
 var s=document.getElementById('s');
 s.addEventListener('input',function(){{var q=s.value.toLowerCase();
  ['st','t'].forEach(function(id){{[].forEach.call(document.getElementById(id).tBodies[0].rows,function(r){{
-   r.style.display=(!q||(r.dataset.k||'').indexOf(q)>-1)?'':'none';}});}});}});
+   r.style.display=(!q||(r.dataset.k||'').indexOf(q)>-1)?'':'none';}});}});
+ var n=[].filter.call(document.querySelectorAll('#st tbody tr,#t tbody tr'),function(r){{return r.style.display!=='none';}}).length;
+ document.getElementById('nomatch').textContent=(q&&!n)?"No page matches yet. Every county's typical cost is in its state page's county table: find your state below.":'';}});
 </script>{FOOT}"""
 wr(os.path.join(DIST, "flood-insurance", "index.html"), hub)
 
@@ -192,7 +211,7 @@ meth = HEAD.format(title="Methodology — flood insurance data", desc="Definitio
 <li><b>Disaster Declarations Summaries v2</b> — OpenFEMA. Federal flood/storm declarations.</li>
 <li><b>Housing Assistance (Owners) v2</b> — OpenFEMA. FEMA aid paid to owners after disasters.</li>
 <li><b>National Risk Index (counties)</b> — FEMA ArcGIS (FEMA_NationalRiskIndex). Flood expected annual loss + percentile.</li>
-<li><b>Multiple-Loss Flood Properties</b> — OpenFEMA (Individual Assistance). One record per property per declared disaster that damaged it, for properties that flooded more than once; a property on FEMA's severe repetitive loss list is flagged.</li>
+<li><b>Multiple-Loss Flood Properties</b> — OpenFEMA (Individual Assistance). One record per property per declared disaster that damaged it, for properties that flooded more than once; FEMA's disaster-aid data flags some as severe repeat-loss (SRL).</li>
 <li>Official <b>Policy Information by State and Community</b> workbook — listed for reference; the pages are not yet checked against it.</li></ul>
 <p class="mut">Seven federal datasets; the full-risk premium is a field within Policies and the PIF workbook is a reference, not a separate fetch. Each page lists the ones it uses.</p></div>
 <div class="card"><h2>Definitions &amp; rules</h2><ul>

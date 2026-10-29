@@ -31,7 +31,7 @@ def new_acc():
     return {"units": 0, "mand_units": 0, "tenant_units": 0, "condo_unit_units": 0, "rcbap_units": 0, "elev_units": 0,
             "gf_units": 0, "prem_new": [], "prem_old": [], "prem_elev": [], "prem_low": [], "sf_n": 0, "sf_max_cov": 0,
             "rc_n": 0, "rc_over": 0, "fee": [], "hfiaa": [], "reserve": [], "icc": [], "ded": collections.Counter(),
-            "cost_hist": collections.Counter(), "cost_hist_new": collections.Counter(), "all_cost": [], "sf_cost": [], "sf_prem": [], "sf_new_cost": []}
+            "cost_hist": collections.Counter(), "cost_hist_new": collections.Counter(), "zone_hist": {}, "all_cost": [], "sf_cost": [], "sf_prem": [], "sf_new_cost": []}
 
 def policies(st):
     acc = collections.defaultdict(new_acc)
@@ -54,6 +54,10 @@ def policies(st):
             a["sf_n"] += 1
             if cost and cost > 0:
                 a["cost_hist"][round(cost)] += 1
+                if k == "ST":   # backlog 1: U.S. cost by zone group (A high-risk, V coastal high-risk, B/C/X moderate-low); D and blank left out
+                    _z = (r["ratedFloodZone"] or "").upper()[:1]
+                    _zg = "A" if _z == "A" else "V" if _z == "V" else "X" if _z in ("B", "C", "X") else None
+                    if _zg: a["zone_hist"].setdefault(_zg, collections.Counter())[round(cost)] += 1
                 if (r["originalNBDate"] or "")[:10] >= NB_FROM: a["sf_new_cost"].append(cost); a["cost_hist_new"][round(cost)] += 1
                 a["sf_cost"].append(cost)
             if prem and prem > 0: a["sf_prem"].append(prem)
@@ -87,6 +91,7 @@ def policies(st):
                   "deductibles": {str(d): pct(c, n_ded) for d, c in a["ded"].most_common(4)}, "sf_n": a["sf_n"]}
         if k == "ST":   # histograms and counts the home page sums into exact U.S. figures
             out[k]["cost_hist"] = dict(a["cost_hist"]); out[k]["cost_hist_new"] = dict(a["cost_hist_new"])
+            out[k]["cost_hist_zone"] = {g: dict(h) for g, h in a["zone_hist"].items()}
             out[k]["ded_counts"] = {str(d): c for d, c in a["ded"].items()}
         out[k]["averages"] = {"sf_cost_median": med(a["sf_cost"]), "sf_cost_mean": round(statistics.mean(a["sf_cost"])) if a["sf_cost"] else None,   # every state and county (hater r5)
                               "sf_prem_median": med(a["sf_prem"]), "sf_prem_mean": round(statistics.mean(a["sf_prem"])) if a["sf_prem"] else None,
@@ -150,7 +155,7 @@ def run(st):
     p, c = policies(st), claims(st)
     d = os.path.join(ROOT, "data", "states", slug(st)); os.makedirs(d, exist_ok=True)
     os.makedirs(os.path.join(ROOT, "data", "us"), exist_ok=True)
-    for key in ("cost_hist", "cost_hist_new"):   # all single-family policies / those first bought in the past year
+    for key in ("cost_hist", "cost_hist_new", "cost_hist_zone"):   # all single-family policies / those first bought in the past year / by zone group
         hp = os.path.join(ROOT, "data", "us", key + ".json")
         allh = json.load(open(hp)) if os.path.exists(hp) else {}
         allh[st] = p["ST"].pop(key); json.dump(allh, open(hp, "w"))

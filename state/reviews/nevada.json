@@ -1,0 +1,10 @@
+{
+ "slug": "nevada",
+ "verdict": "FAIL",
+ "template": "d8a0377441759423",
+ "defects": [
+  "**MAJOR** (nevada-07, and the screen-1 card nevada-01). The headline and table disagree."
+ ],
+ "reviewer": "hater round 12 (fresh agent, docs/HATER-PROMPT.md)",
+ "notes": ""
+}
