@@ -92,9 +92,19 @@ def pull_slice(ds, st, name, filt, fields):
     json.dump({"n": total, "at": str(datetime.datetime.now())}, open(done, "w"))
     return total
 
-def pull_state(ds, st, fields):
+RECENT = ASOF_DATE.year - 2   # claims for losses before this year are kept from last month's pull (owner 2026-10-29)
+def _clear(ds, st, keep_old):
+    d = os.path.join(RAW, ds, st)
+    for f in (os.listdir(d) if os.path.isdir(d) else []):
+        y = f.split(".")[0]
+        if f.endswith(".done") and not (keep_old and y.isdigit() and int(y) < RECENT): os.remove(os.path.join(d, f))
+
+def pull_state(ds, st, fields, full=False):
     marker = os.path.join(RAW, ds, st + ".done")
-    if os.path.exists(marker): log(f"{ds} {st} already done"); return
+    if os.path.exists(marker):
+        if json.load(open(marker)).get("asof") == str(ASOF_DATE): log(f"{ds} {st} already done"); return
+        os.remove(marker); _clear(ds, st, keep_old=True)   # last month's claims: re-pull recent years and "no year" only
+    if full: _clear(ds, st, keep_old=False)
     base, parts = slices(ds, st)
     total = count(ds, base); t0 = time.time()
     got = 0
@@ -106,8 +116,10 @@ def pull_state(ds, st, fields):
         else:
             log(f"FAILED {ds} {st} slice {name} — state left unfinished"); return
     if got != total:
+        if not full:   # FEMA revised an old year we kept: pull this state's claims in full once
+            log(f"MISMATCH {ds} {st}: {got} != {total}; re-pulling every slice"); return pull_state(ds, st, fields, full=True)
         log(f"MISMATCH {ds} {st}: slices sum {got} != state total {total} — not marked done"); return
-    json.dump({"n": total, "at": str(datetime.datetime.now()), "secs": round(time.time() - t0)}, open(marker, "w"))
+    json.dump({"n": total, "asof": str(ASOF_DATE), "at": str(datetime.datetime.now()), "secs": round(time.time() - t0)}, open(marker, "w"))
     log(f"DONE {ds} {st}: {total} records in {round(time.time() - t0)}s")
 
 states = sys.argv[1:] or STATES

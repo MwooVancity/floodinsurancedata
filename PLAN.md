@@ -214,3 +214,8 @@ the owner's OK. Every defect a review finds becomes a gate check, so no review h
   on zoned claims, building + contents + ICC). Re-add after the 2026-11-03 refresh, worded "of paid claim dollars"
   (not "buildings"), with the period, and its takeaway for the "Am I required" reader.
 - Take-up (homes with flood insurance): verify the penetration source first (cut 10-28).
+
+## Monthly data refresh (2026-10-29)
+Policies are re-downloaded each month; claims keep last month's copy and re-pull only the last 3 loss years plus
+"no year" (`pull_raw.py` RECENT). If FEMA's state total stops matching, that state's claims are re-pulled in full.
+The job log prints the raw download size (`du -sh`). Check the 2026-11-03 run: time, size, all 51 states done.

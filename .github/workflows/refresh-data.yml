@@ -26,10 +26,17 @@ jobs:
           python-version: '3.12'
       - id: m
         run: echo "month=$(date -u +%Y-%m)" >> "$GITHUB_OUTPUT"
-      - uses: actions/cache@v4
+      - uses: actions/cache@v4   # claims carry over month to month: only the last 3 loss years are re-pulled (pull_raw RECENT)
         with:
-          path: .cache/raw
-          key: fema-raw-${{ steps.m.outputs.month }}
+          path: .cache/raw/NfipClaims
+          key: fema-claims-${{ steps.m.outputs.month }}
+          restore-keys: fema-claims-
+      - uses: actions/cache@v4   # policies: fresh every month (this cache only resumes a run within the month)
+        with:
+          path: |
+            .cache/raw/NfipPolicies
+            .cache/raw/asof.txt
+          key: fema-pol-${{ steps.m.outputs.month }}
       - name: Download every FEMA policy and claim (resumable; skips finished slices)
         run: python -I tools/pull_raw.py && du -sh .cache/raw   # owner asked the download size
       - name: Compute state, county and extras figures
