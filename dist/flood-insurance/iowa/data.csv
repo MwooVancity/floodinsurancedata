@@ -55,6 +55,8 @@ Iowa,frp_median,$966,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPr
 Iowa,frp_plus_fees,"$1,203",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,fullRiskPremium + federalPolicyFee + hfiaaSurcharge + reserveFundAssessment,"July 31, 2026"
 Iowa,cost_mean,"$1,155",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Iowa,cost_all_mean,"$1,767",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + occupancyType,"July 31, 2026"
+Iowa,condo_unit_pct,1.7%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
+Iowa,condo_building_pct,3.5%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
 Iowa,units_listed,"4,984",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"July 31, 2026"
 Iowa,ded_amount,"$2,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"July 31, 2026"
 Iowa,ded_share,44.4%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"July 31, 2026"

@@ -55,6 +55,8 @@ New Hampshire,frp_median,"$1,701",usd_premium_only,FEMA OpenFEMA — NFIP Polici
 New Hampshire,frp_plus_fees,"$2,015",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,fullRiskPremium + federalPolicyFee + hfiaaSurcharge + reserveFundAssessment,"July 31, 2026"
 New Hampshire,cost_mean,"$1,658",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 New Hampshire,cost_all_mean,"$2,154",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + occupancyType,"July 31, 2026"
+New Hampshire,condo_unit_pct,4.7%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
+New Hampshire,condo_building_pct,0.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
 New Hampshire,units_listed,"2,613",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"July 31, 2026"
 New Hampshire,ded_amount,"$2,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"July 31, 2026"
 New Hampshire,ded_share,34.1%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"July 31, 2026"

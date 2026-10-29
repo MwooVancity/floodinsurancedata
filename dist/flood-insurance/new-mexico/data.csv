@@ -52,6 +52,8 @@ New Mexico,frp_median,$929,usd_premium_only,FEMA OpenFEMA — NFIP Policies,full
 New Mexico,frp_plus_fees,"$1,185",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,fullRiskPremium + federalPolicyFee + hfiaaSurcharge + reserveFundAssessment,"July 31, 2026"
 New Mexico,cost_mean,"$1,280",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 New Mexico,cost_all_mean,"$1,503",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + occupancyType,"July 31, 2026"
+New Mexico,condo_unit_pct,0.5%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
+New Mexico,condo_building_pct,1.3%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
 New Mexico,units_listed,"7,697",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"July 31, 2026"
 New Mexico,ded_amount,"$2,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"July 31, 2026"
 New Mexico,ded_share,46.3%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"July 31, 2026"

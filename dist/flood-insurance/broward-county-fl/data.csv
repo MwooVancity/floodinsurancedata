@@ -56,6 +56,8 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Broward County, Florida",frp_plus_fees,$883,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,fullRiskPremium + federalPolicyFee + hfiaaSurcharge + reserveFundAssessment,"July 31, 2026"
 "Broward County, Florida",cost_mean,$974,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 "Broward County, Florida",cost_all_mean,"$1,298",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + occupancyType,"July 31, 2026"
+"Broward County, Florida",condo_unit_pct,3.4%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
+"Broward County, Florida",condo_building_pct,0.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
 "Broward County, Florida",units_listed,"98,708",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"July 31, 2026"
 "Broward County, Florida",ded_amount,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"July 31, 2026"
 "Broward County, Florida",ded_share,50.0%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"July 31, 2026"

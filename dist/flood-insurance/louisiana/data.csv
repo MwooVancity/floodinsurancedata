@@ -55,6 +55,8 @@ Louisiana,frp_median,"$1,220",usd_premium_only,FEMA OpenFEMA — NFIP Policies,f
 Louisiana,frp_plus_fees,"$1,466",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,fullRiskPremium + federalPolicyFee + hfiaaSurcharge + reserveFundAssessment,"July 31, 2026"
 Louisiana,cost_mean,"$1,212",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Louisiana,cost_all_mean,"$1,337",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + occupancyType,"July 31, 2026"
+Louisiana,condo_unit_pct,1.1%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
+Louisiana,condo_building_pct,0.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
 Louisiana,units_listed,"292,018",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"July 31, 2026"
 Louisiana,ded_amount,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"July 31, 2026"
 Louisiana,ded_share,53.2%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"July 31, 2026"

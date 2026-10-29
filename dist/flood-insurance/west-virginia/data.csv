@@ -55,6 +55,8 @@ West Virginia,frp_median,"$2,368",usd_premium_only,FEMA OpenFEMA — NFIP Polici
 West Virginia,frp_plus_fees,"$2,676",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,fullRiskPremium + federalPolicyFee + hfiaaSurcharge + reserveFundAssessment,"July 31, 2026"
 West Virginia,cost_mean,"$1,621",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 West Virginia,cost_all_mean,"$2,272",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + occupancyType,"July 31, 2026"
+West Virginia,condo_unit_pct,0.3%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
+West Virginia,condo_building_pct,10.4%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
 West Virginia,units_listed,"5,279",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"July 31, 2026"
 West Virginia,ded_amount,"$2,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"July 31, 2026"
 West Virginia,ded_share,36.2%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"July 31, 2026"

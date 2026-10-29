@@ -25,6 +25,9 @@ def query(slug):   # the query a real reader types for this page
            f"flood insurance cost {slug.rsplit('-', 1)[0].replace('-', ' ')} {a.get('state', '')}"
 
 def prep(rnd, slugs):
+    if "--light" in sys.argv:   # CLAUDE.md budget: changed cards only, page text, no screenshots, no random pages
+        open(os.path.join(DIR, f"round{rnd}-template.txt"), "w").write(RV.template_hash())
+        return print("light round: template", RV.template_hash(), "pages:", " ".join(html_path(s) for s in slugs))
     # 2 random pages each round beside the samples: findings came only from the same 3-4 pages (2026-10-28)
     import random
     pool = [p["slug"] for p in json.load(open(os.path.join(ROOT, "places.json")))] + \
@@ -79,6 +82,6 @@ def record(rnd):
         print(f"{slug}: {verdict} ({len(bad)} blocker/major, {len(gaps)} gaps to backlog.md)")
 
 if __name__ == "__main__":
-    if sys.argv[1:2] == ["prep"]: prep(sys.argv[2], [a for a in sys.argv[3:] if a != "--local"])
+    if sys.argv[1:2] == ["prep"]: prep(sys.argv[2], [a for a in sys.argv[3:] if a not in ("--local", "--light")])
     elif sys.argv[1:2] == ["record"]: record(sys.argv[2])
     else: print(__doc__)

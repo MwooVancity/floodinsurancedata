@@ -52,6 +52,8 @@ Alaska,frp_median,$251,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRisk
 Alaska,frp_plus_fees,$377,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,fullRiskPremium + federalPolicyFee + hfiaaSurcharge + reserveFundAssessment,"July 31, 2026"
 Alaska,cost_mean,$426,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Alaska,cost_all_mean,$619,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + occupancyType,"July 31, 2026"
+Alaska,condo_unit_pct,2.3%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
+Alaska,condo_building_pct,0.8%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
 Alaska,units_listed,"1,986",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"July 31, 2026"
 Alaska,ded_amount,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"July 31, 2026"
 Alaska,ded_share,58.4%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"July 31, 2026"

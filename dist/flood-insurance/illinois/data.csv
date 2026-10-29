@@ -55,6 +55,8 @@ Illinois,frp_median,"$1,026",usd_premium_only,FEMA OpenFEMA — NFIP Policies,fu
 Illinois,frp_plus_fees,"$1,285",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,fullRiskPremium + federalPolicyFee + hfiaaSurcharge + reserveFundAssessment,"July 31, 2026"
 Illinois,cost_mean,"$1,300",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Illinois,cost_all_mean,"$1,688",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + occupancyType,"July 31, 2026"
+Illinois,condo_unit_pct,1.9%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
+Illinois,condo_building_pct,0.9%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
 Illinois,units_listed,"17,497",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"July 31, 2026"
 Illinois,ded_amount,"$2,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"July 31, 2026"
 Illinois,ded_share,39.2%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"July 31, 2026"

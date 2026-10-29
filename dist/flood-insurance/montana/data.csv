@@ -52,6 +52,8 @@ Montana,frp_median,$790,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRis
 Montana,frp_plus_fees,"$1,024",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,fullRiskPremium + federalPolicyFee + hfiaaSurcharge + reserveFundAssessment,"July 31, 2026"
 Montana,cost_mean,"$1,136",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Montana,cost_all_mean,"$1,288",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + occupancyType,"July 31, 2026"
+Montana,condo_unit_pct,1.3%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
+Montana,condo_building_pct,0.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
 Montana,units_listed,"2,192",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"July 31, 2026"
 Montana,ded_amount,"$2,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"July 31, 2026"
 Montana,ded_share,43.9%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"July 31, 2026"

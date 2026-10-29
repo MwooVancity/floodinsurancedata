@@ -55,6 +55,8 @@ Michigan,frp_median,$631,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRi
 Michigan,frp_plus_fees,$838,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,fullRiskPremium + federalPolicyFee + hfiaaSurcharge + reserveFundAssessment,"July 31, 2026"
 Michigan,cost_mean,$954,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Michigan,cost_all_mean,"$1,189",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + occupancyType,"July 31, 2026"
+Michigan,condo_unit_pct,2.3%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
+Michigan,condo_building_pct,0.9%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
 Michigan,units_listed,"12,641",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"July 31, 2026"
 Michigan,ded_amount,"$2,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"July 31, 2026"
 Michigan,ded_share,41.0%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"July 31, 2026"

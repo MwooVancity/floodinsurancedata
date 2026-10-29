@@ -56,6 +56,8 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Dare County, North Carolina",frp_plus_fees,$804,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,fullRiskPremium + federalPolicyFee + hfiaaSurcharge + reserveFundAssessment,"July 31, 2026"
 "Dare County, North Carolina",cost_mean,$828,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 "Dare County, North Carolina",cost_all_mean,"$1,121",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + occupancyType,"July 31, 2026"
+"Dare County, North Carolina",condo_unit_pct,1.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
+"Dare County, North Carolina",condo_building_pct,0.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
 "Dare County, North Carolina",units_listed,"4,395",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"July 31, 2026"
 "Dare County, North Carolina",ded_amount,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"July 31, 2026"
 "Dare County, North Carolina",ded_share,78.2%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"July 31, 2026"

@@ -56,6 +56,8 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Lee County, Florida",frp_plus_fees,"$3,857",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,fullRiskPremium + federalPolicyFee + hfiaaSurcharge + reserveFundAssessment,"July 31, 2026"
 "Lee County, Florida",cost_mean,"$2,197",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 "Lee County, Florida",cost_all_mean,"$2,929",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + occupancyType,"July 31, 2026"
+"Lee County, Florida",condo_unit_pct,5.2%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
+"Lee County, Florida",condo_building_pct,0.1%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
 "Lee County, Florida",units_listed,"53,965",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"July 31, 2026"
 "Lee County, Florida",ded_amount,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"July 31, 2026"
 "Lee County, Florida",ded_share,44.7%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"July 31, 2026"

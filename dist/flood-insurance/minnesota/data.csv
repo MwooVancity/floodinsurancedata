@@ -55,6 +55,8 @@ Minnesota,frp_median,"$1,015",usd_premium_only,FEMA OpenFEMA — NFIP Policies,f
 Minnesota,frp_plus_fees,"$1,267",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,fullRiskPremium + federalPolicyFee + hfiaaSurcharge + reserveFundAssessment,"July 31, 2026"
 Minnesota,cost_mean,"$1,254",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Minnesota,cost_all_mean,"$1,517",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + occupancyType,"July 31, 2026"
+Minnesota,condo_unit_pct,2.5%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
+Minnesota,condo_building_pct,1.8%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
 Minnesota,units_listed,"4,010",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"July 31, 2026"
 Minnesota,ded_amount,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"July 31, 2026"
 Minnesota,ded_share,35.9%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"July 31, 2026"

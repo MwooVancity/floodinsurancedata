@@ -56,6 +56,8 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Horry County, South Carolina",frp_plus_fees,$614,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,fullRiskPremium + federalPolicyFee + hfiaaSurcharge + reserveFundAssessment,"July 31, 2026"
 "Horry County, South Carolina",cost_mean,$762,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 "Horry County, South Carolina",cost_all_mean,"$1,554",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + occupancyType,"July 31, 2026"
+"Horry County, South Carolina",condo_unit_pct,2.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
+"Horry County, South Carolina",condo_building_pct,0.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
 "Horry County, South Carolina",units_listed,"14,356",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"July 31, 2026"
 "Horry County, South Carolina",ded_amount,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"July 31, 2026"
 "Horry County, South Carolina",ded_share,82.1%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"July 31, 2026"

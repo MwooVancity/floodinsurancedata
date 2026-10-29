@@ -55,6 +55,8 @@ Maine,frp_median,$854,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskP
 Maine,frp_plus_fees,"$1,106",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,fullRiskPremium + federalPolicyFee + hfiaaSurcharge + reserveFundAssessment,"July 31, 2026"
 Maine,cost_mean,"$1,253",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Maine,cost_all_mean,"$2,045",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + occupancyType,"July 31, 2026"
+Maine,condo_unit_pct,3.7%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
+Maine,condo_building_pct,0.9%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
 Maine,units_listed,"2,738",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"July 31, 2026"
 Maine,ded_amount,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"July 31, 2026"
 Maine,ded_share,39.0%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"July 31, 2026"

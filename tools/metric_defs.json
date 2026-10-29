@@ -106,6 +106,10 @@
    "def": "Numeric code that uniquely identifies all administrative/legal and statistical geographic areas for which the Census Bureau tabulates data. In this instance, the Census GeoID is presented at the Census Block Group level. This is an address-based 12-character code that is the concatenation of fields consisting of the 2-character state FIPS code, the 3-character county FIPS code, the 6-character census tract code, and the 1-character block group code. Block numbers beginning with a zero are associated with water-only areas. Please see: https://www.census.gov/programs-surveys/geography/guidance/geo-identifiers.html",
    "sha256": "0d361dd30ac1ed0333dc989a6a219d329578581c70e9dccaa22bdad3cfc83807"
   },
+  "condominiumCoverageTypeCode": {
+   "def": "Indicates what type of coverage the building has (e.g., Residential Condominium Building Association Policy (RCBAP), Master Policy)\nLegal values (value : description):\nN : Not a Condominium; \nU : Individual Condominium Unit insured by a unit owner or by an association; \nA : Condominium Association; \nH : Condominium Master Policy (RCBAP) High-Rise; \nL : Condominium Master Policy (RCBAP) Low-Rise;",
+   "sha256": "cdc2f834ba20dbb303d85f830c9a1acf9868780211debb1ad818cd07e48f86e2"
+  },
   "elevatedBuildingIndicator": {
    "def": "Indicates whether a building meets the NFIP definition of an elevated building. Yes is indicated with either a 'true' or '1'. No is indicated with either a 'false' or '0'.  An elevated building is a no-basement building that was constructed so as to meet the following criteria: \n1. The top of the elevated floor (all A zones) or the bottom of the lowest horizontal structural member of the lowest floor (all V zones) is above ground level;\n2. The building is adequately anchored;\n3. The method of elevation is pilings, columns (posts and piers), shear walls (not in V zones), or solid foundation perimeter walls (not in V zones);",
    "sha256": "61e51661c33fbac48826bf488ec324176da3c5f37db483b5beb30ebdb9bfef5a"

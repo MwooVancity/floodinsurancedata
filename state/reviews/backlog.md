@@ -192,3 +192,8 @@ Ranked by reader value. hater.py record appends each round's **GAP** lines below
 - 1-800 Insurance's "$2,000–$6,000 for most Little River properties" (likely condo/VE) has no answer; our 29566 Little River median is $493 single-family. That is the same base problem as the MAJOR above.
 - No new-map (2003 FIRM, pending update) note; WBTW and WMBF both lead on it.
 - No condo/RCBAP cost line at all.
+
+## light round 13 MINORs (2026-10-28; fix in the next template batch)
+- Quote checker: clearing the amount leaves the old zone line (zq must clear when the amount is empty).
+- Zone dropdown lists thin zones (Louisiana A12, 53 policies); consider the zone card's own floor.
+- Condo note prints "0.0%" for condo buildings; say "none" or drop the clause at 0.

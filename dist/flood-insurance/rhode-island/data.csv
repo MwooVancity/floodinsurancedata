@@ -54,6 +54,8 @@ Rhode Island,frp_median,$992,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fu
 Rhode Island,frp_plus_fees,"$1,254",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,fullRiskPremium + federalPolicyFee + hfiaaSurcharge + reserveFundAssessment,"July 31, 2026"
 Rhode Island,cost_mean,"$1,318",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Rhode Island,cost_all_mean,"$1,737",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + occupancyType,"July 31, 2026"
+Rhode Island,condo_unit_pct,2.3%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
+Rhode Island,condo_building_pct,0.1%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
 Rhode Island,units_listed,"5,097",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"July 31, 2026"
 Rhode Island,ded_amount,"$2,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"July 31, 2026"
 Rhode Island,ded_share,39.4%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"July 31, 2026"

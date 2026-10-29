@@ -56,6 +56,8 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Duval County, Florida",frp_plus_fees,"$1,117",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,fullRiskPremium + federalPolicyFee + hfiaaSurcharge + reserveFundAssessment,"July 31, 2026"
 "Duval County, Florida",cost_mean,"$1,055",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 "Duval County, Florida",cost_all_mean,"$1,330",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + occupancyType,"July 31, 2026"
+"Duval County, Florida",condo_unit_pct,3.1%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
+"Duval County, Florida",condo_building_pct,0.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
 "Duval County, Florida",units_listed,"17,386",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"July 31, 2026"
 "Duval County, Florida",ded_amount,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"July 31, 2026"
 "Duval County, Florida",ded_share,69.9%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"July 31, 2026"

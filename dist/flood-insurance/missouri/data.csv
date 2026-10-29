@@ -55,6 +55,8 @@ Missouri,frp_median,"$1,093",usd_premium_only,FEMA OpenFEMA — NFIP Policies,fu
 Missouri,frp_plus_fees,"$1,349",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,fullRiskPremium + federalPolicyFee + hfiaaSurcharge + reserveFundAssessment,"July 31, 2026"
 Missouri,cost_mean,"$1,281",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Missouri,cost_all_mean,"$1,906",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + occupancyType,"July 31, 2026"
+Missouri,condo_unit_pct,1.6%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
+Missouri,condo_building_pct,0.1%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"July 31, 2026"
 Missouri,units_listed,"8,003",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"July 31, 2026"
 Missouri,ded_amount,"$2,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"July 31, 2026"
 Missouri,ded_share,35.9%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"July 31, 2026"

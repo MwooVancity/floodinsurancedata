@@ -1,10 +1,8 @@
 {
  "slug": "louisiana",
- "verdict": "FAIL",
- "template": "d8a0377441759423",
- "defects": [
-  "**MAJOR** (louisiana-21/22). \"6,132 records are from homes on FEMA's severe repetitive loss list\", with the tile label \"Records from homes on the severe repetit"
- ],
- "reviewer": "hater round 12 (fresh agent, docs/HATER-PROMPT.md)",
+ "verdict": "PASS",
+ "template": "5c7436720d144d23",
+ "defects": [],
+ "reviewer": "hater round 13 (fresh agent, docs/HATER-PROMPT.md)",
  "notes": ""
 }
