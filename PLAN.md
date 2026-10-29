@@ -11,7 +11,7 @@ Today: all five UNKNOWN. That is the bottleneck. Work that cannot move the score
 - Live: home + 51 states + 52 counties + 404 (111 pages), template reviewed (light round 18 PASS), live gate clean.
 - Queue: 1,803 counties pass the build; the daily GitHub job publishes 10 reviewed ones a day (25 max per release).
 - Data: as of 2026-07-31; monthly cloud refresh on the 3rd (claims carry over; only the last 3 loss years re-pulled).
-- Reviews: no wrong figure found in rounds 12-19; defects left are wording and layout only.
+- Reviews: no wrong live figure in rounds 12-19 (round 19 caught an overstated new figure before release); open defects are wording and layout.
 
 ## Next moves, in order (each has a "done when")
 1. OWNER, 10 minutes: Search Console access for Claude (or read it). Done when impressions, clicks and the top
