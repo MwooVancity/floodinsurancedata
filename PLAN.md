@@ -50,6 +50,20 @@ single-family policies for a median, or a failed build).
 7. **Later layer:** ZIP pages only after counties index well, and only ZIPs that pass the three-part test.
    Not before.
 
+## Helpfulness and information gain (owner asked 2026-10-28; in order, cheapest first)
+Data already held (template changes, one light check covers all five):
+1. Quote checker by flood zone (`policies.cost_by_zone`): compare the reader's quote with their own zone, not the county.
+2. "Why sites differ" names the figure the searcher just saw (MoneyGeek, Insurify, NerdWallet) and which of our rows it matches.
+3. Elevated vs not-elevated premium (`prem_elevated_median` / `prem_not_elevated_median`) with the Elevation Certificate step.
+4. Condo line (`condo_unit_pct`, `condo_building_pct`): what condo owners are and are not in our cost figures.
+5. Non-NFIP communities named on state pages (`crs_out`).
+One more breakdown in the monthly cloud job:
+6. Paid share per named storm (claims file), beside the all-claims paid share.
+7. Community flood-map date (Community Status Book, if the field is in our pull; check first).
+Rules: each addition replaces something weaker or goes inside an existing card (pages are already 20-25 phone screens);
+Search Console queries decide what is missing; one phone read per change, not a full review round.
+Ranking, beyond the page: data stories (rankings) for links; Search Console read first.
+
 ## What works
 - Builder rules make wrong text hard (`tp`, `m`, `claim`, `rule`); 9-question gate on built and live HTML; mutation suite of real shipped bugs.
 - Template review on 3 samples plus flags for odd pages; S12 blocks unreviewed pages; S14 ages gaps.
