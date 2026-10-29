@@ -53,7 +53,7 @@ louisiana "Submitted and indexed". Top queries: Arkansas, Florida (position 19.5
 ## Every month, every year (edge cases first; the jobs run themselves, sessions check them)
 What can break, and the guard already in place (or OPEN):
 - FEMA API down, slow or renamed fields: pull_raw stops before agg_raw, so the site keeps last month's data and the
-  as-of date ages. OPEN: a month-over-month jump check (a median moving more than 25% holds that page for a look).
+  as-of date ages. A median moving more than 25% stops the commit (`jump_check.py`); a session looks, then reruns.
 - A state's count stops matching: that state's claims re-pull in full; still wrong = refresh stops, nothing half-written.
 - GitHub: the claims cache can be evicted (10 GB): the next run pulls in full (slow, not wrong). $12 compute: ~5 h/month used.
 - FEMA wording or rule pages change: recheck.py re-fetches every rule excerpt each release; a missing excerpt stops it.
