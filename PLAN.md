@@ -5,7 +5,8 @@ Rules live in CLAUDE.md. This file is the state and the next moves only; history
 ## Goal and scoreboard
 The most helpful flood-insurance page for every US county, for a scared reader on a phone (user, not Google).
 Scoreboard, the only measure of progress: pages indexed · impressions · clicks · queries on page 1 · AI citations.
-Today: all five UNKNOWN. That is the bottleneck. Work that cannot move the scoreboard waits.
+2026-10-29 (Search Console, data 10-23..10-27): 101 impressions, 1 click, average position 46; sitemap 110 read, 0 errors;
+louisiana "Submitted and indexed". Top queries: Arkansas, Florida (position 19.5), Utah. Read: `tools/gsc_read.mjs`.
 
 ## Where we are (2026-10-29)
 - Live: home + 51 states + 52 counties + 404 (111 pages), template reviewed (light round 18 PASS), live gate clean.
@@ -14,8 +15,8 @@ Today: all five UNKNOWN. That is the bottleneck. Work that cannot move the score
 - Reviews: no wrong live figure in rounds 12-19 (round 19 caught an overstated new figure before release); open defects are wording and layout.
 
 ## Next moves, in order (each has a "done when")
-1. OWNER, 10 minutes: Search Console access for Claude (or read it). Done when impressions, clicks and the top
-   queries per page are written here, with a date. Repeat weekly. Until this exists, steps 4-5 are guesses.
+1. Search Console: DONE (the calcscrape service account already has owner access). Re-read weekly; owner clicks
+   "Validate fix" on the Datasets report (the citation fix shipped 10-29; louisiana was last crawled 10-26).
 2. 2026-11-03 refresh run: check time, download size and all 51 states done. Done when the numbers are here.
 3. One batch after step 2, then one light check (≤ ~90k tokens) and release:
    - search boxes on tables with 16+ rows, with a "no matches" line;
