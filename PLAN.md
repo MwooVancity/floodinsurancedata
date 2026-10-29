@@ -21,6 +21,11 @@ Today: all five UNKNOWN. That is the bottleneck. Work that cannot move the score
    - search boxes on tables with 16+ rows, with a "no matches" line;
    - "Outside a high-risk zone?" line on the "Am I required" card, worded "of paid claim dollars", with its period;
    - take-up (homes with flood insurance): verify the penetration source, then show it or delete the idea.
+3b. Same batch: (i) a gate check + mutation for each defect class found in rounds 16-19 (CLAUDE.md rule, not yet
+   done; biggest miss); (ii) round 13-19 MINORs: condo "leave both out", overstated glide wording where the gap is
+   tiny, Maine duplicate disaster line, "Assigned in error" vs "Claim deleted in error", thin zones in the dropdown;
+   (iii) glossary of terms used on the page (FEMA wording, sourced); (iv) one line each for renters, landlords,
+   second homes and businesses; (v) ZIP names: "near <place>" fallback where no place covers 25%.
 4. Links: build ONE data story from data we hold ("counties paying furthest below FEMA's full-risk price").
    Done when it is live. Pitching it to local news needs the owner (outreach is outbound).
 5. Pace: 20 a day now (owner). After 4 weeks of step-1 data: 25 if most pages are indexed; drop to 10 if not; stop if
