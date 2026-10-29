@@ -37,6 +37,7 @@ jobs:
           set -e
           python -I tools/agg_raw.py
           python -I tools/extras_raw.py
+          python -I tools/collect_state_small.py   # community discounts, disasters, aid, repeat floods, risk ratings (were collected once and never refreshed)
       - name: Commit the computed data
         run: |
           git config user.name "github-actions[bot]"

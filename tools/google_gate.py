@@ -146,6 +146,39 @@ _us = re.search(r'<div class="n">(\$[\d,]+)</div><div class="l">U\.S\. median', 
 _seen = {re.sub(r"<[^>]+>", "", v) for h in pages.values() for v in re.findall(r'<span data-m="us_p50"[^>]*>(.*?)</span>', h)}
 if _us and _seen - {_us.group(1)}: fail("S11", f"home U.S. median {_us.group(1)} but pages print {sorted(_seen)}")
 
+# S15 every home-page figure equals an independent recompute from the data files (2026-10-28 site review: the home
+# page, the busiest page, was the only one no number check read)
+_DATA = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
+_home = text(pages.get("/", ""))
+def _hist_mid(path):   # median of a {state: {cost: count}} histogram, written apart from build_site's quantile code
+    cnt = {}
+    for st in json.load(open(path)).values():
+        for v, c in st.items(): cnt[int(v)] = cnt.get(int(v), 0) + c
+    half, run = sum(cnt.values()) / 2, 0
+    for v in sorted(cnt):
+        run += cnt[v]
+        if run >= half: return v
+if _home and os.path.exists(os.path.join(_DATA, "us", "cost_hist.json")):
+    _sx = [json.load(open(os.path.join(_DATA, "states", s, "extras.json")))["policies"]
+           for s in sorted(os.listdir(os.path.join(_DATA, "states"))) if os.path.exists(os.path.join(_DATA, "states", s, "extras.json"))]
+    def _wm(mk, nk): return round(sum((e["averages"][mk] or 0) * e["averages"][nk] for e in _sx) / sum(e["averages"][nk] for e in _sx))
+    _dc = {}
+    for e in _sx:
+        for d, c in (e.get("ded_counts") or {}).items(): _dc[d] = _dc.get(d, 0) + c
+    _top = max(_dc, key=_dc.get)
+    _want = {"Typical cost, existing single-family homes (median)": _hist_mid(os.path.join(_DATA, "us", "cost_hist.json")),
+             "Typical cost, policies first bought in the past year": _hist_mid(os.path.join(_DATA, "us", "cost_hist_new.json")),
+             "Average (mean) cost, single-family homes": _wm("sf_cost_mean", "sf_n"),
+             "Average cost, every policy type (adds condos, rentals, businesses)": _wm("all_cost_mean", "all_n"),
+             "Average premium alone, single-family homes (before the federal fees)": _wm("sf_prem_mean", "sf_prem_n")}
+    for _lab, _v in _want.items():
+        _mm = re.search(re.escape(_lab) + r" \$([\d,]+)", _home)
+        if not _mm: fail("S15", f"home: row '{_lab}' missing")
+        elif int(_mm.group(1).replace(",", "")) != _v: fail("S15", f"home: '{_lab}' shows ${_mm.group(1)}, data says ${_v:,}")
+    _mm = re.search(r"single-family policies is \$([\d,]+) \(([\d.]+)% of them\)", _home)
+    if not _mm or int(_mm.group(1).replace(",", "")) != int(float(_top)) or float(_mm.group(2)) != round(100 * _dc[_top] / sum(_dc.values()), 1):
+        fail("S15", f"home: usual deductible line does not match the data (${int(float(_top)):,}, {round(100 * _dc[_top] / sum(_dc.values()), 1)}%)")
+
 # S12 hater review: every indexable page (home, states, counties) has a current PASS from a hostile reader (tools/review.py)
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import review as RV
 _th = RV.template_hash()

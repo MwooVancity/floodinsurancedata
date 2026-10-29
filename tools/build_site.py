@@ -6,7 +6,7 @@ import csv, json, os, html
 PLACES = os.environ.get("FF_PLACES", "places.json")
 DIST = os.environ.get("FF_DIST", "dist")
 DATADIR = os.environ.get("FF_DATADIR", "data")
-BASE = os.environ.get("FF_BASEURL", "https://example.com").rstrip("/")
+BASE = os.environ.get("FF_BASEURL", "https://floodinsurancedata.com").rstrip("/")   # never example.com: a standalone run would ship wrong canonicals
 RETR = os.environ.get("FF_RETR", "October 22, 2026")   # data retrieval date, for Privacy/Terms "last updated"
 places = json.load(open(PLACES)) if os.path.exists(PLACES) else []
 # fail-closed: include ONLY counties that passed this run (published.json). A county that rendered a
@@ -192,18 +192,15 @@ meth = HEAD.format(title="Methodology — flood insurance data", desc="Definitio
 <li><b>Disaster Declarations Summaries v2</b> — OpenFEMA. Federal flood/storm declarations.</li>
 <li><b>Housing Assistance (Owners) v2</b> — OpenFEMA. FEMA aid paid to owners after disasters.</li>
 <li><b>National Risk Index (counties)</b> — FEMA ArcGIS (FEMA_NationalRiskIndex). Flood expected annual loss + percentile.</li>
-<li><b>U.S. Census ACS 5-year (B25001)</b> — U.S. Census Bureau API. Housing units, used only where FEMA's own penetration rate is missing.</li>
 <li><b>Multiple-Loss Flood Properties</b> — OpenFEMA (Individual Assistance). One record per property per declared disaster that damaged it, for properties that flooded more than once; a property on FEMA's severe repetitive loss list is flagged.</li>
-<li><b>NFIP Residential Penetration Rates</b> — OpenFEMA. Share of residential structures with an NFIP policy, overall and inside the high-risk zone, per county.</li>
-<li><b>NOAA NCEI Storm Events</b> — NOAA. Recorded flood/flash-flood/coastal-flood events + NWS property-damage estimates, per county (1996 on).</li>
 <li>Official <b>Policy Information by State and Community</b> workbook — reconciliation benchmark (a cross-check, not a dataset).</li></ul>
-<p class="mut">Ten federal datasets in all; the full-risk premium is a field within Policies and the PIF workbook is a reconciliation benchmark, not separate fetches.</p></div>
+<p class="mut">Seven federal datasets; the full-risk premium is a field within Policies and the PIF workbook is a reconciliation benchmark, not a separate fetch. Each page lists the ones it uses.</p></div>
 <div class="card"><h2>Definitions &amp; rules</h2><ul>
 <li><b>Policy units</b> = sum of <code>policyCount</code>, never a row count — condo-association records carry more than one unit.</li>
 <li><b>Cost cohort</b>: single-family primary-residence policies (occupancy 1/11, primary residence), annual cost = premium + fees.</li>
 <li><b>Percentiles</b> p25/p50/p75/p90 by inclusive interpolation.</li>
 <li><b>Full-risk gap</b>: share of cohort whose premium charged (<code>totalInsurancePremiumOfThePolicy</code>) is below FEMA's full-risk premium (<code>fullRiskPremium</code>); both are premium-only. The cost figures elsewhere use <code>policyCost</code>, which FEMA defines as premium plus the reserve fund assessment, federal policy fee and HFIAA surcharge, so they are not compared with full-risk.</li>
-<li><b>Claims per 100</b>: cumulative paid claims since 1978 over current policy units — a historical tally, not an annual rate or a flood probability.</li>
+<li><b>Claims against policies</b>: cumulative claims since 1978 beside current policy units — a historical tally, not an annual rate or a flood probability.</li>
 <li><b>Minimum sizes</b>: a cost spread needs 100 or more priced single-family policies; a flood-zone median 50; a county median 30; a ZIP median 25. Smaller medians move more from year to year, and the count is shown beside each.</li>
 <li><b>Dates</b>: each figure shows its effective date and retrieval date; policy snapshot differs from other datasets' retrieval dates.</li></ul></div>
 <div class="card" id="limits"><h2>What the data cannot tell you</h2><ul>
@@ -232,7 +229,7 @@ policyholders actually pay, how that compares with FEMA's full-risk price, the c
 risk, and the community discounts that lower the bill — every figure drawn from a public federal dataset,
 with its exact source and the date it was pulled.</p></div>
 <div class="card"><h2>How the numbers are made and checked</h2><ul>
-<li>Compiled directly from FEMA's OpenFEMA records, NOAA and the U.S. Census Bureau; no private data. Two figures are FEMA models and are labeled as such: the National Risk Index and FEMA's estimate of how many homes are insured.</li>
+<li>Compiled directly from FEMA's OpenFEMA records and FEMA's National Risk Index; no private data. One figure is a FEMA model and is labeled as such: the National Risk Index.</li>
 <li>Every page is built by code and must pass an automated correctness gate before it ships: percentiles and
 sums are recomputed, record counts are checked against the download's own totals (FEMA's separate official policy count is not yet compared), every ratio's denominator is
 disclosed, and nothing publishes if a check fails. The <a href="/methodology/">methodology</a> defines every term.</li>
@@ -269,8 +266,8 @@ visits here and elsewhere. You may opt out of personalized advertising via
 options at <a href="https://www.aboutads.info" rel="nofollow">aboutads.info</a>. This section will be
 updated to name every ad vendor at the time ads are enabled.</p></div>
 <div class="card"><h2>Third-party data &amp; links</h2>
-<p>All figures are compiled from public U.S. federal sources (FEMA OpenFEMA, the FEMA National Risk Index,
-and the U.S. Census Bureau). We link to official FEMA and Census pages; their privacy practices are their
+<p>All figures are compiled from public U.S. federal sources (FEMA OpenFEMA and the FEMA National Risk Index).
+We link to official FEMA pages; their privacy practices are their
 own. We are not affiliated with or endorsed by FEMA.</p></div>
 <div class="card"><h2>Children &amp; changes</h2>
 <p>The site is not directed to children under 13 and collects no information from them. We may update this
@@ -306,22 +303,20 @@ with open(csv_path, "w", newline="", encoding="utf-8") as f:
     w = csv.writer(f)
     w.writerow(["slug", "county", "geoid", "policy_units", "median_cost", "p25", "p75", "p90",
                 "full_risk_median", "share_below_full_risk_pct", "claims_since_1978", "claims_paid_usd",
-                "nfip_takeup_pct", "nfip_takeup_sfha_pct", "avg_paid_claim_usd", "closed_no_payment_pct",
-                "paid_outside_sfha_pct", "noaa_flood_events_1996_2025", "noaa_flood_damage_usd"])
+                "avg_paid_claim_usd", "closed_no_payment_pct"])
     for p in places:
         ap = os.path.join(cdir(p["slug"]), "agg.json")
         if not os.path.exists(ap): continue
         a = json.load(open(ap)); P = a["policies"]; C = a["claims"]
         dp = os.path.join(cdir(p["slug"]), "data.json")
         d = json.load(open(dp)) if os.path.exists(dp) else {}
-        pen, cx, se = d.get("penetration") or {}, d.get("claims_extra") or {}, d.get("storm_events") or {}
+        cx = d.get("claims_extra") or {}
         w.writerow([p["slug"], p["short"], p.get("geoid"), P["units"], P["p50"], P["p25"], P["p75"], P["p90"],
                     P["frp_median"], P["share_below"], C["rows"], C["total_paid"],
-                    pen.get("overall_pct"), pen.get("sfha_pct"), cx.get("avg_paid"), cx.get("cwop_share"),
-                    cx.get("outside_sfha_pct"), se.get("events"), se.get("damage")])
+                    cx.get("avg_paid"), cx.get("cwop_share")])
 data = HEAD.format(title="Download the flood-insurance data", desc="Per-county NFIP flood-insurance aggregates as CSV.", canon=BASE + "/data/") + f"""
 <h1>Download the data</h1>
-<p>Per-county aggregates computed from FEMA OpenFEMA and NOAA NCEI: policy units, cost spread, full-risk gap, claims, average paid claim, share closed without payment, share of paid dollars outside the high-risk zone, NFIP take-up, and NOAA flood events (1996–2025). Blank = not available for that county.</p>
+<p>Per-county aggregates computed from FEMA OpenFEMA records: policy units, cost spread, full-risk gap, claims, average paid claim and share closed without payment. Blank = not available for that county.</p>
 <p><a href="/data/counties.csv">counties.csv</a> — {len(places)} places.</p>
 <p class="mut">Reuse freely with attribution: "This product uses FEMA's OpenFEMA API, but is not endorsed by FEMA."</p>{FOOT}"""
 wr(os.path.join(DIST, "data", "index.html"), data)

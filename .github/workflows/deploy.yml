@@ -20,7 +20,7 @@ jobs:
       - name: Run the correctness gate on every built county page
         run: |
           set -e
-          for d in data/*/; do
+          for d in data/c/*/; do   # county data lives in data/c/<slug> since 2026-10-27
             slug=$(basename "$d")
             page="dist/flood-insurance/$slug/index.html"
             [ -f "$d/agg.json" ] && [ -f "$page" ] || continue

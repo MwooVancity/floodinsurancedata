@@ -143,6 +143,13 @@ RULES = {
         "text": "Those prices step up toward full-risk each year, limited by the yearly cap.",
         "sources": [(FS + "/premiumcosts", "Limits annual premium increases to a set percentage.", "curl"),
                     ("https://www.fema.gov/flood-insurance/risk-rating", "most rates not increase more than 18% per year", "manual")]},
+    "nfip_not_sold": {   # 2026-10-28 site review: 34 Louisiana, 137 Texas communities are not in the NFIP; the page called them "no discount"
+        "text": "Federal flood insurance (NFIP) is sold only in communities that take part in the NFIP; in a community that "
+                "has not joined, has withdrawn or is suspended, no one can buy an NFIP policy.",
+        "sources": [("https://www.floodsmart.gov/get-insured/eligibility",
+                     "You can get flood insurance from the National Flood Insurance Program if your city or town participates in the NFIP", "curl"),
+                    ("https://www.fema.gov/about/glossary/participation-nfip",
+                     "No resident will be able to purchase a flood insurance policy", "manual")]},
     "crs_auto": {
         "text": "It is automatic, already in these prices, and the same in every flood zone.",
         "sources": [(FS + "/premiumcosts", "Applies to all eligible policies within the community, regardless of flood zone.", "curl")]},
