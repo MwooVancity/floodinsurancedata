@@ -21,8 +21,8 @@ NOTES = {
                "“Assigned in error” and “Other” are FEMA's own labels; some closed claims are paperwork, "
                "not a denied flood."),
     "events": ("Flood events",
-               "Paid NFIP claims grouped by the flood event FEMA assigned (FEMA's name). Claims with no event, or a catch-all "
-               "label spanning many years, are left out of the event table. Event totals include code-upgrade (ICC) payments, "
+               "Paid NFIP claims grouped by the flood event FEMA assigned (FEMA's name). A catch-all "
+               "label spanning many years gets its own row; floods with too few paid claims here to count as one flood (see the card) are not listed. Event totals include code-upgrade (ICC) payments, "
                "which the yearly totals leave out."),
     "claims": ("Claims by year",
                "Net building and contents payments by year of loss. Claims are matched by the claims dataset's county code, "
@@ -31,14 +31,6 @@ NOTES = {
                   "One home appears once for each declared disaster that damaged it, so the count is damage events on "
                   "repeat-flooded homes, not distinct homes (FEMA says these records cannot be totaled by property). "
                   "Disaster-aid records since 2002, separate from NFIP insurance claims."),
-    "takeup": ("Take-up rate",
-               "FEMA's NFIP residential take-up rate: the share of residential structures with an NFIP policy, overall and "
-               "inside the Special Flood Hazard Area. NFIP only (private flood insurance is excluded); the structure count "
-               "is a FEMA estimate."),
-    "noaa": ("Weather-service flood events",
-             "Physical flood events recorded by the National Weather Service (1996 on), separate from insured NFIP claims: "
-             "floods that happened, insured or not. Damage figures are field estimates, not audited, and undercount in "
-             "early years."),
     "declarations": ("Disaster declarations",
                      "Distinct storms by calendar year: one storm's emergency and major-disaster declarations are counted "
                      "once, not each declaration record."),

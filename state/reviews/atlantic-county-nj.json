@@ -1,0 +1,10 @@
+{
+ "slug": "atlantic-county-nj",
+ "verdict": "FAIL",
+ "template": "69a297bf12a2b59a",
+ "defects": [
+  "**BLOCKER** (NOAA card omits the county's worst flood; atlantic-county-nj-16)."
+ ],
+ "reviewer": "hater round 10 (fresh agent, docs/HATER-PROMPT.md)",
+ "notes": ""
+}

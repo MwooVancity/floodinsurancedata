@@ -58,3 +58,38 @@ Ranked by reader value. hater.py record appends each round's **GAP** lines below
 - Private flood: whether a lender or Citizens accepts it, and its price.
 - No cost by municipality, though the CRS table already lists the 32 communities.
 - No ZIP-level below-full-risk share or full-risk median.
+
+## home (round 10)
+- The SERP's #1–#3 (NerdWallet "$899/yr", Policygenius via Kiplinger "$888", Insurify "$786 median") are not named against our rows. Our "Why do sites quote different prices?" table is the right place, and no competitor has one (information gain).
+- No cost by flood zone on home. Policygenius and Bankrate give zone figures.
+- Private flood: when a lender must accept it.
+- No territories (PR, USVI, Guam).
+- No JSON-LD on home.
+
+## louisiana (round 10)
+- Insurify's "Plaquemines Parish $4,752" (a search result) is not reconciled with our Plaquemines median of $1,231 (mean against median, and which policies).
+- No "years to reach full risk at 18% a year" for the 56.6% below full risk.
+- No "find your parish" jump link on screen 1. The parish table is our information gain over MoneyGeek and Bankrate, and it sits on screen 12.
+- Private flood.
+- No state-level NOAA panel.
+
+## palm-beach-county-fl (round 10)
+- NerdWallet $528 / $488, MoneyGeek $466 and Insurify $709 (search results) are not named against our $507 premium and $670 cost.
+- No ZIP-level full-risk gap. The Miami Herald's "33469 +342%" story is what a Jupiter or Tequesta searcher has read.
+- Private flood and Citizens acceptance of private flood.
+- No cost by municipality.
+- No paid share by named storm.
+
+## orange-county-ca (round 10)
+- Insurify lists Orange County at $795 and $892 (two of its pages disagree); our $1,083 is not reconciled with them. Our "Why do sites quote different prices" table could name them.
+- The post-wildfire waiting-period exception (44 CFR 61.11(c)) and debris-flow risk after fire, the local flood type in 92676 and 92679.
+- OC Public Works' "25% discount for unincorporated homeowners" press release is matched by our CRS row, which is information gain. But nothing tells a city resident (Santa Ana, Garden Grove: no discount) why their city gets none.
+- Private flood.
+- No cost by city. The ZIP table half-covers it.
+
+## atlantic-county-nj (round 10)
+- Insurify's "Atlantic County $1,022" and Clovered's "$1,899 under Risk Rating 2.0" (search results) are not reconciled with our $1,246 median and $2,017 all-policy mean.
+- No Risk Rating 2.0 transition line. The Press of Atlantic City reported that most of 27,000 policies saw $0–$10 increases; we have the 58.5% below full risk but no "how fast it closes".
+- No cost by municipality. The CRS table lists the towns, and Brigantine, Margate, Ventnor and Longport are what searchers type.
+- Private flood.
+- No elevation-certificate or "elevated vs not" next step tied to the 2,478 elevated policies (median premium $894 against $1,051).

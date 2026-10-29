@@ -1,0 +1,595 @@
+[
+ {
+  "title": "How do I actually get covered — and how fast?",
+  "var": "howto_card",
+  "line": 380,
+  "condition": null,
+  "metrics": [],
+  "paths": [],
+  "reads": [],
+  "rules": [
+   "aid_insurance",
+   "already_flooded",
+   "homeowners_excl",
+   "how_to_buy",
+   "howto_answer",
+   "howto_tiles",
+   "wait_exceptions"
+  ],
+  "notes": []
+ },
+ {
+  "title": "Why do sites quote different prices for ?",
+  "var": "averages_card",
+  "line": 498,
+  "condition": null,
+  "metrics": [
+   "cost_new",
+   "cost_p50"
+  ],
+  "paths": [
+   "extras.policies.cost_new_median"
+  ],
+  "reads": [
+   "averages",
+   "cost_by_year",
+   "cost_new_n",
+   "fee_mean",
+   "frp_median",
+   "p50",
+   "policies",
+   "prem_median"
+  ],
+  "rules": [],
+  "notes": [
+   "averages"
+  ]
+ },
+ {
+  "title": "How much flood risk is here?",
+  "var": "risk",
+  "line": 217,
+  "condition": "have_risk",
+  "metrics": [],
+  "paths": [],
+  "reads": [],
+  "rules": [],
+  "notes": []
+ },
+ {
+  "title": "How much flood risk is here?",
+  "var": "risk",
+  "line": 221,
+  "condition": "have_risk",
+  "metrics": [],
+  "paths": [],
+  "reads": [],
+  "rules": [],
+  "notes": []
+ },
+ {
+  "title": "What does it cost in my flood zone?",
+  "var": "zone_cost_card",
+  "line": 281,
+  "condition": "czone",
+  "metrics": [
+   "claim:cost less than",
+   "threshold",
+   "zone_cost"
+  ],
+  "paths": [
+   "const.zone_min",
+   "policies.cost_by_zone..median"
+  ],
+  "reads": [
+   "cost_by_zone",
+   "coverage_building",
+   "p50",
+   "prem_median"
+  ],
+  "rules": [
+   "rr2_zone"
+  ],
+  "notes": []
+ },
+ {
+  "title": "How common is flood insurance here?",
+  "var": "takeup_card",
+  "line": 396,
+  "condition": "hu and P.get(\"units\") and (data.get(\"penetration\") or {}).get(\"overall_pct\") is None",
+  "metrics": [
+   "housing_units",
+   "takeup_per_100",
+   "units"
+  ],
+  "paths": [
+   "data.housing_units",
+   "policies.units"
+  ],
+  "reads": [
+   "housing_units",
+   "penetration",
+   "units"
+  ],
+  "rules": [],
+  "notes": []
+ },
+ {
+  "title": "How common is flood insurance here?",
+  "var": "takeup_card",
+  "line": 407,
+  "condition": "hu and P.get(\"units\") and (data.get(\"penetration\") or {}).get(\"overall_pct\") is None",
+  "metrics": [],
+  "paths": [],
+  "reads": [
+   "housing_units",
+   "penetration",
+   "units"
+  ],
+  "rules": [],
+  "notes": []
+ },
+ {
+  "title": "(computed title)",
+  "var": "tilemap_card",
+  "line": 431,
+  "condition": "len(state_risk) >= 4",
+  "metrics": [
+   "county_count"
+  ],
+  "paths": [],
+  "reads": [],
+  "rules": [],
+  "notes": []
+ },
+ {
+  "title": "Find your ZIP in this ",
+  "var": "zip_card",
+  "line": 457,
+  "condition": "bz",
+  "metrics": [
+   "zip",
+   "zip_cost",
+   "zip_count"
+  ],
+  "paths": [],
+  "reads": [],
+  "rules": [],
+  "notes": [
+   "zip"
+  ]
+ },
+ {
+  "title": "Can I pay less?",
+  "var": "save_card",
+  "line": 516,
+  "condition": "_ded or _xpp.get(\"prem_elevated_n\")",
+  "metrics": [
+   "ded_share",
+   "prem_elevated",
+   "prem_elevated_n",
+   "prem_not_elevated",
+   "prem_not_elevated_n"
+  ],
+  "paths": [
+   "extras.policies.deductibles.N",
+   "extras.policies.prem_elevated_median",
+   "extras.policies.prem_elevated_n",
+   "extras.policies.prem_not_elevated_median",
+   "extras.policies.prem_not_elevated_n"
+  ],
+  "reads": [
+   "deductibles",
+   "frp_median",
+   "prem_elevated_n",
+   "prem_not_elevated_n"
+  ],
+  "rules": [
+   "save_ways"
+  ],
+  "notes": []
+ },
+ {
+  "title": "Would a policy here pay to rebuild my home?",
+  "var": "rebuild_card",
+  "line": 582,
+  "condition": "(_xp.get(\"replacement_n\") or 0) >= 30 and _xp.get(\"replacement_over_250k_pct\") is not None",
+  "metrics": [
+   "at_cap_pct",
+   "damage_n",
+   "damage_over_cov_pct",
+   "rebuild_n",
+   "rebuild_over_cap_pct"
+  ],
+  "paths": [
+   "extras.claims.damage_n",
+   "extras.claims.damage_over_coverage_pct",
+   "extras.policies.at_building_max_pct",
+   "extras.policies.replacement_n",
+   "extras.policies.replacement_over_250k_pct"
+  ],
+  "reads": [
+   "at_building_max_pct",
+   "claims",
+   "damage_n",
+   "damage_over_coverage_pct",
+   "inforce_history",
+   "policies",
+   "replacement_n",
+   "replacement_over_250k_pct"
+  ],
+  "rules": [
+   "building_cap",
+   "rcv_80"
+  ],
+  "notes": [
+   "rebuild"
+  ]
+ },
+ {
+  "title": "Why do flood claims here go unpaid?",
+  "var": "unpaid_card",
+  "line": 597,
+  "condition": "_why and (_xc.get(\"unpaid_n\") or 0) >= 10",
+  "metrics": [
+   "unpaid_n",
+   "unpaid_reason_n"
+  ],
+  "paths": [
+   "extras.claims.unpaid_n",
+   "extras.claims.unpaid_reasons..n"
+  ],
+  "reads": [
+   "at_building_max_pct",
+   "claims",
+   "damage_n",
+   "damage_over_coverage_pct",
+   "policies",
+   "replacement_n",
+   "replacement_over_250k_pct",
+   "unpaid_n",
+   "unpaid_reasons"
+  ],
+  "rules": [],
+  "notes": [
+   "unpaid"
+  ]
+ },
+ {
+  "title": "Which floods paid out the biggest totals here?",
+  "var": "events_card",
+  "line": 625,
+  "condition": "len(_ev) >= 2",
+  "metrics": [
+   "event_avg",
+   "event_claims",
+   "event_paid"
+  ],
+  "paths": [
+   "extras.claims.events..avg",
+   "extras.claims.events..claims",
+   "extras.claims.events..paid"
+  ],
+  "reads": [
+   "events"
+  ],
+  "rules": [],
+  "notes": [
+   "events"
+  ]
+ },
+ {
+  "title": "Do the same homes flood again here?",
+  "var": "multiloss_card",
+  "line": 651,
+  "condition": "ml.get(\"total\") is not None",
+  "metrics": [
+   "ml_srl",
+   "ml_total"
+  ],
+  "paths": [
+   "data.multiloss.srl",
+   "data.multiloss.total"
+  ],
+  "reads": [
+   "multiloss",
+   "srl",
+   "total"
+  ],
+  "rules": [],
+  "notes": [
+   "multiloss"
+  ]
+ },
+ {
+  "title": "Do flood claims here actually pay out?",
+  "var": "payout_card",
+  "line": 668,
+  "condition": "cx.get(\"claims\")",
+  "metrics": [
+   "avg_paid",
+   "claims_paid_n",
+   "cwop_share",
+   "decade",
+   "decade_claims",
+   "decade_paid_share"
+  ],
+  "paths": [
+   "data.claims_extra.avg_paid",
+   "data.claims_extra.cwop_share",
+   "data.claims_extra.paid_n",
+   "extras.claims.by_decade..n",
+   "extras.claims.by_decade..paid_pct"
+  ],
+  "reads": [
+   "by_decade",
+   "claims",
+   "claims_extra",
+   "cwop_share"
+  ],
+  "rules": [
+   "cwop"
+  ],
+  "notes": []
+ },
+ {
+  "title": "I'm outside the high-risk zone. Do floods happen there?",
+  "var": "outside_note",
+  "line": 699,
+  "condition": "cx.get(\"outside_sfha_pct\") is not None and P.get(\"sfha_share_units\") is not None",
+  "metrics": [
+   "outside_sfha_dollars",
+   "outside_sfha_policies",
+   "zone_cost"
+  ],
+  "paths": [
+   "data.claims_extra.outside_sfha_pct",
+   "policies.cost_by_zone.X.median"
+  ],
+  "reads": [
+   "outside_sfha_pct",
+   "sfha_share_units"
+  ],
+  "rules": [],
+  "notes": []
+ },
+ {
+  "title": "How many homes here carry flood insurance?",
+  "var": "takeup_card",
+  "line": 711,
+  "condition": "pen.get(\"overall_pct\") is not None",
+  "metrics": [
+   "pen_contracts",
+   "pen_overall",
+   "pen_sfha",
+   "pen_words"
+  ],
+  "paths": [
+   "data.penetration.contracts",
+   "data.penetration.overall_pct"
+  ],
+  "reads": [
+   "outside_sfha_pct",
+   "overall_pct",
+   "penetration",
+   "sfha_pct"
+  ],
+  "rules": [],
+  "notes": [
+   "takeup"
+  ]
+ },
+ {
+  "title": "How often has it actually flooded here?",
+  "var": "storm_card",
+  "line": 730,
+  "condition": "se.get(\"events\")",
+  "metrics": [
+   "storm_damage",
+   "storm_events"
+  ],
+  "paths": [],
+  "reads": [
+   "damage",
+   "events",
+   "overall_pct",
+   "penetration",
+   "sfha_pct",
+   "storm_events"
+  ],
+  "rules": [],
+  "notes": [
+   "noaa"
+  ]
+ },
+ {
+  "title": "What have premiums done over time here?",
+  "var": "trend_card",
+  "line": 745,
+  "condition": "len(cyear) >= 3",
+  "metrics": [
+   "threshold"
+  ],
+  "paths": [
+   "const.year_min"
+  ],
+  "reads": [
+   "damage",
+   "events",
+   "storm_events"
+  ],
+  "rules": [],
+  "notes": []
+ },
+ {
+  "title": "What does it cost in my ?",
+  "var": "zip_card",
+  "line": 551,
+  "condition": "len(_cty) < 2",
+  "metrics": [
+   "county_cost",
+   "threshold"
+  ],
+  "paths": [
+   "const.min_priced",
+   "const.spread_min",
+   "counties..p50"
+  ],
+  "reads": [
+   "nri_counties"
+  ],
+  "rules": [],
+  "notes": []
+ },
+ {
+  "title": "Are people dropping flood insurance in ?",
+  "var": "state_trend_card",
+  "line": 569,
+  "condition": "_h and _ch is not None",
+  "metrics": [
+   "inforce"
+  ],
+  "paths": [
+   "data.inforce_history.by_year.2022",
+   "data.inforce_history.by_year.2026",
+   "data.inforce_history.by_year.N"
+  ],
+  "reads": [
+   "inforce_history"
+  ],
+  "rules": [],
+  "notes": []
+ },
+ {
+  "title": "Am I required to buy it?",
+  "var": "HTML",
+  "line": 1088,
+  "condition": null,
+  "metrics": [
+   "sfha_share"
+  ],
+  "paths": [
+   "policies.sfha_share_units"
+  ],
+  "reads": [],
+  "rules": [
+   "fl_citizens",
+   "lender_any_zone",
+   "purchase_answer"
+  ],
+  "notes": [
+   "zones"
+  ]
+ },
+ {
+  "title": "How much does it cost here?",
+  "var": "HTML",
+  "line": 1097,
+  "condition": null,
+  "metrics": [],
+  "paths": [],
+  "reads": [],
+  "rules": [],
+  "notes": []
+ },
+ {
+  "title": "What do floods actually pay out here?",
+  "var": "HTML",
+  "line": 1101,
+  "condition": null,
+  "metrics": [
+   "claims_total",
+   "claims_year_paid"
+  ],
+  "paths": [
+   "claims.by_year..1",
+   "claims.total_paid"
+  ],
+  "reads": [],
+  "rules": [],
+  "notes": [
+   "claims"
+  ]
+ },
+ {
+  "title": "How do current premiums compare with FEMA's full-risk price?",
+  "var": "HTML",
+  "line": 1120,
+  "condition": null,
+  "metrics": [
+   "frp_median",
+   "prem_median",
+   "share_below",
+   "units_listed"
+  ],
+  "paths": [
+   "agg.policies.share_below",
+   "policies.below_n"
+  ],
+  "reads": [],
+  "rules": [],
+  "notes": []
+ },
+ {
+  "title": "Does my town get a community discount?",
+  "var": "HTML",
+  "line": 1132,
+  "condition": null,
+  "metrics": [],
+  "paths": [],
+  "reads": [],
+  "rules": [],
+  "notes": []
+ },
+ {
+  "title": "(computed title)",
+  "var": "HTML",
+  "line": 1149,
+  "condition": null,
+  "metrics": [
+   "declarations"
+  ],
+  "paths": [],
+  "reads": [],
+  "rules": [],
+  "notes": [
+   "declarations"
+  ]
+ },
+ {
+  "title": "Did FEMA aid homeowners after floods and storms?",
+  "var": "HTML",
+  "line": 1155,
+  "condition": null,
+  "metrics": [
+   "claim:yes",
+   "ia_paid",
+   "ia_per_reg"
+  ],
+  "paths": [],
+  "reads": [],
+  "rules": [
+   "ia_partial"
+  ],
+  "notes": []
+ },
+ {
+  "title": "Are these counts complete?",
+  "var": "HTML",
+  "line": 1165,
+  "condition": null,
+  "metrics": [
+   "official_count",
+   "official_diff",
+   "records_total",
+   "units"
+  ],
+  "paths": [
+   "policies.rows",
+   "policies.units"
+  ],
+  "reads": [],
+  "rules": [],
+  "notes": []
+ }
+]

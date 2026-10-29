@@ -81,7 +81,7 @@ def sub(old, new, count=1):
     return PAGE.replace(old, new, count)
 def agg_with(**kw):
     a = json.loads(json.dumps(AGG)); a["policies"].update(kw); return a
-STORM = re.search(r'<p class="src" data-src="storm_events,storm_damage">Source: [^.]*\.', PAGE).group()
+STORM = re.search(r'<p class="src" data-src="ml_total">Source: [^.]*\.', PAGE).group()   # weather card cut 2026-10-28: the repeat-flood line carries the test
 MUTATIONS = [   # (defect class from THE EVIDENCE table, what we reintroduce, expected id, page or agg)
     ("1 fee-vs-premium basis", "gap computed on policyCost", "L17", None, agg_with(gap_basis="cost")),
     ("2 prose vs numbers", "'most' asserted at 46.1%", "B1",
@@ -91,7 +91,7 @@ MUTATIONS = [   # (defect class from THE EVIDENCE table, what we reintroduce, ex
     ("3 rows called homes", "IA records labelled homes", "A2", sub("</span> damage records from homes", "</span> homes"), None),
     ("4 cross-panel", "filed count called 'paid'", "C3", sub("</span> NFIP flood claims and", "</span> paid NFIP flood claims and"), None),
     ("5 rating vs percentile", "percentile without its basis", "A4", PAGE.replace("per dollar of building value, that loss is higher than in about", "flood risk is higher than in about"), None),
-    ("6 attribution", "NOAA panel credited to FEMA", "A1", sub(STORM, '<p class="src" data-src="storm_events,storm_damage">Source: FEMA OpenFEMA.'), None),
+    ("6 attribution", "FEMA panel credited to NOAA", "A1", sub(STORM, '<p class="src" data-src="ml_total">Source: NOAA NCEI.'), None),
     ("6 attribution", "hand-typed source line", "A1", re.sub(r'<p class="src" data-src="ml_total">', '<p class="src">', PAGE, count=1), None),
     ("8 law wording", "purchase rule narrowed", "E1", sub("federally regulated or backed mortgage", "federally backed mortgage"), None),
     ("sources", "dataset listed that no panel shows", "A5", sub('<ul class="srclist">', '<ul class="srclist"><li><a href="x">FEMA OpenFEMA — Made Up</a></li>'), None),

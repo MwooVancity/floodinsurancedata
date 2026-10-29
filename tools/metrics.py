@@ -114,7 +114,7 @@ METRICS = {
 }
 
 # method constants a page states ("zones with fewer than 50 priced policies are omitted"): printed as tagged figures
-CONST = {"min_priced": 30, "zone_min": 50, "zip_min": 25, "spread_min": 100, "rank_min": 100, "year_min": 30}
+CONST = {"min_priced": 30, "zone_min": 50, "zip_min": 25, "spread_min": 100, "rank_min": 100, "year_min": 30, "event_min": 20}
 _NRI, _CSB, _PEN, _ML = "NRI", "NfipCommunityStatusBook", "NfipResidentialPenetrationRates", "IndividualAssistanceMultipleLossFloodProperties"
 METRICS.update({   # every other figure a page prints; q (data-q) names the row when one metric fills a table
     "threshold": _m(POL, ["policyCost"], "count"),

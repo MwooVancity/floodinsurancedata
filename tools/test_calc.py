@@ -90,7 +90,7 @@ assert bzp["55555"]["cost_n"] == 10 and bzp["55555"]["median"] is None and bzp["
 # Exercises the shipping build_page.py + gate.py, not a re-implementation. Skips if the county data is absent.
 import subprocess, tempfile, json as _json
 TOOLS = os.path.dirname(os.path.abspath(__file__))
-_lee = os.path.join(os.path.dirname(TOOLS), "data", "lee-county-fl")
+_lee = os.path.join(os.path.dirname(TOOLS), "data", "c", "lee-county-fl")   # the current pipeline (data/c), not the stale pre-2026-10-27 copy
 _agg = os.path.join(_lee, "agg.json")
 if os.path.exists(_agg) and os.path.exists(os.path.join(_lee, "data.json")):
     tmp = tempfile.mkdtemp()

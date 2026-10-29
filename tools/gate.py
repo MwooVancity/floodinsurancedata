@@ -274,6 +274,22 @@ if P.get("sfha_units") is not None and units and "of all buildings" not in page:
 if re.search(r"per 100\b", page, re.I) and not re.search(r"cumulative|not an annual rate", page, re.I): fail("L14", "a per-100 ratio without its caveat")
 if P.get("frp_median") and money(P["frp_median"]) in page and not re.search(r"not a quote", page, re.I): fail("L16", "full-risk shown without a 'not a quote' caveat")
 
+# H12/H13 every card states its limits and never claims past its data; a card whose data exists is on the page
+# (tools/card_spec.py; hater r10: NOAA "all buildings" with coastal floods missing, a silently dropped storm)
+from card_spec import CARDS as _CS
+_secs = [(norm(re.sub(r"<[^>]+>", " ", t)), norm(re.sub(r"<[^>]+>", " ", re.sub(r"<script.*?</script>", " ", b, flags=re.S))))
+         for t, b in re.findall(r'<section class="card"[^>]*><h2>(.*?)</h2>(.*?)</section>', page, re.S)]
+for _c in _CS:
+    _hit = [b for t, b in _secs if re.search(_c["title"], t)]
+    for _b in _hit:
+        for _p in _c["must"]:
+            if _p not in _b: fail("H12", f"card '{_c['title']}' does not state its limit: '{_p}'")
+        for _p in _c["never"]:
+            if _p.lower() in _b.lower(): fail("H12", f"card '{_c['title']}' claims past its data: '{_p}'")
+    try: _want = _c["shown_when"](agg, data, EXTRAS)
+    except Exception as _e: fail("H13", f"card '{_c['title']}' spec cannot read this page's data: {_e!r}"); continue
+    if _want and not _hit: fail("H13", f"card '{_c['title']}' has data here but is not on the page")
+
 # ---------------- 7 ANSWER first ----------------
 for stand in re.findall(r'<p class="stand">(.*?)</p>', page, re.S):
     words = norm(re.sub(r"<[^>]+>", " ", stand)).split()
