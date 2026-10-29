@@ -7,6 +7,19 @@ plain replies, decide sensible defaults, no "Next:" line. Model: riverwaterlevel
 entity, government data only, no verdict). This file is the whole spec; keep it under ~200 lines,
 reader first, orders not descriptions, one file, no competing side docs.
 
+## Where we are (update this block every session; it is the strategic brain)
+- Updated 2026-10-28. Live: the round 9 release (home, 51 states, 52 counties). Rounds 10-12 fixes are committed,
+  not live. Round 12: home + orange-county-ca PASS; 5 pages failed on wording MAJORs, now fixed; round 13 is next.
+- Search Console verified 2026-10-23 (SCALE-PLAN, archived). Traffic: not yet measured; check GSC before any scaling.
+- Run flood sessions FROM THIS FOLDER (C:\Users\mwoo7\Desktop\floodinsurance) so this file loads; a session started
+  in calcscrape loads the car-site rules instead.
+- To-do list: `state/reviews/backlog.md` (ranked; S14 fails a release when an item is 3 review rounds old).
+- Decisions (owner 2026-10-28): no premium-rise or premium-estimate calculator ("way too risky"); the quote checker
+  and ZIP lookup stay (they place the reader's own number among real policies and predict nothing). No paid quote
+  referrals until a state-licensing + FTC disclosure check is done. Money order: traffic first, then AdSense after a
+  four-week Search Console review, then referrals if the check clears. A free link to FEMA's official agent finder
+  is allowed (no money, no claim).
+
 ## Line 0 — be the single most helpful flood-insurance page for this place. That is the whole job.
 Not "rank," not "run ads," not "cover more pages" — those are downstream and must never be the goal
 that shapes a page. The goal is: a homeowner at THIS place gets every answer a flood-insurance decision
@@ -34,24 +47,21 @@ key, a per-address lookup, a dataset that doesn't exist yet), it stays a printed
 source, not a silence.
 
 ## Line 0b — we are the dataset catalog (the moat)
-Competitors (NerdWallet, LendingTree, Policygenius, floodfigures.com) show one stale average and a
-count. We join every public dataset that bears on the decision. **TEN distinct federal datasets** (the
-page says "joins 10 of them" and the gate enforces that the stated count equals the sources listed — keep
-it at 8 everywhere). Item 2 is a field of item 1, not a separate fetch; the PIF workbook is a
-reconciliation benchmark, not a dataset. All verified live 2026-10-22 (item 9 added 2026-10-24):
-1. NFIP Policies v3 — cost spread p25/p50/p75/p90 (they show only a median).
-2. NFIP Policies v3 `fullRiskPremium` — the gap to FEMA's true price, share paying below it. (Same dataset as 1 — a field, not a separate source.)
-3. NFIP Claims v3 — claims per 100 policies + paid-by-year (they show raw counts).
-4. National Risk Index — flood expected-annual-loss + national percentile, per county.
-5. DisasterDeclarationsSummaries — flood/hurricane declarations, per county.
-6. HousingAssistanceOwners — FEMA aid paid to owners after floods, per ZIP/county.
-7. NfipCommunityStatusBook — the CRS discount (5–45% off premiums), per community. NOBODY shows it.
-8. Census ACS 5-year B25001 — take-up (NFIP policies per 100 homes), per county. Needs a free Census
-   key in `.env` (`CENSUS_KEY`); if absent the panel shows a gap line.
-9. IndividualAssistanceMultipleLossFloodProperties v1 — repetitive-loss (RL) + severe repetitive-loss
-   (SRL) counts per county, the chronic-repeat-flood signal nobody else joins.
-(Eight DISTINCT datasets: items 1–9 minus item 2, which is a field of item 1.)
-Reconciliation benchmark (not counted as a dataset): FEMA PIF workbook — checks our count to FEMA's official figure.
+Competitors (NerdWallet, LendingTree, Policygenius, MoneyGeek, Insurify) show one average, often unlabelled
+(mean vs median, premium vs cost, homes vs all policies). We join every public dataset that bears on the decision
+and label every figure's base. **Seven federal datasets** (methodology page says "Seven"; keep the count equal
+to the sources listed):
+1. NFIP Policies v3 (bulk parquet): cost spread p25/p50/p75/p90, cost by zone and ZIP, full-risk premium gap
+   (`fullRiskPremium` is a field here, not a separate dataset), deductibles, averages.
+2. NFIP Claims v3 (bulk parquet): claims by year, paid share, unpaid reasons, named flood events.
+3. National Risk Index: flood expected annual loss + national percentile, per county.
+4. Disaster Declarations Summaries: flood disasters (one rule, `metrics.flood_decl`), per county.
+5. Housing Assistance Owners: FEMA aid to owners after flood disasters only.
+6. Community Status Book: CRS discounts, and which communities are NOT in the NFIP.
+7. Individual Assistance Multiple-Loss Flood Properties: repeat-flood damage records (SRL is FEMA's
+   disaster-aid flag, not the NFIP severe repetitive loss list).
+Cut on purpose (card review, tools/card_spec.py): Census take-up, NOAA storm events, tile maps.
+The PIF workbook is listed for reference only; pages are not yet checked against it.
 A reader question with no dataset = a visible gap line naming the data to pull next. A dataset that
 answers no reader question = left out. Verified endpoints: `docs/reader-spec.md`.
 
@@ -73,18 +83,13 @@ would act on it and one plain sentence ties the dataset to that decision. "All t
 licence to pad.
 
 ## Pages — lean, not vast (quality beats volume)
-- `/flood-insurance/<state>/` — 51 state rollups: county table + state tile/risk map.
-- `/flood-insurance/<state>/<county>/` — the core page. County floor: >=100 single-family policies.
-- ZIP folds INTO the county page as a section, EXCEPT a standalone `/.../<zip>/` that passes the
-  **3-part publish test** (all three, not just one): (1) statistical sufficiency — enough eligible
-  policies for a stable estimate, not merely >=20; (2) decision-relevant difference — the ZIP changes
-  the reader's answer on cost, full-risk gap, claims or CRS discount in a way that matters, not just a
-  different number; (3) distinct intent/answer — it gives something the county page does not. Fails any
-  one -> fold into the county. This, not an arbitrary count, is what decides a page exists.
-- No city pages (no city field; the ZIP->city join is the mass-produced pattern Google and pSEO forbid).
-- Data stories (ranked, linkable, same data): counties paying furthest below full-risk; most claims
-  paid since 1978; biggest CRS discounts; event pages ("Hurricane Ian claims by county").
-- `/compare/` quote-position widget; `/methodology/`; `/data/` (downloadable CSV + embed widget).
+- `/flood-insurance/<state>/`: 51 state pages with the county table (screen 1 links to it).
+- `/flood-insurance/<county>/`: the core page. County floor: 30 priced single-family policies for a median.
+- ZIPs fold INTO the county page (ZIP table + lookup). A standalone ZIP page only if it passes all three:
+  enough policies, a decision-changing difference, an answer the county page lacks.
+- No city pages (no city field; ZIP-to-city joins are the mass-produced pattern Google forbids).
+- `/methodology/`, `/data/` (CSV), `/about/`, `/privacy/`, `/terms/`. Data stories (rankings) are not built yet.
+- New counties ship a few at a time (daily GitHub job, reviewed pages only); never hundreds at once.
 Ceiling ~2,000 quality pages (51 + ~1,500 counties + a few hundred real ZIPs), not ~14,000 thin ones.
 Launch wave 1 ~350 (all states + top flood counties); scale only where Search Console shows demand.
 
@@ -97,20 +102,13 @@ Launch wave 1 ~350 (all states + top flood counties); scale only where Search Co
 6. GEO: llms.txt + Dataset/Place/FAQ schema, self-contained quotable stat sentences, embed widget —
    win AI-Overview/ChatGPT/Perplexity citations where a new domain can rank before organic does.
 
-## Data pipeline (monthly, one command)
-`tools/collect.py` is the only network code: pulls per place, computes compact aggregates -> JSON.
-Parameterized by env (FF_STATE, FF_GEOID, FF_COUNTY, FF_COUNTYLABEL, FF_OFFICIAL) so every county
-runs the same code. `tools/collect_small.py` pulls CRS/declarations/housing; `tools/nri.py` pulls the
-National Risk Index flood fields and merges them in. `tools/build_page.py` reads the JSON only and
-renders static HTML (inline-SVG charts, no client lib).
-NRI source (keyless, reachable): `services.arcgis.com/XG15cJAlne2vxtgt` (FEMA_NationalRiskIndex org),
-layer `National_Risk_Index_Counties`, match on `STCOFIPS`. NOT hazards.fema.gov (TLS-blocks some envs)
-and NOT the third-party `EiGeaCDLpVDPqdJ5` copy (a non-national sample).
-Traps baked into a check: SUM `policyCount`, never count rows (condo rows carry >1 unit; Lee rows
-undercount ~32%); `propertyState` required in every policies query or it 503s; page at `$top=1000`
-with NO `$orderby` (orderby forces a server sort of the filtered set and 503s), dedupe by id;
-negative premiums are refunds; claims `countyCode` may not match property county; suppress cost charts
-under 100 cohort policies, ZIP under 20.
+## Data pipeline (monthly, in the cloud)
+Runs in GitHub Actions, never on the laptop (owner 2026-10-28). `refresh-data.yml` (monthly, 3rd, 06:00 UTC):
+`pull_raw.py` (FEMA bulk files, as-of = end of the month 3 months back) -> `agg_raw.py` -> `extras_raw.py` ->
+`collect_state_small.py`, then commits `data/`. `publish-counties.yml` (daily) adds reviewed counties through
+`release.py`. Locally only `build_all.py` and the gates run; `tools/build_page.py` reads JSON only (one function per
+card, `CARD_ORDER`). Traps: SUM `policyCount`, never count rows (condo rows carry more than one unit);
+negative premiums are refunds; claims `countyCode` may not match the property county.
 
 ## Musk's five steps, in order, in service of the reader (HARD, owner 2026-10-27: "smart like Elon Musk ... we still want maximum helpfulness for the user")
 The goal is the most helpful page a frightened reader can find, not the shortest page or the most pages. The five
@@ -181,6 +179,6 @@ docs push put old pages back live). `--hotfix "reason"` skips only the hater rev
 Your own premium; private (non-NFIP) prices; your address's exact zone (link FEMA's map); why prices
 rise (we show the gap, not the cause). Aggregates only, never a record-level or address-level figure.
 
-## Owner alone decides (`docs/OPEN-ITEMS.md`)
-Domain, Search Console property, ad account and consent banner, publisher name/email, opening pages to
-the index, cutting any block. No ads until a four-week Search Console review passes.
+## Owner alone decides
+Domain, Search Console, ad account and consent banner, publisher identity (the site stays anonymous), opening
+pages to the index, paid referrals, cutting any block. No ads until a four-week Search Console review passes.
