@@ -45,6 +45,10 @@ louisiana "Submitted and indexed". Top queries: Arkansas, Florida (position 19.5
      pay-less text only. Photo reading later, in-browser only, reader confirms each value.
    - Renewal-jump check: DROPPED by the ponytail ladder (the cap rule is already on the page; risky). Was: premium only, reasons listed before any
      comparison (coverage change, lost discount, non-primary 25%, new map, lapse), never "illegal".
+3d. Links (owner 10-29), guards first: a monthly outside-link checker that stops a release on a dead link; outside
+   links only to .gov or FloodSmart (gate); 3-5 related links per page chosen from data, never a fixed block; link
+   text names the destination. Add: DisasterAssistance.gov beside the aid rule; FEMA's provider finder beside "how to
+   buy"; state insurance department (needs a sourced list of 51); "compare with" a bordering county.
 4. Links: build ONE data story from data we hold ("counties paying furthest below FEMA's full-risk price").
    Done when it is live. Pitching it to local news needs the owner (outreach is outbound).
 5. Pace: 20 a day now (owner). After 4 weeks of step-1 data: 25 if most pages are indexed; drop to 10 if not; stop if
@@ -73,7 +77,5 @@ data decide the pace -> late January 2027 queue done -> decide ZIP pages and AdS
 Round 18-21: A, C, D, E, H, J, M, N pass. OPEN: B renters/landlords/second homes/business lines; F state insurance
 department contacts; G table search; I error-report contact (owner); K print layout; L Spanish.
 
-## Parked (not now, and why)
-- ZIP pages: only after counties index well (step 5).
-- Spanish, state contacts, print layout: real but slower than steps 1-4.
-- AdSense: after four weeks of Search Console data; owner decides.
+## Parked: ZIP pages (after counties index well); Spanish, state contacts, print layout (slower than steps 1-4);
+AdSense (after four weeks of Search Console data; owner decides).
