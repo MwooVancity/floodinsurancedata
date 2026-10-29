@@ -27,6 +27,18 @@ louisiana "Submitted and indexed". Top queries: Arkansas, Florida (position 19.5
    tiny, Maine duplicate disaster line, "Assigned in error" vs "Claim deleted in error", thin zones in the dropdown;
    (iii) glossary of terms used on the page (FEMA wording, sourced); (iv) one line each for renters, landlords,
    second homes and businesses; (v) ZIP names: "near <place>" fallback where no place covers 25%.
+3c. Reader tools (owner 2026-10-29 "do it all"), lowest risk first, each with a script that types edge cases into
+   the real page (permanent release check) and one light review. All: nothing leaves the phone, rules from
+   rules_registry, numbers tagged, no verdict words, below the quote checker, readable without JavaScript.
+   - Deadline planner (flood date in): proof of loss +60 days; FEMA aid window from the DECLARATION date (source first);
+     guards: future/empty date, local-date parsing, past 60 days, private policies set their own deadlines.
+   - Compare two places: published places only, same level, base labelled, "too few", one lazy JSON (size cap),
+     stacked on a phone, numbers only, no "safer/cheaper".
+   - Decode my policy page: FEMA field names; clean $ and commas; flag monthly-for-yearly and out-of-range;
+     premium vs premium-only median, deductible vs mix, coverage vs $250,000, zone in plain words; FEMA's own
+     pay-less text only. Photo reading later, in-browser only, reader confirms each value.
+   - Renewal-jump check (last; drop if its review finds it misleading): premium only, reasons listed before any
+     comparison (coverage change, lost discount, non-primary 25%, new map, lapse), never "illegal".
 4. Links: build ONE data story from data we hold ("counties paying furthest below FEMA's full-risk price").
    Done when it is live. Pitching it to local news needs the owner (outreach is outbound).
 5. Pace: 20 a day now (owner). After 4 weeks of step-1 data: 25 if most pages are indexed; drop to 10 if not; stop if
