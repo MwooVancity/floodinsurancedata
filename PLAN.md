@@ -2,6 +2,10 @@
 Rules live in CLAUDE.md. This file is the state and the next moves only; history is in git and
 `docs/archive/PLAN-2026-10-29.md`. Keep it under 80 lines: when a line is done, delete it.
 
+## First, before any work: ponytail (owner 2026-10-29)
+Does it need to exist? Does a sentence on the page already answer it? Is it in the code already, or does the
+browser already do it? Only then the least code. Tests scale with harm; reviews only where a reader could be hurt.
+
 ## Goal and scoreboard
 The most helpful flood-insurance page for every US county, for a scared reader on a phone (user, not Google).
 Scoreboard, the only measure of progress: pages indexed · impressions · clicks · queries on page 1 · AI citations.
@@ -30,7 +34,8 @@ louisiana "Submitted and indexed". Top queries: Arkansas, Florida (position 19.5
 3c. Reader tools (owner 2026-10-29 "do it all"; ship standard in CLAUDE.md: oracle, edge suites, fuzz, kill switch, staged), lowest risk first, each with a script that types edge cases into
    the real page (permanent release check) and one light review. All: nothing leaves the phone, rules from
    rules_registry, numbers tagged, no verdict words, below the quote checker, readable without JavaScript.
-   - Deadline planner (flood date in): proof of loss +60 days; FEMA aid window from the DECLARATION date (source first);
+   - Deadline planner: LIVE 2026-10-29 on louisiana, palm-beach-county-fl, broward-county-fl (staged; round 21 PASS).
+     Go to "all" in tools_flags.json on 2026-11-12 if no errors or complaints; then fix the round-21 MINORs. Was: proof of loss +60 days; FEMA aid window from the DECLARATION date (source first);
      guards: future/empty date, local-date parsing, past 60 days, private policies set their own deadlines.
    - (Ponytail 10-29: first try a "compare with" link that opens two county pages; build a tool only if that falls short.)
    - Compare two places: published places only, same level, base labelled, "too few", one lazy JSON (size cap),
