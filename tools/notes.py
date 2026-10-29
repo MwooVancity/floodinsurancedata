@@ -36,11 +36,11 @@ NOTES = {
                      "once, not each declaration record."),
     "nri": ("FEMA's National Risk Index",
             "The rating is FEMA's modeled expected flood loss, adjusted for social vulnerability and community resilience, "
-            "compared across counties (coastal and inland flooding; a tile map shows the worse of the two). Because it weighs "
+            "compared across counties (coastal and inland flooding are rated separately). Because it weighs "
             "vulnerability and resilience, and a place with many valuable buildings can have a large total loss but a low "
             "loss per dollar, the rating and the loss percentile can differ. Any loss figure is a whole-county model of all "
             "flood loss, insured or not, averaged per year, so it runs far above insurance payouts; it is never one home's "
-            "expected loss or premium. Tile maps name the two highest ratings and the page's own county."),
+            "expected loss or premium."),
 }
 
 def how(key, base="../../"):

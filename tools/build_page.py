@@ -71,8 +71,7 @@ h_rows = data.get("housing", [])
 
 # ---- declarations: distinct flood/storm events (by disasterNumber), not records ----
 decl = data.get("declarations", [])
-fh = [d for d in decl if d.get("incidentType") in MX.FLOOD_STORM
-      and "EVACUAT" not in (d.get("declarationTitle") or "").upper()]   # "Hurricane Katrina Evacuation" hosted evacuees; it was not a flood here
+fh = [d for d in decl if MX.flood_decl(d)]
 def _tc(t):   # title case that reads like a name: "St. John the Baptist Parish", "Severe Storms and Flooding", "Lafayette City-Parish"
     t = re.sub(r"\s*-\s*", "-", t.strip()).title()
     return re.sub(r"(?<=\S) (Of|The|And|At|In|On|For|To|A)\b", lambda mm: " " + mm.group(1).lower(), t)
@@ -88,18 +87,21 @@ def cal_year(d):
     s = d.get("declarationDate") or ""
     return s[:4] if len(s) >= 4 and s[:4].isdigit() else (str(d.get("fyDeclared")) if d.get("fyDeclared") else "")
 def event_key(d):
-    # one real event = one storm in one year. FEMA issues BOTH an emergency (EM, 3000-series) and a
-    # major-disaster (DR, 4000-series) number for the same storm, sometimes with different type labels
-    # ("Hurricane Helene" vs "Tropical Storm Helene"); dedup by storm name + calendar year, not number.
+    # FEMA can issue an emergency (EM) and a major-disaster (DR) number for ONE named storm, sometimes with different
+    # type labels ("Hurricane Helene" / "Tropical Storm Helene"): those merge. Every other declaration is its own
+    # event by disaster number (round 11: generic titles a year apart merged eight separate Louisiana disasters).
     t = (d.get("declarationTitle") or "").upper().strip()
-    m = re.match(r"(?:HURRICANE|TROPICAL STORM|TROPICAL DEPRESSION)\s+(.+)", t)
-    return (cal_year(d), (m.group(1).strip() if m else t))
-# a storm declared across a year boundary (Tropical Storm Zeta Oct 2020, Hurricane Zeta Jan 2021) is ONE event,
+    mm = re.match(r"(?:HURRICANE|TROPICAL STORM|TROPICAL DEPRESSION)\s+([A-Z]+)\b", t)
+    return ("storm", mm.group(1)) if mm else ("number", str(d.get("disasterNumber")))
+# a named storm declared across a year boundary (Tropical Storm Zeta Oct 2020, Hurricane Zeta Jan 2021) is ONE event,
 # shown under its first declaration's year
 _ev_first = []
+_seen_num = set()
 for d in sorted(fh, key=lambda x: x.get("declarationDate") or ""):
-    y, n = event_key(d)
-    hit = next((i for i, (y2, n2, _) in enumerate(_ev_first) if n == n2 and y.isdigit() and y2.isdigit() and abs(int(y) - int(y2)) <= 1), None)
+    if d.get("disasterNumber") in _seen_num: continue   # one row per county per disaster: count the disaster once
+    _seen_num.add(d.get("disasterNumber"))
+    y, n = cal_year(d), event_key(d)
+    hit = next((i for i, (y2, n2, _) in enumerate(_ev_first) if n[0] == "storm" and n == n2 and y.isdigit() and y2.isdigit() and abs(int(y) - int(y2)) <= 1), None)
     if hit is None: _ev_first.append((y, n, d))
     elif d.get("declarationType") == "DR" and _ev_first[hit][2].get("declarationType") != "DR":
         # the major-disaster title names the storm as it hit ("Hurricane Ida"); the earlier emergency title is pre-landfall
@@ -591,13 +593,13 @@ def card_events():
                      + ", ".join(str(y) for y, _ in _unnamed) + " (their totals are in the yearly chart above).</p>") if _unnamed else ""
     if len(_ev) >= 2:
         events_card = card("Which floods paid out the biggest totals here?",
-            f"The costliest single flood here was {_evname(_ev[0])}: {tp('event_paid', f'extras.claims.events.{_ev[0][chr(105)]}.paid', big, q=_ev[0]['name'])} across "
+            f"The costliest flood FEMA named here was {_evname(_ev[0])}: {tp('event_paid', f'extras.claims.events.{_ev[0][chr(105)]}.paid', big, q=_ev[0]['name'])} across "
             f"{tp('event_claims', f'extras.claims.events.{_ev[0][chr(105)]}.claims', q=_ev[0]['name'])} NFIP flood claims.",
             "<table><thead><tr><th>Flood (FEMA's name)</th><th>Claims</th><th>Total paid</th><th>Average</th></tr></thead><tbody>"
             + "".join(f"<tr><td>{_evname(e)}</td><td>{tp('event_claims', f'extras.claims.events.{e[chr(105)]}.claims', q=e['name'])}</td>"
                       f"<td>{tp('event_paid', f'extras.claims.events.{e[chr(105)]}.paid', big, q=e['name'])}</td>"
                       f"<td>{tp('event_avg', f'extras.claims.events.{e[chr(105)]}.avg', money, q=e['name'])}</td></tr>" for e in _ev)
-            + "".join(f"<tr><td>{_evname(e)}: FEMA's general label, many separate floods</td><td>{tp('event_claims', f'extras.claims.events.{e[chr(105)]}.claims', q=e['name'])}</td>"
+            + "".join(f"<tr><td>{_evname(e)}: FEMA's records use this name for claims in several years</td><td>{tp('event_claims', f'extras.claims.events.{e[chr(105)]}.claims', q=e['name'])}</td>"
                       f"<td>{tp('event_paid', f'extras.claims.events.{e[chr(105)]}.paid', big, q=e['name'])}</td>"
                       f"<td>{tp('event_avg', f'extras.claims.events.{e[chr(105)]}.avg', money, q=e['name'])}</td></tr>" for e in _ev_all)
             + f"</tbody></table><p class='note'>Grouped by the flood event FEMA named; only claims that paid something, and only floods with {tp('threshold', 'const.event_min', q='event_min')} or more paid claims here. Totals include code-upgrade (ICC) payments, which the yearly chart leaves out.{how('events')}</p>" + _unnamed_note,
@@ -617,7 +619,7 @@ def card_multiloss():
         _ml_lead = (claim("Yes", "yes", ("ml_total", ">", 0)) + f": FEMA's disaster-aid records hold {m('ml_total', num(ml['total']))} damage records from homes here that flooded more than once"
                     + (f"; {m('ml_srl', num(_srl))} records are from homes on FEMA's severe repetitive loss list" if _srl else "") + "."
                     if ml["total"] else
-                    f"Not in FEMA's records: no disaster-aid applications here came from homes that flooded more than once.")
+                    f"Not in FEMA's disaster-aid records since 2002: no aid applications here came from homes that flooded more than once. NFIP insurance claims are counted separately.")
         multiloss_card = card("Do the same homes flood again here?", _ml_lead,
             f"<ul class='kv'><li><b>Repeat-flood damage records</b><span>{tp('ml_total', 'data.multiloss.total')}</span></li>"
             + (f"<li><b>Records from homes on the severe repetitive loss list</b><span>{tp('ml_srl', 'data.multiloss.srl')}</span></li>" if _srl else "")
@@ -936,7 +938,7 @@ def card_disasters():
     return card(f"How often is {CS} a flood disaster?" if IS_STATE else f"How often is this {UNIT} a flood disaster?",
       f"{m('declarations', str(len(fh_events)))} federal disasters for floods or storms here"
       + (f"; the latest was {html.escape(_dtitle(recent[0]))} ({html.escape(cal_year(recent[0]))})." if recent else "."),
-      f"<ul>{_recent_li()}</ul><p class='note'>Only the latest are listed, newest first, one line per disaster; the count covers every flood or storm declaration FEMA lists here, including emergency declarations.{how('declarations')}</p>",
+      f"<ul>{_recent_li()}</ul><p class='note'>Only the latest are listed, newest first, one line per disaster; the count covers every flood, hurricane, tropical-storm and coastal-storm declaration FEMA lists here, plus severe-storm declarations whose title names flooding, including emergency declarations.{how('declarations')}</p>",
       src(["declarations"], "declarations through " + max((cal_year(d) for d in fh), default="the latest on file"), RETR))
 
 def card_aid():
@@ -946,7 +948,7 @@ def card_aid():
         + ".")
        if h_ihp and h_regs else "No FEMA housing aid to homeowners here after floods or storms is on record."),
       f"<p class='note'>{rule('ia_partial')} The average is over every registration, including those approved for nothing. "
-      "Hurricane aid includes wind damage. COVID, fire, ice-storm and tornado aid are left out.</p>",
+      "Only disasters counted in the flood-disaster card are included; their aid can still cover wind or tornado damage from the same storm. Disasters for COVID, fire, winter storms or tornadoes alone are left out.</p>",
       src(["ia_paid", "ia_regs"],
           "homeowner aid by disaster", RETR))
 

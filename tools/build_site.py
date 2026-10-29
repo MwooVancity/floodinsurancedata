@@ -193,8 +193,8 @@ meth = HEAD.format(title="Methodology — flood insurance data", desc="Definitio
 <li><b>Housing Assistance (Owners) v2</b> — OpenFEMA. FEMA aid paid to owners after disasters.</li>
 <li><b>National Risk Index (counties)</b> — FEMA ArcGIS (FEMA_NationalRiskIndex). Flood expected annual loss + percentile.</li>
 <li><b>Multiple-Loss Flood Properties</b> — OpenFEMA (Individual Assistance). One record per property per declared disaster that damaged it, for properties that flooded more than once; a property on FEMA's severe repetitive loss list is flagged.</li>
-<li>Official <b>Policy Information by State and Community</b> workbook — reconciliation benchmark (a cross-check, not a dataset).</li></ul>
-<p class="mut">Seven federal datasets; the full-risk premium is a field within Policies and the PIF workbook is a reconciliation benchmark, not a separate fetch. Each page lists the ones it uses.</p></div>
+<li>Official <b>Policy Information by State and Community</b> workbook — listed for reference; the pages are not yet checked against it.</li></ul>
+<p class="mut">Seven federal datasets; the full-risk premium is a field within Policies and the PIF workbook is a reference, not a separate fetch. Each page lists the ones it uses.</p></div>
 <div class="card"><h2>Definitions &amp; rules</h2><ul>
 <li><b>Policy units</b> = sum of <code>policyCount</code>, never a row count — condo-association records carry more than one unit.</li>
 <li><b>Cost cohort</b>: single-family primary-residence policies (occupancy 1/11, primary residence), annual cost = premium + fees.</li>

@@ -18,10 +18,14 @@ GONE = {   # wrong or misleading text (hater round): must be on no page
     "change coverage at renewal": "r7 44 CFR 61.11 says a coverage increase waits 30 days",
     "A policy can carry the full limit": "r7 unsourced program claim",
     "upper-middle": "r7 checker called the median itself above the middle",
+    "costliest single flood": "r11 an unnamed year paid more than the 'costliest single flood'",
+    "many separate floods": "r11 a storm-named catch-all label was called many floods",
+    "ice-storm and tornado aid are left out": "r11 severe-storm aid with tornado damage was counted",
+    "a tile map shows": "r11 methodology described the retired tile map",
 }
 HAS = [   # (page, phrase, why): a fix that must be visible where the reviewer found the defect
     ("louisiana", "1995", "r5/r6 Louisiana's 1995 flood year was hidden"),
-    ("louisiana", "FEMA's general label, many separate floods", "r6 catch-all claims were dropped"),
+    ("louisiana", "FEMA's records use this name for claims in several years", "r6 catch-all claims were dropped"),
     ("louisiana", "insured for at least 80% of its full rebuilding cost", "r6 the 80% rebuild rule was missing"),
     ("palm-beach-county-fl", "Top reason for unpaid claims", "r6 43.5% paid had no context on screen 1"),
     ("palm-beach-county-fl", "since January 2026", "r6 Citizens tense"),
