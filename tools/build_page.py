@@ -80,6 +80,7 @@ def _dtitle(d):   # "KS-FLOODING 10/31/98" / "NY - SEVERE WX, SEPT 7, 1998" -> "
     t = re.sub(r"^[A-Z]{2}\s*-\s*", "", (d.get("declarationTitle") or d.get("incidentType") or "").strip())
     t = re.sub(r",?\s*\b\d{1,2}/\d{1,2}(/\d{2,4})?\b|,?\s*\b(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEPT?|OCT|NOV|DEC)[A-Z]*\.?\s+\d{1,2}(,\s*\d{4})?", "", t, flags=re.I)
     t = re.sub(r"\s*\b(of\s+)?'?\d{2,4}\b", "", t, flags=re.I)   # stray years ("1996", "Blizzard Of 96"); the year is shown beside it
+    t = re.sub(r"\s+\d{1,2}$", "", t.strip(" ,-"))   # stress test: "AR SEVERE WEATHER 1" (FEMA's sequence number) left a stray figure
     return _tc(t.strip(" ,-"))
 def cal_year(d):
     # CALENDAR year from declarationDate — NOT fyDeclared (FEMA's federal fiscal year, which rolls to
@@ -199,7 +200,7 @@ def card_risk():
             bits = []
             # NRI's *_ALR_NPCTL is the loss RATE percentile (loss per dollar of building value), not total loss: say so
             if isinstance(eald, (int, float)) and eald > 0: bits.append(f"FEMA models roughly {tp('nri_eal_usd', 'nri.' + label.lower() + '.eal_total_usd', big, q=label.lower())} of flood loss a year (buildings, people and farmland valued in dollars, insured or not; a model, not insurance payouts)")
-            if isinstance(pctl, (int, float)): bits.append(f"per dollar of building value, that loss is higher than in about {m('nri_eal_pctl_' + label.lower(), str(round(pctl)) + '%')} of U.S. counties")
+            if isinstance(pctl, (int, float)): bits.append(f"per dollar of building value, {label.lower()} flood loss here is higher than in about {m('nri_eal_pctl_' + label.lower(), str(round(pctl)) + '%')} of U.S. counties")   # stress test: equal coastal/inland percentiles printed one sentence twice
             return (f" {label}: " + "; ".join(bits) + ".") if bits else ""
         risk_body = ("<ul class='kv'>" + rating_row(cf, "Coastal") + rating_row(inl, "Inland") + "</ul>"
                      "<p class='note'>FEMA's rating weighs modeled loss with social vulnerability and community resilience; it is not a "
