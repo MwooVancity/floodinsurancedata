@@ -36,10 +36,10 @@ jobs:
           git diff --quiet tools/counties.json && { echo "queue empty"; echo "none=1" >> "$GITHUB_OUTPUT"; } || true
       - name: Phone check browser
         if: steps.add.outputs.none != '1'
-        run: pip install -q playwright && python -m playwright install --with-deps chromium
+        run: pip install -q playwright && python -m playwright install --with-deps chromium webkit
       - name: Build and every release check (the same steps as a local release; 2026-10-28 it ran only three of them)
         if: steps.add.outputs.none != '1'
-        run: python -I tools/release.py
+        run: python -I tools/test_tools.py --browser webkit && python -I tools/release.py
       - name: Commit, deploy, gate live
         if: steps.add.outputs.none != '1' && (github.event_name == 'schedule' || inputs.publish)
         env:

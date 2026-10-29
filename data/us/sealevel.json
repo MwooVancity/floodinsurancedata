@@ -1,0 +1,1346 @@
+{
+"15007": [
+{
+"station": "1611400",
+"name": "Nawiliwili",
+"trend": 0.75,
+"error": 0.07,
+"start": "01/15/1955",
+"end": "12/15/2025"
+}
+],
+"15003": [
+{
+"station": "1612340",
+"name": "Honolulu",
+"trend": 0.62,
+"error": 0.04,
+"start": "01/15/1905",
+"end": "12/15/2025"
+},
+{
+"station": "1612480",
+"name": "Mokuoloe",
+"trend": 0.7,
+"error": 0.1,
+"start": "05/15/1957",
+"end": "12/15/2025"
+}
+],
+"15009": [
+{
+"station": "1615680",
+"name": "Kahului",
+"trend": 0.9,
+"error": 0.07,
+"start": "01/15/1947",
+"end": "12/15/2025"
+}
+],
+"15001": [
+{
+"station": "1617433",
+"name": "Kawaihae",
+"trend": 1.5,
+"error": 0.19,
+"start": "04/15/1988",
+"end": "12/15/2025"
+},
+{
+"station": "1617760",
+"name": "Hilo",
+"trend": 1.24,
+"error": 0.05,
+"start": "01/15/1927",
+"end": "12/15/2025"
+}
+],
+"66010": [
+{
+"station": "1630000",
+"name": "Apra Harbor, Guam",
+"trend": 2.12,
+"error": 0.58,
+"start": "09/08/1993",
+"end": "12/15/2025"
+}
+],
+"60010": [
+{
+"station": "1770000",
+"name": "Pago Pago, American Samoa",
+"trend": 6.09,
+"error": 1.06,
+"start": "10/29/2009",
+"end": "12/15/2025"
+}
+],
+"23029": [
+{
+"station": "8410140",
+"name": "Eastport",
+"trend": 0.92,
+"error": 0.03,
+"start": "10/15/1929",
+"end": "12/15/2025"
+}
+],
+"23009": [
+{
+"station": "8413320",
+"name": "Bar Harbor",
+"trend": 0.98,
+"error": 0.04,
+"start": "09/15/1947",
+"end": "12/15/2025"
+}
+],
+"23005": [
+{
+"station": "8418150",
+"name": "Portland",
+"trend": 0.78,
+"error": 0.03,
+"start": "01/15/1912",
+"end": "12/15/2025"
+}
+],
+"23031": [
+{
+"station": "8419870",
+"name": "Seavey Island",
+"trend": 0.87,
+"error": 0.04,
+"start": "09/15/1926",
+"end": "12/15/2025"
+}
+],
+"25025": [
+{
+"station": "8443970",
+"name": "Boston",
+"trend": 1.17,
+"error": 0.03,
+"start": "01/15/1921",
+"end": "12/15/2025"
+}
+],
+"25001": [
+{
+"station": "8447930",
+"name": "Woods Hole",
+"trend": 1.24,
+"error": 0.03,
+"start": "08/15/1932",
+"end": "12/15/2025"
+}
+],
+"25019": [
+{
+"station": "8449130",
+"name": "Nantucket Island",
+"trend": 1.63,
+"error": 0.06,
+"start": "01/15/1965",
+"end": "12/15/2025"
+}
+],
+"44005": [
+{
+"station": "8452660",
+"name": "Newport",
+"trend": 1.17,
+"error": 0.03,
+"start": "10/15/1930",
+"end": "12/15/2025"
+}
+],
+"44007": [
+{
+"station": "8454000",
+"name": "Providence",
+"trend": 1.04,
+"error": 0.05,
+"start": "07/15/1938",
+"end": "12/15/2025"
+}
+],
+"09180": [
+{
+"station": "8461490",
+"name": "New London",
+"trend": 1.16,
+"error": 0.04,
+"start": "07/15/1938",
+"end": "12/15/2025"
+}
+],
+"09120": [
+{
+"station": "8467150",
+"name": "Bridgeport",
+"trend": 1.35,
+"error": 0.08,
+"start": "10/15/1964",
+"end": "12/15/2025"
+}
+],
+"36103": [
+{
+"station": "8510560",
+"name": "Montauk",
+"trend": 1.42,
+"error": 0.05,
+"start": "10/15/1947",
+"end": "12/15/2025"
+}
+],
+"36059": [
+{
+"station": "8516945",
+"name": "Kings Point",
+"trend": 1.08,
+"error": 0.04,
+"start": "08/15/1931",
+"end": "12/15/2025"
+}
+],
+"36061": [
+{
+"station": "8518750",
+"name": "The Battery",
+"trend": 1.16,
+"error": 0.02,
+"start": "01/15/1856",
+"end": "12/15/2025"
+}
+],
+"36085": [
+{
+"station": "8519483",
+"name": "Bergen Point",
+"trend": 1.86,
+"error": 0.13,
+"start": "10/15/1981",
+"end": "12/15/2024"
+}
+],
+"34025": [
+{
+"station": "8531680",
+"name": "Sandy Hook",
+"trend": 1.68,
+"error": 0.04,
+"start": "11/15/1932",
+"end": "12/15/2025"
+}
+],
+"34001": [
+{
+"station": "8534720",
+"name": "Atlantic City",
+"trend": 1.67,
+"error": 0.03,
+"start": "09/15/1911",
+"end": "12/15/2025"
+}
+],
+"34009": [
+{
+"station": "8536110",
+"name": "Cape May",
+"trend": 2.01,
+"error": 0.09,
+"start": "12/15/1965",
+"end": "12/15/2025"
+}
+],
+"42101": [
+{
+"station": "8545240",
+"name": "Philadelphia",
+"trend": 1.24,
+"error": 0.04,
+"start": "07/15/1900",
+"end": "12/15/2025"
+}
+],
+"10003": [
+{
+"station": "8551910",
+"name": "Reedy Point",
+"trend": 1.55,
+"error": 0.09,
+"start": "08/15/1956",
+"end": "12/15/2025"
+}
+],
+"10005": [
+{
+"station": "8557380",
+"name": "Lewes",
+"trend": 1.49,
+"error": 0.05,
+"start": "02/15/1919",
+"end": "12/15/2025"
+}
+],
+"24047": [
+{
+"station": "8570283",
+"name": "Ocean City",
+"trend": 2.07,
+"error": 0.14,
+"start": "06/15/1975",
+"end": "12/15/2025"
+}
+],
+"24019": [
+{
+"station": "8571892",
+"name": "Cambridge",
+"trend": 1.59,
+"error": 0.06,
+"start": "01/15/1943",
+"end": "12/15/2025"
+}
+],
+"24029": [
+{
+"station": "8573364",
+"name": "Tolchester Beach",
+"trend": 1.7,
+"error": 0.17,
+"start": "07/15/1971",
+"end": "12/15/2025"
+}
+],
+"24015": [
+{
+"station": "8573927",
+"name": "Chesapeake City",
+"trend": 1.76,
+"error": 0.12,
+"start": "12/15/1972",
+"end": "12/15/2025"
+}
+],
+"24510": [
+{
+"station": "8574680",
+"name": "Baltimore",
+"trend": 1.3,
+"error": 0.02,
+"start": "06/15/1902",
+"end": "12/15/2025"
+}
+],
+"24003": [
+{
+"station": "8575512",
+"name": "Annapolis",
+"trend": 1.52,
+"error": 0.04,
+"start": "09/15/1928",
+"end": "12/15/2025"
+}
+],
+"24009": [
+{
+"station": "8577330",
+"name": "Solomons Island",
+"trend": 1.62,
+"error": 0.05,
+"start": "12/15/1937",
+"end": "12/15/2025"
+}
+],
+"11001": [
+{
+"station": "8594900",
+"name": "Washington",
+"trend": 1.4,
+"error": 0.05,
+"start": "12/15/1924",
+"end": "12/15/2025"
+}
+],
+"51001": [
+{
+"station": "8631044",
+"name": "Wachapreague",
+"trend": 2.24,
+"error": 0.12,
+"start": "07/15/1978",
+"end": "12/15/2025"
+}
+],
+"51131": [
+{
+"station": "8632200",
+"name": "Kiptopeke",
+"trend": 1.58,
+"error": 0.06,
+"start": "09/15/1951",
+"end": "12/15/2025"
+},
+{
+"station": "8638901",
+"name": "Chesapeake Channel",
+"trend": 2.42,
+"error": 0.11,
+"start": "02/15/1975",
+"end": "12/15/2025"
+}
+],
+"51099": [
+{
+"station": "8635027",
+"name": "Dahlgren",
+"trend": 2.24,
+"error": 0.12,
+"start": "07/15/1972",
+"end": "12/15/2025"
+}
+],
+"51133": [
+{
+"station": "8635750",
+"name": "Lewisetta",
+"trend": 2.34,
+"error": 0.11,
+"start": "11/15/1970",
+"end": "12/15/2025"
+}
+],
+"51103": [
+{
+"station": "8636580",
+"name": "Windmill Point",
+"trend": 2.55,
+"error": 0.2,
+"start": "04/15/1982",
+"end": "12/15/2025"
+}
+],
+"51199": [
+{
+"station": "8637689",
+"name": "Yorktown",
+"trend": 1.91,
+"error": 0.06,
+"start": "06/15/1950",
+"end": "12/15/2025"
+}
+],
+"51710": [
+{
+"station": "8638610",
+"name": "Sewells Point",
+"trend": 1.9,
+"error": 0.04,
+"start": "08/15/1927",
+"end": "12/15/2025"
+}
+],
+"37055": [
+{
+"station": "8651370",
+"name": "Duck",
+"trend": 1.94,
+"error": 0.11,
+"start": "06/15/1978",
+"end": "12/15/2025"
+},
+{
+"station": "8652587",
+"name": "Oregon Inlet Marina",
+"trend": 2.17,
+"error": 0.18,
+"start": "05/15/1977",
+"end": "12/15/2025"
+}
+],
+"37031": [
+{
+"station": "8656483",
+"name": "Beaufort",
+"trend": 1.43,
+"error": 0.07,
+"start": "01/15/1953",
+"end": "12/15/2025"
+}
+],
+"37129": [
+{
+"station": "8658120",
+"name": "Wilmington",
+"trend": 1.1,
+"error": 0.07,
+"start": "05/15/1935",
+"end": "12/15/2025"
+}
+],
+"45051": [
+{
+"station": "8661070",
+"name": "Springmaid Pier",
+"trend": 1.32,
+"error": 0.09,
+"start": "06/15/1957",
+"end": "12/15/2025"
+}
+],
+"45019": [
+{
+"station": "8665530",
+"name": "Charleston",
+"trend": 1.38,
+"error": 0.04,
+"start": "01/15/1901",
+"end": "12/15/2025"
+}
+],
+"13051": [
+{
+"station": "8670870",
+"name": "Fort Pulaski",
+"trend": 1.44,
+"error": 0.05,
+"start": "07/15/1935",
+"end": "12/15/2025"
+}
+],
+"12089": [
+{
+"station": "8720030",
+"name": "Fernandina Beach",
+"trend": 0.91,
+"error": 0.03,
+"start": "06/15/1897",
+"end": "12/15/2025"
+}
+],
+"12031": [
+{
+"station": "8720218",
+"name": "Mayport",
+"trend": 1.15,
+"error": 0.05,
+"start": "05/15/1928",
+"end": "12/15/2025"
+}
+],
+"12009": [
+{
+"station": "8721604",
+"name": "Port Canaveral",
+"trend": 2.52,
+"error": 0.26,
+"start": "11/15/1994",
+"end": "12/15/2025"
+}
+],
+"12099": [
+{
+"station": "8722670",
+"name": "Lake Worth Pier",
+"trend": 1.62,
+"error": 0.1,
+"start": "05/15/1970",
+"end": "12/15/2025"
+}
+],
+"12086": [
+{
+"station": "8723214",
+"name": "Virginia Key",
+"trend": 1.26,
+"error": 0.04,
+"start": "06/15/1931",
+"end": "12/15/2025"
+}
+],
+"12087": [
+{
+"station": "8723970",
+"name": "Vaca Key",
+"trend": 1.65,
+"error": 0.08,
+"start": "01/15/1971",
+"end": "12/15/2025"
+},
+{
+"station": "8724580",
+"name": "Key West",
+"trend": 1.04,
+"error": 0.03,
+"start": "01/15/1913",
+"end": "12/15/2025"
+}
+],
+"12021": [
+{
+"station": "8725110",
+"name": "Naples",
+"trend": 1.32,
+"error": 0.08,
+"start": "03/15/1965",
+"end": "12/15/2023"
+}
+],
+"12071": [
+{
+"station": "8725520",
+"name": "Fort Myers",
+"trend": 1.43,
+"error": 0.08,
+"start": "04/15/1965",
+"end": "12/15/2025"
+}
+],
+"12081": [
+{
+"station": "8726384",
+"name": "Port Manatee",
+"trend": 2.15,
+"error": 0.13,
+"start": "06/15/1976",
+"end": "12/15/2025"
+}
+],
+"12103": [
+{
+"station": "8726520",
+"name": "St. Petersburg",
+"trend": 1.23,
+"error": 0.05,
+"start": "01/15/1947",
+"end": "12/15/2025"
+},
+{
+"station": "8726724",
+"name": "Clearwater Beach",
+"trend": 1.72,
+"error": 0.1,
+"start": "05/15/1973",
+"end": "12/15/2025"
+}
+],
+"12057": [
+{
+"station": "8726607",
+"name": "Old Port Tampa",
+"trend": 2.38,
+"error": 0.17,
+"start": "03/15/1995",
+"end": "12/15/2025"
+},
+{
+"station": "8726674",
+"name": "East Bay",
+"trend": 2.17,
+"error": 0.16,
+"start": "10/15/1976",
+"end": "12/15/2025"
+}
+],
+"12075": [
+{
+"station": "8727520",
+"name": "Cedar Key",
+"trend": 0.94,
+"error": 0.04,
+"start": "04/15/1914",
+"end": "12/15/2025"
+}
+],
+"12037": [
+{
+"station": "8728690",
+"name": "Apalachicola",
+"trend": 1.2,
+"error": 0.11,
+"start": "05/15/1967",
+"end": "12/15/2025"
+}
+],
+"12005": [
+{
+"station": "8729108",
+"name": "Panama City",
+"trend": 1.21,
+"error": 0.1,
+"start": "03/15/1973",
+"end": "12/15/2025"
+},
+{
+"station": "8729210",
+"name": "Panama City Beach",
+"trend": 1.91,
+"error": 0.15,
+"start": "10/15/1989",
+"end": "12/15/2025"
+}
+],
+"12033": [
+{
+"station": "8729840",
+"name": "Pensacola",
+"trend": 1.07,
+"error": 0.05,
+"start": "05/15/1923",
+"end": "12/15/2025"
+}
+],
+"01097": [
+{
+"station": "8735180",
+"name": "Dauphin Island",
+"trend": 1.72,
+"error": 0.1,
+"start": "04/15/1966",
+"end": "12/15/2025"
+},
+{
+"station": "8737048",
+"name": "Mobile State Docks",
+"trend": 1.82,
+"error": 0.24,
+"start": "05/15/1980",
+"end": "12/15/2025"
+}
+],
+"28045": [
+{
+"station": "8747437",
+"name": "Bay Waveland",
+"trend": 1.81,
+"error": 0.13,
+"start": "06/15/1978",
+"end": "12/15/2025"
+}
+],
+"22051": [
+{
+"station": "8761724",
+"name": "Grand Isle",
+"trend": 3.59,
+"error": 0.07,
+"start": "01/15/1947",
+"end": "12/15/2025"
+}
+],
+"22071": [
+{
+"station": "8761927",
+"name": "New Canal",
+"trend": 2.36,
+"error": 0.19,
+"start": "12/15/1982",
+"end": "12/15/2025"
+}
+],
+"48245": [
+{
+"station": "8770570",
+"name": "Sabine Pass",
+"trend": 2.43,
+"error": 0.15,
+"start": "06/15/1958",
+"end": "12/15/2020"
+},
+{
+"station": "8770822",
+"name": "Texas Point",
+"trend": 2.27,
+"error": 0.12,
+"start": "06/15/1958",
+"end": "12/15/2025"
+}
+],
+"48201": [
+{
+"station": "8770613",
+"name": "Morgans Point",
+"trend": 1.5,
+"error": 0.24,
+"start": "04/15/1993",
+"end": "12/15/2025"
+}
+],
+"48167": [
+{
+"station": "8771013",
+"name": "Eagle Point",
+"trend": 4.8,
+"error": 0.27,
+"start": "08/15/1993",
+"end": "12/15/2025"
+},
+{
+"station": "8771341",
+"name": "Galveston Bay Entrance",
+"trend": 2.59,
+"error": 0.1,
+"start": "09/15/1957",
+"end": "12/15/2025"
+},
+{
+"station": "8771450",
+"name": "Galveston Pier 21",
+"trend": 2.61,
+"error": 0.04,
+"start": "01/15/1904",
+"end": "12/15/2025"
+}
+],
+"48039": [
+{
+"station": "8772471",
+"name": "Freeport Harbor",
+"trend": 1.38,
+"error": 0.12,
+"start": "01/15/1972",
+"end": "12/15/2025"
+}
+],
+"48007": [
+{
+"station": "8774770",
+"name": "Rockport",
+"trend": 2.38,
+"error": 0.09,
+"start": "03/15/1937",
+"end": "12/15/2025"
+}
+],
+"48355": [
+{
+"station": "8775792",
+"name": "Packery Channel",
+"trend": 2.41,
+"error": 0.21,
+"start": "12/15/1988",
+"end": "12/15/2025"
+},
+{
+"station": "8775870",
+"name": "Corpus Christi",
+"trend": 2.16,
+"error": 0.2,
+"start": "12/15/1983",
+"end": "03/15/2022"
+}
+],
+"48489": [
+{
+"station": "8778490",
+"name": "Port Mansfield",
+"trend": 1.56,
+"error": 0.12,
+"start": "06/15/1963",
+"end": "12/15/2025"
+}
+],
+"48061": [
+{
+"station": "8779748",
+"name": "South Padre Island",
+"trend": 1.61,
+"error": 0.09,
+"start": "06/15/1958",
+"end": "12/15/2025"
+},
+{
+"station": "8779770",
+"name": "Port Isabel",
+"trend": 1.71,
+"error": 0.06,
+"start": "04/15/1944",
+"end": "12/15/2025"
+}
+],
+"06073": [
+{
+"station": "9410170",
+"name": "San Diego",
+"trend": 0.88,
+"error": 0.03,
+"start": "01/15/1906",
+"end": "12/15/2025"
+},
+{
+"station": "9410230",
+"name": "La Jolla",
+"trend": 0.8,
+"error": 0.04,
+"start": "11/15/1924",
+"end": "12/15/2025"
+}
+],
+"06037": [
+{
+"station": "9410660",
+"name": "Los Angeles",
+"trend": 0.42,
+"error": 0.04,
+"start": "12/15/1923",
+"end": "12/15/2025"
+},
+{
+"station": "9410840",
+"name": "Santa Monica",
+"trend": 0.6,
+"error": 0.06,
+"start": "01/15/1933",
+"end": "12/15/2025"
+}
+],
+"06083": [
+{
+"station": "9411340",
+"name": "Santa Barbara",
+"trend": 0.41,
+"error": 0.16,
+"start": "12/15/1973",
+"end": "12/15/2025"
+}
+],
+"06079": [
+{
+"station": "9412110",
+"name": "Port San Luis",
+"trend": 0.39,
+"error": 0.06,
+"start": "07/15/1945",
+"end": "12/15/2025"
+}
+],
+"06053": [
+{
+"station": "9413450",
+"name": "Monterey",
+"trend": 0.7,
+"error": 0.13,
+"start": "12/15/1973",
+"end": "12/15/2025"
+}
+],
+"06075": [
+{
+"station": "9414290",
+"name": "San Francisco",
+"trend": 0.78,
+"error": 0.03,
+"start": "09/01/1897",
+"end": "12/15/2025"
+}
+],
+"06081": [
+{
+"station": "9414523",
+"name": "Redwood City",
+"trend": 1.08,
+"error": 0.25,
+"start": "11/15/1974",
+"end": "12/15/2025"
+}
+],
+"06001": [
+{
+"station": "9414750",
+"name": "Alameda",
+"trend": 0.37,
+"error": 0.07,
+"start": "04/15/1939",
+"end": "12/15/2025"
+}
+],
+"06013": [
+{
+"station": "9414863",
+"name": "Richmond",
+"trend": 1.32,
+"error": 0.29,
+"start": "03/15/1979",
+"end": "12/15/2025"
+},
+{
+"station": "9415144",
+"name": "Port Chicago",
+"trend": 0.77,
+"error": 0.23,
+"start": "11/15/1976",
+"end": "12/15/2025"
+}
+],
+"06041": [
+{
+"station": "9415020",
+"name": "Point Reyes",
+"trend": 0.85,
+"error": 0.14,
+"start": "01/15/1975",
+"end": "12/15/2025"
+}
+],
+"06045": [
+{
+"station": "9416841",
+"name": "Arena Cove",
+"trend": 0.45,
+"error": 0.15,
+"start": "05/15/1978",
+"end": "12/15/2025"
+}
+],
+"06023": [
+{
+"station": "9418767",
+"name": "North Spit",
+"trend": 2.0,
+"error": 0.14,
+"start": "09/15/1977",
+"end": "12/15/2025"
+}
+],
+"06015": [
+{
+"station": "9419750",
+"name": "Crescent City",
+"trend": -0.3,
+"error": 0.05,
+"start": "01/15/1933",
+"end": "12/15/2025"
+}
+],
+"41015": [
+{
+"station": "9431647",
+"name": "Port Orford",
+"trend": -0.02,
+"error": 0.17,
+"start": "10/15/1977",
+"end": "12/15/2025"
+}
+],
+"41011": [
+{
+"station": "9432780",
+"name": "Charleston",
+"trend": 0.44,
+"error": 0.12,
+"start": "04/15/1970",
+"end": "12/15/2025"
+}
+],
+"41041": [
+{
+"station": "9435380",
+"name": "South Beach",
+"trend": 0.69,
+"error": 0.11,
+"start": "02/15/1967",
+"end": "12/15/2025"
+}
+],
+"41057": [
+{
+"station": "9437540",
+"name": "Garibaldi",
+"trend": 0.96,
+"error": 0.12,
+"start": "06/15/1970",
+"end": "12/15/2025"
+}
+],
+"41007": [
+{
+"station": "9439040",
+"name": "Astoria",
+"trend": -0.06,
+"error": 0.06,
+"start": "02/15/1925",
+"end": "12/15/2025"
+}
+],
+"53049": [
+{
+"station": "9440910",
+"name": "Toke Point",
+"trend": 0.18,
+"error": 0.13,
+"start": "01/15/1973",
+"end": "12/15/2025"
+}
+],
+"53009": [
+{
+"station": "9443090",
+"name": "Neah Bay",
+"trend": -0.67,
+"error": 0.05,
+"start": "08/15/1934",
+"end": "12/15/2025"
+},
+{
+"station": "9444090",
+"name": "Port Angeles",
+"trend": 0.18,
+"error": 0.13,
+"start": "09/15/1975",
+"end": "12/15/2025"
+}
+],
+"53031": [
+{
+"station": "9444900",
+"name": "Port Townsend",
+"trend": 0.72,
+"error": 0.11,
+"start": "01/15/1972",
+"end": "12/15/2025"
+}
+],
+"53033": [
+{
+"station": "9447130",
+"name": "Seattle",
+"trend": 0.82,
+"error": 0.03,
+"start": "01/15/1899",
+"end": "12/15/2025"
+}
+],
+"53073": [
+{
+"station": "9449424",
+"name": "Cherry Point",
+"trend": -0.02,
+"error": 0.11,
+"start": "01/15/1973",
+"end": "12/15/2025"
+}
+],
+"53055": [
+{
+"station": "9449880",
+"name": "Friday Harbor",
+"trend": 0.47,
+"error": 0.05,
+"start": "01/15/1934",
+"end": "12/15/2025"
+}
+],
+"02130": [
+{
+"station": "9450460",
+"name": "Ketchikan",
+"trend": -0.14,
+"error": 0.04,
+"start": "01/15/1919",
+"end": "12/15/2025"
+}
+],
+"02220": [
+{
+"station": "9451600",
+"name": "Sitka",
+"trend": -0.97,
+"error": 0.05,
+"start": "05/15/1924",
+"end": "12/15/2025"
+}
+],
+"02110": [
+{
+"station": "9452210",
+"name": "Juneau",
+"trend": -5.32,
+"error": 0.06,
+"start": "01/15/1936",
+"end": "12/15/2025"
+}
+],
+"02230": [
+{
+"station": "9452400",
+"name": "Skagway",
+"trend": -7.14,
+"error": 0.09,
+"start": "09/15/1944",
+"end": "12/15/2025"
+}
+],
+"02282": [
+{
+"station": "9453220",
+"name": "Yakutat",
+"trend": -6.06,
+"error": 0.19,
+"start": "04/06/1988",
+"end": "12/15/2025"
+}
+],
+"02063": [
+{
+"station": "9454050",
+"name": "Cordova",
+"trend": -0.21,
+"error": 0.17,
+"start": "04/06/1988",
+"end": "12/15/2025"
+},
+{
+"station": "9454240",
+"name": "Valdez",
+"trend": -3.45,
+"error": 0.19,
+"start": "04/06/1988",
+"end": "12/15/2025"
+}
+],
+"02122": [
+{
+"station": "9455090",
+"name": "Seward",
+"trend": -1.21,
+"error": 0.11,
+"start": "02/01/1964",
+"end": "12/15/2025"
+},
+{
+"station": "9455500",
+"name": "Seldovia",
+"trend": -3.74,
+"error": 0.12,
+"start": "06/15/1964",
+"end": "12/15/2025"
+},
+{
+"station": "9455760",
+"name": "Nikiski",
+"trend": -3.98,
+"error": 0.16,
+"start": "01/15/1973",
+"end": "12/15/2025"
+}
+],
+"02020": [
+{
+"station": "9455920",
+"name": "Anchorage",
+"trend": -0.27,
+"error": 0.16,
+"start": "01/15/1972",
+"end": "12/15/2025"
+}
+],
+"02150": [
+{
+"station": "9457292",
+"name": "Kodiak Island",
+"trend": -3.44,
+"error": 0.16,
+"start": "08/15/1984",
+"end": "12/15/2025"
+}
+],
+"02013": [
+{
+"station": "9459450",
+"name": "Sand Point",
+"trend": 0.8,
+"error": 0.16,
+"start": "11/15/1972",
+"end": "12/15/2024"
+},
+{
+"station": "9463502",
+"name": "Port Moller",
+"trend": 1.58,
+"error": 0.27,
+"start": "10/15/1984",
+"end": "12/15/2025"
+}
+],
+"02016": [
+{
+"station": "9461380",
+"name": "Adak Island",
+"trend": -0.9,
+"error": 0.07,
+"start": "04/09/1957",
+"end": "12/15/2025"
+},
+{
+"station": "9462620",
+"name": "Unalaska",
+"trend": -1.55,
+"error": 0.1,
+"start": "04/15/1958",
+"end": "12/15/2025"
+}
+],
+"02180": [
+{
+"station": "9468756",
+"name": "Nome",
+"trend": 1.63,
+"error": 0.4,
+"start": "10/15/1992",
+"end": "12/15/2025"
+}
+],
+"02185": [
+{
+"station": "9497645",
+"name": "Prudhoe Bay",
+"trend": 1.68,
+"error": 0.25,
+"start": "12/15/1988",
+"end": "12/15/2025"
+}
+],
+"78010": [
+{
+"station": "9751401",
+"name": "Lime Tree Bay",
+"trend": 1.07,
+"error": 0.1,
+"start": "11/15/1977",
+"end": "12/15/2025"
+}
+],
+"78030": [
+{
+"station": "9751639",
+"name": "Charlotte Amalie",
+"trend": 0.87,
+"error": 0.1,
+"start": "02/15/1975",
+"end": "12/15/2025"
+}
+],
+"72127": [
+{
+"station": "9755371",
+"name": "San Juan",
+"trend": 0.85,
+"error": 0.06,
+"start": "04/15/1962",
+"end": "12/15/2025"
+}
+],
+"72079": [
+{
+"station": "9759110",
+"name": "Magueyes Island",
+"trend": 0.81,
+"error": 0.06,
+"start": "01/15/1955",
+"end": "12/15/2025"
+}
+]
+}
