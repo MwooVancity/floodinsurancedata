@@ -56,7 +56,8 @@ Before editing, write each item's likely failure and its pre-check. Then:
   numbers); every number through `tp`/`m`; a new metric field needs `metrics.py --refresh`.
 - A new figure: state its base and how blanks are handled, recompute it from raw before wording it (round 19:
   blank zones were counted as "outside").
-- Fast loop on home, louisiana and palm-beach-county-fl (build, gate, phone check) until clean; then ONE full build
+- Fast loop: `build_counties.py --only <geoid>` for palm-beach-county-fl (states and home have no single-page build;
+  run build_states.py + build_site.py) with gate and phone check until clean; then ONE full build
   and ONE release.py run; then one light check; then ship and read one live page.
 - Never record a review for a template that changed after it; one writer per project; pull before work.
 
