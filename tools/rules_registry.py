@@ -47,7 +47,7 @@ RULES = {
         "text": "the NFIP's <b>$250,000</b> building limit.",
         "sources": [(FS + "/get-insured/buy-a-policy", "Building policies cover up to $250,000", "curl")]},
     "how_to_buy": {
-        "text": "To buy: call the NFIP at <b>(877) 336-2627</b>, go to <a href='https://www.floodsmart.gov' rel='nofollow "
+        "text": "To buy: call the NFIP at <a href='tel:+18773362627'><b>(877) 336-2627</b></a>, go to <a href='https://www.floodsmart.gov' rel='nofollow "
                 "noopener' target='_blank'>FloodSmart.gov</a>, or ask any licensed insurance agent. Every NFIP insurer "
                 "offers the same rates.",
         "sources": [(FS + "/contact", "Call the NFIP at (877) 336-2627", "curl"),
@@ -84,6 +84,14 @@ RULES = {
                      "located within the special flood hazard area defined by the Federal Emergency Management Agency must have flood coverage in place", "curl"),
                     ("https://www.flsenate.gov/Laws/Statutes/2025/627.351",
                      "January 1, 2027, for all other personal lines residential property insured by the corporation", "curl")]},
+    "zone_codes": {   # round 16: B, C, A99, AH, A01-A30 shown with no plain words
+        "text": "What the zone codes mean (44 CFR §64.3): A, AE and A1–A30 are high-risk; AO and AH are high-risk with "
+                "shallow flooding; A99 is high-risk behind a flood barrier FEMA treats as complete; V, VE and V1–V30 are "
+                "coastal high-risk with waves; B and shaded X are moderate risk; C and unshaded X are minimal risk; D is not yet studied.",
+        "sources": [("https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=64", "B, X Areas of moderate flood hazards", "curl"),
+                    ("https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=64", "C, X Area of minimal hazards", "curl"),
+                    ("https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=64", "D Area of undetermined but possible, flood hazards", "curl"),
+                    ("https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=64", "A99 Area of special flood hazard where enough progress has been made on a protective system", "curl")]},
     "private_accept": {   # backlog 2: lenders must take a qualifying private policy (FDIC rule; OCC, Fed, NCUA, FCA rules match)
         "text": "A private flood policy can meet a lender's flood requirement: federally regulated lenders must accept a private "
                 "policy that meets the federal definition of private flood insurance and covers at least what the loan requires "

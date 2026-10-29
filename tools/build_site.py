@@ -84,7 +84,7 @@ def _man(sl):   # records downloaded for a built state (its pull manifest)
     mm = json.load(open(os.path.join(DATADIR, "states", sl, "agg.json"))).get("manifest") or {}
     return (mm.get("policies") or {}).get("unique_fetched") or 0, (mm.get("claims") or {}).get("unique_fetched") or 0
 _tp = sum(_man(s["slug"])[0] for s in states); _tc = sum(_man(s["slug"])[1] for s in states)
-prov = (f'<p class="mut" style="font-size:14px">Built from {_tp:,} NFIP policy records and {_tc:,} claim records downloaded from FEMA: '
+prov = (f'<p class="mut" style="font-size:14px">Built from {_tp:,} NFIP policy records and {_tc:,} claim records downloaded from FEMA (one record can cover several insured units, such as a condo building): '
         f'every record the download listed for each state, none missing. <a href="/methodology/">How we check them</a></p>') if states else ""
 if len(states) == 51:   # U.S. figures only once every state is built and gated: never a partial total called national
     _h = json.load(open(os.path.join(DATADIR, "us", "cost_hist.json")))
@@ -144,7 +144,7 @@ if len(states) == 51:   # U.S. figures only once every state is built and gated:
         f'<script>var qv=document.getElementById("qv"),qo=document.getElementById("qo");qv.addEventListener("input",function(){{'
         f'var v=+qv.value.replace(/[^0-9.]/g,"");if(!v){{qo.textContent="";return;}}'
         f'qo.textContent="$"+v.toLocaleString()+" is "+(v<={_q[0.25]}?"in the lowest quarter":v<{_med}?"below the middle":v=={_med}?"right at the middle":v<{_q[0.75]}?"above the middle":v<{_q[0.9]}?"in the top quarter":"in the top tenth")'
-        f'+" of U.S. single-family policies (half pay {money(_q[0.25])} to {money(_q[0.75])}).";}});</script>')
+        f'+" of U.S. single-family policies (half pay {money(_q[0.25])} to {money(_q[0.75])}). These are existing policies, many still below FEMA’s full-risk price; policies first bought in the past year typically pay {money(_new_med)}.";}});</script>')
 else: home_cards = ""
 home = HEAD.format(title="Flood insurance cost by state and county (FEMA data)",
     desc="What flood insurance actually costs where you live, from FEMA's own policy and claim records: typical cost, whether you're required to buy it, how fast it starts, and what floods have paid out.",
@@ -163,7 +163,7 @@ home = HEAD.format(title="Flood insurance cost by state and county (FEMA data)",
 <div class="card"><h2>Flood insurance by state</h2>{extremes}
 <table id="st"><thead><tr><th>State</th><th>Median / yr</th><th>Insured units</th></tr></thead>
 <tbody>{srows or '<tr><td colspan=3 class=mut>State pages are being built.</td></tr>'}</tbody></table></div>
-<div class="card"><h2>County pages</h2><p class="stand">{len(places)} counties so far, listed by number of policies; more are added as each passes review. Every county's figures also sit in its state page's county table.</p>
+<div class="card"><h2>County pages</h2><p class="stand">{len(places)} counties so far, listed by insured units; more are added as each passes review. Every county's figures also sit in its state page's county table.</p>
 <table id="t"><thead><tr><th>County</th><th>Median / yr</th><th>Insured units</th></tr></thead>
 <tbody>{rows or '<tr><td colspan=3 class=mut>No counties published yet.</td></tr>'}</tbody></table></div>
 <script>
@@ -259,9 +259,19 @@ disclosed, and nothing publishes if a check fails. The <a href="/methodology/">m
 <p>This site is <b>not affiliated with or endorsed by FEMA</b> or any government agency, and has <b>no
 relationship with any insurer, agent, or lead-generation service</b>. It does not sell insurance, generate
 quotes, or earn commissions on policies. It is a reference, not a sales page. Any advertising, if added
-later, will be disclosed here.</p></div>
+later, will be disclosed here.</p>
+<p>The site is run anonymously, by choice: there is no named author. Every figure instead names its exact federal
+source and date, and the <a href="/methodology/">methodology</a> shows how each one is counted, so a reader can check it.</p></div>
 {FOOT}"""
 wr(os.path.join(DIST, "about", "index.html"), about)
+
+# ---- 404 (round 16: a mistyped address showed the host's bare error page) ----
+wr(os.path.join(DIST, "404.html"), """<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>Page not found - Flood Insurance Data</title>
+<style>body{margin:0;background:#f4f7f8;color:#132029;font:17px/1.6 system-ui,sans-serif}main{max-width:640px;margin:0 auto;padding:40px 20px}a{color:#15617f}</style>
+</head><body><main><h1>Page not found</h1><p>That address has no page. Find your state or county on the
+<a href="/">home page</a>, which lists every state and county.</p></main></body></html>""")
 
 # ---- privacy policy (required for AdSense; written to current state + ad-ready, no false claims) ----
 privacy = HEAD.format(title="Privacy Policy — Flood Insurance Data", desc="How Flood Insurance Data handles data, cookies, logs, and advertising.", canon=BASE + "/privacy/") + f"""

@@ -90,7 +90,7 @@ MUTATIONS = [   # (defect class from THE EVIDENCE table, what we reintroduce, ex
     ("2 prose vs numbers", "free-typed 'climb toward'", "B2", sub("(premiums only, before fees)", "(premiums only, before fees). Bills climb toward it"), None),
     ("3 rows called homes", "IA records labelled homes", "A2", sub("</span> damage records from homes", "</span> homes"), None),
     ("4 cross-panel", "filed count called 'paid'", "C3", sub("</span> NFIP flood claims and", "</span> paid NFIP flood claims and"), None),
-    ("5 rating vs percentile", "percentile without its basis", "A4", PAGE.replace("per dollar of building value, inland flood loss here is higher than in about", "inland flood risk is higher than in about"), None),
+    ("5 rating vs percentile", "percentile without its basis", "A4", PAGE.replace("loss per dollar of building value: inland flood loss here is higher than in about", "inland flood risk is higher than in about"), None),
     ("6 attribution", "FEMA panel credited to NOAA", "A1", sub(STORM, '<p class="src" data-src="ml_total">Source: NOAA NCEI.'), None),
     ("6 attribution", "hand-typed source line", "A1", re.sub(r'<p class="src" data-src="ml_total">', '<p class="src">', PAGE, count=1), None),
     ("8 law wording", "purchase rule narrowed", "E1", sub("federally regulated or backed mortgage", "federally backed mortgage"), None),

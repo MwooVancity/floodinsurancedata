@@ -1,14 +1,8 @@
 {
  "slug": "maine",
- "verdict": "FAIL",
- "template": "408fc1089834322b",
- "defects": [
-  "**MAJOR** \"Which floods paid out the biggest totals here? The costliest flood FEMA named here was Flooding (1987): $10.0 million\" (maine-02), while the yearly c",
-  "**MAJOR** Disaster list: \"2024 — Severe Storms and Flooding / 2024 — Severe Storm and Flooding / 2023 — Severe Storm and Flooding / 2023 — Severe Storm and Floo",
-  "**MAJOR** Quote checker and \"Renewing?\" mislabel (class; see LA items 1-2).",
-  "**MAJOR** Hero card \"48.0% PAY LESS THAN FEMA'S FULL-RISK PRICE, SO THEIR BILLS RISE EACH YEAR\" (class, LA item 5).",
-  "**MAJOR** \"Zone C\" (3.4% of units; median $1,018, above Zone A's $866) has no plain words, so a reader may think C is a risk class above A. The A02/V02 labels a"
- ],
- "reviewer": "hater round 16 (fresh agent, docs/HATER-PROMPT.md)",
+ "verdict": "PASS",
+ "template": "03b5a061b4a6ee11",
+ "defects": [],
+ "reviewer": "hater round 18 (fresh agent, docs/HATER-PROMPT.md)",
  "notes": ""
 }

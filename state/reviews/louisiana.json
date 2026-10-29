@@ -1,14 +1,8 @@
 {
  "slug": "louisiana",
- "verdict": "FAIL",
- "template": "408fc1089834322b",
- "defects": [
-  "**MAJOR** Quote checker compares against existing, partly discounted policies (56.6% below full risk here). A buyer typing a full-risk quote near $1,466 (\"Full-",
-  "**MAJOR** \"Renewing? Policies whose term began in 2026 typically pay $1,215\" (hero, louisiana-00; also the checker output). Policies whose term began in 2026 in",
-  "**MAJOR** Hero \"Does it pay out here? 77.8% of claims here paid something; the average paid claim was $55,453\" has no caveat next to it. The $55,453 mixes 1978-",
-  "**MAJOR** Codes with no plain words in the zone table, zone cost table and checker dropdown: \"Zone C\", \"Zone B\" (old labels for low/moderate risk, shown with no",
-  "**MAJOR** Hero card \"56.6% PAY LESS THAN FEMA'S FULL-RISK PRICE, SO THEIR BILLS RISE EACH YEAR\" (louisiana-00). It is screen 1's fourth big number, and \"full-ri"
- ],
- "reviewer": "hater round 16 (fresh agent, docs/HATER-PROMPT.md)",
+ "verdict": "PASS",
+ "template": "03b5a061b4a6ee11",
+ "defects": [],
+ "reviewer": "hater round 18 (fresh agent, docs/HATER-PROMPT.md)",
  "notes": ""
 }
