@@ -31,7 +31,7 @@ jobs:
           path: .cache/raw
           key: fema-raw-${{ steps.m.outputs.month }}
       - name: Download every FEMA policy and claim (resumable; skips finished slices)
-        run: python -I tools/pull_raw.py
+        run: python -I tools/pull_raw.py && du -sh .cache/raw   # owner asked the download size
       - name: Compute state, county and extras figures
         run: |
           set -e
