@@ -9,7 +9,7 @@ Today: all five UNKNOWN. That is the bottleneck. Work that cannot move the score
 
 ## Where we are (2026-10-29)
 - Live: home + 51 states + 52 counties + 404 (111 pages), template reviewed (light round 18 PASS), live gate clean.
-- Queue: 1,803 counties pass the build; the daily GitHub job publishes 10 reviewed ones a day (25 max per release).
+- Queue: 1,803 counties pass the build; the daily GitHub job publishes 20 reviewed ones a day (owner 2026-10-29; 25 max per release).
 - Data: as of 2026-07-31; monthly cloud refresh on the 3rd (claims carry over; only the last 3 loss years re-pulled).
 - Reviews: no wrong live figure in rounds 12-19 (round 19 caught an overstated new figure before release); open defects are wording and layout.
 
@@ -23,7 +23,7 @@ Today: all five UNKNOWN. That is the bottleneck. Work that cannot move the score
    - take-up (homes with flood insurance): verify the penetration source, then show it or delete the idea.
 4. Links: build ONE data story from data we hold ("counties paying furthest below FEMA's full-risk price").
    Done when it is live. Pitching it to local news needs the owner (outreach is outbound).
-5. Pace: after 4 weeks of step-1 data, 25 counties a day if most pages are indexed; hold at 10 if not; stop if
+5. Pace: 20 a day now (owner). After 4 weeks of step-1 data: 25 if most pages are indexed; drop to 10 if not; stop if
    site-wide impressions fall. Done when the decision and its numbers are written here.
 
 ## Deleted 2026-10-29 (Musk step 2)

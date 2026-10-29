@@ -31,7 +31,7 @@ jobs:
       - name: Add the next 10 counties
         id: add
         run: |
-          out=$(python -I tools/add_counties.py 10); echo "$out"
+          out=$(python -I tools/add_counties.py 20); echo "$out"
           echo "msg=$out" >> "$GITHUB_OUTPUT"
           git diff --quiet tools/counties.json && { echo "queue empty"; echo "none=1" >> "$GITHUB_OUTPUT"; } || true
       - name: Phone check browser
