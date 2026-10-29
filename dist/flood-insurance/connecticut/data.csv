@@ -19,6 +19,8 @@ Connecticut,records_claims,"29,492",count,FEMA OpenFEMA — NFIP Claims,id,"July
 Connecticut,sfha_share,78.4%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Connecticut,zone_units,"21,506",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Connecticut,zone_share,67.4%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+Connecticut,map_new_n,19,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"
+Connecticut,map_date,"November 13, 2026",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"
 Connecticut,cost_p90,"$4,162",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Connecticut,cost_n,"15,053",count,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Connecticut,coverage,$7.4 billion,usd_coverage,FEMA OpenFEMA — NFIP Policies,totalBuildingInsuranceCoverage + totalContentsInsuranceCoverage,"July 31, 2026"

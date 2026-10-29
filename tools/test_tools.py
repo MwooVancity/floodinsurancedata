@@ -20,12 +20,47 @@ def oracle(value, today):   # the full list of sentences the deadline planner ma
     if left == 0: return f"An NFIP proof of loss is due today, {fmt(due)}. Contact your insurer now."
     return f"The 60-day NFIP proof-of-loss date was {fmt(due)}. Contact your insurer now; it may have extended the date."
 
+# FEMA map-date reader (PLAN 3e): a truth table from FEMA's legend, then every real value in the data must parse
+sys.path.insert(0, os.path.join(ROOT, "tools")); from mapdate import map_date
+_T = datetime.date(2026, 10, 29)
+TRUTH = [("09/24/21", "current", datetime.date(2021, 9, 24)), ("09/28/84", "current", datetime.date(1984, 9, 28)),
+         ("01/05/70", "current", datetime.date(1970, 1, 5)), ("12/31/69", "current", datetime.date(2069, 12, 31)),
+         ("11/13/26(>)", "new", datetime.date(2026, 11, 13)), ("10/01/26(>)", "current", datetime.date(2026, 10, 1)),
+         ("04/03/12(M)", "current", datetime.date(2012, 4, 3)), ("02/02/90(L)", "current", datetime.date(1990, 2, 2)),
+         ("(NSFHA)", "nsfha", None), ("(All Zone D)", "nsfha", None), ("", "none", None), (None, "none", None), ("N/A", "none", None),
+         ("E", "none", None), ("(S)", "none", None), ("06/01/95(S)", "none", None), ("(W)", "none", None)]
+bad = []
+for v, kind, d in TRUTH:
+    k2, d2, _ = map_date(v, _T)
+    if (k2, d2) != (kind, d) and not (v == "12/31/69" and k2 == "new"): bad.append(f"map_date({v!r}) = {(k2, d2)} != {(kind, d)}")
+for v in ("13/01/20", "02/30/20", "garbage", "2020-01-01"):
+    try: map_date(v, _T); bad.append(f"map_date({v!r}) accepted a bad value")
+    except ValueError: pass
+import glob
+_vals = {c.get("currentlyEffectiveMapDate") for f in glob.glob(os.path.join(ROOT, "data", "*", "*", "data.json"))
+         for c in json.load(open(f, encoding="utf-8")).get("crs", []) if "currentlyEffectiveMapDate" in c}
+for v in _vals:
+    try: map_date(v, _T)
+    except ValueError as e: bad.append(f"real FEMA value not understood: {e}")
+
+# NOAA sea-level line (PLAN 3e): every trend printed equals NOAA's file for a gauge in the county or a bordering one
+_sl = json.load(open(os.path.join(ROOT, "data", "us", "sealevel.json"), encoding="utf-8"))
+_adj = json.load(open(os.path.join(ROOT, "data", "us", "county_adjacency.json"), encoding="utf-8"))
+for _d in glob.glob(os.path.join(ROOT, "dist", "flood-insurance", "*", "index.html")):
+    _h = open(_d, encoding="utf-8").read()
+    _got = re.findall(r"tide gauge at .*?measured a sea-level trend of <[^>]*>([+-]\d+\.\d\d)<", _h)
+    if not _got: continue
+    _ag = os.path.join(ROOT, "data", "c", os.path.basename(os.path.dirname(_d)), "agg.json")
+    _g = json.load(open(_ag, encoding="utf-8")).get("geoid") if os.path.exists(_ag) else ""
+    _ok = {f"{s['trend']:+.2f}" for s in _sl.get(_g, [])}   # in-county gauges only (round 28)
+    for t in _got:
+        if t not in _ok: bad.append(f"{os.path.basename(os.path.dirname(_d))}: sea trend {t} not in NOAA's file for it or a neighbour")
+
 flags = json.load(open(os.path.join(ROOT, "tools", "tools_flags.json"), encoding="utf-8"))
 on = flags.get("deadline") or []
-slugs = [s for s in os.listdir(os.path.join(ROOT, "dist", "flood-insurance")) if os.path.isdir(os.path.join(ROOT, "dist", "flood-insurance", s))]
+slugs = [s for s in os.listdir(os.path.join(ROOT, "dist", "flood-insurance")) if os.path.exists(os.path.join(ROOT, "dist", "flood-insurance", s, "index.html"))]
 pages = slugs if on == "all" else [s for s in on if s in slugs]
 url = lambda s: "file:///" + os.path.join(ROOT, "dist", "flood-insurance", s, "index.html").replace("\\", "/")
-bad = []
 # the tool appears exactly where the flags say, and nowhere else
 for s in slugs:
     has = "id='deadline'" in open(os.path.join(ROOT, "dist", "flood-insurance", s, "index.html"), encoding="utf-8").read()

@@ -23,6 +23,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Pasco County, Florida",sfha_share,70.1%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Pasco County, Florida",zone_units,"13,886",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Pasco County, Florida",zone_share,55.2%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Pasco County, Florida",map_date,"June 5, 2020",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"
 "Pasco County, Florida",cost_p90,"$3,735",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 "Pasco County, Florida",cost_n,"17,072",count,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 "Pasco County, Florida",coverage,$5.6 billion,usd_coverage,FEMA OpenFEMA — NFIP Policies,totalBuildingInsuranceCoverage + totalContentsInsuranceCoverage,"July 31, 2026"

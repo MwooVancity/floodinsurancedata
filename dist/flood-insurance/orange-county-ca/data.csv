@@ -23,6 +23,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Orange County, California",sfha_share,55.4%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Orange County, California",zone_units,"4,200",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Orange County, California",zone_share,44.2%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Orange County, California",map_date,"March 21, 2019",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"
 "Orange County, California",cost_p90,"$1,738",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 "Orange County, California",cost_n,"5,455",count,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 "Orange County, California",coverage,$2.4 billion,usd_coverage,FEMA OpenFEMA — NFIP Policies,totalBuildingInsuranceCoverage + totalContentsInsuranceCoverage,"July 31, 2026"

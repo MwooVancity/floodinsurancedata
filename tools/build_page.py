@@ -224,7 +224,26 @@ def card_risk():
                     "Next source to pull (reachable host): FEMA NRI county table from gis.fema.gov or the "
                     "NRI_Table_Counties.csv download. The public third-party ArcGIS copy was a non-national sample.</p>")
     if IS_STATE: risk = ""   # FEMA's NRI rates counties; the state page shows every county's rating in the tile map instead
+    elif _sea_line(): risk = risk.replace("</section>", _sea_line() + src(["sea_trend"], "NOAA's published trends", RETR) + "</section>", 1)
     return risk
+
+def _sea_line():   # PLAN 3e: NOAA's published sea-level trend at a tide gauge in this county, else in a bordering one
+    try:
+        sl = json.load(open(os.path.join(os.path.dirname(HERE), "data", "us", "sealevel.json"), encoding="utf-8"))
+        adj = json.load(open(os.path.join(os.path.dirname(HERE), "data", "us", "county_adjacency.json"), encoding="utf-8"))
+    except Exception: return ""
+    g = agg.get("geoid") or ""
+    here = sl.get(g) or []
+    st = here[:3]   # round 28: a gauge in the county only; a bordering county can be on the other coast (Broward/Collier)
+    if not st: return ""   # no gauge in the county: nothing, never a far-away gauge
+    def one(s, i):   # a signed figure, no direction word (gate B2); Alaska trends are negative (land rising)
+        t = s["trend"]
+        return (f"NOAA's tide gauge at {m('sea_trend', html.escape(s['name']), q=s['station'] + '_name')} measured a sea-level trend of "
+                f"{m('sea_trend', f'{t:+.2f}', q=s['station'])} inches per decade (give or take {m('sea_trend', f'{s['error']:.2f}', q=s['station'] + '_err')} inches per decade) "
+                f"from {m('sea_trend', s['start'][-4:], q=s['station'] + '_from')} to {m('sea_trend', s['end'][-4:], q=s['station'] + '_to')}")
+    where = ""
+    return (f"<p class='note'><b>Local sea level:</b> " + "; ".join(one(s, i) for i, s in enumerate(st)) + where
+            + ". A plus sign means the water there got higher over that period. A tide gauge measures one spot on the coast; it is not your property's flood risk.</p>")
 
 # ---- zone card (policy UNITS) ----
 def _zone_body():
@@ -364,6 +383,32 @@ def _cname_plain(c):
         if f: n += f" ({f.group(1).lower()})"
     return html.escape(n)
 # table only for communities with a discount; the rest fold into one named line (a screen of "No discount" rows helps no one)
+from mapdate import map_date   # PLAN 3e: FEMA map-date legend reader (tested in test_tools.py)
+def _mdate(d): return f"{_MONTHS[f'{d.month:02d}']} {d.day}, {d.year}"
+def _map_line():   # PLAN 3e: when this place's FEMA map took effect, and which communities get a new one (FEMA's "(>)")
+    rows = [(c, *map_date(c.get("currentlyEffectiveMapDate"))) for c in _crs_all if "currentlyEffectiveMapDate" in c]
+    if not rows: return ""
+    new = sorted((r for r in rows if r[1] == "new"), key=lambda r: r[2])
+    out = []
+    if not IS_STATE:
+        own = next((r for r in rows if (r[0].get("communityName") or "").endswith("*")), None)   # FEMA marks the unincorporated county "*"
+        if own and own[1] == "current":
+            out.append(f"FEMA's current flood map for unincorporated {CS} took effect {m('map_date', _mdate(own[2]), q='own')}"
+                       + (f"; {own[3]}" if own[3] else "") + ".")
+        elif own and own[1] == "nsfha":
+            out.append(f"For unincorporated {CS}, {own[3]}.")
+        if new:
+            names = [_cname_plain(r[0]) for r in new]
+            out.append(f"New FEMA flood maps take effect {m('map_date', _mdate(new[0][2]), q='first_new')}"
+                       + (" or later" if len({r[2] for r in new}) > 1 else "") + " for "
+                       + and_list(names[:8] + ([f"{m('map_new_n', str(len(names) - 8), q='more')} more"] if len(names) > 8 else [])) + ".")
+    elif new:
+        out.append(f"{m('map_new_n', str(len(new)))} communities in {CS} get a new FEMA flood map after FEMA's latest report, "
+                   f"the first on {m('map_date', _mdate(new[0][2]), q='first_new')}.")
+    if not out: return ""
+    return (f"<p class='note'><b>Flood map:</b> {' '.join(out)} Check your own address on "
+            "<a href='https://msc.fema.gov/portal/home' rel='noopener' target='_blank'>FEMA's flood map</a>.</p>")
+
 def _crs_parts():
     _has_disc = [c for c in crs if _pct(c.get("sfhaDiscount")) or _pct(c.get("nonSfhaDiscount"))]
     _no_disc = sorted((c for c in crs if c not in _has_disc), key=lambda c: html.unescape(_cname_plain(c)).casefold())   # A to Z as shown (gate H8)
@@ -970,11 +1015,11 @@ def card_required():
       (f"<p class='note'><b>{rule('fl_citizens')}</b></p>" if agg.get("state") == "FL" else "") +
       f"<p class='note'>{rule('private_accept')}</p>" +
       f"<p class='note'>{m('sfha_share', str(P['sfha_share_units']) + '%')} of {CS}'s NFIP policy units are in high-risk zones (not {tp('sfha_share', 'policies.sfha_share_units', pct)} of all buildings, and not an answer about your own home).</p>"
-      f"{_zone_body()}<p class='note'>Insured units by the zone each policy is rated in.{how('zones')}</p>"
+      f"{_zone_body()}<p class='note'>Insured units by the zone each policy is rated in.{how('zones')}</p>" + _map_line()
       + (f"<p class='note'><b>Not in the NFIP ({m('crs_count', str(len(crs_out)), q='not_nfip')} communities here)"
          + (": " + "; ".join(sorted((_cname(c) + (" (unincorporated area only)" if re.search(r"\b(COUNTY|PARISH|BOROUGH)\b", (c.get("communityName") or "").upper()) else "") for c in crs_out), key=lambda h: html.unescape(re.sub("<[^>]+>", "", h)).casefold())))
          + f".</b> {rule('nfip_not_sold')}</p>" if crs_out else ""),
-      src(["units", "sfha_share"], POL_ASOF, RETR) + src_rules(["purchase_answer", "lender_any_zone", "private_accept"] + (["fl_citizens"] if agg.get("state") == "FL" else []) + (["nfip_not_sold"] if crs_out else [])), id="required")
+      src(["units", "sfha_share"], POL_ASOF, RETR) + (src(["map_date"], "FEMA's current Community Status Book", RETR) if _map_line() else "") + src_rules(["purchase_answer", "lender_any_zone", "private_accept"] + (["fl_citizens"] if agg.get("state") == "FL" else []) + (["nfip_not_sold"] if crs_out else [])), id="required")
 
 def card_cost():
     cost_lead, cost_body = _cost_parts()

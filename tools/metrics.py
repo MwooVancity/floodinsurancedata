@@ -19,6 +19,7 @@ DATASETS = {   # display name, citation URL, whether the OpenFEMA attribution ap
     "IndividualAssistanceMultipleLossFloodProperties": ("FEMA OpenFEMA — Individual Assistance Multiple-Loss Flood Properties", "https://www.fema.gov/openfema-data-page/individual-assistance-multiple-loss-flood-properties-v1", OPENFEMA),
     "NfipResidentialPenetrationRates": ("FEMA OpenFEMA — NFIP Residential Penetration Rates", "https://www.fema.gov/openfema-data-page/nfip-residential-penetration-rates-v1", OPENFEMA),
     "StormEvents": ("NOAA NCEI — Storm Events Database", "https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/", "noaa"),
+    "NoaaSeaLevelTrends": ("NOAA Tides & Currents — Sea Level Trends", "https://tidesandcurrents.noaa.gov/sltrends/", "noaa"),
     "CensusACS": ("U.S. Census Bureau — ACS 5-year B25001 (housing units)", "https://data.census.gov/table/ACSDT5Y2023.B25001", "census"),
 }
 API_VERSION = {"NfipPolicies": 3, "NfipClaims": 3, "NfipCommunityStatusBook": 1, "DisasterDeclarationsSummaries": 2,
@@ -29,7 +30,7 @@ API_VERSION = {"NfipPolicies": 3, "NfipClaims": 3, "NfipCommunityStatusBook": 1,
 # that must name it in the words right after the number (or in its tile label). A FEMA IA row is one property PER
 # disaster, so "1,133 homes" fails and "1,133 flood-damage applications" passes. (A positive rule, not a ban list.)
 UNITS = {"usd_cost_with_fees", "usd_deductible", "usd_premium_only", "usd_claim_paid", "usd_aid_paid", "usd_coverage", "usd_modeled_loss",
-         "usd_reported_damage", "pct", "count", "rating"}
+         "usd_reported_damage", "pct", "count", "rating", "in_per_decade"}
 NOUN_REQUIRED = {"ia_damage_record": r"records?|applications?", "policy_record": r"polic(y|ies)|records?",
                  "claim_record": r"claims?|NFIP flood claims",
                  "noaa_event": r"flood|events?"}
@@ -144,6 +145,9 @@ METRICS.update({   # every other figure a page prints; q (data-q) names the row 
     "event_avg": _m(CLM, ["floodEvent", "netBuildingPaymentAmount", "netContentsPaymentAmount", "netIccPaymentAmount"], "usd_claim_paid"),
     "damage_n": _m(CLM, ["buildingDamageAmount"], "count"),
     "crs_count": _m(_CSB, ["communityName", "sfhaDiscount"], "count"),
+    "sea_trend": _m("NoaaSeaLevelTrends", ["trend", "startDate", "endDate"], "in_per_decade"),   # PLAN 3e: NOAA's published trend per station
+    "map_date": _m(_CSB, ["currentlyEffectiveMapDate"], "rating"),   # PLAN 3e: the community's current FEMA map date (a label)
+    "map_new_n": _m(_CSB, ["currentlyEffectiveMapDate"], "count"),   # communities whose new map takes effect after FEMA's report
     "crs_class": _m(_CSB, ["classRating"], "count"),
     "pen_contracts": _m(_PEN, ["resContractsInForce"], "count"),
     "pen_words": _m(_PEN, ["resPenetrationRate"], "pct"),

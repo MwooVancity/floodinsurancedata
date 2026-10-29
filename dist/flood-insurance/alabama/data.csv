@@ -19,6 +19,8 @@ Alabama,records_claims,"44,896",count,FEMA OpenFEMA — NFIP Claims,id,"July 31,
 Alabama,sfha_share,76.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Alabama,zone_units,"25,413",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Alabama,zone_share,55.2%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+Alabama,map_new_n,2,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"
+Alabama,map_date,"January 22, 2027",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"
 Alabama,crs_count,61,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),communityName + sfhaDiscount,"July 31, 2026"
 Alabama,cost_p90,"$2,145",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Alabama,cost_n,"17,396",count,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"

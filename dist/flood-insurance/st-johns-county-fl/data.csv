@@ -23,6 +23,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "St. Johns County, Florida",sfha_share,40.3%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "St. Johns County, Florida",zone_units,"19,475",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "St. Johns County, Florida",zone_share,59.5%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"St. Johns County, Florida",map_date,"December 7, 2018",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"
 "St. Johns County, Florida",cost_p90,"$1,975",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 "St. Johns County, Florida",cost_n,"17,086",count,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 "St. Johns County, Florida",coverage,$7.6 billion,usd_coverage,FEMA OpenFEMA — NFIP Policies,totalBuildingInsuranceCoverage + totalContentsInsuranceCoverage,"July 31, 2026"

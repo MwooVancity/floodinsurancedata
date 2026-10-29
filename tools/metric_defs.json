@@ -84,6 +84,10 @@
    "def": "This is the name of the community, and is associated with the unique CID identifier. Generally, an NFIP community represents the lowest level of government with land use authority. Thus, not every city or town is recognized as its own community with the NFIP. Each state or territory determines land use authority granted to counties/parishes/boroughs, towns/cities, tribal area, etc. within their own jurisdiction",
    "sha256": "48be6f2dbcf9f23d8612a88f6ae88497a7c065ffa795bb51f85843b36dc85dcc"
   },
+  "currentlyEffectiveMapDate": {
+   "def": "Date of the map currently in effect.\n\nE            Indicates Entry In Emergency Program\nNSFHA  No Special Flood Hazard Area - All Zone C \n(>)         Date of Current Effective Map is after the Date of This Report\nN/A       Not Applicable At This Time\n(S)         Suspended Community\n(W)       Withdrawn Community\n(M)       No Elevation Determined - All Zone A, C and X\n(L)         Original FIRM by Letter - All Zone A, C and X",
+   "sha256": "469d9ce86229f03c12098b8746deff1e4b7ac96edca4cfbd143a856a4d9d448c"
+  },
   "nonSfhaDiscount": {
    "def": "The percentage of non Special Flood Hazard Area insurance (non-SFHA)  discount available based on the information received from the Community Rating System (CRS)",
    "sha256": "e073bc121a843691e70c901df20751e16c7a998a273ef2ba563c6c94aea3ecc0"

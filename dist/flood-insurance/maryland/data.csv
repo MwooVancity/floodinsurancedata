@@ -19,6 +19,8 @@ Maryland,records_claims,"25,376",count,FEMA OpenFEMA — NFIP Claims,id,"July 31
 Maryland,sfha_share,45.6%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Maryland,zone_units,"33,782",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Maryland,zone_share,54.2%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+Maryland,map_new_n,5,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"
+Maryland,map_date,"November 27, 2026",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"
 Maryland,cost_p90,"$1,198",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Maryland,cost_n,"22,921",count,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Maryland,coverage,$14.0 billion,usd_coverage,FEMA OpenFEMA — NFIP Policies,totalBuildingInsuranceCoverage + totalContentsInsuranceCoverage,"July 31, 2026"

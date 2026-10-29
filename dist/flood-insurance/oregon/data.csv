@@ -19,6 +19,8 @@ Oregon,records_claims,"6,095",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2
 Oregon,sfha_share,58.8%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Oregon,zone_units,"10,459",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Oregon,zone_share,45.6%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+Oregon,map_new_n,3,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"
+Oregon,map_date,"November 13, 2026",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"
 Oregon,crs_count,4,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),communityName + sfhaDiscount,"July 31, 2026"
 Oregon,cost_p90,"$2,170",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Oregon,cost_n,"10,807",count,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"

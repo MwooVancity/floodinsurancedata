@@ -23,6 +23,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Fort Bend County, Texas",sfha_share,7.4%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Fort Bend County, Texas",zone_units,"38,310",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Fort Bend County, Texas",zone_share,92.4%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Fort Bend County, Texas",map_date,"January 29, 2021",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"
 "Fort Bend County, Texas",cost_p90,"$1,267",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 "Fort Bend County, Texas",cost_n,"38,256",count,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 "Fort Bend County, Texas",coverage,$10.0 billion,usd_coverage,FEMA OpenFEMA — NFIP Policies,totalBuildingInsuranceCoverage + totalContentsInsuranceCoverage,"July 31, 2026"

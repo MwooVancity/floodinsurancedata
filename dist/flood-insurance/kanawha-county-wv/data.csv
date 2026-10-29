@@ -23,6 +23,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Kanawha County, West Virginia",sfha_share,83.9%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Kanawha County, West Virginia",zone_units,933,count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Kanawha County, West Virginia",zone_share,72.7%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Kanawha County, West Virginia",map_date,"August 1, 2023",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"
 "Kanawha County, West Virginia",cost_p90,"$3,018",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 "Kanawha County, West Virginia",cost_n,926,count,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 "Kanawha County, West Virginia",coverage,$203.1 million,usd_coverage,FEMA OpenFEMA — NFIP Policies,totalBuildingInsuranceCoverage + totalContentsInsuranceCoverage,"July 31, 2026"

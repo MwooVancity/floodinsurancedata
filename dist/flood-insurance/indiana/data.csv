@@ -19,6 +19,8 @@ Indiana,records_claims,"19,787",count,FEMA OpenFEMA — NFIP Claims,id,"July 31,
 Indiana,sfha_share,73.2%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Indiana,zone_units,"8,506",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Indiana,zone_share,54.7%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+Indiana,map_new_n,2,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"
+Indiana,map_date,"January 22, 2027",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"
 Indiana,crs_count,72,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),communityName + sfhaDiscount,"July 31, 2026"
 Indiana,cost_p90,"$1,797",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Indiana,cost_n,"11,054",count,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"

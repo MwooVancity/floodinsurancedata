@@ -23,6 +23,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Sarasota County, Florida",sfha_share,58.6%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Sarasota County, Florida",zone_units,"32,240",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Sarasota County, Florida",zone_share,52.5%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Sarasota County, Florida",map_date,"March 27, 2024",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"
 "Sarasota County, Florida",cost_p90,"$3,349",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 "Sarasota County, Florida",cost_n,"24,736",count,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 "Sarasota County, Florida",coverage,$14.0 billion,usd_coverage,FEMA OpenFEMA — NFIP Policies,totalBuildingInsuranceCoverage + totalContentsInsuranceCoverage,"July 31, 2026"

@@ -19,6 +19,8 @@ Michigan,records_claims,"14,954",count,FEMA OpenFEMA — NFIP Claims,id,"July 31
 Michigan,sfha_share,73.3%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Michigan,zone_units,"12,297",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Michigan,zone_share,62.5%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+Michigan,map_new_n,14,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"
+Michigan,map_date,"January 22, 2027",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"
 Michigan,crs_count,198,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),communityName + sfhaDiscount,"July 31, 2026"
 Michigan,cost_p90,"$1,545",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Michigan,cost_n,"12,641",count,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"

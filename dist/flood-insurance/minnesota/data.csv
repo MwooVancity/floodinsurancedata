@@ -19,6 +19,8 @@ Minnesota,records_claims,"12,474",count,FEMA OpenFEMA — NFIP Claims,id,"July 3
 Minnesota,sfha_share,55.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Minnesota,zone_units,"2,749",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Minnesota,zone_share,42.6%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+Minnesota,map_new_n,2,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"
+Minnesota,map_date,"January 2, 2050",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"
 Minnesota,crs_count,102,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),communityName + sfhaDiscount,"July 31, 2026"
 Minnesota,cost_p90,"$2,082",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Minnesota,cost_n,"4,010",count,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
