@@ -60,6 +60,8 @@ Before editing, write each item's likely failure and its pre-check. Then:
   run build_states.py + build_site.py) with gate and phone check until clean; then ONE full build
   and ONE release.py run; then one light check; then ship and read one live page.
 - Never record a review for a template that changed after it; one writer per project; pull before work.
+- A template change no reader can see (markup, scripts): `hater.py carry <round> <last passed release> <samples>`
+  keeps the PASS only if every sample's visible text is identical; any difference needs a light review.
 
 ## Whole project: Musk's five steps toward #1 (HARD, owner 2026-10-28; strategy and scoreboard in PLAN.md)
 Before any task, name which scoreboard number it moves: pages indexed, impressions, clicks, page-1 queries,

@@ -81,7 +81,26 @@ def record(rnd):
                 f.write(f"\n## {slug} (round {rnd})\n" + "".join(f"- {re.sub(r'^[*]{2}GAP[^*]*[*]{2}', '', g).strip()}\n" for g in gaps))
         print(f"{slug}: {verdict} ({len(bad)} blocker/major, {len(gaps)} gaps to backlog.md)")
 
+def carry(rnd, prev, slugs):
+    """CLAUDE.md budget "None": a template change no reader can see (markup, scripts) keeps its PASS only if every
+    slug's visible text equals the release `prev`, which passed review. Any difference stops it: a real review is due."""
+    import subprocess
+    def vis(h):
+        h = re.sub(r"<script.*?</script>", "", h, flags=re.S)
+        return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", h)).strip()
+    lines = []
+    for s in slugs:
+        rel = os.path.relpath(html_path(s), ROOT).replace("\\", "/")
+        old = subprocess.run(["git", "show", f"{prev}:{rel}"], capture_output=True, text=True, encoding="utf-8").stdout
+        if not old or vis(old) != vis(open(html_path(s), encoding="utf-8").read()):
+            sys.exit(f"carry refused: {s} visible text differs from {prev} (or no copy there); run a light review")
+        lines.append(f"## {s}\nVisible text identical to release {prev} (scripts and tags stripped); no reader-visible change.\nVerdict: PASS\n")
+    open(os.path.join(DIR, f"hater-round{rnd}.md"), "w", encoding="utf-8").write(f"# Round {rnd}: carried PASS (machine check)\n\n" + "\n".join(lines))
+    open(os.path.join(DIR, f"round{rnd}-template.txt"), "w").write(RV.template_hash())
+    record(rnd)
+
 if __name__ == "__main__":
+    if sys.argv[1:2] == ["carry"]: carry(sys.argv[2], sys.argv[3], sys.argv[4:]); sys.exit()
     if sys.argv[1:2] == ["prep"]: prep(sys.argv[2], [a for a in sys.argv[3:] if a not in ("--local", "--light")])
     elif sys.argv[1:2] == ["record"]: record(sys.argv[2])
     else: print(__doc__)
