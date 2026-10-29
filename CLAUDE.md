@@ -1,6 +1,7 @@
 # Flood insurance data site (floodinsurancedata.com)
 
 Strategy and status: PLAN.md (read at session start, update after every batch).
+Session start, first reply: report every deploy since the last session (`gh run list` for publish-counties and refresh-data, `git log` "publish:" lines, live sitemap count). Owner 2026-10-29.
 
 ## Reader
 A US homeowner or buyer at one place, on a phone, 30-60 seconds, days of urgency: at a closing with a flood-zone letter, a renewal that jumped, or a street that flooded last night. Page answers, in order, above the long tables: how risky here, am I required to buy it, what it costs (in my zone), is it rising, what floods pay out here, can I pay less; plus how urgent and what to do next (where to buy, 30-day wait, coverage limits). One static page per place from public federal data. Run flood sessions from this folder; calcscrape and river rules do not apply.
