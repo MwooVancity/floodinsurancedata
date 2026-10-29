@@ -26,6 +26,30 @@ The most helpful flood-insurance page for each US state and county, from public 
      Harris, Miami-Dade). Fix with 1: no cross-state fill once neighbours exist.
   3. One sitemap (110 URLs); an index is needed only past 50,000 URLs. `lastmod` must stay the real data date.
 
+## Scaling to every county (2026-10-28; counts read from the repo today)
+The numbers: 3,028 counties have data (`data/all-counties/`); 1,803 of them pass the page build and sit in
+`state/county-queue.json`, largest first; 52 are published. The other ~1,225 are too thin for a page (under 30 priced
+single-family policies for a median, or a failed build).
+1. **Who gets a page:** only the 1,803 queued counties, largest first. A thin county never gets its own page; it stays
+   a row in its state's county table, and the home search sends its readers there. No noindex filler pages.
+2. **Before the queue speeds up (one time):** the template has a current PASS (light check, step 1 below);
+   neighbour sibling links are in (step 5b); the all-county stress scan has the data-triggered cases (step 2) and
+   passes on every queued county. The stress scan, not a reviewer, is what checks 1,800 pages.
+3. **Pace:** the daily GitHub job publishes 10 a day (about 6 months for the queue). google_gate S7 caps any release
+   at 25 new indexable pages. Never more, even if all pass (owner 2026-10-26: no bulk publish).
+4. **Per-page review only where code says the data is odd:** `review.flags()` (unpaid share 20+ points from the
+   state's, claims per policy under 0.2x or over 5x) sends that county to its own quick look (cheap model, the
+   flagged cards only), batched weekly. Every other county ships on the template PASS plus the gates.
+5. **Watch Google, then decide the speed (Search Console, weekly):**
+   - Speed up to 25 a day only if, after 4 weeks, most published pages are indexed and impressions grow.
+   - Hold at 10 if indexing lags (pages "crawled, not indexed").
+   - Stop and investigate if site-wide impressions fall sharply. The car site's 2026-09-14 cliff was site-wide.
+6. **Keep it fresh at scale:** the monthly cloud refresh rebuilds every published page's data; `lastmod` moves only
+   when a page's data changes. Pages whose county later falls under the floor go back to a state-table row with a
+   redirect to the state page.
+7. **Later layer:** ZIP pages only after counties index well, and only ZIPs that pass the three-part test.
+   Not before.
+
 ## What works
 - Builder rules make wrong text hard (`tp`, `m`, `claim`, `rule`); 9-question gate on built and live HTML; mutation suite of real shipped bugs.
 - Template review on 3 samples plus flags for odd pages; S12 blocks unreviewed pages; S14 ages gaps.
