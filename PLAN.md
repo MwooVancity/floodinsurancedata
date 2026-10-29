@@ -50,8 +50,11 @@ louisiana "Submitted and indexed". Top queries: Arkansas, Florida (position 19.5
    buy"; state insurance department (needs a sourced list of 51); "compare with" a bordering county.
 3e. Two datasets that change the insurance decision (owner 10-29 API list; the rest are live conditions and belong
    on riverwaterlevels.com, which stays separate). Verify the source first. (i) County flood-map dates: effective vs
-   preliminary labelled; a gap line where missing (check the Community Status Book fields we already pull).
-   (ii) NOAA sea-level trend for coastal counties: NOAA's published trend and period only, a gauge in or next to the
+   preliminary labelled. CHECKED 10-29: FEMA's CSB has `currentlyEffectiveMapDate` per community (two-digit years:
+   "09/24/21"; read yy <= this year as 20yy, else 19yy; non-dates such as "(NSFHA)" print as words, null = gap);
+   now collected by collect_state_small (arrives 11-03). No preliminary/pending map date in it: link FEMA's map site.
+   (ii) CHECKED 10-29: NOAA sealvltrends API, 144 stations, trend in inches/decade with start/end dates and lat/lon;
+   county from the Census geocoder (station point -> county). NOAA sea-level trend for coastal counties: NOAA's published trend and period only, a gauge in or next to the
    county (named), nothing for inland counties, "a county figure is not your property's risk" beside it.
 4. Links: build ONE data story from data we hold ("counties paying furthest below FEMA's full-risk price").
    Done when it is live. Pitching it to local news needs the owner (outreach is outbound).

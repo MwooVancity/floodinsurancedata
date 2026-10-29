@@ -40,7 +40,7 @@ def run(st):
     d = os.path.join(ROOT, "data", "states", slug(st)); os.makedirs(d, exist_ok=True)
     out = {}
     out["crs"] = fema("v1", "NfipCommunityStatusBook", f"state eq '{st}'",
-                      "communityName,county,classRating,sfhaDiscount,nonSfhaDiscount,participatingInNFIP")
+                      "communityName,county,classRating,sfhaDiscount,nonSfhaDiscount,participatingInNFIP,currentlyEffectiveMapDate")   # map date: PLAN 3e
     out["declarations"] = fema("v2", "DisasterDeclarationsSummaries", f"state eq '{st}'",
                                "disasterNumber,declarationType,incidentType,declarationTitle,fyDeclared,declarationDate,fipsCountyCode")
     out["housing"] = fema("v2", "HousingAssistanceOwners", f"state eq '{st}'",
