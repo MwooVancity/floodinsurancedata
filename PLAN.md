@@ -49,7 +49,7 @@ the sources with dates, and that there are no ads or paid links. A way to report
 **M. Freshness.** Data as-of on every page, monthly refresh, dates move only when the data changes.
 **N. Consistency.** The same card says the same thing the same way on every page; state and county pages agree.
 
-## Batch: round 16 fixes (2026-10-28; full review against checklist A-N; no wrong figures, wording/UI MAJORs)
+## Batch: round 16 fixes (2026-10-28; full review against checklist A-N; no wrong figures, wording/UI MAJORs) — SHIPPED 2026-10-29 (rounds 17-18 light checks PASS, live gate 111 pages)
 Each line: DONE with the proof, or OPEN. Ship only when every MAJOR is DONE (one light check, then release).
 1. Quote checker: say these are existing policies (many below full-risk) and show the new-policy median beside the result. OPEN
 2. "Renewing?" label: the term-year row includes new buyers; relabel it. OPEN
@@ -60,12 +60,12 @@ Each line: DONE with the proof, or OPEN. Ship only when every MAJOR is DONE (one
 7. Disaster list: month and FEMA disaster number on each line, so same-title disasters differ. OPEN
 8. Zone codes: plain risk words on every zone (B/X shaded moderate, C/X low, A99, AH/AO, A01-A30 high-risk); dropdown A-Z. OPEN
 9. Non-NFIP list: a county-named community says "unincorporated area only". OPEN
-10. County-table dashes: a legend line ("fewer than 30 priced single-family policies"). OPEN
-11. Average paid claim: "1978-2026 dollars, not adjusted for inflation, includes code-upgrade payments" beside it. OPEN
-12. Home: policy records vs insured units explained; county list header matches its column. OPEN
-13. "No named flood in <year>" must not contradict a multi-year label row covering that year. OPEN
-14. Phone UI: tap-to-call NFIP number, note text 15px+, back-to-top link, search box on long tables. OPEN
-15. Site: a 404 page; About says the site is run anonymously. OPEN
+10. County-table dashes: a legend line ("fewer than 30 priced single-family policies"). DONE
+11. Average paid claim: "1978-2026 dollars, not adjusted for inflation, includes code-upgrade payments" beside it. DONE
+12. Home: policy records vs insured units explained; county list header matches its column. DONE
+13. "No named flood in <year>" must not contradict a multi-year label row covering that year. DONE
+14. Phone UI: tap-to-call NFIP number, note text 15px+, back-to-top link, search box on long tables. PARTLY (tap-to-call, 15px notes, back-to-top DONE; long-table search OPEN)
+15. Site: a 404 page; About says the site is run anonymously. DONE
 Next GAP (top): show NFIP take-up (homes with flood insurance) and the share of claims from outside high-risk zones; both are in data.
 
 ## Strategy: Musk's five steps on the whole project (owner 2026-10-28: "elon musk it to #1")

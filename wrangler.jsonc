@@ -1,7 +1,7 @@
 {
   "name": "floodinsurancedata",
   "compatibility_date": "2026-10-19",
-  "assets": { "directory": "./dist" },
+  "assets": { "directory": "./dist", "not_found_handling": "404-page" },
   "workers_dev": true,
   "routes": [
     { "pattern": "floodinsurancedata.com", "custom_domain": true },
