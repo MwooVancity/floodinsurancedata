@@ -61,7 +61,7 @@ Before editing, write each item's likely failure and its pre-check. Then:
   and ONE release.py run; then one light check; then ship and read one live page.
 - Never record a review for a template that changed after it; one writer per project; pull before work.
 - A template change no reader can see (markup, scripts): `hater.py carry <round> <last passed release> <samples>`
-  keeps the PASS only if every sample's visible text is identical; any difference needs a light review.
+  keeps the PASS only if every sample's visible text is identical (`carry <round> passed <samples>` compares with the snapshot saved when it passed); any difference needs a light review.
 
 ## Ponytail ladder before building anything (HARD, owner 2026-10-29)
 Stop at the first rung that holds: does it need to exist (does a sentence already on the page answer it?) ->
