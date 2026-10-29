@@ -3,6 +3,29 @@
 ## Goal
 The most helpful flood-insurance page for each US state and county, from public federal data. Reader: a homeowner or buyer with a flood-zone letter or a renewal, on a phone, 60 seconds (see CLAUDE.md).
 
+## Strategy: Musk's five steps on the whole project (owner 2026-10-28: "elon musk it to #1")
+Scoreboard (the only measure of progress): pages indexed, impressions, clicks, queries on page 1, AI-answer citations.
+Work that cannot move one of these is suspect.
+1. **Question every requirement.** What gets us to #1 for "flood insurance cost <county>": (a) a page exists for that
+   county, (b) Google indexes it, (c) it answers better than #1, (d) other sites link to us. Everything else is
+   overhead. Twelve review rounds, a growing gate and side docs moved none of the four.
+2. **Delete.**
+   - Review rounds as the default (see budget below).
+   - Docs: CLAUDE.md holds the rules, PLAN.md holds the state, nothing else. `docs/MASTER-PROMPT.md` and
+     `REVIEW-PROMPT.md` fold in or go to `docs/archive/`; only `docs/HATER-PROMPT.md` stays, because `hater.py` reads it.
+   - Dead tools for cut features: the NOAA, take-up and per-place API collectors. Grep for callers, then delete.
+   - Weak cards: each page is 20-25 phone screens. A card a scared reader would not miss goes; the answers stay.
+3. **Simplify.** One template, one gate run per batch, one all-county scan. Correctness lives in the builder, so a
+   wrong sentence cannot be written; no new check without a defect it catches.
+4. **Accelerate where it moves the scoreboard.**
+   - (a) Coverage: one template PASS unblocks the 1,803-county queue. 10/day now, 25/day once Google indexes most pages.
+   - (c) Answers: the helpfulness list below, cheapest first.
+   - (d) Links: data stories (rankings from data we hold), built once, pitched to local news. The one way past
+     NerdWallet's authority.
+   - (b) Indexing: sitemap, internal links, bordering-county links (done in code).
+5. **Automate last.** Already automated: monthly FEMA data, daily publishing. Next: a weekly Search Console pull into
+   `state/gsc.json` (needs an owner-made service account key). Then the scoreboard updates itself and decides the pace.
+
 ## Where we are (2026-10-28)
 - Built site: `dist/flood-insurance/` has 104 folders (51 states, 52 counties and parishes, index.html); `tools/counties.json` 52 counties; `state/county-queue.json` 1,803 counties queued. Last dist commit 514d1559 (publish: added 10).
 - Live: rounds 10-12 fixes, shipped 2026-10-28 as a hotfix (commit 5a56b096): live gate 110 pages = build; horry-county-sc read live.
@@ -105,6 +128,11 @@ Ranking, beyond the page: data stories (rankings) for links; Search Console read
 - 2026-10-28 round 11: one flood-disaster rule for counts, aid and claim checks (1f638128).
 - 2026-10-28 stress test on 1,803 counties: repeated NRI sentence and FEMA sequence numbers fixed (d8e204f6).
 - 2026-10-28 published 10 more counties (514d1559).
+
+## Review and gate budget (owner 2026-10-28; rule in CLAUDE.md)
+About a million tokens went to 12 review rounds. From now: scripts first (gates + all-county scan), one cheap light
+check per batch (changed cards, 2 pages, text only, under ~50k tokens), a full round only for a major redesign with
+the owner's OK. Every defect a review finds becomes a gate check, so no review hunts it again.
 
 ## Session 2026-10-28 (late): built in code, NOT yet built/gated/reviewed
 - Done in code: quote checker zone choice (item 1); condo line (item 4); non-NFIP names on state pages (item 5);

@@ -42,6 +42,22 @@ A US homeowner or buyer at one place, on a phone, 30-60 seconds, days of urgency
 4. Beat #1: WebSearch the real query; show what the top 3 give from our data or print a gap line.
 5. Gates once. 6. Review only when the fixlog is complete. 7. Ship only on PASS.
 
+## Whole project: Musk's five steps toward #1 (HARD, owner 2026-10-28; strategy and scoreboard in PLAN.md)
+Before any task, name which scoreboard number it moves: pages indexed, impressions, clicks, page-1 queries,
+AI-answer citations. None = question it, then delete it. Order: question, delete, simplify, accelerate, automate last.
+Two files only: CLAUDE.md = rules, PLAN.md = strategy and state.
+
+## Review and gate budget (HARD, owner 2026-10-28: "be like Elon Musk with review/gates, we've blown a million tokens")
+1. Question the requirement: before any review, name the defect it could catch that the gates and the all-county
+   scan cannot. None named = no review.
+2. Delete: no full hater round for wording, labels, one card or a rule (a round cost ~320k tokens). Wrong live text
+   ships on gates with `--hotfix`. Never review the same defect class twice: after one finding it is a gate check.
+3. Simplify: the default check is scripts (gates + all-county scan, near zero tokens). A light check is one cheap-model
+   agent, changed cards only, 2 pages, page text only (no screenshots, no web search), under ~50k tokens.
+4. Accelerate: batch every change, run gates ONCE per batch, one light check per batch, never per fix.
+5. Automate: FULL mode (6 judges, screenshots, search) at most once per major template redesign or new data source,
+   and only with the owner's OK and a stated token cost first.
+
 ## Review (signed-review gate)
 - Enforced: `google_gate.py` S12 fails a release with any indexable page lacking a current PASS in `state/reviews/<slug>.json`; `add_counties.py` queues only reviewed counties.
 - Size the review to the change (global CLAUDE.md "Size every review to the change"); say level and cost in one line first:
