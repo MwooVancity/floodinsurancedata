@@ -51,22 +51,22 @@ the sources with dates, and that there are no ads or paid links. A way to report
 
 ## Batch: round 16 fixes (2026-10-28; full review against checklist A-N; no wrong figures, wording/UI MAJORs) — SHIPPED 2026-10-29 (rounds 17-18 light checks PASS, live gate 111 pages)
 Each line: DONE with the proof, or OPEN. Ship only when every MAJOR is DONE (one light check, then release).
-1. Quote checker: say these are existing policies (many below full-risk) and show the new-policy median beside the result. OPEN
-2. "Renewing?" label: the term-year row includes new buyers; relabel it. OPEN
-3. Hero tile: define "full-risk price" in plain words on screen 1; no alarm when the gap is small. OPEN
-4. Screen-1 payout line: caveat beside it (many unpaid claims are paperwork or "other"). OPEN
-5. NRI: rating word vs loss percentile shown as two different FEMA measures. OPEN
-6. Events lead: when a bigger year has no named flood, say so in the lead (Maine 2024). OPEN
-7. Disaster list: month and FEMA disaster number on each line, so same-title disasters differ. OPEN
-8. Zone codes: plain risk words on every zone (B/X shaded moderate, C/X low, A99, AH/AO, A01-A30 high-risk); dropdown A-Z. OPEN
-9. Non-NFIP list: a county-named community says "unincorporated area only". OPEN
+1. Quote checker: say these are existing policies (many below full-risk) and show the new-policy median beside the result. DONE
+2. "Renewing?" label: the term-year row includes new buyers; relabel it. DONE
+3. Hero tile: define "full-risk price" in plain words on screen 1; no alarm when the gap is small. DONE
+4. Screen-1 payout line: caveat beside it (many unpaid claims are paperwork or "other"). DONE
+5. NRI: rating word vs loss percentile shown as two different FEMA measures. DONE
+6. Events lead: when a bigger year has no named flood, say so in the lead (Maine 2024). DONE
+7. Disaster list: month and FEMA disaster number on each line, so same-title disasters differ. PARTLY (month + emergency label; disaster number OPEN)
+8. Zone codes: plain risk words on every zone (B/X shaded moderate, C/X low, A99, AH/AO, A01-A30 high-risk); dropdown A-Z. DONE
+9. Non-NFIP list: a county-named community says "unincorporated area only". DONE
 10. County-table dashes: a legend line ("fewer than 30 priced single-family policies"). DONE
 11. Average paid claim: "1978-2026 dollars, not adjusted for inflation, includes code-upgrade payments" beside it. DONE
 12. Home: policy records vs insured units explained; county list header matches its column. DONE
 13. "No named flood in <year>" must not contradict a multi-year label row covering that year. DONE
-14. Phone UI: tap-to-call NFIP number, note text 15px+, back-to-top link, search box on long tables. PARTLY (tap-to-call, 15px notes, back-to-top DONE; long-table search OPEN)
+14. Phone UI: tap-to-call NFIP number, note text 15px+, back-to-top link, search box on long tables. PARTLY (tap-to-call, 15px notes, back-to-top DONE; long-table search DONE 10-29)
 15. Site: a 404 page; About says the site is run anonymously. DONE
-Next GAP (top): show NFIP take-up (homes with flood insurance) and the share of claims from outside high-risk zones; both are in data.
+Next GAP (top): show NFIP take-up (homes with flood insurance) and the share of claims from outside high-risk zones; both are in data. Outside-zone share: DONE 10-29 (one line on "Am I required"). Take-up: OPEN (cut 10-28; verify its source first).
 
 ## Strategy: Musk's five steps on the whole project (owner 2026-10-28: "elon musk it to #1")
 Scoreboard (the only measure of progress): pages indexed, impressions, clicks, queries on page 1, AI-answer citations.
@@ -207,3 +207,10 @@ the owner's OK. Every defect a review finds becomes a gate check, so no review h
 - Dropped on purpose: naming competitors' figures (item 2): not public data, changes without notice.
 - Left: run build_all + release.py gates once (fix anything they catch); light check of changed cards; ship;
   cloud data job for the zone table; items 6-7; all-county scan; Search Console read (owner).
+
+## Next batch (held 2026-10-29; light round 19 reviewed a withdrawn version, not recorded)
+- Long-table search boxes: script read correct in round 19; re-add, plus a "no matches" line.
+- "Outside a high-risk zone?" line: data fixed in agg_raw.py (blank zones now leave both sides; share of paid dollars
+  on zoned claims, building + contents + ICC). Re-add after the 2026-11-03 refresh, worded "of paid claim dollars"
+  (not "buildings"), with the period, and its takeaway for the "Am I required" reader.
+- Take-up (homes with flood insurance): verify the penetration source first (cut 10-28).

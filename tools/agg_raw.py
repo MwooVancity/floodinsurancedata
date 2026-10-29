@@ -60,10 +60,13 @@ def claims_extra(rows):
     if not rows: return None
     paid = [r for r in rows if net(r) > 0]
     paid_total = sum(net(r) for r in paid)
-    outside = sum(net(r) for r in paid if (r["ratedFloodZone"] or "")[:1] not in ("A", "V"))
+    # round 19: a claim with no rated zone is neither inside nor outside; it leaves both sides of the share
+    zoned = [r for r in paid if (r["ratedFloodZone"] or "").strip()]
+    outside = sum(net(r) for r in zoned if r["ratedFloodZone"].strip()[:1] not in ("A", "V"))
+    zoned_total = sum(net(r) for r in zoned)
     return {"claims": len(rows), "avg_paid": round(paid_total / len(paid)) if paid else 0,
             "cwop_share": round(100 * (len(rows) - len(paid)) / len(rows), 1),
-            "outside_sfha_pct": round(100 * outside / paid_total, 1) if paid_total else None,
+            "outside_sfha_pct": round(100 * outside / zoned_total, 1) if zoned_total else None,   # of paid dollars on zoned claims: building, contents and ICC
             "paid_n": len(paid), "source": "OpenFEMA NFIP Claims v3 (raw pull)"}
 
 def manifest(ds, st):
