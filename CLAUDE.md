@@ -79,6 +79,9 @@ crash, never NaN/undefined/Infinity, never a verdict word; (5) Chromium + WebKit
 (`tools/tools_flags.json`, off = removed on the next hotfix); (7) staged: the 3 sample pages for 2 weeks, then all;
 (8) rule wording checked by a second model. Never generate a page per input pair (scaled-content abuse): one tool URL.
 
+The universal version is the global ~/.claude/CLAUDE.md "Master engineering prompt" (every project; a global hook
+prints its trigger on every request). Apply it to the machinery too: the daily full rebuild survived because it never was.
+
 ## Whole project: Musk's five steps toward #1 (HARD, owner 2026-10-28; strategy and scoreboard in PLAN.md)
 Before any task, name which scoreboard number it moves: pages indexed, impressions, clicks, page-1 queries,
 AI-answer citations. None = question it, then delete it. Order: question, delete, simplify, accelerate, automate last.
