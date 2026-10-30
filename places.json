@@ -680,6 +680,26 @@
 "indexable": true
 },
 {
+"slug": "maricopa-county-az",
+"label": "Maricopa County, Arizona",
+"short": "Maricopa County",
+"geoid": "04013",
+"state": "AZ",
+"units": 12436,
+"median": 891,
+"indexable": true
+},
+{
+"slug": "orange-county-tx",
+"label": "Orange County, Texas",
+"short": "Orange County",
+"geoid": "48361",
+"state": "TX",
+"units": 12097,
+"median": 1192,
+"indexable": true
+},
+{
 "slug": "terrebonne-parish-la",
 "label": "Terrebonne Parish, Louisiana",
 "short": "Terrebonne Parish",
@@ -690,6 +710,126 @@
 "indexable": true
 },
 {
+"slug": "jackson-county-ms",
+"label": "Jackson County, Mississippi",
+"short": "Jackson County",
+"geoid": "28059",
+"state": "MS",
+"units": 11932,
+"median": 1355,
+"indexable": true
+},
+{
+"slug": "cook-county-il",
+"label": "Cook County, Illinois",
+"short": "Cook County",
+"geoid": "17031",
+"state": "IL",
+"units": 11828,
+"median": 1162,
+"indexable": true
+},
+{
+"slug": "maui-county-hi",
+"label": "Maui County, Hawaii",
+"short": "Maui County",
+"geoid": "15009",
+"state": "HI",
+"units": 11735,
+"median": 1263,
+"indexable": true
+},
+{
+"slug": "santa-rosa-county-fl",
+"label": "Santa Rosa County, Florida",
+"short": "Santa Rosa County",
+"geoid": "12113",
+"state": "FL",
+"units": 11600,
+"median": 872,
+"indexable": true
+},
+{
+"slug": "santa-clara-county-ca",
+"label": "Santa Clara County, California",
+"short": "Santa Clara County",
+"geoid": "06085",
+"state": "CA",
+"units": 11536,
+"median": 1271,
+"indexable": true
+},
+{
+"slug": "norfolk-city-va",
+"label": "Norfolk city, Virginia",
+"short": "Norfolk city",
+"geoid": "51710",
+"state": "VA",
+"units": 11163,
+"median": 722,
+"indexable": true
+},
+{
+"slug": "flagler-county-fl",
+"label": "Flagler County, Florida",
+"short": "Flagler County",
+"geoid": "12035",
+"state": "FL",
+"units": 10793,
+"median": 1080,
+"indexable": true
+},
+{
+"slug": "st-charles-parish-la",
+"label": "St. Charles Parish, Louisiana",
+"short": "St. Charles Parish",
+"geoid": "22089",
+"state": "LA",
+"units": 10664,
+"median": 1186,
+"indexable": true
+},
+{
+"slug": "bergen-county-nj",
+"label": "Bergen County, New Jersey",
+"short": "Bergen County",
+"geoid": "34003",
+"state": "NJ",
+"units": 10467,
+"median": 1278,
+"indexable": true
+},
+{
+"slug": "hidalgo-county-tx",
+"label": "Hidalgo County, Texas",
+"short": "Hidalgo County",
+"geoid": "48215",
+"state": "TX",
+"units": 9960,
+"median": 631,
+"indexable": true
+},
+{
+"slug": "barnstable-county-ma",
+"label": "Barnstable County, Massachusetts",
+"short": "Barnstable County",
+"geoid": "25001",
+"state": "MA",
+"units": 9896,
+"median": 1443,
+"indexable": true
+},
+{
+"slug": "suffolk-county-ma",
+"label": "Suffolk County, Massachusetts",
+"short": "Suffolk County",
+"geoid": "25025",
+"state": "MA",
+"units": 9676,
+"median": 1679,
+"indexable": true
+},
+{
 "slug": "orange-county-ca",
 "label": "Orange County, California",
 "short": "Orange County",
@@ -697,6 +837,66 @@
 "state": "CA",
 "units": 9496,
 "median": 1083,
+"indexable": true
+},
+{
+"slug": "hampton-city-va",
+"label": "Hampton city, Virginia",
+"short": "Hampton city",
+"geoid": "51650",
+"state": "VA",
+"units": 9314,
+"median": 739,
+"indexable": true
+},
+{
+"slug": "osceola-county-fl",
+"label": "Osceola County, Florida",
+"short": "Osceola County",
+"geoid": "12097",
+"state": "FL",
+"units": 9307,
+"median": 645,
+"indexable": true
+},
+{
+"slug": "st-bernard-parish-la",
+"label": "St. Bernard Parish, Louisiana",
+"short": "St. Bernard Parish",
+"geoid": "22087",
+"state": "LA",
+"units": 9243,
+"median": 1088,
+"indexable": true
+},
+{
+"slug": "essex-county-ma",
+"label": "Essex County, Massachusetts",
+"short": "Essex County",
+"geoid": "25009",
+"state": "MA",
+"units": 9089,
+"median": 1313,
+"indexable": true
+},
+{
+"slug": "nassau-county-fl",
+"label": "Nassau County, Florida",
+"short": "Nassau County",
+"geoid": "12089",
+"state": "FL",
+"units": 9020,
+"median": 1082,
+"indexable": true
+},
+{
+"slug": "travis-county-tx",
+"label": "Travis County, Texas",
+"short": "Travis County",
+"geoid": "48453",
+"state": "TX",
+"units": 8921,
+"median": 1008,
 "indexable": true
 },
 {

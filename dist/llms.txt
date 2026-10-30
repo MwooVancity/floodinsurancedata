@@ -124,8 +124,28 @@
 - [Harrison County](https://floodinsurancedata.com/flood-insurance/harrison-county-ms/): median $1,212
 - [Calcasieu Parish](https://floodinsurancedata.com/flood-insurance/calcasieu-parish-la/): median $1,264
 - [Los Angeles County](https://floodinsurancedata.com/flood-insurance/los-angeles-county-ca/): median $1,092
+- [Maricopa County](https://floodinsurancedata.com/flood-insurance/maricopa-county-az/): median $891
+- [Orange County](https://floodinsurancedata.com/flood-insurance/orange-county-tx/): median $1,192
 - [Terrebonne Parish](https://floodinsurancedata.com/flood-insurance/terrebonne-parish-la/): median $1,369
+- [Jackson County](https://floodinsurancedata.com/flood-insurance/jackson-county-ms/): median $1,355
+- [Cook County](https://floodinsurancedata.com/flood-insurance/cook-county-il/): median $1,162
+- [Maui County](https://floodinsurancedata.com/flood-insurance/maui-county-hi/): median $1,263
+- [Santa Rosa County](https://floodinsurancedata.com/flood-insurance/santa-rosa-county-fl/): median $872
+- [Santa Clara County](https://floodinsurancedata.com/flood-insurance/santa-clara-county-ca/): median $1,271
+- [Norfolk city](https://floodinsurancedata.com/flood-insurance/norfolk-city-va/): median $722
+- [Flagler County](https://floodinsurancedata.com/flood-insurance/flagler-county-fl/): median $1,080
+- [St. Charles Parish](https://floodinsurancedata.com/flood-insurance/st-charles-parish-la/): median $1,186
+- [Bergen County](https://floodinsurancedata.com/flood-insurance/bergen-county-nj/): median $1,278
+- [Hidalgo County](https://floodinsurancedata.com/flood-insurance/hidalgo-county-tx/): median $631
+- [Barnstable County](https://floodinsurancedata.com/flood-insurance/barnstable-county-ma/): median $1,443
+- [Suffolk County](https://floodinsurancedata.com/flood-insurance/suffolk-county-ma/): median $1,679
 - [Orange County](https://floodinsurancedata.com/flood-insurance/orange-county-ca/): median $1,083
+- [Hampton city](https://floodinsurancedata.com/flood-insurance/hampton-city-va/): median $739
+- [Osceola County](https://floodinsurancedata.com/flood-insurance/osceola-county-fl/): median $645
+- [St. Bernard Parish](https://floodinsurancedata.com/flood-insurance/st-bernard-parish-la/): median $1,088
+- [Essex County](https://floodinsurancedata.com/flood-insurance/essex-county-ma/): median $1,313
+- [Nassau County](https://floodinsurancedata.com/flood-insurance/nassau-county-fl/): median $1,082
+- [Travis County](https://floodinsurancedata.com/flood-insurance/travis-county-tx/): median $1,008
 - [St. Louis County](https://floodinsurancedata.com/flood-insurance/st-louis-county-mo/): median $1,257
 - [Kanawha County](https://floodinsurancedata.com/flood-insurance/kanawha-county-wv/): median $1,450
 - [Methodology](https://floodinsurancedata.com/methodology/)

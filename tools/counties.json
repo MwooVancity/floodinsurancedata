@@ -718,5 +718,205 @@
   "label": "Los Angeles County, California",
   "short": "Los Angeles County",
   "official": 0
+ },
+ {
+  "slug": "maricopa-county-az",
+  "state": "AZ",
+  "geoid": "04013",
+  "county": "MARICOPA",
+  "countytitle": "Maricopa",
+  "label": "Maricopa County, Arizona",
+  "short": "Maricopa County",
+  "official": 0
+ },
+ {
+  "slug": "orange-county-tx",
+  "state": "TX",
+  "geoid": "48361",
+  "county": "ORANGE",
+  "countytitle": "Orange",
+  "label": "Orange County, Texas",
+  "short": "Orange County",
+  "official": 0
+ },
+ {
+  "slug": "jackson-county-ms",
+  "state": "MS",
+  "geoid": "28059",
+  "county": "JACKSON",
+  "countytitle": "Jackson",
+  "label": "Jackson County, Mississippi",
+  "short": "Jackson County",
+  "official": 0
+ },
+ {
+  "slug": "cook-county-il",
+  "state": "IL",
+  "geoid": "17031",
+  "county": "COOK",
+  "countytitle": "Cook",
+  "label": "Cook County, Illinois",
+  "short": "Cook County",
+  "official": 0
+ },
+ {
+  "slug": "maui-county-hi",
+  "state": "HI",
+  "geoid": "15009",
+  "county": "MAUI",
+  "countytitle": "Maui",
+  "label": "Maui County, Hawaii",
+  "short": "Maui County",
+  "official": 0
+ },
+ {
+  "slug": "santa-rosa-county-fl",
+  "state": "FL",
+  "geoid": "12113",
+  "county": "SANTA ROSA",
+  "countytitle": "Santa Rosa",
+  "label": "Santa Rosa County, Florida",
+  "short": "Santa Rosa County",
+  "official": 0
+ },
+ {
+  "slug": "santa-clara-county-ca",
+  "state": "CA",
+  "geoid": "06085",
+  "county": "SANTA CLARA",
+  "countytitle": "Santa Clara",
+  "label": "Santa Clara County, California",
+  "short": "Santa Clara County",
+  "official": 0
+ },
+ {
+  "slug": "norfolk-city-va",
+  "state": "VA",
+  "geoid": "51710",
+  "county": "NORFOLK CITY",
+  "countytitle": "Norfolk city",
+  "label": "Norfolk city, Virginia",
+  "short": "Norfolk city",
+  "official": 0
+ },
+ {
+  "slug": "flagler-county-fl",
+  "state": "FL",
+  "geoid": "12035",
+  "county": "FLAGLER",
+  "countytitle": "Flagler",
+  "label": "Flagler County, Florida",
+  "short": "Flagler County",
+  "official": 0
+ },
+ {
+  "slug": "st-charles-parish-la",
+  "state": "LA",
+  "geoid": "22089",
+  "county": "ST. CHARLES",
+  "countytitle": "St. Charles",
+  "label": "St. Charles Parish, Louisiana",
+  "short": "St. Charles Parish",
+  "official": 0
+ },
+ {
+  "slug": "bergen-county-nj",
+  "state": "NJ",
+  "geoid": "34003",
+  "county": "BERGEN",
+  "countytitle": "Bergen",
+  "label": "Bergen County, New Jersey",
+  "short": "Bergen County",
+  "official": 0
+ },
+ {
+  "slug": "hidalgo-county-tx",
+  "state": "TX",
+  "geoid": "48215",
+  "county": "HIDALGO",
+  "countytitle": "Hidalgo",
+  "label": "Hidalgo County, Texas",
+  "short": "Hidalgo County",
+  "official": 0
+ },
+ {
+  "slug": "barnstable-county-ma",
+  "state": "MA",
+  "geoid": "25001",
+  "county": "BARNSTABLE",
+  "countytitle": "Barnstable",
+  "label": "Barnstable County, Massachusetts",
+  "short": "Barnstable County",
+  "official": 0
+ },
+ {
+  "slug": "suffolk-county-ma",
+  "state": "MA",
+  "geoid": "25025",
+  "county": "SUFFOLK",
+  "countytitle": "Suffolk",
+  "label": "Suffolk County, Massachusetts",
+  "short": "Suffolk County",
+  "official": 0
+ },
+ {
+  "slug": "hampton-city-va",
+  "state": "VA",
+  "geoid": "51650",
+  "county": "HAMPTON CITY",
+  "countytitle": "Hampton city",
+  "label": "Hampton city, Virginia",
+  "short": "Hampton city",
+  "official": 0
+ },
+ {
+  "slug": "osceola-county-fl",
+  "state": "FL",
+  "geoid": "12097",
+  "county": "OSCEOLA",
+  "countytitle": "Osceola",
+  "label": "Osceola County, Florida",
+  "short": "Osceola County",
+  "official": 0
+ },
+ {
+  "slug": "st-bernard-parish-la",
+  "state": "LA",
+  "geoid": "22087",
+  "county": "ST. BERNARD",
+  "countytitle": "St. Bernard",
+  "label": "St. Bernard Parish, Louisiana",
+  "short": "St. Bernard Parish",
+  "official": 0
+ },
+ {
+  "slug": "essex-county-ma",
+  "state": "MA",
+  "geoid": "25009",
+  "county": "ESSEX",
+  "countytitle": "Essex",
+  "label": "Essex County, Massachusetts",
+  "short": "Essex County",
+  "official": 0
+ },
+ {
+  "slug": "nassau-county-fl",
+  "state": "FL",
+  "geoid": "12089",
+  "county": "NASSAU",
+  "countytitle": "Nassau",
+  "label": "Nassau County, Florida",
+  "short": "Nassau County",
+  "official": 0
+ },
+ {
+  "slug": "travis-county-tx",
+  "state": "TX",
+  "geoid": "48453",
+  "county": "TRAVIS",
+  "countytitle": "Travis",
+  "label": "Travis County, Texas",
+  "short": "Travis County",
+  "official": 0
  }
 ]
