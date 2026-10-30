@@ -60,6 +60,7 @@ flags = json.load(open(os.path.join(ROOT, "tools", "tools_flags.json"), encoding
 on = flags.get("deadline") or []
 slugs = [s for s in os.listdir(os.path.join(ROOT, "dist", "flood-insurance")) if os.path.exists(os.path.join(ROOT, "dist", "flood-insurance", s, "index.html"))]
 pages = slugs if on == "all" else [s for s in on if s in slugs]
+# scale (PLAN): the oracle/fuzz runs on one page (same code everywhere); presence is checked on every page above
 url = lambda s: "file:///" + os.path.join(ROOT, "dist", "flood-insurance", s, "index.html").replace("\\", "/")
 # the tool appears exactly where the flags say, and nowhere else
 for s in slugs:

@@ -56,6 +56,11 @@ louisiana "Submitted and indexed". Top queries: Arkansas, Florida (position 19.5
 5. Pace: 20 a day now (owner). After 4 weeks of step-1 data: 25 if most pages are indexed; drop to 10 if not; stop if
    site-wide impressions fall. Done when the decision and its numbers are written here.
 
+## Scale guard (measured 2026-10-29: full build 165 s for 103 pages, about 1.6 s a page)
+A daily full rebuild at 2,000 pages is about 55 min a day, over GitHub's free compute. BEFORE 400 live pages: the daily
+job builds only the new counties, the states that list them, home and sitemap (about 3 min); the full rebuild runs
+monthly after the refresh. Tool fuzz runs on one page; presence on all. Flagged-page reviews: weekly batch, cheap model, capped.
+
 ## Every month, every year (edge cases first; the jobs run themselves, sessions check them)
 What can break, and the guard already in place (or OPEN):
 - FEMA API down, slow or renamed fields: pull_raw stops before agg_raw, so the site keeps last month's data and the
