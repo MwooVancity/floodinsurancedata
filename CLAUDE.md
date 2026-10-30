@@ -38,6 +38,7 @@ helpfulness checklist is in PLAN.md; every review brief must judge every item on
 - Live gate: `python -I tools/release.py --live`.
 - Cloud: `refresh-data.yml` monthly (pull_raw, agg_raw, extras_raw, collect_state_small; commits `data/`); `publish-counties.yml` daily adds reviewed counties via `add_counties.py`.
 - No dry runs of cloud jobs (owner 2026-10-29): the next scheduled run is the test; a failing gate ships nothing.
+- No emails and no GitHub issues as alerts (owner 2026-10-29). Jobs fail closed and self-heal (PLAN "Runs without Claude").
 - Gap backlog: `state/reviews/backlog.md` (google_gate S14 fails a release when an item is 3 review rounds old).
 
 ## Procedure (every build or fix)

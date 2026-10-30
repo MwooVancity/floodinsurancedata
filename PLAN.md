@@ -69,20 +69,22 @@ can appear in its related links); unchanged = skipped (`tools/fingerprint.py`). 
 byte-identical; one county's data -> only that state's pages; a new county -> 5 files. Code change -> everything (right).
 
 ## Runs without Claude (owner drops the subscription about 2026-11-19; built 2026-10-29)
-Nothing a reader sees may break unseen. A failed check ships nothing and the live site stays as it was. Guards:
-- A failed job opens one GitHub issue "Job failed: <job>" (GitHub emails the owner), adds a comment on each new
-  failure, and closes it when the job passes again (`tools/job_alert.sh`). The daily and monthly jobs check each other:
-  "Job not running" when publish has not succeeded for 3 days or refresh for 40 days.
-- Found 2026-10-29: refresh 10-29 failed at the push (fixed: pull --rebase; it has never succeeded yet, so an alert
-  opens until the 11-03 run passes); publish 10-29 failed because flsenate.gov did not answer GitHub (fixed: an unreachable
+No emails, no issues (owner 2026-10-29). A failed check ships nothing and the live site stays as it was; failures show
+only as a red run on the Actions page and in the next session's start report. Self-heal, in publish-counties:
+- After a deploy, every live page must equal the page that passed; if not, the previous release is deployed again.
+- Days with nothing to publish still check every live page; a mismatch (deleted site, stale edge) redeploys once.
+- Over 19,000 files stops before deploying (Cloudflare free plan: 20,000 a deploy).
+- Found 2026-10-29: refresh 10-29 failed at the push (fixed: pull --rebase; never succeeded yet, the 11-03 run is the
+  first); publish 10-29 failed because flsenate.gov did not answer GitHub (fixed: an unreachable
   law page warns and fails only after 14 days unreached); the 10-28 publish ran with phone checks skipped (now a missing
   browser fails in the cloud). Every one was silent before.
 - Pinned: runner ubuntu-26.04, wrangler 4.86.0, playwright 1.64.1, Python 3.12, Node 20. A retired runner fails loudly.
-- Cloudflare token: the daily job opens "Renew soon" 30 days before it expires (`tools/token_check.py`).
+- Cloudflare token (30 days) and domain (45 days; Cloudflare Registrar, expires 2027-10-23): a yellow warning on the
+  daily run page (`tools/token_check.py`).
 - Git size, measured: 52 MB for all history (104 pages); largest file 3.3 MB (limit 100 MB); jobs check out only the
-  latest commit, so history does not slow them. Estimate at 2,000 pages: a few hundred MB a year. Not urgent; the
-  refresh job opens "Repo large" at 1.5 GB. (The 290/350 MB a month in the old note was unpacked size.)
-Owner-only after 11-19 (each arrives as an issue email): renew the Cloudflare token; a law page that moved (a rule's
+  latest commit, so history does not slow them. Estimate at 2,000 pages: a few hundred MB a year. Not urgent.
+  (The 290/350 MB a month in the old note was unpacked size.)
+Owner-only after 11-19 (seen on the Actions page): keep the domain's auto-renew card valid; renew the Cloudflare token; a law page that moved (a rule's
 link must be re-pointed: the release stays stopped, the live site unchanged); a 25% jump in a median that stops the
 refresh (the old data stays live and correct, only older); a GitHub runner retired (change one line).
 

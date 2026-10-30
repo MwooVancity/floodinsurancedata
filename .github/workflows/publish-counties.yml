@@ -14,8 +14,6 @@ on:
 
 permissions:
   contents: write
-  issues: write
-  actions: read
 
 concurrency: publish-counties
 
@@ -31,15 +29,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Cloudflare token expiry (an alert issue 30 days before deploys would stop)
+      - name: Cloudflare token expiry (a warning on the run page 30 days before deploys would stop)
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          GH_TOKEN: ${{ github.token }}
         run: |
           out=$(python -I tools/token_check.py); echo "$out"
-          r=$(echo "$out" | grep RENEW || true)
-          [ -n "$r" ] && bash tools/job_alert.sh warn "Renew soon: Cloudflare API token" "$r. Make a new token in Cloudflare and paste it into GitHub repo Settings, Secrets, CLOUDFLARE_API_TOKEN." || true
+          echo "$out" | grep RENEW | sed 's/^/::warning::/' || true   # a yellow note on the run page; no email (owner)
       - name: Add the next 10 counties
         id: add
         run: |
@@ -64,14 +60,16 @@ jobs:
           git add -A tools/counties.json places.json dist data/c state
           git commit -m "publish: ${{ steps.add.outputs.msg }}"
           git pull --rebase origin master && git push
+          n=$(find dist -type f | wc -l); echo "files: $n"; [ "$n" -lt 19000 ]   # Cloudflare free plan: 20,000 files a deploy
           npx --yes wrangler@4.86.0 deploy
           sleep 30
-          python -I tools/gate_live.py
-      - name: Alert on failure (one GitHub issue; GitHub emails the owner)
-        if: failure()
-        env: { GH_TOKEN: "${{ github.token }}" }
-        run: bash tools/job_alert.sh fail "publish-counties" refresh-data.yml 40
-      - name: Close the alert when passing again; check the other job still runs
-        if: success()
-        env: { GH_TOKEN: "${{ github.token }}" }
-        run: bash tools/job_alert.sh ok "publish-counties" refresh-data.yml 40
+          # live must equal what passed; if not, put the previous release back (it passed yesterday) and stop
+          python -I tools/gate_live.py || { git checkout HEAD~1 -- dist; npx --yes wrangler@4.86.0 deploy; sleep 30; python -I tools/gate_live.py; exit 1; }
+      - name: Live site check on days with nothing to publish (queue empty; a lapsed domain or deleted site shows here)
+        if: steps.add.outputs.none == '1'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          # live must equal the committed release; if not, deploy it again once (self-heal), then it must match
+          python -I tools/gate_live.py || { npx --yes wrangler@4.86.0 deploy; sleep 30; python -I tools/gate_live.py; }
