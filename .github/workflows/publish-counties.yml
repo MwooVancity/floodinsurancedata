@@ -14,12 +14,15 @@ on:
 
 permissions:
   contents: write
+  issues: write
+  actions: read
 
 concurrency: publish-counties
 
 jobs:
   publish:
     runs-on: ubuntu-26.04   # pinned 2026-10-29 (owner: nothing may change under the jobs)
+    concurrency: { group: site-deploy }   # one deploy at a time across workflows (2026-10-30)
     timeout-minutes: 45   # a normal day takes ~4 min; the default is 6 hours of billed minutes on a hang
     steps:
       - uses: actions/checkout@v4
@@ -44,7 +47,11 @@ jobs:
           git diff --quiet tools/counties.json && { echo "queue empty"; echo "none=1" >> "$GITHUB_OUTPUT"; } || true
       - name: Phone check browser
         if: steps.add.outputs.none != '1'
-        run: pip install -q playwright==1.64.1 && python -m playwright install --with-deps chromium webkit
+        run: |
+          pip install -q playwright==1.64.1 && python -m playwright install --with-deps chromium webkit
+          sudo apt-get install -y -q fonts-roboto fonts-noto-core fonts-noto-mono   # measure with a phone's fonts
+          mkdir -p ~/.config/fontconfig && cp tools/ci-fonts.conf ~/.config/fontconfig/fonts.conf && fc-cache -f
+          fc-match sans-serif; fc-match system-ui; fc-match serif   # proof in the log: must print Roboto / Noto Serif
       - name: Build and every release check (the same steps as a local release; 2026-10-28 it ran only three of them)
         if: steps.add.outputs.none != '1'
         run: python -I tools/test_tools.py --browser webkit && python -I tools/release.py
@@ -73,3 +80,11 @@ jobs:
         run: |
           # live must equal the committed release; if not, deploy it again once (self-heal), then it must match
           python -I tools/gate_live.py || { npx --yes wrangler@4.86.0 deploy; sleep 30; python -I tools/gate_live.py; }
+      - name: Alert on failure (one GitHub issue; GitHub emails the owner)
+        if: failure()
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: bash tools/job_alert.sh fail "publish-counties" refresh-data.yml 40
+      - name: Close the alert when passing again; check the other job still runs
+        if: success()
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: bash tools/job_alert.sh ok "publish-counties" refresh-data.yml 40

@@ -69,8 +69,10 @@ can appear in its related links); unchanged = skipped (`tools/fingerprint.py`). 
 byte-identical; one county's data -> only that state's pages; a new county -> 5 files. Code change -> everything (right).
 
 ## Runs without Claude (owner drops the subscription about 2026-11-19; built 2026-10-29)
-No emails, no issues (owner 2026-10-29). A failed check ships nothing and the live site stays as it was; failures show
-only as a red run on the Actions page and in the next session's start report. Self-heal, in publish-counties:
+A failed check ships nothing and the live site stays as it was. Emails only on failure (owner 2026-10-29): a failed job
+opens one GitHub issue "Job failed: <job>", comments on each repeat, closes when it passes (`tools/job_alert.sh`); the
+daily and monthly jobs check each other ("Job not running": publish 3 days, refresh 40 days). Deploys: one at a time
+across workflows (group site-deploy), and deploy.yml always deploys the latest master. Self-heal, in publish-counties:
 - After a deploy, every live page must equal the page that passed; if not, the previous release is deployed again.
 - Days with nothing to publish still check every live page; a mismatch (deleted site, stale edge) redeploys once.
 - Over 19,000 files stops before deploying (Cloudflare free plan: 20,000 a deploy).

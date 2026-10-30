@@ -36,10 +36,13 @@ jobs:
     if: github.event_name == 'push'
     runs-on: ubuntu-26.04   # pinned 2026-10-29 (owner: nothing may change under the jobs)
     timeout-minutes: 10
-    # two pushes seconds apart (seen 2026-10-30 01:25) could finish out of order and put the older site live
-    concurrency: { group: deploy, cancel-in-progress: true }
+    # two deploys could finish out of order and put an older site live (seen 2026-10-30): one deploy at a time across
+    # workflows (publish-counties shares the group), and always the LATEST master, never the commit that triggered it
+    concurrency: { group: site-deploy }
+    permissions: { contents: read, issues: write }
     steps:
       - uses: actions/checkout@v4
+        with: { ref: master }
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
@@ -48,3 +51,7 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      - name: Alert on failure (one GitHub issue; GitHub emails the owner)
+        if: failure()
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: bash tools/job_alert.sh fail "deploy" - 0
