@@ -27,6 +27,7 @@ fi
 
 n=$(gh issue list --state open --json number,title -q ".[] | select(.title==\"Job failed: $name\") | .number" | head -1)
 [ -n "$n" ] && { gh issue close "$n" --comment "Passed again on $(date -u +%F): $run_url" || true; }
+[ "$other" = - ] && exit 0   # deploy.yml watches no other job
 
 last=$(gh run list --workflow "$other" --status success --limit 1 --json createdAt -q '.[0].createdAt' 2>/dev/null)
 if [ -z "$last" ]; then age=9999; else age=$(( ( $(date -u +%s) - $(date -u -d "$last" +%s) ) / 86400 )); fi

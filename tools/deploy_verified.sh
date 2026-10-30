@@ -10,7 +10,7 @@ sleep 30
 [ "${DRILL_CORRUPT:-}" = 1 ] && echo "<!-- drill -->" >> dist/index.html
 if python -I tools/gate_live.py; then exit 0; fi
 echo "ROLLBACK: live differs from what passed; deploying the previous release"
-git checkout HEAD~1 -- dist
+rm -rf dist && git checkout HEAD~1 -- dist   # exactly the previous release (no pages that are new today)
 $W deploy
 sleep 30
 python -I tools/gate_live.py && echo "ROLLBACK OK: previous release is live"

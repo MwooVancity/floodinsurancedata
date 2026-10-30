@@ -55,3 +55,7 @@ jobs:
         if: failure()
         env: { GH_TOKEN: "${{ github.token }}" }
         run: bash tools/job_alert.sh fail "deploy" - 0
+      - name: Close the deploy alert when a deploy passes again
+        if: success()
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: bash tools/job_alert.sh ok "deploy" - 0

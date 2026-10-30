@@ -31,6 +31,7 @@ jobs:
     timeout-minutes: 45   # a normal day takes ~4 min; the default is 6 hours of billed minutes on a hang
     steps:
       - uses: actions/checkout@v4
+        with: { fetch-depth: 2 }   # the rollback needs the previous release (HEAD~1); depth 1 broke it (drill 2026-10-30)
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -47,8 +48,10 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
-          if DRILL_CORRUPT=1 bash tools/deploy_verified.sh; then echo "DRILL FAILED: no rollback"; exit 1; fi
-          echo "DRILL OK: rollback ran"; git checkout HEAD -- dist && bash tools/deploy_verified.sh && echo "DRILL OK: today's release live again"
+          # pass only if the rollback deployed AND its live check passed (2026-10-30: a failed rollback printed OK)
+          DRILL_CORRUPT=1 bash tools/deploy_verified.sh 2>&1 | tee drill.log || true
+          grep -q "ROLLBACK OK: previous release is live" drill.log || { echo "DRILL FAILED: rollback did not complete"; exit 1; }
+          echo "DRILL OK: rollback completed"; git checkout HEAD -- dist && bash tools/deploy_verified.sh && echo "DRILL OK: today's release live again"
       - name: Cloudflare token expiry (a warning on the run page 30 days before deploys would stop)
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
