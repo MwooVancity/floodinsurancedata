@@ -2,6 +2,13 @@
 Rules live in CLAUDE.md. This file is the state and the next moves only; history is in git and
 `docs/archive/PLAN-2026-10-29.md`. Keep it under 80 lines: when a line is done, delete it.
 
+## The big picture (owner 2026-10-29: "Musk steps should have caught this")
+We built before proving demand: 20+ review rounds and a pipeline factory while the scoreboard shows 101 impressions,
+1 click. The Musk steps were applied to page text, never to the machine. From now: (1) the weekly scoreboard decides;
+polish only where a number says a page fails. (2) Effort goes to reach: counties live, one data story, Search Console.
+(3) Audit the factory once: delete every gate, check or review step that never caught a real defect (state/gate-history).
+(4) Time every recurring job monthly (release.py prints each step); fingerprint what grows with pages. (5) Short sessions.
+
 ## First, before any work: ponytail (owner 2026-10-29)
 Does it need to exist? Does a sentence on the page already answer it? Is it in the code already, or does the
 browser already do it? Only then the least code. Tests scale with harm; reviews only where a reader could be hurt.

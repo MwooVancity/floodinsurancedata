@@ -5,9 +5,10 @@ recheck.py (network, minutes) runs separately as its own background job before a
 import os, re, subprocess, sys
 
 T = os.path.dirname(os.path.abspath(__file__))
-def step(name, *cmd):
-    print(f"== {name}", flush=True)
+def step(name, *cmd):   # every step is timed (PLAN: measure every recurring job; what grows with pages gets fingerprinted)
+    print(f"== {name}", flush=True); t0 = __import__("time").time()
     r = subprocess.run([sys.executable, "-I", *cmd], cwd=os.path.dirname(T))
+    print(f"   [{__import__('time').time() - t0:.0f} s] {name}", flush=True)
     if r.returncode: sys.exit(f"RELEASE STOPPED at: {name}")
 
 if "--live" in sys.argv:
