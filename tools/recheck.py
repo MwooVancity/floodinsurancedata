@@ -115,15 +115,34 @@ for ds, fields in now.items():
             problems.append(f"FEMA definition changed or vanished: {ds}.{f} — re-read it, update metrics.py, then --refresh")
 print("field definitions:", "unchanged" if not any("definition" in p for p in problems) else "CHANGED")
 
+def fetch_page(url):   # (text, ok): ok only on HTTP 200; 3 tries
+    for _ in range(3):
+        p = subprocess.run(["curl", "-sL", "--compressed", "-A", "Mozilla/5.0", "--max-time", "60", "-w", "\n%{http_code}", url], capture_output=True)
+        raw, _, code = p.stdout.decode("utf-8", "replace").rpartition("\n")
+        if code == "200": break
+        time.sleep(10)
+    raw = re.sub(r"<(script|style)[^>]*>.*?</\1>", " ", raw, flags=re.S)
+    return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", raw))), code == "200"
+
+# 2026-10-29 the daily release stopped because flsenate.gov did not answer GitHub's servers and that was reported as
+# "excerpt gone". Unreachable is not changed: it warns, and fails only when the page has not loaded for 14 days.
+OKF = os.path.join(ROOT, "state", "rule-fetch-ok.json")
+last_ok = json.load(open(OKF)) if os.path.exists(OKF) else {}
+today = datetime.date.today()
 cache = {}
 for k, r in RULES.items():
     for url, ex, method in r["sources"]:
         if method != "curl": continue
         if url not in cache:
-            raw = subprocess.run(["curl", "-sL", "--compressed", "-A", "Mozilla/5.0", "--max-time", "60", url], capture_output=True).stdout.decode("utf-8", "replace")
-            raw = re.sub(r"<(script|style)[^>]*>.*?</\1>", " ", raw, flags=re.S)
-            cache[url] = re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", raw)))
-        if ex not in cache[url]: problems.append(f"rule {k}: excerpt no longer on {url}: {ex!r}")
+            cache[url] = fetch_page(url)
+            if cache[url][1]: last_ok[url] = today.isoformat()
+        text, ok = cache[url]
+        if ok and ex not in text: problems.append(f"rule {k}: excerpt no longer on {url}: {ex!r}")
+        elif not ok:
+            age = (today - datetime.date.fromisoformat(last_ok[url])).days if url in last_ok else 999
+            if age > 14: problems.append(f"rule {k}: {url} has not loaded for {age} days; re-read it by hand")
+            else: print(f"warning: rule {k}: {url} did not load this run (last loaded {age} days ago)")
+json.dump(last_ok, open(OKF, "w"), indent=1, sort_keys=True)
 manual = sorted({k for k, r in RULES.items() for _, _, m_ in r["sources"] if m_ == "manual"})
 print("rules: curl sources", "all present" if not any(p.startswith("rule ") for p in problems) else "MISSING",
       f"| manual (human re-read due): {manual}")

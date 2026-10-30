@@ -20,6 +20,7 @@ concurrency: publish-counties
 jobs:
   publish:
     runs-on: ubuntu-latest
+    timeout-minutes: 45   # a normal day takes ~4 min; the default is 6 hours of billed minutes on a hang
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
