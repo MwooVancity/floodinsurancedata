@@ -11,6 +11,11 @@ on:
         description: 'Commit and deploy (false = dry run)'
         type: boolean
         default: false
+      drill:
+        description: 'Fire drill (proves a guard for real): fail = alert opens; idle = nothing-to-publish live check; rollback = a bad live page is rolled back, then today is redeployed'
+        type: choice
+        options: [none, fail, idle, rollback]
+        default: none
 
 permissions:
   contents: write
@@ -32,6 +37,18 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+      - name: Drill fail (the alert step below must open an issue)
+        if: inputs.drill == 'fail'
+        run: |
+          echo "DRILL - forced failure"; exit 1
+      - name: Drill rollback (live must be put back, then today's release redeployed)
+        if: inputs.drill == 'rollback'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          if DRILL_CORRUPT=1 bash tools/deploy_verified.sh; then echo "DRILL FAILED: no rollback"; exit 1; fi
+          echo "DRILL OK: rollback ran"; git checkout HEAD -- dist && bash tools/deploy_verified.sh && echo "DRILL OK: today's release live again"
       - name: Cloudflare token expiry (a warning on the run page 30 days before deploys would stop)
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -42,6 +59,7 @@ jobs:
       - name: Add the next 10 counties
         id: add
         run: |
+          if [ -n "${{ inputs.drill }}" ] && [ "${{ inputs.drill }}" != none ]; then echo "none=1" >> "$GITHUB_OUTPUT"; echo "drill: nothing added"; exit 0; fi
           out=$(python -I tools/add_counties.py 20); echo "$out"
           echo "msg=$out" >> "$GITHUB_OUTPUT"
           git diff --quiet tools/counties.json && { echo "queue empty"; echo "none=1" >> "$GITHUB_OUTPUT"; } || true
@@ -67,13 +85,9 @@ jobs:
           git add -A tools/counties.json places.json dist data/c state
           git commit -m "publish: ${{ steps.add.outputs.msg }}"
           git pull --rebase origin master && git push
-          n=$(find dist -type f | wc -l); echo "files: $n"; [ "$n" -lt 19000 ]   # Cloudflare free plan: 20,000 files a deploy
-          npx --yes wrangler@4.86.0 deploy
-          sleep 30
-          # live must equal what passed; if not, put the previous release back (it passed yesterday) and stop
-          python -I tools/gate_live.py || { git checkout HEAD~1 -- dist; npx --yes wrangler@4.86.0 deploy; sleep 30; python -I tools/gate_live.py; exit 1; }
+          bash tools/deploy_verified.sh   # deploy; live must equal what passed, else the previous release goes back
       - name: Live site check on days with nothing to publish (queue empty; a lapsed domain or deleted site shows here)
-        if: steps.add.outputs.none == '1'
+        if: steps.add.outputs.none == '1' && inputs.drill != 'rollback' && inputs.drill != 'fail'
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
