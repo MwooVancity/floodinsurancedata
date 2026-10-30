@@ -37,6 +37,7 @@ helpfulness checklist is in PLAN.md; every review brief must judge every item on
 - Ship: `python -I tools/release.py --ship` (build, every gate incl. hater review, commit dist, push, deploy, live gate). `--hotfix "reason"` skips only the hater review, only to remove or correct wrong live text a review named.
 - Live gate: `python -I tools/release.py --live`.
 - Cloud: `refresh-data.yml` monthly (pull_raw, agg_raw, extras_raw, collect_state_small; commits `data/`); `publish-counties.yml` daily adds reviewed counties via `add_counties.py`.
+- No dry runs of cloud jobs (owner 2026-10-29): the next scheduled run is the test; a failing gate ships nothing.
 - Gap backlog: `state/reviews/backlog.md` (google_gate S14 fails a release when an item is 3 review rounds old).
 
 ## Procedure (every build or fix)
