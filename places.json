@@ -440,6 +440,16 @@
 "indexable": true
 },
 {
+"slug": "virginia-beach-city-va",
+"label": "Virginia Beach city, Virginia",
+"short": "Virginia Beach city",
+"geoid": "51810",
+"state": "VA",
+"units": 20355,
+"median": 709,
+"indexable": true
+},
+{
 "slug": "monmouth-county-nj",
 "label": "Monmouth County, New Jersey",
 "short": "Monmouth County",
@@ -447,6 +457,66 @@
 "state": "NJ",
 "units": 19956,
 "median": 1197,
+"indexable": true
+},
+{
+"slug": "cameron-county-tx",
+"label": "Cameron County, Texas",
+"short": "Cameron County",
+"geoid": "48061",
+"state": "TX",
+"units": 19785,
+"median": 624,
+"indexable": true
+},
+{
+"slug": "queens-county-ny",
+"label": "Queens County, New York",
+"short": "Queens County",
+"geoid": "36081",
+"state": "NY",
+"units": 19697,
+"median": 1232,
+"indexable": true
+},
+{
+"slug": "indian-river-county-fl",
+"label": "Indian River County, Florida",
+"short": "Indian River County",
+"geoid": "12061",
+"state": "FL",
+"units": 19478,
+"median": 900,
+"indexable": true
+},
+{
+"slug": "st-lucie-county-fl",
+"label": "St. Lucie County, Florida",
+"short": "St. Lucie County",
+"geoid": "12111",
+"state": "FL",
+"units": 19192,
+"median": 631,
+"indexable": true
+},
+{
+"slug": "okaloosa-county-fl",
+"label": "Okaloosa County, Florida",
+"short": "Okaloosa County",
+"geoid": "12091",
+"state": "FL",
+"units": 19069,
+"median": 1057,
+"indexable": true
+},
+{
+"slug": "kings-county-ny",
+"label": "Kings County, New York",
+"short": "Kings County",
+"geoid": "36047",
+"state": "NY",
+"units": 18764,
+"median": 1088,
 "indexable": true
 },
 {
@@ -460,6 +530,46 @@
 "indexable": true
 },
 {
+"slug": "lafayette-parish-la",
+"label": "Lafayette Parish, Louisiana",
+"short": "Lafayette Parish",
+"geoid": "22055",
+"state": "LA",
+"units": 17532,
+"median": 1036,
+"indexable": true
+},
+{
+"slug": "escambia-county-fl",
+"label": "Escambia County, Florida",
+"short": "Escambia County",
+"geoid": "12033",
+"state": "FL",
+"units": 17505,
+"median": 838,
+"indexable": true
+},
+{
+"slug": "walton-county-fl",
+"label": "Walton County, Florida",
+"short": "Walton County",
+"geoid": "12131",
+"state": "FL",
+"units": 17425,
+"median": 979,
+"indexable": true
+},
+{
+"slug": "orange-county-fl",
+"label": "Orange County, Florida",
+"short": "Orange County",
+"geoid": "12095",
+"state": "FL",
+"units": 17219,
+"median": 623,
+"indexable": true
+},
+{
 "slug": "dare-county-nc",
 "label": "Dare County, North Carolina",
 "short": "Dare County",
@@ -470,6 +580,76 @@
 "indexable": true
 },
 {
+"slug": "livingston-parish-la",
+"label": "Livingston Parish, Louisiana",
+"short": "Livingston Parish",
+"geoid": "22063",
+"state": "LA",
+"units": 15215,
+"median": 1232,
+"indexable": true
+},
+{
+"slug": "new-york-county-ny",
+"label": "New York County, New York",
+"short": "New York County",
+"geoid": "36061",
+"state": "NY",
+"units": 14670,
+"median": 1022,
+"indexable": true
+},
+{
+"slug": "fairfield-county-ct",
+"label": "Fairfield County, Connecticut",
+"short": "Fairfield County",
+"geoid": "09001",
+"state": "CT",
+"units": 14619,
+"median": 1505,
+"indexable": true
+},
+{
+"slug": "carteret-county-nc",
+"label": "Carteret County, North Carolina",
+"short": "Carteret County",
+"geoid": "37031",
+"state": "NC",
+"units": 14322,
+"median": 1090,
+"indexable": true
+},
+{
+"slug": "ascension-parish-la",
+"label": "Ascension Parish, Louisiana",
+"short": "Ascension Parish",
+"geoid": "22005",
+"state": "LA",
+"units": 14286,
+"median": 883,
+"indexable": true
+},
+{
+"slug": "martin-county-fl",
+"label": "Martin County, Florida",
+"short": "Martin County",
+"geoid": "12085",
+"state": "FL",
+"units": 14193,
+"median": 990,
+"indexable": true
+},
+{
+"slug": "glynn-county-ga",
+"label": "Glynn County, Georgia",
+"short": "Glynn County",
+"geoid": "13127",
+"state": "GA",
+"units": 13819,
+"median": 978,
+"indexable": true
+},
+{
 "slug": "harrison-county-ms",
 "label": "Harrison County, Mississippi",
 "short": "Harrison County",
@@ -477,6 +657,26 @@
 "state": "MS",
 "units": 13404,
 "median": 1212,
+"indexable": true
+},
+{
+"slug": "calcasieu-parish-la",
+"label": "Calcasieu Parish, Louisiana",
+"short": "Calcasieu Parish",
+"geoid": "22019",
+"state": "LA",
+"units": 12921,
+"median": 1264,
+"indexable": true
+},
+{
+"slug": "los-angeles-county-ca",
+"label": "Los Angeles County, California",
+"short": "Los Angeles County",
+"geoid": "06037",
+"state": "CA",
+"units": 12519,
+"median": 1092,
 "indexable": true
 },
 {

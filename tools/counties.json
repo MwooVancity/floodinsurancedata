@@ -518,5 +518,205 @@
   "label": "Brunswick County, North Carolina",
   "short": "Brunswick County",
   "official": 0
+ },
+ {
+  "slug": "virginia-beach-city-va",
+  "state": "VA",
+  "geoid": "51810",
+  "county": "VIRGINIA BEACH CITY",
+  "countytitle": "Virginia Beach city",
+  "label": "Virginia Beach city, Virginia",
+  "short": "Virginia Beach city",
+  "official": 0
+ },
+ {
+  "slug": "cameron-county-tx",
+  "state": "TX",
+  "geoid": "48061",
+  "county": "CAMERON",
+  "countytitle": "Cameron",
+  "label": "Cameron County, Texas",
+  "short": "Cameron County",
+  "official": 0
+ },
+ {
+  "slug": "queens-county-ny",
+  "state": "NY",
+  "geoid": "36081",
+  "county": "QUEENS",
+  "countytitle": "Queens",
+  "label": "Queens County, New York",
+  "short": "Queens County",
+  "official": 0
+ },
+ {
+  "slug": "indian-river-county-fl",
+  "state": "FL",
+  "geoid": "12061",
+  "county": "INDIAN RIVER",
+  "countytitle": "Indian River",
+  "label": "Indian River County, Florida",
+  "short": "Indian River County",
+  "official": 0
+ },
+ {
+  "slug": "st-lucie-county-fl",
+  "state": "FL",
+  "geoid": "12111",
+  "county": "ST. LUCIE",
+  "countytitle": "St. Lucie",
+  "label": "St. Lucie County, Florida",
+  "short": "St. Lucie County",
+  "official": 0
+ },
+ {
+  "slug": "okaloosa-county-fl",
+  "state": "FL",
+  "geoid": "12091",
+  "county": "OKALOOSA",
+  "countytitle": "Okaloosa",
+  "label": "Okaloosa County, Florida",
+  "short": "Okaloosa County",
+  "official": 0
+ },
+ {
+  "slug": "kings-county-ny",
+  "state": "NY",
+  "geoid": "36047",
+  "county": "KINGS",
+  "countytitle": "Kings",
+  "label": "Kings County, New York",
+  "short": "Kings County",
+  "official": 0
+ },
+ {
+  "slug": "lafayette-parish-la",
+  "state": "LA",
+  "geoid": "22055",
+  "county": "LAFAYETTE",
+  "countytitle": "Lafayette",
+  "label": "Lafayette Parish, Louisiana",
+  "short": "Lafayette Parish",
+  "official": 0
+ },
+ {
+  "slug": "escambia-county-fl",
+  "state": "FL",
+  "geoid": "12033",
+  "county": "ESCAMBIA",
+  "countytitle": "Escambia",
+  "label": "Escambia County, Florida",
+  "short": "Escambia County",
+  "official": 0
+ },
+ {
+  "slug": "walton-county-fl",
+  "state": "FL",
+  "geoid": "12131",
+  "county": "WALTON",
+  "countytitle": "Walton",
+  "label": "Walton County, Florida",
+  "short": "Walton County",
+  "official": 0
+ },
+ {
+  "slug": "orange-county-fl",
+  "state": "FL",
+  "geoid": "12095",
+  "county": "ORANGE",
+  "countytitle": "Orange",
+  "label": "Orange County, Florida",
+  "short": "Orange County",
+  "official": 0
+ },
+ {
+  "slug": "livingston-parish-la",
+  "state": "LA",
+  "geoid": "22063",
+  "county": "LIVINGSTON",
+  "countytitle": "Livingston",
+  "label": "Livingston Parish, Louisiana",
+  "short": "Livingston Parish",
+  "official": 0
+ },
+ {
+  "slug": "new-york-county-ny",
+  "state": "NY",
+  "geoid": "36061",
+  "county": "NEW YORK",
+  "countytitle": "New York",
+  "label": "New York County, New York",
+  "short": "New York County",
+  "official": 0
+ },
+ {
+  "slug": "fairfield-county-ct",
+  "state": "CT",
+  "geoid": "09001",
+  "county": "FAIRFIELD",
+  "countytitle": "Fairfield",
+  "label": "Fairfield County, Connecticut",
+  "short": "Fairfield County",
+  "official": 0
+ },
+ {
+  "slug": "carteret-county-nc",
+  "state": "NC",
+  "geoid": "37031",
+  "county": "CARTERET",
+  "countytitle": "Carteret",
+  "label": "Carteret County, North Carolina",
+  "short": "Carteret County",
+  "official": 0
+ },
+ {
+  "slug": "ascension-parish-la",
+  "state": "LA",
+  "geoid": "22005",
+  "county": "ASCENSION",
+  "countytitle": "Ascension",
+  "label": "Ascension Parish, Louisiana",
+  "short": "Ascension Parish",
+  "official": 0
+ },
+ {
+  "slug": "martin-county-fl",
+  "state": "FL",
+  "geoid": "12085",
+  "county": "MARTIN",
+  "countytitle": "Martin",
+  "label": "Martin County, Florida",
+  "short": "Martin County",
+  "official": 0
+ },
+ {
+  "slug": "glynn-county-ga",
+  "state": "GA",
+  "geoid": "13127",
+  "county": "GLYNN",
+  "countytitle": "Glynn",
+  "label": "Glynn County, Georgia",
+  "short": "Glynn County",
+  "official": 0
+ },
+ {
+  "slug": "calcasieu-parish-la",
+  "state": "LA",
+  "geoid": "22019",
+  "county": "CALCASIEU",
+  "countytitle": "Calcasieu",
+  "label": "Calcasieu Parish, Louisiana",
+  "short": "Calcasieu Parish",
+  "official": 0
+ },
+ {
+  "slug": "los-angeles-county-ca",
+  "state": "CA",
+  "geoid": "06037",
+  "county": "LOS ANGELES",
+  "countytitle": "Los Angeles",
+  "label": "Los Angeles County, California",
+  "short": "Los Angeles County",
+  "official": 0
  }
 ]

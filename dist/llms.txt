@@ -100,10 +100,30 @@
 - [Sussex County](https://floodinsurancedata.com/flood-insurance/sussex-county-de/): median $880
 - [Brunswick County](https://floodinsurancedata.com/flood-insurance/brunswick-county-nc/): median $756
 - [Jefferson County](https://floodinsurancedata.com/flood-insurance/jefferson-county-tx/): median $1,087
+- [Virginia Beach city](https://floodinsurancedata.com/flood-insurance/virginia-beach-city-va/): median $709
 - [Monmouth County](https://floodinsurancedata.com/flood-insurance/monmouth-county-nj/): median $1,197
+- [Cameron County](https://floodinsurancedata.com/flood-insurance/cameron-county-tx/): median $624
+- [Queens County](https://floodinsurancedata.com/flood-insurance/queens-county-ny/): median $1,232
+- [Indian River County](https://floodinsurancedata.com/flood-insurance/indian-river-county-fl/): median $900
+- [St. Lucie County](https://floodinsurancedata.com/flood-insurance/st-lucie-county-fl/): median $631
+- [Okaloosa County](https://floodinsurancedata.com/flood-insurance/okaloosa-county-fl/): median $1,057
+- [Kings County](https://floodinsurancedata.com/flood-insurance/kings-county-ny/): median $1,088
 - [New Hanover County](https://floodinsurancedata.com/flood-insurance/new-hanover-county-nc/): median $963
+- [Lafayette Parish](https://floodinsurancedata.com/flood-insurance/lafayette-parish-la/): median $1,036
+- [Escambia County](https://floodinsurancedata.com/flood-insurance/escambia-county-fl/): median $838
+- [Walton County](https://floodinsurancedata.com/flood-insurance/walton-county-fl/): median $979
+- [Orange County](https://floodinsurancedata.com/flood-insurance/orange-county-fl/): median $623
 - [Dare County](https://floodinsurancedata.com/flood-insurance/dare-county-nc/): median $756
+- [Livingston Parish](https://floodinsurancedata.com/flood-insurance/livingston-parish-la/): median $1,232
+- [New York County](https://floodinsurancedata.com/flood-insurance/new-york-county-ny/): median $1,022
+- [Fairfield County](https://floodinsurancedata.com/flood-insurance/fairfield-county-ct/): median $1,505
+- [Carteret County](https://floodinsurancedata.com/flood-insurance/carteret-county-nc/): median $1,090
+- [Ascension Parish](https://floodinsurancedata.com/flood-insurance/ascension-parish-la/): median $883
+- [Martin County](https://floodinsurancedata.com/flood-insurance/martin-county-fl/): median $990
+- [Glynn County](https://floodinsurancedata.com/flood-insurance/glynn-county-ga/): median $978
 - [Harrison County](https://floodinsurancedata.com/flood-insurance/harrison-county-ms/): median $1,212
+- [Calcasieu Parish](https://floodinsurancedata.com/flood-insurance/calcasieu-parish-la/): median $1,264
+- [Los Angeles County](https://floodinsurancedata.com/flood-insurance/los-angeles-county-ca/): median $1,092
 - [Terrebonne Parish](https://floodinsurancedata.com/flood-insurance/terrebonne-parish-la/): median $1,369
 - [Orange County](https://floodinsurancedata.com/flood-insurance/orange-county-ca/): median $1,083
 - [St. Louis County](https://floodinsurancedata.com/flood-insurance/st-louis-county-mo/): median $1,257
