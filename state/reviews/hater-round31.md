@@ -1,0 +1,12 @@
+## new-york-county-ny
+
+Spot-checks (all match data): 61.2% paid = 917/1,498 (data.json claims_extra); 38.8% closed no payment = 581/1,498 (cwop_share, unpaid_n); state 17.7% / $39,718 avg paid matches data/states/new-york/data.json; Sandy 442 claims, $111.4M, $252,071 avg matches extras events; total paid $120,592,136 and 14,670 units match agg.json. Both flagged oddities are shown, not hidden, and the "1,498 claims against 14,670 policy units ... cumulative tally ... not an annual claim rate or a flood probability" caveat sits right beside them, which blocks the "floods never happen" misreading. The 0.10x ratio is not displayed as a ratio, which is fine.
+
+- MAJOR: "the average paid claim was $131,524" and the card "New York: $39,718" invite "NYC pays 3x more". The figure is dragged up by Sandy (442 of 1,498 claims, $252,071 avg; $111.4M of the $120.6M total). The data holds a paid_building_median of $28,756 (extras) that is not shown on the card. No caveat beside the average says it is a Sandy-skewed mean, so a reader can take $131k as a typical payout. Fix: show the median or add "mostly Hurricane Sandy".
+- MAJOR: "Some unpaid claims are paperwork, not denied floods." sits under the 38.8%. The top reason (32.5%, 160 claims) is "Not an actual flood", i.e. real water damage the policy defines as not flood (drain backup, seepage, per the page's own text). It is not paperwork. Together with "Other" (101) and "Assigned in error" (47) only part is paperwork. A newcomer could read the high unpaid share as harmless clerical noise, or the reverse as denial. Reword to split paperwork (assigned in error) from uncovered water damage (not a flood by policy definition, under deductible).
+- MINOR: "Most do: 61.2%" next to the New York 82.3% (screen-1 line gives the state figure; the card gives 17.7% unpaid) is truthful, but the card heading answer "Most do" does not say this county pays far less often than the state. The state comparison is present; acceptable.
+- MINOR: "2020s: 57.1% paid" (168 claims) with total-paid text saying the latest two years are not final; the decade table does not say recent claims may still be open or unresolved. Add a note.
+- MINOR: why-few-claims is never explained (e.g. mostly high-rise/condo buildings, where flood hits ground-floor/basements and storm events like Sandy dominate). Not wrong, only unexplained.
+- MINOR: "average paid ... incl. code-upgrade (ICC) pay" with icc_claims=1; harmless.
+
+Verdict: FAIL

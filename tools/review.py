@@ -59,9 +59,28 @@ def flags(slug):
         if r < 0.2 or r > 5: out.append(f"claims per policy {r:.2f}x the state's")
     return out
 
+def flag_kind(f):   # the kind of oddity, and how far out it is (for the extreme guard)
+    import re as _re
+    if f.startswith("unpaid"):
+        a, b = [float(x) for x in _re.findall(r"[\d.]+", f)[:2]]; return "unpaid", abs(a - b)
+    r = float(_re.findall(r"[\d.]+", f)[0]); return ("claims_low", 1 / max(r, 1e-6)) if r < 1 else ("claims_high", r)
+
+def kind_approved(fl, th):
+    """PLAN scale problem 3: a flagged page may ship when a page with the same kind of flag passed its own review under
+    this template, and this page is not more than twice as far out as that example (more extreme = its own review)."""
+    ex = {}
+    for p in os.listdir(DIR):
+        if p.endswith(".json") and own_pass(p[:-5], th):
+            for k, v in (flag_kind(f) for f in flags(p[:-5])): ex[k] = max(ex.get(k, 0), v)
+    return all(k in ex and v <= 2 * ex[k] for k, v in (flag_kind(f) for f in fl))
+
 def ok(slug, th=None):
     th = th or template_hash()
-    return own_pass(slug, th) or (template_ok(th) and not flags(slug))
+    if own_pass(slug, th): return True
+    fl = flags(slug)
+    # kind_approved() stays off until the round-31 template fixes (one-storm average, "paperwork" caveat) pass review:
+    # the flagged pages are exactly where those two defects matter most
+    return template_ok(th) and not fl
 
 def record(slug, verdict, defects, reviewer, notes="", template=None):
     """template = the hash the reviewer saw (saved at prep); an edit made after the review must not inherit its PASS."""
