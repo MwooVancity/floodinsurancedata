@@ -78,6 +78,9 @@ What can break, and the guard already in place (or OPEN):
 - A big storm: claims, events and disaster lists grow on their own; no code change. Check the events lead that week.
 - Congress lets the NFIP lapse (reauthorization deadlines, often Sep 30): OPEN, add a sourced "no new policies during a
   lapse" rule the day it happens. January: year ranges, "since 1978" and decade labels roll over; check one page.
+Machinery audit 2026-10-29 (5 steps on the machine): build 7 s, release ~1 min, git 62 MB (data 102 MB), caps on the
+phone log (300 lines) and review snapshots (3 rounds). Monthly: record refresh time and git size; prune closed backlog
+sections; at 2,000 pages switch the live check to changed pages + a sample if its time shows in release.py's timings.
 Calendar:
 - Daily: 20 reviewed counties published (queue of 1,803 done about late January 2027); next session reports deploys.
 - Weekly: read Search Console (`tools/gsc_read.mjs`), write the numbers in the scoreboard.
