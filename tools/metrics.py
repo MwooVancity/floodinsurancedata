@@ -146,6 +146,7 @@ METRICS.update({   # every other figure a page prints; q (data-q) names the row 
     "damage_n": _m(CLM, ["buildingDamageAmount"], "count"),
     "crs_count": _m(_CSB, ["communityName", "sfhaDiscount"], "count"),
     "sea_trend": _m("NoaaSeaLevelTrends", ["trend", "startDate", "endDate"], "in_per_decade"),   # PLAN 3e: NOAA's published trend per station
+    "paid_bldg_median": _m(CLM, ["netBuildingPaymentAmount"], "usd_claim_paid"),   # round 31: the typical paid building claim
     "map_date": _m(_CSB, ["currentlyEffectiveMapDate"], "rating"),   # PLAN 3e: the community's current FEMA map date (a label)
     "map_new_n": _m(_CSB, ["currentlyEffectiveMapDate"], "count"),   # communities whose new map takes effect after FEMA's report
     "crs_class": _m(_CSB, ["classRating"], "count"),

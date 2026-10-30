@@ -135,6 +135,9 @@ MUTATIONS = [   # (defect class from THE EVIDENCE table, what we reintroduce, ex
     ("mined", "structured data names v3, links v2", "H9",
      sub("</main>", '<script type="application/ld+json">{"d": "OpenFEMA NfipPolicies v3", "u": "https://x/fima-nfip-redacted-policies-v2"}</script></main>'), None),
     ("mined", "'2 in 10 homes has'", "H11", sub('<p class="stand">', '<p class="stand">About 2 in 10 homes here has flood insurance (20.0%). '), None),
+    ("round 31", "one-storm average without the typical claim", "H17",   # data where one flood paid most of the money
+     re.sub(r"<p class='note'><b>Typical claim:</b>.*?</p>", "", PAGE, count=1, flags=re.S),
+     dict(AGG, claims=dict(AGG["claims"], total_paid=int(1.2 * max(e.get("paid") or 0 for e in json.load(open(os.path.join(d, "extras.json")))["claims"]["events"]))))),
     ("round 16", "zone codes without plain words", "H14",
      re.sub(r'<span data-rule="zone_codes">.*?</span>', "", sub("</main>", "<table><tr><td>Zone B</td></tr></table></main>"), flags=re.S), None),
     ("round 16", "identical disaster lines", "H15", sub("</main>", "<ul><li>May 2023 — Flooding</li><li>May 2023 — Flooding</li></ul></main>"), None),

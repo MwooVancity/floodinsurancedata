@@ -290,6 +290,14 @@ for _c in _CS:
     except Exception as _e: fail("H13", f"card '{_c['title']}' spec cannot read this page's data: {_e!r}"); continue
     if _want and not _hit: fail("H13", f"card '{_c['title']}' has data here but is not on the page")
 
+# round 31: an average dragged up by one flood is true but misleading; when one event paid over half the money,
+# the payout card must show the typical (median) claim and name that flood
+_evp = [e.get("paid") or 0 for e in ((EXTRAS.get("claims") or {}).get("events") or [])]
+_tot = (agg.get("claims") or {}).get("total_paid") or 0
+if _evp and _tot and max(_evp) > 0.5 * _tot and (EXTRAS.get("claims") or {}).get("paid_building_median") \
+        and 'data-m="avg_paid"' in page and "<b>Typical claim:</b>" not in page:
+    fail("H17", "one flood paid over half of all claim dollars, but the average is shown without the typical claim (round 31: Sandy)")
+
 # rounds 16-19 defect classes made checks (CLAUDE.md: every defect class becomes a check with a mutation)
 if re.search(r"<td>Zone (B|C|X|D|A99|AH|AO|AR)\b", page) and 'data-rule="zone_codes"' not in page:
     fail("H14", "zone codes shown without the plain-words rule (round 16: B, C, A99, AH unexplained)")

@@ -78,9 +78,8 @@ def ok(slug, th=None):
     th = th or template_hash()
     if own_pass(slug, th): return True
     fl = flags(slug)
-    # kind_approved() stays off until the round-31 template fixes (one-storm average, "paperwork" caveat) pass review:
-    # the flagged pages are exactly where those two defects matter most
-    return template_ok(th) and not fl
+    # round 32 passed the round-31 fixes on flagged examples (Manhattan, Broward), so kind approval is back on
+    return template_ok(th) and (not fl or kind_approved(fl, th))
 
 def record(slug, verdict, defects, reviewer, notes="", template=None):
     """template = the hash the reviewer saw (saved at prep); an edit made after the review must not inherit its PASS."""

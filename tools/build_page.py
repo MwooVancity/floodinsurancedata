@@ -659,7 +659,7 @@ def card_unpaid():
             "<table><thead><tr><th>Reason recorded</th><th>Claims</th></tr></thead><tbody>"
             + "".join(f"<tr><td>{html.escape(r['label'])}</td><td>{tp('unpaid_reason_n', f'extras.claims.unpaid_reasons.{r[chr(105)]}.n', q=r['code'])}</td></tr>" for r in _whyall)
             + (f"<tr><td>Smaller reasons, or none recorded</td><td>{m('unpaid_reason_n', num(_why_rest), q='rest')}</td></tr>" if _why_rest > 0 else "")
-            + f"</tbody></table><p class='note'>Some closed claims are paperwork, not a denied flood.{how('unpaid')}</p>",
+            + f"</tbody></table><p class='note'>Closed without payment can mean paperwork (a duplicate, a claim opened in error) or damage the policy did not count as flood damage; the table shows which here.{how('unpaid')}</p>",
             src(["unpaid_n", "unpaid_reason_n"], f"{C['year_min']}–{C['year_max']}", RETR))
     return unpaid_card
 
@@ -728,6 +728,13 @@ def card_payout():
     payout_card = ""
     if cx.get("claims"):
         _paid_pct = round(100 - cx["cwop_share"], 1)
+        # round 31: one storm that paid most of the money pulls the average up (Sandy: $111.4M of Manhattan's $120.6M)
+        _evs = [(i, e) for i, e in enumerate(_xc.get("events") or []) if e.get("paid")]
+        _top = max(_evs, key=lambda ie: ie[1]["paid"], default=None)
+        _evtop = None
+        if _top and C.get("total_paid") and _top[1]["paid"] > 0.5 * C["total_paid"]:
+            _nm = re.sub(r"(?<=[a-z])(?=[A-Z])", " ", re.sub(r"^\d{4}-\d{2}-", "", _top[1]["name"]).replace("-", " ")).strip()
+            _evtop = (html.escape(_nm), tp("event_paid", f"extras.claims.events.{_top[0]}.paid", big, q=_top[1]["name"]))
         _ans = (claim("Most do", "most", ("cwop_share", "<", 50)) + f": {m('paid_share', str(_paid_pct) + '%')} of claims here paid something"
                 if cx["cwop_share"] < 50 else
                 f"{m('cwop_share', str(cx['cwop_share']) + '%')} of claims here closed with no payment"
@@ -735,7 +742,11 @@ def card_payout():
                 if cx["cwop_share"] > 50 else f"About half: {m('cwop_share', str(cx['cwop_share']) + '%')} of claims here closed with no payment")
         payout_card = card("Do flood claims here actually pay out?",
             f"{_ans}. The average paid claim was {tp('avg_paid', 'data.claims_extra.avg_paid', money)} (all years, in dollars of the day, not adjusted for inflation).",
-            f"<ul class='kv'><li><b>Average paid claim, incl. code-upgrade (ICC) pay</b><span>{tp('avg_paid', 'data.claims_extra.avg_paid', money)}</span>{vs_state('avg_paid', 'data.claims_extra.avg_paid', money)}</li>"
+            # round 31: the typical claim, and a storm that paid most of the money, beside the average (a note: F1 caps the opening)
+            ((f"<p class='note'><b>Typical claim:</b> the median paid building claim was {tp('paid_bldg_median', 'extras.claims.paid_building_median', money)}"
+              + (f"; {_evtop[0]} alone paid {_evtop[1]} of the {m('claims_total', big(C['total_paid']), q='evtop')} total, which pulls the average up" if _evtop else "")
+              + ".</p>") if _xc.get('paid_building_median') else "")
+            + f"<ul class='kv'><li><b>Average paid claim, incl. code-upgrade (ICC) pay</b><span>{tp('avg_paid', 'data.claims_extra.avg_paid', money)}</span>{vs_state('avg_paid', 'data.claims_extra.avg_paid', money)}</li>"
             f"<li><b>Closed with no payment</b><span>{tp('cwop_share', 'data.claims_extra.cwop_share', pct)}</span>{vs_state('cwop_share', 'data.claims_extra.cwop_share', pct)}</li>"
             f"<li><b>Claims that paid</b><span>{tp('claims_paid_n', 'data.claims_extra.paid_n')}</span></li></ul>"
             + (("<table><thead><tr><th>Decade of the flood</th><th>Claims filed</th><th>Share that paid something</th></tr></thead><tbody>"
@@ -902,10 +913,10 @@ if _cxq.get("claims") and _cxq.get("avg_paid") and P.get("p50"):
     _qa.append(f'<a href="#payout"><b>Does it pay out here?</b> {m("paid_share", str(round(100 - _cxq["cwop_share"], 1)) + "%")} of claims here paid '
                + (f'something ({html.escape(STATE_NAMES[agg["state"]])}: {m("paid_share", str(round(100 - _scx["cwop_share"], 1)) + "%", q="state")}); '
                   if _scx.get("cwop_share") is not None else 'something; ')
-               + f'the average paid claim was {tp("avg_paid", "data.claims_extra.avg_paid", money)} (all years, not inflation-adjusted).'
+               + (f'the typical paid building claim was {tp("paid_bldg_median", "extras.claims.paid_building_median", money)} (all years, not inflation-adjusted).' if _xc.get("paid_building_median") else f'the average paid claim was {tp("avg_paid", "data.claims_extra.avg_paid", money)} (all years, not inflation-adjusted).')
                + (f' Claims filed for losses in the {m("decade", html.escape(_decs[-1]), q=_decs[-1])}: '
                   f'{tp("decade_paid_share", f"extras.claims.by_decade.{_decs[-1]}.paid_pct", pct, q=_decs[-1])} paid something.' if len(_decs) > 1 else '')
-               + ' Some unpaid claims are paperwork, not denied floods.</a>')
+               + ' Unpaid can mean paperwork or damage the policy did not count as flood.</a>')
 _qa.append('<a href="#covered"><b>Already flooded?</b> What to do now, and what FEMA aid covers.</a>')
 _qa.append('<a href="#compare"><b>Is my quote normal?</b> These are existing policies, not a quote; type yours in to see where it sits.</a>')
 quick_answers = '<nav class="jump qa">' + "".join(_qa) + "</nav>"
