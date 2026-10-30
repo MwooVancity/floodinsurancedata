@@ -68,6 +68,14 @@ Every page carries a fingerprint of its inputs (code, national files, its own an
 can appear in its related links); unchanged = skipped (`tools/fingerprint.py`). Proven: nothing changed 7 s (was 165 s),
 byte-identical; one county's data -> only that state's pages; a new county -> 5 files. Code change -> everything (right).
 
+## Scale problems (5 steps at max scale, measured 2026-10-29; fix BEFORE 300 live counties)
+1. Built pages in git: 144 KB a page, rewritten each monthly refresh: about 290 MB a month at 2,000 pages. Fix: the cloud
+   job builds and deploys; dist stops being committed (keep fingerprints in a small manifest).
+2. data/c in git: 176 KB a county, derived from data/all-counties: about 350 MB a month. Fix: build it in the job, not in git.
+3. Flagged-page reviews: 183 of the 1,803 queue (about 15M tokens one by one). Fix: a script checks each flagged page's
+   numbers against the data; one cheap review per flag TYPE.
+Watch: files per deploy (3 a page; verify Cloudflare's per-deploy file limit before ZIP pages; one share image per state).
+
 ## Every month, every year (edge cases first; the jobs run themselves, sessions check them)
 What can break, and the guard already in place (or OPEN):
 - FEMA API down, slow or renamed fields: pull_raw stops before agg_raw, so the site keeps last month's data and the
