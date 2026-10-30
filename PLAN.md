@@ -68,10 +68,26 @@ Every page carries a fingerprint of its inputs (code, national files, its own an
 can appear in its related links); unchanged = skipped (`tools/fingerprint.py`). Proven: nothing changed 7 s (was 165 s),
 byte-identical; one county's data -> only that state's pages; a new county -> 5 files. Code change -> everything (right).
 
-## Scale problems (5 steps at max scale, measured 2026-10-29; fix BEFORE 300 live counties)
-1. Built pages in git: 144 KB a page, rewritten each monthly refresh: about 290 MB a month at 2,000 pages. Fix: the cloud
-   job builds and deploys; dist stops being committed (keep fingerprints in a small manifest).
-2. data/c in git: 176 KB a county, derived from data/all-counties: about 350 MB a month. Fix: build it in the job, not in git.
+## Runs without Claude (owner drops the subscription about 2026-11-19; built 2026-10-29)
+Nothing a reader sees may break unseen. A failed check ships nothing and the live site stays as it was. Guards:
+- A failed job opens one GitHub issue "Job failed: <job>" (GitHub emails the owner), adds a comment on each new
+  failure, and closes it when the job passes again (`tools/job_alert.sh`). The daily and monthly jobs check each other:
+  "Job not running" when publish has not succeeded for 3 days or refresh for 40 days.
+- Found 2026-10-29: refresh 10-29 failed at the push (fixed: pull --rebase; it has never succeeded yet, so an alert
+  opens until the 11-03 run passes); publish 10-29 failed because flsenate.gov did not answer GitHub (fixed: an unreachable
+  law page warns and fails only after 14 days unreached); the 10-28 publish ran with phone checks skipped (now a missing
+  browser fails in the cloud). Every one was silent before.
+- Pinned: runner ubuntu-26.04, wrangler 4.86.0, playwright 1.64.1, Python 3.12, Node 20. A retired runner fails loudly.
+- Cloudflare token: the daily job opens "Renew soon" 30 days before it expires (`tools/token_check.py`).
+- Git size, measured: 52 MB for all history (104 pages); largest file 3.3 MB (limit 100 MB); jobs check out only the
+  latest commit, so history does not slow them. Estimate at 2,000 pages: a few hundred MB a year. Not urgent; the
+  refresh job opens "Repo large" at 1.5 GB. (The 290/350 MB a month in the old note was unpacked size.)
+Owner-only after 11-19 (each arrives as an issue email): renew the Cloudflare token; a law page that moved (a rule's
+link must be re-pointed: the release stays stopped, the live site unchanged); a 25% jump in a median that stops the
+refresh (the old data stays live and correct, only older); a GitHub runner retired (change one line).
+
+## Scale problems (5 steps at max scale, measured 2026-10-29)
+1-2. Built pages and data/c in git: measured small (above); no change.
 3. Flagged-page reviews: 183 of the 1,803 queue (about 15M tokens one by one). Fix: a script checks each flagged page's
    numbers against the data; one cheap review per flag TYPE.
 Watch: files per deploy (3 a page; verify Cloudflare's per-deploy file limit before ZIP pages; one share image per state).
@@ -82,7 +98,8 @@ What can break, and the guard already in place (or OPEN):
   as-of date ages. A median moving more than 25% stops the commit (`jump_check.py`); a session looks, then reruns.
 - A state's count stops matching: that state's claims re-pull in full; still wrong = refresh stops, nothing half-written.
 - GitHub: the claims cache can be evicted (10 GB): the next run pulls in full (slow, not wrong). $12 compute: ~5 h/month used.
-- FEMA wording or rule pages change: recheck.py re-fetches every rule excerpt each release; a missing excerpt stops it.
+- FEMA wording or rule pages change: recheck.py re-fetches every rule excerpt each release; a missing excerpt stops it
+  (a page that does not load only warns, up to 14 days: `state/rule-fetch-ok.json`).
 - A big storm: claims, events and disaster lists grow on their own; no code change. Check the events lead that week.
 - Congress lets the NFIP lapse (reauthorization deadlines, often Sep 30): OPEN, add a sourced "no new policies during a
   lapse" rule the day it happens. January: year ranges, "since 1978" and decade labels roll over; check one page.

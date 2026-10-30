@@ -184,8 +184,9 @@ try:
         got, o = phone(html); hit = want in got; ok &= hit
         table.append((cls, what, want, "PASS" if hit else "MISSED", ",".join(sorted(got)) or "-"))
     open(good, "w", encoding="utf-8").write(PAGE)
-except ImportError:
-    table.append(("9 reader", "phone checks", "P1-P5", "SKIPPED", "playwright not installed"))
+except ImportError:   # in the cloud a missing browser fails (the 2026-10-28 daily run passed with phone checks skipped)
+    ok &= not os.environ.get("CI")
+    table.append(("9 reader", "phone checks", "P1-P5", "SKIPPED" if ok else "MISSING", "playwright not installed"))
 
 w = max(len(x[1]) for x in table)
 print(f"{'defect class':<22} {'mutation':<{w}} {'expect':<9} {'result':<8} ids fired")

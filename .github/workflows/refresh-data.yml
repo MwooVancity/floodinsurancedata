@@ -12,12 +12,14 @@ on:
 
 permissions:
   contents: write
+  issues: write
+  actions: read
 
 concurrency: refresh-data
 
 jobs:
   refresh:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04   # pinned 2026-10-29 (owner: nothing may change under the jobs)
     timeout-minutes: 350
     steps:
       - uses: actions/checkout@v4
@@ -56,3 +58,17 @@ jobs:
           git diff --cached --quiet && { echo "no data change"; exit 0; }
           git commit -m "data: refresh from FEMA (policies as of $(cat .cache/raw/asof.txt))"
           git pull --rebase -X theirs origin master && git push   # others may push during the 2h run
+      - name: Alert on failure (one GitHub issue; GitHub emails the owner)
+        if: failure()
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: bash tools/job_alert.sh fail "refresh-data" publish-counties.yml 3
+      - name: Close the alert when passing again; check the other job still runs
+        if: success()
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: bash tools/job_alert.sh ok "refresh-data" publish-counties.yml 3
+      - name: Repo size (an alert issue at 1.5 GB; 52 MB on 2026-10-29)
+        if: success()
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          kb=$(gh api "repos/${GITHUB_REPOSITORY}" -q .size); echo "repo ${kb} KB"
+          [ "$kb" -gt 1500000 ] && bash tools/job_alert.sh warn "Repo large" "The repo is ${kb} KB. Pages still deploy; plan to stop committing dist/." || true
