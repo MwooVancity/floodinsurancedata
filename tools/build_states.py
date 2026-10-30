@@ -7,6 +7,7 @@ import json, os, subprocess, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from agg_raw import NAMES, slug
 from collect_state_small import FIPS
+import fingerprint as FP   # build only what changed (PLAN scale guard)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TOOLS = os.path.join(ROOT, "tools")
@@ -31,13 +32,18 @@ for st, name in sorted(NAMES.items(), key=lambda kv: kv[1]):
     label = "the District of Columbia" if st == "DC" else name    # reads right in "in ...", "...'s"
     env = dict(os.environ, FF_LEVEL="state", FF_DIR=d, OUT_HTML=out, FF_COUNTYLABEL=label, FF_COUNTYSHORT=label,
                FF_SLUG=slug(st), FF_GEOID=FIPS[st], FF_OFFICIAL="0", FF_BASEURL=BASE, FF_PLACES=PLACES)
-    r = subprocess.run([sys.executable, "-I", os.path.join(TOOLS, "build_page.py")], env=env, cwd=TOOLS, capture_output=True, text=True)
-    if r.returncode:
+    fp = FP.page_fp(need, {"st": st, "label": label, "base": BASE,
+                            "places": sorted((p["slug"], p["units"], p["median"]) for p in (json.load(open(PLACES)) if os.path.exists(PLACES) else []) if p.get("state") == st)})
+    if not FP.unchanged(out, fp):
+        r = subprocess.run([sys.executable, "-I", os.path.join(TOOLS, "build_page.py")], env=env, cwd=TOOLS, capture_output=True, text=True)
+    else: r = None
+    if r is not None and r.returncode:
         blocked.append(f"{st} (build): {r.stderr.strip().splitlines()[-1][:160] if r.stderr.strip() else '?'}"); continue
-    g = subprocess.run([sys.executable, "-I", os.path.join(TOOLS, "gate.py"), need[0], out, "0"], capture_output=True, text=True)
-    if g.returncode:
+    g = subprocess.run([sys.executable, "-I", os.path.join(TOOLS, "gate.py"), need[0], out, "0"], capture_output=True, text=True) if r is not None else None
+    if g is not None and g.returncode:
         os.remove(out)   # a failing page is never left where deploy would ship it
         blocked.append(f"{st} (gate): " + " | ".join(l.strip() for l in g.stdout.splitlines() if "[" in l)[:300]); continue
+    if r is not None: FP.stamp(out, fp)
     built.append({"abbr": st, "slug": slug(st), "name": name, "units": agg["policies"]["units"], "median": agg["policies"]["p50"],
                   "share_below": agg["policies"].get("share_below"), "claims": agg["claims"]["rows"], "paid": agg["claims"]["total_paid"]})
     print(f"STATE PASS {st} {name}: units {agg['policies']['units']}, median ${agg['policies']['p50']}")

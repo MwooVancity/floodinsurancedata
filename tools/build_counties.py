@@ -58,10 +58,17 @@ def assemble(g, raw):
             "storm_events": dict(se, period=STORM["period"], retrieved=STORM["retrieved"], source=STORM["source"]) if se else {}}
     return st, name, agg, data
 
+import fingerprint as FP   # build only what changed (PLAN scale guard)
+_ADJ = json.load(open(os.path.join(DATA, "us", "county_adjacency.json"))) if os.path.exists(os.path.join(DATA, "us", "county_adjacency.json")) else {}
 def build_one(item):
     g, st, name, sl = item
     d = os.path.join(CDATA, sl); out = os.path.join(DIST, sl, "index.html"); os.makedirs(os.path.dirname(out), exist_ok=True)
     off = str(INDEXED.get(g, {}).get("official", 0))
+    sd = os.path.join(DATA, "states", state_slug(st))
+    near = sorted((p["slug"], p["units"], p["median"]) for p in json.load(open(PLACES)) if p["state"] == st or p["geoid"] in _ADJ.get(g, []))
+    fp = FP.page_fp([os.path.join(d, f) for f in ("agg.json", "data.json", "extras.json")] + [os.path.join(sd, f) for f in ("agg.json", "data.json", "extras.json")],
+                    {"off": off, "idx": g in INDEXED, "label": f"{name}, {NAMES[st]}", "base": BASE, "near": near, "review": REVIEW})
+    if FP.unchanged(out, fp): return sl, None   # same inputs, same page: it passed the gate when it was built
     env = dict(os.environ, FF_DIR=d, OUT_HTML=out, FF_GEOID=g, FF_SLUG=sl, FF_COUNTYLABEL=f"{name}, {NAMES[st]}", FF_COUNTYSHORT=name,
                FF_OFFICIAL=off, FF_BASEURL=BASE, FF_PLACES=PLACES, FF_PLACES_RO="1", FF_NOINDEX="0" if g in INDEXED else "1")
     r = subprocess.run([sys.executable, "-I", os.path.join(T, "build_page.py")], env=env, cwd=T, capture_output=True, text=True)
@@ -70,6 +77,7 @@ def build_one(item):
     if r.returncode:
         os.remove(out)   # a failing page never stays where deploy would ship it
         return sl, "gate: " + " | ".join(l.strip() for l in r.stdout.splitlines() if l.strip().startswith("- "))[:300]
+    FP.stamp(out, fp)
     return sl, None
 
 if __name__ == "__main__":

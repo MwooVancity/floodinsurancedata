@@ -19,8 +19,10 @@ def run(script):
 codes = [run("build_counties.py")]
 places = {p["slug"] for p in json.load(open(os.path.join(ROOT, "places.json")))}
 fdir = os.path.join(DIST, "flood-insurance")
-for name in os.listdir(fdir):   # prune any page folder that is not a county that passed this run (states are rebuilt next)
-    if os.path.isdir(os.path.join(fdir, name)) and name not in places:
+sys.path.insert(0, TOOLS); from agg_raw import NAMES, slug as _sslug
+_states = {_sslug(st) for st in NAMES}   # state folders stay: build_states rebuilds only the ones whose inputs changed
+for name in os.listdir(fdir):   # prune any page folder that is neither a county that passed this run nor a state
+    if os.path.isdir(os.path.join(fdir, name)) and name not in places and name not in _states:
         shutil.rmtree(os.path.join(fdir, name), ignore_errors=True)
 codes += [run("build_states.py"), run("build_site.py")]
 sys.exit(1 if any(codes) else 0)   # a blocked page fails the build, so nothing downstream can ship around it
