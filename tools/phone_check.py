@@ -81,4 +81,7 @@ with sync_playwright() as p:
             f.write(json.dumps({"date": str(datetime.date.today()), "base": base, "slug": s, "height": r["height"],
                                 "pass": not bad, "fails": bad}) + "\n")
     br.close()
+_log = os.path.join(ROOT, "state", "phone-check.jsonl")   # cap (CLAUDE.md: every growing file has a cap): newest 300 lines
+_lines = open(_log).read().splitlines()
+if len(_lines) > 300: open(_log, "w").write("\n".join(_lines[-300:]) + "\n")
 sys.exit(1 if failed else 0)

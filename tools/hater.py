@@ -30,6 +30,8 @@ def vis_text(h):
     return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", h)).strip()
 def snap(rnd, slugs):
     d = os.path.join(SNAP, f"round{rnd}"); os.makedirs(d, exist_ok=True)
+    old = sorted((x for x in os.listdir(SNAP) if x.startswith("round")), key=lambda x: int(x[5:]))[:-3]   # cap: last 3 rounds + passed
+    for x in old: shutil.rmtree(os.path.join(SNAP, x), ignore_errors=True)
     for s in slugs: open(os.path.join(d, s + ".txt"), "w", encoding="utf-8").write(vis_text(open(html_path(s), encoding="utf-8").read()))
 
 def prep(rnd, slugs):
