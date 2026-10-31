@@ -6,3 +6,4 @@ node_modules/
 *.log
 review/
 state/reviews/round*/
+graphify-out/
