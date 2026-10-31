@@ -64,6 +64,8 @@ FOOT = ('<footer class="mut" style="margin:28px 0;border-top:1px solid var(--lin
 import sys as _sys, datetime as _dtm
 _sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from rules_registry import rule, RULES
+from notes import GA_TAG
+HEAD = HEAD.replace("<title>", GA_TAG.replace("{", "{{").replace("}", "}}") + "<title>", 1)   # HEAD goes through .format
 def _rule_hosts(keys):   # the official sites behind these rules, from rules_registry sources
     from urllib.parse import urlparse
     return ", ".join(sorted({urlparse(u).netloc.replace('www.', '') for k in keys for u, *_ in RULES[k]['sources']}))
@@ -272,7 +274,7 @@ wr(os.path.join(DIST, "about", "index.html"), about)
 # ---- 404 (round 16: a mistyped address showed the host's bare error page) ----
 wr(os.path.join(DIST, "404.html"), """<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
-<title>Page not found - Flood Insurance Data</title>
+""" + GA_TAG + """<title>Page not found - Flood Insurance Data</title>
 <style>body{margin:0;background:#f4f7f8;color:#132029;font:17px/1.6 system-ui,sans-serif}main{max-width:640px;margin:0 auto;padding:40px 20px}a{color:#15617f}</style>
 </head><body><main><h1>Page not found</h1><p>That address has no page. Find your state or county on the
 <a href="/">home page</a>, which lists every state and county.</p></main></body></html>""")
@@ -282,14 +284,16 @@ privacy = HEAD.format(title="Privacy Policy — Flood Insurance Data", desc="How
 <h1>Privacy Policy</h1>
 <p class="mut">Last updated {RETR}.</p>
 <div class="card"><h2>What we collect</h2>
-<p>Flood Insurance Data is a static reference site. We do not ask for, collect, or store personal
-information, and there are no accounts, sign-ups, or forms. Our host (Cloudflare) processes standard
+<p>Flood Insurance Data is a static reference site. We do not ask for personal information, and there
+are no accounts, sign-ups, or forms. Visits are counted with Google Analytics (see below). Our host (Cloudflare) processes standard
 server request logs (such as IP address and user agent) to serve the site and protect it from abuse; see
 Cloudflare's privacy policy for details.</p></div>
-<div class="card"><h2>Cookies</h2>
-<p>This site sets no first-party tracking cookies of its own. If analytics or advertising are added in
-future (see below), the cookies and third-party vendors involved will be disclosed here before they are
-enabled.</p></div>
+<div class="card"><h2>Analytics and cookies</h2>
+<p>We use Google Analytics to count visits and see which pages are read. It sets cookies in your browser, and
+Google receives your IP address, the pages you view and basic device details. We see totals, not who you are.
+You can opt out with <a href="https://tools.google.com/dlpage/gaoptout" rel="nofollow">Google's opt-out add-on</a>
+or by blocking cookies in your browser. If advertising is added in future (see below), the cookies and vendors
+involved will be disclosed here before they are enabled.</p></div>
 <div class="card"><h2>Advertising</h2>
 <p>The site currently shows no ads. If advertising is added, it may be served by Google, including Google
 AdSense. Third-party vendors such as Google use cookies to serve ads based on a user's prior visits to this
@@ -303,7 +307,7 @@ updated to name every ad vendor at the time ads are enabled.</p></div>
 We link to official FEMA pages; their privacy practices are their
 own. We are not affiliated with or endorsed by FEMA.</p></div>
 <div class="card"><h2>Children &amp; changes</h2>
-<p>The site is not directed to children under 13 and collects no information from them. We may update this
+<p>The site is not directed to children under 13 and we do not knowingly collect their information. We may update this
 policy; material changes will be reflected by the date above.</p></div>
 {FOOT}"""
 wr(os.path.join(DIST, "privacy", "index.html"), privacy)

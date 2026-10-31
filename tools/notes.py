@@ -1,6 +1,12 @@
 """How-it-is-counted notes: one home each, on /methodology/#<key>; a page card links there with how(key) instead of
 repeating the paragraph (hater r5: half of every county page's prose was the same notes; google_gate S13 measures it).
 A caveat a reader needs beside the figure (not a quote, not adjusted for inflation, not your home) stays on the page."""
+# Google Analytics (this site's own property, owner 2026-10-30). Real host only: gate and phone runs never count as visits
+# and never wait on Google. /privacy/ discloses it.
+GA_TAG = ('<script>if(location.hostname=="floodinsurancedata.com"){window.dataLayer=window.dataLayer||[];'
+          'window.gtag=function(){dataLayer.push(arguments)};gtag("js",new Date());gtag("config","G-EXCYW0PJYG");'
+          'var s=document.createElement("script");s.async=true;s.src="https://www.googletagmanager.com/gtag/js?id=G-EXCYW0PJYG";'
+          'document.head.appendChild(s)}</script>')
 NOTES = {
     "zones": ("Policy units by flood zone",
               "Insured units by the flood zone each policy is rated in; a condo-building policy counts each of its units."),

@@ -8,7 +8,7 @@ import ffcalc
 import metrics as MX
 from metrics import m
 from rules_registry import RULES, rule
-from notes import how
+from notes import how, GA_TAG
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DIR = os.environ.get("FF_DIR", HERE)
@@ -1101,7 +1101,7 @@ _jump = f'<p class="cmp"><a href="#counties">Find your {UNIT} in the table ↓</
 
 HTML = f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">{'<meta name="robots" content="noindex,follow">' if os.environ.get("FF_NOINDEX") == "1" else ""}
-<title>Flood insurance cost in {CL}: {money(P['p50'])} median a year, single-family homes (FEMA data)</title>
+{GA_TAG}<title>Flood insurance cost in {CL}: {money(P['p50'])} median a year, single-family homes (FEMA data)</title>
 <meta name="description" content="{html.escape(META_DESC)}">
 <link rel="canonical" href="{CANON}">
 <meta property="og:type" content="website"><meta property="og:title" content="Flood insurance in {html.escape(CL)}">

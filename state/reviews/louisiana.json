@@ -1,8 +1,8 @@
 {
  "slug": "louisiana",
  "verdict": "PASS",
- "template": "e2e8b4865d99c064",
+ "template": "383e773961affb74",
  "defects": [],
- "reviewer": "hater round 32 (fresh agent, docs/HATER-PROMPT.md)",
+ "reviewer": "hater round 33 (fresh agent, docs/HATER-PROMPT.md)",
  "notes": ""
 }
