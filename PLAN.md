@@ -26,6 +26,8 @@ louisiana "Submitted and indexed". Top queries: Arkansas, Florida (position 19.5
 - Reviews: no wrong live figure in rounds 12-19 (round 19 caught an overstated new figure before release); open defects are wording and layout.
 
 ## Next moves, in order (each has a "done when")
+0. Size the process to the change (owner 2026-10-30: the analytics header line took 4 ship runs). Fix: `hater.py carry` finds
+   every slug on the old hash itself, so one invisible change = one ship. Done when a tag-only change ships first try.
 1. Search Console: connected; re-read weekly. Owner: click "Validate fix" on the Datasets report.
 2. 2026-11-03 refresh run: check time, download size and all 51 states done. Done when the numbers are here.
 3. One batch after step 2, then one light check (≤ ~90k tokens) and release:

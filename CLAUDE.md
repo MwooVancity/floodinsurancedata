@@ -89,6 +89,10 @@ prints its trigger on every request). Apply it to the machinery too: the daily f
 Before any task, name which scoreboard number it moves: pages indexed, impressions, clicks, page-1 queries,
 AI-answer citations. None = question it, then delete it. Order: question, delete, simplify, accelerate, automate last.
 Two files only: CLAUDE.md = rules, PLAN.md = strategy and state.
+First principles before any step (owner 2026-10-30): (1) what must be true for the reader or the scoreboard when this is done;
+(2) what can actually go wrong with THIS change, in one line; (3) run only the checks that could catch that; (4) stop when it
+is true on the live site, and tell the owner what is proven and what is not. Process follows harm, not habit: a change that
+touches no reader-visible text or number (a tag, markup) gets one build, the text-identical proof, one ship and one live read.
 
 ## Review and gate budget (HARD, owner 2026-10-28: "be like Elon Musk with review/gates, we've blown a million tokens")
 1. Question the requirement: before any review, name the defect it could catch that the gates and the all-county
