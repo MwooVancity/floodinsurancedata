@@ -49,7 +49,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Ocean County, New Jersey",zone_cost_n,"14,726",count,FEMA OpenFEMA — NFIP Policies,policyCost + ratedFloodZone,"July 31, 2026"
 "Ocean County, New Jersey",zip_count,47,count,FEMA OpenFEMA — NFIP Policies,reportedZipCode,"July 31, 2026"
 "Ocean County, New Jersey",zip_cost_n,"2,494",count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
-"Ocean County, New Jersey",zip_units,"3,511",count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
+"Ocean County, New Jersey",zip_units,"3,513",count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Ocean County, New Jersey",prem_median,$910,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
 "Ocean County, New Jersey",cost_year_n,"7,768",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Ocean County, New Jersey",cost_new_n,414,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"

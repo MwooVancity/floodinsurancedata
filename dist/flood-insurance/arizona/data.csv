@@ -66,6 +66,6 @@ Arizona,crs_class,2,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),cla
 Arizona,ml_total,0,count,FEMA OpenFEMA — Individual Assistance Multiple-Loss Flood Properties,highRiskPropertyType,"July 31, 2026"
 Arizona,declarations,29,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
 Arizona,ia_paid,$2.0 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"July 31, 2026"
-Arizona,ia_per_reg,"$8,590",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"July 31, 2026"
+Arizona,ia_per_reg,"$8,646",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"July 31, 2026"
 Arizona,records_total,"19,998",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 Arizona,n_sources,6,count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"

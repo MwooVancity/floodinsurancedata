@@ -69,7 +69,7 @@ Louisiana,crs_class,3,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),c
 Louisiana,ml_total,"85,549",count,FEMA OpenFEMA — Individual Assistance Multiple-Loss Flood Properties,highRiskPropertyType,"July 31, 2026"
 Louisiana,ml_srl,"6,132",count,FEMA OpenFEMA — Individual Assistance Multiple-Loss Flood Properties,highRiskPropertyType,"July 31, 2026"
 Louisiana,declarations,70,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
-Louisiana,ia_paid,$4.5 billion,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"July 31, 2026"
+Louisiana,ia_paid,$4.6 billion,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"July 31, 2026"
 Louisiana,ia_per_reg,"$2,514",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"July 31, 2026"
 Louisiana,records_total,"395,032",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 Louisiana,n_sources,6,count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"

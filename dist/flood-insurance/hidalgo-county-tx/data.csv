@@ -71,7 +71,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Hidalgo County, Texas",ml_total,"4,970",count,FEMA OpenFEMA — Individual Assistance Multiple-Loss Flood Properties,highRiskPropertyType,"July 31, 2026"
 "Hidalgo County, Texas",ml_srl,449,count,FEMA OpenFEMA — Individual Assistance Multiple-Loss Flood Properties,highRiskPropertyType,"July 31, 2026"
 "Hidalgo County, Texas",declarations,20,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
-"Hidalgo County, Texas",ia_paid,$124.1 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"July 31, 2026"
+"Hidalgo County, Texas",ia_paid,$124.2 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"July 31, 2026"
 "Hidalgo County, Texas",ia_per_reg,"$2,638",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"July 31, 2026"
 "Hidalgo County, Texas",records_total,"9,819",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Hidalgo County, Texas",n_sources,7,count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"

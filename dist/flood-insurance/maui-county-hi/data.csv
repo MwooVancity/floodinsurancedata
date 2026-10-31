@@ -72,6 +72,6 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Maui County, Hawaii",ml_total,0,count,FEMA OpenFEMA — Individual Assistance Multiple-Loss Flood Properties,highRiskPropertyType,"July 31, 2026"
 "Maui County, Hawaii",declarations,16,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"July 31, 2026"
 "Maui County, Hawaii",ia_paid,$5.0 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"July 31, 2026"
-"Maui County, Hawaii",ia_per_reg,"$6,102",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"July 31, 2026"
+"Maui County, Hawaii",ia_per_reg,"$6,114",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"July 31, 2026"
 "Maui County, Hawaii",records_total,"2,346",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Maui County, Hawaii",n_sources,8,count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
