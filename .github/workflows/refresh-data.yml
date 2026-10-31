@@ -41,14 +41,26 @@ jobs:
           key: fema-pol-${{ steps.m.outputs.month }}
       - name: Download every FEMA policy and claim (resumable; skips finished slices)
         run: python -I tools/pull_raw.py && du -sh .cache/raw   # owner asked the download size
+      # save now: a cache is otherwise saved only if the whole job passes, so a late failure re-downloaded 2 hours (2026-10-30)
+      - uses: actions/cache/save@v4
+        with:
+          path: .cache/raw/NfipClaims
+          key: fema-claims-${{ steps.m.outputs.month }}
+      - uses: actions/cache/save@v4
+        with:
+          path: |
+            .cache/raw/NfipPolicies
+            .cache/raw/asof.txt
+          key: fema-pol-${{ steps.m.outputs.month }}
       - name: Compute state, county and extras figures
         run: |
           set -e
           python -I tools/agg_raw.py
           python -I tools/extras_raw.py
           python -I tools/collect_state_small.py   # community discounts, disasters, aid, repeat floods, risk ratings (were collected once and never refreshed)
-          python -I tools/fetch_map_dates.py   # FEMA map dates into every state and county page (PLAN 3e)
-          python -I tools/fetch_sealevel.py    # NOAA's published sea-level trends (PLAN 3e)
+          # side sources: if one is down, last month's values stay (each carries its own date) and the refresh goes on
+          python -I tools/fetch_map_dates.py || echo "::warning::FEMA map dates not refreshed this month"
+          python -I tools/fetch_sealevel.py || echo "::warning::NOAA sea level not refreshed this month"
           python -I tools/jump_check.py   # a median moving >25% stops the commit: last month's data stays live
       - name: Commit the computed data
         run: |
