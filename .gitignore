@@ -7,3 +7,5 @@ node_modules/
 review/
 state/reviews/round*/
 graphify-out/
+state/phone-check.jsonl
+state/recheck.jsonl

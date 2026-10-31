@@ -94,6 +94,12 @@ def record(rnd):
             os.makedirs(os.path.join(SNAP, "passed"), exist_ok=True); shutil.copy(sp, os.path.join(SNAP, "passed", slug + ".txt"))
         print(f"{slug}: {verdict} ({len(bad)} blocker/major, {len(gaps)} gaps to backlog.md)")
 
+def stamped_slugs():
+    """Every page with its own PASS on the samples' last approved template: all of them must move together, or a flagged
+    page loses its example (analytics, 2026-10-30: two were missed and the ship stopped at S12). Older stamps stay old."""
+    th = RV.get("home")["template"]
+    return sorted(p[:-5] for p in os.listdir(DIR) if p.endswith(".json") and RV.own_pass(p[:-5], th))
+
 def carry(rnd, prev, slugs):
     """CLAUDE.md budget "None": a template change no reader can see (markup, scripts) keeps its PASS only if every
     slug's visible text equals the release `prev`, which passed review. Any difference stops it: a real review is due."""
@@ -118,7 +124,7 @@ def carry(rnd, prev, slugs):
     record(rnd)
 
 if __name__ == "__main__":
-    if sys.argv[1:2] == ["carry"]: carry(sys.argv[2], sys.argv[3], sys.argv[4:]); sys.exit()
+    if sys.argv[1:2] == ["carry"]: carry(sys.argv[2], sys.argv[3], sys.argv[4:] or stamped_slugs()); sys.exit()
     if sys.argv[1:2] == ["prep"]: prep(sys.argv[2], [a for a in sys.argv[3:] if a not in ("--local", "--light")])
     elif sys.argv[1:2] == ["record"]: record(sys.argv[2])
     else: print(__doc__)

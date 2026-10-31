@@ -29,7 +29,7 @@ User, not Google: if something helps SEO but confuses or slows the reader, the r
 1. Name the scoreboard number it moves: pages indexed, impressions, clicks, page-1 queries, AI citations. None = delete it.
 2. Five steps, on the work AND the machinery: question, delete (never an answer), simplify, accelerate, automate last. Each defect becomes a rule or check with a mutation test the same day.
 3. Ponytail: does a sentence on the page answer it -> already in the code -> stdlib -> what the browser does (input type=date, two tabs, find-in-page) -> one line -> least code. Tests scale with harm: reader-harm logic gets one oracle check.
-4. Old-school optimization: measure from a real run, never guess. One bottleneck at a time. Under 10% of the total = leave it. Cost that grows with pages gets "only what changed"; fixed cost waits. Bytes crossing a phone connection (gzipped, per page) and tokens are the hot paths; every byte must serve the reader. Never trade a check that catches wrong numbers for speed. Re-measure; no drop = revert.
+4. Old-school optimization: measure from a real run, never guess. One bottleneck at a time. Under 10% of the total = leave it. Cost that grows with pages gets "only what changed"; fixed cost waits. Bytes crossing a phone connection (gzipped, per page) and tokens are the hot paths; every byte must serve the reader. Never trade a check that catches wrong numbers for speed. Re-measure; no drop = revert. Audit the whole pipeline, source to phone, not files: each step shows its cost and the defect it caught; never caught and catches no wrong number or law = cut. A step skips when its input did not change.
 5. Process follows harm: name what can go wrong with THIS change, run only checks that could catch it.
 
 ## Commands

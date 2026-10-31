@@ -12,12 +12,13 @@ Most helpful flood-insurance page for every US county, for a scared reader on a 
 - Proven in real cloud runs: daily publish unattended; fail, idle, rollback drills; first full refresh (10-31 00:06 UTC, jump check PASS).
 - Measured: daily run 249 s (build + checks 33%, deploy + live gate 31%, phone 20%, add counties 10%); limit 45 min; leave it. Live gate 78 s at 151 pages, about 17 min at 2,000 (scaled; re-measure at 500; then changed pages + a sample). Build unchanged 7 s (`tools/fingerprint.py`).
 - Bytes (gzip): median page 19 KB, largest 29 KB, Palm Beach 21.7 KB. Google script 182 KB, async. `data-p` tags 2.8 KB a page, no reader use. Structured data 0.9 KB: keep. Disk (dist 20 MB, data 104 MB, git 68 MB) costs no reader.
+- Pipeline audit 10-31: tokens are the bottleneck (a full review ~320k, 34 rounds so far; machine time is nearly free). Actions month: refresh 139 min (download 60, compute 78), daily ~4 min, deploy 38 s; private repo, 2,000 free minutes; about 850 at 2,000 pages (scaled). Cloud failures stopped by checks: law page, phone height + mutation.
 - Bottlenecks: tokens per change, pages indexed.
 
 ## Next, in order
-0. Bytes: strip `data-p` after gates, keeping the live gate's comparison right. Decide delaying the Google script (saves 182 KB on quick visits, undercounts them). `hater.py carry` finds every slug on the old hash itself; done when a tag-only change ships first try (analytics took 4 runs).
+0. Bytes: strip `data-p` after gates, keeping the live gate's comparison right. Decide delaying the Google script (saves 182 KB on quick visits, undercounts them).
 1. Weekly Search Console. Owner: "Validate fix" on the Datasets report.
-2. 11-03 refresh: record time, download size, 51 states done. Issue #1 closes on the next daily publish.
+2. 11-03 refresh: record time, download size, 51 states done; note whether FEMA's data changed since 10-31 (if months repeat, check FEMA's dataset date first and skip the 2.3 h). Issue #1 closes on the next daily publish.
 3. After 2, one batch, one light check (≤ ~90k tokens):
    - #3 claims by flood zone and #7 claims outside high-risk zones (ChatGPT list; same FEMA data): the "Outside a high-risk zone?" line on "Am I required", worded "of paid claim dollars", with period.
    - Search boxes on tables of 16+ rows, with a "no matches" line.
@@ -44,7 +45,7 @@ Owner only after 11-19: domain card; renew Cloudflare token; a moved law page (r
 
 ## What can break
 - FEMA down or renamed: pull_raw stops; last month stays, as-of ages. State count mismatch: full re-pull, else refresh stops.
-- Claims cache evicted (10 GB): one slow full pull. Compute ~5 h/month.
+- Claims cache evicted (10 GB): one slow full pull. Refresh 2.3 h/month.
 - Rule pages change: recheck.py stops on a missing excerpt.
 - Big storm: no code change; check the events lead that week.
 - NFIP lapse (deadlines often Sep 30): OPEN, add a sourced "no new policies during a lapse" rule that day.

@@ -27,3 +27,10 @@ assert RV.flags("palm-beach-county-fl"), "Palm Beach (56.5% unpaid vs Florida 30
 assert not RV.flags("lee-county-fl"), RV.flags("lee-county-fl")
 assert RV.flags("home") == [] and RV.flags("louisiana") == []
 print("flag self-test OK")
+
+# carry with no slugs must take every page on the samples' approved template, never a FAIL
+import hater as _H
+_s = _H.stamped_slugs()
+assert {"home", "louisiana", "palm-beach-county-fl"} <= set(_s) or not _s, _s
+assert all(_H.RV.get(x)["verdict"] == "PASS" for x in _s), _s
+print("carry slug list OK:", len(_s))

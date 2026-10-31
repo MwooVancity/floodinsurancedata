@@ -44,12 +44,12 @@ else:
     if "--ship" not in sys.argv: sys.exit(print("READY TO SHIP: release.py --ship [--hotfix \"reason\"]"))
     # every push to master redeploys the COMMITTED dist (deploy.yml), so commit the built pages before anything ships
     R = os.path.dirname(T); g = lambda *a: subprocess.run(["git", *a], cwd=R, check=True)
-    g("add", "-A", "dist", "data/c", "places.json", "tools", "state")
+    g("add", "-A", "dist", "data/c", "data/states", "places.json", "tools", "state")
     if subprocess.run(["git", "diff", "--cached", "--quiet"], cwd=R).returncode:
         g("commit", "-q", "-m", "release: built site" + (f" (hotfix, hater review skipped: {hot})" if hot else "")
           + "\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>")
     g("push", "-q")
-    if subprocess.run("npx wrangler deploy", cwd=R, shell=True).returncode: sys.exit("RELEASE STOPPED at: deploy")
+    if subprocess.run("npx --yes wrangler@4.86.0 deploy", cwd=R, shell=True).returncode: sys.exit("RELEASE STOPPED at: deploy")
     import time; time.sleep(45)
     step("live", os.path.join(T, "release.py"), "--live")
     print("SHIPPED")
