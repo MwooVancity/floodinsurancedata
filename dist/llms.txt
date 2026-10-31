@@ -146,6 +146,26 @@
 - [Essex County](https://floodinsurancedata.com/flood-insurance/essex-county-ma/): median $1,313
 - [Nassau County](https://floodinsurancedata.com/flood-insurance/nassau-county-fl/): median $1,082
 - [Travis County](https://floodinsurancedata.com/flood-insurance/travis-county-tx/): median $1,008
+- [San Diego County](https://floodinsurancedata.com/flood-insurance/san-diego-county-ca/): median $1,083
+- [Lafourche Parish](https://floodinsurancedata.com/flood-insurance/lafourche-parish-la/): median $1,228
+- [Georgetown County](https://floodinsurancedata.com/flood-insurance/georgetown-county-sc/): median $1,031
+- [Westchester County](https://floodinsurancedata.com/flood-insurance/westchester-county-ny/): median $872
+- [Plymouth County](https://floodinsurancedata.com/flood-insurance/plymouth-county-ma/): median $1,508
+- [New Haven County](https://floodinsurancedata.com/flood-insurance/new-haven-county-ct/): median $1,540
+- [Polk County](https://floodinsurancedata.com/flood-insurance/polk-county-fl/): median $627
+- [Tangipahoa Parish](https://floodinsurancedata.com/flood-insurance/tangipahoa-parish-la/): median $1,087
+- [Hancock County](https://floodinsurancedata.com/flood-insurance/hancock-county-ms/): median $1,263
+- [Chesapeake city](https://floodinsurancedata.com/flood-insurance/chesapeake-city-va/): median $702
+- [Seminole County](https://floodinsurancedata.com/flood-insurance/seminole-county-fl/): median $735
+- [Berkeley County](https://floodinsurancedata.com/flood-insurance/berkeley-county-sc/): median $843
+- [Middlesex County](https://floodinsurancedata.com/flood-insurance/middlesex-county-ma/): median $934
+- [King County](https://floodinsurancedata.com/flood-insurance/king-county-wa/): median $961
+- [Dallas County](https://floodinsurancedata.com/flood-insurance/dallas-county-tx/): median $936
+- [Mobile County](https://floodinsurancedata.com/flood-insurance/mobile-county-al/): median $1,232
+- [Marin County](https://floodinsurancedata.com/flood-insurance/marin-county-ca/): median $1,632
+- [Richmond County](https://floodinsurancedata.com/flood-insurance/richmond-county-ny/): median $962
+- [Citrus County](https://floodinsurancedata.com/flood-insurance/citrus-county-fl/): median $1,232
+- [St. John the Baptist Parish](https://floodinsurancedata.com/flood-insurance/st-john-the-baptist-parish-la/): median $1,335
 - [St. Louis County](https://floodinsurancedata.com/flood-insurance/st-louis-county-mo/): median $1,257
 - [Kanawha County](https://floodinsurancedata.com/flood-insurance/kanawha-county-wv/): median $1,450
 - [Methodology](https://floodinsurancedata.com/methodology/)

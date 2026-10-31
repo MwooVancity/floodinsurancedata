@@ -918,5 +918,205 @@
   "label": "Travis County, Texas",
   "short": "Travis County",
   "official": 0
+ },
+ {
+  "slug": "san-diego-county-ca",
+  "state": "CA",
+  "geoid": "06073",
+  "county": "SAN DIEGO",
+  "countytitle": "San Diego",
+  "label": "San Diego County, California",
+  "short": "San Diego County",
+  "official": 0
+ },
+ {
+  "slug": "lafourche-parish-la",
+  "state": "LA",
+  "geoid": "22057",
+  "county": "LAFOURCHE",
+  "countytitle": "Lafourche",
+  "label": "Lafourche Parish, Louisiana",
+  "short": "Lafourche Parish",
+  "official": 0
+ },
+ {
+  "slug": "georgetown-county-sc",
+  "state": "SC",
+  "geoid": "45043",
+  "county": "GEORGETOWN",
+  "countytitle": "Georgetown",
+  "label": "Georgetown County, South Carolina",
+  "short": "Georgetown County",
+  "official": 0
+ },
+ {
+  "slug": "westchester-county-ny",
+  "state": "NY",
+  "geoid": "36119",
+  "county": "WESTCHESTER",
+  "countytitle": "Westchester",
+  "label": "Westchester County, New York",
+  "short": "Westchester County",
+  "official": 0
+ },
+ {
+  "slug": "plymouth-county-ma",
+  "state": "MA",
+  "geoid": "25023",
+  "county": "PLYMOUTH",
+  "countytitle": "Plymouth",
+  "label": "Plymouth County, Massachusetts",
+  "short": "Plymouth County",
+  "official": 0
+ },
+ {
+  "slug": "new-haven-county-ct",
+  "state": "CT",
+  "geoid": "09009",
+  "county": "NEW HAVEN",
+  "countytitle": "New Haven",
+  "label": "New Haven County, Connecticut",
+  "short": "New Haven County",
+  "official": 0
+ },
+ {
+  "slug": "polk-county-fl",
+  "state": "FL",
+  "geoid": "12105",
+  "county": "POLK",
+  "countytitle": "Polk",
+  "label": "Polk County, Florida",
+  "short": "Polk County",
+  "official": 0
+ },
+ {
+  "slug": "tangipahoa-parish-la",
+  "state": "LA",
+  "geoid": "22105",
+  "county": "TANGIPAHOA",
+  "countytitle": "Tangipahoa",
+  "label": "Tangipahoa Parish, Louisiana",
+  "short": "Tangipahoa Parish",
+  "official": 0
+ },
+ {
+  "slug": "hancock-county-ms",
+  "state": "MS",
+  "geoid": "28045",
+  "county": "HANCOCK",
+  "countytitle": "Hancock",
+  "label": "Hancock County, Mississippi",
+  "short": "Hancock County",
+  "official": 0
+ },
+ {
+  "slug": "chesapeake-city-va",
+  "state": "VA",
+  "geoid": "51550",
+  "county": "CHESAPEAKE CITY",
+  "countytitle": "Chesapeake city",
+  "label": "Chesapeake city, Virginia",
+  "short": "Chesapeake city",
+  "official": 0
+ },
+ {
+  "slug": "seminole-county-fl",
+  "state": "FL",
+  "geoid": "12117",
+  "county": "SEMINOLE",
+  "countytitle": "Seminole",
+  "label": "Seminole County, Florida",
+  "short": "Seminole County",
+  "official": 0
+ },
+ {
+  "slug": "berkeley-county-sc",
+  "state": "SC",
+  "geoid": "45015",
+  "county": "BERKELEY",
+  "countytitle": "Berkeley",
+  "label": "Berkeley County, South Carolina",
+  "short": "Berkeley County",
+  "official": 0
+ },
+ {
+  "slug": "middlesex-county-ma",
+  "state": "MA",
+  "geoid": "25017",
+  "county": "MIDDLESEX",
+  "countytitle": "Middlesex",
+  "label": "Middlesex County, Massachusetts",
+  "short": "Middlesex County",
+  "official": 0
+ },
+ {
+  "slug": "king-county-wa",
+  "state": "WA",
+  "geoid": "53033",
+  "county": "KING",
+  "countytitle": "King",
+  "label": "King County, Washington",
+  "short": "King County",
+  "official": 0
+ },
+ {
+  "slug": "dallas-county-tx",
+  "state": "TX",
+  "geoid": "48113",
+  "county": "DALLAS",
+  "countytitle": "Dallas",
+  "label": "Dallas County, Texas",
+  "short": "Dallas County",
+  "official": 0
+ },
+ {
+  "slug": "mobile-county-al",
+  "state": "AL",
+  "geoid": "01097",
+  "county": "MOBILE",
+  "countytitle": "Mobile",
+  "label": "Mobile County, Alabama",
+  "short": "Mobile County",
+  "official": 0
+ },
+ {
+  "slug": "marin-county-ca",
+  "state": "CA",
+  "geoid": "06041",
+  "county": "MARIN",
+  "countytitle": "Marin",
+  "label": "Marin County, California",
+  "short": "Marin County",
+  "official": 0
+ },
+ {
+  "slug": "richmond-county-ny",
+  "state": "NY",
+  "geoid": "36085",
+  "county": "RICHMOND",
+  "countytitle": "Richmond",
+  "label": "Richmond County, New York",
+  "short": "Richmond County",
+  "official": 0
+ },
+ {
+  "slug": "citrus-county-fl",
+  "state": "FL",
+  "geoid": "12017",
+  "county": "CITRUS",
+  "countytitle": "Citrus",
+  "label": "Citrus County, Florida",
+  "short": "Citrus County",
+  "official": 0
+ },
+ {
+  "slug": "st-john-the-baptist-parish-la",
+  "state": "LA",
+  "geoid": "22095",
+  "county": "ST. JOHN THE BAPTIST",
+  "countytitle": "St. John the Baptist",
+  "label": "St. John the Baptist Parish, Louisiana",
+  "short": "St. John the Baptist Parish",
+  "official": 0
  }
 ]

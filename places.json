@@ -900,6 +900,206 @@
 "indexable": true
 },
 {
+"slug": "san-diego-county-ca",
+"label": "San Diego County, California",
+"short": "San Diego County",
+"geoid": "06073",
+"state": "CA",
+"units": 8668,
+"median": 1083,
+"indexable": true
+},
+{
+"slug": "lafourche-parish-la",
+"label": "Lafourche Parish, Louisiana",
+"short": "Lafourche Parish",
+"geoid": "22057",
+"state": "LA",
+"units": 8649,
+"median": 1228,
+"indexable": true
+},
+{
+"slug": "georgetown-county-sc",
+"label": "Georgetown County, South Carolina",
+"short": "Georgetown County",
+"geoid": "45043",
+"state": "SC",
+"units": 8513,
+"median": 1031,
+"indexable": true
+},
+{
+"slug": "westchester-county-ny",
+"label": "Westchester County, New York",
+"short": "Westchester County",
+"geoid": "36119",
+"state": "NY",
+"units": 8458,
+"median": 872,
+"indexable": true
+},
+{
+"slug": "plymouth-county-ma",
+"label": "Plymouth County, Massachusetts",
+"short": "Plymouth County",
+"geoid": "25023",
+"state": "MA",
+"units": 8286,
+"median": 1508,
+"indexable": true
+},
+{
+"slug": "new-haven-county-ct",
+"label": "New Haven County, Connecticut",
+"short": "New Haven County",
+"geoid": "09009",
+"state": "CT",
+"units": 8263,
+"median": 1540,
+"indexable": true
+},
+{
+"slug": "polk-county-fl",
+"label": "Polk County, Florida",
+"short": "Polk County",
+"geoid": "12105",
+"state": "FL",
+"units": 7854,
+"median": 627,
+"indexable": true
+},
+{
+"slug": "tangipahoa-parish-la",
+"label": "Tangipahoa Parish, Louisiana",
+"short": "Tangipahoa Parish",
+"geoid": "22105",
+"state": "LA",
+"units": 7492,
+"median": 1087,
+"indexable": true
+},
+{
+"slug": "hancock-county-ms",
+"label": "Hancock County, Mississippi",
+"short": "Hancock County",
+"geoid": "28045",
+"state": "MS",
+"units": 7462,
+"median": 1263,
+"indexable": true
+},
+{
+"slug": "chesapeake-city-va",
+"label": "Chesapeake city, Virginia",
+"short": "Chesapeake city",
+"geoid": "51550",
+"state": "VA",
+"units": 7428,
+"median": 702,
+"indexable": true
+},
+{
+"slug": "seminole-county-fl",
+"label": "Seminole County, Florida",
+"short": "Seminole County",
+"geoid": "12117",
+"state": "FL",
+"units": 7412,
+"median": 735,
+"indexable": true
+},
+{
+"slug": "berkeley-county-sc",
+"label": "Berkeley County, South Carolina",
+"short": "Berkeley County",
+"geoid": "45015",
+"state": "SC",
+"units": 7312,
+"median": 843,
+"indexable": true
+},
+{
+"slug": "middlesex-county-ma",
+"label": "Middlesex County, Massachusetts",
+"short": "Middlesex County",
+"geoid": "25017",
+"state": "MA",
+"units": 7286,
+"median": 934,
+"indexable": true
+},
+{
+"slug": "king-county-wa",
+"label": "King County, Washington",
+"short": "King County",
+"geoid": "53033",
+"state": "WA",
+"units": 7005,
+"median": 961,
+"indexable": true
+},
+{
+"slug": "dallas-county-tx",
+"label": "Dallas County, Texas",
+"short": "Dallas County",
+"geoid": "48113",
+"state": "TX",
+"units": 6882,
+"median": 936,
+"indexable": true
+},
+{
+"slug": "mobile-county-al",
+"label": "Mobile County, Alabama",
+"short": "Mobile County",
+"geoid": "01097",
+"state": "AL",
+"units": 6794,
+"median": 1232,
+"indexable": true
+},
+{
+"slug": "marin-county-ca",
+"label": "Marin County, California",
+"short": "Marin County",
+"geoid": "06041",
+"state": "CA",
+"units": 6390,
+"median": 1632,
+"indexable": true
+},
+{
+"slug": "richmond-county-ny",
+"label": "Richmond County, New York",
+"short": "Richmond County",
+"geoid": "36085",
+"state": "NY",
+"units": 6186,
+"median": 962,
+"indexable": true
+},
+{
+"slug": "citrus-county-fl",
+"label": "Citrus County, Florida",
+"short": "Citrus County",
+"geoid": "12017",
+"state": "FL",
+"units": 6020,
+"median": 1232,
+"indexable": true
+},
+{
+"slug": "st-john-the-baptist-parish-la",
+"label": "St. John the Baptist Parish, Louisiana",
+"short": "St. John the Baptist Parish",
+"geoid": "22095",
+"state": "LA",
+"units": 5882,
+"median": 1335,
+"indexable": true
+},
+{
 "slug": "st-louis-county-mo",
 "label": "St. Louis County, Missouri",
 "short": "St. Louis County",
