@@ -30,6 +30,10 @@ louisiana "Submitted and indexed". Top queries: Arkansas, Florida (position 19.5
    add counties 10%). Not a bottleneck: free tier, far under the 45-minute limit; leave it. The live gate reads every page, so it
    grows with pages: 78 s at 151 pages, about 17 minutes at the 2,000 ceiling (scaled, not measured). Re-measure at 500 pages.
    The real bottlenecks: tokens per change, and pages indexed.
+   Bytes, measured 2026-10-30 (gzip over the wire): Palm Beach page 21.7 KB; median page 19 KB, largest 29 KB (Texas). Google's
+   analytics script 182 KB, about 8x the page: the biggest waste, loaded async so reading is not blocked. `data-p` gate tags cost
+   2.8 KB a page (13%) and no reader uses them: strip after the gates pass. Structured data 0.9 KB: keep. Disk: dist 20 MB,
+   data 104 MB, git pack 68 MB: not a reader cost, leave it.
    Size the process to the change (owner 2026-10-30: the analytics header line took 4 ship runs). Fix: `hater.py carry` finds
    every slug on the old hash itself, so one invisible change = one ship. Done when a tag-only change ships first try.
 1. Search Console: connected; re-read weekly. Owner: click "Validate fix" on the Datasets report.

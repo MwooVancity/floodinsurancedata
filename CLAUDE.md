@@ -92,8 +92,8 @@ Two files only: CLAUDE.md = rules, PLAN.md = strategy and state.
 Old-school optimization (owner 2026-10-30; Knuth, Amdahl, Goldratt, Pike): (1) measure first: no speed or cost work without a
 number from a real run; a guess is not a reason. (2) One bottleneck at a time: name the single slowest or costliest step; work
 anywhere else moves nothing. (3) Amdahl: a step's share of the total caps the gain; under 10% of total = leave it. (4) Big-O
-before constants: per-job cost that grows with pages gets "only what changed" before it hurts; a fixed cost waits. (5) Optimize
-only what runs often: tokens and reader load time are the hot paths; a one-off stays simple. (6) Correct first: never trade a
+before constants: per-job cost that grows with pages gets "only what changed" before it hurts; a fixed cost waits. (5) Bytes are the hot
+path: count what crosses a phone connection, gzipped, per page, and every byte must serve the reader; a one-off stays simple. (6) Correct first: never trade a
 check that catches wrong numbers for speed. (7) Re-measure after; no drop = revert. Process follows harm: a change no reader can
 see (a tag, markup) gets one build, the text-identical proof, one ship and one live read.
 
