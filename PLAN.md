@@ -5,6 +5,17 @@ State and next moves only; rules in CLAUDE.md, history in git. Under 80 lines: d
 Most helpful flood-insurance page for every US county, for a scared reader on a phone. Measure: pages indexed, impressions, clicks, page-1 queries, AI citations. We built before proving demand: the weekly scoreboard decides; polish only where a number says a page fails.
 2026-10-29 Search Console (data 10-23..27): 101 impressions, 1 click, position 46; sitemap 110 read, 0 errors. Read: `tools/gsc_read.mjs`.
 
+## Who uses it (audit 2026-10-31; small sample, keyword volumes not measured)
+Known: 271 impressions, 3 clicks, position 44, 7 days; all 3 clicks from Canada (guess: the owner). No proven outside reader. 79% of impressions desktop, so "on a phone" is unproven. About two thirds of 182 query impressions are "flood insurance <place>", many towns we have no page for; cost words 29, zones 18, claims 4, condo 3. Why it may fail: new anonymous site, no links, position 44.
+Search results: zone queries are led by spam pages and insurers with conflicting prices; claim appeals by FEMA; map changes by scattered local government pages; condos by forums and agents. Canada: no public flood price data and no national program, so dropped. County averages exist elsewhere but are state-level or stale.
+Try in order, each smallest test first, 4 weeks of Search Console before more:
+1. Zone pages: 3 national pages (AE, X, VE), NFIP median by zone, claims, what it means. Not a page per place.
+2. Towns: county pages name their main towns from Census, in a sentence, no lists; test on 20 counties.
+3. "Claim denied": one page, deadlines via `rule()`, why claims closed unpaid from NFIP data.
+4. Condo: one sourced page; check NFIP condo figures first.
+5. "Get out of a flood zone": one page, LOMA steps via `rule()`, lender can still require it.
+Rules tested: truth, no advice, 2,000 ceiling, no name-swap pages stay. Open: county-only pages (habit). Procedures from official sources are facts, not advice. Hold compare and decode-policy tools until a test shows demand. Dropped: Canada, embed, alerts. Owner: anonymity may cost trust on an insurance topic.
+
 ## State (2026-10-30)
 - Live: 151 pages, sitemap 150 (home, 51 states, 92 counties, site pages). Queue 1,803; daily job adds 20 reviewed (25 max a release); done about late January 2027.
 - Data as of 2026-07-31; refresh on the 3rd (claims carry over, last 3 loss years re-pulled).
