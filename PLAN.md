@@ -1,141 +1,60 @@
 # PLAN: floodinsurancedata.com
-Rules live in CLAUDE.md. This file is the state and the next moves only; history is in git and
-`docs/archive/PLAN-2026-10-29.md`. Keep it under 80 lines: when a line is done, delete it.
-
-## The big picture (owner 2026-10-29: "Musk steps should have caught this")
-We built before proving demand: 20+ review rounds and a pipeline factory while the scoreboard shows 101 impressions,
-1 click. The Musk steps were applied to page text, never to the machine. From now: (1) the weekly scoreboard decides;
-polish only where a number says a page fails. (2) Effort goes to reach: counties live, one data story, Search Console.
-(3) Audit the factory once: delete every gate, check or review step that never caught a real defect (state/gate-history).
-(4) Time every recurring job monthly (release.py prints each step); fingerprint what grows with pages. (5) Short sessions.
-
-## First, before any work: ponytail (owner 2026-10-29)
-Does it need to exist? Does a sentence on the page already answer it? Is it in the code already, or does the
-browser already do it? Only then the least code. Tests scale with harm; reviews only where a reader could be hurt.
+State and next moves only; rules in CLAUDE.md, history in git. Under 80 lines: done = delete.
 
 ## Goal and scoreboard
-The most helpful flood-insurance page for every US county, for a scared reader on a phone (user, not Google).
-Scoreboard, the only measure of progress: pages indexed · impressions · clicks · queries on page 1 · AI citations.
-2026-10-29 (Search Console, data 10-23..10-27): 101 impressions, 1 click, average position 46; sitemap 110 read, 0 errors;
-louisiana "Submitted and indexed". Top queries: Arkansas, Florida (position 19.5), Utah. Read: `tools/gsc_read.mjs`.
+Most helpful flood-insurance page for every US county, for a scared reader on a phone. Measure: pages indexed, impressions, clicks, page-1 queries, AI citations. We built before proving demand: the weekly scoreboard decides; polish only where a number says a page fails.
+2026-10-29 Search Console (data 10-23..27): 101 impressions, 1 click, position 46; sitemap 110 read, 0 errors. Read: `tools/gsc_read.mjs`.
 
-## Where we are (2026-10-29)
-- Live: home + 51 states + 52 counties + 404 (111 pages), template reviewed (light round 18 PASS), live gate clean.
-- Queue: 1,803 counties pass the build; the daily GitHub job publishes 20 reviewed ones a day (owner 2026-10-29; 25 max per release).
-- Data: as of 2026-07-31; monthly cloud refresh on the 3rd (claims carry over; only the last 3 loss years re-pulled).
-- Reviews: no wrong live figure in rounds 12-19 (round 19 caught an overstated new figure before release); open defects are wording and layout.
+## State (2026-10-30)
+- Live: 151 pages, sitemap 150 (home, 51 states, 92 counties, site pages). Queue 1,803; daily job adds 20 reviewed (25 max a release); done about late January 2027.
+- Data as of 2026-07-31; refresh on the 3rd (claims carry over, last 3 loss years re-pulled).
+- Analytics: GA4 property 561730563, `G-EXCYW0PJYG`, account 163330170; `notes.GA_TAG`, real host only; google_gate S15.
+- Proven in real cloud runs: daily publish unattended; fail, idle, rollback drills; first full refresh (10-31 00:06 UTC, jump check PASS).
+- Measured: daily run 249 s (build + checks 33%, deploy + live gate 31%, phone 20%, add counties 10%); limit 45 min; leave it. Live gate 78 s at 151 pages, about 17 min at 2,000 (scaled; re-measure at 500; then changed pages + a sample). Build unchanged 7 s (`tools/fingerprint.py`).
+- Bytes (gzip): median page 19 KB, largest 29 KB, Palm Beach 21.7 KB. Google script 182 KB, async. `data-p` tags 2.8 KB a page, no reader use. Structured data 0.9 KB: keep. Disk (dist 20 MB, data 104 MB, git 68 MB) costs no reader.
+- Bottlenecks: tokens per change, pages indexed.
 
-## Next moves, in order (each has a "done when")
-0. Measured 2026-10-30, last scheduled daily run: 249 s total (build + checks 33%, deploy + live gate 31%, phone browser 20%,
-   add counties 10%). Not a bottleneck: free tier, far under the 45-minute limit; leave it. The live gate reads every page, so it
-   grows with pages: 78 s at 151 pages, about 17 minutes at the 2,000 ceiling (scaled, not measured). Re-measure at 500 pages.
-   The real bottlenecks: tokens per change, and pages indexed.
-   Bytes, measured 2026-10-30 (gzip over the wire): Palm Beach page 21.7 KB; median page 19 KB, largest 29 KB (Texas). Google's
-   analytics script 182 KB, about 8x the page: the biggest waste, loaded async so reading is not blocked. `data-p` gate tags cost
-   2.8 KB a page (13%) and no reader uses them: strip after the gates pass. Structured data 0.9 KB: keep. Disk: dist 20 MB,
-   data 104 MB, git pack 68 MB: not a reader cost, leave it.
-   Size the process to the change (owner 2026-10-30: the analytics header line took 4 ship runs). Fix: `hater.py carry` finds
-   every slug on the old hash itself, so one invisible change = one ship. Done when a tag-only change ships first try.
-1. Search Console: connected; re-read weekly. Owner: click "Validate fix" on the Datasets report.
-2. 2026-11-03 refresh run: check time, download size and all 51 states done. Done when the numbers are here.
-3. One batch after step 2, then one light check (≤ ~90k tokens) and release:
-   - search boxes on tables with 16+ rows, with a "no matches" line;
-   - "Outside a high-risk zone?" line on the "Am I required" card, worded "of paid claim dollars", with its period;
-   - take-up (homes with flood insurance): verify the penetration source, then show it or delete the idea.
-3b. Same batch: (i) a gate check + mutation for each defect class found in rounds 16-19 (CLAUDE.md rule, not yet
-   done; biggest miss); (ii) round 13-19 MINORs: condo "leave both out", overstated glide wording where the gap is
-   tiny, Maine duplicate disaster line, "Assigned in error" vs "Claim deleted in error", thin zones in the dropdown;
-   (iii) glossary of terms used on the page (FEMA wording, sourced); (iv) one line each for renters, landlords,
-   second homes and businesses; (v) ZIP names: "near <place>" fallback where no place covers 25%.
-3c. Reader tools (owner 2026-10-29 "do it all"; ship standard in CLAUDE.md: oracle, edge suites, fuzz, kill switch, staged), lowest risk first, each with a script that types edge cases into
-   the real page (permanent release check) and one light review. All: nothing leaves the phone, rules from
-   rules_registry, numbers tagged, no verdict words, below the quote checker, readable without JavaScript.
-   - Deadline planner: LIVE 2026-10-29 on louisiana, palm-beach-county-fl, broward-county-fl (staged; round 21 PASS).
-     Go to "all" in tools_flags.json on 2026-11-12 if no errors or complaints; then fix the round-21 MINORs. Was: proof of loss +60 days; FEMA aid window from the DECLARATION date (source first);
-     guards: future/empty date, local-date parsing, past 60 days, private policies set their own deadlines.
-   - (Ponytail 10-29: first try a "compare with" link that opens two county pages; build a tool only if that falls short.)
-   - Compare two places: published places only, same level, base labelled, "too few", one lazy JSON (size cap),
-     stacked on a phone, numbers only, no "safer/cheaper".
-   - Decode my policy page: FEMA field names; clean $ and commas; flag monthly-for-yearly and out-of-range;
-     premium vs premium-only median, deductible vs mix, coverage vs $250,000, zone in plain words; FEMA's own
-     pay-less text only. Photo reading later, in-browser only, reader confirms each value.
-   - Renewal-jump check: DROPPED by the ponytail ladder (the cap rule is already on the page; risky). Was: premium only, reasons listed before any
-     comparison (coverage change, lost discount, non-primary 25%, new map, lapse), never "illegal".
-3d. Links (owner 10-29), guards first: a monthly outside-link checker that stops a release on a dead link; outside
-   links only to .gov or FloodSmart (gate); 3-5 related links per page chosen from data, never a fixed block; link
-   text names the destination. Add: DisasterAssistance.gov beside the aid rule; FEMA's provider finder beside "how to
-   buy"; state insurance department (needs a sourced list of 51); "compare with" a bordering county.
-3e. LIVE 2026-10-29: county flood-map dates and new-map notices (FEMA CSB, all six value shapes handled, unknown
-   stops the build); NOAA sea-level trend on county pages with a gauge inside the county (round 28: a bordering
-   county can be on the other coast). Both refresh monthly. OPEN: sea level on state pages.
-4. Links: build ONE data story from data we hold ("counties paying furthest below FEMA's full-risk price").
-   Done when it is live. Pitching it to local news needs the owner (outreach is outbound).
-5. Pace: 20 a day now (owner). After 4 weeks of step-1 data: 25 if most pages are indexed; drop to 10 if not; stop if
-   site-wide impressions fall. Done when the decision and its numbers are written here.
+## Next, in order
+0. Bytes: strip `data-p` after gates, keeping the live gate's comparison right. Decide delaying the Google script (saves 182 KB on quick visits, undercounts them). `hater.py carry` finds every slug on the old hash itself; done when a tag-only change ships first try (analytics took 4 runs).
+1. Weekly Search Console. Owner: "Validate fix" on the Datasets report.
+2. 11-03 refresh: record time, download size, 51 states done. Issue #1 closes on the next daily publish.
+3. After 2, one batch, one light check (≤ ~90k tokens):
+   - #3 claims by flood zone and #7 claims outside high-risk zones (ChatGPT list; same FEMA data): the "Outside a high-risk zone?" line on "Am I required", worded "of paid claim dollars", with period.
+   - Search boxes on tables of 16+ rows, with a "no matches" line.
+   - Take-up: verify the source, show it or delete the idea.
+   - Gate check + mutation for each defect class in rounds 16-19.
+   - MINORs: condo "leave both out"; glide wording where the gap is tiny; Maine duplicate disaster line; "Assigned in error" vs "Claim deleted in error"; thin zones in dropdown.
+   - Sourced glossary; one line each for renters, landlords, second homes, businesses; ZIP "near <place>" fallback where no place covers 25%.
+4. Reader tools (CLAUDE.md standard; each gets an edge script and one light review; nothing leaves the phone, below the quote checker, readable without JS):
+   - Deadline planner LIVE on 3 samples; 11-12 go "all" in `tools_flags.json` if no errors, then round-21 MINORs.
+   - First try a "compare with" link opening two pages. Only if short: compare tool (published places, same level, base labelled, "too few", one lazy JSON, no "safer/cheaper").
+   - Decode my policy: FEMA field names; flag monthly-for-yearly and out-of-range; premium vs median, deductible vs mix, coverage vs $250,000, zone in plain words; FEMA's pay-less text only.
+   - Dropped: renewal-jump check.
+5. Links, guards first: monthly dead-link check stopping a release; outside links only .gov or FloodSmart; 3-5 related links from data; link text names the destination. Add DisasterAssistance.gov, FEMA provider finder, state insurance departments (sourced 51), bordering county. Sea level on state pages (open).
+6. One data story: "counties paying furthest below FEMA's full-risk price". Local-news pitch needs the owner.
+7. Pace: 20 a day. After 4 weeks of data (11-26): 25 if most pages indexed, 10 if not, stop if impressions fall. Write the decision here.
 
-## Scale guard: DONE 2026-10-29 (build only what changed)
-Every page carries a fingerprint of its inputs (code, national files, its own and its state's data, the places that
-can appear in its related links); unchanged = skipped (`tools/fingerprint.py`). Proven: nothing changed 7 s (was 165 s),
-byte-identical; one county's data -> only that state's pages; a new county -> 5 files. Code change -> everything (right).
+## Runs without Claude (subscription ends about 2026-11-19)
+A failed check ships nothing; the live site stays. Failed job = one issue "Job failed: <job>" (`tools/job_alert.sh`). Daily and monthly watch each other (3 and 40 days). Group site-deploy: one deploy at a time; deploy.yml uses latest master.
+- After deploy every live page must equal what passed, else previous release redeploys (`tools/deploy_verified.sh`). Idle days check too and redeploy once. Over 19,000 files stops (free plan 20,000).
+- Pinned: ubuntu-26.04, wrangler 4.86.0, playwright 1.64.1, Python 3.12, Node 20.
+- Warnings on the daily run: Cloudflare token (30 days), domain (45 days; expires 2027-10-23) via `tools/token_check.py`.
+- Refresh side sources cannot stop it; sea level keeps the file on a short answer; cache saves after download. Unreachable law page warns, fails after 14 days (`state/rule-fetch-ok.json`). Missing browser fails in cloud.
+Owner only after 11-19: domain card; renew Cloudflare token; a moved law page (release stays stopped, re-point the rule); a 25% median jump stops the refresh (old data stays); a retired runner (one line).
 
-## Runs without Claude (owner drops the subscription about 2026-11-19; built 2026-10-29)
-Proven in real cloud runs 2026-10-30: daily publish unattended (150 county/state pages live), fail + idle + rollback drills,
-first full monthly refresh (run 2026-10-31 00:06 UTC, jump check PASS, FEMA data as of 2026-07-31, shipped through all gates).
-Analytics: own GA4 property 561730563 (`G-EXCYW0PJYG`, account 163330170), tag in `notes.GA_TAG`, real host only, google_gate S15.
-A tag-only template change needs `hater.py carry` for every slug holding a PASS on the old hash, flagged examples included.
-A failed check ships nothing and the live site stays as it was. Emails only on failure (owner 2026-10-29): a failed job
-opens one GitHub issue "Job failed: <job>", comments on each repeat, closes when it passes (`tools/job_alert.sh`); the
-daily and monthly jobs check each other ("Job not running": publish 3 days, refresh 40 days). Deploys: one at a time
-across workflows (group site-deploy), and deploy.yml always deploys the latest master. Self-heal, in publish-counties:
-- After a deploy, every live page must equal the page that passed; if not, the previous release is deployed again.
-- Days with nothing to publish still check every live page; a mismatch (deleted site, stale edge) redeploys once.
-- Over 19,000 files stops before deploying (Cloudflare free plan: 20,000 a deploy).
-- Found 2026-10-29: refresh 10-29 failed at the push (fixed: pull --rebase; never succeeded yet, the 11-03 run is the
-  first); publish 10-29 failed because flsenate.gov did not answer GitHub (fixed: an unreachable
-  law page warns and fails only after 14 days unreached); the 10-28 publish ran with phone checks skipped (now a missing
-  browser fails in the cloud). Every one was silent before.
-- Pinned: runner ubuntu-26.04, wrangler 4.86.0, playwright 1.64.1, Python 3.12, Node 20. A retired runner fails loudly.
-- Cloudflare token (30 days) and domain (45 days; Cloudflare Registrar, expires 2027-10-23): a yellow warning on the
-  daily run page (`tools/token_check.py`).
-- Git size, measured: 52 MB for all history (104 pages); largest file 3.3 MB (limit 100 MB); jobs check out only the
-  latest commit, so history does not slow them. Estimate at 2,000 pages: a few hundred MB a year. Not urgent.
-  (The 290/350 MB a month in the old note was unpacked size.)
-Owner-only after 11-19 (seen on the Actions page): keep the domain's auto-renew card valid; renew the Cloudflare token; a law page that moved (a rule's
-link must be re-pointed: the release stays stopped, the live site unchanged); a 25% jump in a median that stops the
-refresh (the old data stays live and correct, only older); a GitHub runner retired (change one line).
+## What can break
+- FEMA down or renamed: pull_raw stops; last month stays, as-of ages. State count mismatch: full re-pull, else refresh stops.
+- Claims cache evicted (10 GB): one slow full pull. Compute ~5 h/month.
+- Rule pages change: recheck.py stops on a missing excerpt.
+- Big storm: no code change; check the events lead that week.
+- NFIP lapse (deadlines often Sep 30): OPEN, add a sourced "no new policies during a lapse" rule that day.
+- January: year ranges, "since 1978", decade labels roll over; check one page.
+- Flagged queue: 183 of 1,803. 31 extreme ones need own looks; script numbers, one cheap review per flag type.
+- Before ZIP pages: verify files per deploy (3 a page).
 
-## Scale problems (5 steps at max scale, measured 2026-10-29)
-1-2. Built pages and data/c in git: measured small (above); no change.
-3. Flagged-page reviews: 183 of the 1,803 queue (about 15M tokens one by one). Fix: a script checks each flagged page's
-   numbers against the data; one cheap review per flag TYPE.
-Watch: files per deploy (3 a page; verify Cloudflare's per-deploy file limit before ZIP pages; one share image per state).
+## Calendar
+Weekly Search Console. Monthly: refresh time, git size, prune backlog. Quarterly: light review on samples. Yearly: domain, NRI and CSB updates.
+11-03 refresh -> 11-12 planner to all -> 11-19 subscription ends -> 11-26 pace decision -> late January queue done -> decide ZIP pages and AdSense.
 
-## Every month, every year (edge cases first; the jobs run themselves, sessions check them)
-What can break, and the guard already in place (or OPEN):
-- FEMA API down, slow or renamed fields: pull_raw stops before agg_raw, so the site keeps last month's data and the
-  as-of date ages. A median moving more than 25% stops the commit (`jump_check.py`); a session looks, then reruns.
-- A state's count stops matching: that state's claims re-pull in full; still wrong = refresh stops, nothing half-written.
-- GitHub: the claims cache can be evicted (10 GB): the next run pulls in full (slow, not wrong). $12 compute: ~5 h/month used.
-- FEMA wording or rule pages change: recheck.py re-fetches every rule excerpt each release; a missing excerpt stops it
-  (a page that does not load only warns, up to 14 days: `state/rule-fetch-ok.json`).
-- A big storm: claims, events and disaster lists grow on their own; no code change. Check the events lead that week.
-- Congress lets the NFIP lapse (reauthorization deadlines, often Sep 30): OPEN, add a sourced "no new policies during a
-  lapse" rule the day it happens. January: year ranges, "since 1978" and decade labels roll over; check one page.
-Machinery audit 2026-10-29 (5 steps on the machine): build 7 s, release ~1 min, git 62 MB (data 102 MB), caps on the
-phone log (300 lines) and review snapshots (3 rounds). Monthly: record refresh time and git size; prune closed backlog
-sections; at 2,000 pages switch the live check to changed pages + a sample if its time shows in release.py's timings.
-Calendar:
-- Daily: 20 reviewed counties published (queue of 1,803 done about late January 2027); next session reports deploys.
-- Weekly: read Search Console (`tools/gsc_read.mjs`), write the numbers in the scoreboard.
-- Monthly, the 3rd: FEMA refresh; check time, size and 51 states done.
-- Quarterly: one light review of the template on the 3 samples; prune any line in this file that is done.
-- Yearly: domain renewal (owner); NRI and Community Status Book updates (refresh picks them up); NFIP lapse watch.
-Milestones: 2026-11-03 first refresh check -> 11-12 deadline planner to all pages -> 11-26 four weeks of Search Console
-data decide the pace -> late January 2027 queue done -> decide ZIP pages and AdSense from the numbers.
-
-## Helpfulness checklist A-N (lines in docs/HATER-PROMPT.md; every review judges all 14)
-Round 18-21: A, C, D, E, H, J, M, N pass. OPEN: B renters/landlords/second homes/business lines; F state insurance
-department contacts; G table search; I error-report contact (owner); K print layout; L Spanish.
-
-## Parked: ZIP pages (after counties index well); Spanish, state contacts, print layout (slower than steps 1-4);
-AdSense (after four weeks of Search Console data; owner decides).
+## Open checklist and parked
+Open: B audience lines; F state contacts; G table search; I error-report contact (owner); K print; L Spanish. Parked: ZIP pages, Spanish, print, AdSense.
