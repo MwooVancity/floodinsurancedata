@@ -69,6 +69,10 @@ can appear in its related links); unchanged = skipped (`tools/fingerprint.py`). 
 byte-identical; one county's data -> only that state's pages; a new county -> 5 files. Code change -> everything (right).
 
 ## Runs without Claude (owner drops the subscription about 2026-11-19; built 2026-10-29)
+Proven in real cloud runs 2026-10-30: daily publish unattended (150 county/state pages live), fail + idle + rollback drills,
+first full monthly refresh (run 2026-10-31 00:06 UTC, jump check PASS, FEMA data as of 2026-07-31, shipped through all gates).
+Analytics: own GA4 property 561730563 (`G-EXCYW0PJYG`, account 163330170), tag in `notes.GA_TAG`, real host only, google_gate S15.
+A tag-only template change needs `hater.py carry` for every slug holding a PASS on the old hash, flagged examples included.
 A failed check ships nothing and the live site stays as it was. Emails only on failure (owner 2026-10-29): a failed job
 opens one GitHub issue "Job failed: <job>", comments on each repeat, closes when it passes (`tools/job_alert.sh`); the
 daily and monthly jobs check each other ("Job not running": publish 3 days, refresh 40 days). Deploys: one at a time
