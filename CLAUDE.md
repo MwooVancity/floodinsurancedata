@@ -89,10 +89,13 @@ prints its trigger on every request). Apply it to the machinery too: the daily f
 Before any task, name which scoreboard number it moves: pages indexed, impressions, clicks, page-1 queries,
 AI-answer citations. None = question it, then delete it. Order: question, delete, simplify, accelerate, automate last.
 Two files only: CLAUDE.md = rules, PLAN.md = strategy and state.
-First principles before any step (owner 2026-10-30): (1) what must be true for the reader or the scoreboard when this is done;
-(2) what can actually go wrong with THIS change, in one line; (3) run only the checks that could catch that; (4) stop when it
-is true on the live site, and tell the owner what is proven and what is not. Process follows harm, not habit: a change that
-touches no reader-visible text or number (a tag, markup) gets one build, the text-identical proof, one ship and one live read.
+Old-school optimization (owner 2026-10-30; Knuth, Amdahl, Goldratt, Pike): (1) measure first: no speed or cost work without a
+number from a real run; a guess is not a reason. (2) One bottleneck at a time: name the single slowest or costliest step; work
+anywhere else moves nothing. (3) Amdahl: a step's share of the total caps the gain; under 10% of total = leave it. (4) Big-O
+before constants: per-job cost that grows with pages gets "only what changed" before it hurts; a fixed cost waits. (5) Optimize
+only what runs often: tokens and reader load time are the hot paths; a one-off stays simple. (6) Correct first: never trade a
+check that catches wrong numbers for speed. (7) Re-measure after; no drop = revert. Process follows harm: a change no reader can
+see (a tag, markup) gets one build, the text-identical proof, one ship and one live read.
 
 ## Review and gate budget (HARD, owner 2026-10-28: "be like Elon Musk with review/gates, we've blown a million tokens")
 1. Question the requirement: before any review, name the defect it could catch that the gates and the all-county
