@@ -23,6 +23,7 @@ for st, name in sorted(NAMES.items(), key=lambda kv: kv[1]):
     if not all(os.path.exists(p) for p in need):
         continue
     assemble(d)   # the template reads the county schema (agg.state_risk for the tile map, data.claims_extra for payouts)
+    agg = json.load(open(need[0]))
     out = os.path.join(DIST, slug(st), "index.html"); os.makedirs(os.path.dirname(out), exist_ok=True)
     label = "the District of Columbia" if st == "DC" else name    # reads right in "in ...", "...'s"
     env = dict(os.environ, FF_LEVEL="state", FF_DIR=d, OUT_HTML=out, FF_COUNTYLABEL=label, FF_COUNTYSHORT=label,
