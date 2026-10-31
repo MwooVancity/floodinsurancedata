@@ -3,9 +3,8 @@ largest, a Louisiana parish, the smallest). Fails when a reader would be hurt:
   P1 anything wider than the screen (outside its own scroll box)   P2 any rendered text, SVG included, under 11px
   P3 screen 1 lacks the median, the FEMA map button or the jump menu   P4 the quote checker is below screen 2
   P5 data hidden inside a collapsed <details>
-Usage: python -I tools/phone_check.py [--base file:///.../dist | https://floodinsurancedata.com] [slug ...]
-Appends one line per page to state/phone-check.jsonl (page height is recorded so growth is visible)."""
-import datetime, json, os, sys
+Usage: python -I tools/phone_check.py [--base file:///.../dist | https://floodinsurancedata.com] [slug ...]"""
+import json, os, sys
 from playwright.sync_api import sync_playwright
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -77,11 +76,5 @@ with sync_playwright() as p:
         print(("PHONE FAIL " if bad else "PHONE PASS ") + f"{s} (height {r['height']}px = {r['height'] / H:.1f} screens)")
         for b in bad: print("  -", b)
         failed |= bool(bad)
-        with open(os.path.join(ROOT, "state", "phone-check.jsonl"), "a") as f:
-            f.write(json.dumps({"date": str(datetime.date.today()), "base": base, "slug": s, "height": r["height"],
-                                "pass": not bad, "fails": bad}) + "\n")
     br.close()
-_log = os.path.join(ROOT, "state", "phone-check.jsonl")   # cap (CLAUDE.md: every growing file has a cap): newest 300 lines
-_lines = open(_log).read().splitlines()
-if len(_lines) > 300: open(_log, "w").write("\n".join(_lines[-300:]) + "\n")
 sys.exit(1 if failed else 0)

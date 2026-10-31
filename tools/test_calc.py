@@ -120,4 +120,15 @@ if os.path.exists(_agg) and os.path.exists(os.path.join(_lee, "data.json")):
 else:
     print("integration: skipped (data/lee-county-fl not present)")
 
+# a build must find nothing to write once refresh has assembled a state (dirty tracked files stopped the daily push)
+import agg_raw as _AR, tempfile as _tf
+_d = _tf.mkdtemp()
+_json.dump({"claims_extra": {"x": 1}}, open(os.path.join(_d, "agg.json"), "w"))
+_json.dump({"nri_counties": [{"fips": "1", "county": "A", "rating": "High", "extra": 2}]}, open(os.path.join(_d, "data.json"), "w"))
+_AR.assemble(_d)
+_a, _b = _json.load(open(os.path.join(_d, "agg.json"))), _json.load(open(os.path.join(_d, "data.json")))
+assert _a["state_risk"] == [{"fips": "1", "county": "A", "rating": "High"}] and _a["nri"] is None and _b["claims_extra"] == {"x": 1}
+os.utime(os.path.join(_d, "agg.json"), (1, 1)); _AR.assemble(_d)
+assert os.path.getmtime(os.path.join(_d, "agg.json")) == 1, "assemble rewrote a finished state"
+
 print("test_calc: all assertions passed (exercising ffcalc production functions)")

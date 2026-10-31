@@ -97,8 +97,9 @@ def record(rnd):
 def stamped_slugs():
     """Every page with its own PASS on the samples' last approved template: all of them must move together, or a flagged
     page loses its example (analytics, 2026-10-30: two were missed and the ship stopped at S12). Older stamps stay old."""
-    th = RV.get("home")["template"]
-    return sorted(p[:-5] for p in os.listdir(DIR) if p.endswith(".json") and RV.own_pass(p[:-5], th))
+    home = RV.get("home") or sys.exit("carry: no review stamp for home; name the pages")
+    out = sorted(p[:-5] for p in os.listdir(DIR) if p.endswith(".json") and RV.own_pass(p[:-5], home["template"]))
+    return out or sys.exit("carry: no page holds a PASS on the samples' template; run a review")
 
 def carry(rnd, prev, slugs):
     """CLAUDE.md budget "None": a template change no reader can see (markup, scripts) keeps its PASS only if every

@@ -5,7 +5,7 @@ data/states/built.json (the list build_site and the county pages use, so nothing
 Usage: python -I tools/build_states.py"""
 import json, os, subprocess, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from agg_raw import NAMES, slug
+from agg_raw import NAMES, slug, assemble
 from collect_state_small import FIPS
 import fingerprint as FP   # build only what changed (PLAN scale guard)
 
@@ -22,12 +22,7 @@ for st, name in sorted(NAMES.items(), key=lambda kv: kv[1]):
     need = [os.path.join(d, f) for f in ("agg.json", "data.json", "extras.json")]
     if not all(os.path.exists(p) for p in need):
         continue
-    agg, data = json.load(open(need[0])), json.load(open(need[1]))
-    # assemble: the template reads the county schema (agg.state_risk for the tile map, data.claims_extra for payouts)
-    agg["state_risk"] = [{"fips": c["fips"], "county": c["county"], "rating": c["rating"]} for c in data.get("nri_counties", [])]
-    agg["nri"] = None
-    data["claims_extra"] = agg.get("claims_extra")
-    json.dump(agg, open(need[0], "w")); json.dump(data, open(need[1], "w"))
+    assemble(d)   # the template reads the county schema (agg.state_risk for the tile map, data.claims_extra for payouts)
     out = os.path.join(DIST, slug(st), "index.html"); os.makedirs(os.path.dirname(out), exist_ok=True)
     label = "the District of Columbia" if st == "DC" else name    # reads right in "in ...", "...'s"
     env = dict(os.environ, FF_LEVEL="state", FF_DIR=d, OUT_HTML=out, FF_COUNTYLABEL=label, FF_COUNTYSHORT=label,

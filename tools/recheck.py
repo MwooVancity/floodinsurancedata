@@ -4,7 +4,7 @@
    then compares with the figures tagged on the built page. A shared bug can't hide in both.
 2. Re-fetches FEMA's field definitions; a changed hash means FEMA changed what a field means -> re-read it.
 3. Re-fetches every rules_registry source marked "curl" and checks its excerpt is still on the page.
-Usage: python -I tools/recheck.py [--base https://floodinsurancedata.com] [slug ...]   -> state/recheck.jsonl
+Usage: python -I tools/recheck.py [--base https://floodinsurancedata.com] [slug ...]
 Exit 1 on any mismatch."""
 import datetime, html, json, os, random, re, statistics, subprocess, sys, time, urllib.parse, urllib.request
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -90,11 +90,10 @@ def extras_figures(c):   # what extras_raw wrote for this county (the page print
 # tolerance: the API keeps receiving late records, so counts may drift ~1% between the pull and the check
 TOL = {"units": 0.01, "claims_filed": 0.01, "claims_paid_n": 0.01, "cost_p50": 0.01, "prem_median": 0.01,
        "frp_median": 0.01, "share_below": 1.0, "sfha_share": 1.0, "x_cost_new": 0.01, "x_paid_2020s": 1.0}   # pct metrics: points; others: relative
-problems, log = [], {"date": str(datetime.date.today()), "base": base or "dist"}
+problems = []
 
 _built = [s for s in counties if os.path.exists(os.path.join(ROOT, "data", "c", s, "agg.json"))]
 slugs = [] if RULES_ONLY else args or random.sample([s for s in _built if json.load(open(os.path.join(ROOT, "data", "c", s, "agg.json")))["policies"]["units"] < 25000], 2)
-log["counties"] = {}
 for s in slugs:
     mine, shown = recompute(counties[s]), dict(page_figures(s), **extras_figures(counties[s]))
     rows = {}
@@ -103,7 +102,6 @@ for s in slugs:
         ok = (v is None and p is None) or v is not None and p is not None and (abs(v - p) <= TOL[k] if TOL[k] >= 1 else abs(v - p) <= TOL[k] * max(abs(v), 1))
         rows[k] = {"recomputed": v, "page": p, "ok": ok}
         if not ok: problems.append(f"{s} {k}: recomputed {v}, page shows {p}")
-    log["counties"][s] = rows
     print(f"{s}: " + ", ".join(f"{k} {'ok' if r['ok'] else 'MISMATCH'} ({r['recomputed']} vs {r['page']})" for k, r in rows.items()))
 
 stored = json.load(open(MX.DEFS))
@@ -147,9 +145,6 @@ manual = sorted({k for k, r in RULES.items() for _, _, m_ in r["sources"] if m_ 
 print("rules: curl sources", "all present" if not any(p.startswith("rule ") for p in problems) else "MISSING",
       f"| manual (human re-read due): {manual}")
 
-log["problems"], log["pass"] = problems, not problems
-os.makedirs(os.path.join(ROOT, "state"), exist_ok=True)
-open(os.path.join(ROOT, "state", "recheck.jsonl"), "a").write(json.dumps(log) + "\n")
 print("RECHECK", "PASS" if not problems else "FAIL")
 for p in problems: print("  -", p)
 sys.exit(1 if problems else 0)

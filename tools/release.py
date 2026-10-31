@@ -42,7 +42,7 @@ else:
                 if old and new_keys: grew.append(f"{rel}: {sorted(new_keys)}")
         if grew: sys.exit("RELEASE STOPPED at: hotfix adds figures (needs a hater review): " + "; ".join(grew[:5]))
     if "--ship" not in sys.argv: sys.exit(print("READY TO SHIP: release.py --ship [--hotfix \"reason\"]"))
-    # every push to master redeploys the COMMITTED dist (deploy.yml), so commit the built pages before anything ships
+    # deploy.yml deploys the COMMITTED dist on any push that changes it, so commit the built pages before anything ships
     R = os.path.dirname(T); g = lambda *a: subprocess.run(["git", *a], cwd=R, check=True)
     g("add", "-A", "dist", "data/c", "data/states", "places.json", "tools", "state")
     if subprocess.run(["git", "diff", "--cached", "--quiet"], cwd=R).returncode:

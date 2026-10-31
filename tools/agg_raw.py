@@ -27,6 +27,17 @@ FIPS = {"AL": "01", "AK": "02", "AZ": "04", "AR": "05", "CA": "06", "CO": "08", 
 
 def slug(st): return NAMES[st].lower().replace(" ", "-")
 ASOF_FILE = os.path.join(ROOT, "data", "us", "asof.json")
+def assemble(d):
+    """Add what the page template reads to a state's agg.json and data.json. Refresh ends with it, so the build finds
+    nothing to write: a build that rewrote tracked files stopped `git pull --rebase` and rewrote 41 MB every run."""
+    pa, pd = os.path.join(d, "agg.json"), os.path.join(d, "data.json")
+    if not (os.path.exists(pa) and os.path.exists(pd)): return
+    agg, data = json.load(open(pa)), json.load(open(pd))
+    risk = [{"fips": c["fips"], "county": c["county"], "rating": c["rating"]} for c in data.get("nri_counties", [])]
+    if agg.get("state_risk") == risk and agg.get("nri", 0) is None and data.get("claims_extra", 0) == agg.get("claims_extra"): return
+    agg["state_risk"], agg["nri"], data["claims_extra"] = risk, None, agg.get("claims_extra")
+    json.dump(agg, open(pa, "w")); json.dump(data, open(pd, "w"))
+
 def asof():   # the as-of date of the policies in data/ (set by the pull; every script reads it here)
     return json.load(open(ASOF_FILE))["asof"]
 

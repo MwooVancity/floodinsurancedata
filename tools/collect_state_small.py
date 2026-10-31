@@ -5,7 +5,7 @@ Writes data/states/<slug>/data.json in the county-page schema, plus extras:
 Run AFTER tools/pull_raw.py finishes (one network job at a time). Usage: python -I tools/collect_state_small.py [ST ...]"""
 import json, os, sys, time, urllib.parse, urllib.request
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from agg_raw import NAMES, slug, FIPS
+from agg_raw import NAMES, slug, FIPS, assemble
 import ffcalc
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -80,6 +80,7 @@ def run(st):
         hist = None
         out["inforce_history"] = {"by_year": None, "unavailable": f"OpenFEMA count query timed out: {e}"}
     json.dump(out, open(os.path.join(d, "data.json"), "w"))
+    assemble(d)
     print(f"{st}: crs {len(out['crs'])}, decl {len(out['declarations'])}, housing {len(out['housing'])}, multiloss {len(ml)}, "
           f"pen {out['penetration']['overall_pct']}%, nri counties {len(out['nri_counties'])}, in-force {hist}", flush=True)
 
