@@ -91,6 +91,11 @@ for p in sorted(indexable):
     for w in set(words):
         if words.count(w) > 2: fail("S4", f"{p}: '{w}' repeated {words.count(w)} times in the title")
 
+# S15 analytics: every page carries the tag /privacy/ discloses, so no new page or template goes uncounted
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); from notes import GA_TAG
+for p, h in pages.items():
+    if GA_TAG not in h: fail("S15", f"{p}: Google Analytics tag missing")
+
 # S5 hidden text
 for p, h in pages.items():
     body = re.sub(r"<(script|style|head)\b.*?</\1>", " ", h, flags=re.S)
