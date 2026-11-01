@@ -1,7 +1,7 @@
 """Publish the next N counties: the largest (by policy units) that passed the review build and are not yet in counties.json.
 Usage: python -I tools/add_counties.py [N]   (default 10). Reads state/county-queue.json (committed, so the daily GitHub job
 can use it); `--refresh` rewrites that queue from review/places.json after a local `build_counties.py --all`.
-Owner 2026-10-26: a few at a time, never hundreds at once; google_gate S7 caps a release at 25 new indexable pages."""
+Owner 2026-11-01: full speed, 100 a day; google_gate S7 caps a release at 100 new indexable pages."""
 import json, os, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 QUEUE = os.path.join(ROOT, "state", "county-queue.json")

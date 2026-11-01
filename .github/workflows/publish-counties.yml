@@ -63,7 +63,7 @@ jobs:
         id: add
         run: |
           if [ -n "${{ inputs.drill }}" ] && [ "${{ inputs.drill }}" != none ]; then echo "none=1" >> "$GITHUB_OUTPUT"; echo "drill: nothing added"; exit 0; fi
-          out=$(python -I tools/add_counties.py 20); echo "$out"
+          out=$(python -I tools/add_counties.py 100); echo "$out"
           echo "msg=$out" >> "$GITHUB_OUTPUT"
           git diff --quiet tools/counties.json && { echo "queue empty"; echo "none=1" >> "$GITHUB_OUTPUT"; } || true
       - name: Phone check browser

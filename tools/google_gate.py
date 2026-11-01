@@ -7,7 +7,7 @@ Usage: python -I tools/google_gate.py [--root dist] [--skip-review]
   S4 doorway signals   titles and descriptions unique across the site, no repeated keywords in a title
   S5 hidden text       no text hidden with inline CSS (display:none, visibility:hidden, font-size:0, off-screen)
   S6 index hygiene     sitemap = exactly the indexable pages; canonicals self-referential; robots allows crawling
-  S7 rollout pace      at most 25 newly indexable pages per release (owner 2026-10-26: no bulk publishing)
+  S7 rollout pace      at most 100 newly indexable pages per release (owner 2026-11-01: full speed; the cap only stops a runaway)
   S8 broken links      every internal link resolves to a built page
   S9 page weight       every page under 400 KB of HTML
   S10 cloaking         in gate_live.py: every live page fetched as Googlebot equals the built page"""
@@ -17,7 +17,7 @@ from collections import defaultdict
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DIST = os.path.join(ROOT, sys.argv[sys.argv.index("--root") + 1]) if "--root" in sys.argv else os.path.join(ROOT, "dist")
-MAX_NEW_INDEXABLE, DUP_MAX, MIN_OWN_FIGURES = 25, 0.80, 40
+MAX_NEW_INDEXABLE, DUP_MAX, MIN_OWN_FIGURES = 100, 0.80, 40
 fails = []
 def fail(cid, msg): fails.append(f"[{cid}] {msg}")
 def text(h): return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", re.sub(r"<(script|style|head)\b.*?</\1>", " ", h, flags=re.S))).strip()
