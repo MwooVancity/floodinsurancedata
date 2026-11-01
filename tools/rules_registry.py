@@ -9,6 +9,9 @@ CHECKED = "2026-10-25"
 # FEMA's own dataset description (fema.gov pages block scripts; the OpenFEMA metadata API does not)
 IA_META = "https://www.fema.gov/api/open/v1/OpenFemaDataSets?$filter=name%20eq%20'IndividualAssistanceHousingRegistrantsLargeDisasters'"
 
+CFR64 = "https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=64"
+CFR59 = "https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=59&section=59.1"
+
 RULES = {
     "homeowners_excl": {
         "text": "Standard homeowners insurance does not cover flood damage; flood insurance is bought separately, through the "
@@ -198,6 +201,21 @@ RULES = {
     "other_buyers": {
         "text": "The NFIP also offers policies for renters and businesses.",
         "sources": [(FS + "/get-insured/buy-a-policy", "offers flood insurance policies for homeowners, renters and businesses", "curl")]},
+    "zone_ae": {
+        "text": "Zone AE is a high-risk area: land with a 1 percent or greater chance of flooding in any given year, where FEMA has "
+                "worked out how high the water from that flood would reach (44 CFR §59.1, §64.3).",
+        "sources": [(CFR64, "with water surface elevations determined", "curl"),
+                    (CFR59, "subject to a 1 percent or greater chance of flooding in any given year", "curl")]},
+    "zone_ve": {
+        "text": "Zone VE is a coastal high-risk area: land with a 1 percent or greater chance of flooding in any given year, hit by "
+                "tidal floods with fast-moving water, where FEMA has worked out how high the water would reach (44 CFR §59.1, §64.3).",
+        "sources": [(CFR64, "with water surface elevations determined and with velocity, that is inundated by tidal floods", "curl"),
+                    (CFR59, "subject to a 1 percent or greater chance of flooding in any given year", "curl")]},
+    "zone_x": {
+        "text": "Zone X is outside the high-risk zones. Federal rules use it for two kinds of land: areas of moderate flood hazard, and "
+                "areas of minimal hazard (44 CFR §64.3). FEMA's map shows the moderate kind shaded and the minimal kind unshaded.",
+        "sources": [(CFR64, "B, X Areas of moderate flood hazards", "curl"),
+                    (CFR64, "C, X Area of minimal hazards", "curl")]},
     "ia_partial": {
         "text": "FEMA disaster aid helps with uninsured and underinsured losses, and is separate from NFIP insurance.",
         "sources": [(IA_META, "uninsured and underinsured personal property losses", "curl")]},

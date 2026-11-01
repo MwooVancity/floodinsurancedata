@@ -137,4 +137,16 @@ _x = _AR.claims_extra([_c("AE", 600), _c("X", 100, 200, 100), _c("VE", 0), _c(""
 assert _x["outside_sfha_pct"] == 40.0 and _x["paid_n"] == 4, _x
 assert _AR.claims_extra([_c("", 5)])["outside_sfha_pct"] is None
 
+# zone pages: the national zone histograms must be the same policies as the state zone tables (states drop thin zones only)
+_zh = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data", "us", "cost_hist_zone.json")
+if os.path.exists(_zh):
+    import glob as _g
+    def _zone_counts_agree(hist_n, state_n): return state_n <= hist_n and hist_n - state_n <= 0.02 * hist_n
+    assert not _zone_counts_agree(1000, 900) and not _zone_counts_agree(900, 1000) and _zone_counts_agree(1000, 990)
+    _hz, _sts = _json.load(open(_zh)), [_json.load(open(f))["policies"] for f in _g.glob(os.path.join(os.path.dirname(_zh), "..", "states", "*", "agg.json"))]
+    for _gr, _m in (("A", "A"), ("V", "V"), ("X", "XBC")):
+        _a = sum(sum(v.get(_gr, {}).values()) for v in _hz.values())
+        _b = sum(d["n"] for s in _sts for z, d in (s.get("cost_by_zone") or {}).items() if z[:1] in _m)
+        assert _zone_counts_agree(_a, _b), (_gr, _a, _b)
+
 print("test_calc: all assertions passed (exercising ffcalc production functions)")

@@ -122,7 +122,7 @@ if len(states) == 51:   # U.S. figures only once every state is built and gated:
                       f'(premium plus fees) of existing single-family primary-home policies, by the zone each policy is rated in.</p>'
                       f'<table><thead><tr><th>Flood zone</th><th>Median / yr</th><th>Policies</th></tr></thead><tbody>{_zrows}</tbody></table>'
                       f'<p class="mut">NFIP policies in force on {_ASOF_TXT}; zone D and policies with no zone are left out. Your state page '
-                      'breaks this down by every zone code.</p></div>')
+                      'breaks this down by every zone code. What each means: <a href="/flood-zones/ae/">zone AE</a>, <a href="/flood-zones/x/">zone X</a>, <a href="/flood-zones/ve/">zone VE</a>.</p></div>')
     national = (f'<div class="stats"><div class="stat"><div class="n">{money(_med)}</div><div class="l">U.S. median a year</div></div>'
                 f'<div class="stat"><div class="n">{money(_med / 12)}</div><div class="l">Per month</div></div>'
                 f'<div class="stat"><div class="n">{_units / 1e6:.1f}M</div><div class="l">Insured units in force</div></div></div>'
@@ -358,6 +358,58 @@ data = HEAD.format(title="Download the flood-insurance data", desc="Per-county N
 <p class="mut">Reuse freely with attribution: "This product uses FEMA's OpenFEMA API, but is not endorsed by FEMA."</p>{FOOT}"""
 wr(os.path.join(DIST, "data", "index.html"), data)
 
+# ---- one page per zone a reader meets on a letter (PLAN demand test 1): national NFIP figures, not a page per place ----
+zone_urls = []
+if len(states) == 51 and len(_zh) == 51:
+    ZONES = {"ae": ("AE", "A", "all A zones (AE, A, AH, AO and others)", "zone_ae"),
+             "x": ("X", "X", "X, B and C zones", "zone_x"),
+             "ve": ("VE", "V", "all V zones (VE, V and others)", "zone_ve")}
+    def _st(sl, f): return json.load(open(os.path.join(DATADIR, "states", sl, f), encoding="utf-8"))
+    _sagg = {s["slug"]: _st(s["slug"], "agg.json")["policies"] for s in states}
+    _links = lambda me: " · ".join(f'<a href="/flood-zones/{k}/">Zone {v[0]}</a>' for k, v in ZONES.items() if k != me)
+    for zk, (code, grp, glab, rk) in ZONES.items():
+        h = {s: v.get(grp) or {} for s, v in _zh.items()}
+        n = sum(sum(v.values()) for v in h.values())
+        med, p25, p75 = _hq(h, 0.5), _hq(h, 0.25), _hq(h, 0.75)
+        rows = [(((_sagg[s["slug"]].get("zone_units") or {}).get(code) or 0), s) for s in states]
+        rows = [(u, s) for u, s in sorted(rows, key=lambda r: -r[0]) if u]
+        units = sum(u for u, _ in rows)
+        def zmed(s):
+            d = (_sagg[s["slug"]].get("cost_by_zone") or {}).get(code)
+            return money(d["median"]) if d and d["n"] >= 30 else "too few"
+        def zout(s):
+            c = _st(s["slug"], "data.json").get("claims_extra") or {}
+            return f'{c["outside_sfha_pct"]}%' if c.get("outside_sfha_pct") is not None and (c.get("paid_n") or 0) >= 10 else "too few"
+        xcol = zk == "x"
+        xth = "<th>Share of state's paid claim dollars outside zones A and V</th>" if xcol else ""
+        trs = "".join(f'<tr><td><a href="/flood-insurance/{s["slug"]}/">{s["name"]}</a></td><td>{u:,}</td><td>{zmed(s)}</td>' + (f'<td>{zout(s)}</td>' if xcol else "") + "</tr>" for u, s in rows)
+        keys = [rk, "purchase_answer", "lender_any_zone", "rr2_zone", "howto_answer", "how_to_buy"]
+        vnote = (f'<p class="mut">Most insured units in this zone are not in the median: {units:,} units are rated VE, while the median above rests on '
+                 f'{n:,} single-family primary-home policies.</p>') if zk == "ve" else ""
+        claims = ('<div class="card"><h2>Does zone X flood?</h2><p class="stand">Yes. The last column of the table above shows, state by state, the share of NFIP claim dollars paid on claims rated outside zones A and V, in every year on record. That is every zone other than A and V, not zone X alone. '
+                  "It uses the zone on each claim, not today's map, and leaves out claims with no zone. That share is not a chance of flooding for any one home.</p></div>") if xcol else ""
+        cant = ("whether a home is in the shaded or unshaded part of zone X, because policy records do not separate them. " if xcol else "claims paid in this exact zone across the country. ")
+        pg = HEAD.format(title=f"Flood zone {code}: what it means, who must insure, what it costs",
+                         desc=f"What FEMA flood zone {code} means, when flood insurance is required there, and what NFIP policies in {code} cost, from FEMA's public records.",
+                         canon=BASE + f"/flood-zones/{zk}/") + f"""
+<h1>Flood zone {code}</h1>
+<div class="stats"><div class="stat"><div class="n">{money(med)}</div><div class="l">Median / yr, {glab}; zone {code} alone is in the state table</div></div>
+<div class="stat"><div class="n">{money(p25)}–{money(p75)}</div><div class="l">Half pay between</div></div>
+<div class="stat"><div class="n">{units:,}</div><div class="l">NFIP policy units rated {code}</div></div></div>
+<p class="mut">Median and range: {n:,} existing single-family primary-home policies, premium plus fees, in force on {_ASOF_TXT}. Not a quote. Condo buildings, second homes and businesses count in the units, not the median.</p>
+<a class="btn" href="https://msc.fema.gov/portal/home" rel="noopener" target="_blank">Check your address on FEMA's flood map →</a>
+<div class="card"><h2>What does zone {code} mean?</h2><p class="stand">{rule(rk)}</p></div>
+<div class="card"><h2>Am I required to buy flood insurance?</h2><p class="stand">{rule("purchase_answer")} {rule("lender_any_zone")}</p></div>
+<div class="card"><h2>What does it cost in zone {code}, by state?</h2><p class="stand">{rule("rr2_zone")}</p>{vnote}
+<table><thead><tr><th>State</th><th>Units rated {code}</th><th>Median / yr, zone {code}</th>{xth}</tr></thead><tbody>{trs}</tbody></table>
+<p class="mut">Median: single-family primary homes rated exactly {code}, premium plus fees; too few = under 30 priced policies. Units: every NFIP policy unit rated {code}. In force on {_ASOF_TXT}.</p></div>
+{claims}<div class="card"><h2>How do I get covered?</h2><p class="stand">{rule("howto_answer")} {rule("how_to_buy")}</p></div>
+<div class="card"><h2>What this page cannot tell you</h2><p class="stand">Your premium, private insurers' prices, your exact zone, why prices rise, and {cant}FEMA's map and an agent's quote answer those for your address.</p>
+<p>Other zones: {_links(zk)}. <a href="/flood-insurance/">Your state and county</a>.</p>
+<p class="mut">Sources: FEMA OpenFEMA NFIP Policies v3 and Claims v3; rules from {_rule_hosts(keys)}. <a href="/methodology/">How we check them</a>.</p></div>{FOOT}"""
+        wr(os.path.join(DIST, "flood-zones", zk, "index.html"), pg)
+        zone_urls.append((BASE + f"/flood-zones/{zk}/", None))
+
 # ---- sitemap, robots, llms.txt ----
 # lastmod = the data's effective date (real data change), per-county from its agg; site pages use the max.
 def county_lastmod(slug):
@@ -371,7 +423,7 @@ county_urls = [(BASE + f"/flood-insurance/{p['slug']}/", county_lastmod(p["slug"
 # have no trustworthy per-content modification date, so they omit lastmod rather than inherit a false one.
 urls = [(BASE + "/", None), (BASE + "/flood-insurance/", None), (BASE + "/about/", None),
         (BASE + "/methodology/", None), (BASE + "/data/", None),
-        (BASE + "/privacy/", None), (BASE + "/terms/", None)] + county_urls + \
+        (BASE + "/privacy/", None), (BASE + "/terms/", None)] + zone_urls + county_urls + \
        [(BASE + f"/flood-insurance/{s['slug']}/", county_lastmod(os.path.join("states", s["slug"]))) for s in states]
 sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + \
      "".join(f"  <url><loc>{u}</loc>" + (f"<lastmod>{lm}</lastmod>" if lm else "") + "</url>\n" for u, lm in urls) + \
