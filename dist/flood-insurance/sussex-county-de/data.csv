@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Sussex County, Delaware",records_policies,"15,871",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Sussex County, Delaware",records_claims,"4,307",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Sussex County, Delaware",sfha_share,74.8%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Sussex County, Delaware",outside_sfha_dollars,8.6%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Sussex County, Delaware",zone_units,"12,997",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Sussex County, Delaware",zone_share,59.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Sussex County, Delaware",map_date,"June 20, 2018",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

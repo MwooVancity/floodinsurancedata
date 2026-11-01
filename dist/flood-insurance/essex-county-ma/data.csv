@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Essex County, Massachusetts",records_policies,"6,331",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Essex County, Massachusetts",records_claims,"5,456",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Essex County, Massachusetts",sfha_share,82.5%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Essex County, Massachusetts",outside_sfha_dollars,26.7%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Essex County, Massachusetts",zone_units,"5,690",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Essex County, Massachusetts",zone_share,62.6%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Essex County, Massachusetts",cost_p90,"$2,722",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"

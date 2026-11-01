@@ -17,6 +17,7 @@ New York,cost_new,"$1,204",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,po
 New York,records_policies,"130,299",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 New York,records_claims,"175,430",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 New York,sfha_share,58.6%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+New York,outside_sfha_dollars,26.0%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 New York,zone_units,"88,311",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 New York,zone_share,52.8%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 New York,map_new_n,96,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

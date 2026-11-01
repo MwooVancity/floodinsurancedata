@@ -17,6 +17,7 @@ Texas,cost_new,"$1,057",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,polic
 Texas,records_policies,"550,235",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 Texas,records_claims,"394,204",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 Texas,sfha_share,36.5%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+Texas,outside_sfha_dollars,47.2%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 Texas,zone_units,"347,984",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Texas,zone_share,60.1%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Texas,map_new_n,3,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

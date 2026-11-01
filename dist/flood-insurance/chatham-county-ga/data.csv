@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Chatham County, Georgia",records_policies,"21,420",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Chatham County, Georgia",records_claims,"5,467",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Chatham County, Georgia",sfha_share,54.1%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Chatham County, Georgia",outside_sfha_dollars,26.9%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Chatham County, Georgia",zone_units,"12,627",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Chatham County, Georgia",zone_share,53.1%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Chatham County, Georgia",map_date,"November 13, 2026",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

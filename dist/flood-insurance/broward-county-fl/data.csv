@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Broward County, Florida",records_policies,"137,127",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Broward County, Florida",records_claims,"35,049",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Broward County, Florida",sfha_share,77.9%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Broward County, Florida",outside_sfha_dollars,7.5%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Broward County, Florida",zone_units,"142,779",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Broward County, Florida",zone_share,60.8%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Broward County, Florida",map_date,"July 31, 2024",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

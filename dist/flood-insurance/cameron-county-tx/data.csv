@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Cameron County, Texas",records_policies,"13,730",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Cameron County, Texas",records_claims,"7,061",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Cameron County, Texas",sfha_share,38.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Cameron County, Texas",outside_sfha_dollars,87.7%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Cameron County, Texas",zone_units,"11,868",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Cameron County, Texas",zone_share,60.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Cameron County, Texas",map_date,"February 16, 2018",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

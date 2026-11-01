@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Orleans Parish, Louisiana",records_policies,"62,439",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Orleans Parish, Louisiana",records_claims,"127,255",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Orleans Parish, Louisiana",sfha_share,30.1%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Orleans Parish, Louisiana",outside_sfha_dollars,14.0%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Orleans Parish, Louisiana",zone_units,"46,199",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Orleans Parish, Louisiana",zone_share,68.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Orleans Parish, Louisiana",map_date,"September 30, 2016",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "New Hanover County, North Carolina",records_policies,"13,706",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "New Hanover County, North Carolina",records_claims,"11,183",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "New Hanover County, North Carolina",sfha_share,64.6%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"New Hanover County, North Carolina",outside_sfha_dollars,27.4%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "New Hanover County, North Carolina",zone_units,"9,771",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "New Hanover County, North Carolina",zone_share,55.3%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "New Hanover County, North Carolina",map_date,"January 17, 2025",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

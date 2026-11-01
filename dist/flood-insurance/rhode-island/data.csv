@@ -17,6 +17,7 @@ Rhode Island,cost_new,"$1,116",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policie
 Rhode Island,records_policies,"9,506",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 Rhode Island,records_claims,"7,026",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 Rhode Island,sfha_share,68.9%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+Rhode Island,outside_sfha_dollars,17.8%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 Rhode Island,zone_units,"6,419",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Rhode Island,zone_share,54.4%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Rhode Island,cost_p90,"$2,167",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"

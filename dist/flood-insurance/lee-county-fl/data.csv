@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Lee County, Florida",records_policies,"90,224",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Lee County, Florida",records_claims,"48,496",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Lee County, Florida",sfha_share,85.4%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Lee County, Florida",outside_sfha_dollars,1.3%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Lee County, Florida",zone_units,"106,240",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Lee County, Florida",zone_share,79.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Lee County, Florida",map_date,"November 17, 2022",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

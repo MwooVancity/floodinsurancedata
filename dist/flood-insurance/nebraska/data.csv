@@ -17,6 +17,7 @@ Nebraska,cost_new,$874,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policy
 Nebraska,records_policies,"7,385",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 Nebraska,records_claims,"6,069",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 Nebraska,sfha_share,80.8%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+Nebraska,outside_sfha_dollars,19.7%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 Nebraska,zone_units,"4,195",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Nebraska,zone_share,56.4%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Nebraska,crs_count,96,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),communityName + sfhaDiscount,"July 31, 2026"

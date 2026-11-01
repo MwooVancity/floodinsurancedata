@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Tangipahoa Parish, Louisiana",records_policies,"7,450",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Tangipahoa Parish, Louisiana",records_claims,"4,296",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Tangipahoa Parish, Louisiana",sfha_share,44.3%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Tangipahoa Parish, Louisiana",outside_sfha_dollars,40.8%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Tangipahoa Parish, Louisiana",zone_units,"4,171",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Tangipahoa Parish, Louisiana",zone_share,55.7%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Tangipahoa Parish, Louisiana",map_date,"July 22, 2010",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

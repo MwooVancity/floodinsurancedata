@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Norfolk city, Virginia",records_policies,"8,874",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Norfolk city, Virginia",records_claims,"6,019",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Norfolk city, Virginia",sfha_share,65.3%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Norfolk city, Virginia",outside_sfha_dollars,13.5%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Norfolk city, Virginia",zone_units,"6,965",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Norfolk city, Virginia",zone_share,62.4%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Norfolk city, Virginia",cost_p90,"$1,265",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"

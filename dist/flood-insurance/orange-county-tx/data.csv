@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Orange County, Texas",records_policies,"12,087",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Orange County, Texas",records_claims,"12,876",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Orange County, Texas",sfha_share,42.6%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Orange County, Texas",outside_sfha_dollars,66.9%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Orange County, Texas",zone_units,"4,790",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Orange County, Texas",zone_share,39.6%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Orange County, Texas",map_date,"December 16, 2021",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

@@ -17,6 +17,7 @@ Oklahoma,cost_new,"$1,077",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,po
 Oklahoma,records_policies,"8,499",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 Oklahoma,records_claims,"12,998",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 Oklahoma,sfha_share,62.9%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+Oklahoma,outside_sfha_dollars,33.5%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 Oklahoma,zone_units,"3,970",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Oklahoma,zone_share,46.6%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Oklahoma,crs_count,122,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),communityName + sfhaDiscount,"July 31, 2026"

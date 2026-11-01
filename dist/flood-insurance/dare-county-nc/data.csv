@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Dare County, North Carolina",records_policies,"13,821",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Dare County, North Carolina",records_claims,"18,950",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Dare County, North Carolina",sfha_share,59.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Dare County, North Carolina",outside_sfha_dollars,16.8%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Dare County, North Carolina",zone_units,"6,506",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Dare County, North Carolina",zone_share,40.9%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Dare County, North Carolina",map_date,"June 19, 2020",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

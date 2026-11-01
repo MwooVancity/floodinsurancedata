@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Calcasieu Parish, Louisiana",records_policies,"12,901",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Calcasieu Parish, Louisiana",records_claims,"10,386",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Calcasieu Parish, Louisiana",sfha_share,47.7%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Calcasieu Parish, Louisiana",outside_sfha_dollars,50.0%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Calcasieu Parish, Louisiana",zone_units,"6,718",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Calcasieu Parish, Louisiana",zone_share,52.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Calcasieu Parish, Louisiana",map_date,"May 16, 2019",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

@@ -17,6 +17,7 @@ Arkansas,cost_new,$965,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policy
 Arkansas,records_policies,"11,113",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 Arkansas,records_claims,"10,260",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 Arkansas,sfha_share,76.4%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+Arkansas,outside_sfha_dollars,29.5%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 Arkansas,zone_units,"5,440",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Arkansas,zone_share,48.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Arkansas,crs_count,91,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),communityName + sfhaDiscount,"July 31, 2026"

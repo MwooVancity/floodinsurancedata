@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Manatee County, Florida",records_policies,"29,196",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Manatee County, Florida",records_claims,"11,389",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Manatee County, Florida",sfha_share,64.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Manatee County, Florida",outside_sfha_dollars,2.6%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Manatee County, Florida",zone_units,"23,015",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Manatee County, Florida",zone_share,60.4%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Manatee County, Florida",map_date,"August 10, 2021",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

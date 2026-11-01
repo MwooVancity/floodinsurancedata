@@ -17,6 +17,7 @@ Kansas,cost_new,$916,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCo
 Kansas,records_policies,"6,610",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 Kansas,records_claims,"7,901",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 Kansas,sfha_share,67.1%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+Kansas,outside_sfha_dollars,31.0%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 Kansas,zone_units,"3,172",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Kansas,zone_share,47.1%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Kansas,map_new_n,39,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

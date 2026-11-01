@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Cook County, Illinois",records_policies,"6,874",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Cook County, Illinois",records_claims,"15,260",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Cook County, Illinois",sfha_share,73.8%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Cook County, Illinois",outside_sfha_dollars,31.6%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Cook County, Illinois",zone_units,"6,341",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Cook County, Illinois",zone_share,53.6%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Cook County, Illinois",map_date,"January 23, 2026",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

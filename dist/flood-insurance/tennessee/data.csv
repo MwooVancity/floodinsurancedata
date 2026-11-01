@@ -17,6 +17,7 @@ Tennessee,cost_new,$966,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,polic
 Tennessee,records_policies,"21,791",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 Tennessee,records_claims,"17,706",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 Tennessee,sfha_share,60.1%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+Tennessee,outside_sfha_dollars,26.4%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 Tennessee,zone_units,"12,116",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Tennessee,zone_share,51.8%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Tennessee,map_new_n,8,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

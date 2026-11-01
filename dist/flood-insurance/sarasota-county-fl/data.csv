@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Sarasota County, Florida",records_policies,"39,527",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Sarasota County, Florida",records_claims,"14,415",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Sarasota County, Florida",sfha_share,58.6%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Sarasota County, Florida",outside_sfha_dollars,5.2%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Sarasota County, Florida",zone_units,"32,240",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Sarasota County, Florida",zone_share,52.5%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Sarasota County, Florida",map_date,"March 27, 2024",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

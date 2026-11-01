@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Seminole County, Florida",records_policies,"6,774",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Seminole County, Florida",records_claims,"1,562",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Seminole County, Florida",sfha_share,37.2%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Seminole County, Florida",outside_sfha_dollars,28.1%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Seminole County, Florida",zone_units,"4,651",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Seminole County, Florida",zone_share,62.7%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Seminole County, Florida",map_date,"September 28, 2007",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

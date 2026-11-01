@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Hancock County, Mississippi",records_policies,"7,381",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Hancock County, Mississippi",records_claims,"9,927",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Hancock County, Mississippi",sfha_share,72.2%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Hancock County, Mississippi",outside_sfha_dollars,29.6%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Hancock County, Mississippi",zone_units,"4,532",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Hancock County, Mississippi",zone_share,60.7%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Hancock County, Mississippi",map_date,"September 27, 2019",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

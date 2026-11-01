@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Duval County, Florida",records_policies,"22,477",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Duval County, Florida",records_claims,"6,064",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Duval County, Florida",sfha_share,34.8%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Duval County, Florida",outside_sfha_dollars,31.1%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Duval County, Florida",zone_units,"18,295",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Duval County, Florida",zone_share,64.8%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Duval County, Florida",cost_p90,"$1,408",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"

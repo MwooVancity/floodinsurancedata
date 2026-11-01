@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "King County, Washington",records_policies,"5,440",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "King County, Washington",records_claims,"3,384",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "King County, Washington",sfha_share,51.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"King County, Washington",outside_sfha_dollars,20.0%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "King County, Washington",zone_units,"3,429",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "King County, Washington",zone_share,49.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "King County, Washington",map_date,"August 19, 2020",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

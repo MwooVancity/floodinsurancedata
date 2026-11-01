@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Monroe County, Florida",records_policies,"25,127",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Monroe County, Florida",records_claims,"27,430",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Monroe County, Florida",sfha_share,93.6%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Monroe County, Florida",outside_sfha_dollars,0.6%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Monroe County, Florida",zone_units,"27,308",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Monroe County, Florida",zone_share,86.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Monroe County, Florida",map_date,"February 18, 2005",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

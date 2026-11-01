@@ -16,6 +16,7 @@ California,cost_new,"$1,044",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,
 California,records_policies,"158,060",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 California,records_claims,"53,563",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 California,sfha_share,67.3%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+California,outside_sfha_dollars,30.1%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 California,zone_units,"55,102",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 California,zone_share,31.8%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 California,map_new_n,3,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

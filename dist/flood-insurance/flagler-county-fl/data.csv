@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Flagler County, Florida",records_policies,"7,881",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Flagler County, Florida",records_claims,"2,153",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Flagler County, Florida",sfha_share,32.4%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Flagler County, Florida",outside_sfha_dollars,12.3%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Flagler County, Florida",zone_units,"7,161",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Flagler County, Florida",zone_share,66.3%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Flagler County, Florida",map_date,"June 6, 2018",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

@@ -17,6 +17,7 @@ Nevada,cost_new,$876,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCo
 Nevada,records_policies,"8,905",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 Nevada,records_claims,"1,964",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 Nevada,sfha_share,76.7%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+Nevada,outside_sfha_dollars,25.5%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 Nevada,zone_units,"4,420",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Nevada,zone_share,48.3%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Nevada,crs_count,1,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),communityName + sfhaDiscount,"July 31, 2026"

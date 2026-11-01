@@ -17,6 +17,7 @@ Arizona,cost_new,$961,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyC
 Arizona,records_policies,"19,998",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 Arizona,records_claims,"5,336",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 Arizona,sfha_share,71.1%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+Arizona,outside_sfha_dollars,42.7%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 Arizona,zone_units,"6,776",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Arizona,zone_share,30.1%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Arizona,crs_count,2,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),communityName + sfhaDiscount,"July 31, 2026"

@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Travis County, Texas",records_policies,"6,876",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Travis County, Texas",records_claims,"4,418",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Travis County, Texas",sfha_share,55.7%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Travis County, Texas",outside_sfha_dollars,23.2%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Travis County, Texas",zone_units,"4,736",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Travis County, Texas",zone_share,53.1%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Travis County, Texas",map_date,"January 22, 2020",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

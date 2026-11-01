@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Fort Bend County, Texas",records_policies,"41,279",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Fort Bend County, Texas",records_claims,"7,389",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Fort Bend County, Texas",sfha_share,7.4%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Fort Bend County, Texas",outside_sfha_dollars,70.1%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Fort Bend County, Texas",zone_units,"38,310",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Fort Bend County, Texas",zone_share,92.4%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Fort Bend County, Texas",map_date,"January 29, 2021",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

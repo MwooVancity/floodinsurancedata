@@ -17,6 +17,7 @@ Idaho,cost_new,"$1,005",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,polic
 Idaho,records_policies,"4,376",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 Idaho,records_claims,"1,116",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 Idaho,sfha_share,73.4%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+Idaho,outside_sfha_dollars,36.3%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 Idaho,zone_units,"2,509",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Idaho,zone_share,51.7%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Idaho,crs_count,16,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),communityName + sfhaDiscount,"July 31, 2026"

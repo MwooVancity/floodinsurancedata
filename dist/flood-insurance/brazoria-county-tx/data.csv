@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Brazoria County, Texas",records_policies,"29,342",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Brazoria County, Texas",records_claims,"21,436",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Brazoria County, Texas",sfha_share,42.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Brazoria County, Texas",outside_sfha_dollars,33.8%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Brazoria County, Texas",zone_units,"16,875",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Brazoria County, Texas",zone_share,57.5%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Brazoria County, Texas",map_date,"December 30, 2020",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

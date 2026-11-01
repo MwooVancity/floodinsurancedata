@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Hillsborough County, Florida",records_policies,"55,944",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Hillsborough County, Florida",records_claims,"18,556",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Hillsborough County, Florida",sfha_share,66.7%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Hillsborough County, Florida",outside_sfha_dollars,5.3%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Hillsborough County, Florida",zone_units,"41,020",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Hillsborough County, Florida",zone_share,62.9%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Hillsborough County, Florida",map_date,"October 7, 2021",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

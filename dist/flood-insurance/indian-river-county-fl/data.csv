@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Indian River County, Florida",records_policies,"14,003",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Indian River County, Florida",records_claims,"3,349",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Indian River County, Florida",sfha_share,37.8%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Indian River County, Florida",outside_sfha_dollars,30.0%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Indian River County, Florida",zone_units,"12,098",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Indian River County, Florida",zone_share,62.1%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Indian River County, Florida",map_date,"January 26, 2023",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

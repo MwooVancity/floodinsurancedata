@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Dallas County, Texas",records_policies,"5,752",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Dallas County, Texas",records_claims,"3,457",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Dallas County, Texas",sfha_share,50.1%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Dallas County, Texas",outside_sfha_dollars,35.1%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Dallas County, Texas",zone_units,"3,437",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Dallas County, Texas",zone_share,49.9%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Dallas County, Texas",map_date,"March 21, 2019",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

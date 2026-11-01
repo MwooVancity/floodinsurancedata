@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Polk County, Florida",records_policies,"7,536",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Polk County, Florida",records_claims,"1,671",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Polk County, Florida",sfha_share,54.3%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Polk County, Florida",outside_sfha_dollars,40.4%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Polk County, Florida",zone_units,"3,584",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Polk County, Florida",zone_share,45.6%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Polk County, Florida",map_date,"December 22, 2016",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

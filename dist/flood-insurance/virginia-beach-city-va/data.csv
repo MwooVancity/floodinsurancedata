@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Virginia Beach city, Virginia",records_policies,"15,583",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Virginia Beach city, Virginia",records_claims,"6,260",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Virginia Beach city, Virginia",sfha_share,46.7%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Virginia Beach city, Virginia",outside_sfha_dollars,20.9%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Virginia Beach city, Virginia",zone_units,"10,844",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Virginia Beach city, Virginia",zone_share,53.3%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Virginia Beach city, Virginia",cost_p90,"$1,290",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"

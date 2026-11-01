@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Fairfield County, Connecticut",records_policies,"10,623",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Fairfield County, Connecticut",records_claims,"12,667",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Fairfield County, Connecticut",sfha_share,79.1%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Fairfield County, Connecticut",outside_sfha_dollars,16.5%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Fairfield County, Connecticut",zone_units,"10,374",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Fairfield County, Connecticut",zone_share,71.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Fairfield County, Connecticut",cost_p90,"$4,256",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"

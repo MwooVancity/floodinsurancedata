@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Citrus County, Florida",records_policies,"5,531",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Citrus County, Florida",records_claims,"7,076",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Citrus County, Florida",sfha_share,85.9%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Citrus County, Florida",outside_sfha_dollars,0.6%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Citrus County, Florida",zone_units,"5,043",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Citrus County, Florida",zone_share,83.8%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Citrus County, Florida",map_date,"January 15, 2021",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

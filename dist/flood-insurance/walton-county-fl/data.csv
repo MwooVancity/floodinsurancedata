@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Walton County, Florida",records_policies,"9,444",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Walton County, Florida",records_claims,"3,174",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Walton County, Florida",sfha_share,27.2%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Walton County, Florida",outside_sfha_dollars,60.8%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Walton County, Florida",zone_units,"12,675",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Walton County, Florida",zone_share,72.7%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Walton County, Florida",map_date,"December 30, 2020",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

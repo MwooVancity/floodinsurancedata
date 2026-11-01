@@ -17,6 +17,7 @@ Georgia,cost_new,$924,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyC
 Georgia,records_policies,"64,096",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 Georgia,records_claims,"24,479",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 Georgia,sfha_share,55.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+Georgia,outside_sfha_dollars,28.3%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 Georgia,zone_units,"32,994",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Georgia,zone_share,46.3%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Georgia,map_new_n,21,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

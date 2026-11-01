@@ -17,6 +17,7 @@ Mississippi,cost_new,"$1,192",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies
 Mississippi,records_policies,"47,092",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 Mississippi,records_claims,"64,589",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 Mississippi,sfha_share,70.4%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+Mississippi,outside_sfha_dollars,29.2%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 Mississippi,zone_units,"29,039",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Mississippi,zone_share,59.1%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Mississippi,map_new_n,17,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

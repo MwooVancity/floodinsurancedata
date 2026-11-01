@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Nassau County, New York",records_policies,"37,934",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Nassau County, New York",records_claims,"51,523",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Nassau County, New York",sfha_share,76.3%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Nassau County, New York",outside_sfha_dollars,26.7%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Nassau County, New York",zone_units,"30,267",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Nassau County, New York",zone_share,73.3%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Nassau County, New York",cost_p90,"$3,046",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"

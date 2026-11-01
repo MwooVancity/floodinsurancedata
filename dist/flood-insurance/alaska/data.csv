@@ -17,6 +17,7 @@ Alaska,cost_new,$371,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCo
 Alaska,records_policies,"3,124",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 Alaska,records_claims,808,count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 Alaska,sfha_share,53.4%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+Alaska,outside_sfha_dollars,38.4%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 Alaska,zone_units,"1,477",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Alaska,zone_share,44.9%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Alaska,map_new_n,1,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

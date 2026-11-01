@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Hidalgo County, Texas",records_policies,"9,819",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Hidalgo County, Texas",records_claims,"4,405",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Hidalgo County, Texas",sfha_share,22.7%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Hidalgo County, Texas",outside_sfha_dollars,83.1%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Hidalgo County, Texas",zone_units,"4,054",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Hidalgo County, Texas",zone_share,40.7%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Hidalgo County, Texas",map_date,"June 6, 2000",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

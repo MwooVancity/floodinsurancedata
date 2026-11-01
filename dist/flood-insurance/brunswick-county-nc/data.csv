@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Brunswick County, North Carolina",records_policies,"19,033",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Brunswick County, North Carolina",records_claims,"9,879",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Brunswick County, North Carolina",sfha_share,56.6%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Brunswick County, North Carolina",outside_sfha_dollars,23.2%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Brunswick County, North Carolina",zone_units,"10,496",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Brunswick County, North Carolina",zone_share,49.8%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Brunswick County, North Carolina",map_date,"December 6, 2019",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

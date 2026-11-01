@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Ascension Parish, Louisiana",records_policies,"14,258",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Ascension Parish, Louisiana",records_claims,"6,783",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Ascension Parish, Louisiana",sfha_share,53.1%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Ascension Parish, Louisiana",outside_sfha_dollars,15.0%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Ascension Parish, Louisiana",zone_units,"6,686",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Ascension Parish, Louisiana",zone_share,46.8%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Ascension Parish, Louisiana",map_date,"August 16, 2007",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

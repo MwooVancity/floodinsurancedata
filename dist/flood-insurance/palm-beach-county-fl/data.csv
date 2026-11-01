@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Palm Beach County, Florida",records_policies,"75,140",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Palm Beach County, Florida",records_claims,"10,758",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Palm Beach County, Florida",sfha_share,41.8%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Palm Beach County, Florida",outside_sfha_dollars,45.3%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Palm Beach County, Florida",zone_units,"76,481",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Palm Beach County, Florida",zone_share,57.5%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Palm Beach County, Florida",map_date,"December 20, 2024",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

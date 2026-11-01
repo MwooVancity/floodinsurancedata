@@ -17,6 +17,7 @@ Florida,cost_new,$824,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyC
 Florida,records_policies,"1,130,989",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 Florida,records_claims,"448,618",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 Florida,sfha_share,70.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+Florida,outside_sfha_dollars,8.1%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 Florida,zone_units,"962,121",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Florida,zone_share,53.6%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Florida,map_new_n,33,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

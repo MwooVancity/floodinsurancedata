@@ -17,6 +17,7 @@ Pennsylvania,cost_new,"$1,234",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policie
 Pennsylvania,records_policies,"39,372",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 Pennsylvania,records_claims,"77,060",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 Pennsylvania,sfha_share,67.5%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+Pennsylvania,outside_sfha_dollars,24.8%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 Pennsylvania,zone_units,"23,711",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Pennsylvania,zone_share,55.5%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Pennsylvania,map_new_n,22,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

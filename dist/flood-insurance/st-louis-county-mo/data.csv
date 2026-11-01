@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "St. Louis County, Missouri",records_policies,"3,007",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "St. Louis County, Missouri",records_claims,"12,031",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "St. Louis County, Missouri",sfha_share,53.7%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"St. Louis County, Missouri",outside_sfha_dollars,17.1%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "St. Louis County, Missouri",zone_units,"1,559",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "St. Louis County, Missouri",zone_share,49.9%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "St. Louis County, Missouri",map_date,"February 4, 2015",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

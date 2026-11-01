@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Montgomery County, Texas",records_policies,"22,474",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Montgomery County, Texas",records_claims,"13,035",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Montgomery County, Texas",sfha_share,13.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Montgomery County, Texas",outside_sfha_dollars,45.3%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Montgomery County, Texas",zone_units,"19,592",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Montgomery County, Texas",zone_share,87.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Montgomery County, Texas",map_date,"August 18, 2014",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "East Baton Rouge Parish, Louisiana",records_policies,"39,478",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "East Baton Rouge Parish, Louisiana",records_claims,"22,575",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "East Baton Rouge Parish, Louisiana",sfha_share,47.2%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"East Baton Rouge Parish, Louisiana",outside_sfha_dollars,18.4%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "East Baton Rouge Parish, Louisiana",zone_units,"21,464",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "East Baton Rouge Parish, Louisiana",zone_share,52.8%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "East Baton Rouge Parish, Louisiana",cost_p90,"$1,261",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"

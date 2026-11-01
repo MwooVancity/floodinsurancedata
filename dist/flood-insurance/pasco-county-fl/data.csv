@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Pasco County, Florida",records_policies,"22,414",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Pasco County, Florida",records_claims,"14,544",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Pasco County, Florida",sfha_share,70.1%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Pasco County, Florida",outside_sfha_dollars,2.7%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Pasco County, Florida",zone_units,"13,886",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Pasco County, Florida",zone_share,55.2%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Pasco County, Florida",map_date,"June 5, 2020",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Westchester County, New York",records_policies,"7,252",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Westchester County, New York",records_claims,"12,259",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Westchester County, New York",sfha_share,41.9%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Westchester County, New York",outside_sfha_dollars,27.1%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Westchester County, New York",zone_units,"4,900",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Westchester County, New York",zone_share,57.9%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Westchester County, New York",cost_p90,"$2,382",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"

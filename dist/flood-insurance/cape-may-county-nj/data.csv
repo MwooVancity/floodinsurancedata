@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Cape May County, New Jersey",records_policies,"27,482",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Cape May County, New Jersey",records_claims,"28,016",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Cape May County, New Jersey",sfha_share,92.8%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Cape May County, New Jersey",outside_sfha_dollars,0.6%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Cape May County, New Jersey",zone_units,"40,576",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Cape May County, New Jersey",zone_share,83.7%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Cape May County, New Jersey",cost_p90,"$2,321",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"

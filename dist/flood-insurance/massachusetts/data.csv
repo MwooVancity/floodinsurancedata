@@ -17,6 +17,7 @@ Massachusetts,cost_new,"$1,048",usd_cost_with_fees,FEMA OpenFEMA — NFIP Polici
 Massachusetts,records_policies,"41,640",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 Massachusetts,records_claims,"35,375",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 Massachusetts,sfha_share,74.2%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+Massachusetts,outside_sfha_dollars,21.8%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 Massachusetts,zone_units,"33,838",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Massachusetts,zone_share,57.8%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Massachusetts,crs_count,10,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),communityName + sfhaDiscount,"July 31, 2026"

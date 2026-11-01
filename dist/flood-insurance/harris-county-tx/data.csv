@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Harris County, Texas",records_policies,"222,995",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Harris County, Texas",records_claims,"170,854",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Harris County, Texas",sfha_share,29.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Harris County, Texas",outside_sfha_dollars,47.5%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Harris County, Texas",zone_units,"163,846",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Harris County, Texas",zone_share,70.9%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Harris County, Texas",map_date,"November 15, 2019",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

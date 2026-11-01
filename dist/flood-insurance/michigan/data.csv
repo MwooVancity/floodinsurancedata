@@ -17,6 +17,7 @@ Michigan,cost_new,$785,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policy
 Michigan,records_policies,"17,882",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 Michigan,records_claims,"14,954",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 Michigan,sfha_share,73.3%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+Michigan,outside_sfha_dollars,25.4%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 Michigan,zone_units,"12,297",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Michigan,zone_share,62.5%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Michigan,map_new_n,14,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

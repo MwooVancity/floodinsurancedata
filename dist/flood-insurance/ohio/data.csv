@@ -17,6 +17,7 @@ Ohio,cost_new,$811,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost
 Ohio,records_policies,"21,479",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 Ohio,records_claims,"28,417",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 Ohio,sfha_share,67.5%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+Ohio,outside_sfha_dollars,25.6%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 Ohio,zone_units,"12,438",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Ohio,zone_share,55.5%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Ohio,crs_count,103,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),communityName + sfhaDiscount,"July 31, 2026"

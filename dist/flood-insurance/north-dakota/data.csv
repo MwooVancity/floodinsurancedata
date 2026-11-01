@@ -17,6 +17,7 @@ North Dakota,cost_new,$843,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,po
 North Dakota,records_policies,"5,730",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 North Dakota,records_claims,"13,307",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 North Dakota,sfha_share,50.2%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+North Dakota,outside_sfha_dollars,62.9%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 North Dakota,zone_units,"2,872",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 North Dakota,zone_share,49.7%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 North Dakota,map_new_n,1,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

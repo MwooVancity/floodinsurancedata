@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Maricopa County, Arizona",records_policies,"10,263",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Maricopa County, Arizona",records_claims,"2,633",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Maricopa County, Arizona",sfha_share,69.8%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Maricopa County, Arizona",outside_sfha_dollars,58.9%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Maricopa County, Arizona",zone_units,"4,991",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Maricopa County, Arizona",zone_share,40.1%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Maricopa County, Arizona",map_date,"February 8, 2024",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

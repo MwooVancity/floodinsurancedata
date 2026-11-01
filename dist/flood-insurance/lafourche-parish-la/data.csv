@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Lafourche Parish, Louisiana",records_policies,"8,645",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Lafourche Parish, Louisiana",records_claims,"6,203",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Lafourche Parish, Louisiana",sfha_share,65.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Lafourche Parish, Louisiana",outside_sfha_dollars,26.2%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Lafourche Parish, Louisiana",zone_units,"1,864",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Lafourche Parish, Louisiana",zone_share,21.6%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Lafourche Parish, Louisiana",map_date,"May 4, 1992",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

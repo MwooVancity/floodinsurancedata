@@ -17,6 +17,7 @@ Minnesota,cost_new,"$1,094",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,p
 Minnesota,records_policies,"6,084",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 Minnesota,records_claims,"12,474",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 Minnesota,sfha_share,55.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+Minnesota,outside_sfha_dollars,33.4%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 Minnesota,zone_units,"2,749",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Minnesota,zone_share,42.6%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Minnesota,map_new_n,2,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

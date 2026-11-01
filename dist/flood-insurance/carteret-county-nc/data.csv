@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Carteret County, North Carolina",records_policies,"9,857",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Carteret County, North Carolina",records_claims,"8,997",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Carteret County, North Carolina",sfha_share,61.9%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Carteret County, North Carolina",outside_sfha_dollars,13.4%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Carteret County, North Carolina",zone_units,"7,051",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Carteret County, North Carolina",zone_share,49.2%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Carteret County, North Carolina",map_date,"February 5, 2027",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Charlotte County, Florida",records_policies,"32,763",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Charlotte County, Florida",records_claims,"11,697",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Charlotte County, Florida",sfha_share,88.9%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Charlotte County, Florida",outside_sfha_dollars,2.2%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Charlotte County, Florida",zone_units,"34,806",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Charlotte County, Florida",zone_share,85.2%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Charlotte County, Florida",map_date,"December 15, 2022",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

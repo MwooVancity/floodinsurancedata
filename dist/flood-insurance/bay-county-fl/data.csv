@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Bay County, Florida",records_policies,"14,867",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Bay County, Florida",records_claims,"9,005",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Bay County, Florida",sfha_share,57.3%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Bay County, Florida",outside_sfha_dollars,56.6%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Bay County, Florida",zone_units,"13,643",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Bay County, Florida",zone_share,42.7%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Bay County, Florida",map_date,"October 24, 2024",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

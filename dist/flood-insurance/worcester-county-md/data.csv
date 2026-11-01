@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Worcester County, Maryland",records_policies,"8,485",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Worcester County, Maryland",records_claims,"2,519",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Worcester County, Maryland",sfha_share,39.9%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Worcester County, Maryland",outside_sfha_dollars,23.8%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Worcester County, Maryland",zone_units,"17,647",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Worcester County, Maryland",zone_share,60.1%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Worcester County, Maryland",map_date,"July 16, 2015",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

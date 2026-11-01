@@ -17,6 +17,7 @@ North Carolina,cost_new,$812,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,
 North Carolina,records_policies,"116,687",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 North Carolina,records_claims,"109,593",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 North Carolina,sfha_share,59.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+North Carolina,outside_sfha_dollars,18.7%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 North Carolina,zone_units,"66,783",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 North Carolina,zone_share,50.5%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 North Carolina,map_new_n,8,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

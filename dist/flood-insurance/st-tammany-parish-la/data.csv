@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "St. Tammany Parish, Louisiana",records_policies,"40,387",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "St. Tammany Parish, Louisiana",records_claims,"38,420",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "St. Tammany Parish, Louisiana",sfha_share,47.5%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"St. Tammany Parish, Louisiana",outside_sfha_dollars,17.9%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "St. Tammany Parish, Louisiana",zone_units,"11,631",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "St. Tammany Parish, Louisiana",zone_share,28.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "St. Tammany Parish, Louisiana",map_date,"April 21, 1999",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

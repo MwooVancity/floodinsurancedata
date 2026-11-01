@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Beaufort County, South Carolina",records_policies,"30,417",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Beaufort County, South Carolina",records_claims,"4,968",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Beaufort County, South Carolina",sfha_share,41.5%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Beaufort County, South Carolina",outside_sfha_dollars,24.6%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Beaufort County, South Carolina",zone_units,"25,866",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Beaufort County, South Carolina",zone_share,55.2%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Beaufort County, South Carolina",map_date,"March 23, 2021",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Maui County, Hawaii",records_policies,"2,346",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Maui County, Hawaii",records_claims,819,count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Maui County, Hawaii",sfha_share,56.9%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Maui County, Hawaii",outside_sfha_dollars,13.0%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Maui County, Hawaii",zone_units,"5,050",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Maui County, Hawaii",zone_share,43.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Maui County, Hawaii",map_date,"November 4, 2015",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

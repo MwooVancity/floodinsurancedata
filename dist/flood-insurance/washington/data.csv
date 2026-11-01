@@ -17,6 +17,7 @@ Washington,cost_new,"$1,009",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,
 Washington,records_policies,"26,947",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 Washington,records_claims,"16,074",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 Washington,sfha_share,68.3%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+Washington,outside_sfha_dollars,20.9%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 Washington,zone_units,"12,745",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Washington,zone_share,42.6%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 Washington,map_new_n,19,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

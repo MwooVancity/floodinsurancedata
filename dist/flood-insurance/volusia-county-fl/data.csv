@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Volusia County, Florida",records_policies,"27,131",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Volusia County, Florida",records_claims,"12,577",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Volusia County, Florida",sfha_share,37.1%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Volusia County, Florida",outside_sfha_dollars,28.3%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Volusia County, Florida",zone_units,"30,233",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Volusia County, Florida",zone_share,62.9%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Volusia County, Florida",map_date,"September 29, 2017",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Mobile County, Alabama",records_policies,"6,274",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Mobile County, Alabama",records_claims,"15,117",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Mobile County, Alabama",sfha_share,76.5%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Mobile County, Alabama",outside_sfha_dollars,17.1%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Mobile County, Alabama",zone_units,"4,140",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Mobile County, Alabama",zone_share,60.9%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Mobile County, Alabama",map_date,"June 5, 2020",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

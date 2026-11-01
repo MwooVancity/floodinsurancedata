@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Jefferson Parish, Louisiana",records_policies,"83,105",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Jefferson Parish, Louisiana",records_claims,"135,664",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Jefferson Parish, Louisiana",sfha_share,55.7%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Jefferson Parish, Louisiana",outside_sfha_dollars,15.7%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Jefferson Parish, Louisiana",zone_units,"48,193",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Jefferson Parish, Louisiana",zone_share,55.1%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Jefferson Parish, Louisiana",map_date,"February 2, 2018",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

@@ -17,6 +17,7 @@ New Jersey,cost_new,"$1,383",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,
 New Jersey,records_policies,"132,862",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 New Jersey,records_claims,"202,340",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 New Jersey,sfha_share,85.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+New Jersey,outside_sfha_dollars,8.1%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 New Jersey,zone_units,"144,531",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 New Jersey,zone_share,73.2%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 New Jersey,map_new_n,11,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

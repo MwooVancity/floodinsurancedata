@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "New Haven County, Connecticut",records_policies,"5,750",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "New Haven County, Connecticut",records_claims,"9,609",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "New Haven County, Connecticut",sfha_share,81.8%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"New Haven County, Connecticut",outside_sfha_dollars,12.7%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "New Haven County, Connecticut",zone_units,"5,933",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "New Haven County, Connecticut",zone_share,71.8%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "New Haven County, Connecticut",cost_p90,"$4,273",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"

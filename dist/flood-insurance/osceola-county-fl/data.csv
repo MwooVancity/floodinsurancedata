@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Osceola County, Florida",records_policies,"8,388",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Osceola County, Florida",records_claims,"1,032",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Osceola County, Florida",sfha_share,63.2%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Osceola County, Florida",outside_sfha_dollars,24.7%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Osceola County, Florida",zone_units,"4,225",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Osceola County, Florida",zone_share,45.4%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Osceola County, Florida",map_date,"June 18, 2013",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

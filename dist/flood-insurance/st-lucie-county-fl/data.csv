@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "St. Lucie County, Florida",records_policies,"11,715",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "St. Lucie County, Florida",records_claims,"3,988",count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "St. Lucie County, Florida",sfha_share,40.1%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"St. Lucie County, Florida",outside_sfha_dollars,16.9%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "St. Lucie County, Florida",zone_units,"11,201",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "St. Lucie County, Florida",zone_share,58.4%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "St. Lucie County, Florida",map_date,"February 19, 2020",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"

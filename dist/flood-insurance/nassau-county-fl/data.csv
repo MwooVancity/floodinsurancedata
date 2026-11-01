@@ -21,6 +21,7 @@ place,metric,value,unit,dataset,fields,policies_as_of
 "Nassau County, Florida",records_policies,"6,707",count,FEMA OpenFEMA — NFIP Policies,id,"July 31, 2026"
 "Nassau County, Florida",records_claims,845,count,FEMA OpenFEMA — NFIP Claims,id,"July 31, 2026"
 "Nassau County, Florida",sfha_share,26.6%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
+"Nassau County, Florida",outside_sfha_dollars,40.2%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"July 31, 2026"
 "Nassau County, Florida",zone_units,"6,609",count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Nassau County, Florida",zone_share,73.3%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"July 31, 2026"
 "Nassau County, Florida",map_date,"August 2, 2017",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"July 31, 2026"
