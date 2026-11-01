@@ -8,14 +8,14 @@ Most helpful flood-insurance page for every US county, for a scared reader on a 
 ## Who uses it (audit 2026-10-31; small sample, keyword volumes not measured)
 Known: 271 impressions, 3 clicks, position 44, 7 days; all 3 clicks from Canada (guess: the owner). No proven outside reader. 79% of impressions desktop, so "on a phone" is unproven. About two thirds of 182 query impressions are "flood insurance <place>", many towns we have no page for; cost words 29, zones 18, claims 4, condo 3. Why it may fail: new anonymous site, no links, position 44.
 Search results: zone queries are led by spam pages and insurers with conflicting prices; claim appeals by FEMA; map changes by scattered local government pages; condos by forums and agents. Canada: no public flood price data and no national program, so dropped. County averages exist elsewhere but are state-level or stale.
-Full audit 10-31 tested the pages. Done 11-01: lapse line (`nfip_lapse`, covered card, no dates), outside-zone claim share (required card, 1,727 of 1,803 queued; gate L19; under 10 paid claims = no line), renters and businesses line in cost card, methodology Eight confirmed (NOAA counts). Open: error-report route (owner picks address); no statement that the median excludes contents-only or mobile homes, because the filter does not prove it; check FEMA's occupancy codes before saying more. Verify the existing condo note "single-family figures leave both out": `isone` takes 1/11 and never reads the condo code. Done 10-31: all 1,803 queued pass today's gate (671 had failed on missing zone-code text; would have stopped publishing about 11-15); `add_counties.py` fails loudly on a stall. A county failing after a refresh still stops that day's release and alerts. Before any template change: `build_counties.py --all`, then delete review/. Also: territories never pulled; methodology says Eight, rule says Seven; home has no ZIP box; save edge scripts as one tool, run quarterly.
+Full audit 10-31 tested the pages. Done 11-01: lapse line (`nfip_lapse`, covered card, no dates), outside-zone claim share (required card, 1,727 of 1,803 queued; gate L19; under 10 paid claims = no line), renters and businesses line in cost card, methodology Eight confirmed (NOAA counts). Open: error-report route (owner picks address); no statement that the median excludes contents-only or mobile homes, because the filter does not prove it; check FEMA's occupancy codes before saying more. Condo note now says the single-family figures have no separate condo filter; at the next refresh count cohort rows with condo code U in the cloud, then state it or filter them. Done 10-31: all 1,803 queued pass today's gate (671 had failed on missing zone-code text; would have stopped publishing about 11-15); `add_counties.py` fails loudly on a stall. A county failing after a refresh still stops that day's release and alerts. Before any template change: `build_counties.py --all`, then delete review/. Also: territories never pulled; methodology says Eight, rule says Seven; home has no ZIP box; save edge scripts as one tool, run quarterly.
 Try in order, each smallest test first, 4 weeks of Search Console before more:
 1. Zone pages: 3 national pages (AE, X, VE), NFIP median by zone, claims, what it means. Not a page per place.
 2. Towns: county pages name their main towns from Census, in a sentence, no lists; test on 20 counties.
 3. "Claim denied": one page, deadlines via `rule()`, why claims closed unpaid from NFIP data.
 4. Condo: one sourced page; check NFIP condo figures first.
 5. "Get out of a flood zone": one page, LOMA steps via `rule()`, lender can still require it.
-Rules tested: truth, no advice, 2,000 ceiling, no name-swap pages stay. Open: county-only pages (habit). Procedures from official sources are facts, not advice. Hold compare and decode-policy tools until a test shows demand. Dropped: Canada, embed, alerts. Owner: anonymity may cost trust on an insurance topic.
+Rules tested: truth, no advice, 2,000 ceiling, no name-swap pages stay. Open: county-only pages (habit). Procedures from official sources are facts, not advice. Held until a number asks: zone pages (test 1), claim-denied, condo, get-out-of-zone pages, compare and decode tools, table search, glossary, `data-p`. Town names (test 2) run first. Dropped: Canada, embed, alerts. Owner: anonymity may cost trust on an insurance topic.
 
 ## State (2026-10-30)
 - Live: 151 pages, sitemap 150 (home, 51 states, 92 counties, site pages). Queue 1,803; daily job adds 20 reviewed (25 max a release); done about late January 2027.
@@ -45,15 +45,15 @@ Rules tested: truth, no advice, 2,000 ceiling, no name-swap pages stay. Open: co
    - Dropped: renewal-jump check.
 5. Links, guards first: monthly dead-link check stopping a release; outside links only .gov or FloodSmart; 3-5 related links from data; link text names the destination. Add DisasterAssistance.gov, FEMA provider finder, state insurance departments (sourced 51), bordering county. Sea level on state pages (open).
 6. One data story: "counties paying furthest below FEMA's full-risk price". Local-news pitch needs the owner.
-7. Pace: 20 a day. After 4 weeks of data (11-26): 25 if most pages indexed, 10 if not, stop if impressions fall. Write the decision here.
+7. Pace: 20 a day. 11-26 decision, by rule: most live pages indexed = 25 a day; under half = 10; impressions fall week on week = stop. Towns test: 20 counties in `tools_flags.json` `towns`, shipped 11-01; compare their town-name impressions with the other counties after 4 weeks; no lift = remove.
 
-## Runs without Claude (subscription ends about 2026-11-19)
+## Runs on its own (owner goes to the Pro plan about 2026-11-19; Claude stays, smaller token budget)
 A failed check ships nothing; the live site stays. Failed job = one issue "Job failed: <job>" (`tools/job_alert.sh`). Daily and monthly watch each other (3 and 40 days). Group site-deploy: one deploy at a time; deploy.yml uses latest master.
 - After deploy every live page must equal what passed, else previous release redeploys (`tools/deploy_verified.sh`). Idle days check too and redeploy once. Over 19,000 files stops (free plan 20,000).
 - Pinned: ubuntu-26.04, wrangler 4.86.0, playwright 1.64.1, Python 3.12, Node 20.
 - Warnings on the daily run: Cloudflare token (30 days), domain (45 days; expires 2027-10-23) via `tools/token_check.py`.
 - Refresh side sources cannot stop it; sea level keeps the file on a short answer; cache saves after download. Unreachable law page warns, fails after 14 days (`state/rule-fetch-ok.json`). Missing browser fails in cloud.
-Owner only after 11-19: domain card; renew Cloudflare token; a moved law page (release stays stopped, re-point the rule); a 25% median jump stops the refresh (old data stays); a retired runner (one line).
+Short session fixes: a moved law page (release stays stopped, re-point the rule); a 25% median jump stops the refresh (old data stays); a retired runner (one line); a county failing after a refresh (no auto-skip on purpose: it could hide a wrong page). Owner: domain card; renew Cloudflare token.
 
 ## What can break
 - FEMA down or renamed: pull_raw stops; last month stays, as-of ages. State count mismatch: full re-pull, else refresh stops.
@@ -67,7 +67,7 @@ Owner only after 11-19: domain card; renew Cloudflare token; a moved law page (r
 
 ## Calendar
 Weekly Search Console. Monthly: refresh time, git size, prune backlog. Quarterly: light review on samples. Yearly: domain, NRI and CSB updates.
-11-03 refresh -> 11-12 planner to all -> 11-19 subscription ends -> 11-26 pace decision -> late January queue done -> decide ZIP pages and AdSense.
+11-03 refresh -> 11-12 planner to all -> 11-19 Pro plan -> 11-26 pace decision -> late January queue done -> decide ZIP pages and AdSense.
 
 ## Open checklist and parked
 Open: B audience lines; F state contacts; G table search; I error-report contact (owner); K print; L Spanish. Parked: ZIP pages, Spanish, print, AdSense.

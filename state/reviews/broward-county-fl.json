@@ -1,8 +1,8 @@
 {
  "slug": "broward-county-fl",
  "verdict": "PASS",
- "template": "73e2cd730b02608c",
+ "template": "010e60e9c75561aa",
  "defects": [],
- "reviewer": "hater round 37 (fresh agent, docs/HATER-PROMPT.md)",
+ "reviewer": "hater round 39 (fresh agent, docs/HATER-PROMPT.md)",
  "notes": ""
 }

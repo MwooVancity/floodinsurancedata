@@ -498,6 +498,11 @@ GEOID_SELF = os.environ.get("FF_GEOID", "12071")   # this page's own county (sta
 try: ZIPTOWN = json.load(open(os.path.join(os.path.dirname(HERE), "data", "us", "zip_places.json"), encoding="utf-8"))
 except Exception: ZIPTOWN = {}
 def _zl(z): return html.escape(z) + (f" <span data-name>{html.escape(ZIPTOWN[z])}</span>" if z in ZIPTOWN else "")
+def _town_line(zips):   # demand test (PLAN): flagged counties only; a stray ZIP from elsewhere never tops the list
+    towns = list(dict.fromkeys(ZIPTOWN[z["zip"]] for z in sorted(zips, key=lambda z: -z["units"]) if z["zip"] in ZIPTOWN))[:5]
+    if not _tool_on("towns") or len(towns) < 2: return ""
+    return "<p class='note'>Towns here, ranked by NFIP policy units per ZIP: " + ", ".join(f"<span data-name>{html.escape(t)}</span>" for t in towns) + ".</p>"
+
 def _zip_county():
     bz = [z for z in (agg["policies"].get("by_zip") or []) if z.get("units") and re.fullmatch(r"\d{5}", str(z.get("zip")))]   # hater r7: ZIP+4 strings are not ZIPs
     zip_card = ""
@@ -515,7 +520,7 @@ def _zip_county():
             (f"Typical costs run from {tp('zip_cost', _zp(_lo, 'median'), money, q=_lo['zip'])} a year in {m('zip', _zl(_lo['zip']), q=_lo['zip'])} to "
              f"{tp('zip_cost', _zp(_hi, 'median'), money, q=_hi['zip'])} in {m('zip', _zl(_hi['zip']), q=_hi['zip'])}. " if _lo else "")
             + f"All {m('zip_count', str(len(bz)), q='all')} ZIPs on NFIP policy records here are in the lookup.",
-            f'<input id="zq" inputmode="numeric" maxlength="5" placeholder="e.g. {bz[0]["zip"]}" aria-label="Your ZIP code" '
+            _town_line(bz) + f'<input id="zq" inputmode="numeric" maxlength="5" placeholder="e.g. {bz[0]["zip"]}" aria-label="Your ZIP code" '
             f'style="font-size:18px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;width:160px">'
             f'<p id="zout" class="note" style="margin-top:10px">Enter a five-digit ZIP above.</p>'
             '<p class="note">ZIPs exactly as FEMA recorded them on policies here; a ZIP with only a policy or two may be a ZIP from elsewhere, as entered on the policy.</p>'
@@ -568,8 +573,7 @@ def card_averages():
         + "".join(f"<tr><td>{a_}</td><td>{b_}</td><td>{c_}</td></tr>" for a_, b_, c_ in _avrows) + "</tbody></table>"
         + (f"<p class='note'><b>Condo owners:</b> condo-unit policies are {tp('condo_unit_pct', 'extras.policies.condo_unit_pct', pct)} of NFIP policy units here"
            + (f" and whole condo buildings {tp('condo_building_pct', 'extras.policies.condo_building_pct', pct)}" if _xpp.get('condo_building_pct') else "")
-           + f". The single-family figures above leave both out; "
-           "only the every-policy-type average includes them.</p>" if (_xpp.get("condo_unit_pct") or 0) + (_xpp.get("condo_building_pct") or 0) >= 1 else "")
+           + f". The every-policy-type average includes them. The single-family figures use FEMA's occupancy code with no separate condo filter, so condo units could be in them.</p>" if (_xpp.get("condo_unit_pct") or 0) + (_xpp.get("condo_building_pct") or 0) >= 1 else "")
         + f"<p class='note'>All from the NFIP policies in force on {POL_ASOF}.{how('averages')}</p>",
         src(["cost_p50", "prem_median", "frp_median", "cost_year"] + (["cost_new"] if _new_ok else []) + (["cost_mean", "cost_all_mean"] if _av.get("sf_cost_mean") else []), POL_ASOF, RETR), id="prices")
     return averages_card

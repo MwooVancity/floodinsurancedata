@@ -1,4 +1,30 @@
 {
   "_": "Reader tools kill switch (CLAUDE.md ship standard). A tool shows on the slugs listed, on every page for \"all\", nowhere for []. Staged: samples for 2 weeks, then all.",
-  "deadline": ["louisiana", "palm-beach-county-fl", "broward-county-fl"]
+  "deadline": [
+    "louisiana",
+    "palm-beach-county-fl",
+    "broward-county-fl"
+  ],
+  "towns": [
+    "palm-beach-county-fl",
+    "escambia-county-fl",
+    "livingston-parish-la",
+    "carteret-county-nc",
+    "glynn-county-ga",
+    "maricopa-county-az",
+    "cook-county-il",
+    "santa-clara-county-ca",
+    "st-charles-parish-la",
+    "barnstable-county-ma",
+    "osceola-county-fl",
+    "nassau-county-fl",
+    "lafourche-parish-la",
+    "plymouth-county-ma",
+    "tangipahoa-parish-la",
+    "seminole-county-fl",
+    "king-county-wa",
+    "marin-county-ca",
+    "st-john-the-baptist-parish-la",
+    "polk-county-fl"
+  ]
 }
