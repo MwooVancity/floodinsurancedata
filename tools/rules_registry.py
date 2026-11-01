@@ -187,6 +187,17 @@ RULES = {
                 "the policy defines it, or seepage and drain backup the policy does not cover.",
         "sources": [("https://www.fema.gov/press-release/20250121/hurricane-irma-nfip-claim-closed-without-payment-heres-why",
                      "less than the deductible", "manual")]},
+    "nfip_lapse": {
+        "text": "Congress has to keep renewing the NFIP's authority. During a lapse, NFIP policies cannot be bought, renewed or increased until "
+                "the authority returns. Policies already in force run to their expiration date and claims on them are still handled, though "
+                "FEMA says the money to pay claims may be limited.",
+        # no dates on purpose: true before, during and after any lapse. FEMA bulletin W-23012 (Sept. 25, 2023); pdf, so read by hand.
+        "sources": [("https://www.law.cornell.edu/uscode/text/42/4026", "No new contract for flood insurance under this chapter shall be entered into after", "manual"),
+                    ("https://agents.floodsmart.gov/sites/default/files/bulletins/W-23012/w-23012.pdf", "will remain in force until their expiration date", "manual"),
+                    ("https://agents.floodsmart.gov/sites/default/files/bulletins/W-23012/w-23012.pdf", "funding available to pay claims may be limited", "manual")]},
+    "other_buyers": {
+        "text": "The NFIP also offers policies for renters and businesses.",
+        "sources": [(FS + "/get-insured/buy-a-policy", "offers flood insurance policies for homeowners, renters and businesses", "curl")]},
     "ia_partial": {
         "text": "FEMA disaster aid helps with uninsured and underinsured losses, and is separate from NFIP insurance.",
         "sources": [(IA_META, "uninsured and underinsured personal property losses", "curl")]},

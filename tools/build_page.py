@@ -437,11 +437,12 @@ def _crs_parts():
 
 # ---- how to get covered (factual public NFIP rules — the reader's "what do I do next" + the 30-day catch) ----
 def card_howto():
-    _HOWTO = ["howto_answer", "homeowners_excl", "howto_tiles", "wait_exceptions", "how_to_buy", "already_flooded", "aid_insurance"]
+    _HOWTO = ["howto_answer", "homeowners_excl", "howto_tiles", "wait_exceptions", "how_to_buy", "nfip_lapse", "already_flooded", "aid_insurance"]
     howto_card = card("How do I actually get covered — and how fast?",   # limits live in the tiles once (no second copy)
         rule("howto_answer"),
         rule("howto_tiles")
         + f"<p class='note'>{rule('homeowners_excl')} {rule('wait_exceptions')} {rule('how_to_buy')}</p>"
+        + f"<p class='note'>{rule('nfip_lapse')}</p>"
         + f"<p class='note'>{rule('already_flooded')} {rule('aid_insurance')}</p>"
         + (_deadline_tool() if _tool_on("deadline") else ""),
         src_rules(_HOWTO + (["aid_register_60", "private_deadlines"] if _tool_on("deadline") else [])), id="covered")
@@ -1020,21 +1021,27 @@ _og_meta = (f'<meta property="og:image" content="{CANON}og.png">'
             '<meta name="twitter:card" content="summary_large_image">') if OG else '<meta name="twitter:card" content="summary">'
 
 # ---- the cards placed in the page body: each card is one function; CARD_ORDER alone decides what shows and where ----
+def _outside_line():   # zone on the claim, not today's map; under 10 paid claims a share is one or two houses
+    if cx.get("outside_sfha_pct") is None or (cx.get("paid_n") or 0) < 10: return ""
+    return (f"<p class='note'>Of the NFIP claim dollars paid here ({C['year_min']}–{C['year_max']}), {tp('outside_sfha_dollars', 'data.claims_extra.outside_sfha_pct', pct)} "
+            "went to claims rated outside high-risk zones A and V. That uses the zone on each claim, not today's map, and leaves out claims with no zone.</p>")
+
 def card_required():
     return card("Am I required to buy it?",
       rule("purchase_answer") + " " + rule("lender_any_zone"),
       (f"<p class='note'><b>{rule('fl_citizens')}</b></p>" if agg.get("state") == "FL" else "") +
       f"<p class='note'>{rule('private_accept')}</p>" +
-      f"<p class='note'>{m('sfha_share', str(P['sfha_share_units']) + '%')} of {CS}'s NFIP policy units are in high-risk zones (not {tp('sfha_share', 'policies.sfha_share_units', pct)} of all buildings, and not an answer about your own home).</p>"
+      f"<p class='note'>{m('sfha_share', str(P['sfha_share_units']) + '%')} of {CS}'s NFIP policy units are in high-risk zones (not {tp('sfha_share', 'policies.sfha_share_units', pct)} of all buildings, and not an answer about your own home).</p>" + _outside_line() +
       f"{_zone_body()}<p class='note'>Insured units by the zone each policy is rated in.{how('zones')}</p>" + ("" if P.get("cost_by_zone") else f"<p class='note'>{rule('zone_codes')}</p>") + _map_line()
       + (f"<p class='note'><b>Not in the NFIP ({m('crs_count', str(len(crs_out)), q='not_nfip')} communities here)"
          + (": " + "; ".join(sorted((_cname(c) + (" (unincorporated area only)" if re.search(r"\b(COUNTY|PARISH|BOROUGH)\b", (c.get("communityName") or "").upper()) else "") for c in crs_out), key=lambda h: html.unescape(re.sub("<[^>]+>", "", h)).casefold())))
          + f".</b> {rule('nfip_not_sold')}</p>" if crs_out else ""),
-      src(["units", "sfha_share"], POL_ASOF, RETR) + (src(["map_date"], "FEMA's current Community Status Book", RETR) if _map_line() else "") + src_rules(["purchase_answer", "lender_any_zone", "private_accept"] + (["fl_citizens"] if agg.get("state") == "FL" else []) + (["nfip_not_sold"] if crs_out else [])), id="required")
+      src(["units", "sfha_share"], POL_ASOF, RETR) + (src(["outside_sfha_dollars"], f"{C['year_min']}–{C['year_max']}", RETR) if _outside_line() else "") + (src(["map_date"], "FEMA's current Community Status Book", RETR) if _map_line() else "") + src_rules(["purchase_answer", "lender_any_zone", "private_accept"] + (["fl_citizens"] if agg.get("state") == "FL" else []) + (["nfip_not_sold"] if crs_out else [])), id="required")
 
 def card_cost():
     cost_lead, cost_body = _cost_parts()
-    return card("How much does it cost here?", cost_lead, cost_body, src(["cost_p50", "prem_median", "frp_median", "coverage"], POL_ASOF, RETR))
+    cost_body += f"<p class='note'>{rule('other_buyers')} The median here is for single-family primary-home policies, not businesses or second homes.</p>"
+    return card("How much does it cost here?", cost_lead, cost_body, src(["cost_p50", "prem_median", "frp_median", "coverage"], POL_ASOF, RETR) + src_rules(["other_buyers"]))
 
 def card_claims():
     claims_lead, claims_ratio_note = _claims_parts()

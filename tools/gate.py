@@ -270,6 +270,7 @@ for _ld in re.findall(r'<script type="application/ld\+json">(.*?)</script>', pag
 for _mm in re.finditer(r"\b(?:[2-9]|\d{2,}) in \d+ homes(?: here)? has\b", READ): fail("H11", f"plural count with 'has': {_mm.group(0)}")
 if not agg.get("nri") and agg.get("level") != "state" and "Gap:" not in page: fail("L8", "NRI missing without a gap line")
 if P.get("spread_ok", (P.get("cost_n") or 0) >= 100) != ("Annual NFIP cost spread" in page): fail("L9", "cost spread shown for a small cohort (or hidden for a large one)")
+if ("Of the NFIP claim dollars paid here" in page) != (data.get("claims_extra", {}).get("outside_sfha_pct") is not None and (data["claims_extra"].get("paid_n") or 0) >= 10): fail("L19", "outside-zone claim share shown under 10 paid claims (or missing above)")
 if P.get("sfha_units") is not None and units and "of all buildings" not in page: fail("L12", "SFHA share shown without its denominator disclosure")
 if re.search(r"per 100\b", page, re.I) and not re.search(r"cumulative|not an annual rate", page, re.I): fail("L14", "a per-100 ratio without its caveat")
 if P.get("frp_median") and money(P["frp_median"]) in page and not re.search(r"not a quote", page, re.I): fail("L16", "full-risk shown without a 'not a quote' caveat")

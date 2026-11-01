@@ -131,4 +131,10 @@ assert _a["state_risk"] == [{"fips": "1", "county": "A", "rating": "High"}] and 
 os.utime(os.path.join(_d, "agg.json"), (1, 1)); _AR.assemble(_d)
 assert os.path.getmtime(os.path.join(_d, "agg.json")) == 1, "assemble rewrote a finished state"
 
+# outside share: dollars not counts, building+contents+ICC, a blank zone leaves both sides, unpaid claims ignored
+_c = lambda z, b, c=0, i=0: {"ratedFloodZone": z, "netBuildingPaymentAmount": b, "netContentsPaymentAmount": c, "netIccPaymentAmount": i}
+_x = _AR.claims_extra([_c("AE", 600), _c("X", 100, 200, 100), _c("VE", 0), _c("", 5000), _c(None, 900), _c("X", 0)])
+assert _x["outside_sfha_pct"] == 40.0 and _x["paid_n"] == 4, _x
+assert _AR.claims_extra([_c("", 5)])["outside_sfha_pct"] is None
+
 print("test_calc: all assertions passed (exercising ffcalc production functions)")

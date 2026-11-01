@@ -1,0 +1,2 @@
+# Fixlog round 36
+- MAJOR: cost card said the median is not a price for contents-only cover, but the cohort has no coverage filter (occupancy 1/11 + primary only). Root cause: wording claimed an exclusion the filter does not enforce (ffcalc.aggregate_policies). Fix: claim only business and second home, which the filter enforces; contents-only and mobile home dropped (old code 1 not proven to exclude mobile homes). Proof: new sentence in build_page.card_cost; cohort filter read in ffcalc.py.

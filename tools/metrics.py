@@ -60,7 +60,7 @@ METRICS = {
     "claims_total": _m(CLM, ["netBuildingPaymentAmount", "netContentsPaymentAmount"], "usd_claim_paid"),
     "avg_paid": _m(CLM, ["netBuildingPaymentAmount", "netContentsPaymentAmount", "netIccPaymentAmount"], "usd_claim_paid"),
     "cwop_share": _m(CLM, ["netBuildingPaymentAmount", "netContentsPaymentAmount", "netIccPaymentAmount"], "pct", of="claims filed"),
-    "outside_sfha_dollars": _m(CLM, ["ratedFloodZone", "netBuildingPaymentAmount"], "pct", of="paid claim dollars"),
+    "outside_sfha_dollars": _m(CLM, ["ratedFloodZone", "netBuildingPaymentAmount", "netContentsPaymentAmount", "netIccPaymentAmount"], "pct", of="paid claim dollars"),
     "outside_sfha_policies": _m(POL, ["ratedFloodZone", "policyCount"], "pct", of="policy units"),
     "nri_rating": _m("NRI", ["RISK_RATNG"], "rating", basis="rating"),
     "nri_eal_pctl_coastal": _m("NRI", ["CFLD_ALR_NPCTL"], "pct", basis="per dollar of building value"),

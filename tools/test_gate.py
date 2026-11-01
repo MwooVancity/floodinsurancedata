@@ -123,6 +123,7 @@ MUTATIONS = [   # (defect class from THE EVIDENCE table, what we reintroduce, ex
      re.sub(r"(<th>Reason recorded</th><th>Claims</th></tr></thead><tbody>)<tr>.*?</tr>", r"\1", PAGE, count=1, flags=re.S), None),
     ("hater r1", "a rule printed twice on the page", "E2",
      PAGE.replace("<p class='note'>Every zone starting", "<p class='note'>Standard homeowners insurance does not cover flood damage; flood insurance is bought separately, through the federal NFIP or a private insurer. Every zone starting", 1), None),
+    ("L19", "outside-zone claim line dropped", "L19", PAGE.replace("Of the NFIP claim dollars paid here", "Of paid dollars"), None),
     ("legacy L12b", "'other zones' row dropped", "C4", re.sub(r"<tr><td>Other[^<]*</td>.*?</tr>", "", PAGE, count=1), None),
     # hater round 5 (2026-10-27): existing stock's full-risk price sold as what a new policy costs
     ("hater r5", "existing-policy figure called a new policy's price", "A6",
