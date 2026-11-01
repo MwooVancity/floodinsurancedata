@@ -1118,5 +1118,205 @@
   "label": "St. John the Baptist Parish, Louisiana",
   "short": "St. John the Baptist Parish",
   "official": 0
+ },
+ {
+  "slug": "craven-county-nc",
+  "state": "NC",
+  "geoid": "37049",
+  "county": "CRAVEN",
+  "countytitle": "Craven",
+  "label": "Craven County, North Carolina",
+  "short": "Craven County",
+  "official": 0
+ },
+ {
+  "slug": "tarrant-county-tx",
+  "state": "TX",
+  "geoid": "48439",
+  "county": "TARRANT",
+  "countytitle": "Tarrant",
+  "label": "Tarrant County, Texas",
+  "short": "Tarrant County",
+  "official": 0
+ },
+ {
+  "slug": "norfolk-county-ma",
+  "state": "MA",
+  "geoid": "25021",
+  "county": "NORFOLK",
+  "countytitle": "Norfolk",
+  "label": "Norfolk County, Massachusetts",
+  "short": "Norfolk County",
+  "official": 0
+ },
+ {
+  "slug": "pender-county-nc",
+  "state": "NC",
+  "geoid": "37141",
+  "county": "PENDER",
+  "countytitle": "Pender",
+  "label": "Pender County, North Carolina",
+  "short": "Pender County",
+  "official": 0
+ },
+ {
+  "slug": "bexar-county-tx",
+  "state": "TX",
+  "geoid": "48029",
+  "county": "BEXAR",
+  "countytitle": "Bexar",
+  "label": "Bexar County, Texas",
+  "short": "Bexar County",
+  "official": 0
+ },
+ {
+  "slug": "anne-arundel-county-md",
+  "state": "MD",
+  "geoid": "24003",
+  "county": "ANNE ARUNDEL",
+  "countytitle": "Anne Arundel",
+  "label": "Anne Arundel County, Maryland",
+  "short": "Anne Arundel County",
+  "official": 0
+ },
+ {
+  "slug": "fairfax-county-va",
+  "state": "VA",
+  "geoid": "51059",
+  "county": "FAIRFAX",
+  "countytitle": "Fairfax",
+  "label": "Fairfax County, Virginia",
+  "short": "Fairfax County",
+  "official": 0
+ },
+ {
+  "slug": "onslow-county-nc",
+  "state": "NC",
+  "geoid": "37133",
+  "county": "ONSLOW",
+  "countytitle": "Onslow",
+  "label": "Onslow County, North Carolina",
+  "short": "Onslow County",
+  "official": 0
+ },
+ {
+  "slug": "davidson-county-tn",
+  "state": "TN",
+  "geoid": "47037",
+  "county": "DAVIDSON",
+  "countytitle": "Davidson",
+  "label": "Davidson County, Tennessee",
+  "short": "Davidson County",
+  "official": 0
+ },
+ {
+  "slug": "aransas-county-tx",
+  "state": "TX",
+  "geoid": "48007",
+  "county": "ARANSAS",
+  "countytitle": "Aransas",
+  "label": "Aransas County, Texas",
+  "short": "Aransas County",
+  "official": 0
+ },
+ {
+  "slug": "ouachita-parish-la",
+  "state": "LA",
+  "geoid": "22073",
+  "county": "OUACHITA",
+  "countytitle": "Ouachita",
+  "label": "Ouachita Parish, Louisiana",
+  "short": "Ouachita Parish",
+  "official": 0
+ },
+ {
+  "slug": "bossier-parish-la",
+  "state": "LA",
+  "geoid": "22015",
+  "county": "BOSSIER",
+  "countytitle": "Bossier",
+  "label": "Bossier Parish, Louisiana",
+  "short": "Bossier Parish",
+  "official": 0
+ },
+ {
+  "slug": "san-joaquin-county-ca",
+  "state": "CA",
+  "geoid": "06077",
+  "county": "SAN JOAQUIN",
+  "countytitle": "San Joaquin",
+  "label": "San Joaquin County, California",
+  "short": "San Joaquin County",
+  "official": 0
+ },
+ {
+  "slug": "alameda-county-ca",
+  "state": "CA",
+  "geoid": "06001",
+  "county": "ALAMEDA",
+  "countytitle": "Alameda",
+  "label": "Alameda County, California",
+  "short": "Alameda County",
+  "official": 0
+ },
+ {
+  "slug": "caddo-parish-la",
+  "state": "LA",
+  "geoid": "22017",
+  "county": "CADDO",
+  "countytitle": "Caddo",
+  "label": "Caddo Parish, Louisiana",
+  "short": "Caddo Parish",
+  "official": 0
+ },
+ {
+  "slug": "ventura-county-ca",
+  "state": "CA",
+  "geoid": "06111",
+  "county": "VENTURA",
+  "countytitle": "Ventura",
+  "label": "Ventura County, California",
+  "short": "Ventura County",
+  "official": 0
+ },
+ {
+  "slug": "vermilion-parish-la",
+  "state": "LA",
+  "geoid": "22113",
+  "county": "VERMILION",
+  "countytitle": "Vermilion",
+  "label": "Vermilion Parish, Louisiana",
+  "short": "Vermilion Parish",
+  "official": 0
+ },
+ {
+  "slug": "luzerne-county-pa",
+  "state": "PA",
+  "geoid": "42079",
+  "county": "LUZERNE",
+  "countytitle": "Luzerne",
+  "label": "Luzerne County, Pennsylvania",
+  "short": "Luzerne County",
+  "official": 0
+ },
+ {
+  "slug": "merced-county-ca",
+  "state": "CA",
+  "geoid": "06047",
+  "county": "MERCED",
+  "countytitle": "Merced",
+  "label": "Merced County, California",
+  "short": "Merced County",
+  "official": 0
+ },
+ {
+  "slug": "plaquemines-parish-la",
+  "state": "LA",
+  "geoid": "22075",
+  "county": "PLAQUEMINES",
+  "countytitle": "Plaquemines",
+  "label": "Plaquemines Parish, Louisiana",
+  "short": "Plaquemines Parish",
+  "official": 0
  }
 ]

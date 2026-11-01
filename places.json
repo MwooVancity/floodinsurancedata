@@ -1100,6 +1100,206 @@
 "indexable": true
 },
 {
+"slug": "craven-county-nc",
+"label": "Craven County, North Carolina",
+"short": "Craven County",
+"geoid": "37049",
+"state": "NC",
+"units": 5877,
+"median": 1018,
+"indexable": true
+},
+{
+"slug": "tarrant-county-tx",
+"label": "Tarrant County, Texas",
+"short": "Tarrant County",
+"geoid": "48439",
+"state": "TX",
+"units": 5835,
+"median": 818,
+"indexable": true
+},
+{
+"slug": "norfolk-county-ma",
+"label": "Norfolk County, Massachusetts",
+"short": "Norfolk County",
+"geoid": "25021",
+"state": "MA",
+"units": 5776,
+"median": 1248,
+"indexable": true
+},
+{
+"slug": "pender-county-nc",
+"label": "Pender County, North Carolina",
+"short": "Pender County",
+"geoid": "37141",
+"state": "NC",
+"units": 5562,
+"median": 1030,
+"indexable": true
+},
+{
+"slug": "bexar-county-tx",
+"label": "Bexar County, Texas",
+"short": "Bexar County",
+"geoid": "48029",
+"state": "TX",
+"units": 5345,
+"median": 906,
+"indexable": true
+},
+{
+"slug": "anne-arundel-county-md",
+"label": "Anne Arundel County, Maryland",
+"short": "Anne Arundel County",
+"geoid": "24003",
+"state": "MD",
+"units": 5335,
+"median": 539,
+"indexable": true
+},
+{
+"slug": "fairfax-county-va",
+"label": "Fairfax County, Virginia",
+"short": "Fairfax County",
+"geoid": "51059",
+"state": "VA",
+"units": 5246,
+"median": 612,
+"indexable": true
+},
+{
+"slug": "onslow-county-nc",
+"label": "Onslow County, North Carolina",
+"short": "Onslow County",
+"geoid": "37133",
+"state": "NC",
+"units": 5068,
+"median": 878,
+"indexable": true
+},
+{
+"slug": "davidson-county-tn",
+"label": "Davidson County, Tennessee",
+"short": "Davidson County",
+"geoid": "47037",
+"state": "TN",
+"units": 4911,
+"median": 1159,
+"indexable": true
+},
+{
+"slug": "aransas-county-tx",
+"label": "Aransas County, Texas",
+"short": "Aransas County",
+"geoid": "48007",
+"state": "TX",
+"units": 4890,
+"median": 1208,
+"indexable": true
+},
+{
+"slug": "ouachita-parish-la",
+"label": "Ouachita Parish, Louisiana",
+"short": "Ouachita Parish",
+"geoid": "22073",
+"state": "LA",
+"units": 4829,
+"median": 556,
+"indexable": true
+},
+{
+"slug": "bossier-parish-la",
+"label": "Bossier Parish, Louisiana",
+"short": "Bossier Parish",
+"geoid": "22015",
+"state": "LA",
+"units": 4793,
+"median": 459,
+"indexable": true
+},
+{
+"slug": "san-joaquin-county-ca",
+"label": "San Joaquin County, California",
+"short": "San Joaquin County",
+"geoid": "06077",
+"state": "CA",
+"units": 4760,
+"median": 1084,
+"indexable": true
+},
+{
+"slug": "alameda-county-ca",
+"label": "Alameda County, California",
+"short": "Alameda County",
+"geoid": "06001",
+"state": "CA",
+"units": 4730,
+"median": 1144,
+"indexable": true
+},
+{
+"slug": "caddo-parish-la",
+"label": "Caddo Parish, Louisiana",
+"short": "Caddo Parish",
+"geoid": "22017",
+"state": "LA",
+"units": 4579,
+"median": 715,
+"indexable": true
+},
+{
+"slug": "ventura-county-ca",
+"label": "Ventura County, California",
+"short": "Ventura County",
+"geoid": "06111",
+"state": "CA",
+"units": 4571,
+"median": 1226,
+"indexable": true
+},
+{
+"slug": "vermilion-parish-la",
+"label": "Vermilion Parish, Louisiana",
+"short": "Vermilion Parish",
+"geoid": "22113",
+"state": "LA",
+"units": 4553,
+"median": 1266,
+"indexable": true
+},
+{
+"slug": "luzerne-county-pa",
+"label": "Luzerne County, Pennsylvania",
+"short": "Luzerne County",
+"geoid": "42079",
+"state": "PA",
+"units": 4533,
+"median": 1169,
+"indexable": true
+},
+{
+"slug": "merced-county-ca",
+"label": "Merced County, California",
+"short": "Merced County",
+"geoid": "06047",
+"state": "CA",
+"units": 4502,
+"median": 771,
+"indexable": true
+},
+{
+"slug": "plaquemines-parish-la",
+"label": "Plaquemines Parish, Louisiana",
+"short": "Plaquemines Parish",
+"geoid": "22075",
+"state": "LA",
+"units": 4464,
+"median": 1231,
+"indexable": true
+},
+{
 "slug": "st-louis-county-mo",
 "label": "St. Louis County, Missouri",
 "short": "St. Louis County",

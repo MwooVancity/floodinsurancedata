@@ -166,6 +166,26 @@
 - [Richmond County](https://floodinsurancedata.com/flood-insurance/richmond-county-ny/): median $962
 - [Citrus County](https://floodinsurancedata.com/flood-insurance/citrus-county-fl/): median $1,232
 - [St. John the Baptist Parish](https://floodinsurancedata.com/flood-insurance/st-john-the-baptist-parish-la/): median $1,335
+- [Craven County](https://floodinsurancedata.com/flood-insurance/craven-county-nc/): median $1,018
+- [Tarrant County](https://floodinsurancedata.com/flood-insurance/tarrant-county-tx/): median $818
+- [Norfolk County](https://floodinsurancedata.com/flood-insurance/norfolk-county-ma/): median $1,248
+- [Pender County](https://floodinsurancedata.com/flood-insurance/pender-county-nc/): median $1,030
+- [Bexar County](https://floodinsurancedata.com/flood-insurance/bexar-county-tx/): median $906
+- [Anne Arundel County](https://floodinsurancedata.com/flood-insurance/anne-arundel-county-md/): median $539
+- [Fairfax County](https://floodinsurancedata.com/flood-insurance/fairfax-county-va/): median $612
+- [Onslow County](https://floodinsurancedata.com/flood-insurance/onslow-county-nc/): median $878
+- [Davidson County](https://floodinsurancedata.com/flood-insurance/davidson-county-tn/): median $1,159
+- [Aransas County](https://floodinsurancedata.com/flood-insurance/aransas-county-tx/): median $1,208
+- [Ouachita Parish](https://floodinsurancedata.com/flood-insurance/ouachita-parish-la/): median $556
+- [Bossier Parish](https://floodinsurancedata.com/flood-insurance/bossier-parish-la/): median $459
+- [San Joaquin County](https://floodinsurancedata.com/flood-insurance/san-joaquin-county-ca/): median $1,084
+- [Alameda County](https://floodinsurancedata.com/flood-insurance/alameda-county-ca/): median $1,144
+- [Caddo Parish](https://floodinsurancedata.com/flood-insurance/caddo-parish-la/): median $715
+- [Ventura County](https://floodinsurancedata.com/flood-insurance/ventura-county-ca/): median $1,226
+- [Vermilion Parish](https://floodinsurancedata.com/flood-insurance/vermilion-parish-la/): median $1,266
+- [Luzerne County](https://floodinsurancedata.com/flood-insurance/luzerne-county-pa/): median $1,169
+- [Merced County](https://floodinsurancedata.com/flood-insurance/merced-county-ca/): median $771
+- [Plaquemines Parish](https://floodinsurancedata.com/flood-insurance/plaquemines-parish-la/): median $1,231
 - [St. Louis County](https://floodinsurancedata.com/flood-insurance/st-louis-county-mo/): median $1,257
 - [Kanawha County](https://floodinsurancedata.com/flood-insurance/kanawha-county-wv/): median $1,450
 - [Methodology](https://floodinsurancedata.com/methodology/)
