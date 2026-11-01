@@ -18,7 +18,7 @@ Try in order, each smallest test first, 4 weeks of Search Console before more:
 Rules tested: truth, no advice, 2,000 ceiling, no name-swap pages stay. Open: county-only pages (habit). Procedures from official sources are facts, not advice. Held until a number asks: zone pages (test 1), claim-denied, condo, get-out-of-zone pages, compare and decode tools, table search, glossary, `data-p`. Town names (test 2) run first. Dropped: Canada, embed, alerts. Owner: anonymity may cost trust on an insurance topic.
 
 ## State (2026-10-30)
-- Live: 151 pages, sitemap 150 (home, 51 states, 92 counties, site pages). Queue 1,803; daily job adds 100 reviewed (100 max a release).
+- Live: 151 pages, sitemap 150 (home, 51 states, 92 counties, site pages). Queue 1,803; daily job adds 20 reviewed (25 max a release); done about late January 2027.
 - Data as of 2026-07-31; refresh on the 3rd (claims carry over, last 3 loss years re-pulled).
 - Analytics: GA4 property 561730563, `G-EXCYW0PJYG`, account 163330170; `notes.GA_TAG`, real host only; google_gate S15.
 - Proven in real cloud runs: daily publish unattended; fail, idle, rollback drills; first full refresh (10-31 00:06 UTC, jump check PASS).
@@ -45,7 +45,7 @@ Rules tested: truth, no advice, 2,000 ceiling, no name-swap pages stay. Open: co
    - Dropped: renewal-jump check.
 5. Links, guards first: monthly dead-link check stopping a release; outside links only .gov or FloodSmart; 3-5 related links from data; link text names the destination. Add DisasterAssistance.gov, FEMA provider finder, state insurance departments (sourced 51), bordering county. Sea level on state pages (open).
 6. One data story: "counties paying furthest below FEMA's full-risk price". Local-news pitch needs the owner.
-7. Pace: 100 a day from 11-01 (owner: full speed, no stopping, no noindex); queue done about 11-18; 31 flagged counties need own looks. Risk accepted: Google may treat fast growth on a new domain as scaled content; watch indexed count weekly, no automatic stop. Towns test: 20 counties in `tools_flags.json` `towns`, shipped 11-01; compare their town-name impressions with the other counties after 4 weeks; no lift = remove.
+7. Pace: 20 a day (owner 11-01), no pauses, no noindex holds; queue done about late January; 31 flagged counties need own looks. Watch indexed count weekly. Towns test: 20 counties in `tools_flags.json` `towns`, shipped 11-01; compare their town-name impressions with the other counties after 4 weeks; no lift = remove.
 
 ## Runs on its own (owner goes to the Pro plan about 2026-11-19; Claude stays, smaller token budget)
 A failed check ships nothing; the live site stays. Failed job = one issue "Job failed: <job>" (`tools/job_alert.sh`). Daily and monthly watch each other (3 and 40 days). Group site-deploy: one deploy at a time; deploy.yml uses latest master.
@@ -67,7 +67,7 @@ Short session fixes: a moved law page (release stays stopped, re-point the rule)
 
 ## Calendar
 Weekly Search Console. Monthly: refresh time, git size, prune backlog. Quarterly: light review on samples. Yearly: domain, NRI and CSB updates.
-11-03 refresh -> 11-12 planner to all -> 11-19 Pro plan -> about 11-18 queue done -> decide ZIP pages and AdSense.
+11-03 refresh -> 11-12 planner to all -> 11-19 Pro plan -> late January queue done -> decide ZIP pages and AdSense.
 
 ## Open checklist and parked
 Open: B audience lines; F state contacts; G table search; I error-report contact (owner); K print; L Spanish. Parked: ZIP pages, Spanish, print, AdSense.

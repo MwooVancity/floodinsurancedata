@@ -19,7 +19,7 @@ User, not Google: if something helps SEO but confuses or slows the reader, the r
 - New figure: state its base and how blanks are handled, recompute from raw before wording it. Same paragraph never twice on a page; shared definitions live on `/methodology/`.
 
 ## Site (HARD)
-- 51 states; counties (floor: 30 priced single-family policies for a median); ZIPs fold into the county page (standalone only with enough policies, a decision-changing difference and an answer the county lacks); no city pages; ceiling ~2,000. New counties 100 a day (owner 2026-11-01: full speed); no holding pages back, no pauses.
+- 51 states; counties (floor: 30 priced single-family policies for a median); ZIPs fold into the county page (standalone only with enough policies, a decision-changing difference and an answer the county lacks); no city pages; ceiling ~2,000. New counties 20 a day (owner 2026-11-01); no holding pages back, no pauses, no noindex holds.
 - No stuffing, doorway, near-duplicate pages, fake freshness, hidden text. One colour system; answers on screen 1; static, no client frameworks. No card or page-length caps.
 - Separate from calcscrape and river: own domain, Search Console, ad account; no shared template or links.
 - No paid referrals until a state-licensing + FTC check; no ads until a four-week Search Console review passes. A free link to FEMA's agent finder is allowed.
