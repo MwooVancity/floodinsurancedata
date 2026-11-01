@@ -69,5 +69,10 @@ Short session fixes: a moved law page (release stays stopped, re-point the rule)
 Weekly Search Console. Monthly: refresh time, git size, prune backlog. Quarterly: light review on samples. Yearly: domain, NRI and CSB updates.
 11-03 refresh -> 11-12 planner to all -> 11-19 Pro plan -> late January queue done -> decide ZIP pages and AdSense.
 
+## After the queue (measured 11-01)
+About 1,660 reviewed counties at 20 a day: last one about 2027-01-24. Then 31 stay unpublished until reviewed: 26 have claims per policy over 5x the state's, no passing example exists, so one own review of the most extreme unlocks those up to 2x as far out; do it in January, since each template change voids it, not now. Daily job then runs idle as the watchdog (drill passed); monthly refresh keeps going.
+Measured, no action: a refresh adds 1.6 MB to git, a publish 0.7 MB. Live pages near the review limit: 0; 5 queued are close. A live county drifting past 2x an example stops the release (S12) and opens an issue: short session, one own review. A county falling under the floor drops out at build and its page 404s until Google drops it: accepted. Queue is fixed: counties crossing the floor later need a yearly `--all` + `--refresh`.
+Yearly by hand: re-read manual rules (`recheck.py` lists them), NRI and CSB updates, the `--all` above. January: year labels on one page.
+
 ## Open checklist and parked
 Open: B audience lines; F state contacts; G table search; I error-report contact (owner); K print; L Spanish. Parked: ZIP pages, Spanish, print, AdSense.
