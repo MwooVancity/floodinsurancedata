@@ -124,6 +124,23 @@ def fetch_page(url):   # (text, ok): ok only on HTTP 200; 3 tries
 
 # 2026-10-29 the daily release stopped because flsenate.gov did not answer GitHub's servers and that was reported as
 # "excerpt gone". Unreachable is not changed: it warns, and fails only when the page has not loaded for 14 days.
+# 2026-11-02: registry links are dated snapshots, so re-fetching them could never show a change in the law. Always read the current text.
+LIVE = {"https://www.govinfo.gov/content/pkg/CFR-2024-title44-vol1/xml/CFR-2024-title44-vol1-sec61-11.xml": "https://www.law.cornell.edu/cfr/text/44/61.11",
+        "https://www.govinfo.gov/content/pkg/USCODE-2023-title42/html/USCODE-2023-title42-chap50-subchapI-sec4012a.htm": "https://www.law.cornell.edu/uscode/text/42/4012a",
+        "https://www.flsenate.gov/Laws/Statutes/2025/627.351": "http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0600-0699/0627/Sections/0627.351.html",
+        "https://www.flsenate.gov/Laws/Statutes/2025/689.302": "http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0600-0699/0689/Sections/0689.302.html"}
+SNAPSHOT = re.compile(r"govinfo\.gov/content/pkg/(CFR|USCODE)-|flsenate\.gov/Laws/Statutes/\d{4}/")
+def _ecfr_dates():
+    try: return {str(t["number"]): t["up_to_date_as_of"] for t in json.loads(fetch_page_raw("https://www.ecfr.gov/api/versioner/v1/titles.json"))["titles"]}
+    except Exception as e: problems.append(f"eCFR latest date unavailable: {e}"); return {}
+def fetch_page_raw(url):
+    return subprocess.run(["curl", "-sL", "--compressed", "--max-time", "60", url], capture_output=True).stdout.decode("utf-8", "replace")
+ECFR = _ecfr_dates()
+def live(url):
+    m = re.search(r"ecfr\.gov/api/versioner/v1/full/[\d-]+/title-(\d+)\.xml", url)
+    if m and m[1] in ECFR: return re.sub(r"/full/[\d-]+/", f"/full/{ECFR[m[1]]}/", url)
+    return LIVE.get(url, url)
+assert live("https://www.flsenate.gov/Laws/Statutes/2025/689.302") != "https://www.flsenate.gov/Laws/Statutes/2025/689.302"
 OKF = os.path.join(ROOT, "state", "rule-fetch-ok.json")
 last_ok = json.load(open(OKF)) if os.path.exists(OKF) else {}
 today = datetime.date.today()
@@ -131,6 +148,8 @@ cache = {}
 for k, r in RULES.items():
     for url, ex, method in r["sources"]:
         if method != "curl": continue
+        if SNAPSHOT.search(url) and url not in LIVE: problems.append(f"rule {k}: dated snapshot with no live page in recheck.LIVE: {url}")
+        url = live(url)
         if url not in cache:
             cache[url] = fetch_page(url)
             if cache[url][1]: last_ok[url] = today.isoformat()
@@ -142,6 +161,11 @@ for k, r in RULES.items():
             else: print(f"warning: rule {k}: {url} did not load this run (last loaded {age} days ago)")
 json.dump(last_ok, open(OKF, "w"), indent=1, sort_keys=True)
 manual = sorted({k for k, r in RULES.items() for _, _, m_ in r["sources"] if m_ == "manual"})
+MRF = os.path.join(ROOT, "state", "manual-rule-read.json")   # {rule: date a person or Claude last read its source in raw text}
+read = json.load(open(MRF))
+for k in manual:   # no script can reach these sources, so an old reading stops the release: re-read, then update the date
+    age = (today - datetime.date.fromisoformat(read[k])).days if k in read else 999
+    if age > 183: problems.append(f"rule {k}: source last read {age} days ago; re-read it in raw text and update state/manual-rule-read.json")
 print("rules: curl sources", "all present" if not any(p.startswith("rule ") for p in problems) else "MISSING",
       f"| manual (human re-read due): {manual}")
 

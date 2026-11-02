@@ -17,6 +17,15 @@ User, not Google: if something helps SEO but confuses or slows the reader, the r
 - Data traps: SUM `policyCount`, never count rows; negative premiums are refunds; claims `countyCode` may not match the property county.
 - Builder: every number via `tp(key, path)` or `m(key, shown)`; size/direction words via `claim()`; law text via `rule()` (effective date, coverage, official URL, exact quote from this session); places from Census/NRI; county/parish/borough from `UNIT`; shares via `_share_words()`. Never type a number, date, law or source into a template.
 - New figure: state its base and how blanks are handled, recompute from raw before wording it. Same paragraph never twice on a page; shared definitions live on `/methodology/`.
+- Truth guardrails (owner 2026-11-02: anything else is unhelpful to the reader; each failure happened). Before a rule goes in:
+  1. Read the source in raw text (curl, PDF extract, browser page text). A search or fetch summary is a lead, never a quote.
+  2. Scope in the sentence: which program, policy form, occupancy, lender, state. "Claim denied" without NFIP, "second homes" for all non-primary, "required amount" for a legal minimum were all wrong.
+  3. Keep the source's strength: "at least", "may", "can" stay. No sentence without a quote behind it; an inference is cut.
+  4. Two official sources disagree: print only what both support; a dated guide never beats the current manual.
+  5. One case or example is not a general rule unless the page says so.
+  6. Law is checked against current text, never a dated snapshot (`recheck.LIVE`). A source no script can reach goes in `state/manual-rule-read.json`; older than 183 days stops the release.
+  7. Reviewers read the source too; judging from the registry's own excerpt is not a check. Run the rule text past review before the full build.
+  8. Claims about the law or program never typed in a template; `rule()` only. A new FEMA code gets its label from the data dictionary before it is shown.
 
 ## Site (HARD)
 - 51 states; counties (floor: 30 priced single-family policies for a median); ZIPs fold into the county page (standalone only with enough policies, a decision-changing difference and an answer the county lacks); no city pages; ceiling ~2,000. New counties 20 a day (owner 2026-11-01); no holding pages back, no pauses, no noindex holds.
