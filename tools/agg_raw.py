@@ -45,7 +45,7 @@ def asof():   # the as-of date of the policies in data/ (set by the pull; every 
 POL_NUM = ("policyCount", "policyCost", ffcalc.PREM, "fullRiskPremium", "totalBuildingInsuranceCoverage", "totalContentsInsuranceCoverage")
 POL_STR = ("occupancyType", "primaryResidenceIndicator", "ratedFloodZone", "reportedZipCode", "policyEffectiveDate", "censusGeoid",
            "elevationCertificateIndicator", "preFIRMConstructionIndicator", "mandatoryPurchaseFlag", "buildingDeductibleCode",
-           "originalNBDate", "crsClassCode")
+           "originalNBDate", "crsClassCode", "foundationType", "numberOfFloorsInInsuredBuilding")
 CLM_NUM = ("netBuildingPaymentAmount", "netContentsPaymentAmount", "netIccPaymentAmount", "policyCount", "waterDepth",
            "buildingDamageAmount", "buildingPropertyValue")
 CLM_STR = ("yearOfLoss", "countyCode", "ratedFloodZone", "floodEvent", "nonPaymentReasonBuilding", "reportedZipCode", "dateOfLoss")

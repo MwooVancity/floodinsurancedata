@@ -232,7 +232,7 @@ RULES = {
         "sources": [(USC4012A, "within 45 days after notification under paragraph (1), the lender or servicer for the loan shall purchase the insurance", "curl")]},
     "zone_review": {
         "text": "If you think a lender's high-risk-zone finding is wrong, you and the lender together can ask FEMA to review it within 45 days of "
-                "the lender's notice; a fee applies, and FEMA checks only the zone finding, not your flood risk (44 CFR §65.17).",
+                "the lender's notice; a fee applies (44 CFR §65.17).",
         "sources": [("https://www.law.cornell.edu/cfr/text/44/65.17", "must be submitted within 45 days of the lender's notification to the borrower", "curl")]},
     "odds_30": {
         "text": "A 1 percent chance a year works out to about a 26% chance of at least one such flood over 30 years.",
@@ -263,10 +263,24 @@ RULES = {
                     ("https://www.floodsmart.gov/sites/default/files/media/document/2022-12/B17_Increased%20Cost%20of%20Compliance%20Benefits_Decision%20Upheld.pdf",
                      "before the initiation of mitigation activities", "manual")]},
     "lapse_discount": {
-        "text": "An NFIP policy paid 30 days or more after it expires cannot be renewed; it takes a new application, and FEMA says the lapse may "
-                "affect its statutory discounts (what keeps a bill below full risk).",
+        "text": "A renewal paid after the 30-day grace period leaves a lapse in coverage, and FEMA says a lapse may affect a policy's statutory discounts "
+                "(what keeps a bill below full risk).",
         "sources": [("https://agents.floodsmart.gov/sites/default/files/media/document/2025-07/fema-Risk-Rating-2.0-Renewal-Guide.pdf",
-                     "continued eligibility for statutory discounts", "manual")]},
+                     "continued eligibility for statutory discounts", "manual"),
+                    ("https://www.fema.gov/sites/default/files/documents/fema_fim-5-how-to-renew_apr2021.pdf", "lapse in coverage that may affect policy rating", "manual")]},
+    "surcharge": {
+        "text": "Homes that are not your primary residence, such as second homes and rentals you own, pay a higher federal surcharge: $250 a year, against $25 for a primary home.",
+        "sources": [("https://www.fema.gov/flood-insurance/rules-legislation", "for renters and owners of primary residences and $250 per year", "manual")]},
+    "tx_twia": {   # Texas only
+        "text": "In Texas, a TWIA windstorm policy requires flood insurance when any part of the property is in a V, VE or V1-V30 zone, NFIP cover "
+                "is available for it, and the structure was built, altered, remodeled or enlarged after September 1, 2009.",
+        "sources": [("https://www.twia.org/flood-requirement", "Flood insurance is required when all three of the following conditions are met", "curl"),
+                    ("https://www.twia.org/flood-requirement", "constructed, altered, remodeled, or enlarged after September 1, 2009", "curl")]},
+    "fl_disclosure": {   # Florida only
+        "text": "In Florida, a home seller must give the buyer a flood disclosure at or before the sales contract, saying whether the seller knows of "
+                "flood damage during their ownership, filed a flood claim, or received flood aid (s. 689.302, F.S.).",
+        "sources": [("https://www.flsenate.gov/Laws/Statutes/2025/689.302", "at or before the time the sales contract is executed", "curl"),
+                    ("https://www.flsenate.gov/Laws/Statutes/2025/689.302", "relating to flood damage on the property", "curl")]},
     "ia_partial": {
         "text": "FEMA disaster aid helps with uninsured and underinsured losses, and is separate from NFIP insurance.",
         "sources": [(IA_META, "uninsured and underinsured personal property losses", "curl")]},

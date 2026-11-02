@@ -1038,18 +1038,19 @@ def card_required():
       rule("purchase_answer") + " " + rule("lender_any_zone"),
       (f"<p class='note'><b>{rule('fl_citizens')}</b></p>" if agg.get("state") == "FL" else "") +
       f"<p class='note'>{rule('private_accept')}</p>" +
-      f"<p class='note'><b>At a closing:</b> {rule('lender_amount')} {rule('lender_force')} {rule('zone_review')} {rule('seller_assign')}</p>" +
+      f"<p class='note'><b>At a closing:</b> {rule('lender_amount')} {rule('lender_force')} {rule('zone_review')} {rule('seller_assign')}" + (f" {rule('fl_disclosure')}" if agg.get("state") == "FL" else "") + "</p>" +
+      (f"<p class='note'>{rule('tx_twia')}</p>" if agg.get("state") == "TX" else "") +
       f"<p class='note'>{m('sfha_share', str(P['sfha_share_units']) + '%')} of {CS}'s NFIP policy units are in high-risk zones (not {tp('sfha_share', 'policies.sfha_share_units', pct)} of all buildings, and not an answer about your own home).</p>" + _outside_line() +
       f"{_zone_body()}<p class='note'>Insured units by the zone each policy is rated in.{how('zones')} What each means: <a href='/flood-zones/ae/'>zone AE</a>, <a href='/flood-zones/x/'>zone X</a>, <a href='/flood-zones/ve/'>zone VE</a>.</p>" + ("" if P.get("cost_by_zone") else f"<p class='note'>{rule('zone_codes')}</p>") + _map_line()
       + (f"<p class='note'><b>Not in the NFIP ({m('crs_count', str(len(crs_out)), q='not_nfip')} communities here)"
          + (": " + "; ".join(sorted((_cname(c) + (" (unincorporated area only)" if re.search(r"\b(COUNTY|PARISH|BOROUGH)\b", (c.get("communityName") or "").upper()) else "") for c in crs_out), key=lambda h: html.unescape(re.sub("<[^>]+>", "", h)).casefold())))
          + f".</b> {rule('nfip_not_sold')}</p>" if crs_out else ""),
-      src(["units", "sfha_share"], POL_ASOF, RETR) + (src(["outside_sfha_dollars"], f"{C['year_min']}–{C['year_max']}", RETR) if _outside_line() else "") + (src(["map_date"], "FEMA's current Community Status Book", RETR) if _map_line() else "") + src_rules(["purchase_answer", "lender_any_zone", "private_accept", "lender_amount", "lender_force", "zone_review", "seller_assign"] + (["fl_citizens"] if agg.get("state") == "FL" else []) + (["nfip_not_sold"] if crs_out else [])), id="required")
+      src(["units", "sfha_share"], POL_ASOF, RETR) + (src(["outside_sfha_dollars"], f"{C['year_min']}–{C['year_max']}", RETR) if _outside_line() else "") + (src(["map_date"], "FEMA's current Community Status Book", RETR) if _map_line() else "") + src_rules(["purchase_answer", "lender_any_zone", "private_accept", "lender_amount", "lender_force", "zone_review", "seller_assign"] + (["fl_citizens", "fl_disclosure"] if agg.get("state") == "FL" else []) + (["tx_twia"] if agg.get("state") == "TX" else []) + (["nfip_not_sold"] if crs_out else [])), id="required")
 
 def card_cost():
     cost_lead, cost_body = _cost_parts()
-    cost_body += f"<p class='note'>{rule('other_buyers')} The median here is for single-family primary-home policies, not businesses or second homes.</p>"
-    return card("How much does it cost here?", cost_lead, cost_body, src(["cost_p50", "prem_median", "frp_median", "coverage"], POL_ASOF, RETR) + src_rules(["other_buyers"]))
+    cost_body += f"<p class='note'>{rule('other_buyers')} The median here is for single-family primary-home policies, not businesses or second homes. {rule('surcharge')}</p>"
+    return card("How much does it cost here?", cost_lead, cost_body, src(["cost_p50", "prem_median", "frp_median", "coverage"], POL_ASOF, RETR) + src_rules(["other_buyers", "surcharge"]))
 
 def card_claims():
     claims_lead, claims_ratio_note = _claims_parts()

@@ -45,6 +45,14 @@ def premium_gap(coh):
             "share_below": round(100 * below / len(both), 1) if both else None, "below_n": len(both),
             "gap_basis": "premium"}
 
+def _median_by(coh, key, val):
+    """Median of val per value of key; groups under ZONE_MIN are left out, blanks and zero or negative values never count."""
+    g = defaultdict(list)
+    for r in coh:
+        k, v = str(r.get(key) or "").strip(), r.get(val)
+        if k and isinstance(v, (int, float)) and v > 0: g[k].append(v)
+    return {k: {"median": pctl(v, 50), "n": len(v)} for k, v in g.items() if len(v) >= ZONE_MIN}
+
 def aggregate_policies(rows):
     units = sum(int(r.get("policyCount") or 0) for r in rows)
     coh = [r for r in rows if isone(r.get("occupancyType")) and istrue(r.get("primaryResidenceIndicator"))]
@@ -88,6 +96,9 @@ def aggregate_policies(rows):
         "cost_excluded": len(coh) - len(cost),          # cohort records dropped for null/non-positive cost
         "p25": pctl(cost, 25), "p50": pctl(cost, 50), "p75": pctl(cost, 75), "p90": pctl(cost, 90),
         **gap,
+        "frp_by_zone": _median_by(coh, "ratedFloodZone", "fullRiskPremium"),   # premium only, before fees; closer to a new buyer's price than cost_by_zone
+        "cost_by_foundation": _median_by(coh, "foundationType", "policyCost"),   # FEMA codes; labels and wording come when a page shows them
+        "cost_by_floors": _median_by(coh, "numberOfFloorsInInsuredBuilding", "policyCost"),
         "contents_share": round(100 * sum(1 for r in coh if (r.get("totalContentsInsuranceCoverage") or 0) > 0) / len(coh), 1) if coh else None,   # of single-family primary policies
         "zone_units": dict(sorted(zu.items(), key=lambda x: -x[1])[:12]),
         "sfha_units": sfha, "sfha_share_units": round(100 * sfha / units, 1) if units else None,
