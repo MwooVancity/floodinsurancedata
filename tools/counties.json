@@ -1518,5 +1518,205 @@
   "label": "Santa Barbara County, California",
   "short": "Santa Barbara County",
   "official": 0
+ },
+ {
+  "slug": "chambers-county-tx",
+  "state": "TX",
+  "geoid": "48071",
+  "county": "CHAMBERS",
+  "countytitle": "Chambers",
+  "label": "Chambers County, Texas",
+  "short": "Chambers County",
+  "official": 0
+ },
+ {
+  "slug": "sutter-county-ca",
+  "state": "CA",
+  "geoid": "06101",
+  "county": "SUTTER",
+  "countytitle": "Sutter",
+  "label": "Sutter County, California",
+  "short": "Sutter County",
+  "official": 0
+ },
+ {
+  "slug": "new-london-county-ct",
+  "state": "CT",
+  "geoid": "09011",
+  "county": "NEW LONDON",
+  "countytitle": "New London",
+  "label": "New London County, Connecticut",
+  "short": "New London County",
+  "official": 0
+ },
+ {
+  "slug": "nye-county-nv",
+  "state": "NV",
+  "geoid": "32023",
+  "county": "NYE",
+  "countytitle": "Nye",
+  "label": "Nye County, Nevada",
+  "short": "Nye County",
+  "official": 0
+ },
+ {
+  "slug": "madison-county-al",
+  "state": "AL",
+  "geoid": "01089",
+  "county": "MADISON",
+  "countytitle": "Madison",
+  "label": "Madison County, Alabama",
+  "short": "Madison County",
+  "official": 0
+ },
+ {
+  "slug": "baltimore-county-md",
+  "state": "MD",
+  "geoid": "24005",
+  "county": "BALTIMORE",
+  "countytitle": "Baltimore",
+  "label": "Baltimore County, Maryland",
+  "short": "Baltimore County",
+  "official": 0
+ },
+ {
+  "slug": "bryan-county-ga",
+  "state": "GA",
+  "geoid": "13029",
+  "county": "BRYAN",
+  "countytitle": "Bryan",
+  "label": "Bryan County, Georgia",
+  "short": "Bryan County",
+  "official": 0
+ },
+ {
+  "slug": "wake-county-nc",
+  "state": "NC",
+  "geoid": "37183",
+  "county": "WAKE",
+  "countytitle": "Wake",
+  "label": "Wake County, North Carolina",
+  "short": "Wake County",
+  "official": 0
+ },
+ {
+  "slug": "dupage-county-il",
+  "state": "IL",
+  "geoid": "17043",
+  "county": "DUPAGE",
+  "countytitle": "DuPage",
+  "label": "DuPage County, Illinois",
+  "short": "DuPage County",
+  "official": 0
+ },
+ {
+  "slug": "montgomery-county-pa",
+  "state": "PA",
+  "geoid": "42091",
+  "county": "MONTGOMERY",
+  "countytitle": "Montgomery",
+  "label": "Montgomery County, Pennsylvania",
+  "short": "Montgomery County",
+  "official": 0
+ },
+ {
+  "slug": "bristol-county-ma",
+  "state": "MA",
+  "geoid": "25005",
+  "county": "BRISTOL",
+  "countytitle": "Bristol",
+  "label": "Bristol County, Massachusetts",
+  "short": "Bristol County",
+  "official": 0
+ },
+ {
+  "slug": "baltimore-city-md",
+  "state": "MD",
+  "geoid": "24510",
+  "county": "BALTIMORE CITY",
+  "countytitle": "Baltimore city",
+  "label": "Baltimore city, Maryland",
+  "short": "Baltimore city",
+  "official": 0
+ },
+ {
+  "slug": "currituck-county-nc",
+  "state": "NC",
+  "geoid": "37053",
+  "county": "CURRITUCK",
+  "countytitle": "Currituck",
+  "label": "Currituck County, North Carolina",
+  "short": "Currituck County",
+  "official": 0
+ },
+ {
+  "slug": "fulton-county-ga",
+  "state": "GA",
+  "geoid": "13121",
+  "county": "FULTON",
+  "countytitle": "Fulton",
+  "label": "Fulton County, Georgia",
+  "short": "Fulton County",
+  "official": 0
+ },
+ {
+  "slug": "beaufort-county-nc",
+  "state": "NC",
+  "geoid": "37013",
+  "county": "BEAUFORT",
+  "countytitle": "Beaufort",
+  "label": "Beaufort County, North Carolina",
+  "short": "Beaufort County",
+  "official": 0
+ },
+ {
+  "slug": "santa-cruz-county-ca",
+  "state": "CA",
+  "geoid": "06087",
+  "county": "SANTA CRUZ",
+  "countytitle": "Santa Cruz",
+  "label": "Santa Cruz County, California",
+  "short": "Santa Cruz County",
+  "official": 0
+ },
+ {
+  "slug": "kern-county-ca",
+  "state": "CA",
+  "geoid": "06029",
+  "county": "KERN",
+  "countytitle": "Kern",
+  "label": "Kern County, California",
+  "short": "Kern County",
+  "official": 0
+ },
+ {
+  "slug": "burlington-county-nj",
+  "state": "NJ",
+  "geoid": "34005",
+  "county": "BURLINGTON",
+  "countytitle": "Burlington",
+  "label": "Burlington County, New Jersey",
+  "short": "Burlington County",
+  "official": 0
+ },
+ {
+  "slug": "contra-costa-county-ca",
+  "state": "CA",
+  "geoid": "06013",
+  "county": "CONTRA COSTA",
+  "countytitle": "Contra Costa",
+  "label": "Contra Costa County, California",
+  "short": "Contra Costa County",
+  "official": 0
+ },
+ {
+  "slug": "bronx-county-ny",
+  "state": "NY",
+  "geoid": "36005",
+  "county": "BRONX",
+  "countytitle": "Bronx",
+  "label": "Bronx County, New York",
+  "short": "Bronx County",
+  "official": 0
  }
 ]

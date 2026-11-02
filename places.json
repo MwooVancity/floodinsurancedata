@@ -1500,6 +1500,206 @@
 "indexable": true
 },
 {
+"slug": "chambers-county-tx",
+"label": "Chambers County, Texas",
+"short": "Chambers County",
+"geoid": "48071",
+"state": "TX",
+"units": 3707,
+"median": 1010,
+"indexable": true
+},
+{
+"slug": "sutter-county-ca",
+"label": "Sutter County, California",
+"short": "Sutter County",
+"geoid": "06101",
+"state": "CA",
+"units": 3626,
+"median": 658,
+"indexable": true
+},
+{
+"slug": "new-london-county-ct",
+"label": "New London County, Connecticut",
+"short": "New London County",
+"geoid": "09011",
+"state": "CT",
+"units": 3540,
+"median": 1638,
+"indexable": true
+},
+{
+"slug": "nye-county-nv",
+"label": "Nye County, Nevada",
+"short": "Nye County",
+"geoid": "32023",
+"state": "NV",
+"units": 3525,
+"median": 850,
+"indexable": true
+},
+{
+"slug": "madison-county-al",
+"label": "Madison County, Alabama",
+"short": "Madison County",
+"geoid": "01089",
+"state": "AL",
+"units": 3450,
+"median": 1086,
+"indexable": true
+},
+{
+"slug": "baltimore-county-md",
+"label": "Baltimore County, Maryland",
+"short": "Baltimore County",
+"geoid": "24005",
+"state": "MD",
+"units": 3449,
+"median": 579,
+"indexable": true
+},
+{
+"slug": "bryan-county-ga",
+"label": "Bryan County, Georgia",
+"short": "Bryan County",
+"geoid": "13029",
+"state": "GA",
+"units": 3394,
+"median": 1084,
+"indexable": true
+},
+{
+"slug": "wake-county-nc",
+"label": "Wake County, North Carolina",
+"short": "Wake County",
+"geoid": "37183",
+"state": "NC",
+"units": 3387,
+"median": 878,
+"indexable": true
+},
+{
+"slug": "dupage-county-il",
+"label": "DuPage County, Illinois",
+"short": "DuPage County",
+"geoid": "17043",
+"state": "IL",
+"units": 3366,
+"median": 1034,
+"indexable": true
+},
+{
+"slug": "montgomery-county-pa",
+"label": "Montgomery County, Pennsylvania",
+"short": "Montgomery County",
+"geoid": "42091",
+"state": "PA",
+"units": 3357,
+"median": 1132,
+"indexable": true
+},
+{
+"slug": "bristol-county-ma",
+"label": "Bristol County, Massachusetts",
+"short": "Bristol County",
+"geoid": "25005",
+"state": "MA",
+"units": 3323,
+"median": 1296,
+"indexable": true
+},
+{
+"slug": "baltimore-city-md",
+"label": "Baltimore city, Maryland",
+"short": "Baltimore city",
+"geoid": "24510",
+"state": "MD",
+"units": 3321,
+"median": 530,
+"indexable": true
+},
+{
+"slug": "currituck-county-nc",
+"label": "Currituck County, North Carolina",
+"short": "Currituck County",
+"geoid": "37053",
+"state": "NC",
+"units": 3310,
+"median": 927,
+"indexable": true
+},
+{
+"slug": "fulton-county-ga",
+"label": "Fulton County, Georgia",
+"short": "Fulton County",
+"geoid": "13121",
+"state": "GA",
+"units": 3307,
+"median": 865,
+"indexable": true
+},
+{
+"slug": "beaufort-county-nc",
+"label": "Beaufort County, North Carolina",
+"short": "Beaufort County",
+"geoid": "37013",
+"state": "NC",
+"units": 3294,
+"median": 1001,
+"indexable": true
+},
+{
+"slug": "santa-cruz-county-ca",
+"label": "Santa Cruz County, California",
+"short": "Santa Cruz County",
+"geoid": "06087",
+"state": "CA",
+"units": 3283,
+"median": 1400,
+"indexable": true
+},
+{
+"slug": "kern-county-ca",
+"label": "Kern County, California",
+"short": "Kern County",
+"geoid": "06029",
+"state": "CA",
+"units": 3272,
+"median": 870,
+"indexable": true
+},
+{
+"slug": "burlington-county-nj",
+"label": "Burlington County, New Jersey",
+"short": "Burlington County",
+"geoid": "34005",
+"state": "NJ",
+"units": 3255,
+"median": 1400,
+"indexable": true
+},
+{
+"slug": "contra-costa-county-ca",
+"label": "Contra Costa County, California",
+"short": "Contra Costa County",
+"geoid": "06013",
+"state": "CA",
+"units": 3252,
+"median": 1306,
+"indexable": true
+},
+{
+"slug": "bronx-county-ny",
+"label": "Bronx County, New York",
+"short": "Bronx County",
+"geoid": "36005",
+"state": "NY",
+"units": 3230,
+"median": 1198,
+"indexable": true
+},
+{
 "slug": "st-louis-county-mo",
 "label": "St. Louis County, Missouri",
 "short": "St. Louis County",

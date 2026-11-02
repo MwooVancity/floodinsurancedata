@@ -206,6 +206,26 @@
 - [Marion County](https://floodinsurancedata.com/flood-insurance/marion-county-fl/): median $584
 - [Portsmouth city](https://floodinsurancedata.com/flood-insurance/portsmouth-city-va/): median $595
 - [Santa Barbara County](https://floodinsurancedata.com/flood-insurance/santa-barbara-county-ca/): median $1,232
+- [Chambers County](https://floodinsurancedata.com/flood-insurance/chambers-county-tx/): median $1,010
+- [Sutter County](https://floodinsurancedata.com/flood-insurance/sutter-county-ca/): median $658
+- [New London County](https://floodinsurancedata.com/flood-insurance/new-london-county-ct/): median $1,638
+- [Nye County](https://floodinsurancedata.com/flood-insurance/nye-county-nv/): median $850
+- [Madison County](https://floodinsurancedata.com/flood-insurance/madison-county-al/): median $1,086
+- [Baltimore County](https://floodinsurancedata.com/flood-insurance/baltimore-county-md/): median $579
+- [Bryan County](https://floodinsurancedata.com/flood-insurance/bryan-county-ga/): median $1,084
+- [Wake County](https://floodinsurancedata.com/flood-insurance/wake-county-nc/): median $878
+- [DuPage County](https://floodinsurancedata.com/flood-insurance/dupage-county-il/): median $1,034
+- [Montgomery County](https://floodinsurancedata.com/flood-insurance/montgomery-county-pa/): median $1,132
+- [Bristol County](https://floodinsurancedata.com/flood-insurance/bristol-county-ma/): median $1,296
+- [Baltimore city](https://floodinsurancedata.com/flood-insurance/baltimore-city-md/): median $530
+- [Currituck County](https://floodinsurancedata.com/flood-insurance/currituck-county-nc/): median $927
+- [Fulton County](https://floodinsurancedata.com/flood-insurance/fulton-county-ga/): median $865
+- [Beaufort County](https://floodinsurancedata.com/flood-insurance/beaufort-county-nc/): median $1,001
+- [Santa Cruz County](https://floodinsurancedata.com/flood-insurance/santa-cruz-county-ca/): median $1,400
+- [Kern County](https://floodinsurancedata.com/flood-insurance/kern-county-ca/): median $870
+- [Burlington County](https://floodinsurancedata.com/flood-insurance/burlington-county-nj/): median $1,400
+- [Contra Costa County](https://floodinsurancedata.com/flood-insurance/contra-costa-county-ca/): median $1,306
+- [Bronx County](https://floodinsurancedata.com/flood-insurance/bronx-county-ny/): median $1,198
 - [St. Louis County](https://floodinsurancedata.com/flood-insurance/st-louis-county-mo/): median $1,257
 - [Kanawha County](https://floodinsurancedata.com/flood-insurance/kanawha-county-wv/): median $1,450
 - [Methodology](https://floodinsurancedata.com/methodology/)
