@@ -75,7 +75,11 @@ def claims_extra(rows):
     zoned = [r for r in paid if (r["ratedFloodZone"] or "").strip()]
     outside = sum(net(r) for r in zoned if r["ratedFloodZone"].strip()[:1] not in ("A", "V"))
     zoned_total = sum(net(r) for r in zoned)
-    return {"claims": len(rows), "avg_paid": round(paid_total / len(paid)) if paid else 0,
+    months = {}   # paid dollars by calendar month of loss: when floods hit here, against the 30-day wait
+    for r in paid:
+        mo = (r.get("dateOfLoss") or "")[5:7]
+        if mo.isdigit() and 1 <= int(mo) <= 12: months[mo] = round(months.get(mo, 0) + net(r), 2)
+    return {"loss_months": months, "claims": len(rows), "avg_paid": round(paid_total / len(paid)) if paid else 0,
             "cwop_share": round(100 * (len(rows) - len(paid)) / len(rows), 1),
             "outside_sfha_pct": round(100 * outside / zoned_total, 1) if zoned_total else None,   # of paid dollars on zoned claims: building, contents and ICC
             "paid_n": len(paid), "source": "OpenFEMA NFIP Claims v3 (raw pull)"}

@@ -308,14 +308,14 @@ def card_zone_cost():
              f"(Zone {html.escape(_zhi[0])}) here. " if len(czone) > 1 else "")
             + "Your zone is on your lender's flood determination or FEMA's map; find its row below.",
             f"<table><thead><tr><th>Flood zone</th><th>Median / yr</th><th>Priced policies</th></tr></thead><tbody>{rows_}</tbody></table>"
-            + f"<p class='note'>{rule('zone_codes')}</p>"
+            + f"<p class='note'>{rule('zone_codes')} {rule('odds_30')}</p>"
             + ("<p class='note'>Some zones share the same median because many policies here are charged exactly the same amount, "
                "so the middle policy in several zones lands on that one price. Each median is computed from that zone's own policy records.</p>" if len({d['median'] for d in czone.values()}) < len(czone) else "")
             + (("<p class='note'><b>" + claim("Why can a high-risk zone cost less than Zone X here?", "cost less than",
                                                ("zone_inversion", "==", 1)) + "</b> " + rule("rr2_zone") + "</p>")
                if VALS["zone_inversion"] else "")
             + f"<p class='note'>Zones with fewer than {tp('threshold', 'const.zone_min', q='zone_min')} priced single-family policies are omitted. Your own premium still depends on elevation and coverage.</p>",
-            src(["zone_cost"], POL_ASOF, RETR) + src_rules(["zone_codes"]), id="zone-cost")
+            src(["zone_cost"], POL_ASOF, RETR) + src_rules(["zone_codes", "odds_30"]), id="zone-cost")
     return zone_cost_card
 
 # ---- premium trend: REMOVED. An in-force annual-policy snapshot holds only current-term policies, so
@@ -341,6 +341,7 @@ def _gap_parts():
     else:   # no "years to full risk": the two medians come from different policies, so their ratio describes no real bill
         glide_note = (f"<p class='note'><b>Yearly cap:</b> {rule('glide')} {rule('cap')} Bills already at full risk "
                       "still change with FEMA's yearly rate updates.</p>")
+    glide_note += f"<p class='note'>{rule('lapse_discount')}</p>"
     return gap_lead, glide_note
 
 def _claims_parts():
@@ -437,13 +438,15 @@ def _crs_parts():
 
 # ---- how to get covered (factual public NFIP rules — the reader's "what do I do next" + the 30-day catch) ----
 def card_howto():
-    _HOWTO = ["howto_answer", "homeowners_excl", "howto_tiles", "wait_exceptions", "how_to_buy", "nfip_lapse", "already_flooded", "aid_insurance"]
+    _HOWTO = ["howto_answer", "homeowners_excl", "howto_tiles", "wait_exceptions", "how_to_buy", "nfip_lapse", "flood_def", "not_covered", "already_flooded", "aid_insurance", "claim_appeal", "substantial_damage"]
     howto_card = card("How do I actually get covered — and how fast?",   # limits live in the tiles once (no second copy)
         rule("howto_answer"),
         rule("howto_tiles")
         + f"<p class='note'>{rule('homeowners_excl')} {rule('wait_exceptions')} {rule('how_to_buy')}</p>"
         + f"<p class='note'>{rule('nfip_lapse')}</p>"
+        + f"<p class='note'><b>What it won't pay:</b> {rule('flood_def')} {rule('not_covered')}</p>"
         + f"<p class='note'>{rule('already_flooded')} {rule('aid_insurance')}</p>"
+        + f"<p class='note'>{rule('claim_appeal')} {rule('substantial_damage')}</p>"
         + (_deadline_tool() if _tool_on("deadline") else ""),
         src_rules(_HOWTO + (["aid_register_60", "private_deadlines"] if _tool_on("deadline") else [])), id="covered")
     return howto_card
@@ -1035,12 +1038,13 @@ def card_required():
       rule("purchase_answer") + " " + rule("lender_any_zone"),
       (f"<p class='note'><b>{rule('fl_citizens')}</b></p>" if agg.get("state") == "FL" else "") +
       f"<p class='note'>{rule('private_accept')}</p>" +
+      f"<p class='note'><b>At a closing:</b> {rule('lender_amount')} {rule('lender_force')} {rule('zone_review')} {rule('seller_assign')}</p>" +
       f"<p class='note'>{m('sfha_share', str(P['sfha_share_units']) + '%')} of {CS}'s NFIP policy units are in high-risk zones (not {tp('sfha_share', 'policies.sfha_share_units', pct)} of all buildings, and not an answer about your own home).</p>" + _outside_line() +
       f"{_zone_body()}<p class='note'>Insured units by the zone each policy is rated in.{how('zones')} What each means: <a href='/flood-zones/ae/'>zone AE</a>, <a href='/flood-zones/x/'>zone X</a>, <a href='/flood-zones/ve/'>zone VE</a>.</p>" + ("" if P.get("cost_by_zone") else f"<p class='note'>{rule('zone_codes')}</p>") + _map_line()
       + (f"<p class='note'><b>Not in the NFIP ({m('crs_count', str(len(crs_out)), q='not_nfip')} communities here)"
          + (": " + "; ".join(sorted((_cname(c) + (" (unincorporated area only)" if re.search(r"\b(COUNTY|PARISH|BOROUGH)\b", (c.get("communityName") or "").upper()) else "") for c in crs_out), key=lambda h: html.unescape(re.sub("<[^>]+>", "", h)).casefold())))
          + f".</b> {rule('nfip_not_sold')}</p>" if crs_out else ""),
-      src(["units", "sfha_share"], POL_ASOF, RETR) + (src(["outside_sfha_dollars"], f"{C['year_min']}–{C['year_max']}", RETR) if _outside_line() else "") + (src(["map_date"], "FEMA's current Community Status Book", RETR) if _map_line() else "") + src_rules(["purchase_answer", "lender_any_zone", "private_accept"] + (["fl_citizens"] if agg.get("state") == "FL" else []) + (["nfip_not_sold"] if crs_out else [])), id="required")
+      src(["units", "sfha_share"], POL_ASOF, RETR) + (src(["outside_sfha_dollars"], f"{C['year_min']}–{C['year_max']}", RETR) if _outside_line() else "") + (src(["map_date"], "FEMA's current Community Status Book", RETR) if _map_line() else "") + src_rules(["purchase_answer", "lender_any_zone", "private_accept", "lender_amount", "lender_force", "zone_review", "seller_assign"] + (["fl_citizens"] if agg.get("state") == "FL" else []) + (["nfip_not_sold"] if crs_out else [])), id="required")
 
 def card_cost():
     cost_lead, cost_body = _cost_parts()
@@ -1063,7 +1067,7 @@ def card_gap():
       f"<ul class='kv'><li><b>Median premium charged (before fees)</b><span>{m('prem_median', money(PREM_MED))}</span></li>"
       f"<li><b>Median full-risk premium</b><span>{m('frp_median', money(P['frp_median']))}</span></li>"
       f"<li><b>Pay below full-risk</b><span>{m('share_below', str(P['share_below']) + '%')} of {tp('units_listed', 'policies.below_n', q='below_n')}</span>{vs_state('share_below', 'agg.policies.share_below', pct)}</li></ul>" + glide_note,
-      src(["prem_median", "frp_median", "share_below"], POL_ASOF, RETR))
+      src(["prem_median", "frp_median", "share_below"], POL_ASOF, RETR) + src_rules(["cap", "lapse_discount"]))
 
 def card_crs():
     crs_rows, crs_none_note, crs_lead = _crs_parts()

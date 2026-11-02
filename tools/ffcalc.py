@@ -39,7 +39,8 @@ def premium_gap(coh):
     both = [r for r in coh if isinstance(r.get(PREM), (int, float)) and r[PREM] > 0
             and isinstance(r.get("fullRiskPremium"), (int, float)) and r["fullRiskPremium"] > 0]
     below = sum(1 for r in both if r[PREM] < r["fullRiskPremium"])
-    return {"prem_median": pctl([r[PREM] for r in both], 50),
+    return {"below_gap_median": pctl([r["fullRiskPremium"] - r[PREM] for r in both if r[PREM] < r["fullRiskPremium"]], 50),   # the two medians below come from different policies; this one is per policy
+            "prem_median": pctl([r[PREM] for r in both], 50),
             "frp_median": pctl([r["fullRiskPremium"] for r in both], 50), "frp_n": len(both),
             "share_below": round(100 * below / len(both), 1) if both else None, "below_n": len(both),
             "gap_basis": "premium"}
@@ -87,6 +88,7 @@ def aggregate_policies(rows):
         "cost_excluded": len(coh) - len(cost),          # cohort records dropped for null/non-positive cost
         "p25": pctl(cost, 25), "p50": pctl(cost, 50), "p75": pctl(cost, 75), "p90": pctl(cost, 90),
         **gap,
+        "contents_share": round(100 * sum(1 for r in coh if (r.get("totalContentsInsuranceCoverage") or 0) > 0) / len(coh), 1) if coh else None,   # of single-family primary policies
         "zone_units": dict(sorted(zu.items(), key=lambda x: -x[1])[:12]),
         "sfha_units": sfha, "sfha_share_units": round(100 * sfha / units, 1) if units else None,
         "spread_ok": len(cost) >= SMALL_COHORT,         # publish the spread only on enough VALID cost obs

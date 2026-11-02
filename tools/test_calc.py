@@ -26,6 +26,8 @@ assert P["zone_units"] == {"AE": 4, "VE": 4, "X": 1}, P["zone_units"]   # zone m
 assert P["sfha_units"] == 8 and P["sfha_share_units"] == round(100 * 8 / 9, 1), (P["sfha_units"], P["sfha_share_units"])
 assert P["share_below"] == 100.0 and P["below_n"] == 3, (P["share_below"], P["below_n"])  # ids 1,2,3 below on premium basis
 assert P["gap_basis"] == "premium" and P["prem_median"] == 1400 and P["frp_median"] == 3000, P
+assert round(1 - 0.99 ** 30, 2) == 0.26                             # rule odds_30
+assert ffcalc.premium_gap([{ffcalc.PREM: 100, "fullRiskPremium": 400}, {ffcalc.PREM: 500, "fullRiskPremium": 400}])["below_gap_median"] == 300   # only policies below full risk count
 assert P["spread_ok"] is False, P["spread_ok"]                      # only 3 valid costs < 100 -> suppress
 
 CLM = [

@@ -11,6 +11,8 @@ IA_META = "https://www.fema.gov/api/open/v1/OpenFemaDataSets?$filter=name%20eq%2
 
 CFR64 = "https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=64"
 CFR59 = "https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=59&section=59.1"
+CFR61 = "https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=61"
+USC4012A = "https://www.law.cornell.edu/uscode/text/42/4012a"
 
 RULES = {
     "homeowners_excl": {
@@ -216,6 +218,55 @@ RULES = {
                 "areas of minimal hazard (44 CFR §64.3). FEMA's map shows the moderate kind shaded and the minimal kind unshaded.",
         "sources": [(CFR64, "B, X Areas of moderate flood hazards", "curl"),
                     (CFR64, "C, X Area of minimal hazards", "curl")]},
+    "seller_assign": {
+        "text": "Buying a home with an NFIP policy: the seller can assign the policy to you in writing when title transfers, and FEMA says "
+                "a below-full-risk discount can move to the new owner that way.",
+        "sources": [(CFR61, "You may assign this policy in writing when you transfer title of your property to someone else", "curl"),
+                    ("https://www.fema.gov/flood-insurance/risk-rating", "transfer their discount to a new owner", "manual")]},
+    "lender_amount": {
+        "text": "Where a federally regulated lender must require it, the legal minimum is the loan balance or the NFIP's limit for the property, whichever is less (42 U.S.C. §4012a(b)).",
+        "sources": [(USC4012A, "in an amount at least equal to the outstanding principal balance of the loan or the maximum limit of coverage", "curl")]},
+    "lender_force": {
+        "text": "If such a lender notifies you that coverage is needed and you do not buy it within 45 days, the lender must buy it for you and "
+                "can charge you for it (42 U.S.C. §4012a(e)).",
+        "sources": [(USC4012A, "within 45 days after notification under paragraph (1), the lender or servicer for the loan shall purchase the insurance", "curl")]},
+    "zone_review": {
+        "text": "If you think a lender's high-risk-zone finding is wrong, you and the lender together can ask FEMA to review it within 45 days of "
+                "the lender's notice; a fee applies, and FEMA checks only the zone finding, not your flood risk (44 CFR §65.17).",
+        "sources": [("https://www.law.cornell.edu/cfr/text/44/65.17", "must be submitted within 45 days of the lender's notification to the borrower", "curl")]},
+    "odds_30": {
+        "text": "A 1 percent chance a year works out to about a 26% chance of at least one such flood over 30 years.",
+        # arithmetic, tested in test_calc.py: 1 - 0.99**30 = 0.2603; the 1 percent is the regulation's
+        "sources": [(CFR59, "subject to a 1 percent or greater chance of flooding in any given year", "curl")]},
+    "flood_def": {
+        "text": "The policy generally counts a flood only when water covers two or more acres of normally dry land or two or more properties, "
+                "one of them yours.",
+        "sources": [(CFR61, "two or more acres of normally dry land area or of two or more properties", "curl")]},
+    "not_covered": {
+        "text": "A standard NFIP home policy does not pay for a hotel or other living costs while you are out of the home, or for belongings outside the "
+                "building, and it limits what it pays for in a basement. Belongings are paid at actual cash value (their used value), not the cost of new ones.",
+        "sources": [(CFR61, "Any additional living expenses incurred while the insured building is being repaired", "curl"),
+                    (CFR61, "Personal property not inside", "curl"),
+                    ("https://www.law.cornell.edu/cfr/text/44/appendix-A(1)_to_part_61", "in a basement regardless of the zone", "manual"),
+                    ("https://www.law.cornell.edu/cfr/text/44/appendix-A(1)_to_part_61", "subject to actual cash value", "manual")]},
+    "claim_appeal": {
+        "text": "NFIP claim denied? You can appeal to FEMA within 60 days of the date on the denial letter, and you can sue within one year of the denial. "
+                "An appeal does not extend that year.",
+        "sources": [(FS + "/recover/appeal-a-claim", "within 60 days of the date written on your denial letter", "curl"),
+                    (FS + "/recover/appeal-a-claim", "does not extend the one-year period", "curl")]},
+    "substantial_damage": {
+        "text": "If repairs would cost 50 percent or more of the building's market value before the flood, it counts as substantially damaged under federal rules, and "
+                "local floodplain rules can require elevating or other work. On an NFIP policy with building coverage, Increased Cost of Compliance pays up to $30,000 toward "
+                "that; the local official's letter has to come before the work starts.",
+        "sources": [(CFR59, "would equal or exceed 50 percent of the market value of the structure before the damage occurred", "curl"),
+                    (CFR61, "We will pay you up to $30,000 under this Coverage D", "curl"),
+                    ("https://www.floodsmart.gov/sites/default/files/media/document/2022-12/B17_Increased%20Cost%20of%20Compliance%20Benefits_Decision%20Upheld.pdf",
+                     "before the initiation of mitigation activities", "manual")]},
+    "lapse_discount": {
+        "text": "An NFIP policy paid 30 days or more after it expires cannot be renewed; it takes a new application, and FEMA says the lapse may "
+                "affect its statutory discounts (what keeps a bill below full risk).",
+        "sources": [("https://agents.floodsmart.gov/sites/default/files/media/document/2025-07/fema-Risk-Rating-2.0-Renewal-Guide.pdf",
+                     "continued eligibility for statutory discounts", "manual")]},
     "ia_partial": {
         "text": "FEMA disaster aid helps with uninsured and underinsured losses, and is separate from NFIP insurance.",
         "sources": [(IA_META, "uninsured and underinsured personal property losses", "curl")]},
