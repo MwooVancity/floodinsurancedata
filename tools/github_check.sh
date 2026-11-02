@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# Master GitHub check: every repo, one read-only pass, no agent. Prints only what needs a look.
+# Master GitHub check: this repo only, one read-only pass, no agent. Prints only what needs a look.
 # Failed runs in 7 days, active workflows whose last run failed, scheduled jobs silent over 2 days, open issues.
 now=$(date -u +%s); week=$(date -u -d "7 days ago" +%FT%TZ)
-for r in $(gh repo list --limit 50 --json nameWithOwner,isArchived -q '.[]|select(.isArchived==false)|.nameWithOwner'); do
+for r in MwooVancity/floodinsurancedata; do
   gh run list -R "$r" --limit 100 --json workflowName,conclusion,createdAt,headBranch \
     -q "[.[]|select(.createdAt>=\"$week\" and (.conclusion==\"failure\" or .conclusion==\"timed_out\" or .conclusion==\"startup_failure\"))]|group_by(.workflowName+.headBranch)|.[]|\"$r FAILED \(.[0].workflowName) x\(length) on \(.[0].headBranch), last \(.[0].createdAt)\""
   gh api "repos/$r/actions/workflows" --paginate -q '.workflows[]|select(.state=="active")|"\(.id)|\(.name)"' 2>/dev/null | while IFS='|' read -r id name; do

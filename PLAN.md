@@ -76,7 +76,7 @@ After the 11-03 refresh, one batch from new fields in data: `claims_extra.loss_m
 ## Truth holes (closed 11-02)
 Closed 11-02: every rule now rests on text read raw: law (Cornell, govinfo), FloodSmart, FEMA's data dictionary, the October 2025 Flood Insurance Manual. No rule depends on a fema.gov page any more; `cap`, `glide`, `lapse_discount`, `nfip_lapse`, `substantial_damage` are PDF reads in `state/manual-rule-read.json` (183-day expiry). Edge-case audit all 15 fixed; all 1,803 eligible counties pass the gate; timeout alert proven by a real timed-out run.
 Standing limits, no fix exists: T1 catches duty words only, so other typed program facts rely on review; an excerpt proves a phrase, not its meaning.
-Next: after the 11-03 refresh, new figures (recompute from raw; month chart base paid dollars incl. ICC, zero-paid out; foundation codes labelled from FEMA). River's hourly doctor: no scheduled run since 11-02 11:09 UTC, river session.
+Next: after the 11-03 refresh, new figures (recompute from raw; month chart base paid dollars incl. ICC, zero-paid out; foundation codes labelled from FEMA).
 
 ## After the queue (measured 11-01)
 About 1,660 reviewed counties at 20 a day: last one about 2027-01-24. Then 31 stay unpublished until reviewed: 26 have claims per policy over 5x the state's, no passing example exists, so one own review of the most extreme unlocks those up to 2x as far out; do it in January, since each template change voids it, not now. Daily job then runs idle as the watchdog (drill passed); monthly refresh keeps going.
