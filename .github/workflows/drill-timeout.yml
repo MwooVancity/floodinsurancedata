@@ -1,0 +1,12 @@
+name: drill-timeout
+# One-time proof that the alert condition runs when a job hits its time limit. Deleted after the run.
+on: workflow_dispatch
+jobs:
+  drill:
+    runs-on: ubuntu-26.04
+    timeout-minutes: 1
+    steps:
+      - run: sleep 120
+      - name: Alert step
+        if: failure() || cancelled()   # same condition as the three real jobs
+        run: echo ALERT-STEP-RAN
