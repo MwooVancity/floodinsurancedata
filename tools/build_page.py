@@ -348,7 +348,7 @@ def _claims_parts():
                    f"{m('claims_total', big(C['total_paid']))} in payouts since {C['year_min']}"
                    + (f"; the worst {pl(len(top_paid), 'year was', 'years were')} {and_list(y for y, _ in top_paid)}." if top_paid else "."))
     # the ratio reads like a risk score, so it is demoted to a note with both numbers shown, never the headline.
-    claims_ratio_note = (f"<p class='note'>That is {m('claims_filed', num(C['rows']))} claims since {C['year_min']} against "
+    claims_ratio_note = (f"<p class='note'>That is {m('claims_filed', num(C['rows']))} {pl(C['rows'], 'claim')} since {C['year_min']} against "
                          f"{m('units', num(P['units']))} policy units in force today — a cumulative tally spanning ~{m('claims_span_years', str(C['year_max']-C['year_min']+1))} "
                          f"years over a present-day snapshot, not an annual claim rate or a flood probability.</p>")
     return claims_lead, claims_ratio_note

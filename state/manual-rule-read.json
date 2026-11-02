@@ -1,12 +1,7 @@
 {
- "aid_insurance": "2026-10-25",
- "cap": "2026-10-25",
- "cwop": "2026-10-25",
- "glide": "2026-10-25",
+ "cap": "2026-11-02",
+ "glide": "2026-11-02",
  "lapse_discount": "2026-11-02",
  "nfip_lapse": "2026-11-02",
- "nfip_not_sold": "2026-10-25",
- "rr2_zone": "2026-10-25",
- "seller_assign": "2026-10-25",
  "substantial_damage": "2026-11-02"
 }

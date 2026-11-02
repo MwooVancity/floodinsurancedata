@@ -5,6 +5,7 @@ method: "curl" = machine-verifiable; "manual" = the host blocks scripts (fema.go
 read on `checked` (re-read it when it goes stale). Never add a rule without a source and an excerpt."""
 
 FS = "https://www.floodsmart.gov"
+FIM = "https://agents.floodsmart.gov/sites/default/files/media/document/2025-09/fema_nfip-FloodInsuranceManual-October2025-508c.pdf"   # pdf, read by hand 2026-11-02
 CHECKED = "2026-10-25"
 # FEMA's own dataset description (fema.gov pages block scripts; the OpenFEMA metadata API does not)
 IA_META = "https://www.fema.gov/api/open/v1/OpenFemaDataSets?$filter=name%20eq%20'IndividualAssistanceHousingRegistrantsLargeDisasters'"
@@ -145,10 +146,11 @@ RULES = {
         "text": "Usually 30 days after you buy; no wait with a new or refinanced mortgage.",
         "sources": [(FS + "/get-insured/buy-a-policy", "will go into effect 30 days after your date of purchase", "curl")]},
     "aid_insurance": {   # owner of a flood-damaged home in a high-risk zone: FEMA aid comes with an insurance duty
-        "text": "If FEMA aid pays to repair a home in a high-risk zone, you must buy and keep flood insurance on it, or "
-                "you cannot get that aid again after a later flood.",
-        "sources": [("https://www.fema.gov/press-release/20250121/flood-aid-recipients-get-insurance-stay-eligible-repeat-assistance",
-                     "ineligible for IHP Assistance for flood-damaged real or personal property in future disasters", "manual")]},
+        "text": "If FEMA aid after a flood goes to buy or build a home in a high-risk zone, you must buy and keep flood insurance on it for at least the amount of the aid, or "
+                "you cannot get federal aid for later flood damage to it (44 CFR §206.110).",
+        "sources": [("https://www.law.cornell.edu/cfr/text/44/206.110", "in order to receive any Federal assistance for future flood damage to any insurable property", "curl"),
+                    ("https://www.law.cornell.edu/cfr/text/44/206.110", "must buy and maintain flood insurance", "curl"),
+                    ("https://www.law.cornell.edu/uscode/text/42/5154a", "having failed to obtain and maintain flood insurance", "curl")]},
     "purchase_answer": {
         "text": "Federal law requires it only in a high-risk zone (A or V) with a federally regulated or backed mortgage, "
                 "or federal help to buy or build (42 U.S.C. §4012a).",
@@ -161,37 +163,38 @@ RULES = {
         "sources": [("https://www.federalreserve.gov/frrs/regulations/interagency-questions-and-answers-regarding-flood-insurance.htm",
                      "a lender may require flood insurance as a condition of making the loan, as a matter of safety and soundness", "curl")]},
     "cap": {
-        "text": "By law a primary home's premium cannot rise more than 18% a year; some policies, such as second homes "
-                "and businesses, can rise up to 25%. The cap usually does not apply to new policies, and fees and "
-                "surcharges sit outside it.",
+        "text": "By law, most premium rates may not rise more than 18% a year; the rate for some property, including homes that are not a primary "
+                "residence and business property, rises 25% a year until that group's average rate reaches the level the law sets (42 U.S.C. §4015(e)). FloodSmart puts the limit at 18 to 25% a year for most policyholders. It usually does "
+                "not apply to new policies, raising your coverage or lowering your deductible can go past it, and fees and surcharges are added on top.",
         "sources": [(FS + "/premiumcosts", "per year for most policyholders. This usually does not apply to new policies.", "curl"),
-                    ("https://www.fema.gov/flood-insurance/risk-rating", "most rates not increase more than 18% per year", "manual"),
-                    ("https://www.govinfo.gov/link/uscode/42/4015?link-type=html", "may not be increased by more than 18 percent each year", "curl")]},
+                    (FS + "/premiumcosts", "Additional charges added to the discounted premium.", "curl"),
+                    (FIM, "Most premium rates may not increase by more than 18 percent each year, whether at renewal or by endorsement, except when increasing coverage, decreasing the amount of the deductible", "manual"),
+                    ("https://www.govinfo.gov/link/uscode/42/4015?link-type=html", "may not be increased by more than 18 percent each year", "curl"),
+                    ("https://www.law.cornell.edu/uscode/text/42/4015", "shall be increased by 25 percent each year", "curl"),
+                    ("https://www.law.cornell.edu/uscode/text/42/4014", "any residential property which is not the primary residence of an individual", "curl"),
+                    ("https://www.law.cornell.edu/uscode/text/42/4014", "any business property", "curl")]},
     "rr2_zone": {
-        "text": "Since FEMA's <a href='https://www.fema.gov/flood-insurance/risk-rating' rel='noopener' "
-                "target='_blank'>Risk Rating 2.0</a>, price is set from each building's own flood risk, not its zone, and "
-                "these are existing policies whose buildings differ. The reason for any one zone is not in this data.",
-        "sources": [(FS + "/premiumcosts", "The premium amount is based on the flood risk of the building.", "curl"),
-                    ("https://www.fema.gov/flood-insurance/risk-rating", "does not use flood zones to determine flood risk", "manual")]},
+        "text": "The premium is based on the flood risk of the building. The reason for any one zone is not in this data.",
+        "sources": [(FS + "/premiumcosts", "The premium amount is based on the flood risk of the building.", "curl")]},
     "glide": {
-        "text": "Those prices step up toward full-risk each year, limited by the yearly cap.",
+        "text": "Except for the Emergency Program discount, statutory discounts gradually phase out through an annual increase cap discount at each renewal date until the policy reaches its full-risk premium.",
         "sources": [(FS + "/premiumcosts", "Limits annual premium increases to a set percentage.", "curl"),
-                    ("https://www.fema.gov/flood-insurance/risk-rating", "most rates not increase more than 18% per year", "manual")]},
+                    (FIM, "gradually phase out through a statutory annual increase cap discount", "manual")]},
     "nfip_not_sold": {   # 2026-10-28 site review: 34 Louisiana, 137 Texas communities are not in the NFIP; the page called them "no discount"
         "text": "Federal flood insurance (NFIP) is sold only in communities that take part in the NFIP; in a community that "
-                "has not joined, has withdrawn or is suspended, no one can buy an NFIP policy.",
+                "has not joined, or once a suspension takes effect, no one can buy an NFIP policy.",
         "sources": [("https://www.floodsmart.gov/get-insured/eligibility",
                      "You can get flood insurance from the National Flood Insurance Program if your city or town participates in the NFIP", "curl"),
-                    ("https://www.fema.gov/about/glossary/participation-nfip",
-                     "No resident will be able to purchase a flood insurance policy", "manual")]},
+                    ("https://www.law.cornell.edu/uscode/text/42/4012", "shall make flood insurance available in only those States or areas", "curl"),
+                    ("https://www.law.cornell.edu/cfr/text/44/59.24", "loss of eligibility for the sale of flood insurance", "curl")]},
     "crs_auto": {
         "text": "It is automatic, already in these prices, and the same in every flood zone.",
         "sources": [(FS + "/premiumcosts", "Applies to all eligible policies within the community, regardless of flood zone.", "curl")]},
     "cwop": {
-        "text": "FEMA lists reasons a claim closes without payment, such as damage below the deductible, no flood as "
-                "the policy defines it, or seepage and drain backup the policy does not cover.",
-        "sources": [("https://www.fema.gov/press-release/20250121/hurricane-irma-nfip-claim-closed-without-payment-heres-why",
-                     "less than the deductible", "manual")]},
+        "text": "FEMA's claim records give a reason when a building claim closes without payment, such as damage less than the deductible, not an actual flood, "
+                "seepage or backed-up drains.",
+        "sources": [("https://www.fema.gov/api/open/v1/OpenFemaDataSetFields?$filter=name%20eq%20%27nonPaymentReasonBuilding%27", "Claim denied that was less than deductible", "curl"),
+                    ("https://www.fema.gov/api/open/v1/OpenFemaDataSetFields?$filter=name%20eq%20%27nonPaymentReasonBuilding%27", "Not actual flood", "curl")]},
     "nfip_lapse": {
         "text": "Congress has to keep renewing the NFIP's authority. During a lapse, NFIP policies cannot be bought, renewed or increased until "
                 "the authority returns. Policies already in force run to their expiration date and claims on them are still handled, though "
@@ -204,7 +207,7 @@ RULES = {
         "text": "Every zone starting with A or V is high-risk; A1 to A30 and AE are the same kind of area (44 CFR §64.3).",
         "sources": [(CFR64, "A1-30, AE Area of special flood hazard with water surface elevations determined", "curl")]},
     "zone_price": {
-        "text": "Your flood zone is set at your exact address and decides whether a federally regulated lender must require coverage; your price is based on your own building's flood risk, and FEMA's full-risk price is its price for that risk.",
+        "text": "A federally regulated lender must require coverage for the term of a loan on a building in a high-risk zone where NFIP cover is available; your premium is based on your own building's flood risk.",
         "sources": [("https://www.govinfo.gov/content/pkg/USCODE-2023-title42/html/USCODE-2023-title42-chap50-subchapI-sec4012a.htm", "regulated lending institutions", "curl"),
                     (FS + "/premiumcosts", "The premium amount is based on the flood risk of the building.", "curl"),
                     (FS + "/premiumcosts", "after subtracting statutory discounts from the full-risk premium", "curl")]},
@@ -230,10 +233,8 @@ RULES = {
         "sources": [(CFR64, "B, X Areas of moderate flood hazards", "curl"),
                     (CFR64, "C, X Area of minimal hazards", "curl")]},
     "seller_assign": {
-        "text": "Buying a home with an NFIP policy: the seller can assign the policy to you in writing when title transfers, and FEMA says "
-                "a below-full-risk discount can move to the new owner that way.",
-        "sources": [(CFR61, "You may assign this policy in writing when you transfer title of your property to someone else", "curl"),
-                    ("https://www.fema.gov/flood-insurance/risk-rating", "transfer their discount to a new owner", "manual")]},
+        "text": "Buying a finished home with an NFIP building policy: the seller can assign the policy to you in writing when title transfers.",
+        "sources": [(CFR61, "You may assign this policy in writing when you transfer title of your property to someone else", "curl")]},
     "lender_amount": {
         "text": "Where a federally regulated lender must require it, the legal minimum is the loan balance or the NFIP's limit for the property, whichever is less (42 U.S.C. §4012a(b)).",
         "sources": [(USC4012A, "in an amount at least equal to the outstanding principal balance of the loan or the maximum limit of coverage", "curl")]},
@@ -274,13 +275,12 @@ RULES = {
                     ("https://www.floodsmart.gov/sites/default/files/media/document/2022-12/B17_Increased%20Cost%20of%20Compliance%20Benefits_Decision%20Upheld.pdf",
                      "before the initiation of mitigation activities", "manual")]},
     "lapse_discount": {
-        "text": "A renewal paid after the 30-day grace period leaves a lapse in coverage, and FEMA says a lapse may affect a policy's statutory discounts "
-                "(what keeps a bill below full risk).",
-        "sources": [("https://agents.floodsmart.gov/sites/default/files/media/document/2025-07/fema-Risk-Rating-2.0-Renewal-Guide.pdf",
-                     "continued eligibility for statutory discounts", "manual"),
-                    ("https://www.fema.gov/sites/default/files/documents/fema_fim-5-how-to-renew_apr2021.pdf", "lapse in coverage that may affect policy rating", "manual")]},
+        "text": "Paying a renewal 30 days or more after the policy expires causes a lapse in coverage. You then need a new application, and the lapse may cost you "
+                "statutory discounts (what keeps a bill below full risk), including the yearly cap.",
+        "sources": [(FIM, "causes a lapse in coverage that may result in the loss of Statutory Discounts including the Annual Increase Cap", "manual"),
+                    (FIM, "A new application is required", "manual")]},
     "surcharge": {
-        "text": "Homes that are not your primary residence, such as second homes and rentals you own, pay a higher federal surcharge: $250 a year, against $25 for a primary home.",
+        "text": "Property that is not your primary residence, such as a second home, a rental you own or a non-residential building, pays a higher federal surcharge: $250 a year, against $25 for a primary home.",
         "sources": [("https://www.law.cornell.edu/uscode/text/42/4015a", "(1) $25, except as provided in paragraph (2); and (2) $250, in the case of a policy for any property that is", "curl"),
                     ("https://www.law.cornell.edu/uscode/text/42/4015a", "a residential property that is not the primar", "curl")]},
     "tx_twia": {   # Texas only
