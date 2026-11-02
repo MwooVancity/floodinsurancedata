@@ -21,7 +21,7 @@ if [ "$mode" = warn ]; then   # job_alert.sh warn "<title>" "<body>": an early w
 fi
 
 if [ "$mode" = fail ]; then
-  open_issue "Job failed: $name" "The $name job failed on $(date -u +%F). Nothing was published by this run; the live site is unchanged. Log: $run_url" || true
+  open_issue "Job failed: $name" "The $name job failed on $(date -u +%F). Steps before the failure may have finished, so the live site may or may not have changed. Log: $run_url" || true
   exit 0
 fi
 

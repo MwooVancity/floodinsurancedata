@@ -6,7 +6,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LIMIT = float(sys.argv[sys.argv.index("--limit") + 1]) if "--limit" in sys.argv else 0.25
 MIN_N = 100   # small samples swing; only medians from 100+ priced policies are judged
 held = []
-for f in sorted(glob.glob(os.path.join(ROOT, "data", "states", "*", "agg.json")) + glob.glob(os.path.join(ROOT, "data", "c", "*", "agg.json"))):
+for f in sorted(glob.glob(os.path.join(ROOT, "data", "states", "*", "agg.json")) + glob.glob(os.path.join(ROOT, "data", "all-counties", "*.json"))):   # the refresh writes all-counties, never data/c
     rel = os.path.relpath(f, ROOT).replace("\\", "/")
     old = subprocess.run(["git", "show", f"HEAD:{rel}"], cwd=ROOT, capture_output=True, text=True, encoding="utf-8").stdout
     if not old: continue   # a new page has nothing to compare with
@@ -14,5 +14,6 @@ for f in sorted(glob.glob(os.path.join(ROOT, "data", "states", "*", "agg.json"))
     if not (a.get("p50") and b.get("p50")) or min(a.get("cost_n") or 0, b.get("cost_n") or 0) < MIN_N: continue
     ch = b["p50"] / a["p50"] - 1
     if abs(ch) > LIMIT: held.append(f"{rel}: median ${a['p50']:,} -> ${b['p50']:,} ({ch:+.0%})")
+    if a.get("units") and b.get("units") and abs(b["units"] / a["units"] - 1) > LIMIT: held.append(f"{rel}: policy units {a['units']:,} -> {b['units']:,}")
 print("\n".join(held) or f"JUMP CHECK PASS: no median moved more than {LIMIT:.0%}")
 sys.exit(1 if held else 0)

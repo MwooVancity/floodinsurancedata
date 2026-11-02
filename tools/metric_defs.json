@@ -24,6 +24,10 @@
   }
  },
  "IndividualAssistanceMultipleLossFloodProperties": {
+  "fipsCountyCode": {
+   "def": "FIPS three-digit numeric code used to idenify counties and county equivalents in the United States, the District of Columbia, US territories, outlying areas of the US and freely associated states",
+   "sha256": "eee0bf34d4acef129332497d8d5e7523d6ac0b2c56c4174966a5fd5ffe1aa3f8"
+  },
   "highRiskPropertyType": {
    "def": "Indicate High Risk Property Type: RL - IA Repetitve Loss; SRL - IA Severe Repetitive Loss. RL is properties impacted by 2-3 disaster declarations. SRL denotes properties impacted by 4 or more disaster declarations.",
    "sha256": "a6a3b1b4eb1c1446dbcf38fc037e5730cb1e044ec8c889bf7ec7291307093693"

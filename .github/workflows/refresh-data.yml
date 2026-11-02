@@ -71,7 +71,7 @@ jobs:
           git commit -m "data: refresh from FEMA (policies as of $(cat .cache/raw/asof.txt))"
           git pull --rebase -X theirs origin master && git push   # others may push during the 2h run
       - name: Alert on failure (one GitHub issue; GitHub emails the owner)
-        if: failure()
+        if: failure() || cancelled()   # a timeout counts as cancelled
         env: { GH_TOKEN: "${{ github.token }}" }
         run: bash tools/job_alert.sh fail "refresh-data" publish-counties.yml 3
       - name: Close the alert when passing again; check the other job still runs

@@ -120,6 +120,8 @@ def run(st):
         rollup[g] = {"units": cp["units"], "cost_n": cp["cost_n"], "p50": cp["p50"], "prem_median": cp.get("prem_median"),
                      "share_below": cp.get("share_below"), "sfha_share": cp["sfha_share_units"],
                      "claims": cc["rows"], "paid": cc["total_paid"], "cwop_share": (cx or {}).get("cwop_share")}
+    for f in glob.glob(os.path.join(ROOT, "data", "all-counties", FIPS[st] + "*.json")):
+        if os.path.basename(f)[:5] not in rollup: os.remove(f)
     unassigned = sum(1 for r in pol if len((r["censusGeoid"] or "")[:5]) != 5)
     agg = {"level": "state", "state": st, "name": NAMES[st],
            "policies": dict(P, asof=asof(), retrieved=manifest("NfipPolicies", st)["pulled"], unassigned_rows=unassigned),

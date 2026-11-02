@@ -66,7 +66,7 @@ def slices(ds, st):
             d = n
         return base, out
     base = f"state eq '{st}'"
-    return base, [("noyear", base + " and yearOfLoss eq null")] + [(str(y), base + f" and yearOfLoss eq {y}") for y in range(1970, ASOF_DATE.year + 1)]
+    return base, [("noyear", base + " and yearOfLoss eq null")] + [(str(y), base + f" and yearOfLoss eq {y}") for y in range(1970, datetime.date.today().year + 1)]
 
 def pull_slice(ds, st, name, filt, fields):
     d = os.path.join(RAW, ds, st); os.makedirs(d, exist_ok=True)

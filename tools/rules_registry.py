@@ -197,9 +197,20 @@ RULES = {
                 "the authority returns. Policies already in force run to their expiration date and claims on them are still handled, though "
                 "FEMA says the money to pay claims may be limited.",
         # no dates on purpose: true before, during and after any lapse. FEMA bulletin W-23012 (Sept. 25, 2023); pdf, so read by hand.
-        "sources": [("https://www.law.cornell.edu/uscode/text/42/4026", "No new contract for flood insurance under this chapter shall be entered into after", "manual"),
+        "sources": [("https://www.law.cornell.edu/uscode/text/42/4026", "No new contract for flood insurance under this chapter shall be entered into after", "curl"),
                     ("https://agents.floodsmart.gov/sites/default/files/bulletins/W-23012/w-23012.pdf", "will remain in force until their expiration date", "manual"),
                     ("https://agents.floodsmart.gov/sites/default/files/bulletins/W-23012/w-23012.pdf", "funding available to pay claims may be limited", "manual")]},
+    "zone_labels": {
+        "text": "Every zone starting with A or V is high-risk; A1 to A30 and AE are the same kind of area (44 CFR §64.3).",
+        "sources": [(CFR64, "A1-30, AE Area of special flood hazard with water surface elevations determined", "curl")]},
+    "zone_price": {
+        "text": "Your flood zone is set at your exact address and decides whether a federally regulated lender must require coverage; your price is based on your own building's flood risk, and FEMA's full-risk price is its price for that risk.",
+        "sources": [("https://www.govinfo.gov/content/pkg/USCODE-2023-title42/html/USCODE-2023-title42-chap50-subchapI-sec4012a.htm", "regulated lending institutions", "curl"),
+                    (FS + "/premiumcosts", "The premium amount is based on the flood risk of the building.", "curl"),
+                    (FS + "/premiumcosts", "after subtracting statutory discounts from the full-risk premium", "curl")]},
+    "crs_what": {
+        "text": "FEMA's Community Rating System gives a discount to eligible policies in communities that take part.",
+        "sources": [(FS + "/premiumcosts", "Discount if building is in a participating Community Rating System community and meets eligibility requirements.", "curl")]},
     "other_buyers": {
         "text": "The NFIP also offers policies for renters and businesses.",
         "sources": [(FS + "/get-insured/buy-a-policy", "offers flood insurance policies for homeowners, renters and businesses", "curl")]},
@@ -247,8 +258,8 @@ RULES = {
                 "building, and it limits what it pays for in a basement. Belongings are paid at actual cash value (their used value), not the cost of new ones.",
         "sources": [(CFR61, "Any additional living expenses incurred while the insured building is being repaired", "curl"),
                     (CFR61, "Personal property not inside", "curl"),
-                    ("https://www.law.cornell.edu/cfr/text/44/appendix-A(1)_to_part_61", "in a basement regardless of the zone", "manual"),
-                    ("https://www.law.cornell.edu/cfr/text/44/appendix-A(1)_to_part_61", "subject to actual cash value", "manual")]},
+                    ("https://www.law.cornell.edu/cfr/text/44/appendix-A(1)_to_part_61", "in a basement regardless of the zone", "curl"),
+                    ("https://www.law.cornell.edu/cfr/text/44/appendix-A(1)_to_part_61", "subject to actual cash value", "curl")]},
     "claim_appeal": {
         "text": "NFIP claim denied? You can appeal to FEMA within 60 days of the date on the denial letter, and you can sue within one year of the denial. "
                 "An appeal does not extend that year.",
@@ -270,7 +281,8 @@ RULES = {
                     ("https://www.fema.gov/sites/default/files/documents/fema_fim-5-how-to-renew_apr2021.pdf", "lapse in coverage that may affect policy rating", "manual")]},
     "surcharge": {
         "text": "Homes that are not your primary residence, such as second homes and rentals you own, pay a higher federal surcharge: $250 a year, against $25 for a primary home.",
-        "sources": [("https://www.fema.gov/flood-insurance/rules-legislation", "for renters and owners of primary residences and $250 per year", "manual")]},
+        "sources": [("https://www.law.cornell.edu/uscode/text/42/4015a", "(1) $25, except as provided in paragraph (2); and (2) $250, in the case of a policy for any property that is", "curl"),
+                    ("https://www.law.cornell.edu/uscode/text/42/4015a", "a residential property that is not the primar", "curl")]},
     "tx_twia": {   # Texas only
         "text": "In Texas, a TWIA windstorm policy requires flood insurance when any part of the property is in a V, VE or V1-V30 zone, NFIP cover "
                 "is available for it, and the structure was built, altered, remodeled or enlarged after September 1, 2009.",

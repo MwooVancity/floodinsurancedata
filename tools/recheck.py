@@ -4,9 +4,10 @@
    then compares with the figures tagged on the built page. A shared bug can't hide in both.
 2. Re-fetches FEMA's field definitions; a changed hash means FEMA changed what a field means -> re-read it.
 3. Re-fetches every rules_registry source marked "curl" and checks its excerpt is still on the page.
-Usage: python -I tools/recheck.py [--base https://floodinsurancedata.com] [slug ...]
+4. Hashes the text around each law excerpt; any change there (a new exception) fails until a person re-reads it and runs --accept-law.
+Usage: python -I tools/recheck.py [--base https://floodinsurancedata.com] [--accept-law] [slug ...]
 Exit 1 on any mismatch."""
-import datetime, html, json, os, random, re, statistics, subprocess, sys, time, urllib.parse, urllib.request
+import datetime, hashlib, html, json, os, random, re, statistics, subprocess, sys, time, urllib.parse, urllib.request
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import metrics as MX                    # registry metadata only (field defs); no calculation is shared
 from rules_registry import RULES
@@ -19,6 +20,8 @@ args = sys.argv[1:]
 base = None
 RULES_ONLY = "--rules-only" in args   # release.py step: every rule's official wording is still on its source (seconds, not minutes)
 if RULES_ONLY: args.remove("--rules-only")
+ACCEPT_LAW = "--accept-law" in args   # after a person re-read the changed text
+if ACCEPT_LAW: args.remove("--accept-law"); RULES_ONLY = True
 if "--base" in args:
     i = args.index("--base"); base = args[i + 1]; del args[i:i + 2]
 counties = {c["slug"]: c for c in json.load(open(os.path.join(ROOT, "tools", "counties.json")))}
@@ -145,6 +148,9 @@ OKF = os.path.join(ROOT, "state", "rule-fetch-ok.json")
 last_ok = json.load(open(OKF)) if os.path.exists(OKF) else {}
 today = datetime.date.today()
 cache = {}
+LAWF = os.path.join(ROOT, "state", "law-sections.json")
+law = json.load(open(LAWF)) if os.path.exists(LAWF) else {}
+LAWHOST = re.compile(r"ecfr\.gov|law\.cornell\.edu|leg\.state\.fl\.us")
 for k, r in RULES.items():
     for url, ex, method in r["sources"]:
         if method != "curl": continue
@@ -155,11 +161,17 @@ for k, r in RULES.items():
             if cache[url][1]: last_ok[url] = today.isoformat()
         text, ok = cache[url]
         if ok and ex not in text: problems.append(f"rule {k}: excerpt no longer on {url}: {ex!r}")
+        elif ok and LAWHOST.search(url):   # the excerpt can survive while a new exception lands beside it
+            i = text.index(ex); h = hashlib.sha256(text[max(0, i - 1500):i + len(ex) + 1500].encode()).hexdigest()[:16]
+            lk = f"{k}|{ex[:50]}"
+            if lk in law and law[lk] != h and not ACCEPT_LAW: problems.append(f"rule {k}: law text changed near {ex[:50]!r} on {url}; re-read it, fix the rule if needed, then --accept-law")
+            elif law.get(lk) != h: law[lk] = h
         elif not ok:
             age = (today - datetime.date.fromisoformat(last_ok[url])).days if url in last_ok else 999
             if age > 14: problems.append(f"rule {k}: {url} has not loaded for {age} days; re-read it by hand")
             else: print(f"warning: rule {k}: {url} did not load this run (last loaded {age} days ago)")
 json.dump(last_ok, open(OKF, "w"), indent=1, sort_keys=True)
+json.dump(law, open(LAWF, "w"), indent=1, sort_keys=True)
 manual = sorted({k for k, r in RULES.items() for _, _, m_ in r["sources"] if m_ == "manual"})
 MRF = os.path.join(ROOT, "state", "manual-rule-read.json")   # {rule: date a person or Claude last read its source in raw text}
 read = json.load(open(MRF))

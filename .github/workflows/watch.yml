@@ -1,0 +1,17 @@
+name: watch
+# The daily job cannot report that it stopped, and the monthly job would only notice on the 3rd. This checks it every day.
+on:
+  schedule:
+    - cron: '30 23 * * *'   # after publish-counties, which GitHub starts around 19:00 UTC
+  workflow_dispatch:
+
+jobs:
+  watch:
+    runs-on: ubuntu-26.04   # pinned 2026-10-29 (owner: nothing may change under the jobs)
+    timeout-minutes: 5
+    permissions: { contents: read, issues: write, actions: read }
+    steps:
+      - uses: actions/checkout@v4
+      - name: Open an issue if the daily job has not succeeded for 2 days
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: bash tools/job_alert.sh ok "watch" publish-counties.yml 1

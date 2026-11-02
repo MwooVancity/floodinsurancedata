@@ -122,7 +122,11 @@ MUTATIONS = [   # (defect class from THE EVIDENCE table, what we reintroduce, ex
     ("hater r1", "unpaid table shows only some reasons", "C8",
      re.sub(r"(<th>Reason recorded</th><th>Claims</th></tr></thead><tbody>)<tr>.*?</tr>", r"\1", PAGE, count=1, flags=re.S), None),
     ("hater r1", "a rule printed twice on the page", "E2",
-     PAGE.replace("<p class='note'>Every zone starting", "<p class='note'>Standard homeowners insurance does not cover flood damage; flood insurance is bought separately, through the federal NFIP or a private insurer. Every zone starting", 1), None),
+     PAGE.replace("<p class='note'>Policy records keep", "<p class='note'>Standard homeowners insurance does not cover flood damage; flood insurance is bought separately, through the federal NFIP or a private insurer. Policy records keep", 1), None),
+    ("edge 11-02", "count with a plural noun", "T2", sub("; other sites count other policies", "; 1 federal disasters; other sites count other policies"), None),
+    ("edge 11-02", "builder note on the page", "T2", sub("; other sites count other policies", "; Next source to pull; other sites count other policies"), None),
+    ("edge 11-02", "spread tile beside its suppression", "T3", sub("; other sites count other policies", "; Suppressed percentile spread; other sites count other policies"), None),
+    ("truth 11-02", "duty typed outside a sourced rule", "T1", sub("; other sites count other policies", "; your lender may limit this; other sites count other policies"), None),
     ("L19", "outside-zone claim line dropped", "L19", PAGE.replace("Of the NFIP claim dollars paid here", "Of paid dollars"), None),
     ("legacy L12b", "'other zones' row dropped", "C4", re.sub(r"<tr><td>Other[^<]*</td>.*?</tr>", "", PAGE, count=1), None),
     # hater round 5 (2026-10-27): existing stock's full-risk price sold as what a new policy costs

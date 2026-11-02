@@ -65,7 +65,8 @@ jobs:
           if [ -n "${{ inputs.drill }}" ] && [ "${{ inputs.drill }}" != none ]; then echo "none=1" >> "$GITHUB_OUTPUT"; echo "drill: nothing added"; exit 0; fi
           out=$(python -I tools/add_counties.py 20); echo "$out"
           echo "msg=$out" >> "$GITHUB_OUTPUT"
-          git diff --quiet tools/counties.json && { echo "queue empty"; echo "none=1" >> "$GITHUB_OUTPUT"; } || true
+          # queue empty and the site already holds the latest data: nothing to build (a monthly refresh must still ship)
+          if git diff --quiet tools/counties.json && [ "$(git log -1 --format=%ct -- data/states)" -le "$(git log -1 --format=%ct -- dist)" ]; then echo "queue empty"; echo "none=1" >> "$GITHUB_OUTPUT"; fi
       - name: Phone check browser
         if: steps.add.outputs.none != '1'
         run: |
@@ -86,6 +87,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898+github-actions[bot]@users.noreply.github.com"
           git add -A tools/counties.json places.json dist data/c data/states state
+          git diff --cached --quiet && { echo "nothing changed"; exit 0; }
           git commit -m "publish: ${{ steps.add.outputs.msg }}"
           git pull --rebase origin master && git push
           bash tools/deploy_verified.sh   # deploy; live must equal what passed, else the previous release goes back
@@ -98,7 +100,7 @@ jobs:
           # live must equal the committed release; if not, deploy it again once (self-heal), then it must match
           python -I tools/gate_live.py || { npx --yes wrangler@4.86.0 deploy; sleep 30; python -I tools/gate_live.py; }
       - name: Alert on failure (one GitHub issue; GitHub emails the owner)
-        if: failure()
+        if: failure() || cancelled()   # a timeout counts as cancelled
         env: { GH_TOKEN: "${{ github.token }}" }
         run: bash tools/job_alert.sh fail "publish-counties" refresh-data.yml 40
       - name: Close the alert when passing again; check the other job still runs

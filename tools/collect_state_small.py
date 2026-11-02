@@ -79,12 +79,20 @@ def run(st):
     except RuntimeError as e:
         hist = None
         out["inforce_history"] = {"by_year": None, "unavailable": f"OpenFEMA count query timed out: {e}"}
+    old = json.load(open(os.path.join(d, "data.json"))) if os.path.exists(os.path.join(d, "data.json")) else {}
+    for k in ("crs", "declarations", "housing"):
+        if len(out[k]) < 0.8 * len(old.get(k) or []): raise RuntimeError(f"{k} shrank {len(old[k])} -> {len(out[k])}")   # keep last month's file
     json.dump(out, open(os.path.join(d, "data.json"), "w"))
     assemble(d)
     print(f"{st}: crs {len(out['crs'])}, decl {len(out['declarations'])}, housing {len(out['housing'])}, multiloss {len(ml)}, "
           f"pen {out['penetration']['overall_pct']}%, nri counties {len(out['nri_counties'])}, in-force {hist}", flush=True)
 
 if __name__ == "__main__":
+    failed = []
     for st in (sys.argv[1:] or sorted(NAMES)):
-        try: run(st)
-        except Exception as e: print(st, "FAILED", repr(e)[:150], flush=True)
+        for attempt in (1, 2):
+            try: run(st); break
+            except Exception as e:
+                print(st, "FAILED", repr(e)[:150], flush=True)
+                if attempt == 2: failed.append(st)
+    if failed: sys.exit(f"STOP: {failed} not refreshed; a fresh date must not sit on last month's figures")

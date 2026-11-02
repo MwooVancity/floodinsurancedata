@@ -4,7 +4,7 @@ For each county: write data/c/<slug>/{agg,data}.json, build with build_page.py, 
 page is removed, never shipped. Counties already indexed (tools/counties.json) stay indexable; every new page
 carries noindex; only counties in counties.json are published (see the rollout rule in __main__).
 Writes places.json (what home, hub, sitemap and sibling links read). Usage: python -I tools/build_counties.py [--only slug,...]"""
-import json, os, re, subprocess, sys
+import json, os, re, subprocess, sys, unicodedata
 from concurrent.futures import ThreadPoolExecutor
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from agg_raw import NAMES, slug as state_slug, FIPS
@@ -18,15 +18,26 @@ CDATA = os.path.join(ROOT, "review", "c") if REVIEW else os.path.join(DATA, "c")
 BASE = os.environ.get("FF_BASEURL", "https://floodinsurancedata.com")
 MIN_PRICED = 30   # a median from 30+ priced policies, with its small-sample caveat (no spread chart under 100); fewer = no honest median
 ST_OF = {v: k for k, v in FIPS.items()}
+UNMATCHED_OK = {"VALDEZ-CORDOVA CENSUS AREA"}   # split in two in 2019; FEMA's row cannot say which side
 INDEXED = {c["geoid"]: c for c in json.load(open(os.path.join(T, "counties.json")))}   # live and indexed before 2026-10-26
 NAMES_CEN = json.load(open(os.path.join(DATA, "us", "county_names.json")))
 STORM = json.load(open(os.path.join(DATA, "us", "storm_events.json")))
 
 def page_slug(name, st): return re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-") + "-" + st.lower()
-def key(name):   # "Miami-Dade County" / "MIAMI-DADE COUNTY" / "Miami-Dade (County)" -> "miami-dade|county"
-    n = name.lower().replace("(", "").replace(")", "").strip()
+ALIAS = {"anchorage|borough": "anchorage|municipality", "shannon|county": "oglalalakota|county", "wadehampton|census area": "kusilvak|census area", "georgetown-quitman|county": "quitman|county"}   # FEMA's older names
+OLD_FIPS = {"12025": "12086", "46113": "46102"}   # Dade became Miami-Dade, Shannon became Oglala Lakota; FEMA's repeat-flood list keeps the old codes
+def key(name):   # "Miami-Dade County" / "MIAMI-DADE COUNTY" / "Fairfield (County)(in PMSA 1160)" -> "miami-dade|county"; "Doña Ana" = "Dona Ana", "La Salle" = "LaSalle"
+    n = unicodedata.normalize("NFKD", name).encode("ascii", "ignore").decode().lower()
+    n = re.sub(r"\s*\(in .*$", "", n).replace("(", "").replace(")", "").strip()
+    n = re.sub(r"census a\w*$", "census area", n)   # FEMA cuts long names short
     m = re.match(r"(.*?)\s+(county|parish|borough|city and borough|census area|municipality|city)$", n)
-    return (m.group(1).strip() + "|" + m.group(2)) if m else n
+    base, unit = (m.group(1), m.group(2)) if m else (n, "city")   # FEMA's aid data names independent cities bare ("Virginia Beach") and counties with "(County)"
+    k = base.replace(" ", "").replace(".", "") + "|" + unit
+    return ALIAS.get(k, k)
+def unmatched(st):   # county-named rows no county here claims would silently read as "none on record"
+    sd, ks = state_files(st)[1], {key(n) for g, n in NAMES_CEN.items() if g[:2] == FIPS[st]}
+    names = {h.get("county") or "" for h in sd.get("housing", [])} | {p for c in sd.get("crs", []) for p in (c.get("county") or "").replace(",", "/").split("/")}
+    return sorted(n for n in names if re.search(r"(?i)\bcounty\b|\bparish\b", n) and "equivalent" not in n.lower() and key(n) not in ks)
 
 _states = {}
 def state_files(st):
@@ -47,16 +58,26 @@ def assemble(g, raw):
            "claims": dict(raw["claims"], retrieved=sagg["claims"]["retrieved"]),
            "nri": det.get("nri"), "state_risk": [{"fips": c["fips"], "county": c["county"], "rating": c["rating"]} for c in sdata.get("nri_counties", [])],
            "manifest": {"policies": man("policies", raw["policies"]["rows"]), "claims": man("claims", raw["claims"]["rows"])}}
-    ml = (sdata.get("multiloss") or {}).get("by_county", {}).get(g)
+    _mlc = (sdata.get("multiloss") or {}).get("by_county", {})
+    ml = [v for c, v in _mlc.items() if OLD_FIPS.get(c, c) == g]
+    ml = {"total": sum(v["total"] for v in ml), "srl": sum(v["srl"] for v in ml)}
+    _ml_blank = sum(v["total"] for c, v in _mlc.items() if OLD_FIPS.get(c, c) not in NAMES_CEN)   # FEMA rows with no usable county code, e.g. Virginia's 51000
     se = STORM["by_county"].get(g)
     data = {"claims_extra": dict(raw.get("claims_extra") or {}, retrieved=sm["claims"]["pulled"]),
-            "crs": [c for c in sdata.get("crs", []) if key(c.get("county") or "") == k],
+            "crs": [c for c in sdata.get("crs", []) if k in {key(p) for p in (c.get("county") or "").replace(",", "/").split("/")}],   # FEMA lists a multi-county city as "A COUNTY/B COUNTY" or "A COUNTY,B COUNTY"
             "declarations": [d for d in sdata.get("declarations", []) if (d.get("fipsCountyCode") or "") == g[2:]],
             "housing": [h for h in sdata.get("housing", []) if key(h.get("county") or "") == k],
-            "multiloss": {"total": ml["total"], "srl": ml["srl"], "retrieved": sdata["multiloss"]["retrieved"]} if ml else {"total": 0, "srl": 0, "retrieved": sdata["multiloss"]["retrieved"]},
+            "multiloss": dict(ml, uncoded=_ml_blank, retrieved=sdata["multiloss"]["retrieved"]),
+            "no_county": _no_county(st, sagg),
             "penetration": det.get("penetration") or {},
             "storm_events": dict(se, period=STORM["period"], retrieved=STORM["retrieved"], source=STORM["source"]) if se else {}}
     return st, name, agg, data
+
+_TOT = {}
+def _no_county(st, sagg):   # policies and claims FEMA gives no county: in the state's figures, in no county's
+    t = _TOT.get(st, {"units": 0, "claims": 0}); u = max(0, sagg["policies"]["units"] - t["units"]); c = max(0, sagg["claims"]["rows"] - t["claims"])
+    return {"units_pct": round(100 * u / sagg["policies"]["units"], 1) if sagg["policies"]["units"] else 0, "claims": c,
+            "claims_pct": round(100 * c / sagg["claims"]["rows"], 1) if sagg["claims"]["rows"] else 0}
 
 import fingerprint as FP   # build only what changed (PLAN scale guard)
 _ADJ = json.load(open(os.path.join(DATA, "us", "county_adjacency.json"))) if os.path.exists(os.path.join(DATA, "us", "county_adjacency.json")) else {}
@@ -83,6 +104,13 @@ def build_one(item):
 if __name__ == "__main__":
     only = set(sys.argv[sys.argv.index("--only") + 1].split(",")) if "--only" in sys.argv else None
     items, places = [], []
+    if not REVIEW and not only:
+        bad = {st: u for st in NAMES if st != "DC" and (u := [n for n in unmatched(st) if n not in UNMATCHED_OK])}
+        if bad: sys.exit(f"STOP: FEMA rows match no county, so their pages would say none: {bad}. Fix key() or add to UNMATCHED_OK")
+    for f in sorted(os.listdir(os.path.join(DATA, "all-counties"))):
+        r_ = json.load(open(os.path.join(DATA, "all-counties", f)))
+        if f[:2] in ST_OF:
+            t_ = _TOT.setdefault(ST_OF[f[:2]], {"units": 0, "claims": 0}); t_["units"] += r_["policies"].get("units") or 0; t_["claims"] += r_["claims"].get("rows") or 0
     for f in sorted(os.listdir(os.path.join(DATA, "all-counties"))):
         g = f[:5]; raw = json.load(open(os.path.join(DATA, "all-counties", f)))
         if g[:2] not in ST_OF or g not in NAMES_CEN or (raw["policies"].get("cost_n") or 0) < MIN_PRICED: continue
@@ -103,6 +131,8 @@ if __name__ == "__main__":
         items.append((g, st, name, sl))
         places.append({"slug": sl, "label": f"{name}, {NAMES[st]}", "short": name, "geoid": g, "state": st,
                        "units": agg["policies"]["units"], "median": agg["policies"]["p50"], "indexable": g in INDEXED})
+    lost = sorted(set(INDEXED) - {p["geoid"] for p in places} - {g for g in INDEXED if ST_OF.get(g[:2]) == "DC"})
+    if lost and not only and len(lost) > max(5, len(INDEXED) // 100): sys.exit(f"STOP: {len(lost)} published counties would vanish, e.g. {lost[:8]}")   # a bad download, not real change
     places.sort(key=lambda p: -p["units"])
     if only and os.path.exists(PLACES):   # a partial build keeps every other published county in the list
         places = [p for p in json.load(open(PLACES)) if p["slug"] not in {q["slug"] for q in places}] + places

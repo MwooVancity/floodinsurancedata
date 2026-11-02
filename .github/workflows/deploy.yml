@@ -25,7 +25,7 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
       - name: Alert on failure (one GitHub issue; GitHub emails the owner)
-        if: failure()
+        if: failure() || cancelled()   # a timeout counts as cancelled
         env: { GH_TOKEN: "${{ github.token }}" }
         run: bash tools/job_alert.sh fail "deploy" - 0
       - name: Close the deploy alert when a deploy passes again

@@ -26,4 +26,4 @@ for d, _, fs in os.walk(DIST):
         if live.replace(b"\r\n", b"\n") != built: bad.append(f"{url}: live differs from dist ({len(live)} vs {len(built)} bytes)")
 print(f"live pages checked: {n}, differing: {len(bad)}")
 for b in bad: print("  ", b)
-sys.exit(1 if bad else 0)
+sys.exit(1 if bad or not n else 0)   # zero pages checked is not a pass

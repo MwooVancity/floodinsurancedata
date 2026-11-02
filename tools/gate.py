@@ -158,6 +158,11 @@ OUTSIDE = visible(skip_attrs=("data-claim", "data-rule", "data-name"))   # a pla
 for w in MX.QUANT:
     hit = re.search(rf"\b{re.escape(w)}\b", OUTSIDE, re.I)
     if hit: fail("B2", f"'{w}' used without a checked claim: …{OUTSIDE[max(0, hit.start()-50):hit.end()+40]}…")
+_law = re.search(r"\b(must|by law|federal law|Congress|lenders? (?:may|can)|statut\w+|grace period)\b", OUTSIDE)   # T1 a duty or law stated outside a sourced rule
+if _law: fail("T1", f"law or duty typed outside rule(): …{OUTSIDE[max(0, _law.start()-60):_law.end()+40]}…")
+_t2 = re.search(r"(?<![\d,.$])1 (?:claims|NFIP flood claims|federal disasters|(?:NFIP )?communities)\b|Next source to pull|\$0 in payouts", OUTSIDE)   # T2 broken count wording, builder notes
+if _t2: fail("T2", f"broken wording: …{OUTSIDE[max(0, _t2.start()-40):_t2.end()+40]}…")
+if "Suppressed percentile spread" in OUTSIDE and "Half pay between" in OUTSIDE: fail("T3", "spread suppressed but the Half pay tile is shown")
 for _mm in re.finditer(r"\b(None|nan|NaN|undefined)\b(?!\s+(of|were|was|have|has|is|are)\b)", page):   # B3 a missing value printed as text
     fail("B3", f"missing value printed as '{_mm.group(1)}': …{page[max(0, _mm.start()-50):_mm.end()+20]}…")
 for _mm in re.finditer(r"(\d+(?:\.\d+)?)%(.{0,40})", READ):   # H6 a share is never over 100% unless explained
