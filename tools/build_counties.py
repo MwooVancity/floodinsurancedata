@@ -24,8 +24,10 @@ NAMES_CEN = json.load(open(os.path.join(DATA, "us", "county_names.json")))
 STORM = json.load(open(os.path.join(DATA, "us", "storm_events.json")))
 
 def page_slug(name, st): return re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-") + "-" + st.lower()
-ALIAS = {"anchorage|borough": "anchorage|municipality", "shannon|county": "oglalalakota|county", "wadehampton|census area": "kusilvak|census area", "georgetown-quitman|county": "quitman|county"}   # FEMA's older names
-OLD_FIPS = {"12025": "12086", "46113": "46102"}   # Dade became Miami-Dade, Shannon became Oglala Lakota; FEMA's repeat-flood list keeps the old codes
+ALIAS = {"anchorage|borough": "anchorage|municipality", "shannon|county": "oglalalakota|county", "wadehampton|census area": "kusilvak|census area", "georgetown-quitman|county": "quitman|county",
+         "juneau|borough": "juneau|city and borough", "sitka|borough": "sitka|city and borough", "wrangell|borough": "wrangell|city and borough",
+         "yakutat|borough": "yakutat|city and borough", "skagway|borough": "skagway|municipality"}   # FEMA's older names
+OLD_FIPS = {"12025": "12086", "46113": "46102", "51515": "51019", "02270": "02158"}   # Dade became Miami-Dade, Shannon became Oglala Lakota; FEMA's repeat-flood list keeps the old codes
 def key(name):   # "Miami-Dade County" / "MIAMI-DADE COUNTY" / "Fairfield (County)(in PMSA 1160)" -> "miami-dade|county"; "Doña Ana" = "Dona Ana", "La Salle" = "LaSalle"
     n = unicodedata.normalize("NFKD", name).encode("ascii", "ignore").decode().lower()
     n = re.sub(r"\s*\(in .*$", "", n).replace("(", "").replace(")", "").strip()
@@ -37,7 +39,7 @@ def key(name):   # "Miami-Dade County" / "MIAMI-DADE COUNTY" / "Fairfield (Count
 def unmatched(st):   # county-named rows no county here claims would silently read as "none on record"
     sd, ks = state_files(st)[1], {key(n) for g, n in NAMES_CEN.items() if g[:2] == FIPS[st]}
     names = {h.get("county") or "" for h in sd.get("housing", [])} | {p for c in sd.get("crs", []) for p in (c.get("county") or "").replace(",", "/").split("/")}
-    return sorted(n for n in names if re.search(r"(?i)\bcounty\b|\bparish\b", n) and "equivalent" not in n.lower() and key(n) not in ks)
+    return sorted(n for n in names if re.search(r"(?i)\bcounty\b|\bparish\b|\(borough\)", n) and "equivalent" not in n.lower() and key(n) not in ks)
 
 _states = {}
 def state_files(st):
@@ -65,14 +67,22 @@ def assemble(g, raw):
     se = STORM["by_county"].get(g)
     data = {"claims_extra": dict(raw.get("claims_extra") or {}, retrieved=sm["claims"]["pulled"]),
             "crs": [c for c in sdata.get("crs", []) if k in {key(p) for p in (c.get("county") or "").replace(",", "/").split("/")}],   # FEMA lists a multi-county city as "A COUNTY/B COUNTY" or "A COUNTY,B COUNTY"
-            "declarations": [d for d in sdata.get("declarations", []) if (d.get("fipsCountyCode") or "") == g[2:]],
+            "declarations": [d for d in sdata.get("declarations", []) if OLD_FIPS.get(g[:2] + (d.get("fipsCountyCode") or ""), g[:2] + (d.get("fipsCountyCode") or "")) == g],
             "housing": [h for h in sdata.get("housing", []) if key(h.get("county") or "") == k],
             "multiloss": dict(ml, uncoded=_ml_blank, retrieved=sdata["multiloss"]["retrieved"]),
-            "no_county": _no_county(st, sagg),
+            "no_county": _no_county(st, sagg), "housing_unplaced": _unplaced(st, sdata), "nri_meta": sdet["_nri"],
             "penetration": det.get("penetration") or {},
             "storm_events": dict(se, period=STORM["period"], retrieved=STORM["retrieved"], source=STORM["source"]) if se else {}}
     return st, name, agg, data
 
+_UNPL = {}
+def _unplaced(st, sdata):   # aid FEMA files under tribal or school-area names: no county can claim it, so a page must not read as if none exists
+    if st not in _UNPL:
+        ks, u = {key(n) for g, n in NAMES_CEN.items() if g[:2] == FIPS[st]}, {}
+        for h in sdata.get("housing", []):
+            if key(h.get("county") or "") not in ks: u[str(h.get("disasterNumber"))] = u.get(str(h.get("disasterNumber")), 0) + float(h.get("totalApprovedIhpAmount") or 0)
+        _UNPL[st] = u
+    return _UNPL[st]
 _TOT = {}
 def _no_county(st, sagg):   # policies and claims FEMA gives no county: in the state's figures, in no county's
     t = _TOT.get(st, {"units": 0, "claims": 0}); u = max(0, sagg["policies"]["units"] - t["units"]); c = max(0, sagg["claims"]["rows"] - t["claims"])

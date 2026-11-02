@@ -66,7 +66,7 @@ jobs:
           out=$(python -I tools/add_counties.py 20); echo "$out"
           echo "msg=$out" >> "$GITHUB_OUTPUT"
           # queue empty and the site already holds the latest data: nothing to build (a monthly refresh must still ship)
-          if git diff --quiet tools/counties.json && [ "$(git log -1 --format=%ct -- data/states)" -le "$(git log -1 --format=%ct -- dist)" ]; then echo "queue empty"; echo "none=1" >> "$GITHUB_OUTPUT"; fi
+          if git diff --quiet tools/counties.json && [ "$(python -I tools/refresh_shipped.py)" = yes ]; then echo "queue empty"; echo "none=1" >> "$GITHUB_OUTPUT"; fi
       - name: Phone check browser
         if: steps.add.outputs.none != '1'
         run: |

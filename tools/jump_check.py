@@ -6,8 +6,12 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LIMIT = float(sys.argv[sys.argv.index("--limit") + 1]) if "--limit" in sys.argv else 0.25
 MIN_N = 100   # small samples swing; only medians from 100+ priced policies are judged
 held = []
+PUB = {c["geoid"] for c in json.load(open(os.path.join(ROOT, "tools", "counties.json")))}   # only published pages can stop a refresh
+for g in sorted(PUB):
+    if not os.path.exists(os.path.join(ROOT, "data", "all-counties", g + ".json")): held.append(f"data/all-counties/{g}.json: published county gone from the download")
 for f in sorted(glob.glob(os.path.join(ROOT, "data", "states", "*", "agg.json")) + glob.glob(os.path.join(ROOT, "data", "all-counties", "*.json"))):   # the refresh writes all-counties, never data/c
     rel = os.path.relpath(f, ROOT).replace("\\", "/")
+    if "all-counties" in rel and os.path.basename(f)[:5] not in PUB: continue
     old = subprocess.run(["git", "show", f"HEAD:{rel}"], cwd=ROOT, capture_output=True, text=True, encoding="utf-8").stdout
     if not old: continue   # a new page has nothing to compare with
     a, b = json.loads(old).get("policies") or {}, json.load(open(f, encoding="utf-8")).get("policies") or {}

@@ -430,6 +430,7 @@ sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps
      "</urlset>\n"
 wr(os.path.join(DIST, "sitemap.xml"), sm)
 wr(os.path.join(DIST, "robots.txt"), f"User-agent: *\nAllow: /\nSitemap: {BASE}/sitemap.xml\n")
+wr(os.path.join(DIST, "_headers"), "/flood-insurance/*/data.csv\n  X-Robots-Tag: noindex\n")   # a download, not a search result
 wr(os.path.join(DIST, "llms.txt"),
    "# Flood insurance data\n\n> Per-county NFIP flood-insurance statistics from public FEMA data: what "
    "policyholders pay, the gap to FEMA's full-risk price, claims history, flood risk, and CRS discounts.\n\n"

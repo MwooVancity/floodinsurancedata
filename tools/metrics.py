@@ -69,6 +69,7 @@ METRICS = {
     "crs_discount": _m("NfipCommunityStatusBook", ["sfhaDiscount", "nonSfhaDiscount", "classRating"], "pct"),
     "declarations": _m("DisasterDeclarationsSummaries", ["disasterNumber", "incidentType", "declarationDate"], "count", counts="declaration_event"),
     "ia_paid": _m("HousingAssistanceOwners", ["totalApprovedIhpAmount"], "usd_aid_paid"),
+    "ia_unplaced": _m("HousingAssistanceOwners", ["totalApprovedIhpAmount"], "usd_aid_paid"),
     "ia_regs": _m("HousingAssistanceOwners", ["validRegistrations"], "count", counts="registration"),
     "ml_total": _m("IndividualAssistanceMultipleLossFloodProperties", ["highRiskPropertyType"], "count", counts="ia_damage_record"),
     "ml_uncoded": _m("IndividualAssistanceMultipleLossFloodProperties", ["fipsCountyCode"], "count", counts="ia_damage_record"),

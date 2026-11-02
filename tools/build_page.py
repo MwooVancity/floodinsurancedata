@@ -116,6 +116,7 @@ h_rows = [r for r in h_rows if r.get("disasterNumber") in _fh_nums]
 h_regs = sum(int(r.get("validRegistrations") or 0) for r in h_rows)
 h_ihp = sum(float(r.get("totalApprovedIhpAmount") or 0) for r in h_rows)
 h_disasters = len(set(r.get("disasterNumber") for r in h_rows))
+h_unplaced = sum(v for k, v in (data.get("housing_unplaced") or {}).items() if k.isdigit() and int(k) in _fh_nums)
 recent = [d for _, _, d in reversed(_ev_first)][:6]
 
 _crs_all = sorted(data.get("crs", []), key=lambda x: -(int((x.get("sfhaDiscount") or "0%").rstrip("%") or 0)))
@@ -219,7 +220,7 @@ def card_risk():
         if _present(inl.get("risk_rating")): parts.append(f"{html.escape(str(inl['risk_rating']))} for inland (river) flooding")
         risk = card("How much flood risk is here?",
                     " and ".join(parts) + f", by FEMA's {UNIT} rating. That compares this {UNIT} with others; it is not a forecast for your address.",
-                    risk_body, src(["nri_rating", "nri_eal_usd"], "NRI 2023 release", RETR))
+                    risk_body, src(["nri_rating", "nri_eal_usd"], f"NRI {data['nri_meta']['version']} release" if data.get("nri_meta") else "", pretty_date(data["nri_meta"]["retrieved"]) if data.get("nri_meta") else RETR))
     else:
         risk = card("How much flood risk is here?",
                     f"FEMA's National Risk Index has no usable flood rating for this {UNIT}."
@@ -961,7 +962,7 @@ jsonld = json.dumps([
      "creator": {"@type": "Organization", "name": "Flood Insurance Data", "url": BASE_URL},
      "isBasedOn": "https://www.fema.gov/about/openfema/data-sets",
      "publisher": {"@type": "Organization", "name": "Flood Insurance Data", "url": BASE_URL},
-     "dateModified": ISO_DATE,   # the data's real change date; no datePublished (it would move with every refresh)
+     "dateModified": P["asof"][:10],   # the data's real change date, not the download day; no datePublished (it would move with every refresh)
      "citation": "@@CITATION@@",
      "isBasedOn": "https://www.fema.gov/about/openfema/data-sets", "license": "https://www.fema.gov/about/openfema/terms-conditions"},
     {"@context": "https://schema.org", "@type": "Place", "name": CL,
@@ -1099,7 +1100,8 @@ def card_aid():
       ((claim("Yes", "yes", ("ia_paid", ">", 0)) + f": FEMA approved {m('ia_paid', big(h_ihp))} for homeowners here after floods and storms, "
         f"about {m('ia_per_reg', money(h_ihp / h_regs))} per registration"
         + ".")
-       if h_ihp and h_regs else "No FEMA housing aid to homeowners here after floods or storms is on record."),
+       if h_ihp and h_regs else (f"None is on record under this {UNIT}'s name, but for the same disasters FEMA lists {m('ia_unplaced', big(h_unplaced))} elsewhere in this state under names that match no {UNIT}, such as tribal or school areas, which may include it." if h_unplaced else
+                                "No FEMA housing aid to homeowners here after floods or storms is on record.")),
       f"<p class='note'>{rule('ia_partial')} The average is over every registration, including those approved for nothing. "
       "Only disasters counted in the flood-disaster card are included; their aid can still cover wind or tornado damage from the same storm. Disasters for COVID, fire, winter storms or tornadoes alone are left out.</p>",
       src(["ia_paid", "ia_regs"],

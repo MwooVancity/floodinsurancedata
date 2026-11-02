@@ -9,6 +9,10 @@ on:
   schedule:
     - cron: '0 6 3 * *'   # 06:00 UTC on the 3rd of each month
   workflow_dispatch:
+    inputs:
+      jump_limit:
+        description: 'Allowed move in one refresh, after a person looked at a held change (default 0.25)'
+        default: '0.25'
 
 permissions:
   contents: write
@@ -61,7 +65,7 @@ jobs:
           # side sources: if one is down, last month's values stay (each carries its own date) and the refresh goes on
           python -I tools/fetch_map_dates.py || echo "::warning::FEMA map dates not refreshed this month"
           python -I tools/fetch_sealevel.py || echo "::warning::NOAA sea level not refreshed this month"
-          python -I tools/jump_check.py   # a median moving >25% stops the commit: last month's data stays live
+          python -I tools/jump_check.py --limit ${{ inputs.jump_limit || '0.25' }}   # a median moving >25% stops the commit: last month's data stays live
       - name: Commit the computed data
         run: |
           git config user.name "github-actions[bot]"

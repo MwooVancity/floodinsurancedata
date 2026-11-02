@@ -64,6 +64,7 @@ def run(st):
                           "source": "OpenFEMA NfipResidentialPenetrationRates v1 (summed over the state's counties)"}
     nri = get(NRI + "?" + urllib.parse.urlencode({"where": f"STATEABBRV='{st}'", "outFields": "STCOFIPS,COUNTY,CFLD_RISKR,IFLD_RISKR",
                                                   "f": "json", "returnGeometry": "false", "resultRecordCount": 1000}))
+    if "features" not in nri: raise RuntimeError(f"NRI: {str(nri)[:80]}")   # the API answers 200 with an error body
     out["nri_counties"] = [{"fips": f["attributes"]["STCOFIPS"], "county": f["attributes"]["COUNTY"],
                             "coastal": f["attributes"]["CFLD_RISKR"], "inland": f["attributes"]["IFLD_RISKR"],
                             "rating": ffcalc.worst_flood_rating(f["attributes"]["CFLD_RISKR"], f["attributes"]["IFLD_RISKR"])}
@@ -80,7 +81,7 @@ def run(st):
         hist = None
         out["inforce_history"] = {"by_year": None, "unavailable": f"OpenFEMA count query timed out: {e}"}
     old = json.load(open(os.path.join(d, "data.json"))) if os.path.exists(os.path.join(d, "data.json")) else {}
-    for k in ("crs", "declarations", "housing"):
+    for k in ("crs", "declarations", "housing", "nri_counties"):
         if len(out[k]) < 0.8 * len(old.get(k) or []): raise RuntimeError(f"{k} shrank {len(old[k])} -> {len(out[k])}")   # keep last month's file
     json.dump(out, open(os.path.join(d, "data.json"), "w"))
     assemble(d)

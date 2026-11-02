@@ -21,6 +21,7 @@ r = subprocess.run([sys.executable, "-I", os.path.join(T, "build_page.py")], env
 assert r.returncode == 0, "build_page failed: " + r.stderr[-600:]
 PAGE = open(good, encoding="utf-8").read()
 AGG = json.load(open(os.path.join(d, "agg.json")))
+_P50 = re.search(r'<span data-m="cost_p50">([^<]+)</span>', PAGE).group(1)   # read from the page: a refresh moves it
 
 def gate(html=None, agg=None):
     hp, ap = os.path.join(tmp, "m.html"), os.path.join(d, "agg.json")
@@ -97,13 +98,13 @@ MUTATIONS = [   # (defect class from THE EVIDENCE table, what we reintroduce, ex
     ("sources", "dataset listed that no panel shows", "A5", sub('<ul class="srclist">', '<ul class="srclist"><li><a href="x">FEMA OpenFEMA — Made Up</a></li>'), None),
     ("reader first", "card opens with a data dump", "F1",
      PAGE.replace('<p class="stand">', '<p class="stand">' + "This block lists every figure in the dataset before any answer is given to the reader at all. " * 2, 1), None),
-    ("one figure", "same metric shows two values", "A3", sub('<span data-m="cost_p50">$865</span>', '<span data-m="cost_p50">$856</span>'), None),
+    ("one figure", "same metric shows two values", "A3", sub(f'<span data-m="cost_p50">{_P50}</span>', '<span data-m="cost_p50">$1</span>'), None),
     ("provenance", "record count inflated", "V2", re.sub(r'(<span data-m="records_policies"[^>]*>)[\d,]+', r"\g<1>99,999", PAGE, count=1), None),
     ("provenance", "complete download not stated", "G1", re.sub(r'<p class="prov">.*?</p>', "", PAGE, count=1, flags=re.S), None),
     ("reader text", "county shown as its code", "H1", sub("</main>", '<div id="counties"><table><tbody><tr><td>12009</td></tr></tbody></table></div></main>'), None),
     ("reader text", "points to county pages it does not link", "H2", sub('<p class="stand">', '<p class="stand">Open a county below for its own figures. '), None),
     ("reader text", "percentile code in a chart label", "H3", sub("<b>Typical</b>", "<b>p25 median</b>"), None),
-    ("reader text", "effective date is the download day", "H4", re.sub(r"Data effective July 31, 2026; retrieved ([A-Z][a-z]+ \d{1,2}, \d{4})", r"Data effective \1; retrieved \1", PAGE, count=1), None),
+    ("reader text", "effective date is the download day", "H4", re.sub(r"Data effective [A-Z][a-z]+ \d{1,2}, \d{4}; retrieved ([A-Z][a-z]+ \d{1,2}, \d{4})", r"Data effective \1; retrieved \1", PAGE, count=1), None),
     ("numbers", "hand-typed figure in a lead", "V1", sub('<p class="stand">', '<p class="stand">About 4,200 homes flooded here. '), None),
     ("numbers", "table cell differs from its data", "V2",
      re.sub(r'(<span data-m="zone_cost" data-q="X" data-p="[^"]+">)\$[\d,]+', r"\g<1>$999", PAGE), None),
