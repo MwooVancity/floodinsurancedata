@@ -1300,6 +1300,206 @@
 "indexable": true
 },
 {
+"slug": "union-county-nj",
+"label": "Union County, New Jersey",
+"short": "Union County",
+"geoid": "34039",
+"state": "NJ",
+"units": 4462,
+"median": 1318,
+"indexable": true
+},
+{
+"slug": "multnomah-county-or",
+"label": "Multnomah County, Oregon",
+"short": "Multnomah County",
+"geoid": "41051",
+"state": "OR",
+"units": 4447,
+"median": 733,
+"indexable": true
+},
+{
+"slug": "boulder-county-co",
+"label": "Boulder County, Colorado",
+"short": "Boulder County",
+"geoid": "08013",
+"state": "CO",
+"units": 4352,
+"median": 1050,
+"indexable": true
+},
+{
+"slug": "tulare-county-ca",
+"label": "Tulare County, California",
+"short": "Tulare County",
+"geoid": "06107",
+"state": "CA",
+"units": 4343,
+"median": 929,
+"indexable": true
+},
+{
+"slug": "clay-county-fl",
+"label": "Clay County, Florida",
+"short": "Clay County",
+"geoid": "12019",
+"state": "FL",
+"units": 4275,
+"median": 1048,
+"indexable": true
+},
+{
+"slug": "essex-county-nj",
+"label": "Essex County, New Jersey",
+"short": "Essex County",
+"geoid": "34013",
+"state": "NJ",
+"units": 4224,
+"median": 1084,
+"indexable": true
+},
+{
+"slug": "san-mateo-county-ca",
+"label": "San Mateo County, California",
+"short": "San Mateo County",
+"geoid": "06081",
+"state": "CA",
+"units": 4223,
+"median": 1205,
+"indexable": true
+},
+{
+"slug": "hawaii-county-hi",
+"label": "Hawaii County, Hawaii",
+"short": "Hawaii County",
+"geoid": "15001",
+"state": "HI",
+"units": 4124,
+"median": 1232,
+"indexable": true
+},
+{
+"slug": "washington-county-ri",
+"label": "Washington County, Rhode Island",
+"short": "Washington County",
+"geoid": "44009",
+"state": "RI",
+"units": 4049,
+"median": 1186,
+"indexable": true
+},
+{
+"slug": "lake-county-fl",
+"label": "Lake County, Florida",
+"short": "Lake County",
+"geoid": "12069",
+"state": "FL",
+"units": 4039,
+"median": 676,
+"indexable": true
+},
+{
+"slug": "jefferson-county-ky",
+"label": "Jefferson County, Kentucky",
+"short": "Jefferson County",
+"geoid": "21111",
+"state": "KY",
+"units": 4013,
+"median": 1128,
+"indexable": true
+},
+{
+"slug": "york-county-me",
+"label": "York County, Maine",
+"short": "York County",
+"geoid": "23031",
+"state": "ME",
+"units": 3863,
+"median": 1171,
+"indexable": true
+},
+{
+"slug": "riverside-county-ca",
+"label": "Riverside County, California",
+"short": "Riverside County",
+"geoid": "06065",
+"state": "CA",
+"units": 3854,
+"median": 1083,
+"indexable": true
+},
+{
+"slug": "kauai-county-hi",
+"label": "Kauai County, Hawaii",
+"short": "Kauai County",
+"geoid": "15007",
+"state": "HI",
+"units": 3848,
+"median": 1374,
+"indexable": true
+},
+{
+"slug": "hernando-county-fl",
+"label": "Hernando County, Florida",
+"short": "Hernando County",
+"geoid": "12053",
+"state": "FL",
+"units": 3829,
+"median": 775,
+"indexable": true
+},
+{
+"slug": "rockingham-county-nh",
+"label": "Rockingham County, New Hampshire",
+"short": "Rockingham County",
+"geoid": "33015",
+"state": "NH",
+"units": 3827,
+"median": 1284,
+"indexable": true
+},
+{
+"slug": "wayne-county-mi",
+"label": "Wayne County, Michigan",
+"short": "Wayne County",
+"geoid": "26163",
+"state": "MI",
+"units": 3801,
+"median": 682,
+"indexable": true
+},
+{
+"slug": "marion-county-fl",
+"label": "Marion County, Florida",
+"short": "Marion County",
+"geoid": "12083",
+"state": "FL",
+"units": 3797,
+"median": 584,
+"indexable": true
+},
+{
+"slug": "portsmouth-city-va",
+"label": "Portsmouth city, Virginia",
+"short": "Portsmouth city",
+"geoid": "51740",
+"state": "VA",
+"units": 3747,
+"median": 595,
+"indexable": true
+},
+{
+"slug": "santa-barbara-county-ca",
+"label": "Santa Barbara County, California",
+"short": "Santa Barbara County",
+"geoid": "06083",
+"state": "CA",
+"units": 3746,
+"median": 1232,
+"indexable": true
+},
+{
 "slug": "st-louis-county-mo",
 "label": "St. Louis County, Missouri",
 "short": "St. Louis County",

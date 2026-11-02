@@ -186,6 +186,26 @@
 - [Luzerne County](https://floodinsurancedata.com/flood-insurance/luzerne-county-pa/): median $1,169
 - [Merced County](https://floodinsurancedata.com/flood-insurance/merced-county-ca/): median $771
 - [Plaquemines Parish](https://floodinsurancedata.com/flood-insurance/plaquemines-parish-la/): median $1,231
+- [Union County](https://floodinsurancedata.com/flood-insurance/union-county-nj/): median $1,318
+- [Multnomah County](https://floodinsurancedata.com/flood-insurance/multnomah-county-or/): median $733
+- [Boulder County](https://floodinsurancedata.com/flood-insurance/boulder-county-co/): median $1,050
+- [Tulare County](https://floodinsurancedata.com/flood-insurance/tulare-county-ca/): median $929
+- [Clay County](https://floodinsurancedata.com/flood-insurance/clay-county-fl/): median $1,048
+- [Essex County](https://floodinsurancedata.com/flood-insurance/essex-county-nj/): median $1,084
+- [San Mateo County](https://floodinsurancedata.com/flood-insurance/san-mateo-county-ca/): median $1,205
+- [Hawaii County](https://floodinsurancedata.com/flood-insurance/hawaii-county-hi/): median $1,232
+- [Washington County](https://floodinsurancedata.com/flood-insurance/washington-county-ri/): median $1,186
+- [Lake County](https://floodinsurancedata.com/flood-insurance/lake-county-fl/): median $676
+- [Jefferson County](https://floodinsurancedata.com/flood-insurance/jefferson-county-ky/): median $1,128
+- [York County](https://floodinsurancedata.com/flood-insurance/york-county-me/): median $1,171
+- [Riverside County](https://floodinsurancedata.com/flood-insurance/riverside-county-ca/): median $1,083
+- [Kauai County](https://floodinsurancedata.com/flood-insurance/kauai-county-hi/): median $1,374
+- [Hernando County](https://floodinsurancedata.com/flood-insurance/hernando-county-fl/): median $775
+- [Rockingham County](https://floodinsurancedata.com/flood-insurance/rockingham-county-nh/): median $1,284
+- [Wayne County](https://floodinsurancedata.com/flood-insurance/wayne-county-mi/): median $682
+- [Marion County](https://floodinsurancedata.com/flood-insurance/marion-county-fl/): median $584
+- [Portsmouth city](https://floodinsurancedata.com/flood-insurance/portsmouth-city-va/): median $595
+- [Santa Barbara County](https://floodinsurancedata.com/flood-insurance/santa-barbara-county-ca/): median $1,232
 - [St. Louis County](https://floodinsurancedata.com/flood-insurance/st-louis-county-mo/): median $1,257
 - [Kanawha County](https://floodinsurancedata.com/flood-insurance/kanawha-county-wv/): median $1,450
 - [Methodology](https://floodinsurancedata.com/methodology/)

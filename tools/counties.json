@@ -1318,5 +1318,205 @@
   "label": "Plaquemines Parish, Louisiana",
   "short": "Plaquemines Parish",
   "official": 0
+ },
+ {
+  "slug": "union-county-nj",
+  "state": "NJ",
+  "geoid": "34039",
+  "county": "UNION",
+  "countytitle": "Union",
+  "label": "Union County, New Jersey",
+  "short": "Union County",
+  "official": 0
+ },
+ {
+  "slug": "multnomah-county-or",
+  "state": "OR",
+  "geoid": "41051",
+  "county": "MULTNOMAH",
+  "countytitle": "Multnomah",
+  "label": "Multnomah County, Oregon",
+  "short": "Multnomah County",
+  "official": 0
+ },
+ {
+  "slug": "boulder-county-co",
+  "state": "CO",
+  "geoid": "08013",
+  "county": "BOULDER",
+  "countytitle": "Boulder",
+  "label": "Boulder County, Colorado",
+  "short": "Boulder County",
+  "official": 0
+ },
+ {
+  "slug": "tulare-county-ca",
+  "state": "CA",
+  "geoid": "06107",
+  "county": "TULARE",
+  "countytitle": "Tulare",
+  "label": "Tulare County, California",
+  "short": "Tulare County",
+  "official": 0
+ },
+ {
+  "slug": "clay-county-fl",
+  "state": "FL",
+  "geoid": "12019",
+  "county": "CLAY",
+  "countytitle": "Clay",
+  "label": "Clay County, Florida",
+  "short": "Clay County",
+  "official": 0
+ },
+ {
+  "slug": "essex-county-nj",
+  "state": "NJ",
+  "geoid": "34013",
+  "county": "ESSEX",
+  "countytitle": "Essex",
+  "label": "Essex County, New Jersey",
+  "short": "Essex County",
+  "official": 0
+ },
+ {
+  "slug": "san-mateo-county-ca",
+  "state": "CA",
+  "geoid": "06081",
+  "county": "SAN MATEO",
+  "countytitle": "San Mateo",
+  "label": "San Mateo County, California",
+  "short": "San Mateo County",
+  "official": 0
+ },
+ {
+  "slug": "hawaii-county-hi",
+  "state": "HI",
+  "geoid": "15001",
+  "county": "HAWAII",
+  "countytitle": "Hawaii",
+  "label": "Hawaii County, Hawaii",
+  "short": "Hawaii County",
+  "official": 0
+ },
+ {
+  "slug": "washington-county-ri",
+  "state": "RI",
+  "geoid": "44009",
+  "county": "WASHINGTON",
+  "countytitle": "Washington",
+  "label": "Washington County, Rhode Island",
+  "short": "Washington County",
+  "official": 0
+ },
+ {
+  "slug": "lake-county-fl",
+  "state": "FL",
+  "geoid": "12069",
+  "county": "LAKE",
+  "countytitle": "Lake",
+  "label": "Lake County, Florida",
+  "short": "Lake County",
+  "official": 0
+ },
+ {
+  "slug": "jefferson-county-ky",
+  "state": "KY",
+  "geoid": "21111",
+  "county": "JEFFERSON",
+  "countytitle": "Jefferson",
+  "label": "Jefferson County, Kentucky",
+  "short": "Jefferson County",
+  "official": 0
+ },
+ {
+  "slug": "york-county-me",
+  "state": "ME",
+  "geoid": "23031",
+  "county": "YORK",
+  "countytitle": "York",
+  "label": "York County, Maine",
+  "short": "York County",
+  "official": 0
+ },
+ {
+  "slug": "riverside-county-ca",
+  "state": "CA",
+  "geoid": "06065",
+  "county": "RIVERSIDE",
+  "countytitle": "Riverside",
+  "label": "Riverside County, California",
+  "short": "Riverside County",
+  "official": 0
+ },
+ {
+  "slug": "kauai-county-hi",
+  "state": "HI",
+  "geoid": "15007",
+  "county": "KAUAI",
+  "countytitle": "Kauai",
+  "label": "Kauai County, Hawaii",
+  "short": "Kauai County",
+  "official": 0
+ },
+ {
+  "slug": "hernando-county-fl",
+  "state": "FL",
+  "geoid": "12053",
+  "county": "HERNANDO",
+  "countytitle": "Hernando",
+  "label": "Hernando County, Florida",
+  "short": "Hernando County",
+  "official": 0
+ },
+ {
+  "slug": "rockingham-county-nh",
+  "state": "NH",
+  "geoid": "33015",
+  "county": "ROCKINGHAM",
+  "countytitle": "Rockingham",
+  "label": "Rockingham County, New Hampshire",
+  "short": "Rockingham County",
+  "official": 0
+ },
+ {
+  "slug": "wayne-county-mi",
+  "state": "MI",
+  "geoid": "26163",
+  "county": "WAYNE",
+  "countytitle": "Wayne",
+  "label": "Wayne County, Michigan",
+  "short": "Wayne County",
+  "official": 0
+ },
+ {
+  "slug": "marion-county-fl",
+  "state": "FL",
+  "geoid": "12083",
+  "county": "MARION",
+  "countytitle": "Marion",
+  "label": "Marion County, Florida",
+  "short": "Marion County",
+  "official": 0
+ },
+ {
+  "slug": "portsmouth-city-va",
+  "state": "VA",
+  "geoid": "51740",
+  "county": "PORTSMOUTH CITY",
+  "countytitle": "Portsmouth city",
+  "label": "Portsmouth city, Virginia",
+  "short": "Portsmouth city",
+  "official": 0
+ },
+ {
+  "slug": "santa-barbara-county-ca",
+  "state": "CA",
+  "geoid": "06083",
+  "county": "SANTA BARBARA",
+  "countytitle": "Santa Barbara",
+  "label": "Santa Barbara County, California",
+  "short": "Santa Barbara County",
+  "official": 0
  }
 ]
