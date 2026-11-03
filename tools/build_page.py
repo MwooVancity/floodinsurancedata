@@ -50,6 +50,11 @@ for _u in ("city", "census area", "municipality"):   # Virginia Beach is an inde
     if os.environ.get("FF_COUNTYSHORT", "").lower().endswith(" " + _u): UNIT = _u
 RETR = _retr()
 POL_ASOF = pretty_date(P["asof"])   # the snapshot date in the data, not a typed one   # the day this place's records were downloaded (state pages); the county collect date otherwise
+def _yr_span(y):   # policies in force on the as-of date that began in year y: only the as-of year is a clean span (Jan to the
+    import calendar   # as-of month); the year before holds just the months after the as-of month (review 2026-11-03), so it is not shown
+    a = P["asof"][:10]; yy, mm = int(a[:4]), int(a[5:7])
+    if str(y) != str(yy): return None
+    return f"{calendar.month_abbr[1]} {yy}" if mm == 1 else f"{calendar.month_abbr[1]}–{calendar.month_abbr[mm]} {yy}"
 def src(keys, effective, retrieved):
     """A panel's source line, built from the metrics it shows (metrics.py), never typed by hand."""
     effective, retrieved = pretty_date(effective), pretty_date(retrieved)
@@ -555,8 +560,8 @@ def card_averages():
     _fees = sum(_xpp.get(k) or 0 for k in ("fee_mean", "hfiaa_mean", "reserve_mean")) if _xpp.get("fee_mean") is not None else None
     _avrows = [("Typical cost, single-family homes (median)", m("cost_p50", money(P["p50"])), "premium plus fees; the middle policy"),
                ("Typical premium only", m("prem_median", money(P["prem_median"])), "before the federal fee, reserve fund and surcharge")]
-    for _y in _yrs_cb[-2:]:
-        _avrows.append((f"Typical cost, policies whose term began in {_y}", tp("cost_year", f"policies.cost_by_year.{_y}.median", money, q=_y),
+    for _y in [y for y in _yrs_cb[-1:] if _yr_span(y)]:
+        _avrows.append((f"Typical cost, policies whose term began {_yr_span(_y)}", tp("cost_year", f"policies.cost_by_year.{_y}.median", money, q=_y),
                         f"{tp('cost_year_n', f'policies.cost_by_year.{_y}.n', num, q=_y)} policies"))
     if _new_ok:
         _avrows.append(("Typical cost, policies first bought in the past year", tp("cost_new", "extras.policies.cost_new_median", money),
@@ -856,8 +861,9 @@ def _pct_vs(a, b, q):
 cmp_line = ""
 _cby1 = P.get("cost_by_year") or {}
 _ly = max((y for y, d in _cby1.items() if (d.get("n") or 0) >= MX.CONST["year_min"]), default=None)
+_ly = _ly if _ly and _yr_span(_ly) else None   # a partial earlier year is never labelled as a whole year
 _renew_line = ('<p class="cmp">'   # hater r5: the renewing and the buying reader each get their own figure on screen 1
-               + (f'<b>This year’s bills:</b> policies whose term began in {_ly} (renewals and policies sold this year together) typically pay {tp("cost_year", f"policies.cost_by_year.{_ly}.median", money, q=_ly)}. '
+               + (f'<b>This year’s bills:</b> policies whose term began {_yr_span(_ly)} (renewals and policies sold this year together) typically pay {tp("cost_year", f"policies.cost_by_year.{_ly}.median", money, q=_ly)}. '
                   if _ly and len(_cby1) > 1 else "")
                + (f'<b>Buying?</b> Policies first bought in the past year typically pay {tp("cost_new", "extras.policies.cost_new_median", money)}. ' if _new_ok else "")
                + '<a href="#prices">Why prices differ</a>.</p>') if (_ly and len(_cby1) > 1) or _new_ok else ""
@@ -989,7 +995,7 @@ var P={{p25:{P['p25']},p50:{P['p50']},p75:{P['p75']},p90:{P['p90']}}};
 var Z={json.dumps({z: [d['median'], d['n']] for z, d in (P.get('cost_by_zone') or {}).items()})};
 var R={json.dumps(" These are existing policies, many still below FEMA's full-risk price, so a new quote often lands higher."
                   + (f" Policies first bought in the past year typically pay {money(_xpp['cost_new_median'])}." if _new_ok else "")
-                  + (f" Policies whose term began in {_ly} (renewals and new buyers) typically pay {money(_cby1[_ly]['median'])}." if _ly and len(_cby1) > 1 else ""))};
+                  + (f" Policies whose term began {_yr_span(_ly)} (renewals and new buyers) typically pay {money(_cby1[_ly]['median'])}." if _ly and len(_cby1) > 1 else ""))};
 var el=document.getElementById('q'),out=document.getElementById('qout');
 el.addEventListener('input',function(){{
   var v=parseFloat(el.value);
