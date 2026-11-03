@@ -10,13 +10,12 @@ from concurrent.futures import ThreadPoolExecutor
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RAW = os.path.join(ROOT, ".cache", "raw")
 API = "https://www.fema.gov/api/open/v3/"
-os.makedirs(RAW, exist_ok=True)
 def _asof():   # end of the month 3 months back (FEMA updates monthly, with a lag); a resumed pull keeps the date it started with
     p = os.path.join(RAW, "asof.txt")
     if os.path.exists(p): return open(p).read().strip()
     t = datetime.date.today().replace(day=1)
     for _ in range(2): t = (t - datetime.timedelta(days=1)).replace(day=1)
-    d = str(t - datetime.timedelta(days=1)); open(p, "w").write(d); return d
+    d = str(t - datetime.timedelta(days=1)); os.makedirs(RAW, exist_ok=True); open(p, "w").write(d); return d
 ASOF_DATE = datetime.date.fromisoformat(_asof())
 ASOF = f"{ASOF_DATE}T00:00:00.000z"
 STATES = ("DC HI WY SD AK MT VT ND NH NE UT ID NM KS NV IA ME WV OK OR CO KY AR RI MN WI TN IN MO MI AZ WA MS DE CT "
@@ -36,7 +35,6 @@ CLM_FIELDS = ("id state countyCode censusGeoid reportedZipCode yearOfLoss dateOf
               "nonPaymentReasonContents waterDepth floodWaterDuration elevatedBuildingIndicator postFIRMConstructionIndicator "
               "rateMethod originalNBDate crsClassCode nfipCommunityNumberCurrent").split()
 LOCK = threading.Lock()
-os.makedirs(RAW, exist_ok=True)
 def log(msg):
     line = f"{datetime.datetime.now():%H:%M:%S} {msg}"
     with LOCK:
@@ -128,8 +126,8 @@ def pull_state(ds, st, fields, full=False):
     log(f"DONE {ds} {st}: {total} records in {round(time.time() - t0)}s")
 
 if __name__ == "__main__":   # pull_bulk.py imports the field lists, the as-of rule and the API helpers
-    states = sys.argv[1:] or STATES
-    jobs = [("NfipPolicies", s, POL_FIELDS) for s in states] + [("NfipClaims", s, CLM_FIELDS) for s in states]
+    os.makedirs(RAW, exist_ok=True); states = sys.argv[1:] or STATES
+    jobs =[("NfipPolicies", s, POL_FIELDS) for s in states] + [("NfipClaims", s, CLM_FIELDS) for s in states]
     log(f"start: {len(states)} states, {len(jobs)} state-datasets")
     with ThreadPoolExecutor(max_workers=3) as ex:
         list(ex.map(lambda j: pull_state(*j), jobs))

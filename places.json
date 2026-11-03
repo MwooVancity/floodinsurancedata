@@ -5,8 +5,8 @@
 "short": "Miami-Dade County",
 "geoid": "12086",
 "state": "FL",
-"units": 366669,
-"median": 891,
+"units": 362515,
+"median": 898,
 "indexable": true
 },
 {
@@ -15,8 +15,8 @@
 "short": "Broward County",
 "geoid": "12011",
 "state": "FL",
-"units": 234789,
-"median": 831,
+"units": 232960,
+"median": 832,
 "indexable": true
 },
 {
@@ -25,8 +25,8 @@
 "short": "Harris County",
 "geoid": "48201",
 "state": "TX",
-"units": 231234,
-"median": 1084,
+"units": 226917,
+"median": 1087,
 "indexable": true
 },
 {
@@ -35,18 +35,8 @@
 "short": "Lee County",
 "geoid": "12071",
 "state": "FL",
-"units": 134473,
-"median": 1658,
-"indexable": true
-},
-{
-"slug": "palm-beach-county-fl",
-"label": "Palm Beach County, Florida",
-"short": "Palm Beach County",
-"geoid": "12099",
-"state": "FL",
-"units": 132945,
-"median": 670,
+"units": 133325,
+"median": 1689,
 "indexable": true
 },
 {
@@ -55,8 +45,18 @@
 "short": "Pinellas County",
 "geoid": "12103",
 "state": "FL",
-"units": 132836,
-"median": 1442,
+"units": 131666,
+"median": 1459,
+"indexable": true
+},
+{
+"slug": "palm-beach-county-fl",
+"label": "Palm Beach County, Florida",
+"short": "Palm Beach County",
+"geoid": "12099",
+"state": "FL",
+"units": 131028,
+"median": 673,
 "indexable": true
 },
 {
@@ -65,8 +65,8 @@
 "short": "Collier County",
 "geoid": "12021",
 "state": "FL",
-"units": 100302,
-"median": 1265,
+"units": 99483,
+"median": 1266,
 "indexable": true
 },
 {
@@ -75,8 +75,8 @@
 "short": "Jefferson Parish",
 "geoid": "22051",
 "state": "LA",
-"units": 87527,
-"median": 1172,
+"units": 86271,
+"median": 1218,
 "indexable": true
 },
 {
@@ -85,8 +85,8 @@
 "short": "Orleans Parish",
 "geoid": "22071",
 "state": "LA",
-"units": 67988,
-"median": 1093,
+"units": 66648,
+"median": 1141,
 "indexable": true
 },
 {
@@ -95,8 +95,8 @@
 "short": "Hillsborough County",
 "geoid": "12057",
 "state": "FL",
-"units": 65247,
-"median": 1117,
+"units": 64312,
+"median": 1154,
 "indexable": true
 },
 {
@@ -105,18 +105,8 @@
 "short": "Sarasota County",
 "geoid": "12115",
 "state": "FL",
-"units": 61446,
-"median": 1084,
-"indexable": true
-},
-{
-"slug": "galveston-county-tx",
-"label": "Galveston County, Texas",
-"short": "Galveston County",
-"geoid": "48167",
-"state": "TX",
-"units": 60942,
-"median": 1101,
+"units": 60758,
+"median": 1087,
 "indexable": true
 },
 {
@@ -125,8 +115,18 @@
 "short": "Charleston County",
 "geoid": "45019",
 "state": "SC",
-"units": 60873,
-"median": 978,
+"units": 60150,
+"median": 979,
+"indexable": true
+},
+{
+"slug": "galveston-county-tx",
+"label": "Galveston County, Texas",
+"short": "Galveston County",
+"geoid": "48167",
+"state": "TX",
+"units": 60045,
+"median": 1153,
 "indexable": true
 },
 {
@@ -135,18 +135,8 @@
 "short": "Horry County",
 "geoid": "45051",
 "state": "SC",
-"units": 53412,
-"median": 583,
-"indexable": true
-},
-{
-"slug": "cape-may-county-nj",
-"label": "Cape May County, New Jersey",
-"short": "Cape May County",
-"geoid": "34009",
-"state": "NJ",
-"units": 48473,
-"median": 1200,
+"units": 52602,
+"median": 585,
 "indexable": true
 },
 {
@@ -155,8 +145,18 @@
 "short": "Sacramento County",
 "geoid": "06067",
 "state": "CA",
-"units": 48307,
-"median": 832,
+"units": 48033,
+"median": 833,
+"indexable": true
+},
+{
+"slug": "cape-may-county-nj",
+"label": "Cape May County, New Jersey",
+"short": "Cape May County",
+"geoid": "34009",
+"state": "NJ",
+"units": 47966,
+"median": 1212,
 "indexable": true
 },
 {
@@ -165,8 +165,8 @@
 "short": "Volusia County",
 "geoid": "12127",
 "state": "FL",
-"units": 48099,
-"median": 861,
+"units": 47629,
+"median": 865,
 "indexable": true
 },
 {
@@ -175,8 +175,8 @@
 "short": "Beaufort County",
 "geoid": "45013",
 "state": "SC",
-"units": 46831,
-"median": 864,
+"units": 46138,
+"median": 872,
 "indexable": true
 },
 {
@@ -185,8 +185,8 @@
 "short": "Honolulu County",
 "geoid": "15003",
 "state": "HI",
-"units": 45987,
-"median": 1510,
+"units": 46105,
+"median": 1526,
 "indexable": true
 },
 {
@@ -195,28 +195,8 @@
 "short": "Brevard County",
 "geoid": "12009",
 "state": "FL",
-"units": 43440,
-"median": 865,
-"indexable": true
-},
-{
-"slug": "st-tammany-parish-la",
-"label": "St. Tammany Parish, Louisiana",
-"short": "St. Tammany Parish",
-"geoid": "22103",
-"state": "LA",
-"units": 41503,
-"median": 1212,
-"indexable": true
-},
-{
-"slug": "fort-bend-county-tx",
-"label": "Fort Bend County, Texas",
-"short": "Fort Bend County",
-"geoid": "48157",
-"state": "TX",
-"units": 41452,
-"median": 964,
+"units": 42930,
+"median": 866,
 "indexable": true
 },
 {
@@ -225,8 +205,28 @@
 "short": "Nassau County",
 "geoid": "36059",
 "state": "NY",
-"units": 41308,
-"median": 1470,
+"units": 40981,
+"median": 1475,
+"indexable": true
+},
+{
+"slug": "st-tammany-parish-la",
+"label": "St. Tammany Parish, Louisiana",
+"short": "St. Tammany Parish",
+"geoid": "22103",
+"state": "LA",
+"units": 40849,
+"median": 1233,
+"indexable": true
+},
+{
+"slug": "fort-bend-county-tx",
+"label": "Fort Bend County, Texas",
+"short": "Fort Bend County",
+"geoid": "48157",
+"state": "TX",
+"units": 40694,
+"median": 965,
 "indexable": true
 },
 {
@@ -235,8 +235,8 @@
 "short": "Ocean County",
 "geoid": "34029",
 "state": "NJ",
-"units": 41040,
-"median": 1146,
+"units": 40674,
+"median": 1160,
 "indexable": true
 },
 {
@@ -245,8 +245,8 @@
 "short": "Charlotte County",
 "geoid": "12015",
 "state": "FL",
-"units": 40832,
-"median": 1976,
+"units": 40383,
+"median": 1988,
 "indexable": true
 },
 {
@@ -255,8 +255,8 @@
 "short": "East Baton Rouge Parish",
 "geoid": "22033",
 "state": "LA",
-"units": 40683,
-"median": 611,
+"units": 40148,
+"median": 612,
 "indexable": true
 },
 {
@@ -265,8 +265,8 @@
 "short": "Manatee County",
 "geoid": "12081",
 "state": "FL",
-"units": 38100,
-"median": 828,
+"units": 37694,
+"median": 831,
 "indexable": true
 },
 {
@@ -275,8 +275,8 @@
 "short": "St. Johns County",
 "geoid": "12109",
 "state": "FL",
-"units": 32726,
-"median": 1084,
+"units": 32317,
+"median": 1087,
 "indexable": true
 },
 {
@@ -285,8 +285,8 @@
 "short": "Bay County",
 "geoid": "12005",
 "state": "FL",
-"units": 31958,
-"median": 877,
+"units": 31656,
+"median": 880,
 "indexable": true
 },
 {
@@ -295,8 +295,8 @@
 "short": "Monroe County",
 "geoid": "12087",
 "state": "FL",
-"units": 31747,
-"median": 1915,
+"units": 31429,
+"median": 1931,
 "indexable": true
 },
 {
@@ -305,18 +305,8 @@
 "short": "Worcester County",
 "geoid": "24047",
 "state": "MD",
-"units": 29373,
-"median": 994,
-"indexable": true
-},
-{
-"slug": "brazoria-county-tx",
-"label": "Brazoria County, Texas",
-"short": "Brazoria County",
-"geoid": "48039",
-"state": "TX",
-"units": 29360,
-"median": 1082,
+"units": 29203,
+"median": 997,
 "indexable": true
 },
 {
@@ -325,8 +315,18 @@
 "short": "Suffolk County",
 "geoid": "36103",
 "state": "NY",
-"units": 29237,
-"median": 1232,
+"units": 28973,
+"median": 1263,
+"indexable": true
+},
+{
+"slug": "brazoria-county-tx",
+"label": "Brazoria County, Texas",
+"short": "Brazoria County",
+"geoid": "48039",
+"state": "TX",
+"units": 28843,
+"median": 1084,
 "indexable": true
 },
 {
@@ -335,8 +335,8 @@
 "short": "Duval County",
 "geoid": "12031",
 "state": "FL",
-"units": 28217,
-"median": 1034,
+"units": 27760,
+"median": 1044,
 "indexable": true
 },
 {
@@ -345,8 +345,8 @@
 "short": "Nueces County",
 "geoid": "48355",
 "state": "TX",
-"units": 26908,
-"median": 910,
+"units": 26589,
+"median": 913,
 "indexable": true
 },
 {
@@ -355,8 +355,8 @@
 "short": "Baldwin County",
 "geoid": "01003",
 "state": "AL",
-"units": 25823,
-"median": 1132,
+"units": 25316,
+"median": 1167,
 "indexable": true
 },
 {
@@ -365,8 +365,8 @@
 "short": "Pasco County",
 "geoid": "12101",
 "state": "FL",
-"units": 25176,
-"median": 834,
+"units": 24886,
+"median": 837,
 "indexable": true
 },
 {
@@ -375,8 +375,8 @@
 "short": "Hudson County",
 "geoid": "34017",
 "state": "NJ",
-"units": 24445,
-"median": 1670,
+"units": 24229,
+"median": 1713,
 "indexable": true
 },
 {
@@ -385,8 +385,8 @@
 "short": "Chatham County",
 "geoid": "13051",
 "state": "GA",
-"units": 23782,
-"median": 1016,
+"units": 23429,
+"median": 1030,
 "indexable": true
 },
 {
@@ -395,8 +395,8 @@
 "short": "Atlantic County",
 "geoid": "34001",
 "state": "NJ",
-"units": 23137,
-"median": 1246,
+"units": 22917,
+"median": 1264,
 "indexable": true
 },
 {
@@ -405,8 +405,8 @@
 "short": "Montgomery County",
 "geoid": "48339",
 "state": "TX",
-"units": 22513,
-"median": 1001,
+"units": 22135,
+"median": 1005,
 "indexable": true
 },
 {
@@ -415,8 +415,8 @@
 "short": "Sussex County",
 "geoid": "10005",
 "state": "DE",
-"units": 22022,
-"median": 880,
+"units": 21861,
+"median": 881,
 "indexable": true
 },
 {
@@ -425,8 +425,8 @@
 "short": "Brunswick County",
 "geoid": "37019",
 "state": "NC",
-"units": 21091,
-"median": 756,
+"units": 20871,
+"median": 760,
 "indexable": true
 },
 {
@@ -435,8 +435,8 @@
 "short": "Jefferson County",
 "geoid": "48245",
 "state": "TX",
-"units": 20824,
-"median": 1087,
+"units": 20434,
+"median": 1147,
 "indexable": true
 },
 {
@@ -445,8 +445,8 @@
 "short": "Virginia Beach city",
 "geoid": "51810",
 "state": "VA",
-"units": 20355,
-"median": 709,
+"units": 20100,
+"median": 713,
 "indexable": true
 },
 {
@@ -455,18 +455,8 @@
 "short": "Monmouth County",
 "geoid": "34025",
 "state": "NJ",
-"units": 19956,
-"median": 1197,
-"indexable": true
-},
-{
-"slug": "cameron-county-tx",
-"label": "Cameron County, Texas",
-"short": "Cameron County",
-"geoid": "48061",
-"state": "TX",
-"units": 19785,
-"median": 624,
+"units": 19797,
+"median": 1202,
 "indexable": true
 },
 {
@@ -475,8 +465,18 @@
 "short": "Queens County",
 "geoid": "36081",
 "state": "NY",
-"units": 19697,
-"median": 1232,
+"units": 19599,
+"median": 1263,
+"indexable": true
+},
+{
+"slug": "cameron-county-tx",
+"label": "Cameron County, Texas",
+"short": "Cameron County",
+"geoid": "48061",
+"state": "TX",
+"units": 19436,
+"median": 628,
 "indexable": true
 },
 {
@@ -485,8 +485,8 @@
 "short": "Indian River County",
 "geoid": "12061",
 "state": "FL",
-"units": 19478,
-"median": 900,
+"units": 19241,
+"median": 904,
 "indexable": true
 },
 {
@@ -495,8 +495,8 @@
 "short": "St. Lucie County",
 "geoid": "12111",
 "state": "FL",
-"units": 19192,
-"median": 631,
+"units": 18978,
+"median": 633,
 "indexable": true
 },
 {
@@ -505,8 +505,8 @@
 "short": "Okaloosa County",
 "geoid": "12091",
 "state": "FL",
-"units": 19069,
-"median": 1057,
+"units": 18955,
+"median": 1075,
 "indexable": true
 },
 {
@@ -515,8 +515,8 @@
 "short": "Kings County",
 "geoid": "36047",
 "state": "NY",
-"units": 18764,
-"median": 1088,
+"units": 18645,
+"median": 1106,
 "indexable": true
 },
 {
@@ -525,8 +525,8 @@
 "short": "New Hanover County",
 "geoid": "37129",
 "state": "NC",
-"units": 17667,
-"median": 963,
+"units": 17443,
+"median": 969,
 "indexable": true
 },
 {
@@ -535,8 +535,8 @@
 "short": "Lafayette Parish",
 "geoid": "22055",
 "state": "LA",
-"units": 17532,
-"median": 1036,
+"units": 17312,
+"median": 1041,
 "indexable": true
 },
 {
@@ -545,8 +545,8 @@
 "short": "Escambia County",
 "geoid": "12033",
 "state": "FL",
-"units": 17505,
-"median": 838,
+"units": 17310,
+"median": 841,
 "indexable": true
 },
 {
@@ -555,8 +555,8 @@
 "short": "Walton County",
 "geoid": "12131",
 "state": "FL",
-"units": 17425,
-"median": 979,
+"units": 17301,
+"median": 983,
 "indexable": true
 },
 {
@@ -565,8 +565,8 @@
 "short": "Orange County",
 "geoid": "12095",
 "state": "FL",
-"units": 17219,
-"median": 623,
+"units": 17062,
+"median": 624,
 "indexable": true
 },
 {
@@ -575,8 +575,8 @@
 "short": "Dare County",
 "geoid": "37055",
 "state": "NC",
-"units": 15894,
-"median": 756,
+"units": 15767,
+"median": 762,
 "indexable": true
 },
 {
@@ -585,8 +585,8 @@
 "short": "Livingston Parish",
 "geoid": "22063",
 "state": "LA",
-"units": 15215,
-"median": 1232,
+"units": 15000,
+"median": 1237,
 "indexable": true
 },
 {
@@ -595,8 +595,8 @@
 "short": "New York County",
 "geoid": "36061",
 "state": "NY",
-"units": 14670,
-"median": 1022,
+"units": 14925,
+"median": 1021,
 "indexable": true
 },
 {
@@ -605,8 +605,8 @@
 "short": "Fairfield County",
 "geoid": "09001",
 "state": "CT",
-"units": 14619,
-"median": 1505,
+"units": 14358,
+"median": 1512,
 "indexable": true
 },
 {
@@ -615,8 +615,8 @@
 "short": "Carteret County",
 "geoid": "37031",
 "state": "NC",
-"units": 14322,
-"median": 1090,
+"units": 14181,
+"median": 1103,
 "indexable": true
 },
 {
@@ -625,8 +625,8 @@
 "short": "Ascension Parish",
 "geoid": "22005",
 "state": "LA",
-"units": 14286,
-"median": 883,
+"units": 14070,
+"median": 890,
 "indexable": true
 },
 {
@@ -635,8 +635,8 @@
 "short": "Martin County",
 "geoid": "12085",
 "state": "FL",
-"units": 14193,
-"median": 990,
+"units": 14007,
+"median": 995,
 "indexable": true
 },
 {
@@ -645,8 +645,8 @@
 "short": "Glynn County",
 "geoid": "13127",
 "state": "GA",
-"units": 13819,
-"median": 978,
+"units": 13680,
+"median": 979,
 "indexable": true
 },
 {
@@ -655,8 +655,8 @@
 "short": "Harrison County",
 "geoid": "28047",
 "state": "MS",
-"units": 13404,
-"median": 1212,
+"units": 13267,
+"median": 1233,
 "indexable": true
 },
 {
@@ -665,8 +665,8 @@
 "short": "Calcasieu Parish",
 "geoid": "22019",
 "state": "LA",
-"units": 12921,
-"median": 1264,
+"units": 12718,
+"median": 1266,
 "indexable": true
 },
 {
@@ -675,8 +675,8 @@
 "short": "Los Angeles County",
 "geoid": "06037",
 "state": "CA",
-"units": 12519,
-"median": 1092,
+"units": 12457,
+"median": 1121,
 "indexable": true
 },
 {
@@ -685,8 +685,8 @@
 "short": "Maricopa County",
 "geoid": "04013",
 "state": "AZ",
-"units": 12436,
-"median": 891,
+"units": 12338,
+"median": 897,
 "indexable": true
 },
 {
@@ -695,8 +695,8 @@
 "short": "Orange County",
 "geoid": "48361",
 "state": "TX",
-"units": 12097,
-"median": 1192,
+"units": 11937,
+"median": 1232,
 "indexable": true
 },
 {
@@ -705,18 +705,8 @@
 "short": "Terrebonne Parish",
 "geoid": "22109",
 "state": "LA",
-"units": 11936,
-"median": 1369,
-"indexable": true
-},
-{
-"slug": "jackson-county-ms",
-"label": "Jackson County, Mississippi",
-"short": "Jackson County",
-"geoid": "28059",
-"state": "MS",
-"units": 11932,
-"median": 1355,
+"units": 11812,
+"median": 1396,
 "indexable": true
 },
 {
@@ -725,8 +715,18 @@
 "short": "Cook County",
 "geoid": "17031",
 "state": "IL",
-"units": 11828,
-"median": 1162,
+"units": 11789,
+"median": 1168,
+"indexable": true
+},
+{
+"slug": "jackson-county-ms",
+"label": "Jackson County, Mississippi",
+"short": "Jackson County",
+"geoid": "28059",
+"state": "MS",
+"units": 11776,
+"median": 1372,
 "indexable": true
 },
 {
@@ -735,18 +735,8 @@
 "short": "Maui County",
 "geoid": "15009",
 "state": "HI",
-"units": 11735,
-"median": 1263,
-"indexable": true
-},
-{
-"slug": "santa-rosa-county-fl",
-"label": "Santa Rosa County, Florida",
-"short": "Santa Rosa County",
-"geoid": "12113",
-"state": "FL",
-"units": 11600,
-"median": 872,
+"units": 11723,
+"median": 1264,
 "indexable": true
 },
 {
@@ -755,8 +745,18 @@
 "short": "Santa Clara County",
 "geoid": "06085",
 "state": "CA",
-"units": 11536,
-"median": 1271,
+"units": 11519,
+"median": 1278,
+"indexable": true
+},
+{
+"slug": "santa-rosa-county-fl",
+"label": "Santa Rosa County, Florida",
+"short": "Santa Rosa County",
+"geoid": "12113",
+"state": "FL",
+"units": 11438,
+"median": 877,
 "indexable": true
 },
 {
@@ -765,8 +765,8 @@
 "short": "Norfolk city",
 "geoid": "51710",
 "state": "VA",
-"units": 11163,
-"median": 722,
+"units": 11081,
+"median": 728,
 "indexable": true
 },
 {
@@ -775,8 +775,8 @@
 "short": "Flagler County",
 "geoid": "12035",
 "state": "FL",
-"units": 10793,
-"median": 1080,
+"units": 10676,
+"median": 1082,
 "indexable": true
 },
 {
@@ -785,8 +785,8 @@
 "short": "St. Charles Parish",
 "geoid": "22089",
 "state": "LA",
-"units": 10664,
-"median": 1186,
+"units": 10521,
+"median": 1231,
 "indexable": true
 },
 {
@@ -795,18 +795,8 @@
 "short": "Bergen County",
 "geoid": "34003",
 "state": "NJ",
-"units": 10467,
-"median": 1278,
-"indexable": true
-},
-{
-"slug": "hidalgo-county-tx",
-"label": "Hidalgo County, Texas",
-"short": "Hidalgo County",
-"geoid": "48215",
-"state": "TX",
-"units": 9960,
-"median": 631,
+"units": 10397,
+"median": 1303,
 "indexable": true
 },
 {
@@ -815,8 +805,8 @@
 "short": "Barnstable County",
 "geoid": "25001",
 "state": "MA",
-"units": 9896,
-"median": 1443,
+"units": 9828,
+"median": 1451,
 "indexable": true
 },
 {
@@ -825,8 +815,18 @@
 "short": "Suffolk County",
 "geoid": "25025",
 "state": "MA",
-"units": 9676,
-"median": 1679,
+"units": 9743,
+"median": 1680,
+"indexable": true
+},
+{
+"slug": "hidalgo-county-tx",
+"label": "Hidalgo County, Texas",
+"short": "Hidalgo County",
+"geoid": "48215",
+"state": "TX",
+"units": 9686,
+"median": 633,
 "indexable": true
 },
 {
@@ -835,8 +835,8 @@
 "short": "Orange County",
 "geoid": "06059",
 "state": "CA",
-"units": 9496,
-"median": 1083,
+"units": 9448,
+"median": 1084,
 "indexable": true
 },
 {
@@ -845,8 +845,8 @@
 "short": "Hampton city",
 "geoid": "51650",
 "state": "VA",
-"units": 9314,
-"median": 739,
+"units": 9195,
+"median": 741,
 "indexable": true
 },
 {
@@ -855,8 +855,8 @@
 "short": "Osceola County",
 "geoid": "12097",
 "state": "FL",
-"units": 9307,
-"median": 645,
+"units": 9167,
+"median": 648,
 "indexable": true
 },
 {
@@ -865,8 +865,8 @@
 "short": "St. Bernard Parish",
 "geoid": "22087",
 "state": "LA",
-"units": 9243,
-"median": 1088,
+"units": 9069,
+"median": 1133,
 "indexable": true
 },
 {
@@ -875,8 +875,8 @@
 "short": "Essex County",
 "geoid": "25009",
 "state": "MA",
-"units": 9089,
-"median": 1313,
+"units": 8933,
+"median": 1349,
 "indexable": true
 },
 {
@@ -885,8 +885,8 @@
 "short": "Nassau County",
 "geoid": "12089",
 "state": "FL",
-"units": 9020,
-"median": 1082,
+"units": 8884,
+"median": 1083,
 "indexable": true
 },
 {
@@ -895,8 +895,8 @@
 "short": "Travis County",
 "geoid": "48453",
 "state": "TX",
-"units": 8921,
-"median": 1008,
+"units": 8827,
+"median": 1012,
 "indexable": true
 },
 {
@@ -905,8 +905,8 @@
 "short": "San Diego County",
 "geoid": "06073",
 "state": "CA",
-"units": 8668,
-"median": 1083,
+"units": 8660,
+"median": 1084,
 "indexable": true
 },
 {
@@ -915,8 +915,8 @@
 "short": "Lafourche Parish",
 "geoid": "22057",
 "state": "LA",
-"units": 8649,
-"median": 1228,
+"units": 8519,
+"median": 1234,
 "indexable": true
 },
 {
@@ -925,8 +925,8 @@
 "short": "Georgetown County",
 "geoid": "45043",
 "state": "SC",
-"units": 8513,
-"median": 1031,
+"units": 8429,
+"median": 1034,
 "indexable": true
 },
 {
@@ -935,7 +935,7 @@
 "short": "Westchester County",
 "geoid": "36119",
 "state": "NY",
-"units": 8458,
+"units": 8413,
 "median": 872,
 "indexable": true
 },
@@ -945,8 +945,8 @@
 "short": "Plymouth County",
 "geoid": "25023",
 "state": "MA",
-"units": 8286,
-"median": 1508,
+"units": 8236,
+"median": 1514,
 "indexable": true
 },
 {
@@ -955,8 +955,8 @@
 "short": "New Haven County",
 "geoid": "09009",
 "state": "CT",
-"units": 8263,
-"median": 1540,
+"units": 8172,
+"median": 1546,
 "indexable": true
 },
 {
@@ -965,18 +965,8 @@
 "short": "Polk County",
 "geoid": "12105",
 "state": "FL",
-"units": 7854,
-"median": 627,
-"indexable": true
-},
-{
-"slug": "tangipahoa-parish-la",
-"label": "Tangipahoa Parish, Louisiana",
-"short": "Tangipahoa Parish",
-"geoid": "22105",
-"state": "LA",
-"units": 7492,
-"median": 1087,
+"units": 7748,
+"median": 628,
 "indexable": true
 },
 {
@@ -985,8 +975,18 @@
 "short": "Hancock County",
 "geoid": "28045",
 "state": "MS",
-"units": 7462,
-"median": 1263,
+"units": 7384,
+"median": 1267,
+"indexable": true
+},
+{
+"slug": "tangipahoa-parish-la",
+"label": "Tangipahoa Parish, Louisiana",
+"short": "Tangipahoa Parish",
+"geoid": "22105",
+"state": "LA",
+"units": 7356,
+"median": 1117,
 "indexable": true
 },
 {
@@ -995,8 +995,8 @@
 "short": "Chesapeake city",
 "geoid": "51550",
 "state": "VA",
-"units": 7428,
-"median": 702,
+"units": 7352,
+"median": 706,
 "indexable": true
 },
 {
@@ -1005,8 +1005,8 @@
 "short": "Seminole County",
 "geoid": "12117",
 "state": "FL",
-"units": 7412,
-"median": 735,
+"units": 7280,
+"median": 737,
 "indexable": true
 },
 {
@@ -1015,8 +1015,8 @@
 "short": "Berkeley County",
 "geoid": "45015",
 "state": "SC",
-"units": 7312,
-"median": 843,
+"units": 7207,
+"median": 844,
 "indexable": true
 },
 {
@@ -1025,8 +1025,8 @@
 "short": "Middlesex County",
 "geoid": "25017",
 "state": "MA",
-"units": 7286,
-"median": 934,
+"units": 7129,
+"median": 943,
 "indexable": true
 },
 {
@@ -1035,8 +1035,8 @@
 "short": "King County",
 "geoid": "53033",
 "state": "WA",
-"units": 7005,
-"median": 961,
+"units": 6949,
+"median": 962,
 "indexable": true
 },
 {
@@ -1045,8 +1045,8 @@
 "short": "Dallas County",
 "geoid": "48113",
 "state": "TX",
-"units": 6882,
-"median": 936,
+"units": 6798,
+"median": 938,
 "indexable": true
 },
 {
@@ -1055,8 +1055,8 @@
 "short": "Mobile County",
 "geoid": "01097",
 "state": "AL",
-"units": 6794,
-"median": 1232,
+"units": 6689,
+"median": 1256,
 "indexable": true
 },
 {
@@ -1065,8 +1065,8 @@
 "short": "Marin County",
 "geoid": "06041",
 "state": "CA",
-"units": 6390,
-"median": 1632,
+"units": 6346,
+"median": 1639,
 "indexable": true
 },
 {
@@ -1075,8 +1075,8 @@
 "short": "Richmond County",
 "geoid": "36085",
 "state": "NY",
-"units": 6186,
-"median": 962,
+"units": 6150,
+"median": 965,
 "indexable": true
 },
 {
@@ -1085,18 +1085,8 @@
 "short": "Citrus County",
 "geoid": "12017",
 "state": "FL",
-"units": 6020,
-"median": 1232,
-"indexable": true
-},
-{
-"slug": "st-john-the-baptist-parish-la",
-"label": "St. John the Baptist Parish, Louisiana",
-"short": "St. John the Baptist Parish",
-"geoid": "22095",
-"state": "LA",
-"units": 5882,
-"median": 1335,
+"units": 5980,
+"median": 1240,
 "indexable": true
 },
 {
@@ -1105,8 +1095,18 @@
 "short": "Craven County",
 "geoid": "37049",
 "state": "NC",
-"units": 5877,
-"median": 1018,
+"units": 5810,
+"median": 1023,
+"indexable": true
+},
+{
+"slug": "st-john-the-baptist-parish-la",
+"label": "St. John the Baptist Parish, Louisiana",
+"short": "St. John the Baptist Parish",
+"geoid": "22095",
+"state": "LA",
+"units": 5794,
+"median": 1357,
 "indexable": true
 },
 {
@@ -1115,8 +1115,8 @@
 "short": "Tarrant County",
 "geoid": "48439",
 "state": "TX",
-"units": 5835,
-"median": 818,
+"units": 5781,
+"median": 821,
 "indexable": true
 },
 {
@@ -1125,8 +1125,8 @@
 "short": "Norfolk County",
 "geoid": "25021",
 "state": "MA",
-"units": 5776,
-"median": 1248,
+"units": 5714,
+"median": 1278,
 "indexable": true
 },
 {
@@ -1135,18 +1135,8 @@
 "short": "Pender County",
 "geoid": "37141",
 "state": "NC",
-"units": 5562,
-"median": 1030,
-"indexable": true
-},
-{
-"slug": "bexar-county-tx",
-"label": "Bexar County, Texas",
-"short": "Bexar County",
-"geoid": "48029",
-"state": "TX",
-"units": 5345,
-"median": 906,
+"units": 5509,
+"median": 1037,
 "indexable": true
 },
 {
@@ -1155,8 +1145,18 @@
 "short": "Anne Arundel County",
 "geoid": "24003",
 "state": "MD",
-"units": 5335,
-"median": 539,
+"units": 5274,
+"median": 542,
+"indexable": true
+},
+{
+"slug": "bexar-county-tx",
+"label": "Bexar County, Texas",
+"short": "Bexar County",
+"geoid": "48029",
+"state": "TX",
+"units": 5266,
+"median": 915,
 "indexable": true
 },
 {
@@ -1165,7 +1165,7 @@
 "short": "Fairfax County",
 "geoid": "51059",
 "state": "VA",
-"units": 5246,
+"units": 5196,
 "median": 612,
 "indexable": true
 },
@@ -1175,18 +1175,8 @@
 "short": "Onslow County",
 "geoid": "37133",
 "state": "NC",
-"units": 5068,
-"median": 878,
-"indexable": true
-},
-{
-"slug": "davidson-county-tn",
-"label": "Davidson County, Tennessee",
-"short": "Davidson County",
-"geoid": "47037",
-"state": "TN",
-"units": 4911,
-"median": 1159,
+"units": 4980,
+"median": 884,
 "indexable": true
 },
 {
@@ -1195,8 +1185,18 @@
 "short": "Aransas County",
 "geoid": "48007",
 "state": "TX",
-"units": 4890,
-"median": 1208,
+"units": 4830,
+"median": 1236,
+"indexable": true
+},
+{
+"slug": "davidson-county-tn",
+"label": "Davidson County, Tennessee",
+"short": "Davidson County",
+"geoid": "47037",
+"state": "TN",
+"units": 4829,
+"median": 1188,
 "indexable": true
 },
 {
@@ -1205,28 +1205,8 @@
 "short": "Ouachita Parish",
 "geoid": "22073",
 "state": "LA",
-"units": 4829,
-"median": 556,
-"indexable": true
-},
-{
-"slug": "bossier-parish-la",
-"label": "Bossier Parish, Louisiana",
-"short": "Bossier Parish",
-"geoid": "22015",
-"state": "LA",
-"units": 4793,
-"median": 459,
-"indexable": true
-},
-{
-"slug": "san-joaquin-county-ca",
-"label": "San Joaquin County, California",
-"short": "San Joaquin County",
-"geoid": "06077",
-"state": "CA",
-"units": 4760,
-"median": 1084,
+"units": 4779,
+"median": 558,
 "indexable": true
 },
 {
@@ -1235,18 +1215,28 @@
 "short": "Alameda County",
 "geoid": "06001",
 "state": "CA",
-"units": 4730,
-"median": 1144,
+"units": 4747,
+"median": 1149,
 "indexable": true
 },
 {
-"slug": "caddo-parish-la",
-"label": "Caddo Parish, Louisiana",
-"short": "Caddo Parish",
-"geoid": "22017",
+"slug": "bossier-parish-la",
+"label": "Bossier Parish, Louisiana",
+"short": "Bossier Parish",
+"geoid": "22015",
 "state": "LA",
-"units": 4579,
-"median": 715,
+"units": 4747,
+"median": 460,
+"indexable": true
+},
+{
+"slug": "san-joaquin-county-ca",
+"label": "San Joaquin County, California",
+"short": "San Joaquin County",
+"geoid": "06077",
+"state": "CA",
+"units": 4644,
+"median": 1083,
 "indexable": true
 },
 {
@@ -1255,28 +1245,18 @@
 "short": "Ventura County",
 "geoid": "06111",
 "state": "CA",
-"units": 4571,
-"median": 1226,
+"units": 4559,
+"median": 1227,
 "indexable": true
 },
 {
-"slug": "vermilion-parish-la",
-"label": "Vermilion Parish, Louisiana",
-"short": "Vermilion Parish",
-"geoid": "22113",
+"slug": "caddo-parish-la",
+"label": "Caddo Parish, Louisiana",
+"short": "Caddo Parish",
+"geoid": "22017",
 "state": "LA",
-"units": 4553,
-"median": 1266,
-"indexable": true
-},
-{
-"slug": "luzerne-county-pa",
-"label": "Luzerne County, Pennsylvania",
-"short": "Luzerne County",
-"geoid": "42079",
-"state": "PA",
-"units": 4533,
-"median": 1169,
+"units": 4537,
+"median": 717,
 "indexable": true
 },
 {
@@ -1285,28 +1265,28 @@
 "short": "Merced County",
 "geoid": "06047",
 "state": "CA",
-"units": 4502,
-"median": 771,
+"units": 4505,
+"median": 779,
 "indexable": true
 },
 {
-"slug": "plaquemines-parish-la",
-"label": "Plaquemines Parish, Louisiana",
-"short": "Plaquemines Parish",
-"geoid": "22075",
+"slug": "vermilion-parish-la",
+"label": "Vermilion Parish, Louisiana",
+"short": "Vermilion Parish",
+"geoid": "22113",
 "state": "LA",
-"units": 4464,
-"median": 1231,
+"units": 4485,
+"median": 1267,
 "indexable": true
 },
 {
-"slug": "union-county-nj",
-"label": "Union County, New Jersey",
-"short": "Union County",
-"geoid": "34039",
-"state": "NJ",
-"units": 4462,
-"median": 1318,
+"slug": "luzerne-county-pa",
+"label": "Luzerne County, Pennsylvania",
+"short": "Luzerne County",
+"geoid": "42079",
+"state": "PA",
+"units": 4472,
+"median": 1182,
 "indexable": true
 },
 {
@@ -1315,8 +1295,28 @@
 "short": "Multnomah County",
 "geoid": "41051",
 "state": "OR",
-"units": 4447,
-"median": 733,
+"units": 4434,
+"median": 734,
+"indexable": true
+},
+{
+"slug": "union-county-nj",
+"label": "Union County, New Jersey",
+"short": "Union County",
+"geoid": "34039",
+"state": "NJ",
+"units": 4413,
+"median": 1352,
+"indexable": true
+},
+{
+"slug": "plaquemines-parish-la",
+"label": "Plaquemines Parish, Louisiana",
+"short": "Plaquemines Parish",
+"geoid": "22075",
+"state": "LA",
+"units": 4398,
+"median": 1234,
 "indexable": true
 },
 {
@@ -1325,8 +1325,8 @@
 "short": "Boulder County",
 "geoid": "08013",
 "state": "CO",
-"units": 4352,
-"median": 1050,
+"units": 4327,
+"median": 1060,
 "indexable": true
 },
 {
@@ -1335,8 +1335,8 @@
 "short": "Tulare County",
 "geoid": "06107",
 "state": "CA",
-"units": 4343,
-"median": 929,
+"units": 4295,
+"median": 938,
 "indexable": true
 },
 {
@@ -1345,18 +1345,8 @@
 "short": "Clay County",
 "geoid": "12019",
 "state": "FL",
-"units": 4275,
-"median": 1048,
-"indexable": true
-},
-{
-"slug": "essex-county-nj",
-"label": "Essex County, New Jersey",
-"short": "Essex County",
-"geoid": "34013",
-"state": "NJ",
-"units": 4224,
-"median": 1084,
+"units": 4213,
+"median": 1058,
 "indexable": true
 },
 {
@@ -1365,8 +1355,18 @@
 "short": "San Mateo County",
 "geoid": "06081",
 "state": "CA",
-"units": 4223,
-"median": 1205,
+"units": 4202,
+"median": 1225,
+"indexable": true
+},
+{
+"slug": "essex-county-nj",
+"label": "Essex County, New Jersey",
+"short": "Essex County",
+"geoid": "34013",
+"state": "NJ",
+"units": 4187,
+"median": 1088,
 "indexable": true
 },
 {
@@ -1375,8 +1375,8 @@
 "short": "Hawaii County",
 "geoid": "15001",
 "state": "HI",
-"units": 4124,
-"median": 1232,
+"units": 4096,
+"median": 1234,
 "indexable": true
 },
 {
@@ -1385,18 +1385,8 @@
 "short": "Washington County",
 "geoid": "44009",
 "state": "RI",
-"units": 4049,
-"median": 1186,
-"indexable": true
-},
-{
-"slug": "lake-county-fl",
-"label": "Lake County, Florida",
-"short": "Lake County",
-"geoid": "12069",
-"state": "FL",
-"units": 4039,
-"median": 676,
+"units": 4005,
+"median": 1189,
 "indexable": true
 },
 {
@@ -1405,18 +1395,18 @@
 "short": "Jefferson County",
 "geoid": "21111",
 "state": "KY",
-"units": 4013,
-"median": 1128,
+"units": 3993,
+"median": 1135,
 "indexable": true
 },
 {
-"slug": "york-county-me",
-"label": "York County, Maine",
-"short": "York County",
-"geoid": "23031",
-"state": "ME",
-"units": 3863,
-"median": 1171,
+"slug": "lake-county-fl",
+"label": "Lake County, Florida",
+"short": "Lake County",
+"geoid": "12069",
+"state": "FL",
+"units": 3959,
+"median": 677,
 "indexable": true
 },
 {
@@ -1425,8 +1415,8 @@
 "short": "Riverside County",
 "geoid": "06065",
 "state": "CA",
-"units": 3854,
-"median": 1083,
+"units": 3831,
+"median": 1084,
 "indexable": true
 },
 {
@@ -1435,58 +1425,18 @@
 "short": "Kauai County",
 "geoid": "15007",
 "state": "HI",
-"units": 3848,
-"median": 1374,
+"units": 3830,
+"median": 1400,
 "indexable": true
 },
 {
-"slug": "hernando-county-fl",
-"label": "Hernando County, Florida",
-"short": "Hernando County",
-"geoid": "12053",
-"state": "FL",
-"units": 3829,
-"median": 775,
-"indexable": true
-},
-{
-"slug": "rockingham-county-nh",
-"label": "Rockingham County, New Hampshire",
-"short": "Rockingham County",
-"geoid": "33015",
-"state": "NH",
-"units": 3827,
-"median": 1284,
-"indexable": true
-},
-{
-"slug": "wayne-county-mi",
-"label": "Wayne County, Michigan",
-"short": "Wayne County",
-"geoid": "26163",
-"state": "MI",
-"units": 3801,
-"median": 682,
-"indexable": true
-},
-{
-"slug": "marion-county-fl",
-"label": "Marion County, Florida",
-"short": "Marion County",
-"geoid": "12083",
-"state": "FL",
-"units": 3797,
-"median": 584,
-"indexable": true
-},
-{
-"slug": "portsmouth-city-va",
-"label": "Portsmouth city, Virginia",
-"short": "Portsmouth city",
-"geoid": "51740",
-"state": "VA",
-"units": 3747,
-"median": 595,
+"slug": "york-county-me",
+"label": "York County, Maine",
+"short": "York County",
+"geoid": "23031",
+"state": "ME",
+"units": 3824,
+"median": 1186,
 "indexable": true
 },
 {
@@ -1495,8 +1445,58 @@
 "short": "Santa Barbara County",
 "geoid": "06083",
 "state": "CA",
-"units": 3746,
-"median": 1232,
+"units": 3810,
+"median": 1233,
+"indexable": true
+},
+{
+"slug": "rockingham-county-nh",
+"label": "Rockingham County, New Hampshire",
+"short": "Rockingham County",
+"geoid": "33015",
+"state": "NH",
+"units": 3806,
+"median": 1300,
+"indexable": true
+},
+{
+"slug": "hernando-county-fl",
+"label": "Hernando County, Florida",
+"short": "Hernando County",
+"geoid": "12053",
+"state": "FL",
+"units": 3776,
+"median": 777,
+"indexable": true
+},
+{
+"slug": "wayne-county-mi",
+"label": "Wayne County, Michigan",
+"short": "Wayne County",
+"geoid": "26163",
+"state": "MI",
+"units": 3764,
+"median": 683,
+"indexable": true
+},
+{
+"slug": "marion-county-fl",
+"label": "Marion County, Florida",
+"short": "Marion County",
+"geoid": "12083",
+"state": "FL",
+"units": 3747,
+"median": 586,
+"indexable": true
+},
+{
+"slug": "portsmouth-city-va",
+"label": "Portsmouth city, Virginia",
+"short": "Portsmouth city",
+"geoid": "51740",
+"state": "VA",
+"units": 3703,
+"median": 597,
 "indexable": true
 },
 {
@@ -1505,8 +1505,8 @@
 "short": "Chambers County",
 "geoid": "48071",
 "state": "TX",
-"units": 3707,
-"median": 1010,
+"units": 3631,
+"median": 1017,
 "indexable": true
 },
 {
@@ -1515,7 +1515,7 @@
 "short": "Sutter County",
 "geoid": "06101",
 "state": "CA",
-"units": 3626,
+"units": 3605,
 "median": 658,
 "indexable": true
 },
@@ -1525,8 +1525,8 @@
 "short": "New London County",
 "geoid": "09011",
 "state": "CT",
-"units": 3540,
-"median": 1638,
+"units": 3512,
+"median": 1659,
 "indexable": true
 },
 {
@@ -1535,8 +1535,8 @@
 "short": "Nye County",
 "geoid": "32023",
 "state": "NV",
-"units": 3525,
-"median": 850,
+"units": 3503,
+"median": 857,
 "indexable": true
 },
 {
@@ -1545,8 +1545,8 @@
 "short": "Madison County",
 "geoid": "01089",
 "state": "AL",
-"units": 3450,
-"median": 1086,
+"units": 3423,
+"median": 1088,
 "indexable": true
 },
 {
@@ -1555,8 +1555,28 @@
 "short": "Baltimore County",
 "geoid": "24005",
 "state": "MD",
-"units": 3449,
-"median": 579,
+"units": 3411,
+"median": 581,
+"indexable": true
+},
+{
+"slug": "dupage-county-il",
+"label": "DuPage County, Illinois",
+"short": "DuPage County",
+"geoid": "17043",
+"state": "IL",
+"units": 3365,
+"median": 1035,
+"indexable": true
+},
+{
+"slug": "montgomery-county-pa",
+"label": "Montgomery County, Pennsylvania",
+"short": "Montgomery County",
+"geoid": "42091",
+"state": "PA",
+"units": 3330,
+"median": 1152,
 "indexable": true
 },
 {
@@ -1565,7 +1585,7 @@
 "short": "Bryan County",
 "geoid": "13029",
 "state": "GA",
-"units": 3394,
+"units": 3325,
 "median": 1084,
 "indexable": true
 },
@@ -1575,38 +1595,8 @@
 "short": "Wake County",
 "geoid": "37183",
 "state": "NC",
-"units": 3387,
+"units": 3312,
 "median": 878,
-"indexable": true
-},
-{
-"slug": "dupage-county-il",
-"label": "DuPage County, Illinois",
-"short": "DuPage County",
-"geoid": "17043",
-"state": "IL",
-"units": 3366,
-"median": 1034,
-"indexable": true
-},
-{
-"slug": "montgomery-county-pa",
-"label": "Montgomery County, Pennsylvania",
-"short": "Montgomery County",
-"geoid": "42091",
-"state": "PA",
-"units": 3357,
-"median": 1132,
-"indexable": true
-},
-{
-"slug": "bristol-county-ma",
-"label": "Bristol County, Massachusetts",
-"short": "Bristol County",
-"geoid": "25005",
-"state": "MA",
-"units": 3323,
-"median": 1296,
 "indexable": true
 },
 {
@@ -1615,38 +1605,18 @@
 "short": "Baltimore city",
 "geoid": "24510",
 "state": "MD",
-"units": 3321,
-"median": 530,
+"units": 3305,
+"median": 527,
 "indexable": true
 },
 {
-"slug": "currituck-county-nc",
-"label": "Currituck County, North Carolina",
-"short": "Currituck County",
-"geoid": "37053",
-"state": "NC",
-"units": 3310,
-"median": 927,
-"indexable": true
-},
-{
-"slug": "fulton-county-ga",
-"label": "Fulton County, Georgia",
-"short": "Fulton County",
-"geoid": "13121",
-"state": "GA",
-"units": 3307,
-"median": 865,
-"indexable": true
-},
-{
-"slug": "beaufort-county-nc",
-"label": "Beaufort County, North Carolina",
-"short": "Beaufort County",
-"geoid": "37013",
-"state": "NC",
+"slug": "bristol-county-ma",
+"label": "Bristol County, Massachusetts",
+"short": "Bristol County",
+"geoid": "25005",
+"state": "MA",
 "units": 3294,
-"median": 1001,
+"median": 1310,
 "indexable": true
 },
 {
@@ -1655,8 +1625,38 @@
 "short": "Santa Cruz County",
 "geoid": "06087",
 "state": "CA",
-"units": 3283,
+"units": 3270,
 "median": 1400,
+"indexable": true
+},
+{
+"slug": "fulton-county-ga",
+"label": "Fulton County, Georgia",
+"short": "Fulton County",
+"geoid": "13121",
+"state": "GA",
+"units": 3268,
+"median": 872,
+"indexable": true
+},
+{
+"slug": "currituck-county-nc",
+"label": "Currituck County, North Carolina",
+"short": "Currituck County",
+"geoid": "37053",
+"state": "NC",
+"units": 3261,
+"median": 930,
+"indexable": true
+},
+{
+"slug": "beaufort-county-nc",
+"label": "Beaufort County, North Carolina",
+"short": "Beaufort County",
+"geoid": "37013",
+"state": "NC",
+"units": 3256,
+"median": 1006,
 "indexable": true
 },
 {
@@ -1665,18 +1665,8 @@
 "short": "Kern County",
 "geoid": "06029",
 "state": "CA",
-"units": 3272,
-"median": 870,
-"indexable": true
-},
-{
-"slug": "burlington-county-nj",
-"label": "Burlington County, New Jersey",
-"short": "Burlington County",
-"geoid": "34005",
-"state": "NJ",
-"units": 3255,
-"median": 1400,
+"units": 3250,
+"median": 874,
 "indexable": true
 },
 {
@@ -1685,8 +1675,18 @@
 "short": "Contra Costa County",
 "geoid": "06013",
 "state": "CA",
-"units": 3252,
-"median": 1306,
+"units": 3239,
+"median": 1325,
+"indexable": true
+},
+{
+"slug": "burlington-county-nj",
+"label": "Burlington County, New Jersey",
+"short": "Burlington County",
+"geoid": "34005",
+"state": "NJ",
+"units": 3230,
+"median": 1409,
 "indexable": true
 },
 {
@@ -1695,7 +1695,7 @@
 "short": "Bronx County",
 "geoid": "36005",
 "state": "NY",
-"units": 3230,
+"units": 3222,
 "median": 1198,
 "indexable": true
 },
@@ -1705,8 +1705,8 @@
 "short": "St. Louis County",
 "geoid": "29189",
 "state": "MO",
-"units": 3126,
-"median": 1257,
+"units": 3080,
+"median": 1272,
 "indexable": true
 },
 {
@@ -1715,8 +1715,8 @@
 "short": "Kanawha County",
 "geoid": "54039",
 "state": "WV",
-"units": 1283,
-"median": 1450,
+"units": 1262,
+"median": 1464,
 "indexable": true
 }
 ]

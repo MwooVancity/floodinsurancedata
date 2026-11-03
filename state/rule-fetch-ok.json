@@ -17,6 +17,7 @@
  "https://www.ecfr.gov/api/versioner/v1/full/2026-10-30/title-44.xml?part=59&section=59.1": "2026-11-03",
  "https://www.ecfr.gov/api/versioner/v1/full/2026-10-30/title-44.xml?part=61": "2026-11-03",
  "https://www.ecfr.gov/api/versioner/v1/full/2026-10-30/title-44.xml?part=64": "2026-11-03",
+ "https://www.ecfr.gov/api/versioner/v1/full/2026-11-02/title-12.xml?part=339&section=339.3": "2026-11-03",
  "https://www.federalreserve.gov/frrs/regulations/interagency-questions-and-answers-regarding-flood-insurance.htm": "2026-11-03",
  "https://www.fema.gov/api/open/v1/OpenFemaDataSetFields?$filter=name%20eq%20%27nonPaymentReasonBuilding%27": "2026-11-03",
  "https://www.fema.gov/api/open/v1/OpenFemaDataSets?$filter=name%20eq%20'IndividualAssistanceHousingRegistrantsLargeDisasters'": "2026-11-03",
