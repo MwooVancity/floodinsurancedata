@@ -1,5 +1,245 @@
 [
 {
+"slug": "middlesex-county-nj",
+"state": "NJ",
+"geoid": "34023",
+"label": "Middlesex County, New Jersey",
+"short": "Middlesex County",
+"units": 3126
+},
+{
+"slug": "montgomery-county-md",
+"state": "MD",
+"geoid": "24031",
+"label": "Montgomery County, Maryland",
+"short": "Montgomery County",
+"units": 2156
+},
+{
+"slug": "anne-arundel-county-md",
+"state": "MD",
+"geoid": "24003",
+"label": "Anne Arundel County, Maryland",
+"short": "Anne Arundel County",
+"units": 5335
+},
+{
+"slug": "prince-william-county-va",
+"state": "VA",
+"geoid": "51153",
+"label": "Prince William County, Virginia",
+"short": "Prince William County",
+"units": 1073
+},
+{
+"slug": "washington-county-vt",
+"state": "VT",
+"geoid": "50023",
+"label": "Washington County, Vermont",
+"short": "Washington County",
+"units": 857
+},
+{
+"slug": "grand-forks-county-nd",
+"state": "ND",
+"geoid": "38035",
+"label": "Grand Forks County, North Dakota",
+"short": "Grand Forks County",
+"units": 389
+},
+{
+"slug": "elkhart-county-in",
+"state": "IN",
+"geoid": "18039",
+"label": "Elkhart County, Indiana",
+"short": "Elkhart County",
+"units": 422
+},
+{
+"slug": "raleigh-county-wv",
+"state": "WV",
+"geoid": "54081",
+"label": "Raleigh County, West Virginia",
+"short": "Raleigh County",
+"units": 109
+},
+{
+"slug": "washington-county-or",
+"state": "OR",
+"geoid": "41067",
+"label": "Washington County, Oregon",
+"short": "Washington County",
+"units": 1498
+},
+{
+"slug": "pulaski-county-ar",
+"state": "AR",
+"geoid": "05119",
+"label": "Pulaski County, Arkansas",
+"short": "Pulaski County",
+"units": 1894
+},
+{
+"slug": "jefferson-county-ar",
+"state": "AR",
+"geoid": "05069",
+"label": "Jefferson County, Arkansas",
+"short": "Jefferson County",
+"units": 317
+},
+{
+"slug": "greene-county-ar",
+"state": "AR",
+"geoid": "05055",
+"label": "Greene County, Arkansas",
+"short": "Greene County",
+"units": 356
+},
+{
+"slug": "denver-county-co",
+"state": "CO",
+"geoid": "08031",
+"label": "Denver County, Colorado",
+"short": "Denver County",
+"units": 1057
+},
+{
+"slug": "salt-lake-county-ut",
+"state": "UT",
+"geoid": "49035",
+"label": "Salt Lake County, Utah",
+"short": "Salt Lake County",
+"units": 1200
+},
+{
+"slug": "utah-county-ut",
+"state": "UT",
+"geoid": "49049",
+"label": "Utah County, Utah",
+"short": "Utah County",
+"units": 747
+},
+{
+"slug": "tulsa-county-ok",
+"state": "OK",
+"geoid": "40143",
+"label": "Tulsa County, Oklahoma",
+"short": "Tulsa County",
+"units": 1858
+},
+{
+"slug": "hennepin-county-mn",
+"state": "MN",
+"geoid": "27053",
+"label": "Hennepin County, Minnesota",
+"short": "Hennepin County",
+"units": 989
+},
+{
+"slug": "ramsey-county-mn",
+"state": "MN",
+"geoid": "27123",
+"label": "Ramsey County, Minnesota",
+"short": "Ramsey County",
+"units": 455
+},
+{
+"slug": "richland-county-sc",
+"state": "SC",
+"geoid": "45079",
+"label": "Richland County, South Carolina",
+"short": "Richland County",
+"units": 2182
+},
+{
+"slug": "lexington-county-sc",
+"state": "SC",
+"geoid": "45063",
+"label": "Lexington County, South Carolina",
+"short": "Lexington County",
+"units": 1400
+},
+{
+"slug": "burleigh-county-nd",
+"state": "ND",
+"geoid": "38015",
+"label": "Burleigh County, North Dakota",
+"short": "Burleigh County",
+"units": 646
+},
+{
+"slug": "pennington-county-sd",
+"state": "SD",
+"geoid": "46103",
+"label": "Pennington County, South Dakota",
+"short": "Pennington County",
+"units": 345
+},
+{
+"slug": "thurston-county-wa",
+"state": "WA",
+"geoid": "53067",
+"label": "Thurston County, Washington",
+"short": "Thurston County",
+"units": 767
+},
+{
+"slug": "kitsap-county-wa",
+"state": "WA",
+"geoid": "53035",
+"label": "Kitsap County, Washington",
+"short": "Kitsap County",
+"units": 923
+},
+{
+"slug": "champaign-county-il",
+"state": "IL",
+"geoid": "17019",
+"label": "Champaign County, Illinois",
+"short": "Champaign County",
+"units": 221
+},
+{
+"slug": "saginaw-county-mi",
+"state": "MI",
+"geoid": "26145",
+"label": "Saginaw County, Michigan",
+"short": "Saginaw County",
+"units": 1129
+},
+{
+"slug": "lincoln-county-ne",
+"state": "NE",
+"geoid": "31111",
+"label": "Lincoln County, Nebraska",
+"short": "Lincoln County",
+"units": 149
+},
+{
+"slug": "haywood-county-nc",
+"state": "NC",
+"geoid": "37087",
+"label": "Haywood County, North Carolina",
+"short": "Haywood County",
+"units": 693
+},
+{
+"slug": "clark-county-nv",
+"state": "NV",
+"geoid": "32003",
+"label": "Clark County, Nevada",
+"short": "Clark County",
+"units": 1388
+},
+{
+"slug": "ocean-county-nj",
+"state": "NJ",
+"geoid": "34029",
+"label": "Ocean County, New Jersey",
+"short": "Ocean County",
+"units": 41040
+},
+{
 "slug": "miami-dade-county-fl",
 "state": "FL",
 "geoid": "12086",
@@ -182,14 +422,6 @@
 "label": "Nassau County, New York",
 "short": "Nassau County",
 "units": 41308
-},
-{
-"slug": "ocean-county-nj",
-"state": "NJ",
-"geoid": "34029",
-"label": "Ocean County, New Jersey",
-"short": "Ocean County",
-"units": 41040
 },
 {
 "slug": "charlotte-county-fl",
@@ -920,14 +1152,6 @@
 "units": 5345
 },
 {
-"slug": "anne-arundel-county-md",
-"state": "MD",
-"geoid": "24003",
-"label": "Anne Arundel County, Maryland",
-"short": "Anne Arundel County",
-"units": 5335
-},
-{
 "slug": "fairfax-county-va",
 "state": "VA",
 "geoid": "51059",
@@ -1408,14 +1632,6 @@
 "units": 3126
 },
 {
-"slug": "middlesex-county-nj",
-"state": "NJ",
-"geoid": "34023",
-"label": "Middlesex County, New Jersey",
-"short": "Middlesex County",
-"units": 3126
-},
-{
 "slug": "mecklenburg-county-nc",
 "state": "NC",
 "geoid": "37119",
@@ -1776,14 +1992,6 @@
 "units": 2224
 },
 {
-"slug": "richland-county-sc",
-"state": "SC",
-"geoid": "45079",
-"label": "Richland County, South Carolina",
-"short": "Richland County",
-"units": 2182
-},
-{
 "slug": "snohomish-county-wa",
 "state": "WA",
 "geoid": "53061",
@@ -1806,14 +2014,6 @@
 "label": "Queen Anne's County, Maryland",
 "short": "Queen Anne's County",
 "units": 2160
-},
-{
-"slug": "montgomery-county-md",
-"state": "MD",
-"geoid": "24031",
-"label": "Montgomery County, Maryland",
-"short": "Montgomery County",
-"units": 2156
 },
 {
 "slug": "waller-county-tx",
@@ -1928,14 +2128,6 @@
 "units": 1914
 },
 {
-"slug": "pulaski-county-ar",
-"state": "AR",
-"geoid": "05119",
-"label": "Pulaski County, Arkansas",
-"short": "Pulaski County",
-"units": 1894
-},
-{
 "slug": "wharton-county-tx",
 "state": "TX",
 "geoid": "48481",
@@ -1949,14 +2141,6 @@
 "geoid": "09003",
 "label": "Hartford County, Connecticut",
 "short": "Hartford County",
-"units": 1858
-},
-{
-"slug": "tulsa-county-ok",
-"state": "OK",
-"geoid": "40143",
-"label": "Tulsa County, Oklahoma",
-"short": "Tulsa County",
 "units": 1858
 },
 {
@@ -2224,14 +2408,6 @@
 "units": 1519
 },
 {
-"slug": "washington-county-or",
-"state": "OR",
-"geoid": "41067",
-"label": "Washington County, Oregon",
-"short": "Washington County",
-"units": 1498
-},
-{
 "slug": "oakland-county-mi",
 "state": "MI",
 "geoid": "26125",
@@ -2312,14 +2488,6 @@
 "units": 1404
 },
 {
-"slug": "lexington-county-sc",
-"state": "SC",
-"geoid": "45063",
-"label": "Lexington County, South Carolina",
-"short": "Lexington County",
-"units": 1400
-},
-{
 "slug": "tillamook-county-or",
 "state": "OR",
 "geoid": "41057",
@@ -2350,14 +2518,6 @@
 "label": "Durham County, North Carolina",
 "short": "Durham County",
 "units": 1391
-},
-{
-"slug": "clark-county-nv",
-"state": "NV",
-"geoid": "32003",
-"label": "Clark County, Nevada",
-"short": "Clark County",
-"units": 1388
 },
 {
 "slug": "kent-county-ri",
@@ -2600,14 +2760,6 @@
 "units": 1200
 },
 {
-"slug": "salt-lake-county-ut",
-"state": "UT",
-"geoid": "49035",
-"label": "Salt Lake County, Utah",
-"short": "Salt Lake County",
-"units": 1200
-},
-{
 "slug": "will-county-il",
 "state": "IL",
 "geoid": "17197",
@@ -2662,14 +2814,6 @@
 "label": "Linn County, Iowa",
 "short": "Linn County",
 "units": 1130
-},
-{
-"slug": "saginaw-county-mi",
-"state": "MI",
-"geoid": "26145",
-"label": "Saginaw County, Michigan",
-"short": "Saginaw County",
-"units": 1129
 },
 {
 "slug": "fresno-county-ca",
@@ -2752,14 +2896,6 @@
 "units": 1075
 },
 {
-"slug": "prince-william-county-va",
-"state": "VA",
-"geoid": "51153",
-"label": "Prince William County, Virginia",
-"short": "Prince William County",
-"units": 1073
-},
-{
 "slug": "larimer-county-co",
 "state": "CO",
 "geoid": "08069",
@@ -2782,14 +2918,6 @@
 "label": "St. Mary's County, Maryland",
 "short": "St. Mary's County",
 "units": 1060
-},
-{
-"slug": "denver-county-co",
-"state": "CO",
-"geoid": "08031",
-"label": "Denver County, Colorado",
-"short": "Denver County",
-"units": 1057
 },
 {
 "slug": "assumption-parish-la",
@@ -2960,14 +3088,6 @@
 "units": 990
 },
 {
-"slug": "hennepin-county-mn",
-"state": "MN",
-"geoid": "27053",
-"label": "Hennepin County, Minnesota",
-"short": "Hennepin County",
-"units": 989
-},
-{
 "slug": "dane-county-wi",
 "state": "WI",
 "geoid": "55025",
@@ -3088,14 +3208,6 @@
 "units": 926
 },
 {
-"slug": "kitsap-county-wa",
-"state": "WA",
-"geoid": "53035",
-"label": "Kitsap County, Washington",
-"short": "Kitsap County",
-"units": 923
-},
-{
 "slug": "jackson-county-mo",
 "state": "MO",
 "geoid": "29095",
@@ -3174,14 +3286,6 @@
 "label": "Montgomery County, Alabama",
 "short": "Montgomery County",
 "units": 861
-},
-{
-"slug": "washington-county-vt",
-"state": "VT",
-"geoid": "50023",
-"label": "Washington County, Vermont",
-"short": "Washington County",
-"units": 857
 },
 {
 "slug": "pike-county-ky",
@@ -3408,14 +3512,6 @@
 "units": 770
 },
 {
-"slug": "thurston-county-wa",
-"state": "WA",
-"geoid": "53067",
-"label": "Thurston County, Washington",
-"short": "Thurston County",
-"units": 767
-},
-{
 "slug": "concordia-parish-la",
 "state": "LA",
 "geoid": "22029",
@@ -3477,14 +3573,6 @@
 "geoid": "13103",
 "label": "Effingham County, Georgia",
 "short": "Effingham County",
-"units": 747
-},
-{
-"slug": "utah-county-ut",
-"state": "UT",
-"geoid": "49049",
-"label": "Utah County, Utah",
-"short": "Utah County",
 "units": 747
 },
 {
@@ -3632,14 +3720,6 @@
 "units": 695
 },
 {
-"slug": "haywood-county-nc",
-"state": "NC",
-"geoid": "37087",
-"label": "Haywood County, North Carolina",
-"short": "Haywood County",
-"units": 693
-},
-{
 "slug": "washington-county-ar",
 "state": "AR",
 "geoid": "05143",
@@ -3782,14 +3862,6 @@
 "label": "Muscogee County, Georgia",
 "short": "Muscogee County",
 "units": 648
-},
-{
-"slug": "burleigh-county-nd",
-"state": "ND",
-"geoid": "38015",
-"label": "Burleigh County, North Dakota",
-"short": "Burleigh County",
-"units": 646
 },
 {
 "slug": "cumberland-county-pa",
@@ -4648,14 +4720,6 @@
 "units": 459
 },
 {
-"slug": "ramsey-county-mn",
-"state": "MN",
-"geoid": "27123",
-"label": "Ramsey County, Minnesota",
-"short": "Ramsey County",
-"units": 455
-},
-{
 "slug": "bartholomew-county-in",
 "state": "IN",
 "geoid": "18005",
@@ -4880,14 +4944,6 @@
 "units": 424
 },
 {
-"slug": "elkhart-county-in",
-"state": "IN",
-"geoid": "18039",
-"label": "Elkhart County, Indiana",
-"short": "Elkhart County",
-"units": 422
-},
-{
 "slug": "josephine-county-or",
 "state": "OR",
 "geoid": "41033",
@@ -5110,14 +5166,6 @@
 "label": "Union County, North Carolina",
 "short": "Union County",
 "units": 392
-},
-{
-"slug": "grand-forks-county-nd",
-"state": "ND",
-"geoid": "38035",
-"label": "Grand Forks County, North Dakota",
-"short": "Grand Forks County",
-"units": 389
 },
 {
 "slug": "windham-county-vt",
@@ -5384,14 +5432,6 @@
 "units": 357
 },
 {
-"slug": "greene-county-ar",
-"state": "AR",
-"geoid": "05055",
-"label": "Greene County, Arkansas",
-"short": "Greene County",
-"units": 356
-},
-{
 "slug": "ontario-county-ny",
 "state": "NY",
 "geoid": "36069",
@@ -5541,14 +5581,6 @@
 "geoid": "37071",
 "label": "Gaston County, North Carolina",
 "short": "Gaston County",
-"units": 345
-},
-{
-"slug": "pennington-county-sd",
-"state": "SD",
-"geoid": "46103",
-"label": "Pennington County, South Dakota",
-"short": "Pennington County",
 "units": 345
 },
 {
@@ -5790,14 +5822,6 @@
 "label": "Centre County, Pennsylvania",
 "short": "Centre County",
 "units": 318
-},
-{
-"slug": "jefferson-county-ar",
-"state": "AR",
-"geoid": "05069",
-"label": "Jefferson County, Arkansas",
-"short": "Jefferson County",
-"units": 317
 },
 {
 "slug": "cascade-county-mt",
@@ -7093,14 +7117,6 @@
 "geoid": "08075",
 "label": "Logan County, Colorado",
 "short": "Logan County",
-"units": 221
-},
-{
-"slug": "champaign-county-il",
-"state": "IL",
-"geoid": "17019",
-"label": "Champaign County, Illinois",
-"short": "Champaign County",
 "units": 221
 },
 {
@@ -8888,14 +8904,6 @@
 "units": 149
 },
 {
-"slug": "lincoln-county-ne",
-"state": "NE",
-"geoid": "31111",
-"label": "Lincoln County, Nebraska",
-"short": "Lincoln County",
-"units": 149
-},
-{
 "slug": "rhea-county-tn",
 "state": "TN",
 "geoid": "47143",
@@ -10509,14 +10517,6 @@
 "geoid": "51630",
 "label": "Fredericksburg city, Virginia",
 "short": "Fredericksburg city",
-"units": 109
-},
-{
-"slug": "raleigh-county-wv",
-"state": "WV",
-"geoid": "54081",
-"label": "Raleigh County, West Virginia",
-"short": "Raleigh County",
 "units": 109
 },
 {

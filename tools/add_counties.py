@@ -1,4 +1,5 @@
-"""Publish the next N counties: the largest (by policy units) that passed the review build and are not yet in counties.json.
+"""Publish the next N counties in queue order (largest by policy units; 11-03: 30 counties Search Console already shows us
+for, town named with its state, moved to the front by hand) that passed the review build and are not yet in counties.json.
 Usage: python -I tools/add_counties.py [N]   (default 10). Reads state/county-queue.json (committed, so the daily GitHub job
 can use it); `--refresh` rewrites that queue from review/places.json after a local `build_counties.py --all`.
 Owner 2026-11-01: 20 a day; google_gate S7 caps a release at 25 new indexable pages."""
