@@ -48,7 +48,7 @@ Rules tested: truth, no advice, 2,000 ceiling, no name-swap pages stay. Open: co
 7. Pace: 20 a day (owner 11-01), no pauses, no noindex holds; queue done about late January; 31 flagged counties need own looks. Watch indexed count weekly. Towns test: 20 counties in `tools_flags.json` `towns`, shipped 11-01; compare their town-name impressions with the other counties after 4 weeks; no lift = remove.
 
 ## Runs on its own (owner goes to the Pro plan about 2026-11-19; Claude stays, smaller token budget)
-A failed check ships nothing; the live site stays. Failed job = one issue "Job failed: <job>" (`tools/job_alert.sh`). Timeouts and cancels alert too. `watch.yml` checks the daily job every night (alert after 2 days); daily and monthly also watch each other (3 and 40 days). Group site-deploy: one deploy at a time; deploy.yml uses latest master.
+A failed check ships nothing; the live site stays. Failed job = one issue "Job failed: <job>" (`tools/job_alert.sh`). Timeouts and cancels alert too. `watch.yml` checks the daily job every night (alert after 2 days); daily and monthly also watch each other (3 and 34 days; 11-03 GitHub dropped the scheduled refresh, hand-dispatched 12:27 UTC, so a missed 3rd now alerts by the 6th). Group site-deploy: one deploy at a time; deploy.yml uses latest master.
 - After deploy every live page must equal what passed, else previous release redeploys (`tools/deploy_verified.sh`). Idle days check too and redeploy once. Over 19,000 files stops (free plan 20,000).
 - Pinned: ubuntu-26.04, wrangler 4.86.0, playwright 1.64.1, Python 3.12, Node 20.
 - Warnings on the daily run: Cloudflare token (30 days), domain (45 days; expires 2027-10-23) via `tools/token_check.py`.

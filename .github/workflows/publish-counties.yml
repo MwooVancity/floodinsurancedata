@@ -102,10 +102,10 @@ jobs:
       - name: Alert on failure (one GitHub issue; GitHub emails the owner)
         if: failure() || cancelled()   # a timeout counts as cancelled
         env: { GH_TOKEN: "${{ github.token }}" }
-        run: bash tools/job_alert.sh fail "publish-counties" refresh-data.yml 40
+        run: bash tools/job_alert.sh fail "publish-counties" refresh-data.yml 34
       - name: Close the alert when passing again; check the other job still runs
         if: success()
         env: { GH_TOKEN: "${{ github.token }}" }
         run: |
-          bash tools/job_alert.sh ok "publish-counties" refresh-data.yml 40
+          bash tools/job_alert.sh ok "publish-counties" refresh-data.yml 34
           bash tools/job_alert.sh ok "deploy" - 0   # bot pushes never start deploy.yml, so a passed publish closes its alert
