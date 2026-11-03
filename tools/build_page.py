@@ -443,13 +443,13 @@ def _crs_parts():
 
 # ---- how to get covered (factual public NFIP rules — the reader's "what do I do next" + the 30-day catch) ----
 def card_howto():
-    _HOWTO = ["howto_answer", "homeowners_excl", "howto_tiles", "wait_exceptions", "how_to_buy", "nfip_lapse", "flood_def", "not_covered", "already_flooded", "aid_insurance", "claim_appeal", "substantial_damage"]
+    _HOWTO = ["howto_answer", "homeowners_excl", "howto_tiles", "wait_exceptions", "how_to_buy", "nfip_lapse", "flood_def", "not_covered", "wind_excl", "already_flooded", "aid_insurance", "claim_appeal", "substantial_damage"]
     howto_card = card("How do I actually get covered — and how fast?",   # limits live in the tiles once (no second copy)
         rule("howto_answer"),
         rule("howto_tiles")
         + f"<p class='note'>{rule('homeowners_excl')} {rule('wait_exceptions')} {rule('how_to_buy')}</p>"
         + f"<p class='note'>{rule('nfip_lapse')}</p>"
-        + f"<p class='note'><b>What it won't pay:</b> {rule('flood_def')} {rule('not_covered')}</p>"
+        + f"<p class='note'><b>What it won't pay:</b> {rule('flood_def')} {rule('not_covered')} {rule('wind_excl')}</p>"
         + f"<p class='note'>{rule('already_flooded')} {rule('aid_insurance')}</p>"
         + f"<p class='note'>{rule('claim_appeal')} {rule('substantial_damage')}</p>"
         + (_deadline_tool() if _tool_on("deadline") else ""),

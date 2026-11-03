@@ -12,7 +12,8 @@ IA_META = "https://www.fema.gov/api/open/v1/OpenFemaDataSets?$filter=name%20eq%2
 
 CFR64 = "https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=64"
 CFR59 = "https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=59&section=59.1"
-CFR61 = "https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=61"
+WIND_FS = "https://agents.floodsmart.gov/sites/default/files/media/document/2025-07/fema-nfip-wind-vs-floodwater-damage-fact-sheet-03-2023.pdf"   # pdf, read by hand 2026-11-03
+CFR61 ="https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=61"
 USC4012A = "https://www.law.cornell.edu/uscode/text/42/4012a"
 
 RULES = {
@@ -293,6 +294,15 @@ RULES = {
                 "flood damage during their ownership, filed a flood claim, or received flood aid (s. 689.302, F.S.).",
         "sources": [("https://www.flsenate.gov/Laws/Statutes/2025/689.302", "at or before the time the sales contract is executed", "curl"),
                     ("https://www.flsenate.gov/Laws/Statutes/2025/689.302", "relating to flood damage on the property", "curl")]},
+    "wind_excl": {   # 11-03 Search Console: "hurricane insurance cost" queries; CFR (current) and FEMA's fact sheet agree on wind
+        "text": "Hurricanes can cause both wind and flood damage. A standard NFIP policy does not pay for wind damage, including rain blown in by "
+                "wind or water coming through a roof the wind damaged; it does pay for water entering from the ground up, such as storm surge. "
+                "Other policies, such as homeowners policies, may cover wind-driven rain, so you will likely file claims with both.",
+        "sources": [(CFR61, "Theft, fire, explosion, wind, or windstorm", "curl"),
+                    (WIND_FS, "considered wind-driven rain and is not covered under your flood insurance policy", "manual"),
+                    (WIND_FS, "water entering your home from the ground up due to storm surge", "manual"),
+                    (WIND_FS, "may cover damage from other perils, such as wind-driven rain", "manual"),
+                    (WIND_FS, "You will likely need to file insurance claims with both entities", "manual")]},
     "ia_partial": {
         "text": "FEMA disaster aid helps with uninsured and underinsured losses, and is separate from NFIP insurance.",
         "sources": [(IA_META, "uninsured and underinsured personal property losses", "curl")]},
