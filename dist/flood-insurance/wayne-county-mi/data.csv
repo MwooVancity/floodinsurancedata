@@ -124,8 +124,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Wayne County, Michigan",zip_cost_n,48229,93,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Wayne County, Michigan",zip_units,48229,105,count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Wayne County, Michigan",prem_median,,$517,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Wayne County, Michigan",cost_year,2025,$676,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Wayne County, Michigan",cost_year_n,2025,"1,191",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Wayne County, Michigan",cost_year_n,2026,"1,582",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Wayne County, Michigan",cost_new_n,,310,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Wayne County, Michigan",frp_median,,$526,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

@@ -413,8 +413,6 @@ Missouri,county_units,29229,3,count,FEMA OpenFEMA — NFIP Policies,policyCount 
 Missouri,county_claims,29229,8,count,FEMA OpenFEMA — NFIP Claims,id + countyCode,"July 31, 2026"
 Missouri,threshold,spread_min,100,count,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Missouri,prem_median,,$854,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-Missouri,cost_year,2025,"$1,014",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-Missouri,cost_year_n,2025,"3,351",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 Missouri,cost_year_n,2026,"4,652",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 Missouri,cost_new_n,,792,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 Missouri,frp_median,,"$1,093",usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

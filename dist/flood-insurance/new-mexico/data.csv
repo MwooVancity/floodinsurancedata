@@ -196,8 +196,6 @@ New Mexico,county_share_below,35061,26.3%,pct,FEMA OpenFEMA — NFIP Policies,to
 New Mexico,county_claims,35061,125,count,FEMA OpenFEMA — NFIP Claims,id + countyCode,"July 31, 2026"
 New Mexico,threshold,spread_min,100,count,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 New Mexico,prem_median,,$809,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-New Mexico,cost_year,2025,$958,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-New Mexico,cost_year_n,2025,"2,996",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 New Mexico,cost_year_n,2026,"4,701",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 New Mexico,cost_new_n,,"1,162",count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 New Mexico,frp_median,,$929,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

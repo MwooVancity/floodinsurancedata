@@ -116,8 +116,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Glynn County, Georgia",zip_cost_n,31561,129,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Glynn County, Georgia",zip_units,31561,775,count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Glynn County, Georgia",prem_median,,$768,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Glynn County, Georgia",cost_year,2025,$935,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Glynn County, Georgia",cost_year_n,2025,"2,863",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Glynn County, Georgia",cost_year_n,2026,"3,839",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Glynn County, Georgia",cost_new_n,,308,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Glynn County, Georgia",frp_median,,$849,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

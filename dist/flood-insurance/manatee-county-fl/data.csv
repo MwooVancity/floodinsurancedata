@@ -153,8 +153,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Manatee County, Florida",zip_cost_n,34243,"1,398",count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Manatee County, Florida",zip_units,34243,"1,963",count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Manatee County, Florida",prem_median,,$641,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Manatee County, Florida",cost_year,2025,$783,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Manatee County, Florida",cost_year_n,2025,"8,142",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Manatee County, Florida",cost_year_n,2026,"10,099",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Manatee County, Florida",cost_new_n,,"1,737",count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Manatee County, Florida",frp_median,,$673,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

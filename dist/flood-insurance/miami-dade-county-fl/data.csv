@@ -160,8 +160,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Miami-Dade County, Florida",zip_cost_n,33055,"4,597",count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Miami-Dade County, Florida",zip_units,33055,"5,575",count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Miami-Dade County, Florida",prem_median,,$694,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Miami-Dade County, Florida",cost_year,2025,$876,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Miami-Dade County, Florida",cost_year_n,2025,"54,899",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Miami-Dade County, Florida",cost_year_n,2026,"76,176",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Miami-Dade County, Florida",cost_new_n,,"8,748",count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Miami-Dade County, Florida",frp_median,,$855,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

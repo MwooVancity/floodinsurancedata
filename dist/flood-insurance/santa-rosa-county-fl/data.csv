@@ -139,8 +139,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Santa Rosa County, Florida",zip_cost_n,32570,282,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Santa Rosa County, Florida",zip_units,32570,371,count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Santa Rosa County, Florida",prem_median,,$678,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Santa Rosa County, Florida",cost_year,2025,$820,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Santa Rosa County, Florida",cost_year_n,2025,"3,444",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Santa Rosa County, Florida",cost_year_n,2026,"4,981",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Santa Rosa County, Florida",cost_new_n,,467,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Santa Rosa County, Florida",frp_median,,$721,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

@@ -78,8 +78,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Nye County, Nevada",zip_cost_n,89061,76,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Nye County, Nevada",zip_units,89061,102,count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Nye County, Nevada",prem_median,,$659,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Nye County, Nevada",cost_year,2025,$837,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Nye County, Nevada",cost_year_n,2025,"1,001",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Nye County, Nevada",cost_year_n,2026,"1,422",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Nye County, Nevada",cost_new_n,,273,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Nye County, Nevada",frp_median,,$690,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

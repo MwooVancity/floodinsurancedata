@@ -129,8 +129,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Davidson County, Tennessee",zip_cost_n,37209,168,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Davidson County, Tennessee",zip_units,37209,282,count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Davidson County, Tennessee",prem_median,,$921,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Davidson County, Tennessee",cost_year,2025,"$1,083",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Davidson County, Tennessee",cost_year_n,2025,"1,183",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Davidson County, Tennessee",cost_year_n,2026,"1,646",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Davidson County, Tennessee",cost_new_n,,186,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Davidson County, Tennessee",frp_median,,"$1,336",usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

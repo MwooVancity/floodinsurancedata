@@ -137,8 +137,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Hancock County, Mississippi",zip_cost_n,39572,163,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Hancock County, Mississippi",zip_units,39572,226,count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Hancock County, Mississippi",prem_median,,"$1,009",usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Hancock County, Mississippi",cost_year,2025,"$1,148",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Hancock County, Mississippi",cost_year_n,2025,"1,626",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Hancock County, Mississippi",cost_year_n,2026,"2,863",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Hancock County, Mississippi",cost_new_n,,243,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Hancock County, Mississippi",frp_median,,"$1,654",usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

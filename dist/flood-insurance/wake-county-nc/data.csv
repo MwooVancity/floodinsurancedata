@@ -126,8 +126,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Wake County, North Carolina",zip_cost_n,27604,102,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Wake County, North Carolina",zip_units,27604,162,count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Wake County, North Carolina",prem_median,,$682,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Wake County, North Carolina",cost_year,2025,$851,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Wake County, North Carolina",cost_year_n,2025,"1,387",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Wake County, North Carolina",cost_year_n,2026,959,count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Wake County, North Carolina",cost_new_n,,235,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Wake County, North Carolina",frp_median,,$711,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

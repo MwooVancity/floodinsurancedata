@@ -158,8 +158,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Atlantic County, New Jersey",zip_cost_n,08221,163,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Atlantic County, New Jersey",zip_units,08221,233,count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Atlantic County, New Jersey",prem_median,,$995,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Atlantic County, New Jersey",cost_year,2025,"$1,188",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Atlantic County, New Jersey",cost_year_n,2025,"2,646",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Atlantic County, New Jersey",cost_year_n,2026,"3,029",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Atlantic County, New Jersey",cost_new_n,,177,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Atlantic County, New Jersey",frp_median,,"$1,400",usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

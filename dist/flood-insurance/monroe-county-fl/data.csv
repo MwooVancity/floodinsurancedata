@@ -144,8 +144,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Monroe County, Florida",zip_cost_n,33051,214,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Monroe County, Florida",zip_units,33051,"1,147",count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Monroe County, Florida",prem_median,,"$1,562",usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Monroe County, Florida",cost_year,2025,"$1,725",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Monroe County, Florida",cost_year_n,2025,"4,429",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Monroe County, Florida",cost_year_n,2026,"7,031",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Monroe County, Florida",cost_new_n,,714,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Monroe County, Florida",frp_median,,"$4,063",usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

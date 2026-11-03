@@ -153,8 +153,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Pinellas County, Florida",zip_cost_n,33710,"1,873",count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Pinellas County, Florida",zip_units,33710,"2,234",count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Pinellas County, Florida",prem_median,,"$1,160",usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Pinellas County, Florida",cost_year,2025,"$1,270",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Pinellas County, Florida",cost_year_n,2025,"21,702",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Pinellas County, Florida",cost_year_n,2026,"30,058",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Pinellas County, Florida",cost_new_n,,"5,041",count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Pinellas County, Florida",frp_median,,"$2,121",usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

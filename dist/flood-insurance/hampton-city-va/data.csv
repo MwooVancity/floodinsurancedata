@@ -138,8 +138,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Hampton city, Virginia",zip_cost_n,23605,206,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Hampton city, Virginia",zip_units,23605,291,count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Hampton city, Virginia",prem_median,,$565,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Hampton city, Virginia",cost_year,2025,$720,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Hampton city, Virginia",cost_year_n,2025,"3,064",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Hampton city, Virginia",cost_year_n,2026,"3,769",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Hampton city, Virginia",cost_new_n,,387,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Hampton city, Virginia",frp_median,,$579,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

@@ -126,8 +126,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Suffolk County, Massachusetts",zip_cost_n,02132,33,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Suffolk County, Massachusetts",zip_units,02132,39,count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Suffolk County, Massachusetts",prem_median,,"$1,362",usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Suffolk County, Massachusetts",cost_year,2025,"$1,558",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Suffolk County, Massachusetts",cost_year_n,2025,519,count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Suffolk County, Massachusetts",cost_year_n,2026,678,count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Suffolk County, Massachusetts",cost_new_n,,56,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Suffolk County, Massachusetts",frp_median,,"$2,019",usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

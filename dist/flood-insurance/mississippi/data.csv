@@ -367,8 +367,6 @@ Mississippi,county_share_below,28163,26.5%,pct,FEMA OpenFEMA — NFIP Policies,t
 Mississippi,county_claims,28163,410,count,FEMA OpenFEMA — NFIP Claims,id + countyCode,"July 31, 2026"
 Mississippi,threshold,spread_min,100,count,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Mississippi,prem_median,,$963,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-Mississippi,cost_year,2025,"$1,088",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-Mississippi,cost_year_n,2025,"12,295",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 Mississippi,cost_year_n,2026,"18,741",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 Mississippi,cost_new_n,,"1,784",count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 Mississippi,frp_median,,"$1,435",usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

@@ -130,8 +130,6 @@ Rhode Island,county_share_below,44009,38.8%,pct,FEMA OpenFEMA — NFIP Policies,
 Rhode Island,county_claims,44009,"2,399",count,FEMA OpenFEMA — NFIP Claims,id + countyCode,"July 31, 2026"
 Rhode Island,threshold,spread_min,100,count,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Rhode Island,prem_median,,$913,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-Rhode Island,cost_year,2025,"$1,102",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-Rhode Island,cost_year_n,2025,"2,489",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 Rhode Island,cost_year_n,2026,"2,608",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 Rhode Island,cost_new_n,,222,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 Rhode Island,frp_median,,$992,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

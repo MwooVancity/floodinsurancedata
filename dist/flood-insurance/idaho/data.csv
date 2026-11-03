@@ -200,8 +200,6 @@ Idaho,county_share_below,16087,21.3%,pct,FEMA OpenFEMA — NFIP Policies,totalIn
 Idaho,county_claims,16087,23,count,FEMA OpenFEMA — NFIP Claims,id + countyCode,"July 31, 2026"
 Idaho,threshold,spread_min,100,count,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Idaho,prem_median,,$805,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-Idaho,cost_year,2025,$985,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-Idaho,cost_year_n,2025,"1,179",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 Idaho,cost_year_n,2026,"1,635",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 Idaho,cost_new_n,,315,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 Idaho,frp_median,,$886,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

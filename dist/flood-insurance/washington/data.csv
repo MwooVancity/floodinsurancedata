@@ -266,8 +266,6 @@ Washington,county_share_below,53077,42.9%,pct,FEMA OpenFEMA — NFIP Policies,to
 Washington,county_claims,53077,320,count,FEMA OpenFEMA — NFIP Claims,id + countyCode,"July 31, 2026"
 Washington,threshold,spread_min,100,count,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Washington,prem_median,,$800,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-Washington,cost_year,2025,"$1,007",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-Washington,cost_year_n,2025,"7,816",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 Washington,cost_year_n,2026,"8,706",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 Washington,cost_new_n,,"2,041",count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 Washington,frp_median,,$976,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

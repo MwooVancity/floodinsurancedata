@@ -105,8 +105,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Hawaii County, Hawaii",zip_cost_n,96743,69,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Hawaii County, Hawaii",zip_units,96743,359,count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Hawaii County, Hawaii",prem_median,,$983,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Hawaii County, Hawaii",cost_year,2025,"$1,086",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Hawaii County, Hawaii",cost_year_n,2025,271,count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Hawaii County, Hawaii",cost_year_n,2026,290,count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Hawaii County, Hawaii",frp_median,,"$4,755",usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"
 "Hawaii County, Hawaii",frp_plus_fees,,"$5,084",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,fullRiskPremium + federalPolicyFee + hfiaaSurcharge + reserveFundAssessment,"July 31, 2026"

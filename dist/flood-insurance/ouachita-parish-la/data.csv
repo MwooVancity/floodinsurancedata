@@ -126,8 +126,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Ouachita Parish, Louisiana",zip_cost_n,71280,26,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Ouachita Parish, Louisiana",zip_units,71280,34,count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Ouachita Parish, Louisiana",prem_median,,$410,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Ouachita Parish, Louisiana",cost_year,2025,$552,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Ouachita Parish, Louisiana",cost_year_n,2025,"1,188",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Ouachita Parish, Louisiana",cost_year_n,2026,"2,027",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Ouachita Parish, Louisiana",cost_new_n,,216,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Ouachita Parish, Louisiana",frp_median,,$413,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

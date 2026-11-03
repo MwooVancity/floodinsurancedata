@@ -146,8 +146,6 @@ Connecticut,county_share_below,09015,57.7%,pct,FEMA OpenFEMA — NFIP Policies,t
 Connecticut,county_claims,09015,74,count,FEMA OpenFEMA — NFIP Claims,id + countyCode,"July 31, 2026"
 Connecticut,threshold,spread_min,100,count,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Connecticut,prem_median,,"$1,211",usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-Connecticut,cost_year,2025,"$1,396",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-Connecticut,cost_year_n,2025,"7,213",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 Connecticut,cost_year_n,2026,"7,840",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 Connecticut,cost_new_n,,"1,195",count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 Connecticut,frp_median,,"$1,969",usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

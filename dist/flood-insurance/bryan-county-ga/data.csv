@@ -101,8 +101,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Bryan County, Georgia",zip_cost_n,31308,34,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Bryan County, Georgia",zip_units,31308,55,count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Bryan County, Georgia",prem_median,,$858,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Bryan County, Georgia",cost_year,2025,"$1,080",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Bryan County, Georgia",cost_year_n,2025,"1,274",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Bryan County, Georgia",cost_year_n,2026,"1,378",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Bryan County, Georgia",cost_new_n,,146,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Bryan County, Georgia",frp_median,,"$1,021",usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

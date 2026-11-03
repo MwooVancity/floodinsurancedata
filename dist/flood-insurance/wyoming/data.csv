@@ -147,8 +147,6 @@ Wyoming,county_units,56045,4,count,FEMA OpenFEMA — NFIP Policies,policyCount +
 Wyoming,county_claims,56045,1,count,FEMA OpenFEMA — NFIP Claims,id + countyCode,"July 31, 2026"
 Wyoming,threshold,spread_min,100,count,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Wyoming,prem_median,,$792,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-Wyoming,cost_year,2025,$981,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-Wyoming,cost_year_n,2025,335,count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 Wyoming,cost_year_n,2026,560,count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 Wyoming,cost_new_n,,116,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 Wyoming,frp_median,,$844,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

@@ -139,8 +139,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Dallas County, Texas",zip_cost_n,75214,119,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Dallas County, Texas",zip_units,75214,135,count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Dallas County, Texas",prem_median,,$732,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Dallas County, Texas",cost_year,2025,$894,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Dallas County, Texas",cost_year_n,2025,"1,879",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Dallas County, Texas",cost_year_n,2026,"2,115",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Dallas County, Texas",cost_new_n,,478,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Dallas County, Texas",frp_median,,$792,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

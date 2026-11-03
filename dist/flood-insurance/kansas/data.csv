@@ -335,8 +335,6 @@ Kansas,county_share_below,20209,30.6%,pct,FEMA OpenFEMA — NFIP Policies,totalI
 Kansas,county_claims,20209,434,count,FEMA OpenFEMA — NFIP Claims,id + countyCode,"July 31, 2026"
 Kansas,threshold,spread_min,100,count,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Kansas,prem_median,,$813,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-Kansas,cost_year,2025,"$1,013",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-Kansas,cost_year_n,2025,"1,732",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 Kansas,cost_year_n,2026,"2,573",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 Kansas,cost_new_n,,492,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 Kansas,frp_median,,$892,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

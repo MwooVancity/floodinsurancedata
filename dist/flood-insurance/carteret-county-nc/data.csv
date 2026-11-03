@@ -144,8 +144,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Carteret County, North Carolina",zip_cost_n,28531,109,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Carteret County, North Carolina",zip_units,28531,245,count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Carteret County, North Carolina",prem_median,,$863,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Carteret County, North Carolina",cost_year,2025,"$1,079",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Carteret County, North Carolina",cost_year_n,2025,"2,238",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Carteret County, North Carolina",cost_year_n,2026,"2,787",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Carteret County, North Carolina",cost_new_n,,214,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Carteret County, North Carolina",frp_median,,"$1,023",usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

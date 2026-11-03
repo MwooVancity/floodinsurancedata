@@ -163,8 +163,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Jefferson County, Texas",zip_cost_n,77640,"1,343",count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Jefferson County, Texas",zip_units,77640,"1,835",count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Jefferson County, Texas",prem_median,,$860,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Jefferson County, Texas",cost_year,2025,"$1,081",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Jefferson County, Texas",cost_year_n,2025,"6,446",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Jefferson County, Texas",cost_year_n,2026,"10,194",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Jefferson County, Texas",cost_new_n,,"2,124",count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Jefferson County, Texas",frp_median,,"$1,237",usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

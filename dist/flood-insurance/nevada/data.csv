@@ -141,8 +141,6 @@ Nevada,county_share_below,32033,26.4%,pct,FEMA OpenFEMA — NFIP Policies,totalI
 Nevada,county_claims,32033,8,count,FEMA OpenFEMA — NFIP Claims,id + countyCode,"July 31, 2026"
 Nevada,threshold,spread_min,100,count,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Nevada,prem_median,,$665,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-Nevada,cost_year,2025,$840,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-Nevada,cost_year_n,2025,"2,541",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 Nevada,cost_year_n,2026,"3,286",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 Nevada,cost_new_n,,717,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 Nevada,frp_median,,$692,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

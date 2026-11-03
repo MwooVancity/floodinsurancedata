@@ -153,8 +153,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Escambia County, Florida",zip_cost_n,32514,394,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Escambia County, Florida",zip_units,32514,517,count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Escambia County, Florida",prem_median,,$649,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Escambia County, Florida",cost_year,2025,$826,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Escambia County, Florida",cost_year_n,2025,"3,034",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Escambia County, Florida",cost_year_n,2026,"4,233",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Escambia County, Florida",cost_new_n,,880,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Escambia County, Florida",frp_median,,$691,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

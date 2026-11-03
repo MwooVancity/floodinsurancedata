@@ -135,8 +135,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Chatham County, Georgia",zip_cost_n,31404,705,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Chatham County, Georgia",zip_units,31404,"1,244",count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Chatham County, Georgia",prem_median,,$800,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Chatham County, Georgia",cost_year,2025,$962,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Chatham County, Georgia",cost_year_n,2025,"7,449",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Chatham County, Georgia",cost_year_n,2026,"8,792",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Chatham County, Georgia",cost_new_n,,679,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Chatham County, Georgia",frp_median,,$960,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

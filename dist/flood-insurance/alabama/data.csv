@@ -323,8 +323,6 @@ Alabama,county_units,01133,31,count,FEMA OpenFEMA — NFIP Policies,policyCount 
 Alabama,county_claims,01133,11,count,FEMA OpenFEMA — NFIP Claims,id + countyCode,"July 31, 2026"
 Alabama,threshold,spread_min,100,count,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Alabama,prem_median,,$905,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-Alabama,cost_year,2025,"$1,084",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-Alabama,cost_year_n,2025,"7,653",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 Alabama,cost_year_n,2026,"9,743",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 Alabama,cost_new_n,,"1,397",count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 Alabama,frp_median,,"$1,362",usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

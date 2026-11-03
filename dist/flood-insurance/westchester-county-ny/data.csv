@@ -150,8 +150,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Westchester County, New York",zip_cost_n,10803,156,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Westchester County, New York",zip_units,10803,187,count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Westchester County, New York",prem_median,,$678,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Westchester County, New York",cost_year,2025,$808,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Westchester County, New York",cost_year_n,2025,"2,613",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Westchester County, New York",cost_year_n,2026,"2,497",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Westchester County, New York",cost_new_n,,277,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Westchester County, New York",frp_median,,$692,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

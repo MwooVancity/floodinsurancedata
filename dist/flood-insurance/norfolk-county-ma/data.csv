@@ -141,8 +141,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Norfolk County, Massachusetts",zip_cost_n,02492,74,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Norfolk County, Massachusetts",zip_units,02492,82,count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Norfolk County, Massachusetts",prem_median,,$996,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Norfolk County, Massachusetts",cost_year,2025,"$1,193",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Norfolk County, Massachusetts",cost_year_n,2025,"1,176",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Norfolk County, Massachusetts",cost_year_n,2026,"1,148",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Norfolk County, Massachusetts",cost_new_n,,279,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Norfolk County, Massachusetts",frp_median,,"$1,257",usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

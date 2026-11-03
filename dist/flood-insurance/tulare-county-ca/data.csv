@@ -134,8 +134,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Tulare County, California",zip_cost_n,93286,111,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Tulare County, California",zip_units,93286,167,count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Tulare County, California",prem_median,,$726,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Tulare County, California",cost_year,2025,$892,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Tulare County, California",cost_year_n,2025,"1,228",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Tulare County, California",cost_year_n,2026,"1,628",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Tulare County, California",cost_new_n,,463,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Tulare County, California",frp_median,,$804,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

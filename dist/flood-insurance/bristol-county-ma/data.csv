@@ -139,8 +139,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Bristol County, Massachusetts",zip_cost_n,02780,85,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Bristol County, Massachusetts",zip_units,02780,146,count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Bristol County, Massachusetts",prem_median,,"$1,037",usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Bristol County, Massachusetts",cost_year,2025,"$1,212",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Bristol County, Massachusetts",cost_year_n,2025,946,count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Bristol County, Massachusetts",cost_year_n,2026,879,count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Bristol County, Massachusetts",cost_new_n,,105,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Bristol County, Massachusetts",frp_median,,"$1,214",usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

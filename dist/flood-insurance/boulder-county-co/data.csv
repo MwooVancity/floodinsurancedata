@@ -117,8 +117,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Boulder County, Colorado",zip_cost_n,80540,66,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Boulder County, Colorado",zip_units,80540,102,count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Boulder County, Colorado",prem_median,,$829,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Boulder County, Colorado",cost_year,2025,"$1,017",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Boulder County, Colorado",cost_year_n,2025,662,count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Boulder County, Colorado",cost_year_n,2026,"1,015",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Boulder County, Colorado",cost_new_n,,206,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Boulder County, Colorado",frp_median,,$876,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

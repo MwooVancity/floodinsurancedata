@@ -156,8 +156,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Duval County, Florida",zip_cost_n,32210,783,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Duval County, Florida",zip_units,32210,"1,330",count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Duval County, Florida",prem_median,,$815,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Duval County, Florida",cost_year,2025,$996,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Duval County, Florida",cost_year_n,2025,"8,094",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Duval County, Florida",cost_year_n,2026,"9,292",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Duval County, Florida",cost_new_n,,730,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Duval County, Florida",frp_median,,$895,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

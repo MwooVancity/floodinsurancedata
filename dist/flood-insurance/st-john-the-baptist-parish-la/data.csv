@@ -130,8 +130,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "St. John the Baptist Parish, Louisiana",zip_cost_n,70090,31,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "St. John the Baptist Parish, Louisiana",zip_units,70090,41,count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "St. John the Baptist Parish, Louisiana",prem_median,,"$1,070",usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"St. John the Baptist Parish, Louisiana",cost_year,2025,"$1,233",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"St. John the Baptist Parish, Louisiana",cost_year_n,2025,"1,889",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "St. John the Baptist Parish, Louisiana",cost_year_n,2026,"2,981",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "St. John the Baptist Parish, Louisiana",cost_new_n,,475,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "St. John the Baptist Parish, Louisiana",frp_median,,"$1,697",usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

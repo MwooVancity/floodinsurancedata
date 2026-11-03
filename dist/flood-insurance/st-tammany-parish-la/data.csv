@@ -189,8 +189,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "St. Tammany Parish, Louisiana",zip_cost_n,70435,"2,073",count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "St. Tammany Parish, Louisiana",zip_units,70435,"2,316",count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "St. Tammany Parish, Louisiana",prem_median,,$966,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"St. Tammany Parish, Louisiana",cost_year,2025,"$1,084",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"St. Tammany Parish, Louisiana",cost_year_n,2025,"13,332",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "St. Tammany Parish, Louisiana",cost_year_n,2026,"20,026",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "St. Tammany Parish, Louisiana",cost_new_n,,"4,133",count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "St. Tammany Parish, Louisiana",frp_median,,"$1,425",usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

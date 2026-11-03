@@ -344,8 +344,6 @@ Minnesota,county_units,27173,16,count,FEMA OpenFEMA — NFIP Policies,policyCoun
 Minnesota,county_claims,27173,146,count,FEMA OpenFEMA — NFIP Claims,id + countyCode,"July 31, 2026"
 Minnesota,threshold,spread_min,100,count,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Minnesota,prem_median,,$873,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-Minnesota,cost_year,2025,"$1,082",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-Minnesota,cost_year_n,2025,"1,537",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 Minnesota,cost_year_n,2026,"2,473",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 Minnesota,cost_new_n,,364,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 Minnesota,frp_median,,"$1,015",usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

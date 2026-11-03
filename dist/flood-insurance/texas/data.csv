@@ -885,8 +885,6 @@ Texas,county_share_below,48507,15.2%,pct,FEMA OpenFEMA — NFIP Policies,totalIn
 Texas,county_claims,48507,47,count,FEMA OpenFEMA — NFIP Claims,id + countyCode,"July 31, 2026"
 Texas,threshold,spread_min,100,count,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Texas,prem_median,,$854,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-Texas,cost_year,2025,"$1,066",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-Texas,cost_year_n,2025,"179,599",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 Texas,cost_year_n,2026,"249,726",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 Texas,cost_new_n,,"41,618",count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 Texas,frp_median,,$971,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

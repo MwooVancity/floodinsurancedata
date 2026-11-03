@@ -116,8 +116,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Multnomah County, Oregon",zip_cost_n,97217,26,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Multnomah County, Oregon",zip_units,97217,132,count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Multnomah County, Oregon",prem_median,,$560,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Multnomah County, Oregon",cost_year,2025,$734,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Multnomah County, Oregon",cost_year_n,2025,350,count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Multnomah County, Oregon",cost_year_n,2026,393,count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Multnomah County, Oregon",cost_new_n,,79,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Multnomah County, Oregon",frp_median,,$567,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

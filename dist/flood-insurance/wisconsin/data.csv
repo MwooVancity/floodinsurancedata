@@ -331,8 +331,6 @@ Wisconsin,county_share_below,55141,36.3%,pct,FEMA OpenFEMA — NFIP Policies,tot
 Wisconsin,county_claims,55141,48,count,FEMA OpenFEMA — NFIP Claims,id + countyCode,"July 31, 2026"
 Wisconsin,threshold,spread_min,100,count,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Wisconsin,prem_median,,$714,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-Wisconsin,cost_year,2025,$871,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-Wisconsin,cost_year_n,2025,"2,901",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 Wisconsin,cost_year_n,2026,"3,749",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 Wisconsin,cost_new_n,,"1,053",count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 Wisconsin,frp_median,,$762,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

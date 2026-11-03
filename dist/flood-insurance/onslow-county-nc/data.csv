@@ -132,8 +132,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Onslow County, North Carolina",zip_cost_n,28555,39,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Onslow County, North Carolina",zip_units,28555,49,count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Onslow County, North Carolina",prem_median,,$682,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Onslow County, North Carolina",cost_year,2025,$822,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Onslow County, North Carolina",cost_year_n,2025,"1,315",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Onslow County, North Carolina",cost_year_n,2026,"1,501",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Onslow County, North Carolina",cost_new_n,,216,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Onslow County, North Carolina",frp_median,,$772,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

@@ -149,8 +149,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Cape May County, New Jersey",zip_cost_n,08243,113,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Cape May County, New Jersey",zip_units,08243,"5,947",count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Cape May County, New Jersey",prem_median,,$956,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Cape May County, New Jersey",cost_year,2025,"$1,149",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Cape May County, New Jersey",cost_year_n,2025,"2,298",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Cape May County, New Jersey",cost_year_n,2026,"2,645",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Cape May County, New Jersey",cost_new_n,,122,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Cape May County, New Jersey",frp_median,,"$1,481",usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

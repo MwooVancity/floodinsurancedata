@@ -150,8 +150,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "St. Johns County, Florida",zip_cost_n,32086,917,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "St. Johns County, Florida",zip_units,32086,"1,595",count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "St. Johns County, Florida",prem_median,,$858,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"St. Johns County, Florida",cost_year,2025,"$1,082",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"St. Johns County, Florida",cost_year_n,2025,"7,486",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "St. Johns County, Florida",cost_year_n,2026,"9,600",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "St. Johns County, Florida",cost_new_n,,"1,006",count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "St. Johns County, Florida",frp_median,,"$1,356",usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

@@ -121,8 +121,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Portsmouth city, Virginia",zip_cost_n,23702,295,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Portsmouth city, Virginia",zip_units,23702,400,count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Portsmouth city, Virginia",prem_median,,$443,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Portsmouth city, Virginia",cost_year,2025,$579,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Portsmouth city, Virginia",cost_year_n,2025,"1,174",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Portsmouth city, Virginia",cost_year_n,2026,"1,227",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Portsmouth city, Virginia",cost_new_n,,222,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Portsmouth city, Virginia",frp_median,,$447,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

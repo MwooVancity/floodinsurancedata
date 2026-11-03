@@ -153,8 +153,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Pasco County, Florida",zip_cost_n,34668,833,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Pasco County, Florida",zip_units,34668,"1,853",count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Pasco County, Florida",prem_median,,$646,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Pasco County, Florida",cost_year,2025,$808,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Pasco County, Florida",cost_year_n,2025,"7,172",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Pasco County, Florida",cost_year_n,2026,"9,900",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Pasco County, Florida",cost_new_n,,"2,055",count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Pasco County, Florida",frp_median,,$673,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

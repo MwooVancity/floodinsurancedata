@@ -153,8 +153,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Mobile County, Alabama",zip_cost_n,36693,181,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Mobile County, Alabama",zip_units,36693,230,count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Mobile County, Alabama",prem_median,,$983,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Mobile County, Alabama",cost_year,2025,"$1,086",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Mobile County, Alabama",cost_year_n,2025,"1,641",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Mobile County, Alabama",cost_year_n,2026,"2,180",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Mobile County, Alabama",cost_new_n,,339,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Mobile County, Alabama",frp_median,,"$1,762",usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

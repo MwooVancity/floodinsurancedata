@@ -177,8 +177,6 @@ Massachusetts,county_share_below,25027,36.3%,pct,FEMA OpenFEMA — NFIP Policies
 Massachusetts,county_claims,25027,765,count,FEMA OpenFEMA — NFIP Claims,id + countyCode,"July 31, 2026"
 Massachusetts,threshold,spread_min,100,count,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Massachusetts,prem_median,,"$1,038",usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-Massachusetts,cost_year,2025,"$1,202",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-Massachusetts,cost_year_n,2025,"11,016",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 Massachusetts,cost_year_n,2026,"9,849",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 Massachusetts,cost_new_n,,"1,814",count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 Massachusetts,frp_median,,"$1,295",usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

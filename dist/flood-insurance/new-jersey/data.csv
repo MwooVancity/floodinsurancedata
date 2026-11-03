@@ -225,8 +225,6 @@ New Jersey,county_share_below,34041,57.1%,pct,FEMA OpenFEMA — NFIP Policies,to
 New Jersey,county_claims,34041,"1,273",count,FEMA OpenFEMA — NFIP Claims,id + countyCode,"July 31, 2026"
 New Jersey,threshold,spread_min,100,count,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 New Jersey,prem_median,,$964,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-New Jersey,cost_year,2025,"$1,180",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-New Jersey,cost_year_n,2025,"29,209",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 New Jersey,cost_year_n,2026,"32,908",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 New Jersey,cost_new_n,,"2,669",count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 New Jersey,frp_median,,"$1,453",usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

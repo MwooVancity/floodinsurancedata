@@ -142,8 +142,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Sussex County, Delaware",zip_cost_n,19968,254,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Sussex County, Delaware",zip_units,19968,494,count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Sussex County, Delaware",prem_median,,$685,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Sussex County, Delaware",cost_year,2025,$835,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Sussex County, Delaware",cost_year_n,2025,"3,067",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Sussex County, Delaware",cost_year_n,2026,"3,079",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Sussex County, Delaware",cost_new_n,,276,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Sussex County, Delaware",frp_median,,$736,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

@@ -217,8 +217,6 @@ North Dakota,county_units,38105,39,count,FEMA OpenFEMA — NFIP Policies,policyC
 North Dakota,county_claims,38105,19,count,FEMA OpenFEMA — NFIP Claims,id + countyCode,"July 31, 2026"
 North Dakota,threshold,spread_min,100,count,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 North Dakota,prem_median,,$664,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-North Dakota,cost_year,2025,$868,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-North Dakota,cost_year_n,2025,"1,466",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 North Dakota,cost_year_n,2026,"2,815",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 North Dakota,cost_new_n,,347,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 North Dakota,frp_median,,$692,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

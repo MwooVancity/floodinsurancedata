@@ -117,8 +117,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Worcester County, Maryland",zip_cost_n,21851,48,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Worcester County, Maryland",zip_units,21851,64,count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Worcester County, Maryland",prem_median,,$781,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Worcester County, Maryland",cost_year,2025,$955,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Worcester County, Maryland",cost_year_n,2025,"1,470",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Worcester County, Maryland",cost_year_n,2026,"1,527",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Worcester County, Maryland",cost_new_n,,84,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Worcester County, Maryland",frp_median,,$858,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

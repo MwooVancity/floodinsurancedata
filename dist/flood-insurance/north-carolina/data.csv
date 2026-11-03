@@ -483,8 +483,6 @@ North Carolina,county_share_below,37199,35.9%,pct,FEMA OpenFEMA — NFIP Policie
 North Carolina,county_claims,37199,146,count,FEMA OpenFEMA — NFIP Claims,id + countyCode,"July 31, 2026"
 North Carolina,threshold,spread_min,100,count,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 North Carolina,prem_median,,$718,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-North Carolina,cost_year,2025,$883,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-North Carolina,cost_year_n,2025,"31,376",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 North Carolina,cost_year_n,2026,"34,282",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 North Carolina,cost_new_n,,"4,964",count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 North Carolina,frp_median,,$795,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

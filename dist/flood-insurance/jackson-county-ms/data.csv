@@ -144,8 +144,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Jackson County, Mississippi",zip_cost_n,39565,109,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Jackson County, Mississippi",zip_units,39565,132,count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Jackson County, Mississippi",prem_median,,"$1,087",usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Jackson County, Mississippi",cost_year,2025,"$1,285",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Jackson County, Mississippi",cost_year_n,2025,"3,439",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Jackson County, Mississippi",cost_year_n,2026,"5,514",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Jackson County, Mississippi",cost_new_n,,440,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Jackson County, Mississippi",frp_median,,"$2,001",usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

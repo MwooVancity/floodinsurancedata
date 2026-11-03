@@ -147,8 +147,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Montgomery County, Texas",zip_cost_n,77385,986,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Montgomery County, Texas",zip_units,77385,"1,142",count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Montgomery County, Texas",prem_median,,$787,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Montgomery County, Texas",cost_year,2025,$997,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Montgomery County, Texas",cost_year_n,2025,"8,303",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Montgomery County, Texas",cost_year_n,2026,"11,327",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Montgomery County, Texas",cost_new_n,,"1,674",count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Montgomery County, Texas",frp_median,,$810,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

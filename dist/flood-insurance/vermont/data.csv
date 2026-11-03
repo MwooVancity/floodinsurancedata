@@ -153,8 +153,6 @@ Vermont,county_share_below,50027,42.9%,pct,FEMA OpenFEMA — NFIP Policies,total
 Vermont,county_claims,50027,511,count,FEMA OpenFEMA — NFIP Claims,id + countyCode,"July 31, 2026"
 Vermont,threshold,spread_min,100,count,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Vermont,prem_median,,"$1,030",usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-Vermont,cost_year,2025,"$1,198",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-Vermont,cost_year_n,2025,761,count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 Vermont,cost_year_n,2026,809,count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 Vermont,cost_new_n,,145,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 Vermont,frp_median,,"$1,494",usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

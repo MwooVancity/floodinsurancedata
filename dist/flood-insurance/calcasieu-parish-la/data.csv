@@ -145,8 +145,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Calcasieu Parish, Louisiana",zip_cost_n,70647,416,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Calcasieu Parish, Louisiana",zip_units,70647,475,count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Calcasieu Parish, Louisiana",prem_median,,"$1,010",usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Calcasieu Parish, Louisiana",cost_year,2025,"$1,135",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Calcasieu Parish, Louisiana",cost_year_n,2025,"4,174",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Calcasieu Parish, Louisiana",cost_year_n,2026,"5,917",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Calcasieu Parish, Louisiana",cost_new_n,,632,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Calcasieu Parish, Louisiana",frp_median,,"$2,013",usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

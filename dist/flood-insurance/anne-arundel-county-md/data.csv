@@ -136,8 +136,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Anne Arundel County, Maryland",zip_cost_n,21409,162,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Anne Arundel County, Maryland",zip_units,21409,192,count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Anne Arundel County, Maryland",prem_median,,$396,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Anne Arundel County, Maryland",cost_year,2025,$519,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Anne Arundel County, Maryland",cost_year_n,2025,"1,838",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Anne Arundel County, Maryland",cost_year_n,2026,"1,882",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Anne Arundel County, Maryland",cost_new_n,,222,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Anne Arundel County, Maryland",frp_median,,$399,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

@@ -405,8 +405,6 @@ Louisiana,county_units,22127,41,count,FEMA OpenFEMA — NFIP Policies,policyCoun
 Louisiana,county_claims,22127,140,count,FEMA OpenFEMA — NFIP Claims,id + countyCode,"July 31, 2026"
 Louisiana,threshold,spread_min,100,count,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Louisiana,prem_median,,$859,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-Louisiana,cost_year,2025,"$1,080",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-Louisiana,cost_year_n,2025,"121,828",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 Louisiana,cost_year_n,2026,"170,190",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 Louisiana,cost_new_n,,"30,754",count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 Louisiana,frp_median,,"$1,220",usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

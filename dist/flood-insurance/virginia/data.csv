@@ -551,8 +551,6 @@ Virginia,county_share_below,51199,57.9%,pct,FEMA OpenFEMA — NFIP Policies,tota
 Virginia,county_claims,51199,"1,569",count,FEMA OpenFEMA — NFIP Claims,id + countyCode,"July 31, 2026"
 Virginia,threshold,spread_min,100,count,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Virginia,prem_median,,$578,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-Virginia,cost_year,2025,$723,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-Virginia,cost_year_n,2025,"27,626",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 Virginia,cost_year_n,2026,"29,732",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 Virginia,cost_new_n,,"3,583",count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 Virginia,frp_median,,$592,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

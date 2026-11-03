@@ -149,8 +149,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Beaufort County, South Carolina",zip_cost_n,29906,748,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Beaufort County, South Carolina",zip_units,29906,980,count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Beaufort County, South Carolina",prem_median,,$671,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Beaufort County, South Carolina",cost_year,2025,$821,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Beaufort County, South Carolina",cost_year_n,2025,"8,613",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Beaufort County, South Carolina",cost_year_n,2026,"10,753",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Beaufort County, South Carolina",cost_new_n,,808,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Beaufort County, South Carolina",frp_median,,$736,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

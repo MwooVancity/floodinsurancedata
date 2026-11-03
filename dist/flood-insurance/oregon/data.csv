@@ -222,8 +222,6 @@ Oregon,county_share_below,41071,45.3%,pct,FEMA OpenFEMA — NFIP Policies,totalI
 Oregon,county_claims,41071,108,count,FEMA OpenFEMA — NFIP Claims,id + countyCode,"July 31, 2026"
 Oregon,threshold,spread_min,100,count,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Oregon,prem_median,,$853,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-Oregon,cost_year,2025,"$1,065",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-Oregon,cost_year_n,2025,"5,002",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 Oregon,cost_year_n,2026,"5,805",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 Oregon,cost_new_n,,"1,289",count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 Oregon,frp_median,,"$1,010",usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

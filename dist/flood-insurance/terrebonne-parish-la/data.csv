@@ -161,8 +161,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Terrebonne Parish, Louisiana",zip_cost_n,70395,215,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Terrebonne Parish, Louisiana",zip_units,70395,267,count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Terrebonne Parish, Louisiana",prem_median,,"$1,099",usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Terrebonne Parish, Louisiana",cost_year,2025,"$1,205",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Terrebonne Parish, Louisiana",cost_year_n,2025,"4,085",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Terrebonne Parish, Louisiana",cost_year_n,2026,"5,049",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Terrebonne Parish, Louisiana",cost_new_n,,972,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Terrebonne Parish, Louisiana",frp_median,,"$2,853",usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

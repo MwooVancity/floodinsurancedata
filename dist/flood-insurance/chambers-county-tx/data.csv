@@ -138,8 +138,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Chambers County, Texas",zip_cost_n,77597,32,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Chambers County, Texas",zip_units,77597,61,count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Chambers County, Texas",prem_median,,$795,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Chambers County, Texas",cost_year,2025,"$1,010",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Chambers County, Texas",cost_year_n,2025,"1,357",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Chambers County, Texas",cost_year_n,2026,"1,865",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Chambers County, Texas",cost_new_n,,321,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Chambers County, Texas",frp_median,,$827,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

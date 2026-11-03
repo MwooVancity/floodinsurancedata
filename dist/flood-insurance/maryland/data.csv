@@ -212,8 +212,6 @@ Maryland,county_share_below,24047,40.6%,pct,FEMA OpenFEMA — NFIP Policies,tota
 Maryland,county_claims,24047,"2,519",count,FEMA OpenFEMA — NFIP Claims,id + countyCode,"July 31, 2026"
 Maryland,threshold,spread_min,100,count,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Maryland,prem_median,,$420,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-Maryland,cost_year,2025,$549,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-Maryland,cost_year_n,2025,"11,338",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 Maryland,cost_year_n,2026,"11,583",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 Maryland,cost_new_n,,"1,456",count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 Maryland,frp_median,,$425,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

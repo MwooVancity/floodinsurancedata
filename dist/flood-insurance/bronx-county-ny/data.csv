@@ -125,8 +125,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Bronx County, New York",zip_cost_n,10471,26,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Bronx County, New York",zip_units,10471,32,count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Bronx County, New York",prem_median,,$954,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Bronx County, New York",cost_year,2025,"$1,186",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Bronx County, New York",cost_year_n,2025,433,count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Bronx County, New York",cost_year_n,2026,506,count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Bronx County, New York",cost_new_n,,59,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Bronx County, New York",frp_median,,$984,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

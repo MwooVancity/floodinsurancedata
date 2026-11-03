@@ -124,8 +124,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Madison County, Alabama",zip_cost_n,35760,86,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Madison County, Alabama",zip_units,35760,108,count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Madison County, Alabama",prem_median,,$859,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Madison County, Alabama",cost_year,2025,"$1,084",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Madison County, Alabama",cost_year_n,2025,"1,124",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Madison County, Alabama",cost_year_n,2026,"1,346",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Madison County, Alabama",cost_new_n,,183,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Madison County, Alabama",frp_median,,"$1,124",usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

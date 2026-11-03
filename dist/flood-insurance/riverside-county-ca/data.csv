@@ -135,8 +135,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Riverside County, California",zip_cost_n,92530,57,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Riverside County, California",zip_units,92530,91,count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Riverside County, California",prem_median,,$857,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Riverside County, California",cost_year,2025,"$1,082",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Riverside County, California",cost_year_n,2025,"1,015",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Riverside County, California",cost_year_n,2026,"1,126",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Riverside County, California",cost_new_n,,273,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Riverside County, California",frp_median,,"$1,242",usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

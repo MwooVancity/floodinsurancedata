@@ -148,8 +148,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Norfolk city, Virginia",zip_cost_n,23513,223,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Norfolk city, Virginia",zip_units,23513,316,count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Norfolk city, Virginia",prem_median,,$551,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Norfolk city, Virginia",cost_year,2025,$692,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Norfolk city, Virginia",cost_year_n,2025,"2,841",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Norfolk city, Virginia",cost_year_n,2026,"3,390",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Norfolk city, Virginia",cost_new_n,,428,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Norfolk city, Virginia",frp_median,,$561,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

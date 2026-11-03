@@ -125,8 +125,6 @@ Delaware,county_share_below,10005,39.5%,pct,FEMA OpenFEMA — NFIP Policies,tota
 Delaware,county_claims,10005,"4,307",count,FEMA OpenFEMA — NFIP Claims,id + countyCode,"July 31, 2026"
 Delaware,threshold,spread_min,100,count,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Delaware,prem_median,,$721,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-Delaware,cost_year,2025,$865,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-Delaware,cost_year_n,2025,"4,032",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 Delaware,cost_year_n,2026,"4,073",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 Delaware,cost_new_n,,391,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 Delaware,frp_median,,$777,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

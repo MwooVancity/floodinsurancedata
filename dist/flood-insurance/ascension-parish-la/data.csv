@@ -144,8 +144,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Ascension Parish, Louisiana",zip_cost_n,70449,26,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Ascension Parish, Louisiana",zip_units,70449,28,count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Ascension Parish, Louisiana",prem_median,,$687,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Ascension Parish, Louisiana",cost_year,2025,$851,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Ascension Parish, Louisiana",cost_year_n,2025,"5,311",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Ascension Parish, Louisiana",cost_year_n,2026,"6,482",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Ascension Parish, Louisiana",cost_new_n,,"1,276",count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Ascension Parish, Louisiana",frp_median,,$732,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

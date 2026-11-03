@@ -127,8 +127,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Washington County, Rhode Island",zip_cost_n,02874,32,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Washington County, Rhode Island",zip_units,02874,45,count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Washington County, Rhode Island",prem_median,,$944,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Washington County, Rhode Island",cost_year,2025,"$1,102",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Washington County, Rhode Island",cost_year_n,2025,734,count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Washington County, Rhode Island",cost_year_n,2026,835,count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Washington County, Rhode Island",cost_new_n,,52,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Washington County, Rhode Island",frp_median,,"$1,047",usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

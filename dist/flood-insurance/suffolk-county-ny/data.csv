@@ -147,8 +147,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Suffolk County, New York",zip_cost_n,11951,481,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Suffolk County, New York",zip_units,11951,567,count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Suffolk County, New York",prem_median,,$983,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Suffolk County, New York",cost_year,2025,"$1,198",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Suffolk County, New York",cost_year_n,2025,"7,900",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Suffolk County, New York",cost_year_n,2026,"7,444",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Suffolk County, New York",cost_new_n,,408,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Suffolk County, New York",frp_median,,"$2,174",usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

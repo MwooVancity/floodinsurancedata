@@ -354,8 +354,6 @@ Iowa,county_units,19197,19,count,FEMA OpenFEMA — NFIP Policies,policyCount + c
 Iowa,county_claims,19197,2,count,FEMA OpenFEMA — NFIP Claims,id + countyCode,"July 31, 2026"
 Iowa,threshold,spread_min,100,count,FEMA OpenFEMA — NFIP Policies,policyCost,"July 31, 2026"
 Iowa,prem_median,,$820,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-Iowa,cost_year,2025,$988,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-Iowa,cost_year_n,2025,"1,976",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 Iowa,cost_year_n,2026,"3,008",count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 Iowa,cost_new_n,,371,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 Iowa,frp_median,,$966,usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"

@@ -148,8 +148,6 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Montgomery County, Pennsylvania",zip_cost_n,19426,64,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"July 31, 2026"
 "Montgomery County, Pennsylvania",zip_units,19426,85,count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"July 31, 2026"
 "Montgomery County, Pennsylvania",prem_median,,$898,usd_premium_only,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy,"July 31, 2026"
-"Montgomery County, Pennsylvania",cost_year,2025,"$1,046",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
-"Montgomery County, Pennsylvania",cost_year_n,2025,927,count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Montgomery County, Pennsylvania",cost_year_n,2026,951,count,FEMA OpenFEMA — NFIP Policies,policyCost + policyEffectiveDate,"July 31, 2026"
 "Montgomery County, Pennsylvania",cost_new_n,,109,count,FEMA OpenFEMA — NFIP Policies,policyCost + originalNBDate,"July 31, 2026"
 "Montgomery County, Pennsylvania",frp_median,,"$1,024",usd_premium_only,FEMA OpenFEMA — NFIP Policies,fullRiskPremium,"July 31, 2026"
