@@ -19,5 +19,17 @@ Verdict: PASS
 - MINOR: same missing "single-family primary-home" base on the screen-1 and quote-checker sentences. The n of 28,268 is the priced single-family subset, not all 132,945 policies, and the table row says only "policies".
 Verdict: PASS
 
+## broward-county-fl
+- Page: "policies whose term began Jan–Jul 2026 ... $876", "43,250 policies". agg.json cost_by_year."2026" is median 876, n 43,250. Match. Label true for as-of 2026-07-31. No "2025" row on the page (2025 is in the data: 798, n 55,458, correctly not shown).
+- Screen-1 and quote-checker sentences agree with the table. No duplicate paragraph.
+- MINOR: same missing "single-family primary-home" base on the screen-1 sentence as the earlier pages.
+Verdict: PASS
+
+## new-york-county-ny
+- Figure present: "Jan–Jul 2026 $820, 95 policies". agg.json cost_by_year."2026" is median 820, n 95. Match. Label true. No "2025" row on the page (the data holds 1,081 on n 77, correctly not shown).
+- MINOR: the base is only 95 policies. The count is printed beside the figure, so the reader can judge it. The "Buying?" line is absent (too few new policies), which leaves nothing misleading.
+- MINOR: same missing single-family base on the screen-1 sentence.
+Verdict: PASS
+
 ## Gaps
 Did not check raw policy rows for effective dates after the as-of date, or the other 3,000+ pages. Did not render on a phone. Did not check the state pages' build gate. Did not check whether "past year" new-policy wording is consistent with the term-began figure (not in scope).
