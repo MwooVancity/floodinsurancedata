@@ -49,6 +49,7 @@ jobs:
             .cache/raw/asof.txt
           key: fema-pol-${{ steps.m.outputs.month }}
       - name: Download every FEMA policy and claim (resumable; skips finished slices)
+        id: dl
         if: steps.plan.outputs.pull == 'true'
         # FEMA 503s on a few slices are common (2026-11-03: 4 states over 2 runs); resume twice on its own before failing
         run: |
@@ -90,7 +91,8 @@ jobs:
           git commit -m "data: refresh from FEMA (policies as of $(python -I -c "import json;print(json.load(open('data/us/asof.json'))['asof'])"))"
           git pull --rebase -X theirs origin master && git push   # others may push during the 2h run
       - name: Alert on failure (one GitHub issue per problem; GitHub emails the owner once)
-        if: failure() || cancelled()   # a timeout counts as cancelled
+        # a timeout counts as cancelled. FEMA down on the 3rd or on a hand run: no email, the 6th resumes (owner 2026-11-03: one email per real problem)
+        if: (failure() || cancelled()) && !(steps.dl.outcome == 'failure' && (github.event.schedule == '0 6 3 * *' || github.event_name == 'workflow_dispatch'))
         env: { GH_TOKEN: "${{ github.token }}" }
         run: bash tools/job_alert.sh fail "refresh-data" publish-counties.yml 3
       - name: Close the alert when passing again; check the other job still runs
