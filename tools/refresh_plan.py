@@ -1,6 +1,6 @@
 """Does this month's refresh need the big FEMA download (owner 2026-11-03: "downloading over and over seems wasteful")?
 Pull only when the new as-of date is (a) newer than the one in data/ and (b) before FEMA's last policy-file update, so a
-rerun, the backup cron or a month FEMA did not update re-downloads nothing, and the as-of never runs past FEMA's data
+rerun, the daily 3rd-10th cron after a good run or a month FEMA did not update re-downloads nothing, and the as-of never runs past FEMA's data
 (policies renewing in a month the file does not cover would vanish: about 1/12 of all homes per month, under the jump check).
 Writes pull=true|false to $GITHUB_OUTPUT. FEMA unreachable = exit 1 (the job fails and alerts; a silent skip would never alert).
 Usage: python -I tools/refresh_plan.py [--test]"""
@@ -20,7 +20,7 @@ def decide(target, have, fema):
 
 def stale(fema, today): return (today - fema).days > 90   # FEMA updates about monthly; 3 months without one needs a person
 
-def fema_updated(tries=6):   # FEMA 503s are common (2026-11-03): one bad answer must not fail the month
+def fema_updated(tries=3):   # FEMA 503s are common (2026-11-03); still down = fail, tomorrow's run retries (no email before the 10th)
     url = "https://www.fema.gov/api/open/v1/DataSets?$select=name,lastDataSetRefresh&$filter=name%20eq%20%27NfipPolicies%27"
     for i in range(tries):
         try:

@@ -7,8 +7,9 @@ name: refresh-data
 # ships the new figures only through every gate.
 on:
   schedule:
-    - cron: '0 6 3 * *'   # 06:00 UTC on the 3rd of each month
-    - cron: '0 6 6 * *'   # backup: GitHub dropped the 3rd's run on 2026-11-03; refresh_plan makes this a no-op if the 3rd worked
+    # 06:00 UTC daily on the 3rd-10th: a dropped or late cron (2026-11-03), a FEMA outage or a late FEMA file is retried the
+    # next day; refresh_plan makes a run after a good one a ~30 s no-op. Retries are days, not sleeps on a billed runner.
+    - cron: '0 6 3-10 * *'
   workflow_dispatch:
     inputs:
       jump_limit:
@@ -24,6 +25,7 @@ concurrency: refresh-data
 
 jobs:
   refresh:
+    concurrency: { group: site-deploy }   # one writer on master at a time: publish shares it (11-03 critique: a late refresh's push raced the daily publish)
     runs-on: ubuntu-26.04   # pinned 2026-10-29 (owner: nothing may change under the jobs)
     timeout-minutes: 350
     steps:
@@ -39,7 +41,7 @@ jobs:
         if: steps.plan.outputs.pull == 'true'
         with:
           path: .cache/raw/NfipClaims
-          key: fema-claims-${{ steps.m.outputs.month }}
+          key: fema-claims-${{ steps.m.outputs.month }}-${{ github.run_id }}
           restore-keys: fema-claims-
       - uses: actions/cache@v4   # policies: fresh every month (this cache only resumes a run within the month)
         if: steps.plan.outputs.pull == 'true'
@@ -47,27 +49,26 @@ jobs:
           path: |
             .cache/raw/NfipPolicies
             .cache/raw/asof.txt
-          key: fema-pol-${{ steps.m.outputs.month }}
+          key: fema-pol-${{ steps.m.outputs.month }}-${{ github.run_id }}
+          restore-keys: fema-pol-${{ steps.m.outputs.month }}-   # this month only; newest partial wins
       - name: Download every FEMA policy and claim (resumable; skips finished slices)
         id: dl
         if: steps.plan.outputs.pull == 'true'
-        # FEMA 503s on a few slices are common (2026-11-03: 4 states over 2 runs); resume twice on its own before failing
-        run: |
-          python -I tools/pull_raw.py || { sleep 900; python -I tools/pull_raw.py; } || { sleep 1800; python -I tools/pull_raw.py; }
-          du -sh .cache/raw   # owner asked the download size
+        # FEMA 503s on a few slices are common (2026-11-03); unfinished states resume on tomorrow's run from the saved cache
+        run: python -I tools/pull_raw.py && du -sh .cache/raw   # owner asked the download size
       # save now: a cache is otherwise saved only if the whole job passes, so a late failure re-downloaded 2 hours (2026-10-30)
       - uses: actions/cache/save@v4
         if: always() && steps.plan.outputs.pull == 'true'   # keep finished states even when one fails; .done markers are written only after counts match
         with:
           path: .cache/raw/NfipClaims
-          key: fema-claims-${{ steps.m.outputs.month }}
+          key: fema-claims-${{ steps.m.outputs.month }}-${{ github.run_id }}   # cache keys are write-once: one per run, so every run's progress keeps
       - uses: actions/cache/save@v4
         if: always() && steps.plan.outputs.pull == 'true'   # keep finished states even when one fails; .done markers are written only after counts match
         with:
           path: |
             .cache/raw/NfipPolicies
             .cache/raw/asof.txt
-          key: fema-pol-${{ steps.m.outputs.month }}
+          key: fema-pol-${{ steps.m.outputs.month }}-${{ github.run_id }}
       - name: Compute state, county and extras figures from the download
         if: steps.plan.outputs.pull == 'true'
         run: |
@@ -91,10 +92,13 @@ jobs:
           git commit -m "data: refresh from FEMA (policies as of $(python -I -c "import json;print(json.load(open('data/us/asof.json'))['asof'])"))"
           git pull --rebase -X theirs origin master && git push   # others may push during the 2h run
       - name: Alert on failure (one GitHub issue per problem; GitHub emails the owner once)
-        # a timeout counts as cancelled. FEMA down on the 3rd or on a hand run: no email, the 6th resumes (owner 2026-11-03: one email per real problem)
-        if: (failure() || cancelled()) && !(steps.dl.outcome == 'failure' && (github.event.schedule == '0 6 3 * *' || github.event_name == 'workflow_dispatch'))
+        if: failure() || cancelled()   # a timeout counts as cancelled
         env: { GH_TOKEN: "${{ github.token }}" }
-        run: bash tools/job_alert.sh fail "refresh-data" publish-counties.yml 3
+        run: |
+          # FEMA unreachable before the 10th: no email, tomorrow's run resumes (owner 2026-11-03: one email per real problem)
+          if [ "$(date -u +%-d)" -lt 10 ] && { [ "${{ steps.plan.outcome }}" = failure ] || [ "${{ steps.dl.outcome }}" = failure ]; }; then
+            echo "::warning::FEMA did not answer; tomorrow's run retries"; exit 0; fi
+          bash tools/job_alert.sh fail "refresh-data" publish-counties.yml 3
       - name: Close the alert when passing again; check the other job still runs
         if: success()
         env: { GH_TOKEN: "${{ github.token }}" }
