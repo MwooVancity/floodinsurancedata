@@ -47,6 +47,8 @@ p = os.path.join(ROOT, "data", "us", "asof.json")
 have = datetime.date.fromisoformat(json.load(open(p))["asof"]) if os.path.exists(p) else None
 fema, today = fema_updated(), datetime.date.today()
 pull, why = decide(target_asof(today), have, fema)
+if os.environ.get("FORCE") == "true" and target_asof(today) < fema:   # hand run after a method fix (never past FEMA's file)
+    pull, why = True, f"forced by hand: {why}"
 print(("PULL: " if pull else "SKIP download: ") + why)
 # side sources (community discounts, disasters, aid, repeat floods; ~73 min, 2026-10-31 log): with a new download, or once on the 3rd
 side = pull or today.day == 3

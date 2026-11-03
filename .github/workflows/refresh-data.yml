@@ -14,6 +14,10 @@ on:
       jump_limit:
         description: 'Allowed move in one refresh, after a person looked at a held change (default 0.25)'
         default: '0.25'
+      force:
+        description: 'Download and recompute even if the data is current (after a method fix)'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -33,6 +37,7 @@ jobs:
         with:
           python-version: '3.12'
       - id: plan   # skip the download when nothing is new (owner 2026-11-03)
+        env: { FORCE: "${{ inputs.force }}" }
         run: python -I tools/refresh_plan.py
       - name: Download FEMA's bulk policy and claim files, with every check (pull_bulk.py docstring)
         id: dl
