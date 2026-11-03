@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Failure alert for the cloud jobs (owner 2026-10-29: the site must run with no one reading chat).
 # Usage (last step of a job, GH_TOKEN set): tools/job_alert.sh fail|ok "<workflow name>" <other workflow file> <max days>
-# fail: one open issue per job ("Job failed: <name>"); a new failure comments on it (GitHub emails the owner each time).
+# fail: one open issue per job ("Job failed: <name>"); later failures add nothing while it is open (one email per problem).
 # ok:   closes that issue if open, then checks the OTHER job succeeded within <max days> (a job that stopped running
 #       cannot report itself, so the daily and monthly jobs watch each other) and opens an issue if not.
 # Never fails the job itself: an alert problem must not hide or replace the real result.
@@ -10,9 +10,9 @@ mode=$1; name=$2; other=${3:-}; maxdays=${4:-0}
 run_url="${GITHUB_SERVER_URL:-https://github.com}/${GITHUB_REPOSITORY:-}/actions/runs/${GITHUB_RUN_ID:-}"
 owner=${GITHUB_REPOSITORY_OWNER:-}
 
-open_issue() {   # $1 title, $2 body: comment on the open issue with this title, else create it
+open_issue() {   # $1 title, $2 body: create the issue unless one with this title is open (owner 2026-11-03: one email per problem, not per retry)
   n=$(gh issue list --state open --search "in:title \"$1\"" --json number,title -q ".[] | select(.title==\"$1\") | .number" | head -1)
-  if [ -n "$n" ]; then gh issue comment "$n" --body "$2"; else gh issue create --title "$1" --body "@$owner $2"; fi
+  [ -n "$n" ] || gh issue create --title "$1" --body "@$owner $2"
 }
 
 if [ "$mode" = warn ]; then   # job_alert.sh warn "<title>" "<body>": an early warning; the job still passes

@@ -89,7 +89,7 @@ jobs:
           git diff --cached --quiet && { echo "no data change"; exit 0; }
           git commit -m "data: refresh from FEMA (policies as of $(python -I -c "import json;print(json.load(open('data/us/asof.json'))['asof'])"))"
           git pull --rebase -X theirs origin master && git push   # others may push during the 2h run
-      - name: Alert on failure (one GitHub issue; GitHub emails the owner)
+      - name: Alert on failure (one GitHub issue per problem; GitHub emails the owner once)
         if: failure() || cancelled()   # a timeout counts as cancelled
         env: { GH_TOKEN: "${{ github.token }}" }
         run: bash tools/job_alert.sh fail "refresh-data" publish-counties.yml 3
