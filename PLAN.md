@@ -30,7 +30,7 @@ Rules tested: truth, no advice, 2,000 ceiling, no name-swap pages stay. Open: co
 ## Next, in order
 0. Bytes: strip `data-p` after gates, keeping the live gate's comparison right. Decide delaying the Google script (saves 182 KB on quick visits, undercounts them).
 1. Weekly Search Console. Owner: "Validate fix" on the Datasets report.
-2. 11-03 refresh: record time, download size, 51 states done; note whether FEMA's data changed since 10-31 (if months repeat, check FEMA's dataset date first and skip the 2.3 h). Issue #1 closes on the next daily publish.
+2. 11-03 refresh (as-of 08-31; FEMA file 09-09, August complete: FL Aug/Jul 0.88 vs 0.90 last year): GitHub dropped the cron; 2 runs failed on FEMA 503s (NC; NJ, NY, SC); run 1 lost its download (cache save skipped on failure, fixed). Now `tools/refresh_plan.py` skips the download when data is current or FEMA's file does not cover the new as-of (never pull past FEMA's file); download resumes itself twice; backup cron on the 6th. Record time, size when the 4th run passes. Issue #1 closes on the next daily publish.
 3. After 2, one batch, one light check (≤ ~90k tokens):
    - #3 claims by flood zone and #7 claims outside high-risk zones (ChatGPT list; same FEMA data): the "Outside a high-risk zone?" line on "Am I required", worded "of paid claim dollars", with period.
    - Search boxes on tables of 16+ rows, with a "no matches" line.
