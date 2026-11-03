@@ -47,10 +47,12 @@ jobs:
         run: python -I tools/pull_raw.py && du -sh .cache/raw   # owner asked the download size
       # save now: a cache is otherwise saved only if the whole job passes, so a late failure re-downloaded 2 hours (2026-10-30)
       - uses: actions/cache/save@v4
+        if: always()   # keep finished states even when one fails; .done markers are written only after counts match
         with:
           path: .cache/raw/NfipClaims
           key: fema-claims-${{ steps.m.outputs.month }}
       - uses: actions/cache/save@v4
+        if: always()   # keep finished states even when one fails; .done markers are written only after counts match
         with:
           path: |
             .cache/raw/NfipPolicies
