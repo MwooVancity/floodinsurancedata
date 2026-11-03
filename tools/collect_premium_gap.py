@@ -28,7 +28,7 @@ def q(params): return POL + "?" + urllib.parse.urlencode(params, quote_via=urlli
 
 for c in counties:
     filt = (f"propertyState eq '{c['state']}' and startswith(censusGeoid,'{c['geoid']}') "
-            f"and policyEffectiveDate le '{ASOF}' and policyTerminationDate ge '{ASOF}'")
+            f"and policyEffectiveDate le '{ASOF}' and policyTerminationDate gt '{ASOF}'")
     try:
         total = get(q({"$filter": filt, "$select": "id", "$top": 1, "$inlinecount": "allpages"}))["metadata"]["count"]
         seen, skip, top = {}, 0, 1000

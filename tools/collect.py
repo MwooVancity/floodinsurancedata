@@ -86,7 +86,7 @@ t0 = time.time()
 
 # POLICIES ----------------------------------------------------------------------
 pol = page_all(POL,
-    f"propertyState eq '{ST}' and startswith(censusGeoid,'{GEO}') and policyEffectiveDate le '{ASOF}' and policyTerminationDate ge '{ASOF}'",
+    f"propertyState eq '{ST}' and startswith(censusGeoid,'{GEO}') and policyEffectiveDate le '{ASOF}' and policyTerminationDate gt '{ASOF}'",
     "id,policyCost,totalInsurancePremiumOfThePolicy,fullRiskPremium,ratedFloodZone,occupancyType,primaryResidenceIndicator,policyCount,"
     "reportedZipCode,policyEffectiveDate,totalBuildingInsuranceCoverage,totalContentsInsuranceCoverage",
     "policies")

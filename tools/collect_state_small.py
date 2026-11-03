@@ -75,7 +75,7 @@ def run(st):
     try:
         for y in range(2019, 2027):
             a = f"{y}-07-31T00:00:00.000z"
-            hist[str(y)] = count(f"propertyState eq '{st}' and policyEffectiveDate le '{a}' and policyTerminationDate ge '{a}'", tries=2)
+            hist[str(y)] = count(f"propertyState eq '{st}' and policyEffectiveDate le '{a}' and policyTerminationDate gt '{a}'", tries=2)
         out["inforce_history"] = {"by_year": hist, "note": "in-force NFIP policy records on July 31 of each year", "source": "OpenFEMA NfipPolicies v3"}
     except RuntimeError as e:
         hist = None

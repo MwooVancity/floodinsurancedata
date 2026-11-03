@@ -57,9 +57,11 @@ def count(ds, filt): return get(q(ds, {"$filter": filt, "$select": "id", "$top":
 
 def slices(ds, st):
     if ds == "NfipPolicies":
-        base = f"propertyState eq '{st}' and policyEffectiveDate le '{ASOF}' and policyTerminationDate ge '{ASOF}'"
-        out = [("pre2020", base + " and policyEffectiveDate lt '2020-01-01T00:00:00.000z'")]
-        d = datetime.date(2020, 1, 1)
+        base = f"propertyState eq '{st}' and policyEffectiveDate le '{ASOF}' and policyTerminationDate gt '{ASOF}'"
+        # NFIP terms are at most 3 years, so nothing older is in force (FL, TX 2026-11-03: 0 rows); one guard slice keeps
+        # the sum exact if FEMA ever has such a row. Cut ~45 empty slices per state, the ones that drew most 503s.
+        d = ASOF_DATE.replace(year=ASOF_DATE.year - 3, day=1)
+        out = [("older", base + f" and policyEffectiveDate lt '{d}T00:00:00.000z'")]
         while d <= ASOF_DATE.replace(day=1):
             n = (d.replace(day=28) + datetime.timedelta(days=4)).replace(day=1)
             out.append((f"{d:%Y%m}", base + f" and policyEffectiveDate ge '{d}T00:00:00.000z' and policyEffectiveDate lt '{n}T00:00:00.000z'"))
@@ -106,6 +108,9 @@ def pull_state(ds, st, fields, full=False):
         os.remove(marker); _clear(ds, st, keep_old=True)   # last month's claims: re-pull recent years and "no year" only
     if full: _clear(ds, st, keep_old=False)
     base, parts = slices(ds, st)
+    d = os.path.join(RAW, ds, st); names = {n for n, _ in parts}   # agg_raw reads every *.csv.gz here: a file from an
+    for f in (os.listdir(d) if os.path.isdir(d) else []):           # old slice scheme would be counted twice (2026-11-03)
+        if f.split(".")[0] not in names: os.remove(os.path.join(d, f))
     total = count(ds, base); t0 = time.time()
     got = 0
     for name, filt in parts:
