@@ -75,14 +75,18 @@ jobs:
           set -e
           python -I tools/agg_raw.py
           python -I tools/extras_raw.py
-      - name: Refresh the small sources and check the figures
+      - name: Refresh the small sources
+        id: side
+        if: steps.plan.outputs.pull == 'true' || steps.plan.outputs.side == 'true'   # 73 min: not on every 3rd-10th retry (review 11-03)
         run: |
           set -e
           python -I tools/collect_state_small.py   # community discounts, disasters, aid, repeat floods, risk ratings (were collected once and never refreshed)
           # side sources: if one is down, last month's values stay (each carries its own date) and the refresh goes on
           python -I tools/fetch_map_dates.py || echo "::warning::FEMA map dates not refreshed this month"
           python -I tools/fetch_sealevel.py || echo "::warning::NOAA sea level not refreshed this month"
-          python -I tools/jump_check.py --limit ${{ inputs.jump_limit || '0.25' }}   # a median moving >25% stops the commit: last month's data stays live
+      - name: Jump check (own step, so a held change always emails; FEMA outages before the 10th do not)
+        if: steps.plan.outputs.pull == 'true'
+        run: python -I tools/jump_check.py --limit ${{ inputs.jump_limit || '0.25' }}   # a median moving >25% stops the commit: last month's data stays live
       - name: Commit the computed data
         run: |
           git config user.name "github-actions[bot]"
@@ -96,7 +100,7 @@ jobs:
         env: { GH_TOKEN: "${{ github.token }}" }
         run: |
           # FEMA unreachable before the 10th: no email, tomorrow's run resumes (owner 2026-11-03: one email per real problem)
-          if [ "$(date -u +%-d)" -lt 10 ] && { [ "${{ steps.plan.outcome }}" = failure ] || [ "${{ steps.dl.outcome }}" = failure ]; }; then
+          if [ "$(date -u +%-d)" -lt 10 ] && { [ "${{ steps.plan.outcome }}" = failure ] || [ "${{ steps.dl.outcome }}" = failure ] || [ "${{ steps.side.outcome }}" = failure ]; }; then
             echo "::warning::FEMA did not answer; tomorrow's run retries"; exit 0; fi
           bash tools/job_alert.sh fail "refresh-data" publish-counties.yml 3
       - name: Close the alert when passing again; check the other job still runs

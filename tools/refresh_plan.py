@@ -19,6 +19,7 @@ def decide(target, have, fema):
     return True, f"new as-of {target} (data {have}, FEMA file {fema})"
 
 def stale(fema, today): return (today - fema).days > 90   # FEMA updates about monthly; 3 months without one needs a person
+def old(have, today): return bool(have) and (today - have).days > 150   # as-of is ~95 days old by design; 150 = a missed month or two
 
 def fema_updated(tries=3):   # FEMA 503s are common (2026-11-03); still down = fail, tomorrow's run retries (no email before the 10th)
     url = "https://www.fema.gov/api/open/v1/DataSets?$select=name,lastDataSetRefresh&$filter=name%20eq%20%27NfipPolicies%27"
@@ -39,6 +40,7 @@ if "--test" in sys.argv:
     assert not decide(d(2026, 9, 30), d(2026, 8, 31), d(2026, 9, 9))[0]      # FEMA has not updated: never pull past its file
     assert decide(d(2026, 8, 31), None, d(2026, 9, 9))[0]                    # first run, no data yet
     assert not stale(d(2026, 9, 9), d(2026, 11, 3)) and stale(d(2026, 9, 9), d(2026, 12, 9))
+    assert not old(d(2026, 8, 31), d(2026, 12, 10)) and old(d(2026, 7, 31), d(2027, 1, 3)) and not old(None, d(2027, 1, 3))
     print("refresh_plan tests pass"); sys.exit(0)
 
 p = os.path.join(ROOT, "data", "us", "asof.json")
@@ -46,6 +48,10 @@ have = datetime.date.fromisoformat(json.load(open(p))["asof"]) if os.path.exists
 fema, today = fema_updated(), datetime.date.today()
 pull, why = decide(target_asof(today), have, fema)
 print(("PULL: " if pull else "SKIP download: ") + why)
-if os.environ.get("GITHUB_OUTPUT"): open(os.environ["GITHUB_OUTPUT"], "a").write(f"pull={str(pull).lower()}\n")
+# side sources (community discounts, disasters, aid, repeat floods; ~73 min, 2026-10-31 log): with a new download, or once on the 3rd
+side = pull or today.day == 3
+if os.environ.get("GITHUB_OUTPUT"): open(os.environ["GITHUB_OUTPUT"], "a").write(f"pull={str(pull).lower()}\nside={str(side).lower()}\n")
 if not pull and stale(fema, today):   # pages keep printing their as-of date, but someone must look (renamed dataset? stopped?)
     print(f"FEMA's policy file has not been updated since {fema} ({(today - fema).days} days)"); sys.exit(1)
+if not pull and old(have, today):   # skipped runs count as success, so the 34-day job check cannot see stale data
+    print(f"site data is as of {have}, {(today - have).days} days old"); sys.exit(1)
