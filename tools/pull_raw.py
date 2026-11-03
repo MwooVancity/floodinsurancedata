@@ -127,11 +127,12 @@ def pull_state(ds, st, fields, full=False):
     json.dump({"n": total, "asof": str(ASOF_DATE), "at": str(datetime.datetime.now()), "secs": round(time.time() - t0)}, open(marker, "w"))
     log(f"DONE {ds} {st}: {total} records in {round(time.time() - t0)}s")
 
-states = sys.argv[1:] or STATES
-jobs = [("NfipPolicies", s, POL_FIELDS) for s in states] + [("NfipClaims", s, CLM_FIELDS) for s in states]
-log(f"start: {len(states)} states, {len(jobs)} state-datasets")
-with ThreadPoolExecutor(max_workers=3) as ex:
-    list(ex.map(lambda j: pull_state(*j), jobs))
-left = [f"{ds} {s}" for ds, s, _ in jobs if not os.path.exists(os.path.join(RAW, ds, s + ".done"))]
-log("ALL DONE" if not left else f"FINISHED WITH {len(left)} UNFINISHED: {left}")
-sys.exit(1 if left else 0)   # a partial pull must stop the refresh job before agg_raw writes half a country
+if __name__ == "__main__":   # pull_bulk.py imports the field lists, the as-of rule and the API helpers
+    states = sys.argv[1:] or STATES
+    jobs = [("NfipPolicies", s, POL_FIELDS) for s in states] + [("NfipClaims", s, CLM_FIELDS) for s in states]
+    log(f"start: {len(states)} states, {len(jobs)} state-datasets")
+    with ThreadPoolExecutor(max_workers=3) as ex:
+        list(ex.map(lambda j: pull_state(*j), jobs))
+    left = [f"{ds} {s}" for ds, s, _ in jobs if not os.path.exists(os.path.join(RAW, ds, s + ".done"))]
+    log("ALL DONE" if not left else f"FINISHED WITH {len(left)} UNFINISHED: {left}")
+    sys.exit(1 if left else 0)   # a partial pull must stop the refresh job before agg_raw writes half a country
