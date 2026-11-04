@@ -44,6 +44,8 @@ def prep(rnd, slugs):
            [s["slug"] for s in json.load(open(os.path.join(ROOT, "data", "states", "built.json")))]
     slugs = list(slugs) + random.Random(int(rnd)).sample(sorted(set(pool) - set(slugs)), 2)
     from playwright.sync_api import sync_playwright
+    for x in os.listdir(DIR):   # cap: only this round's screenshots stay on disk (72 MB had piled up by 11-04)
+        if re.fullmatch(r"round\d+", x) and x != f"round{rnd}": shutil.rmtree(os.path.join(DIR, x), ignore_errors=True)
     shots = os.path.join(DIR, f"round{rnd}"); os.makedirs(shots, exist_ok=True)
     listing = []
     with sync_playwright() as p:
