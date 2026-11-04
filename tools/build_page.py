@@ -8,6 +8,7 @@ import ffcalc
 import metrics as MX
 from metrics import m
 from rules_registry import RULES, rule
+from theme import THEME
 from notes import how, GA_TAG
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -490,7 +491,7 @@ function run(){
 }
 i.addEventListener('input',run);i.addEventListener('change',run);})();</script>"""
 
-_INP = "style='font-size:16px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;max-width:100%'"   # long option text must not widen a 390 px page
+_INP = "style='font-size:16px;padding:8px 10px;max-width:100%'"   # long option text must not widen a 390 px page
 def _start_tool():
     # Policy start date (11-03): FIM October 2025 Tables 8-10 only; every output sentence is listed in tools/test_tools.py
     # (start_oracle). Kill switch "start" in tools_flags.json: set it to [] during an NFIP lapse (no new policies are sold).
@@ -1248,7 +1249,7 @@ details.more>summary::-webkit-details-marker{{display:none}}details.more>summary
 .card{{padding:18px 15px}}.card h2{{font-size:21px}}.stat .n{{font-size:23px}}ul.kv > li > span{{font-size:19px}}ul.kv b{{font-size:11px}}
 table{{font-size:13.5px}}th,td{{padding:7px 6px}}thead th{{font-size:11px;white-space:normal}}
 table{{width:100%}}}}
-</style></head><body>
+</style><style>{THEME}</style></head><body>
 <header class="topbar"><div class="wrap"><a class="brand" href="../../">Flood Insurance Data</a><span class="crumb">Flood insurance › {(f'<a href="../{state_slug(_state)}/" style="color:inherit">{html.escape(STATE_NAMES[_state])}</a> › ' if (not IS_STATE and _state in _built_states) else '')}{CS}</span></div></header>
 <main class="wrap">
 <section class="hero">

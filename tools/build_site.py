@@ -1,7 +1,9 @@
 """Build the shared site pages from places.json: home+lookup, methodology, data (CSV),
 sitemap.xml, robots.txt, llms.txt. Reads per-county agg.json for the download table.
 Env: FF_PLACES (places.json), FF_DIST (dist dir), FF_DATADIR (per-county data root), FF_BASEURL."""
-import csv, json, os, html
+import csv, json, os, html, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from theme import THEME
 
 PLACES = os.environ.get("FF_PLACES", "places.json")
 DIST = os.environ.get("FF_DIST", "dist")
@@ -53,7 +55,7 @@ td a{{font-weight:600}}
 input{{font-size:17px;padding:11px 13px;border:1px solid var(--line);border-radius:10px;width:100%;max-width:380px;box-shadow:var(--shadow)}}
 ul{{padding-left:20px}}li{{margin:.25em 0}}
 .mut{{color:var(--mut);font-size:13px}}
-@media(max-width:620px){{h1{{font-size:30px}}.stats{{grid-template-columns:1fr 1fr}}.card{{padding:18px 15px}}table{{font-size:13.5px}}th,td{{padding:7px 6px}}thead th{{font-size:11px}}}}</style></head><body>
+@media(max-width:620px){{h1{{font-size:30px}}.stats{{grid-template-columns:1fr 1fr}}.card{{padding:18px 15px}}table{{font-size:13.5px}}th,td{{padding:7px 6px}}thead th{{font-size:11px}}}}</style><style>"""+THEME.replace("{","{{").replace("}","}}")+"""</style></head><body>
 <header class="topbar"><div class="wrap"><a href="/">Flood Insurance Data</a></div></header><main class="wrap">"""
 FOOT = ('<footer class="mut" style="margin:28px 0;border-top:1px solid var(--line);padding-top:14px">This product uses FEMA\'s OpenFEMA API but is not '
         'endorsed by FEMA. Place names via GeoNames (CC BY 4.0). Aggregates only, never individual quotes.'

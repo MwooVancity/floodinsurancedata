@@ -2,7 +2,7 @@
 largest, a Louisiana parish, the smallest). Fails when a reader would be hurt:
   P1 anything wider than the screen (outside its own scroll box)   P2 any rendered text, SVG included, under 11px
   P3 screen 1 lacks the median, the FEMA map button or the jump menu   P4 the quote checker is below screen 2
-  P5 data hidden inside a collapsed <details>
+  P5 data hidden inside a collapsed <details>   P6 chart labels overlap   P7 text contrast under WCAG AA (owner 11-04: "blurry")
 Usage: python -I tools/phone_check.py [--base file:///.../dist | https://floodinsurancedata.com] [slug ...]"""
 import json, os, sys
 from playwright.sync_api import sync_playwright
@@ -27,7 +27,11 @@ if not slugs:
 # vw is the DEVICE width, not innerWidth: given wide content a phone widens the layout viewport and zooms the whole
 # page out, so measuring against innerWidth would hide exactly the overflow a reader suffers.
 JS = """() => {
-  const vw = %W%, out = {height: document.documentElement.scrollHeight, wide: [], small: [], hidden: 0};
+  const vw = %W%, out = {height: document.documentElement.scrollHeight, wide: [], small: [], faint: [], hidden: 0};
+  const rgb = s => { const m = s.match(/[\\d.]+/g) || [0, 0, 0, 0]; return [+m[0], +m[1], +m[2], m.length > 3 ? +m[3] : 1]; };
+  const lum = c => { const f = v => { v /= 255; return v <= .03928 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4; };
+    return .2126 * f(c[0]) + .7152 * f(c[1]) + .0722 * f(c[2]); };
+  const ratio = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y) + .05) / (Math.min(x, y) + .05); };
   if (document.documentElement.scrollWidth > vw + 1 || innerWidth > vw + 1)
     out.wide.push('page is ' + Math.max(document.documentElement.scrollWidth, innerWidth) + 'px wide');
   const scrollBox = e => { for (let p = e.parentElement; p; p = p.parentElement) {
@@ -43,6 +47,10 @@ JS = """() => {
     if (svg && svg.viewBox && svg.viewBox.baseVal && svg.viewBox.baseVal.width)
       px = px * svg.getBoundingClientRect().width / svg.viewBox.baseVal.width;
     if (px < %MIN%) out.small.push(e.tagName + ' ' + px.toFixed(1) + 'px "' + e.textContent.trim().slice(0, 30) + '"');
+    if (!svg) { const cs = getComputedStyle(e), c = rgb(cs.color);
+      let bg = null; for (let p = e; p && !bg; p = p.parentElement) { const b = rgb(getComputedStyle(p).backgroundColor); if (b[3]) bg = b; }
+      const k = ratio(c, bg || [255, 255, 255, 1]), big = px >= 24 || (px >= 18.6 && +cs.fontWeight >= 700);
+      if (k < (big ? 3 : 4.5)) out.faint.push(e.tagName + ' ' + k.toFixed(2) + ':1 "' + e.textContent.trim().slice(0, 30) + '"'); }
   }
   const top = s => { const e = document.querySelector(s); return e ? e.getBoundingClientRect().top + scrollY : null; };
   out.median = top('[data-m="cost_p50"]'); out.map = top('a.btn'); out.jump = top('nav.jump'); out.compare = top('#compare');
@@ -68,6 +76,7 @@ with sync_playwright() as p:
         bad = []
         if r["wide"]: bad.append(f"P1 wider than screen: {r['wide'][:4]}")
         if r["small"]: bad.append(f"P2 text under {MIN_PX}px: {r['small'][:4]}")
+        if r["faint"]: bad.append(f"P7 text too faint (contrast under 4.5:1, 3:1 if large): {r['faint'][:4]}")
         for k in ("median", "map", "jump"):
             if r[k] is None or r[k] > H: bad.append(f"P3 {k} not on screen 1 (top {r[k]})")
         if r["compare"] is None or r["compare"] > 2 * H: bad.append(f"P4 quote checker not within screen 2 (top {r['compare']})")

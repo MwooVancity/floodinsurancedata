@@ -26,7 +26,7 @@ def query(slug):   # the query a real reader types for this page
 
 SNAP = os.path.join(DIR, "snap")   # visible text the reviewer saw (prep) and the last text that PASSed (record)
 def vis_text(h):
-    h = re.sub(r"<script.*?</script>", "", h, flags=re.S)
+    h = re.sub(r"<(script|style)\b.*?</\1>", "", h, flags=re.S)   # CSS is not text a reader sees
     return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", h)).strip()
 def snap(rnd, slugs):
     d = os.path.join(SNAP, f"round{rnd}"); os.makedirs(d, exist_ok=True)
@@ -106,7 +106,7 @@ def carry(rnd, prev, slugs):
     slug's visible text equals the release `prev`, which passed review. Any difference stops it: a real review is due."""
     import subprocess
     def vis(h):
-        h = re.sub(r"<script.*?</script>", "", h, flags=re.S)
+        h = re.sub(r"<(script|style)\b.*?</\1>", "", h, flags=re.S)   # CSS is not text a reader sees
         return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", h)).strip()
     lines = []
     for s in slugs:

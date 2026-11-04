@@ -184,6 +184,7 @@ try:
         ("9 reader", "data collapsed in <details>", "P5", re.sub(r'(<section class="card" id="required">.*?</section>)', r"<details>\1</details>", PAGE, count=1, flags=re.S)),
         ("9 reader", "quote checker moved to the end", "P4", PAGE.replace(QW, "").replace("</main>", QW + "</main>")),
         ("9 reader", "4px chart labels", "P2", PAGE.replace(".ax{fill:var(--mut);font-size:13px", ".ax{fill:var(--mut);font-size:4px")),
+        ("9 reader", "faint grey text", "P7", PAGE.replace("</style></head>", "</style><style>.src{color:#b4bcc2}</style></head>", 1)),
         ("9 reader", "page wider than the phone", "P1", PAGE.replace("</main>", '<div style="width:900px">x</div></main>')),
         ("9 reader", "chart labels print over each other", "P6", PAGE.replace("</main>",
          '<svg viewBox="0 0 360 40" width="100%"><text x="100" y="20" class="ax">$1,008</text><text x="110" y="20" class="ax">$1,172</text></svg></main>'))]:
