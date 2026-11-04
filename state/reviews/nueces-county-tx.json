@@ -1,8 +1,8 @@
 {
  "slug": "nueces-county-tx",
  "verdict": "PASS",
- "template": "3007aac7c0b1e357",
+ "template": "fbb0be6cf3493464",
  "defects": [],
- "reviewer": "hater round 57 (fresh agent, docs/HATER-PROMPT.md)",
+ "reviewer": "hater round 58 (fresh agent, docs/HATER-PROMPT.md)",
  "notes": ""
 }
