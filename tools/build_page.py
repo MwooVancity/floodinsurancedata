@@ -452,8 +452,10 @@ def card_howto():
         + f"<p class='note'><b>What it won't pay:</b> {rule('flood_def')} {rule('not_covered')} {rule('wind_excl')}</p>"
         + f"<p class='note'>{rule('already_flooded')} {rule('aid_insurance')}</p>"
         + f"<p class='note'>{rule('claim_appeal')} {rule('substantial_damage')}</p>"
-        + (_deadline_tool() if _tool_on("deadline") else ""),
-        src_rules(_HOWTO + (["aid_register_60", "private_deadlines"] if _tool_on("deadline") else [])), id="covered")
+        + (_deadline_tool() if _tool_on("deadline") else "")
+        + (_start_tool() if _tool_on("start") else ""),
+        src_rules(_HOWTO + (["aid_register_60", "private_deadlines"] if _tool_on("deadline") else [])
+                  + (["start_30", "start_map", "start_loan"] if _tool_on("start") else [])), id="covered")
     return howto_card
 
 def _tool_on(name):   # kill switch + staged launch: tools/tools_flags.json (CLAUDE.md reader tools ship standard)
@@ -487,6 +489,46 @@ function run(){
   else o.textContent='The 60-day NFIP proof-of-loss date was '+fmt(due)+'. Contact your insurer now; it may have extended the date.';
 }
 i.addEventListener('input',run);i.addEventListener('change',run);})();</script>"""
+
+_INP = "style='font-size:16px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;max-width:100%'"   # long option text must not widen a 390 px page
+def _start_tool():
+    # Policy start date (11-03): FIM October 2025 Tables 8-10 only; every output sentence is listed in tools/test_tools.py
+    # (start_oracle). Kill switch "start" in tools_flags.json: set it to [] during an NFIP lapse (no new policies are sold).
+    return (f"<div class='tool' id='start'><p class='note'><b>Buying now? Work out when a new NFIP policy, or added or increased NFIP coverage, starts.</b> "
+            f"{rule('start_30')} {rule('start_map')} {rule('start_loan')}</p>"
+            f"<label class='note' for='st'>Exception:</label> <select id='st' {_INP}><option value='none'>None of these</option>"
+            "<option value='loan'>A loan secured by this property (making, increasing, extending or renewing it), applied for on or before closing</option>"
+            "<option value='map'>A FEMA map revision newly shows the building in a high-risk zone (time limit in the map rule above)</option></select><br>"
+            f"<label class='note' for='sa'>Application date (with a loan, the closing date):</label> <input id='sa' type='date' {_INP}><br>"
+            f"<label class='note' for='sr'>Date the insurer received the form and full amount due, if you know it:</label> <input id='sr' type='date' {_INP}><br>"
+            "<label class='note'><input id='sc' type='checkbox'> Mailed by certified mail in time (rule above; not for loans)</label><br>"
+            "<label class='note'><input id='sl' type='checkbox'> The lender, title company or settlement attorney paid (loan only)</label>"
+            "<p id='so' class='note' aria-live='polite'></p>" + _START_JS + "</div>")
+
+_START_JS = """<script>(function(){
+var M=['January','February','March','April','May','June','July','August','September','October','November','December'];
+function g(x){return document.getElementById(x);}
+function fmt(d){return M[d.getMonth()]+' '+d.getDate()+', '+d.getFullYear();}
+function pd(v){var m=/^(\\d{4})-(\\d{2})-(\\d{2})$/.exec(v||'');if(!m)return null;var y=+m[1],mo=+m[2]-1,da=+m[3],d=new Date(y,mo,da);
+  if(d.getFullYear()!==y||d.getMonth()!==mo||d.getDate()!==da)return null;return d;}
+function add(d,n){return new Date(d.getFullYear(),d.getMonth(),d.getDate()+n);}
+function out(){
+  var t=g('st').value,av=g('sa').value,rv=g('sr').value,a=pd(av),r=pd(rv),c=g('sc').checked,l=g('sl').checked;
+  if(!av)return '';
+  if(!a)return 'That is not a date. Enter the application date (with a loan, the closing date).';
+  if(rv&&!r)return 'That is not a date. Leave the receipt date empty if you do not know it.';
+  if(t==='loan'){var w=add(a,l?29:9);
+    if(!r)return 'Coverage starts at the time of the loan closing on '+fmt(a)+' if the insurer receives the form and full amount due by '+fmt(w)+'. If it receives them later, the earliest start is 12:01 a.m. local time on the 30th calendar day after it receives them.';
+    if(r<=w)return 'Coverage starts at the time of the loan closing on '+fmt(a)+'.';
+    return 'The insurer received them after '+fmt(w)+', so the earliest start is 12:01 a.m. local time on '+fmt(add(r,30))+'.';}
+  var k=t==='map'?1:30,kw=t==='map'?'next calendar day':'30th calendar day';
+  if(r&&r<a)return 'The insurer cannot receive the form before the application date. Check both dates.';
+  if(c||(r&&r<=add(a,9)))return 'The earliest start is 12:01 a.m. local time on '+fmt(add(a,k))+'.';
+  if(!r)return 'The earliest start is 12:01 a.m. local time on '+fmt(add(a,k))+' if the insurer receives the form and full amount due by '+fmt(add(a,9))+', or they are mailed by certified mail by '+fmt(add(a,3))+'. If the insurer receives them later, it is the '+kw+' after it receives them.';
+  return 'The insurer received them more than 10 days after the application date, so the earliest start is 12:01 a.m. local time on '+fmt(add(r,k))+'.';
+}
+function run(){var s=out();if(s&&g('st').value==='map'&&s.indexOf('That is not')<0&&s.indexOf('cannot receive')<0)s+=' This holds only if the insurer receives them within 13 months of the map revision\\'s effective date; after that, the 30-day wait applies.';g('so').textContent=s;}
+['st','sa','sr','sc','sl'].forEach(function(x){g(x).addEventListener('input',run);g(x).addEventListener('change',run);});})();</script>"""
 
 _MONTHS = dict(zip([f"{i:02d}" for i in range(1, 13)], "January February March April May June July August September October November December".split()))
 _WORDS = {2: "two", 3: "three", 4: "four", 5: "five", 6: "six"}

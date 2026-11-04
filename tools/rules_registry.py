@@ -26,12 +26,43 @@ RULES = {
                 "flood this week.",
         "sources": [(FS + "/get-insured/buy-a-policy", "will go into effect 30 days after your date of purchase", "curl")]},
     "wait_exceptions": {
-        "text": "Exceptions: no wait if you buy while making, increasing, extending or renewing a mortgage; a one-day wait if a map revision puts the property in a high-risk zone and you buy "
-                "within 13 months of the revision (44 CFR §61.11).",
-        # FloodSmart's consumer page rounds this to "12 months"; the regulation says 13 — the regulation is cited.
-        "sources": [(FS + "/get-insured/buy-a-policy", "while making, increasing, extending or renewing a mortgage", "curl"),
-                    ("https://www.govinfo.gov/content/pkg/CFR-2024-title44-vol1/xml/CFR-2024-title44-vol1-sec61-11.xml",
-                     "During the 13-month period beginning on the effective date of a revised", "curl")]},
+        "text": "Exceptions in FEMA's flood insurance manual: with a loan secured by the insured property (making, increasing, extending or renewing it), coverage "
+                "you apply for on or before closing can start at the time of the loan closing if the "
+                "insurer gets the form and full amount due in time; the wait is one day when a FEMA map revision newly shows the building in a high-risk zone "
+                "and the insurer gets them within 13 months of the revision's effective date.",
+        # 11-03: was "(44 CFR §61.11)" on a 2024 CFR snapshot. Current 61.11(a) gives the 1-day wait for ANY initial purchase in the 13 months
+        # after a map revision; the October 2025 manual (what insurers apply) limits it to buildings newly mapped into an SFHA. Rule 4: the
+        # narrower case is the one both support, so the page prints the manual's (a reader never reads "1 day" when FEMA applies 30).
+        "sources": [(CFR61, "During the 13-month period beginning on the effective date of a revised", "curl"),
+                    (FIM, "coverage becomes effective as of the time of the loan closing", "manual"),
+                    (FIM, "making, increasing, extending, or renewing a loan secured by the insured property", "manual"),
+                    (FIM, "must apply for flood insurance (or request an endorsement to add or increase coverage) on or before the closing date", "manual"),
+                    (FIM, "revises an FHBM or a FIRM to show that the building is now in an SFHA when it was not previously", "manual"),
+                    (FIM, "within 13 months from the effective date of the map revision", "manual")]},
+    "start_30": {   # policy start-date tool (11-03); FIM October 2025, Table 8
+        "text": "Without an exception, the earliest start is 12:01 a.m. local time on the 30th calendar day after the application date, if the insurer receives the "
+                "form and full amount due within 10 calendar days of that date or they are mailed by certified mail within 4 calendar days; otherwise it is the "
+                "30th calendar day after the insurer receives them.",
+        "sources": [(FIM, "on the 30th calendar day after the application date", "manual"),
+                    (FIM, "within 10 calendar days from the application date", "manual"),
+                    (FIM, "mailed by certified mail within 4 calendar days from the application date", "manual"),
+                    (FIM, "on the 30th calendar day after the insurer", "manual")]},
+    "start_map": {   # FIM Table 9
+        "text": "With the map exception the same receipt rules apply, but the start is the next calendar day instead of the 30th; if the insurer receives the form "
+                "and full amount due more than 13 months after the map revision's effective date, the 30-day wait applies.",
+        "sources": [(FIM, "after 13 months from the effective date of the map revision, the 30-day waiting period applies", "manual"),
+                    (FIM, "on the next calendar day after the application date", "manual"),
+                    (FIM, "on the next calendar day after the insurer", "manual")]},
+    "start_loan": {   # FIM Table 10
+        "text": "With the loan exception, coverage starts at the time of the loan closing if the insurer receives the form and full amount due within 30 calendar "
+                "days of closing when the lender, title company or settlement attorney pays, or within 10 calendar days when you or anyone else pays; otherwise "
+                "the earliest start is the 30th calendar day after the insurer receives them. Contents-only coverage qualifies only if the contents are part of "
+                "the security for the loan.",
+        "sources": [(FIM, "Contents-only policies and endorsements can only be eligible for the loan exception if the contents are part of the security for a loan", "manual"),
+                    (FIM, "If the lender, title company, or settlement attorney pays the premium", "manual"),
+                    (FIM, "within 30 calendar days from the closing", "manual"),
+                    (FIM, "within 10 calendar days from the loan transaction closing", "manual"),
+                    (FIM, "The effective date will be the date and time of the loan closing", "manual")]},
     "howto_answer": {
         "text": "Most policies start <b>30 days</b> after you buy, but there is no wait if you buy it with a new "
                 "or refinanced mortgage.",
