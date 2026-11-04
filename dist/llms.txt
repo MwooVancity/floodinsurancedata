@@ -226,8 +226,28 @@
 - [Contra Costa County](https://floodinsurancedata.com/flood-insurance/contra-costa-county-ca/): median $1,325
 - [Burlington County](https://floodinsurancedata.com/flood-insurance/burlington-county-nj/): median $1,409
 - [Bronx County](https://floodinsurancedata.com/flood-insurance/bronx-county-ny/): median $1,198
+- [Middlesex County](https://floodinsurancedata.com/flood-insurance/middlesex-county-nj/): median $1,233
 - [St. Louis County](https://floodinsurancedata.com/flood-insurance/st-louis-county-mo/): median $1,272
+- [Richland County](https://floodinsurancedata.com/flood-insurance/richland-county-sc/): median $892
+- [Montgomery County](https://floodinsurancedata.com/flood-insurance/montgomery-county-md/): median $445
+- [Pulaski County](https://floodinsurancedata.com/flood-insurance/pulaski-county-ar/): median $1,083
+- [Tulsa County](https://floodinsurancedata.com/flood-insurance/tulsa-county-ok/): median $1,066
+- [Washington County](https://floodinsurancedata.com/flood-insurance/washington-county-or/): median $866
+- [Lexington County](https://floodinsurancedata.com/flood-insurance/lexington-county-sc/): median $958
 - [Kanawha County](https://floodinsurancedata.com/flood-insurance/kanawha-county-wv/): median $1,464
+- [Salt Lake County](https://floodinsurancedata.com/flood-insurance/salt-lake-county-ut/): median $548
+- [Prince William County](https://floodinsurancedata.com/flood-insurance/prince-william-county-va/): median $666
+- [Denver County](https://floodinsurancedata.com/flood-insurance/denver-county-co/): median $660
+- [Hennepin County](https://floodinsurancedata.com/flood-insurance/hennepin-county-mn/): median $831
+- [Washington County](https://floodinsurancedata.com/flood-insurance/washington-county-vt/): median $1,532
+- [Utah County](https://floodinsurancedata.com/flood-insurance/utah-county-ut/): median $756
+- [Burleigh County](https://floodinsurancedata.com/flood-insurance/burleigh-county-nd/): median $1,349
+- [Ramsey County](https://floodinsurancedata.com/flood-insurance/ramsey-county-mn/): median $768
+- [Elkhart County](https://floodinsurancedata.com/flood-insurance/elkhart-county-in/): median $925
+- [Grand Forks County](https://floodinsurancedata.com/flood-insurance/grand-forks-county-nd/): median $917
+- [Greene County](https://floodinsurancedata.com/flood-insurance/greene-county-ar/): median $732
+- [Jefferson County](https://floodinsurancedata.com/flood-insurance/jefferson-county-ar/): median $873
+- [Raleigh County](https://floodinsurancedata.com/flood-insurance/raleigh-county-wv/): median $1,244
 - [Methodology](https://floodinsurancedata.com/methodology/)
 - [Data CSV](https://floodinsurancedata.com/data/counties.csv)
 

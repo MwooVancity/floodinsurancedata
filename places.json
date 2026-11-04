@@ -1700,6 +1700,16 @@
 "indexable": true
 },
 {
+"slug": "middlesex-county-nj",
+"label": "Middlesex County, New Jersey",
+"short": "Middlesex County",
+"geoid": "34023",
+"state": "NJ",
+"units": 3087,
+"median": 1233,
+"indexable": true
+},
+{
 "slug": "st-louis-county-mo",
 "label": "St. Louis County, Missouri",
 "short": "St. Louis County",
@@ -1710,6 +1720,66 @@
 "indexable": true
 },
 {
+"slug": "richland-county-sc",
+"label": "Richland County, South Carolina",
+"short": "Richland County",
+"geoid": "45079",
+"state": "SC",
+"units": 2163,
+"median": 892,
+"indexable": true
+},
+{
+"slug": "montgomery-county-md",
+"label": "Montgomery County, Maryland",
+"short": "Montgomery County",
+"geoid": "24031",
+"state": "MD",
+"units": 2124,
+"median": 445,
+"indexable": true
+},
+{
+"slug": "pulaski-county-ar",
+"label": "Pulaski County, Arkansas",
+"short": "Pulaski County",
+"geoid": "05119",
+"state": "AR",
+"units": 1860,
+"median": 1083,
+"indexable": true
+},
+{
+"slug": "tulsa-county-ok",
+"label": "Tulsa County, Oklahoma",
+"short": "Tulsa County",
+"geoid": "40143",
+"state": "OK",
+"units": 1809,
+"median": 1066,
+"indexable": true
+},
+{
+"slug": "washington-county-or",
+"label": "Washington County, Oregon",
+"short": "Washington County",
+"geoid": "41067",
+"state": "OR",
+"units": 1494,
+"median": 866,
+"indexable": true
+},
+{
+"slug": "lexington-county-sc",
+"label": "Lexington County, South Carolina",
+"short": "Lexington County",
+"geoid": "45063",
+"state": "SC",
+"units": 1373,
+"median": 958,
+"indexable": true
+},
+{
 "slug": "kanawha-county-wv",
 "label": "Kanawha County, West Virginia",
 "short": "Kanawha County",
@@ -1717,6 +1787,136 @@
 "state": "WV",
 "units": 1262,
 "median": 1464,
+"indexable": true
+},
+{
+"slug": "salt-lake-county-ut",
+"label": "Salt Lake County, Utah",
+"short": "Salt Lake County",
+"geoid": "49035",
+"state": "UT",
+"units": 1193,
+"median": 548,
+"indexable": true
+},
+{
+"slug": "prince-william-county-va",
+"label": "Prince William County, Virginia",
+"short": "Prince William County",
+"geoid": "51153",
+"state": "VA",
+"units": 1059,
+"median": 666,
+"indexable": true
+},
+{
+"slug": "denver-county-co",
+"label": "Denver County, Colorado",
+"short": "Denver County",
+"geoid": "08031",
+"state": "CO",
+"units": 1036,
+"median": 660,
+"indexable": true
+},
+{
+"slug": "hennepin-county-mn",
+"label": "Hennepin County, Minnesota",
+"short": "Hennepin County",
+"geoid": "27053",
+"state": "MN",
+"units": 975,
+"median": 831,
+"indexable": true
+},
+{
+"slug": "washington-county-vt",
+"label": "Washington County, Vermont",
+"short": "Washington County",
+"geoid": "50023",
+"state": "VT",
+"units": 859,
+"median": 1532,
+"indexable": true
+},
+{
+"slug": "utah-county-ut",
+"label": "Utah County, Utah",
+"short": "Utah County",
+"geoid": "49049",
+"state": "UT",
+"units": 763,
+"median": 756,
+"indexable": true
+},
+{
+"slug": "burleigh-county-nd",
+"label": "Burleigh County, North Dakota",
+"short": "Burleigh County",
+"geoid": "38015",
+"state": "ND",
+"units": 635,
+"median": 1349,
+"indexable": true
+},
+{
+"slug": "ramsey-county-mn",
+"label": "Ramsey County, Minnesota",
+"short": "Ramsey County",
+"geoid": "27123",
+"state": "MN",
+"units": 454,
+"median": 768,
+"indexable": true
+},
+{
+"slug": "elkhart-county-in",
+"label": "Elkhart County, Indiana",
+"short": "Elkhart County",
+"geoid": "18039",
+"state": "IN",
+"units": 421,
+"median": 925,
+"indexable": true
+},
+{
+"slug": "grand-forks-county-nd",
+"label": "Grand Forks County, North Dakota",
+"short": "Grand Forks County",
+"geoid": "38035",
+"state": "ND",
+"units": 386,
+"median": 917,
+"indexable": true
+},
+{
+"slug": "greene-county-ar",
+"label": "Greene County, Arkansas",
+"short": "Greene County",
+"geoid": "05055",
+"state": "AR",
+"units": 353,
+"median": 732,
+"indexable": true
+},
+{
+"slug": "jefferson-county-ar",
+"label": "Jefferson County, Arkansas",
+"short": "Jefferson County",
+"geoid": "05069",
+"state": "AR",
+"units": 317,
+"median": 873,
+"indexable": true
+},
+{
+"slug": "raleigh-county-wv",
+"label": "Raleigh County, West Virginia",
+"short": "Raleigh County",
+"geoid": "54081",
+"state": "WV",
+"units": 108,
+"median": 1244,
 "indexable": true
 }
 ]

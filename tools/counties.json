@@ -1718,5 +1718,205 @@
   "label": "Bronx County, New York",
   "short": "Bronx County",
   "official": 0
+ },
+ {
+  "slug": "middlesex-county-nj",
+  "state": "NJ",
+  "geoid": "34023",
+  "county": "MIDDLESEX",
+  "countytitle": "Middlesex",
+  "label": "Middlesex County, New Jersey",
+  "short": "Middlesex County",
+  "official": 0
+ },
+ {
+  "slug": "montgomery-county-md",
+  "state": "MD",
+  "geoid": "24031",
+  "county": "MONTGOMERY",
+  "countytitle": "Montgomery",
+  "label": "Montgomery County, Maryland",
+  "short": "Montgomery County",
+  "official": 0
+ },
+ {
+  "slug": "prince-william-county-va",
+  "state": "VA",
+  "geoid": "51153",
+  "county": "PRINCE WILLIAM",
+  "countytitle": "Prince William",
+  "label": "Prince William County, Virginia",
+  "short": "Prince William County",
+  "official": 0
+ },
+ {
+  "slug": "washington-county-vt",
+  "state": "VT",
+  "geoid": "50023",
+  "county": "WASHINGTON",
+  "countytitle": "Washington",
+  "label": "Washington County, Vermont",
+  "short": "Washington County",
+  "official": 0
+ },
+ {
+  "slug": "grand-forks-county-nd",
+  "state": "ND",
+  "geoid": "38035",
+  "county": "GRAND FORKS",
+  "countytitle": "Grand Forks",
+  "label": "Grand Forks County, North Dakota",
+  "short": "Grand Forks County",
+  "official": 0
+ },
+ {
+  "slug": "elkhart-county-in",
+  "state": "IN",
+  "geoid": "18039",
+  "county": "ELKHART",
+  "countytitle": "Elkhart",
+  "label": "Elkhart County, Indiana",
+  "short": "Elkhart County",
+  "official": 0
+ },
+ {
+  "slug": "raleigh-county-wv",
+  "state": "WV",
+  "geoid": "54081",
+  "county": "RALEIGH",
+  "countytitle": "Raleigh",
+  "label": "Raleigh County, West Virginia",
+  "short": "Raleigh County",
+  "official": 0
+ },
+ {
+  "slug": "washington-county-or",
+  "state": "OR",
+  "geoid": "41067",
+  "county": "WASHINGTON",
+  "countytitle": "Washington",
+  "label": "Washington County, Oregon",
+  "short": "Washington County",
+  "official": 0
+ },
+ {
+  "slug": "pulaski-county-ar",
+  "state": "AR",
+  "geoid": "05119",
+  "county": "PULASKI",
+  "countytitle": "Pulaski",
+  "label": "Pulaski County, Arkansas",
+  "short": "Pulaski County",
+  "official": 0
+ },
+ {
+  "slug": "jefferson-county-ar",
+  "state": "AR",
+  "geoid": "05069",
+  "county": "JEFFERSON",
+  "countytitle": "Jefferson",
+  "label": "Jefferson County, Arkansas",
+  "short": "Jefferson County",
+  "official": 0
+ },
+ {
+  "slug": "greene-county-ar",
+  "state": "AR",
+  "geoid": "05055",
+  "county": "GREENE",
+  "countytitle": "Greene",
+  "label": "Greene County, Arkansas",
+  "short": "Greene County",
+  "official": 0
+ },
+ {
+  "slug": "denver-county-co",
+  "state": "CO",
+  "geoid": "08031",
+  "county": "DENVER",
+  "countytitle": "Denver",
+  "label": "Denver County, Colorado",
+  "short": "Denver County",
+  "official": 0
+ },
+ {
+  "slug": "salt-lake-county-ut",
+  "state": "UT",
+  "geoid": "49035",
+  "county": "SALT LAKE",
+  "countytitle": "Salt Lake",
+  "label": "Salt Lake County, Utah",
+  "short": "Salt Lake County",
+  "official": 0
+ },
+ {
+  "slug": "utah-county-ut",
+  "state": "UT",
+  "geoid": "49049",
+  "county": "UTAH",
+  "countytitle": "Utah",
+  "label": "Utah County, Utah",
+  "short": "Utah County",
+  "official": 0
+ },
+ {
+  "slug": "tulsa-county-ok",
+  "state": "OK",
+  "geoid": "40143",
+  "county": "TULSA",
+  "countytitle": "Tulsa",
+  "label": "Tulsa County, Oklahoma",
+  "short": "Tulsa County",
+  "official": 0
+ },
+ {
+  "slug": "hennepin-county-mn",
+  "state": "MN",
+  "geoid": "27053",
+  "county": "HENNEPIN",
+  "countytitle": "Hennepin",
+  "label": "Hennepin County, Minnesota",
+  "short": "Hennepin County",
+  "official": 0
+ },
+ {
+  "slug": "ramsey-county-mn",
+  "state": "MN",
+  "geoid": "27123",
+  "county": "RAMSEY",
+  "countytitle": "Ramsey",
+  "label": "Ramsey County, Minnesota",
+  "short": "Ramsey County",
+  "official": 0
+ },
+ {
+  "slug": "richland-county-sc",
+  "state": "SC",
+  "geoid": "45079",
+  "county": "RICHLAND",
+  "countytitle": "Richland",
+  "label": "Richland County, South Carolina",
+  "short": "Richland County",
+  "official": 0
+ },
+ {
+  "slug": "lexington-county-sc",
+  "state": "SC",
+  "geoid": "45063",
+  "county": "LEXINGTON",
+  "countytitle": "Lexington",
+  "label": "Lexington County, South Carolina",
+  "short": "Lexington County",
+  "official": 0
+ },
+ {
+  "slug": "burleigh-county-nd",
+  "state": "ND",
+  "geoid": "38015",
+  "county": "BURLEIGH",
+  "countytitle": "Burleigh",
+  "label": "Burleigh County, North Dakota",
+  "short": "Burleigh County",
+  "official": 0
  }
 ]
