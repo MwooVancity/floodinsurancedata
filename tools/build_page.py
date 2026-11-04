@@ -455,7 +455,7 @@ def card_howto():
         + (_deadline_tool() if _tool_on("deadline") else "")
         + (_start_tool() if _tool_on("start") else ""),
         src_rules(_HOWTO + (["aid_register_60", "private_deadlines"] if _tool_on("deadline") else [])
-                  + (["start_30", "start_map", "start_loan"] if _tool_on("start") else [])), id="covered")
+                  + (["start_30", "start_map", "start_map_13", "start_loan"] if _tool_on("start") else [])), id="covered")
     return howto_card
 
 def _tool_on(name):   # kill switch + staged launch: tools/tools_flags.json (CLAUDE.md reader tools ship standard)
@@ -495,7 +495,7 @@ def _start_tool():
     # Policy start date (11-03): FIM October 2025 Tables 8-10 only; every output sentence is listed in tools/test_tools.py
     # (start_oracle). Kill switch "start" in tools_flags.json: set it to [] during an NFIP lapse (no new policies are sold).
     return (f"<div class='tool' id='start'><p class='note'><b>Buying now? Work out when a new NFIP policy, or added or increased NFIP coverage, starts.</b> "
-            f"{rule('start_30')} {rule('start_map')} {rule('start_loan')}</p>"
+            f"{rule('start_30')} {rule('start_map')} {rule('start_map_13')} {rule('start_loan')}</p>"
             f"<label class='note' for='st'>Exception:</label> <select id='st' {_INP}><option value='none'>None of these</option>"
             "<option value='loan'>A loan secured by this property (making, increasing, extending or renewing it), applied for on or before closing</option>"
             "<option value='map'>A FEMA map revision newly shows the building in a high-risk zone (time limit in the map rule above)</option></select><br>"
@@ -527,7 +527,7 @@ function out(){
   if(!r)return 'The earliest start is 12:01 a.m. local time on '+fmt(add(a,k))+' if the insurer receives the form and full amount due by '+fmt(add(a,9))+', or they are mailed by certified mail by '+fmt(add(a,3))+'. If the insurer receives them later, it is the '+kw+' after it receives them.';
   return 'The insurer received them more than 10 days after the application date, so the earliest start is 12:01 a.m. local time on '+fmt(add(r,k))+'.';
 }
-function run(){var s=out();if(s&&g('st').value==='map'&&s.indexOf('That is not')<0&&s.indexOf('cannot receive')<0)s+=' This holds only if the insurer receives them within 13 months of the map revision\\'s effective date; after that, the 30-day wait applies.';g('so').textContent=s;}
+function run(){var s=out();if(s&&g('st').value==='map'&&s.indexOf('That is not')<0&&s.indexOf('cannot receive')<0)s+=' '+[].filter.call(document.querySelectorAll('#start span'),function(e){return e.dataset.rule==='start_map_13';})[0].textContent;g('so').textContent=s;}
 ['st','sa','sr','sc','sl'].forEach(function(x){g(x).addEventListener('input',run);g(x).addEventListener('change',run);});})();</script>"""
 
 _MONTHS = dict(zip([f"{i:02d}" for i in range(1, 13)], "January February March April May June July August September October November December".split()))

@@ -20,6 +20,7 @@ def oracle(value, today):   # the full list of sentences the deadline planner ma
     if left == 0: return f"An NFIP proof of loss is due today, {fmt(due)}. Contact your insurer now."
     return f"The 60-day NFIP proof-of-loss date was {fmt(due)}. Contact your insurer now; it may have extended the date."
 
+sys.path.insert(0, os.path.join(ROOT, "tools")); import rules_registry as _RR
 def start_oracle(t, av, rv, c, l):   # policy start date: FIM October 2025 Tables 8-10, written from the manual, not from the JS
     D = datetime.timedelta
     def pd(v):
@@ -40,8 +41,7 @@ def start_oracle(t, av, rv, c, l):   # policy start date: FIM October 2025 Table
     if r and r < a: return "The insurer cannot receive the form before the application date. Check both dates."
     s = _std(t, a, r, c, D)
     # round 57 T3: every map result carries the manual's 13-month receipt limit
-    return s + (" This holds only if the insurer receives them within 13 months of the map revision's effective date; after that, the 30-day wait applies."
-                if t == "map" else "")
+    return s + (" " + _RR.RULES["start_map_13"]["text"] if t == "map" else "")
 def _std(t, a, r, c, D):
     k = 1 if t == "map" else 30   # Table 9 (next calendar day) / Table 8 (30th calendar day)
     if c or (r and r <= a + D(days=9)): return f"The earliest start is 12:01 a.m. local time on {fmt(a + D(days=k))}."

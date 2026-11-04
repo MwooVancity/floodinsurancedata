@@ -48,11 +48,14 @@ RULES = {
                     (FIM, "mailed by certified mail within 4 calendar days from the application date", "manual"),
                     (FIM, "on the 30th calendar day after the insurer", "manual")]},
     "start_map": {   # FIM Table 9
-        "text": "With the map exception the same receipt rules apply, but the start is the next calendar day instead of the 30th; if the insurer receives the form "
-                "and full amount due more than 13 months after the map revision's effective date, the 30-day wait applies.",
-        "sources": [(FIM, "after 13 months from the effective date of the map revision, the 30-day waiting period applies", "manual"),
-                    (FIM, "on the next calendar day after the application date", "manual"),
+        "text": "With the map exception the same receipt rules apply, but the start is the next calendar day instead of the 30th.",
+        "sources": [(FIM, "on the next calendar day after the application date", "manual"),
                     (FIM, "on the next calendar day after the insurer", "manual")]},
+    "start_map_13": {   # round 57 T3: printed in the tool's rules and appended to every map result (JS reads this span)
+        "text": "The map exception holds only if the insurer receives the form and full amount due within 13 months of the map revision's effective date; "
+                "after that, the 30-day wait applies.",
+        "sources": [(FIM, "within 13 months from the effective date of the map revision", "manual"),
+                    (FIM, "after 13 months from the effective date of the map revision, the 30-day waiting period applies", "manual")]},
     "start_loan": {   # FIM Table 10
         "text": "With the loan exception, coverage starts at the time of the loan closing if the insurer receives the form and full amount due within 30 calendar "
                 "days of closing when the lender, title company or settlement attorney pays, or within 10 calendar days when you or anyone else pays; otherwise "
