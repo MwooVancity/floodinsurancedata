@@ -1700,6 +1700,46 @@
 "indexable": true
 },
 {
+"slug": "bucks-county-pa",
+"label": "Bucks County, Pennsylvania",
+"short": "Bucks County",
+"geoid": "42017",
+"state": "PA",
+"units": 3199,
+"median": 1260,
+"indexable": true
+},
+{
+"slug": "yolo-county-ca",
+"label": "Yolo County, California",
+"short": "Yolo County",
+"geoid": "06113",
+"state": "CA",
+"units": 3193,
+"median": 1087,
+"indexable": true
+},
+{
+"slug": "prince-george-s-county-md",
+"label": "Prince George's County, Maryland",
+"short": "Prince George's County",
+"geoid": "24033",
+"state": "MD",
+"units": 3183,
+"median": 500,
+"indexable": true
+},
+{
+"slug": "philadelphia-county-pa",
+"label": "Philadelphia County, Pennsylvania",
+"short": "Philadelphia County",
+"geoid": "42101",
+"state": "PA",
+"units": 3169,
+"median": 924,
+"indexable": true
+},
+{
 "slug": "middlesex-county-nj",
 "label": "Middlesex County, New Jersey",
 "short": "Middlesex County",
@@ -1710,6 +1750,16 @@
 "indexable": true
 },
 {
+"slug": "iberia-parish-la",
+"label": "Iberia Parish, Louisiana",
+"short": "Iberia Parish",
+"geoid": "22045",
+"state": "LA",
+"units": 3082,
+"median": 1266,
+"indexable": true
+},
+{
 "slug": "st-louis-county-mo",
 "label": "St. Louis County, Missouri",
 "short": "St. Louis County",
@@ -1717,6 +1767,76 @@
 "state": "MO",
 "units": 3080,
 "median": 1272,
+"indexable": true
+},
+{
+"slug": "dorchester-county-sc",
+"label": "Dorchester County, South Carolina",
+"short": "Dorchester County",
+"geoid": "45035",
+"state": "SC",
+"units": 3046,
+"median": 804,
+"indexable": true
+},
+{
+"slug": "skagit-county-wa",
+"label": "Skagit County, Washington",
+"short": "Skagit County",
+"geoid": "53057",
+"state": "WA",
+"units": 3039,
+"median": 1012,
+"indexable": true
+},
+{
+"slug": "rapides-parish-la",
+"label": "Rapides Parish, Louisiana",
+"short": "Rapides Parish",
+"geoid": "22079",
+"state": "LA",
+"units": 3037,
+"median": 516,
+"indexable": true
+},
+{
+"slug": "sumter-county-fl",
+"label": "Sumter County, Florida",
+"short": "Sumter County",
+"geoid": "12119",
+"state": "FL",
+"units": 3021,
+"median": 622,
+"indexable": true
+},
+{
+"slug": "poquoson-city-va",
+"label": "Poquoson city, Virginia",
+"short": "Poquoson city",
+"geoid": "51735",
+"state": "VA",
+"units": 3019,
+"median": 1102,
+"indexable": true
+},
+{
+"slug": "mecklenburg-county-nc",
+"label": "Mecklenburg County, North Carolina",
+"short": "Mecklenburg County",
+"geoid": "37119",
+"state": "NC",
+"units": 3017,
+"median": 918,
+"indexable": true
+},
+{
+"slug": "camden-county-ga",
+"label": "Camden County, Georgia",
+"short": "Camden County",
+"geoid": "13039",
+"state": "GA",
+"units": 2998,
+"median": 924,
 "indexable": true
 },
 {
@@ -1770,6 +1890,16 @@
 "indexable": true
 },
 {
+"slug": "clark-county-nv",
+"label": "Clark County, Nevada",
+"short": "Clark County",
+"geoid": "32003",
+"state": "NV",
+"units": 1377,
+"median": 836,
+"indexable": true
+},
+{
 "slug": "lexington-county-sc",
 "label": "Lexington County, South Carolina",
 "short": "Lexington County",
@@ -1797,6 +1927,16 @@
 "state": "UT",
 "units": 1193,
 "median": 548,
+"indexable": true
+},
+{
+"slug": "saginaw-county-mi",
+"label": "Saginaw County, Michigan",
+"short": "Saginaw County",
+"geoid": "26145",
+"state": "MI",
+"units": 1120,
+"median": 910,
 "indexable": true
 },
 {
@@ -1830,6 +1970,16 @@
 "indexable": true
 },
 {
+"slug": "kitsap-county-wa",
+"label": "Kitsap County, Washington",
+"short": "Kitsap County",
+"geoid": "53035",
+"state": "WA",
+"units": 912,
+"median": 693,
+"indexable": true
+},
+{
 "slug": "washington-county-vt",
 "label": "Washington County, Vermont",
 "short": "Washington County",
@@ -1840,6 +1990,16 @@
 "indexable": true
 },
 {
+"slug": "thurston-county-wa",
+"label": "Thurston County, Washington",
+"short": "Thurston County",
+"geoid": "53067",
+"state": "WA",
+"units": 765,
+"median": 884,
+"indexable": true
+},
+{
 "slug": "utah-county-ut",
 "label": "Utah County, Utah",
 "short": "Utah County",
@@ -1847,6 +2007,16 @@
 "state": "UT",
 "units": 763,
 "median": 756,
+"indexable": true
+},
+{
+"slug": "haywood-county-nc",
+"label": "Haywood County, North Carolina",
+"short": "Haywood County",
+"geoid": "37087",
+"state": "NC",
+"units": 684,
+"median": 1221,
 "indexable": true
 },
 {
@@ -1900,6 +2070,16 @@
 "indexable": true
 },
 {
+"slug": "pennington-county-sd",
+"label": "Pennington County, South Dakota",
+"short": "Pennington County",
+"geoid": "46103",
+"state": "SD",
+"units": 333,
+"median": 1038,
+"indexable": true
+},
+{
 "slug": "jefferson-county-ar",
 "label": "Jefferson County, Arkansas",
 "short": "Jefferson County",
@@ -1907,6 +2087,26 @@
 "state": "AR",
 "units": 317,
 "median": 873,
+"indexable": true
+},
+{
+"slug": "champaign-county-il",
+"label": "Champaign County, Illinois",
+"short": "Champaign County",
+"geoid": "17019",
+"state": "IL",
+"units": 223,
+"median": 1154,
+"indexable": true
+},
+{
+"slug": "lincoln-county-ne",
+"label": "Lincoln County, Nebraska",
+"short": "Lincoln County",
+"geoid": "31111",
+"state": "NE",
+"units": 146,
+"median": 589,
 "indexable": true
 },
 {

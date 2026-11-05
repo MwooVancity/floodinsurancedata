@@ -1918,5 +1918,205 @@
   "label": "Burleigh County, North Dakota",
   "short": "Burleigh County",
   "official": 0
+ },
+ {
+  "slug": "pennington-county-sd",
+  "state": "SD",
+  "geoid": "46103",
+  "county": "PENNINGTON",
+  "countytitle": "Pennington",
+  "label": "Pennington County, South Dakota",
+  "short": "Pennington County",
+  "official": 0
+ },
+ {
+  "slug": "thurston-county-wa",
+  "state": "WA",
+  "geoid": "53067",
+  "county": "THURSTON",
+  "countytitle": "Thurston",
+  "label": "Thurston County, Washington",
+  "short": "Thurston County",
+  "official": 0
+ },
+ {
+  "slug": "kitsap-county-wa",
+  "state": "WA",
+  "geoid": "53035",
+  "county": "KITSAP",
+  "countytitle": "Kitsap",
+  "label": "Kitsap County, Washington",
+  "short": "Kitsap County",
+  "official": 0
+ },
+ {
+  "slug": "champaign-county-il",
+  "state": "IL",
+  "geoid": "17019",
+  "county": "CHAMPAIGN",
+  "countytitle": "Champaign",
+  "label": "Champaign County, Illinois",
+  "short": "Champaign County",
+  "official": 0
+ },
+ {
+  "slug": "saginaw-county-mi",
+  "state": "MI",
+  "geoid": "26145",
+  "county": "SAGINAW",
+  "countytitle": "Saginaw",
+  "label": "Saginaw County, Michigan",
+  "short": "Saginaw County",
+  "official": 0
+ },
+ {
+  "slug": "lincoln-county-ne",
+  "state": "NE",
+  "geoid": "31111",
+  "county": "LINCOLN",
+  "countytitle": "Lincoln",
+  "label": "Lincoln County, Nebraska",
+  "short": "Lincoln County",
+  "official": 0
+ },
+ {
+  "slug": "haywood-county-nc",
+  "state": "NC",
+  "geoid": "37087",
+  "county": "HAYWOOD",
+  "countytitle": "Haywood",
+  "label": "Haywood County, North Carolina",
+  "short": "Haywood County",
+  "official": 0
+ },
+ {
+  "slug": "clark-county-nv",
+  "state": "NV",
+  "geoid": "32003",
+  "county": "CLARK",
+  "countytitle": "Clark",
+  "label": "Clark County, Nevada",
+  "short": "Clark County",
+  "official": 0
+ },
+ {
+  "slug": "bucks-county-pa",
+  "state": "PA",
+  "geoid": "42017",
+  "county": "BUCKS",
+  "countytitle": "Bucks",
+  "label": "Bucks County, Pennsylvania",
+  "short": "Bucks County",
+  "official": 0
+ },
+ {
+  "slug": "prince-george-s-county-md",
+  "state": "MD",
+  "geoid": "24033",
+  "county": "PRINCE GEORGE'S",
+  "countytitle": "Prince George's",
+  "label": "Prince George's County, Maryland",
+  "short": "Prince George's County",
+  "official": 0
+ },
+ {
+  "slug": "yolo-county-ca",
+  "state": "CA",
+  "geoid": "06113",
+  "county": "YOLO",
+  "countytitle": "Yolo",
+  "label": "Yolo County, California",
+  "short": "Yolo County",
+  "official": 0
+ },
+ {
+  "slug": "philadelphia-county-pa",
+  "state": "PA",
+  "geoid": "42101",
+  "county": "PHILADELPHIA",
+  "countytitle": "Philadelphia",
+  "label": "Philadelphia County, Pennsylvania",
+  "short": "Philadelphia County",
+  "official": 0
+ },
+ {
+  "slug": "iberia-parish-la",
+  "state": "LA",
+  "geoid": "22045",
+  "county": "IBERIA",
+  "countytitle": "Iberia",
+  "label": "Iberia Parish, Louisiana",
+  "short": "Iberia Parish",
+  "official": 0
+ },
+ {
+  "slug": "mecklenburg-county-nc",
+  "state": "NC",
+  "geoid": "37119",
+  "county": "MECKLENBURG",
+  "countytitle": "Mecklenburg",
+  "label": "Mecklenburg County, North Carolina",
+  "short": "Mecklenburg County",
+  "official": 0
+ },
+ {
+  "slug": "dorchester-county-sc",
+  "state": "SC",
+  "geoid": "45035",
+  "county": "DORCHESTER",
+  "countytitle": "Dorchester",
+  "label": "Dorchester County, South Carolina",
+  "short": "Dorchester County",
+  "official": 0
+ },
+ {
+  "slug": "sumter-county-fl",
+  "state": "FL",
+  "geoid": "12119",
+  "county": "SUMTER",
+  "countytitle": "Sumter",
+  "label": "Sumter County, Florida",
+  "short": "Sumter County",
+  "official": 0
+ },
+ {
+  "slug": "camden-county-ga",
+  "state": "GA",
+  "geoid": "13039",
+  "county": "CAMDEN",
+  "countytitle": "Camden",
+  "label": "Camden County, Georgia",
+  "short": "Camden County",
+  "official": 0
+ },
+ {
+  "slug": "skagit-county-wa",
+  "state": "WA",
+  "geoid": "53057",
+  "county": "SKAGIT",
+  "countytitle": "Skagit",
+  "label": "Skagit County, Washington",
+  "short": "Skagit County",
+  "official": 0
+ },
+ {
+  "slug": "rapides-parish-la",
+  "state": "LA",
+  "geoid": "22079",
+  "county": "RAPIDES",
+  "countytitle": "Rapides",
+  "label": "Rapides Parish, Louisiana",
+  "short": "Rapides Parish",
+  "official": 0
+ },
+ {
+  "slug": "poquoson-city-va",
+  "state": "VA",
+  "geoid": "51735",
+  "county": "POQUOSON CITY",
+  "countytitle": "Poquoson city",
+  "label": "Poquoson city, Virginia",
+  "short": "Poquoson city",
+  "official": 0
  }
 ]
