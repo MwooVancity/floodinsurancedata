@@ -24,6 +24,20 @@ def kind(k):
     if k.startswith("flood insurance ") and tail in TOWNS: return "town"
     return "generic"
 
+if "--queue" in sys.argv:   # reorder state/county-queue.json by Keyword Planner searches for the county name (owner 11-05)
+    vol = collections.Counter()
+    for r in rows:
+        m = re.match(r"(.+? (?:county|parish|borough)) (?:flood insurance|flood zone map)$", r["Keyword"])
+        if m: vol[m[1]] += low(r["Avg. monthly searches"])
+    qp = os.path.join(ROOT, "state", "county-queue.json")
+    q = json.load(open(qp, encoding="utf-8"))
+    same = collections.Counter()   # "harris county" TX and GA share one search: split by insured units, so TX keeps nearly all
+    for p in q: same[p["short"].lower()] += p.get("units") or 0
+    key = lambda ip: (-(vol[ip[1]["short"].lower()] * (ip[1].get("units") or 0) / (same[ip[1]["short"].lower()] or 1)), ip[0])
+    q2 = [p for _, p in sorted(enumerate(q), key=key)]
+    json.dump(q2, open(qp, "w", encoding="utf-8"), indent=0, ensure_ascii=False)
+    print("queue reordered:", len(q2), "| first 10:", [p["slug"] for p in q2[:10]]); sys.exit()
+
 by = collections.defaultdict(list)
 for r in rows:
     by[kind(r["Keyword"])].append((low(r["Avg. monthly searches"]), r["Avg. monthly searches"], r["Keyword"]))

@@ -1,19 +1,267 @@
 [
 {
-"slug": "middlesex-county-nj",
-"state": "NJ",
-"geoid": "34023",
-"label": "Middlesex County, New Jersey",
-"short": "Middlesex County",
-"units": 3126
+"slug": "pinellas-county-fl",
+"state": "FL",
+"geoid": "12103",
+"label": "Pinellas County, Florida",
+"short": "Pinellas County",
+"units": 132836
 },
 {
-"slug": "montgomery-county-md",
-"state": "MD",
-"geoid": "24031",
-"label": "Montgomery County, Maryland",
+"slug": "harris-county-tx",
+"state": "TX",
+"geoid": "48201",
+"label": "Harris County, Texas",
+"short": "Harris County",
+"units": 231234
+},
+{
+"slug": "broward-county-fl",
+"state": "FL",
+"geoid": "12011",
+"label": "Broward County, Florida",
+"short": "Broward County",
+"units": 234789
+},
+{
+"slug": "collier-county-fl",
+"state": "FL",
+"geoid": "12021",
+"label": "Collier County, Florida",
+"short": "Collier County",
+"units": 100302
+},
+{
+"slug": "pima-county-az",
+"state": "AZ",
+"geoid": "04019",
+"label": "Pima County, Arizona",
+"short": "Pima County",
+"units": 2918
+},
+{
+"slug": "hillsborough-county-fl",
+"state": "FL",
+"geoid": "12057",
+"label": "Hillsborough County, Florida",
+"short": "Hillsborough County",
+"units": 65247
+},
+{
+"slug": "palm-beach-county-fl",
+"state": "FL",
+"geoid": "12099",
+"label": "Palm Beach County, Florida",
+"short": "Palm Beach County",
+"units": 132945
+},
+{
+"slug": "orleans-parish-la",
+"state": "LA",
+"geoid": "22071",
+"label": "Orleans Parish, Louisiana",
+"short": "Orleans Parish",
+"units": 67988
+},
+{
+"slug": "sarasota-county-fl",
+"state": "FL",
+"geoid": "12115",
+"label": "Sarasota County, Florida",
+"short": "Sarasota County",
+"units": 61446
+},
+{
+"slug": "galveston-county-tx",
+"state": "TX",
+"geoid": "48167",
+"label": "Galveston County, Texas",
+"short": "Galveston County",
+"units": 60942
+},
+{
+"slug": "horry-county-sc",
+"state": "SC",
+"geoid": "45051",
+"label": "Horry County, South Carolina",
+"short": "Horry County",
+"units": 53412
+},
+{
+"slug": "volusia-county-fl",
+"state": "FL",
+"geoid": "12127",
+"label": "Volusia County, Florida",
+"short": "Volusia County",
+"units": 48099
+},
+{
+"slug": "brevard-county-fl",
+"state": "FL",
+"geoid": "12009",
+"label": "Brevard County, Florida",
+"short": "Brevard County",
+"units": 43440
+},
+{
+"slug": "fort-bend-county-tx",
+"state": "TX",
+"geoid": "48157",
+"label": "Fort Bend County, Texas",
+"short": "Fort Bend County",
+"units": 41452
+},
+{
+"slug": "charlotte-county-fl",
+"state": "FL",
+"geoid": "12015",
+"label": "Charlotte County, Florida",
+"short": "Charlotte County",
+"units": 40832
+},
+{
+"slug": "manatee-county-fl",
+"state": "FL",
+"geoid": "12081",
+"label": "Manatee County, Florida",
+"short": "Manatee County",
+"units": 38100
+},
+{
+"slug": "brazoria-county-tx",
+"state": "TX",
+"geoid": "48039",
+"label": "Brazoria County, Texas",
+"short": "Brazoria County",
+"units": 29360
+},
+{
+"slug": "pasco-county-fl",
+"state": "FL",
+"geoid": "12101",
+"label": "Pasco County, Florida",
+"short": "Pasco County",
+"units": 25176
+},
+{
+"slug": "maricopa-county-az",
+"state": "AZ",
+"geoid": "04013",
+"label": "Maricopa County, Arizona",
+"short": "Maricopa County",
+"units": 12436
+},
+{
+"slug": "bexar-county-tx",
+"state": "TX",
+"geoid": "48029",
+"label": "Bexar County, Texas",
+"short": "Bexar County",
+"units": 5345
+},
+{
+"slug": "hernando-county-fl",
+"state": "FL",
+"geoid": "12053",
+"label": "Hernando County, Florida",
+"short": "Hernando County",
+"units": 3829
+},
+{
+"slug": "skagit-county-wa",
+"state": "WA",
+"geoid": "53057",
+"label": "Skagit County, Washington",
+"short": "Skagit County",
+"units": 3054
+},
+{
+"slug": "lee-county-fl",
+"state": "FL",
+"geoid": "12071",
+"label": "Lee County, Florida",
+"short": "Lee County",
+"units": 134473
+},
+{
+"slug": "pierce-county-wa",
+"state": "WA",
+"geoid": "53053",
+"label": "Pierce County, Washington",
+"short": "Pierce County",
+"units": 2581
+},
+{
+"slug": "polk-county-fl",
+"state": "FL",
+"geoid": "12105",
+"label": "Polk County, Florida",
+"short": "Polk County",
+"units": 7854
+},
+{
+"slug": "montgomery-county-tx",
+"state": "TX",
+"geoid": "48339",
+"label": "Montgomery County, Texas",
 "short": "Montgomery County",
-"units": 2156
+"units": 22513
+},
+{
+"slug": "jefferson-parish-la",
+"state": "LA",
+"geoid": "22051",
+"label": "Jefferson Parish, Louisiana",
+"short": "Jefferson Parish",
+"units": 87527
+},
+{
+"slug": "terrebonne-parish-la",
+"state": "LA",
+"geoid": "22109",
+"label": "Terrebonne Parish, Louisiana",
+"short": "Terrebonne Parish",
+"units": 11936
+},
+{
+"slug": "king-county-wa",
+"state": "WA",
+"geoid": "53033",
+"label": "King County, Washington",
+"short": "King County",
+"units": 7005
+},
+{
+"slug": "nassau-county-ny",
+"state": "NY",
+"geoid": "36059",
+"label": "Nassau County, New York",
+"short": "Nassau County",
+"units": 41308
+},
+{
+"slug": "suffolk-county-ny",
+"state": "NY",
+"geoid": "36103",
+"label": "Suffolk County, New York",
+"short": "Suffolk County",
+"units": 29237
+},
+{
+"slug": "polk-county-ia",
+"state": "IA",
+"geoid": "19153",
+"label": "Polk County, Iowa",
+"short": "Polk County",
+"units": 1178
+},
+{
+"slug": "montgomery-county-pa",
+"state": "PA",
+"geoid": "42091",
+"label": "Montgomery County, Pennsylvania",
+"short": "Montgomery County",
+"units": 3357
 },
 {
 "slug": "anne-arundel-county-md",
@@ -22,86 +270,6 @@
 "label": "Anne Arundel County, Maryland",
 "short": "Anne Arundel County",
 "units": 5335
-},
-{
-"slug": "prince-william-county-va",
-"state": "VA",
-"geoid": "51153",
-"label": "Prince William County, Virginia",
-"short": "Prince William County",
-"units": 1073
-},
-{
-"slug": "washington-county-vt",
-"state": "VT",
-"geoid": "50023",
-"label": "Washington County, Vermont",
-"short": "Washington County",
-"units": 857
-},
-{
-"slug": "grand-forks-county-nd",
-"state": "ND",
-"geoid": "38035",
-"label": "Grand Forks County, North Dakota",
-"short": "Grand Forks County",
-"units": 389
-},
-{
-"slug": "elkhart-county-in",
-"state": "IN",
-"geoid": "18039",
-"label": "Elkhart County, Indiana",
-"short": "Elkhart County",
-"units": 422
-},
-{
-"slug": "raleigh-county-wv",
-"state": "WV",
-"geoid": "54081",
-"label": "Raleigh County, West Virginia",
-"short": "Raleigh County",
-"units": 109
-},
-{
-"slug": "washington-county-or",
-"state": "OR",
-"geoid": "41067",
-"label": "Washington County, Oregon",
-"short": "Washington County",
-"units": 1498
-},
-{
-"slug": "pulaski-county-ar",
-"state": "AR",
-"geoid": "05119",
-"label": "Pulaski County, Arkansas",
-"short": "Pulaski County",
-"units": 1894
-},
-{
-"slug": "jefferson-county-ar",
-"state": "AR",
-"geoid": "05069",
-"label": "Jefferson County, Arkansas",
-"short": "Jefferson County",
-"units": 317
-},
-{
-"slug": "greene-county-ar",
-"state": "AR",
-"geoid": "05055",
-"label": "Greene County, Arkansas",
-"short": "Greene County",
-"units": 356
-},
-{
-"slug": "denver-county-co",
-"state": "CO",
-"geoid": "08031",
-"label": "Denver County, Colorado",
-"short": "Denver County",
-"units": 1057
 },
 {
 "slug": "salt-lake-county-ut",
@@ -136,52 +304,12 @@
 "units": 989
 },
 {
-"slug": "ramsey-county-mn",
-"state": "MN",
-"geoid": "27123",
-"label": "Ramsey County, Minnesota",
-"short": "Ramsey County",
-"units": 455
-},
-{
-"slug": "richland-county-sc",
-"state": "SC",
-"geoid": "45079",
-"label": "Richland County, South Carolina",
-"short": "Richland County",
-"units": 2182
-},
-{
 "slug": "lexington-county-sc",
 "state": "SC",
 "geoid": "45063",
 "label": "Lexington County, South Carolina",
 "short": "Lexington County",
 "units": 1400
-},
-{
-"slug": "burleigh-county-nd",
-"state": "ND",
-"geoid": "38015",
-"label": "Burleigh County, North Dakota",
-"short": "Burleigh County",
-"units": 646
-},
-{
-"slug": "pennington-county-sd",
-"state": "SD",
-"geoid": "46103",
-"label": "Pennington County, South Dakota",
-"short": "Pennington County",
-"units": 345
-},
-{
-"slug": "thurston-county-wa",
-"state": "WA",
-"geoid": "53067",
-"label": "Thurston County, Washington",
-"short": "Thurston County",
-"units": 767
 },
 {
 "slug": "kitsap-county-wa",
@@ -192,46 +320,6 @@
 "units": 923
 },
 {
-"slug": "champaign-county-il",
-"state": "IL",
-"geoid": "17019",
-"label": "Champaign County, Illinois",
-"short": "Champaign County",
-"units": 221
-},
-{
-"slug": "saginaw-county-mi",
-"state": "MI",
-"geoid": "26145",
-"label": "Saginaw County, Michigan",
-"short": "Saginaw County",
-"units": 1129
-},
-{
-"slug": "lincoln-county-ne",
-"state": "NE",
-"geoid": "31111",
-"label": "Lincoln County, Nebraska",
-"short": "Lincoln County",
-"units": 149
-},
-{
-"slug": "haywood-county-nc",
-"state": "NC",
-"geoid": "37087",
-"label": "Haywood County, North Carolina",
-"short": "Haywood County",
-"units": 693
-},
-{
-"slug": "clark-county-nv",
-"state": "NV",
-"geoid": "32003",
-"label": "Clark County, Nevada",
-"short": "Clark County",
-"units": 1388
-},
-{
 "slug": "ocean-county-nj",
 "state": "NJ",
 "geoid": "34029",
@@ -240,116 +328,12 @@
 "units": 41040
 },
 {
-"slug": "miami-dade-county-fl",
-"state": "FL",
-"geoid": "12086",
-"label": "Miami-Dade County, Florida",
-"short": "Miami-Dade County",
-"units": 366669
-},
-{
-"slug": "broward-county-fl",
-"state": "FL",
-"geoid": "12011",
-"label": "Broward County, Florida",
-"short": "Broward County",
-"units": 234789
-},
-{
-"slug": "harris-county-tx",
-"state": "TX",
-"geoid": "48201",
-"label": "Harris County, Texas",
-"short": "Harris County",
-"units": 231234
-},
-{
-"slug": "lee-county-fl",
-"state": "FL",
-"geoid": "12071",
-"label": "Lee County, Florida",
-"short": "Lee County",
-"units": 134473
-},
-{
-"slug": "palm-beach-county-fl",
-"state": "FL",
-"geoid": "12099",
-"label": "Palm Beach County, Florida",
-"short": "Palm Beach County",
-"units": 132945
-},
-{
-"slug": "pinellas-county-fl",
-"state": "FL",
-"geoid": "12103",
-"label": "Pinellas County, Florida",
-"short": "Pinellas County",
-"units": 132836
-},
-{
-"slug": "collier-county-fl",
-"state": "FL",
-"geoid": "12021",
-"label": "Collier County, Florida",
-"short": "Collier County",
-"units": 100302
-},
-{
-"slug": "jefferson-parish-la",
-"state": "LA",
-"geoid": "22051",
-"label": "Jefferson Parish, Louisiana",
-"short": "Jefferson Parish",
-"units": 87527
-},
-{
-"slug": "orleans-parish-la",
-"state": "LA",
-"geoid": "22071",
-"label": "Orleans Parish, Louisiana",
-"short": "Orleans Parish",
-"units": 67988
-},
-{
-"slug": "hillsborough-county-fl",
-"state": "FL",
-"geoid": "12057",
-"label": "Hillsborough County, Florida",
-"short": "Hillsborough County",
-"units": 65247
-},
-{
-"slug": "sarasota-county-fl",
-"state": "FL",
-"geoid": "12115",
-"label": "Sarasota County, Florida",
-"short": "Sarasota County",
-"units": 61446
-},
-{
-"slug": "galveston-county-tx",
-"state": "TX",
-"geoid": "48167",
-"label": "Galveston County, Texas",
-"short": "Galveston County",
-"units": 60942
-},
-{
 "slug": "charleston-county-sc",
 "state": "SC",
 "geoid": "45019",
 "label": "Charleston County, South Carolina",
 "short": "Charleston County",
 "units": 60873
-},
-{
-"slug": "horry-county-sc",
-"state": "SC",
-"geoid": "45051",
-"label": "Horry County, South Carolina",
-"short": "Horry County",
-"units": 53412
 },
 {
 "slug": "cape-may-county-nj",
@@ -368,132 +352,12 @@
 "units": 48307
 },
 {
-"slug": "volusia-county-fl",
-"state": "FL",
-"geoid": "12127",
-"label": "Volusia County, Florida",
-"short": "Volusia County",
-"units": 48099
-},
-{
-"slug": "beaufort-county-sc",
-"state": "SC",
-"geoid": "45013",
-"label": "Beaufort County, South Carolina",
-"short": "Beaufort County",
-"units": 46831
-},
-{
-"slug": "honolulu-county-hi",
-"state": "HI",
-"geoid": "15003",
-"label": "Honolulu County, Hawaii",
-"short": "Honolulu County",
-"units": 45987
-},
-{
-"slug": "brevard-county-fl",
-"state": "FL",
-"geoid": "12009",
-"label": "Brevard County, Florida",
-"short": "Brevard County",
-"units": 43440
-},
-{
-"slug": "st-tammany-parish-la",
-"state": "LA",
-"geoid": "22103",
-"label": "St. Tammany Parish, Louisiana",
-"short": "St. Tammany Parish",
-"units": 41503
-},
-{
-"slug": "fort-bend-county-tx",
-"state": "TX",
-"geoid": "48157",
-"label": "Fort Bend County, Texas",
-"short": "Fort Bend County",
-"units": 41452
-},
-{
-"slug": "nassau-county-ny",
-"state": "NY",
-"geoid": "36059",
-"label": "Nassau County, New York",
-"short": "Nassau County",
-"units": 41308
-},
-{
-"slug": "charlotte-county-fl",
-"state": "FL",
-"geoid": "12015",
-"label": "Charlotte County, Florida",
-"short": "Charlotte County",
-"units": 40832
-},
-{
 "slug": "east-baton-rouge-parish-la",
 "state": "LA",
 "geoid": "22033",
 "label": "East Baton Rouge Parish, Louisiana",
 "short": "East Baton Rouge Parish",
 "units": 40683
-},
-{
-"slug": "manatee-county-fl",
-"state": "FL",
-"geoid": "12081",
-"label": "Manatee County, Florida",
-"short": "Manatee County",
-"units": 38100
-},
-{
-"slug": "st-johns-county-fl",
-"state": "FL",
-"geoid": "12109",
-"label": "St. Johns County, Florida",
-"short": "St. Johns County",
-"units": 32726
-},
-{
-"slug": "bay-county-fl",
-"state": "FL",
-"geoid": "12005",
-"label": "Bay County, Florida",
-"short": "Bay County",
-"units": 31958
-},
-{
-"slug": "monroe-county-fl",
-"state": "FL",
-"geoid": "12087",
-"label": "Monroe County, Florida",
-"short": "Monroe County",
-"units": 31747
-},
-{
-"slug": "worcester-county-md",
-"state": "MD",
-"geoid": "24047",
-"label": "Worcester County, Maryland",
-"short": "Worcester County",
-"units": 29373
-},
-{
-"slug": "brazoria-county-tx",
-"state": "TX",
-"geoid": "48039",
-"label": "Brazoria County, Texas",
-"short": "Brazoria County",
-"units": 29360
-},
-{
-"slug": "suffolk-county-ny",
-"state": "NY",
-"geoid": "36103",
-"label": "Suffolk County, New York",
-"short": "Suffolk County",
-"units": 29237
 },
 {
 "slug": "duval-county-fl",
@@ -520,28 +384,12 @@
 "units": 25823
 },
 {
-"slug": "pasco-county-fl",
-"state": "FL",
-"geoid": "12101",
-"label": "Pasco County, Florida",
-"short": "Pasco County",
-"units": 25176
-},
-{
 "slug": "hudson-county-nj",
 "state": "NJ",
 "geoid": "34017",
 "label": "Hudson County, New Jersey",
 "short": "Hudson County",
 "units": 24445
-},
-{
-"slug": "chatham-county-ga",
-"state": "GA",
-"geoid": "13051",
-"label": "Chatham County, Georgia",
-"short": "Chatham County",
-"units": 23782
 },
 {
 "slug": "atlantic-county-nj",
@@ -552,44 +400,12 @@
 "units": 23137
 },
 {
-"slug": "montgomery-county-tx",
-"state": "TX",
-"geoid": "48339",
-"label": "Montgomery County, Texas",
-"short": "Montgomery County",
-"units": 22513
-},
-{
-"slug": "sussex-county-de",
-"state": "DE",
-"geoid": "10005",
-"label": "Sussex County, Delaware",
-"short": "Sussex County",
-"units": 22022
-},
-{
 "slug": "brunswick-county-nc",
 "state": "NC",
 "geoid": "37019",
 "label": "Brunswick County, North Carolina",
 "short": "Brunswick County",
 "units": 21091
-},
-{
-"slug": "jefferson-county-tx",
-"state": "TX",
-"geoid": "48245",
-"label": "Jefferson County, Texas",
-"short": "Jefferson County",
-"units": 20824
-},
-{
-"slug": "virginia-beach-city-va",
-"state": "VA",
-"geoid": "51810",
-"label": "Virginia Beach city, Virginia",
-"short": "Virginia Beach city",
-"units": 20355
 },
 {
 "slug": "monmouth-county-nj",
@@ -600,22 +416,6 @@
 "units": 19956
 },
 {
-"slug": "cameron-county-tx",
-"state": "TX",
-"geoid": "48061",
-"label": "Cameron County, Texas",
-"short": "Cameron County",
-"units": 19785
-},
-{
-"slug": "queens-county-ny",
-"state": "NY",
-"geoid": "36081",
-"label": "Queens County, New York",
-"short": "Queens County",
-"units": 19697
-},
-{
 "slug": "indian-river-county-fl",
 "state": "FL",
 "geoid": "12061",
@@ -624,28 +424,12 @@
 "units": 19478
 },
 {
-"slug": "st-lucie-county-fl",
-"state": "FL",
-"geoid": "12111",
-"label": "St. Lucie County, Florida",
-"short": "St. Lucie County",
-"units": 19192
-},
-{
 "slug": "okaloosa-county-fl",
 "state": "FL",
 "geoid": "12091",
 "label": "Okaloosa County, Florida",
 "short": "Okaloosa County",
 "units": 19069
-},
-{
-"slug": "kings-county-ny",
-"state": "NY",
-"geoid": "36047",
-"label": "Kings County, New York",
-"short": "Kings County",
-"units": 18764
 },
 {
 "slug": "new-hanover-county-nc",
@@ -664,30 +448,6 @@
 "units": 17532
 },
 {
-"slug": "escambia-county-fl",
-"state": "FL",
-"geoid": "12033",
-"label": "Escambia County, Florida",
-"short": "Escambia County",
-"units": 17505
-},
-{
-"slug": "walton-county-fl",
-"state": "FL",
-"geoid": "12131",
-"label": "Walton County, Florida",
-"short": "Walton County",
-"units": 17425
-},
-{
-"slug": "orange-county-fl",
-"state": "FL",
-"geoid": "12095",
-"label": "Orange County, Florida",
-"short": "Orange County",
-"units": 17219
-},
-{
 "slug": "dare-county-nc",
 "state": "NC",
 "geoid": "37055",
@@ -702,22 +462,6 @@
 "label": "Livingston Parish, Louisiana",
 "short": "Livingston Parish",
 "units": 15215
-},
-{
-"slug": "new-york-county-ny",
-"state": "NY",
-"geoid": "36061",
-"label": "New York County, New York",
-"short": "New York County",
-"units": 14670
-},
-{
-"slug": "fairfield-county-ct",
-"state": "CT",
-"geoid": "09001",
-"label": "Fairfield County, Connecticut",
-"short": "Fairfield County",
-"units": 14619
 },
 {
 "slug": "carteret-county-nc",
@@ -736,28 +480,12 @@
 "units": 14286
 },
 {
-"slug": "martin-county-fl",
-"state": "FL",
-"geoid": "12085",
-"label": "Martin County, Florida",
-"short": "Martin County",
-"units": 14193
-},
-{
 "slug": "glynn-county-ga",
 "state": "GA",
 "geoid": "13127",
 "label": "Glynn County, Georgia",
 "short": "Glynn County",
 "units": 13819
-},
-{
-"slug": "harrison-county-ms",
-"state": "MS",
-"geoid": "28047",
-"label": "Harrison County, Mississippi",
-"short": "Harrison County",
-"units": 13404
 },
 {
 "slug": "calcasieu-parish-la",
@@ -774,46 +502,6 @@
 "label": "Los Angeles County, California",
 "short": "Los Angeles County",
 "units": 12519
-},
-{
-"slug": "maricopa-county-az",
-"state": "AZ",
-"geoid": "04013",
-"label": "Maricopa County, Arizona",
-"short": "Maricopa County",
-"units": 12436
-},
-{
-"slug": "orange-county-tx",
-"state": "TX",
-"geoid": "48361",
-"label": "Orange County, Texas",
-"short": "Orange County",
-"units": 12097
-},
-{
-"slug": "terrebonne-parish-la",
-"state": "LA",
-"geoid": "22109",
-"label": "Terrebonne Parish, Louisiana",
-"short": "Terrebonne Parish",
-"units": 11936
-},
-{
-"slug": "jackson-county-ms",
-"state": "MS",
-"geoid": "28059",
-"label": "Jackson County, Mississippi",
-"short": "Jackson County",
-"units": 11932
-},
-{
-"slug": "cook-county-il",
-"state": "IL",
-"geoid": "17031",
-"label": "Cook County, Illinois",
-"short": "Cook County",
-"units": 11828
 },
 {
 "slug": "maui-county-hi",
@@ -840,28 +528,12 @@
 "units": 11536
 },
 {
-"slug": "norfolk-city-va",
-"state": "VA",
-"geoid": "51710",
-"label": "Norfolk city, Virginia",
-"short": "Norfolk city",
-"units": 11163
-},
-{
 "slug": "flagler-county-fl",
 "state": "FL",
 "geoid": "12035",
 "label": "Flagler County, Florida",
 "short": "Flagler County",
 "units": 10793
-},
-{
-"slug": "st-charles-parish-la",
-"state": "LA",
-"geoid": "22089",
-"label": "St. Charles Parish, Louisiana",
-"short": "St. Charles Parish",
-"units": 10664
 },
 {
 "slug": "bergen-county-nj",
@@ -880,76 +552,12 @@
 "units": 9960
 },
 {
-"slug": "barnstable-county-ma",
-"state": "MA",
-"geoid": "25001",
-"label": "Barnstable County, Massachusetts",
-"short": "Barnstable County",
-"units": 9896
-},
-{
-"slug": "suffolk-county-ma",
-"state": "MA",
-"geoid": "25025",
-"label": "Suffolk County, Massachusetts",
-"short": "Suffolk County",
-"units": 9676
-},
-{
-"slug": "orange-county-ca",
-"state": "CA",
-"geoid": "06059",
-"label": "Orange County, California",
-"short": "Orange County",
-"units": 9496
-},
-{
-"slug": "hampton-city-va",
-"state": "VA",
-"geoid": "51650",
-"label": "Hampton city, Virginia",
-"short": "Hampton city",
-"units": 9314
-},
-{
 "slug": "osceola-county-fl",
 "state": "FL",
 "geoid": "12097",
 "label": "Osceola County, Florida",
 "short": "Osceola County",
 "units": 9307
-},
-{
-"slug": "st-bernard-parish-la",
-"state": "LA",
-"geoid": "22087",
-"label": "St. Bernard Parish, Louisiana",
-"short": "St. Bernard Parish",
-"units": 9243
-},
-{
-"slug": "essex-county-ma",
-"state": "MA",
-"geoid": "25009",
-"label": "Essex County, Massachusetts",
-"short": "Essex County",
-"units": 9089
-},
-{
-"slug": "nassau-county-fl",
-"state": "FL",
-"geoid": "12089",
-"label": "Nassau County, Florida",
-"short": "Nassau County",
-"units": 9020
-},
-{
-"slug": "travis-county-tx",
-"state": "TX",
-"geoid": "48453",
-"label": "Travis County, Texas",
-"short": "Travis County",
-"units": 8921
 },
 {
 "slug": "san-diego-county-ca",
@@ -984,92 +592,12 @@
 "units": 8458
 },
 {
-"slug": "plymouth-county-ma",
-"state": "MA",
-"geoid": "25023",
-"label": "Plymouth County, Massachusetts",
-"short": "Plymouth County",
-"units": 8286
-},
-{
-"slug": "new-haven-county-ct",
-"state": "CT",
-"geoid": "09009",
-"label": "New Haven County, Connecticut",
-"short": "New Haven County",
-"units": 8263
-},
-{
-"slug": "polk-county-fl",
-"state": "FL",
-"geoid": "12105",
-"label": "Polk County, Florida",
-"short": "Polk County",
-"units": 7854
-},
-{
 "slug": "tangipahoa-parish-la",
 "state": "LA",
 "geoid": "22105",
 "label": "Tangipahoa Parish, Louisiana",
 "short": "Tangipahoa Parish",
 "units": 7492
-},
-{
-"slug": "hancock-county-ms",
-"state": "MS",
-"geoid": "28045",
-"label": "Hancock County, Mississippi",
-"short": "Hancock County",
-"units": 7462
-},
-{
-"slug": "chesapeake-city-va",
-"state": "VA",
-"geoid": "51550",
-"label": "Chesapeake city, Virginia",
-"short": "Chesapeake city",
-"units": 7428
-},
-{
-"slug": "seminole-county-fl",
-"state": "FL",
-"geoid": "12117",
-"label": "Seminole County, Florida",
-"short": "Seminole County",
-"units": 7412
-},
-{
-"slug": "berkeley-county-sc",
-"state": "SC",
-"geoid": "45015",
-"label": "Berkeley County, South Carolina",
-"short": "Berkeley County",
-"units": 7312
-},
-{
-"slug": "middlesex-county-ma",
-"state": "MA",
-"geoid": "25017",
-"label": "Middlesex County, Massachusetts",
-"short": "Middlesex County",
-"units": 7286
-},
-{
-"slug": "king-county-wa",
-"state": "WA",
-"geoid": "53033",
-"label": "King County, Washington",
-"short": "King County",
-"units": 7005
-},
-{
-"slug": "dallas-county-tx",
-"state": "TX",
-"geoid": "48113",
-"label": "Dallas County, Texas",
-"short": "Dallas County",
-"units": 6882
 },
 {
 "slug": "mobile-county-al",
@@ -1088,28 +616,12 @@
 "units": 6390
 },
 {
-"slug": "richmond-county-ny",
-"state": "NY",
-"geoid": "36085",
-"label": "Richmond County, New York",
-"short": "Richmond County",
-"units": 6186
-},
-{
 "slug": "citrus-county-fl",
 "state": "FL",
 "geoid": "12017",
 "label": "Citrus County, Florida",
 "short": "Citrus County",
 "units": 6020
-},
-{
-"slug": "st-john-the-baptist-parish-la",
-"state": "LA",
-"geoid": "22095",
-"label": "St. John the Baptist Parish, Louisiana",
-"short": "St. John the Baptist Parish",
-"units": 5882
 },
 {
 "slug": "craven-county-nc",
@@ -1128,28 +640,12 @@
 "units": 5835
 },
 {
-"slug": "norfolk-county-ma",
-"state": "MA",
-"geoid": "25021",
-"label": "Norfolk County, Massachusetts",
-"short": "Norfolk County",
-"units": 5776
-},
-{
 "slug": "pender-county-nc",
 "state": "NC",
 "geoid": "37141",
 "label": "Pender County, North Carolina",
 "short": "Pender County",
 "units": 5562
-},
-{
-"slug": "bexar-county-tx",
-"state": "TX",
-"geoid": "48029",
-"label": "Bexar County, Texas",
-"short": "Bexar County",
-"units": 5345
 },
 {
 "slug": "fairfax-county-va",
@@ -1166,14 +662,6 @@
 "label": "Onslow County, North Carolina",
 "short": "Onslow County",
 "units": 5068
-},
-{
-"slug": "davidson-county-tn",
-"state": "TN",
-"geoid": "47037",
-"label": "Davidson County, Tennessee",
-"short": "Davidson County",
-"units": 4911
 },
 {
 "slug": "aransas-county-tx",
@@ -1216,14 +704,6 @@
 "units": 4730
 },
 {
-"slug": "caddo-parish-la",
-"state": "LA",
-"geoid": "22017",
-"label": "Caddo Parish, Louisiana",
-"short": "Caddo Parish",
-"units": 4579
-},
-{
 "slug": "ventura-county-ca",
 "state": "CA",
 "geoid": "06111",
@@ -1238,6 +718,3958 @@
 "label": "Vermilion Parish, Louisiana",
 "short": "Vermilion Parish",
 "units": 4553
+},
+{
+"slug": "tulare-county-ca",
+"state": "CA",
+"geoid": "06107",
+"label": "Tulare County, California",
+"short": "Tulare County",
+"units": 4343
+},
+{
+"slug": "san-mateo-county-ca",
+"state": "CA",
+"geoid": "06081",
+"label": "San Mateo County, California",
+"short": "San Mateo County",
+"units": 4223
+},
+{
+"slug": "hawaii-county-hi",
+"state": "HI",
+"geoid": "15001",
+"label": "Hawaii County, Hawaii",
+"short": "Hawaii County",
+"units": 4124
+},
+{
+"slug": "riverside-county-ca",
+"state": "CA",
+"geoid": "06065",
+"label": "Riverside County, California",
+"short": "Riverside County",
+"units": 3854
+},
+{
+"slug": "santa-barbara-county-ca",
+"state": "CA",
+"geoid": "06083",
+"label": "Santa Barbara County, California",
+"short": "Santa Barbara County",
+"units": 3746
+},
+{
+"slug": "sutter-county-ca",
+"state": "CA",
+"geoid": "06101",
+"label": "Sutter County, California",
+"short": "Sutter County",
+"units": 3626
+},
+{
+"slug": "nye-county-nv",
+"state": "NV",
+"geoid": "32023",
+"label": "Nye County, Nevada",
+"short": "Nye County",
+"units": 3525
+},
+{
+"slug": "bryan-county-ga",
+"state": "GA",
+"geoid": "13029",
+"label": "Bryan County, Georgia",
+"short": "Bryan County",
+"units": 3394
+},
+{
+"slug": "wake-county-nc",
+"state": "NC",
+"geoid": "37183",
+"label": "Wake County, North Carolina",
+"short": "Wake County",
+"units": 3387
+},
+{
+"slug": "currituck-county-nc",
+"state": "NC",
+"geoid": "37053",
+"label": "Currituck County, North Carolina",
+"short": "Currituck County",
+"units": 3310
+},
+{
+"slug": "kern-county-ca",
+"state": "CA",
+"geoid": "06029",
+"label": "Kern County, California",
+"short": "Kern County",
+"units": 3272
+},
+{
+"slug": "contra-costa-county-ca",
+"state": "CA",
+"geoid": "06013",
+"label": "Contra Costa County, California",
+"short": "Contra Costa County",
+"units": 3252
+},
+{
+"slug": "bucks-county-pa",
+"state": "PA",
+"geoid": "42017",
+"label": "Bucks County, Pennsylvania",
+"short": "Bucks County",
+"units": 3219
+},
+{
+"slug": "yolo-county-ca",
+"state": "CA",
+"geoid": "06113",
+"label": "Yolo County, California",
+"short": "Yolo County",
+"units": 3201
+},
+{
+"slug": "iberia-parish-la",
+"state": "LA",
+"geoid": "22045",
+"label": "Iberia Parish, Louisiana",
+"short": "Iberia Parish",
+"units": 3140
+},
+{
+"slug": "mecklenburg-county-nc",
+"state": "NC",
+"geoid": "37119",
+"label": "Mecklenburg County, North Carolina",
+"short": "Mecklenburg County",
+"units": 3094
+},
+{
+"slug": "rapides-parish-la",
+"state": "LA",
+"geoid": "22079",
+"label": "Rapides Parish, Louisiana",
+"short": "Rapides Parish",
+"units": 3051
+},
+{
+"slug": "accomack-county-va",
+"state": "VA",
+"geoid": "51001",
+"label": "Accomack County, Virginia",
+"short": "Accomack County",
+"units": 2944
+},
+{
+"slug": "alachua-county-fl",
+"state": "FL",
+"geoid": "12001",
+"label": "Alachua County, Florida",
+"short": "Alachua County",
+"units": 2941
+},
+{
+"slug": "passaic-county-nj",
+"state": "NJ",
+"geoid": "34031",
+"label": "Passaic County, New Jersey",
+"short": "Passaic County",
+"units": 2842
+},
+{
+"slug": "morris-county-nj",
+"state": "NJ",
+"geoid": "34027",
+"label": "Morris County, New Jersey",
+"short": "Morris County",
+"units": 2828
+},
+{
+"slug": "leon-county-fl",
+"state": "FL",
+"geoid": "12073",
+"label": "Leon County, Florida",
+"short": "Leon County",
+"units": 2745
+},
+{
+"slug": "lane-county-or",
+"state": "OR",
+"geoid": "41039",
+"label": "Lane County, Oregon",
+"short": "Lane County",
+"units": 2723
+},
+{
+"slug": "cobb-county-ga",
+"state": "GA",
+"geoid": "13067",
+"label": "Cobb County, Georgia",
+"short": "Cobb County",
+"units": 2481
+},
+{
+"slug": "san-patricio-county-tx",
+"state": "TX",
+"geoid": "48409",
+"label": "San Patricio County, Texas",
+"short": "San Patricio County",
+"units": 2464
+},
+{
+"slug": "sonoma-county-ca",
+"state": "CA",
+"geoid": "06097",
+"label": "Sonoma County, California",
+"short": "Sonoma County",
+"units": 2394
+},
+{
+"slug": "acadia-parish-la",
+"state": "LA",
+"geoid": "22001",
+"label": "Acadia Parish, Louisiana",
+"short": "Acadia Parish",
+"units": 2382
+},
+{
+"slug": "solano-county-ca",
+"state": "CA",
+"geoid": "06095",
+"label": "Solano County, California",
+"short": "Solano County",
+"units": 2282
+},
+{
+"slug": "valencia-county-nm",
+"state": "NM",
+"geoid": "35061",
+"label": "Valencia County, New Mexico",
+"short": "Valencia County",
+"units": 2282
+},
+{
+"slug": "whatcom-county-wa",
+"state": "WA",
+"geoid": "53073",
+"label": "Whatcom County, Washington",
+"short": "Whatcom County",
+"units": 2256
+},
+{
+"slug": "denton-county-tx",
+"state": "TX",
+"geoid": "48121",
+"label": "Denton County, Texas",
+"short": "Denton County",
+"units": 2228
+},
+{
+"slug": "snohomish-county-wa",
+"state": "WA",
+"geoid": "53061",
+"label": "Snohomish County, Washington",
+"short": "Snohomish County",
+"units": 2177
+},
+{
+"slug": "waller-county-tx",
+"state": "TX",
+"geoid": "48473",
+"label": "Waller County, Texas",
+"short": "Waller County",
+"units": 2108
+},
+{
+"slug": "washoe-county-nv",
+"state": "NV",
+"geoid": "32031",
+"label": "Washoe County, Nevada",
+"short": "Washoe County",
+"units": 1977
+},
+{
+"slug": "pasquotank-county-nc",
+"state": "NC",
+"geoid": "37139",
+"label": "Pasquotank County, North Carolina",
+"short": "Pasquotank County",
+"units": 1942
+},
+{
+"slug": "ada-county-id",
+"state": "ID",
+"geoid": "16001",
+"label": "Ada County, Idaho",
+"short": "Ada County",
+"units": 1914
+},
+{
+"slug": "pitt-county-nc",
+"state": "NC",
+"geoid": "37147",
+"label": "Pitt County, North Carolina",
+"short": "Pitt County",
+"units": 1743
+},
+{
+"slug": "gulf-county-fl",
+"state": "FL",
+"geoid": "12045",
+"label": "Gulf County, Florida",
+"short": "Gulf County",
+"units": 1737
+},
+{
+"slug": "rankin-county-ms",
+"state": "MS",
+"geoid": "28121",
+"label": "Rankin County, Mississippi",
+"short": "Rankin County",
+"units": 1684
+},
+{
+"slug": "collin-county-tx",
+"state": "TX",
+"geoid": "48085",
+"label": "Collin County, Texas",
+"short": "Collin County",
+"units": 1643
+},
+{
+"slug": "monterey-county-ca",
+"state": "CA",
+"geoid": "06053",
+"label": "Monterey County, California",
+"short": "Monterey County",
+"units": 1610
+},
+{
+"slug": "broome-county-ny",
+"state": "NY",
+"geoid": "36007",
+"label": "Broome County, New York",
+"short": "Broome County",
+"units": 1585
+},
+{
+"slug": "yavapai-county-az",
+"state": "AZ",
+"geoid": "04025",
+"label": "Yavapai County, Arizona",
+"short": "Yavapai County",
+"units": 1568
+},
+{
+"slug": "butte-county-ca",
+"state": "CA",
+"geoid": "06007",
+"label": "Butte County, California",
+"short": "Butte County",
+"units": 1568
+},
+{
+"slug": "oklahoma-county-ok",
+"state": "OK",
+"geoid": "40109",
+"label": "Oklahoma County, Oklahoma",
+"short": "Oklahoma County",
+"units": 1534
+},
+{
+"slug": "yuba-county-ca",
+"state": "CA",
+"geoid": "06115",
+"label": "Yuba County, California",
+"short": "Yuba County",
+"units": 1473
+},
+{
+"slug": "tillamook-county-or",
+"state": "OR",
+"geoid": "41057",
+"label": "Tillamook County, Oregon",
+"short": "Tillamook County",
+"units": 1397
+},
+{
+"slug": "okeechobee-county-fl",
+"state": "FL",
+"geoid": "12093",
+"label": "Okeechobee County, Florida",
+"short": "Okeechobee County",
+"units": 1346
+},
+{
+"slug": "rockland-county-ny",
+"state": "NY",
+"geoid": "36087",
+"label": "Rockland County, New York",
+"short": "Rockland County",
+"units": 1346
+},
+{
+"slug": "napa-county-ca",
+"state": "CA",
+"geoid": "06055",
+"label": "Napa County, California",
+"short": "Napa County",
+"units": 1292
+},
+{
+"slug": "chester-county-pa",
+"state": "PA",
+"geoid": "42029",
+"label": "Chester County, Pennsylvania",
+"short": "Chester County",
+"units": 1288
+},
+{
+"slug": "iberville-parish-la",
+"state": "LA",
+"geoid": "22047",
+"label": "Iberville Parish, Louisiana",
+"short": "Iberville Parish",
+"units": 1287
+},
+{
+"slug": "onondaga-county-ny",
+"state": "NY",
+"geoid": "36067",
+"label": "Onondaga County, New York",
+"short": "Onondaga County",
+"units": 1276
+},
+{
+"slug": "placer-county-ca",
+"state": "CA",
+"geoid": "06061",
+"label": "Placer County, California",
+"short": "Placer County",
+"units": 1267
+},
+{
+"slug": "wakulla-county-fl",
+"state": "FL",
+"geoid": "12129",
+"label": "Wakulla County, Florida",
+"short": "Wakulla County",
+"units": 1256
+},
+{
+"slug": "will-county-il",
+"state": "IL",
+"geoid": "17197",
+"label": "Will County, Illinois",
+"short": "Will County",
+"units": 1199
+},
+{
+"slug": "fresno-county-ca",
+"state": "CA",
+"geoid": "06019",
+"label": "Fresno County, California",
+"short": "Fresno County",
+"units": 1125
+},
+{
+"slug": "gwinnett-county-ga",
+"state": "GA",
+"geoid": "13135",
+"label": "Gwinnett County, Georgia",
+"short": "Gwinnett County",
+"units": 1119
+},
+{
+"slug": "greenville-county-sc",
+"state": "SC",
+"geoid": "45045",
+"label": "Greenville County, South Carolina",
+"short": "Greenville County",
+"units": 1092
+},
+{
+"slug": "larimer-county-co",
+"state": "CO",
+"geoid": "08069",
+"label": "Larimer County, Colorado",
+"short": "Larimer County",
+"units": 1066
+},
+{
+"slug": "ector-county-tx",
+"state": "TX",
+"geoid": "48135",
+"label": "Ector County, Texas",
+"short": "Ector County",
+"units": 1053
+},
+{
+"slug": "highlands-county-fl",
+"state": "FL",
+"geoid": "12055",
+"label": "Highlands County, Florida",
+"short": "Highlands County",
+"units": 1031
+},
+{
+"slug": "lucas-county-oh",
+"state": "OH",
+"geoid": "39095",
+"label": "Lucas County, Ohio",
+"short": "Lucas County",
+"units": 1009
+},
+{
+"slug": "sedgwick-county-ks",
+"state": "KS",
+"geoid": "20173",
+"label": "Sedgwick County, Kansas",
+"short": "Sedgwick County",
+"units": 1000
+},
+{
+"slug": "lubbock-county-tx",
+"state": "TX",
+"geoid": "48303",
+"label": "Lubbock County, Texas",
+"short": "Lubbock County",
+"units": 979
+},
+{
+"slug": "craighead-county-ar",
+"state": "AR",
+"geoid": "05031",
+"label": "Craighead County, Arkansas",
+"short": "Craighead County",
+"units": 960
+},
+{
+"slug": "guilford-county-nc",
+"state": "NC",
+"geoid": "37081",
+"label": "Guilford County, North Carolina",
+"short": "Guilford County",
+"units": 960
+},
+{
+"slug": "pinal-county-az",
+"state": "AZ",
+"geoid": "04021",
+"label": "Pinal County, Arizona",
+"short": "Pinal County",
+"units": 943
+},
+{
+"slug": "levy-county-fl",
+"state": "FL",
+"geoid": "12075",
+"label": "Levy County, Florida",
+"short": "Levy County",
+"units": 941
+},
+{
+"slug": "berks-county-pa",
+"state": "PA",
+"geoid": "42011",
+"label": "Berks County, Pennsylvania",
+"short": "Berks County",
+"units": 889
+},
+{
+"slug": "james-city-county-va",
+"state": "VA",
+"geoid": "51095",
+"label": "James City County, Virginia",
+"short": "James City County",
+"units": 874
+},
+{
+"slug": "stanislaus-county-ca",
+"state": "CA",
+"geoid": "06099",
+"label": "Stanislaus County, California",
+"short": "Stanislaus County",
+"units": 850
+},
+{
+"slug": "cochise-county-az",
+"state": "AZ",
+"geoid": "04003",
+"label": "Cochise County, Arizona",
+"short": "Cochise County",
+"units": 821
+},
+{
+"slug": "mchenry-county-il",
+"state": "IL",
+"geoid": "17111",
+"label": "McHenry County, Illinois",
+"short": "McHenry County",
+"units": 811
+},
+{
+"slug": "garland-county-ar",
+"state": "AR",
+"geoid": "05051",
+"label": "Garland County, Arkansas",
+"short": "Garland County",
+"units": 804
+},
+{
+"slug": "mohave-county-az",
+"state": "AZ",
+"geoid": "04015",
+"label": "Mohave County, Arizona",
+"short": "Mohave County",
+"units": 778
+},
+{
+"slug": "hendry-county-fl",
+"state": "FL",
+"geoid": "12051",
+"label": "Hendry County, Florida",
+"short": "Hendry County",
+"units": 762
+},
+{
+"slug": "pearl-river-county-ms",
+"state": "MS",
+"geoid": "28109",
+"label": "Pearl River County, Mississippi",
+"short": "Pearl River County",
+"units": 722
+},
+{
+"slug": "bullitt-county-ky",
+"state": "KY",
+"geoid": "21029",
+"label": "Bullitt County, Kentucky",
+"short": "Bullitt County",
+"units": 639
+},
+{
+"slug": "vanderburgh-county-in",
+"state": "IN",
+"geoid": "18163",
+"label": "Vanderburgh County, Indiana",
+"short": "Vanderburgh County",
+"units": 623
+},
+{
+"slug": "madera-county-ca",
+"state": "CA",
+"geoid": "06039",
+"label": "Madera County, California",
+"short": "Madera County",
+"units": 599
+},
+{
+"slug": "vigo-county-in",
+"state": "IN",
+"geoid": "18167",
+"label": "Vigo County, Indiana",
+"short": "Vigo County",
+"units": 597
+},
+{
+"slug": "loudoun-county-va",
+"state": "VA",
+"geoid": "51107",
+"label": "Loudoun County, Virginia",
+"short": "Loudoun County",
+"units": 593
+},
+{
+"slug": "shasta-county-ca",
+"state": "CA",
+"geoid": "06089",
+"label": "Shasta County, California",
+"short": "Shasta County",
+"units": 581
+},
+{
+"slug": "johnston-county-nc",
+"state": "NC",
+"geoid": "37101",
+"label": "Johnston County, North Carolina",
+"short": "Johnston County",
+"units": 571
+},
+{
+"slug": "dixie-county-fl",
+"state": "FL",
+"geoid": "12029",
+"label": "Dixie County, Florida",
+"short": "Dixie County",
+"units": 568
+},
+{
+"slug": "duplin-county-nc",
+"state": "NC",
+"geoid": "37061",
+"label": "Duplin County, North Carolina",
+"short": "Duplin County",
+"units": 564
+},
+{
+"slug": "niagara-county-ny",
+"state": "NY",
+"geoid": "36063",
+"label": "Niagara County, New York",
+"short": "Niagara County",
+"units": 543
+},
+{
+"slug": "kerr-county-tx",
+"state": "TX",
+"geoid": "48265",
+"label": "Kerr County, Texas",
+"short": "Kerr County",
+"units": 516
+},
+{
+"slug": "austin-county-tx",
+"state": "TX",
+"geoid": "48015",
+"label": "Austin County, Texas",
+"short": "Austin County",
+"units": 515
+},
+{
+"slug": "chelan-county-wa",
+"state": "WA",
+"geoid": "53007",
+"label": "Chelan County, Washington",
+"short": "Chelan County",
+"units": 513
+},
+{
+"slug": "bastrop-county-tx",
+"state": "TX",
+"geoid": "48021",
+"label": "Bastrop County, Texas",
+"short": "Bastrop County",
+"units": 510
+},
+{
+"slug": "bulloch-county-ga",
+"state": "GA",
+"geoid": "13031",
+"label": "Bulloch County, Georgia",
+"short": "Bulloch County",
+"units": 467
+},
+{
+"slug": "cabarrus-county-nc",
+"state": "NC",
+"geoid": "37025",
+"label": "Cabarrus County, North Carolina",
+"short": "Cabarrus County",
+"units": 467
+},
+{
+"slug": "suwannee-county-fl",
+"state": "FL",
+"geoid": "12121",
+"label": "Suwannee County, Florida",
+"short": "Suwannee County",
+"units": 465
+},
+{
+"slug": "humboldt-county-ca",
+"state": "CA",
+"geoid": "06023",
+"label": "Humboldt County, California",
+"short": "Humboldt County",
+"units": 462
+},
+{
+"slug": "davis-county-ut",
+"state": "UT",
+"geoid": "49011",
+"label": "Davis County, Utah",
+"short": "Davis County",
+"units": 352
+},
+{
+"slug": "gaston-county-nc",
+"state": "NC",
+"geoid": "37071",
+"label": "Gaston County, North Carolina",
+"short": "Gaston County",
+"units": 345
+},
+{
+"slug": "roanoke-county-va",
+"state": "VA",
+"geoid": "51161",
+"label": "Roanoke County, Virginia",
+"short": "Roanoke County",
+"units": 320
+},
+{
+"slug": "otsego-county-ny",
+"state": "NY",
+"geoid": "36077",
+"label": "Otsego County, New York",
+"short": "Otsego County",
+"units": 315
+},
+{
+"slug": "rogers-county-ok",
+"state": "OK",
+"geoid": "40131",
+"label": "Rogers County, Oklahoma",
+"short": "Rogers County",
+"units": 293
+},
+{
+"slug": "spokane-county-wa",
+"state": "WA",
+"geoid": "53063",
+"label": "Spokane County, Washington",
+"short": "Spokane County",
+"units": 274
+},
+{
+"slug": "anoka-county-mn",
+"state": "MN",
+"geoid": "27003",
+"label": "Anoka County, Minnesota",
+"short": "Anoka County",
+"units": 267
+},
+{
+"slug": "weber-county-ut",
+"state": "UT",
+"geoid": "49057",
+"label": "Weber County, Utah",
+"short": "Weber County",
+"units": 245
+},
+{
+"slug": "mesa-county-co",
+"state": "CO",
+"geoid": "08077",
+"label": "Mesa County, Colorado",
+"short": "Mesa County",
+"units": 231
+},
+{
+"slug": "lonoke-county-ar",
+"state": "AR",
+"geoid": "05085",
+"label": "Lonoke County, Arkansas",
+"short": "Lonoke County",
+"units": 222
+},
+{
+"slug": "hendricks-county-in",
+"state": "IN",
+"geoid": "18063",
+"label": "Hendricks County, Indiana",
+"short": "Hendricks County",
+"units": 166
+},
+{
+"slug": "calaveras-county-ca",
+"state": "CA",
+"geoid": "06009",
+"label": "Calaveras County, California",
+"short": "Calaveras County",
+"units": 125
+},
+{
+"slug": "tooele-county-ut",
+"state": "UT",
+"geoid": "49045",
+"label": "Tooele County, Utah",
+"short": "Tooele County",
+"units": 50
+},
+{
+"slug": "cameron-county-tx",
+"state": "TX",
+"geoid": "48061",
+"label": "Cameron County, Texas",
+"short": "Cameron County",
+"units": 19785
+},
+{
+"slug": "walton-county-fl",
+"state": "FL",
+"geoid": "12131",
+"label": "Walton County, Florida",
+"short": "Walton County",
+"units": 17425
+},
+{
+"slug": "cook-county-il",
+"state": "IL",
+"geoid": "17031",
+"label": "Cook County, Illinois",
+"short": "Cook County",
+"units": 11828
+},
+{
+"slug": "escambia-county-fl",
+"state": "FL",
+"geoid": "12033",
+"label": "Escambia County, Florida",
+"short": "Escambia County",
+"units": 17505
+},
+{
+"slug": "chatham-county-ga",
+"state": "GA",
+"geoid": "13051",
+"label": "Chatham County, Georgia",
+"short": "Chatham County",
+"units": 23782
+},
+{
+"slug": "bay-county-fl",
+"state": "FL",
+"geoid": "12005",
+"label": "Bay County, Florida",
+"short": "Bay County",
+"units": 31958
+},
+{
+"slug": "martin-county-fl",
+"state": "FL",
+"geoid": "12085",
+"label": "Martin County, Florida",
+"short": "Martin County",
+"units": 14193
+},
+{
+"slug": "seminole-county-fl",
+"state": "FL",
+"geoid": "12117",
+"label": "Seminole County, Florida",
+"short": "Seminole County",
+"units": 7412
+},
+{
+"slug": "berkeley-county-sc",
+"state": "SC",
+"geoid": "45015",
+"label": "Berkeley County, South Carolina",
+"short": "Berkeley County",
+"units": 7312
+},
+{
+"slug": "fairfield-county-ct",
+"state": "CT",
+"geoid": "09001",
+"label": "Fairfield County, Connecticut",
+"short": "Fairfield County",
+"units": 14619
+},
+{
+"slug": "dallas-county-tx",
+"state": "TX",
+"geoid": "48113",
+"label": "Dallas County, Texas",
+"short": "Dallas County",
+"units": 6882
+},
+{
+"slug": "fulton-county-ga",
+"state": "GA",
+"geoid": "13121",
+"label": "Fulton County, Georgia",
+"short": "Fulton County",
+"units": 3307
+},
+{
+"slug": "harrison-county-ms",
+"state": "MS",
+"geoid": "28047",
+"label": "Harrison County, Mississippi",
+"short": "Harrison County",
+"units": 13404
+},
+{
+"slug": "beaufort-county-sc",
+"state": "SC",
+"geoid": "45013",
+"label": "Beaufort County, South Carolina",
+"short": "Beaufort County",
+"units": 46831
+},
+{
+"slug": "richland-county-sc",
+"state": "SC",
+"geoid": "45079",
+"label": "Richland County, South Carolina",
+"short": "Richland County",
+"units": 2182
+},
+{
+"slug": "dekalb-county-ga",
+"state": "GA",
+"geoid": "13089",
+"label": "DeKalb County, Georgia",
+"short": "DeKalb County",
+"units": 3037
+},
+{
+"slug": "santa-cruz-county-ca",
+"state": "CA",
+"geoid": "06087",
+"label": "Santa Cruz County, California",
+"short": "Santa Cruz County",
+"units": 3283
+},
+{
+"slug": "monroe-county-fl",
+"state": "FL",
+"geoid": "12087",
+"label": "Monroe County, Florida",
+"short": "Monroe County",
+"units": 31747
+},
+{
+"slug": "hancock-county-ms",
+"state": "MS",
+"geoid": "28045",
+"label": "Hancock County, Mississippi",
+"short": "Hancock County",
+"units": 7462
+},
+{
+"slug": "lewis-county-wa",
+"state": "WA",
+"geoid": "53041",
+"label": "Lewis County, Washington",
+"short": "Lewis County",
+"units": 1250
+},
+{
+"slug": "hardin-county-tx",
+"state": "TX",
+"geoid": "48199",
+"label": "Hardin County, Texas",
+"short": "Hardin County",
+"units": 2745
+},
+{
+"slug": "orange-county-fl",
+"state": "FL",
+"geoid": "12095",
+"label": "Orange County, Florida",
+"short": "Orange County",
+"units": 17219
+},
+{
+"slug": "sumter-county-fl",
+"state": "FL",
+"geoid": "12119",
+"label": "Sumter County, Florida",
+"short": "Sumter County",
+"units": 3064
+},
+{
+"slug": "howard-county-md",
+"state": "MD",
+"geoid": "24027",
+"label": "Howard County, Maryland",
+"short": "Howard County",
+"units": 1009
+},
+{
+"slug": "stark-county-oh",
+"state": "OH",
+"geoid": "39151",
+"label": "Stark County, Ohio",
+"short": "Stark County",
+"units": 431
+},
+{
+"slug": "taylor-county-tx",
+"state": "TX",
+"geoid": "48441",
+"label": "Taylor County, Texas",
+"short": "Taylor County",
+"units": 2176
+},
+{
+"slug": "clay-county-fl",
+"state": "FL",
+"geoid": "12019",
+"label": "Clay County, Florida",
+"short": "Clay County",
+"units": 4275
+},
+{
+"slug": "mason-county-wa",
+"state": "WA",
+"geoid": "53045",
+"label": "Mason County, Washington",
+"short": "Mason County",
+"units": 451
+},
+{
+"slug": "union-county-nj",
+"state": "NJ",
+"geoid": "34039",
+"label": "Union County, New Jersey",
+"short": "Union County",
+"units": 4462
+},
+{
+"slug": "jackson-county-ms",
+"state": "MS",
+"geoid": "28059",
+"label": "Jackson County, Mississippi",
+"short": "Jackson County",
+"units": 11932
+},
+{
+"slug": "forsyth-county-nc",
+"state": "NC",
+"geoid": "37067",
+"label": "Forsyth County, North Carolina",
+"short": "Forsyth County",
+"units": 611
+},
+{
+"slug": "montgomery-county-md",
+"state": "MD",
+"geoid": "24031",
+"label": "Montgomery County, Maryland",
+"short": "Montgomery County",
+"units": 2156
+},
+{
+"slug": "shelby-county-tn",
+"state": "TN",
+"geoid": "47157",
+"label": "Shelby County, Tennessee",
+"short": "Shelby County",
+"units": 2277
+},
+{
+"slug": "jefferson-county-tx",
+"state": "TX",
+"geoid": "48245",
+"label": "Jefferson County, Texas",
+"short": "Jefferson County",
+"units": 20824
+},
+{
+"slug": "essex-county-ma",
+"state": "MA",
+"geoid": "25009",
+"label": "Essex County, Massachusetts",
+"short": "Essex County",
+"units": 9089
+},
+{
+"slug": "dorchester-county-sc",
+"state": "SC",
+"geoid": "45035",
+"label": "Dorchester County, South Carolina",
+"short": "Dorchester County",
+"units": 3093
+},
+{
+"slug": "erie-county-ny",
+"state": "NY",
+"geoid": "36029",
+"label": "Erie County, New York",
+"short": "Erie County",
+"units": 1531
+},
+{
+"slug": "summit-county-oh",
+"state": "OH",
+"geoid": "39153",
+"label": "Summit County, Ohio",
+"short": "Summit County",
+"units": 1004
+},
+{
+"slug": "baker-county-fl",
+"state": "FL",
+"geoid": "12003",
+"label": "Baker County, Florida",
+"short": "Baker County",
+"units": 162
+},
+{
+"slug": "gloucester-county-va",
+"state": "VA",
+"geoid": "51073",
+"label": "Gloucester County, Virginia",
+"short": "Gloucester County",
+"units": 1396
+},
+{
+"slug": "putnam-county-fl",
+"state": "FL",
+"geoid": "12107",
+"label": "Putnam County, Florida",
+"short": "Putnam County",
+"units": 1201
+},
+{
+"slug": "knox-county-tn",
+"state": "TN",
+"geoid": "47093",
+"label": "Knox County, Tennessee",
+"short": "Knox County",
+"units": 1020
+},
+{
+"slug": "orange-county-tx",
+"state": "TX",
+"geoid": "48361",
+"label": "Orange County, Texas",
+"short": "Orange County",
+"units": 12097
+},
+{
+"slug": "williamson-county-tx",
+"state": "TX",
+"geoid": "48491",
+"label": "Williamson County, Texas",
+"short": "Williamson County",
+"units": 2084
+},
+{
+"slug": "liberty-county-tx",
+"state": "TX",
+"geoid": "48291",
+"label": "Liberty County, Texas",
+"short": "Liberty County",
+"units": 1966
+},
+{
+"slug": "polk-county-tx",
+"state": "TX",
+"geoid": "48373",
+"label": "Polk County, Texas",
+"short": "Polk County",
+"units": 572
+},
+{
+"slug": "bradford-county-pa",
+"state": "PA",
+"geoid": "42015",
+"label": "Bradford County, Pennsylvania",
+"short": "Bradford County",
+"units": 569
+},
+{
+"slug": "middlesex-county-ma",
+"state": "MA",
+"geoid": "25017",
+"label": "Middlesex County, Massachusetts",
+"short": "Middlesex County",
+"units": 7286
+},
+{
+"slug": "pottawatomie-county-ok",
+"state": "OK",
+"geoid": "40125",
+"label": "Pottawatomie County, Oklahoma",
+"short": "Pottawatomie County",
+"units": 132
+},
+{
+"slug": "desoto-county-ms",
+"state": "MS",
+"geoid": "28033",
+"label": "DeSoto County, Mississippi",
+"short": "DeSoto County",
+"units": 559
+},
+{
+"slug": "camden-county-ga",
+"state": "GA",
+"geoid": "13039",
+"label": "Camden County, Georgia",
+"short": "Camden County",
+"units": 3055
+},
+{
+"slug": "hamilton-county-tn",
+"state": "TN",
+"geoid": "47065",
+"label": "Hamilton County, Tennessee",
+"short": "Hamilton County",
+"units": 2003
+},
+{
+"slug": "madison-county-al",
+"state": "AL",
+"geoid": "01089",
+"label": "Madison County, Alabama",
+"short": "Madison County",
+"units": 3450
+},
+{
+"slug": "henderson-county-nc",
+"state": "NC",
+"geoid": "37089",
+"label": "Henderson County, North Carolina",
+"short": "Henderson County",
+"units": 629
+},
+{
+"slug": "suffolk-county-ma",
+"state": "MA",
+"geoid": "25025",
+"label": "Suffolk County, Massachusetts",
+"short": "Suffolk County",
+"units": 9676
+},
+{
+"slug": "york-county-me",
+"state": "ME",
+"geoid": "23031",
+"label": "York County, Maine",
+"short": "York County",
+"units": 3863
+},
+{
+"slug": "somerset-county-md",
+"state": "MD",
+"geoid": "24039",
+"label": "Somerset County, Maryland",
+"short": "Somerset County",
+"units": 1955
+},
+{
+"slug": "desoto-county-fl",
+"state": "FL",
+"geoid": "12027",
+"label": "DeSoto County, Florida",
+"short": "DeSoto County",
+"units": 484
+},
+{
+"slug": "pottawatomie-county-ks",
+"state": "KS",
+"geoid": "20149",
+"label": "Pottawatomie County, Kansas",
+"short": "Pottawatomie County",
+"units": 114
+},
+{
+"slug": "orange-county-ca",
+"state": "CA",
+"geoid": "06059",
+"label": "Orange County, California",
+"short": "Orange County",
+"units": 9496
+},
+{
+"slug": "bradford-county-fl",
+"state": "FL",
+"geoid": "12007",
+"label": "Bradford County, Florida",
+"short": "Bradford County",
+"units": 469
+},
+{
+"slug": "lake-county-fl",
+"state": "FL",
+"geoid": "12069",
+"label": "Lake County, Florida",
+"short": "Lake County",
+"units": 4039
+},
+{
+"slug": "liberty-county-ga",
+"state": "GA",
+"geoid": "13179",
+"label": "Liberty County, Georgia",
+"short": "Liberty County",
+"units": 1574
+},
+{
+"slug": "marion-county-fl",
+"state": "FL",
+"geoid": "12083",
+"label": "Marion County, Florida",
+"short": "Marion County",
+"units": 3797
+},
+{
+"slug": "franklin-county-fl",
+"state": "FL",
+"geoid": "12037",
+"label": "Franklin County, Florida",
+"short": "Franklin County",
+"units": 2317
+},
+{
+"slug": "somerset-county-nj",
+"state": "NJ",
+"geoid": "34035",
+"label": "Somerset County, New Jersey",
+"short": "Somerset County",
+"units": 1783
+},
+{
+"slug": "morgan-county-al",
+"state": "AL",
+"geoid": "01103",
+"label": "Morgan County, Alabama",
+"short": "Morgan County",
+"units": 539
+},
+{
+"slug": "polk-county-or",
+"state": "OR",
+"geoid": "41053",
+"label": "Polk County, Oregon",
+"short": "Polk County",
+"units": 430
+},
+{
+"slug": "gloucester-county-nj",
+"state": "NJ",
+"geoid": "34015",
+"label": "Gloucester County, New Jersey",
+"short": "Gloucester County",
+"units": 926
+},
+{
+"slug": "clark-county-nv",
+"state": "NV",
+"geoid": "32003",
+"label": "Clark County, Nevada",
+"short": "Clark County",
+"units": 1388
+},
+{
+"slug": "baker-county-or",
+"state": "OR",
+"geoid": "41001",
+"label": "Baker County, Oregon",
+"short": "Baker County",
+"units": 103
+},
+{
+"slug": "williamson-county-tn",
+"state": "TN",
+"geoid": "47187",
+"label": "Williamson County, Tennessee",
+"short": "Williamson County",
+"units": 1425
+},
+{
+"slug": "cumberland-county-me",
+"state": "ME",
+"geoid": "23005",
+"label": "Cumberland County, Maine",
+"short": "Cumberland County",
+"units": 1622
+},
+{
+"slug": "cumberland-county-nc",
+"state": "NC",
+"geoid": "37051",
+"label": "Cumberland County, North Carolina",
+"short": "Cumberland County",
+"units": 1610
+},
+{
+"slug": "nassau-county-fl",
+"state": "FL",
+"geoid": "12089",
+"label": "Nassau County, Florida",
+"short": "Nassau County",
+"units": 9020
+},
+{
+"slug": "logan-county-wv",
+"state": "WV",
+"geoid": "54045",
+"label": "Logan County, West Virginia",
+"short": "Logan County",
+"units": 322
+},
+{
+"slug": "montgomery-county-oh",
+"state": "OH",
+"geoid": "39113",
+"label": "Montgomery County, Ohio",
+"short": "Montgomery County",
+"units": 1061
+},
+{
+"slug": "perry-county-pa",
+"state": "PA",
+"geoid": "42099",
+"label": "Perry County, Pennsylvania",
+"short": "Perry County",
+"units": 211
+},
+{
+"slug": "dorchester-county-md",
+"state": "MD",
+"geoid": "24019",
+"label": "Dorchester County, Maryland",
+"short": "Dorchester County",
+"units": 1588
+},
+{
+"slug": "york-county-va",
+"state": "VA",
+"geoid": "51199",
+"label": "York County, Virginia",
+"short": "York County",
+"units": 2626
+},
+{
+"slug": "hamilton-county-oh",
+"state": "OH",
+"geoid": "39061",
+"label": "Hamilton County, Ohio",
+"short": "Hamilton County",
+"units": 1255
+},
+{
+"slug": "washington-county-ri",
+"state": "RI",
+"geoid": "44009",
+"label": "Washington County, Rhode Island",
+"short": "Washington County",
+"units": 4049
+},
+{
+"slug": "douglas-county-ne",
+"state": "NE",
+"geoid": "31055",
+"label": "Douglas County, Nebraska",
+"short": "Douglas County",
+"units": 1330
+},
+{
+"slug": "essex-county-nj",
+"state": "NJ",
+"geoid": "34013",
+"label": "Essex County, New Jersey",
+"short": "Essex County",
+"units": 4224
+},
+{
+"slug": "franklin-county-oh",
+"state": "OH",
+"geoid": "39049",
+"label": "Franklin County, Ohio",
+"short": "Franklin County",
+"units": 1570
+},
+{
+"slug": "forsyth-county-ga",
+"state": "GA",
+"geoid": "13117",
+"label": "Forsyth County, Georgia",
+"short": "Forsyth County",
+"units": 246
+},
+{
+"slug": "logan-county-oh",
+"state": "OH",
+"geoid": "39091",
+"label": "Logan County, Ohio",
+"short": "Logan County",
+"units": 263
+},
+{
+"slug": "marion-county-in",
+"state": "IN",
+"geoid": "18097",
+"label": "Marion County, Indiana",
+"short": "Marion County",
+"units": 2454
+},
+{
+"slug": "camden-county-nj",
+"state": "NJ",
+"geoid": "34007",
+"label": "Camden County, New Jersey",
+"short": "Camden County",
+"units": 1605
+},
+{
+"slug": "montgomery-county-al",
+"state": "AL",
+"geoid": "01101",
+"label": "Montgomery County, Alabama",
+"short": "Montgomery County",
+"units": 861
+},
+{
+"slug": "johnson-county-ks",
+"state": "KS",
+"geoid": "20091",
+"label": "Johnson County, Kansas",
+"short": "Johnson County",
+"units": 773
+},
+{
+"slug": "perry-county-ky",
+"state": "KY",
+"geoid": "21193",
+"label": "Perry County, Kentucky",
+"short": "Perry County",
+"units": 170
+},
+{
+"slug": "pierce-county-wi",
+"state": "WI",
+"geoid": "55093",
+"label": "Pierce County, Wisconsin",
+"short": "Pierce County",
+"units": 68
+},
+{
+"slug": "clark-county-wa",
+"state": "WA",
+"geoid": "53011",
+"label": "Clark County, Washington",
+"short": "Clark County",
+"units": 908
+},
+{
+"slug": "columbia-county-fl",
+"state": "FL",
+"geoid": "12023",
+"label": "Columbia County, Florida",
+"short": "Columbia County",
+"units": 695
+},
+{
+"slug": "lake-county-il",
+"state": "IL",
+"geoid": "17097",
+"label": "Lake County, Illinois",
+"short": "Lake County",
+"units": 2268
+},
+{
+"slug": "douglas-county-or",
+"state": "OR",
+"geoid": "41019",
+"label": "Douglas County, Oregon",
+"short": "Douglas County",
+"units": 1018
+},
+{
+"slug": "logan-county-co",
+"state": "CO",
+"geoid": "08075",
+"label": "Logan County, Colorado",
+"short": "Logan County",
+"units": 221
+},
+{
+"slug": "johnson-county-ia",
+"state": "IA",
+"geoid": "19103",
+"label": "Johnson County, Iowa",
+"short": "Johnson County",
+"units": 655
+},
+{
+"slug": "middlesex-county-nj",
+"state": "NJ",
+"geoid": "34023",
+"label": "Middlesex County, New Jersey",
+"short": "Middlesex County",
+"units": 3126
+},
+{
+"slug": "knox-county-me",
+"state": "ME",
+"geoid": "23013",
+"label": "Knox County, Maine",
+"short": "Knox County",
+"units": 404
+},
+{
+"slug": "morgan-county-in",
+"state": "IN",
+"geoid": "18109",
+"label": "Morgan County, Indiana",
+"short": "Morgan County",
+"units": 275
+},
+{
+"slug": "johnson-county-tx",
+"state": "TX",
+"geoid": "48251",
+"label": "Johnson County, Texas",
+"short": "Johnson County",
+"units": 585
+},
+{
+"slug": "henderson-county-ky",
+"state": "KY",
+"geoid": "21101",
+"label": "Henderson County, Kentucky",
+"short": "Henderson County",
+"units": 256
+},
+{
+"slug": "taylor-county-fl",
+"state": "FL",
+"geoid": "12123",
+"label": "Taylor County, Florida",
+"short": "Taylor County",
+"units": 571
+},
+{
+"slug": "clark-county-in",
+"state": "IN",
+"geoid": "18019",
+"label": "Clark County, Indiana",
+"short": "Clark County",
+"units": 737
+},
+{
+"slug": "columbia-county-pa",
+"state": "PA",
+"geoid": "42037",
+"label": "Columbia County, Pennsylvania",
+"short": "Columbia County",
+"units": 563
+},
+{
+"slug": "erie-county-oh",
+"state": "OH",
+"geoid": "39043",
+"label": "Erie County, Ohio",
+"short": "Erie County",
+"units": 490
+},
+{
+"slug": "henderson-county-tx",
+"state": "TX",
+"geoid": "48213",
+"label": "Henderson County, Texas",
+"short": "Henderson County",
+"units": 248
+},
+{
+"slug": "summit-county-co",
+"state": "CO",
+"geoid": "08117",
+"label": "Summit County, Colorado",
+"short": "Summit County",
+"units": 325
+},
+{
+"slug": "columbia-county-or",
+"state": "OR",
+"geoid": "41009",
+"label": "Columbia County, Oregon",
+"short": "Columbia County",
+"units": 537
+},
+{
+"slug": "columbia-county-ga",
+"state": "GA",
+"geoid": "13073",
+"label": "Columbia County, Georgia",
+"short": "Columbia County",
+"units": 534
+},
+{
+"slug": "middlesex-county-ct",
+"state": "CT",
+"geoid": "09007",
+"label": "Middlesex County, Connecticut",
+"short": "Middlesex County",
+"units": 2574
+},
+{
+"slug": "stark-county-nd",
+"state": "ND",
+"geoid": "38089",
+"label": "Stark County, North Dakota",
+"short": "Stark County",
+"units": 100
+},
+{
+"slug": "douglas-county-nv",
+"state": "NV",
+"geoid": "32005",
+"label": "Douglas County, Nevada",
+"short": "Douglas County",
+"units": 773
+},
+{
+"slug": "shelby-county-al",
+"state": "AL",
+"geoid": "01117",
+"label": "Shelby County, Alabama",
+"short": "Shelby County",
+"units": 605
+},
+{
+"slug": "perry-county-oh",
+"state": "OH",
+"geoid": "39127",
+"label": "Perry County, Ohio",
+"short": "Perry County",
+"units": 111
+},
+{
+"slug": "summit-county-ut",
+"state": "UT",
+"geoid": "49043",
+"label": "Summit County, Utah",
+"short": "Summit County",
+"units": 284
+},
+{
+"slug": "marion-county-or",
+"state": "OR",
+"geoid": "41047",
+"label": "Marion County, Oregon",
+"short": "Marion County",
+"units": 1467
+},
+{
+"slug": "erie-county-pa",
+"state": "PA",
+"geoid": "42049",
+"label": "Erie County, Pennsylvania",
+"short": "Erie County",
+"units": 375
+},
+{
+"slug": "hamilton-county-in",
+"state": "IN",
+"geoid": "18057",
+"label": "Hamilton County, Indiana",
+"short": "Hamilton County",
+"units": 589
+},
+{
+"slug": "sumter-county-sc",
+"state": "SC",
+"geoid": "45085",
+"label": "Sumter County, South Carolina",
+"short": "Sumter County",
+"units": 567
+},
+{
+"slug": "hillsborough-county-nh",
+"state": "NH",
+"geoid": "33011",
+"label": "Hillsborough County, New Hampshire",
+"short": "Hillsborough County",
+"units": 909
+},
+{
+"slug": "cumberland-county-pa",
+"state": "PA",
+"geoid": "42041",
+"label": "Cumberland County, Pennsylvania",
+"short": "Cumberland County",
+"units": 645
+},
+{
+"slug": "putnam-county-ny",
+"state": "NY",
+"geoid": "36079",
+"label": "Putnam County, New York",
+"short": "Putnam County",
+"units": 300
+},
+{
+"slug": "madison-county-il",
+"state": "IL",
+"geoid": "17119",
+"label": "Madison County, Illinois",
+"short": "Madison County",
+"units": 973
+},
+{
+"slug": "johnson-county-in",
+"state": "IN",
+"geoid": "18081",
+"label": "Johnson County, Indiana",
+"short": "Johnson County",
+"units": 406
+},
+{
+"slug": "mason-county-wv",
+"state": "WV",
+"geoid": "54053",
+"label": "Mason County, West Virginia",
+"short": "Mason County",
+"units": 85
+},
+{
+"slug": "howard-county-in",
+"state": "IN",
+"geoid": "18067",
+"label": "Howard County, Indiana",
+"short": "Howard County",
+"units": 172
+},
+{
+"slug": "putnam-county-wv",
+"state": "WV",
+"geoid": "54079",
+"label": "Putnam County, West Virginia",
+"short": "Putnam County",
+"units": 274
+},
+{
+"slug": "jefferson-county-ky",
+"state": "KY",
+"geoid": "21111",
+"label": "Jefferson County, Kentucky",
+"short": "Jefferson County",
+"units": 4013
+},
+{
+"slug": "madison-county-ms",
+"state": "MS",
+"geoid": "28089",
+"label": "Madison County, Mississippi",
+"short": "Madison County",
+"units": 824
+},
+{
+"slug": "washington-county-or",
+"state": "OR",
+"geoid": "41067",
+"label": "Washington County, Oregon",
+"short": "Washington County",
+"units": 1498
+},
+{
+"slug": "camden-county-nc",
+"state": "NC",
+"geoid": "37029",
+"label": "Camden County, North Carolina",
+"short": "Camden County",
+"units": 670
+},
+{
+"slug": "lake-county-in",
+"state": "IN",
+"geoid": "18089",
+"label": "Lake County, Indiana",
+"short": "Lake County",
+"units": 1035
+},
+{
+"slug": "perry-county-tn",
+"state": "TN",
+"geoid": "47135",
+"label": "Perry County, Tennessee",
+"short": "Perry County",
+"units": 71
+},
+{
+"slug": "polk-county-ga",
+"state": "GA",
+"geoid": "13233",
+"label": "Polk County, Georgia",
+"short": "Polk County",
+"units": 119
+},
+{
+"slug": "lake-county-ca",
+"state": "CA",
+"geoid": "06033",
+"label": "Lake County, California",
+"short": "Lake County",
+"units": 1023
+},
+{
+"slug": "washington-county-ms",
+"state": "MS",
+"geoid": "28151",
+"label": "Washington County, Mississippi",
+"short": "Washington County",
+"units": 1395
+},
+{
+"slug": "polk-county-mn",
+"state": "MN",
+"geoid": "27119",
+"label": "Polk County, Minnesota",
+"short": "Polk County",
+"units": 116
+},
+{
+"slug": "york-county-pa",
+"state": "PA",
+"geoid": "42133",
+"label": "York County, Pennsylvania",
+"short": "York County",
+"units": 826
+},
+{
+"slug": "cumberland-county-nj",
+"state": "NJ",
+"geoid": "34011",
+"label": "Cumberland County, New Jersey",
+"short": "Cumberland County",
+"units": 442
+},
+{
+"slug": "montgomery-county-tn",
+"state": "TN",
+"geoid": "47125",
+"label": "Montgomery County, Tennessee",
+"short": "Montgomery County",
+"units": 307
+},
+{
+"slug": "santa-cruz-county-az",
+"state": "AZ",
+"geoid": "04023",
+"label": "Santa Cruz County, Arizona",
+"short": "Santa Cruz County",
+"units": 361
+},
+{
+"slug": "morgan-county-wv",
+"state": "WV",
+"geoid": "54065",
+"label": "Morgan County, West Virginia",
+"short": "Morgan County",
+"units": 126
+},
+{
+"slug": "clark-county-oh",
+"state": "OH",
+"geoid": "39023",
+"label": "Clark County, Ohio",
+"short": "Clark County",
+"units": 337
+},
+{
+"slug": "hardin-county-ky",
+"state": "KY",
+"geoid": "21093",
+"label": "Hardin County, Kentucky",
+"short": "Hardin County",
+"units": 297
+},
+{
+"slug": "polk-county-nc",
+"state": "NC",
+"geoid": "37149",
+"label": "Polk County, North Carolina",
+"short": "Polk County",
+"units": 93
+},
+{
+"slug": "perry-county-in",
+"state": "IN",
+"geoid": "18123",
+"label": "Perry County, Indiana",
+"short": "Perry County",
+"units": 54
+},
+{
+"slug": "orange-county-ny",
+"state": "NY",
+"geoid": "36071",
+"label": "Orange County, New York",
+"short": "Orange County",
+"units": 1759
+},
+{
+"slug": "douglas-county-co",
+"state": "CO",
+"geoid": "08035",
+"label": "Douglas County, Colorado",
+"short": "Douglas County",
+"units": 349
+},
+{
+"slug": "knox-county-oh",
+"state": "OH",
+"geoid": "39083",
+"label": "Knox County, Ohio",
+"short": "Knox County",
+"units": 145
+},
+{
+"slug": "mason-county-il",
+"state": "IL",
+"geoid": "17125",
+"label": "Mason County, Illinois",
+"short": "Mason County",
+"units": 48
+},
+{
+"slug": "morgan-county-co",
+"state": "CO",
+"geoid": "08087",
+"label": "Morgan County, Colorado",
+"short": "Morgan County",
+"units": 103
+},
+{
+"slug": "columbia-county-ny",
+"state": "NY",
+"geoid": "36021",
+"label": "Columbia County, New York",
+"short": "Columbia County",
+"units": 206
+},
+{
+"slug": "douglas-county-ks",
+"state": "KS",
+"geoid": "20045",
+"label": "Douglas County, Kansas",
+"short": "Douglas County",
+"units": 308
+},
+{
+"slug": "johnson-county-ky",
+"state": "KY",
+"geoid": "21115",
+"label": "Johnson County, Kentucky",
+"short": "Johnson County",
+"units": 205
+},
+{
+"slug": "putnam-county-oh",
+"state": "OH",
+"geoid": "39137",
+"label": "Putnam County, Ohio",
+"short": "Putnam County",
+"units": 148
+},
+{
+"slug": "jackson-county-or",
+"state": "OR",
+"geoid": "41029",
+"label": "Jackson County, Oregon",
+"short": "Jackson County",
+"units": 1141
+},
+{
+"slug": "somerset-county-pa",
+"state": "PA",
+"geoid": "42111",
+"label": "Somerset County, Pennsylvania",
+"short": "Somerset County",
+"units": 298
+},
+{
+"slug": "morgan-county-il",
+"state": "IL",
+"geoid": "17137",
+"label": "Morgan County, Illinois",
+"short": "Morgan County",
+"units": 90
+},
+{
+"slug": "henderson-county-il",
+"state": "IL",
+"geoid": "17071",
+"label": "Henderson County, Illinois",
+"short": "Henderson County",
+"units": 86
+},
+{
+"slug": "morgan-county-mo",
+"state": "MO",
+"geoid": "29141",
+"label": "Morgan County, Missouri",
+"short": "Morgan County",
+"units": 88
+},
+{
+"slug": "logan-county-ok",
+"state": "OK",
+"geoid": "40083",
+"label": "Logan County, Oklahoma",
+"short": "Logan County",
+"units": 64
+},
+{
+"slug": "washington-county-vt",
+"state": "VT",
+"geoid": "50023",
+"label": "Washington County, Vermont",
+"short": "Washington County",
+"units": 857
+},
+{
+"slug": "union-county-nc",
+"state": "NC",
+"geoid": "37179",
+"label": "Union County, North Carolina",
+"short": "Union County",
+"units": 392
+},
+{
+"slug": "camden-county-mo",
+"state": "MO",
+"geoid": "29029",
+"label": "Camden County, Missouri",
+"short": "Camden County",
+"units": 377
+},
+{
+"slug": "beaufort-county-nc",
+"state": "NC",
+"geoid": "37013",
+"label": "Beaufort County, North Carolina",
+"short": "Beaufort County",
+"units": 3294
+},
+{
+"slug": "shelby-county-in",
+"state": "IN",
+"geoid": "18145",
+"label": "Shelby County, Indiana",
+"short": "Shelby County",
+"units": 214
+},
+{
+"slug": "montgomery-county-ny",
+"state": "NY",
+"geoid": "36057",
+"label": "Montgomery County, New York",
+"short": "Montgomery County",
+"units": 193
+},
+{
+"slug": "clay-county-mo",
+"state": "MO",
+"geoid": "29047",
+"label": "Clay County, Missouri",
+"short": "Clay County",
+"units": 343
+},
+{
+"slug": "columbia-county-wi",
+"state": "WI",
+"geoid": "55021",
+"label": "Columbia County, Wisconsin",
+"short": "Columbia County",
+"units": 166
+},
+{
+"slug": "logan-county-il",
+"state": "IL",
+"geoid": "17107",
+"label": "Logan County, Illinois",
+"short": "Logan County",
+"units": 56
+},
+{
+"slug": "polk-county-tn",
+"state": "TN",
+"geoid": "47139",
+"label": "Polk County, Tennessee",
+"short": "Polk County",
+"units": 62
+},
+{
+"slug": "lewis-county-wv",
+"state": "WV",
+"geoid": "54041",
+"label": "Lewis County, West Virginia",
+"short": "Lewis County",
+"units": 88
+},
+{
+"slug": "jackson-county-mo",
+"state": "MO",
+"geoid": "29095",
+"label": "Jackson County, Missouri",
+"short": "Jackson County",
+"units": 917
+},
+{
+"slug": "york-county-sc",
+"state": "SC",
+"geoid": "45091",
+"label": "York County, South Carolina",
+"short": "York County",
+"units": 446
+},
+{
+"slug": "montgomery-county-va",
+"state": "VA",
+"geoid": "51121",
+"label": "Montgomery County, Virginia",
+"short": "Montgomery County",
+"units": 172
+},
+{
+"slug": "richland-county-oh",
+"state": "OH",
+"geoid": "39139",
+"label": "Richland County, Ohio",
+"short": "Richland County",
+"units": 131
+},
+{
+"slug": "washington-county-ar",
+"state": "AR",
+"geoid": "05143",
+"label": "Washington County, Arkansas",
+"short": "Washington County",
+"units": 690
+},
+{
+"slug": "jefferson-county-co",
+"state": "CO",
+"geoid": "08059",
+"label": "Jefferson County, Colorado",
+"short": "Jefferson County",
+"units": 1661
+},
+{
+"slug": "knox-county-ky",
+"state": "KY",
+"geoid": "21121",
+"label": "Knox County, Kentucky",
+"short": "Knox County",
+"units": 94
+},
+{
+"slug": "hancock-county-oh",
+"state": "OH",
+"geoid": "39063",
+"label": "Hancock County, Ohio",
+"short": "Hancock County",
+"units": 463
+},
+{
+"slug": "lake-county-oh",
+"state": "OH",
+"geoid": "39085",
+"label": "Lake County, Ohio",
+"short": "Lake County",
+"units": 477
+},
+{
+"slug": "douglas-county-ga",
+"state": "GA",
+"geoid": "13097",
+"label": "Douglas County, Georgia",
+"short": "Douglas County",
+"units": 213
+},
+{
+"slug": "washington-county-pa",
+"state": "PA",
+"geoid": "42125",
+"label": "Washington County, Pennsylvania",
+"short": "Washington County",
+"units": 639
+},
+{
+"slug": "madison-county-ny",
+"state": "NY",
+"geoid": "36053",
+"label": "Madison County, New York",
+"short": "Madison County",
+"units": 337
+},
+{
+"slug": "hardin-county-tn",
+"state": "TN",
+"geoid": "47071",
+"label": "Hardin County, Tennessee",
+"short": "Hardin County",
+"units": 166
+},
+{
+"slug": "lewis-county-ky",
+"state": "KY",
+"geoid": "21135",
+"label": "Lewis County, Kentucky",
+"short": "Lewis County",
+"units": 74
+},
+{
+"slug": "franklin-county-pa",
+"state": "PA",
+"geoid": "42055",
+"label": "Franklin County, Pennsylvania",
+"short": "Franklin County",
+"units": 269
+},
+{
+"slug": "dekalb-county-il",
+"state": "IL",
+"geoid": "17037",
+"label": "DeKalb County, Illinois",
+"short": "DeKalb County",
+"units": 166
+},
+{
+"slug": "jefferson-county-al",
+"state": "AL",
+"geoid": "01073",
+"label": "Jefferson County, Alabama",
+"short": "Jefferson County",
+"units": 1519
+},
+{
+"slug": "franklin-county-ky",
+"state": "KY",
+"geoid": "21073",
+"label": "Franklin County, Kentucky",
+"short": "Franklin County",
+"units": 265
+},
+{
+"slug": "orange-county-nc",
+"state": "NC",
+"geoid": "37135",
+"label": "Orange County, North Carolina",
+"short": "Orange County",
+"units": 992
+},
+{
+"slug": "knox-county-in",
+"state": "IN",
+"geoid": "18083",
+"label": "Knox County, Indiana",
+"short": "Knox County",
+"units": 82
+},
+{
+"slug": "union-county-pa",
+"state": "PA",
+"geoid": "42119",
+"label": "Union County, Pennsylvania",
+"short": "Union County",
+"units": 275
+},
+{
+"slug": "lewis-county-ny",
+"state": "NY",
+"geoid": "36049",
+"label": "Lewis County, New York",
+"short": "Lewis County",
+"units": 68
+},
+{
+"slug": "williamson-county-il",
+"state": "IL",
+"geoid": "17199",
+"label": "Williamson County, Illinois",
+"short": "Williamson County",
+"units": 163
+},
+{
+"slug": "franklin-county-mo",
+"state": "MO",
+"geoid": "29071",
+"label": "Franklin County, Missouri",
+"short": "Franklin County",
+"units": 225
+},
+{
+"slug": "morgan-county-oh",
+"state": "OH",
+"geoid": "39115",
+"label": "Morgan County, Ohio",
+"short": "Morgan County",
+"units": 52
+},
+{
+"slug": "madison-county-ky",
+"state": "KY",
+"geoid": "21151",
+"label": "Madison County, Kentucky",
+"short": "Madison County",
+"units": 260
+},
+{
+"slug": "hancock-county-me",
+"state": "ME",
+"geoid": "23009",
+"label": "Hancock County, Maine",
+"short": "Hancock County",
+"units": 340
+},
+{
+"slug": "howard-county-ne",
+"state": "NE",
+"geoid": "31093",
+"label": "Howard County, Nebraska",
+"short": "Howard County",
+"units": 47
+},
+{
+"slug": "washington-county-oh",
+"state": "OH",
+"geoid": "39167",
+"label": "Washington County, Ohio",
+"short": "Washington County",
+"units": 476
+},
+{
+"slug": "monroe-county-ny",
+"state": "NY",
+"geoid": "36055",
+"label": "Monroe County, New York",
+"short": "Monroe County",
+"units": 1345
+},
+{
+"slug": "shelby-county-oh",
+"state": "OH",
+"geoid": "39149",
+"label": "Shelby County, Ohio",
+"short": "Shelby County",
+"units": 123
+},
+{
+"slug": "montgomery-county-ks",
+"state": "KS",
+"geoid": "20125",
+"label": "Montgomery County, Kansas",
+"short": "Montgomery County",
+"units": 115
+},
+{
+"slug": "clay-county-mn",
+"state": "MN",
+"geoid": "27027",
+"label": "Clay County, Minnesota",
+"short": "Clay County",
+"units": 202
+},
+{
+"slug": "clark-county-ky",
+"state": "KY",
+"geoid": "21049",
+"label": "Clark County, Kentucky",
+"short": "Clark County",
+"units": 127
+},
+{
+"slug": "union-county-sd",
+"state": "SD",
+"geoid": "46127",
+"label": "Union County, South Dakota",
+"short": "Union County",
+"units": 207
+},
+{
+"slug": "somerset-county-me",
+"state": "ME",
+"geoid": "23025",
+"label": "Somerset County, Maine",
+"short": "Somerset County",
+"units": 145
+},
+{
+"slug": "harris-county-ga",
+"state": "GA",
+"geoid": "13145",
+"label": "Harris County, Georgia",
+"short": "Harris County",
+"units": 79
+},
+{
+"slug": "putnam-county-tn",
+"state": "TN",
+"geoid": "47141",
+"label": "Putnam County, Tennessee",
+"short": "Putnam County",
+"units": 70
+},
+{
+"slug": "marion-county-sc",
+"state": "SC",
+"geoid": "45067",
+"label": "Marion County, South Carolina",
+"short": "Marion County",
+"units": 298
+},
+{
+"slug": "madison-county-in",
+"state": "IN",
+"geoid": "18095",
+"label": "Madison County, Indiana",
+"short": "Madison County",
+"units": 226
+},
+{
+"slug": "madison-county-tn",
+"state": "TN",
+"geoid": "47113",
+"label": "Madison County, Tennessee",
+"short": "Madison County",
+"units": 221
+},
+{
+"slug": "jackson-county-tx",
+"state": "TX",
+"geoid": "48239",
+"label": "Jackson County, Texas",
+"short": "Jackson County",
+"units": 523
+},
+{
+"slug": "montgomery-county-ia",
+"state": "IA",
+"geoid": "19137",
+"label": "Montgomery County, Iowa",
+"short": "Montgomery County",
+"units": 98
+},
+{
+"slug": "dallas-county-al",
+"state": "AL",
+"geoid": "01047",
+"label": "Dallas County, Alabama",
+"short": "Dallas County",
+"units": 226
+},
+{
+"slug": "fairfield-county-oh",
+"state": "OH",
+"geoid": "39045",
+"label": "Fairfield County, Ohio",
+"short": "Fairfield County",
+"units": 465
+},
+{
+"slug": "franklin-county-ma",
+"state": "MA",
+"geoid": "25011",
+"label": "Franklin County, Massachusetts",
+"short": "Franklin County",
+"units": 165
+},
+{
+"slug": "johnson-county-tn",
+"state": "TN",
+"geoid": "47091",
+"label": "Johnson County, Tennessee",
+"short": "Johnson County",
+"units": 84
+},
+{
+"slug": "lee-county-ms",
+"state": "MS",
+"geoid": "28081",
+"label": "Lee County, Mississippi",
+"short": "Lee County",
+"units": 385
+},
+{
+"slug": "franklin-county-vt",
+"state": "VT",
+"geoid": "50011",
+"label": "Franklin County, Vermont",
+"short": "Franklin County",
+"units": 153
+},
+{
+"slug": "fulton-county-ny",
+"state": "NY",
+"geoid": "36035",
+"label": "Fulton County, New York",
+"short": "Fulton County",
+"units": 98
+},
+{
+"slug": "johnson-county-mo",
+"state": "MO",
+"geoid": "29101",
+"label": "Johnson County, Missouri",
+"short": "Johnson County",
+"units": 76
+},
+{
+"slug": "clay-county-ar",
+"state": "AR",
+"geoid": "05021",
+"label": "Clay County, Arkansas",
+"short": "Clay County",
+"units": 146
+},
+{
+"slug": "washington-county-mn",
+"state": "MN",
+"geoid": "27163",
+"label": "Washington County, Minnesota",
+"short": "Washington County",
+"units": 330
+},
+{
+"slug": "sumter-county-ga",
+"state": "GA",
+"geoid": "13261",
+"label": "Sumter County, Georgia",
+"short": "Sumter County",
+"units": 98
+},
+{
+"slug": "monroe-county-mi",
+"state": "MI",
+"geoid": "26115",
+"label": "Monroe County, Michigan",
+"short": "Monroe County",
+"units": 916
+},
+{
+"slug": "washington-county-wi",
+"state": "WI",
+"geoid": "55131",
+"label": "Washington County, Wisconsin",
+"short": "Washington County",
+"units": 323
+},
+{
+"slug": "clay-county-ms",
+"state": "MS",
+"geoid": "28025",
+"label": "Clay County, Mississippi",
+"short": "Clay County",
+"units": 140
+},
+{
+"slug": "clay-county-nc",
+"state": "NC",
+"geoid": "37043",
+"label": "Clay County, North Carolina",
+"short": "Clay County",
+"units": 139
+},
+{
+"slug": "union-county-ga",
+"state": "GA",
+"geoid": "13291",
+"label": "Union County, Georgia",
+"short": "Union County",
+"units": 147
+},
+{
+"slug": "franklin-county-me",
+"state": "ME",
+"geoid": "23007",
+"label": "Franklin County, Maine",
+"short": "Franklin County",
+"units": 135
+},
+{
+"slug": "marion-county-ms",
+"state": "MS",
+"geoid": "28091",
+"label": "Marion County, Mississippi",
+"short": "Marion County",
+"units": 217
+},
+{
+"slug": "middlesex-county-va",
+"state": "VA",
+"geoid": "51119",
+"label": "Middlesex County, Virginia",
+"short": "Middlesex County",
+"units": 328
+},
+{
+"slug": "washington-county-md",
+"state": "MD",
+"geoid": "24043",
+"label": "Washington County, Maryland",
+"short": "Washington County",
+"units": 305
+},
+{
+"slug": "douglas-county-il",
+"state": "IL",
+"geoid": "17041",
+"label": "Douglas County, Illinois",
+"short": "Douglas County",
+"units": 100
+},
+{
+"slug": "washington-county-ut",
+"state": "UT",
+"geoid": "49053",
+"label": "Washington County, Utah",
+"short": "Washington County",
+"units": 300
+},
+{
+"slug": "washington-county-tn",
+"state": "TN",
+"geoid": "47179",
+"label": "Washington County, Tennessee",
+"short": "Washington County",
+"units": 295
+},
+{
+"slug": "richland-county-nd",
+"state": "ND",
+"geoid": "38077",
+"label": "Richland County, North Dakota",
+"short": "Richland County",
+"units": 55
+},
+{
+"slug": "hancock-county-in",
+"state": "IN",
+"geoid": "18059",
+"label": "Hancock County, Indiana",
+"short": "Hancock County",
+"units": 201
+},
+{
+"slug": "marion-county-oh",
+"state": "OH",
+"geoid": "39101",
+"label": "Marion County, Ohio",
+"short": "Marion County",
+"units": 200
+},
+{
+"slug": "jefferson-county-mo",
+"state": "MO",
+"geoid": "29099",
+"label": "Jefferson County, Missouri",
+"short": "Jefferson County",
+"units": 701
+},
+{
+"slug": "dekalb-county-al",
+"state": "AL",
+"geoid": "01049",
+"label": "DeKalb County, Alabama",
+"short": "DeKalb County",
+"units": 74
+},
+{
+"slug": "berkeley-county-wv",
+"state": "WV",
+"geoid": "54003",
+"label": "Berkeley County, West Virginia",
+"short": "Berkeley County",
+"units": 159
+},
+{
+"slug": "hardin-county-oh",
+"state": "OH",
+"geoid": "39065",
+"label": "Hardin County, Ohio",
+"short": "Hardin County",
+"units": 65
+},
+{
+"slug": "lee-county-al",
+"state": "AL",
+"geoid": "01081",
+"label": "Lee County, Alabama",
+"short": "Lee County",
+"units": 268
+},
+{
+"slug": "dekalb-county-in",
+"state": "IN",
+"geoid": "18033",
+"label": "DeKalb County, Indiana",
+"short": "DeKalb County",
+"units": 66
+},
+{
+"slug": "putnam-county-in",
+"state": "IN",
+"geoid": "18133",
+"label": "Putnam County, Indiana",
+"short": "Putnam County",
+"units": 40
+},
+{
+"slug": "fulton-county-oh",
+"state": "OH",
+"geoid": "39051",
+"label": "Fulton County, Ohio",
+"short": "Fulton County",
+"units": 66
+},
+{
+"slug": "marion-county-wv",
+"state": "WV",
+"geoid": "54049",
+"label": "Marion County, West Virginia",
+"short": "Marion County",
+"units": 162
+},
+{
+"slug": "jackson-county-nc",
+"state": "NC",
+"geoid": "37099",
+"label": "Jackson County, North Carolina",
+"short": "Jackson County",
+"units": 292
+},
+{
+"slug": "clark-county-ar",
+"state": "AR",
+"geoid": "05019",
+"label": "Clark County, Arkansas",
+"short": "Clark County",
+"units": 65
+},
+{
+"slug": "franklin-county-nc",
+"state": "NC",
+"geoid": "37069",
+"label": "Franklin County, North Carolina",
+"short": "Franklin County",
+"units": 94
+},
+{
+"slug": "washington-county-nc",
+"state": "NC",
+"geoid": "37187",
+"label": "Washington County, North Carolina",
+"short": "Washington County",
+"units": 214
+},
+{
+"slug": "douglas-county-wi",
+"state": "WI",
+"geoid": "55031",
+"label": "Douglas County, Wisconsin",
+"short": "Douglas County",
+"units": 71
+},
+{
+"slug": "seminole-county-ga",
+"state": "GA",
+"geoid": "13253",
+"label": "Seminole County, Georgia",
+"short": "Seminole County",
+"units": 128
+},
+{
+"slug": "lake-county-sd",
+"state": "SD",
+"geoid": "46079",
+"label": "Lake County, South Dakota",
+"short": "Lake County",
+"units": 151
+},
+{
+"slug": "lee-county-ga",
+"state": "GA",
+"geoid": "13177",
+"label": "Lee County, Georgia",
+"short": "Lee County",
+"units": 227
+},
+{
+"slug": "essex-county-va",
+"state": "VA",
+"geoid": "51057",
+"label": "Essex County, Virginia",
+"short": "Essex County",
+"units": 228
+},
+{
+"slug": "clay-county-ia",
+"state": "IA",
+"geoid": "19041",
+"label": "Clay County, Iowa",
+"short": "Clay County",
+"units": 91
+},
+{
+"slug": "washington-county-ok",
+"state": "OK",
+"geoid": "40147",
+"label": "Washington County, Oklahoma",
+"short": "Washington County",
+"units": 204
+},
+{
+"slug": "franklin-county-ny",
+"state": "NY",
+"geoid": "36033",
+"label": "Franklin County, New York",
+"short": "Franklin County",
+"units": 88
+},
+{
+"slug": "union-county-or",
+"state": "OR",
+"geoid": "41061",
+"label": "Union County, Oregon",
+"short": "Union County",
+"units": 95
+},
+{
+"slug": "washington-county-tx",
+"state": "TX",
+"geoid": "48477",
+"label": "Washington County, Texas",
+"short": "Washington County",
+"units": 201
+},
+{
+"slug": "madison-county-ne",
+"state": "NE",
+"geoid": "31119",
+"label": "Madison County, Nebraska",
+"short": "Madison County",
+"units": 105
+},
+{
+"slug": "madison-county-nc",
+"state": "NC",
+"geoid": "37115",
+"label": "Madison County, North Carolina",
+"short": "Madison County",
+"units": 103
+},
+{
+"slug": "union-county-ar",
+"state": "AR",
+"geoid": "05139",
+"label": "Union County, Arkansas",
+"short": "Union County",
+"units": 91
+},
+{
+"slug": "harrison-county-ia",
+"state": "IA",
+"geoid": "19085",
+"label": "Harrison County, Iowa",
+"short": "Harrison County",
+"units": 219
+},
+{
+"slug": "columbia-county-wa",
+"state": "WA",
+"geoid": "53013",
+"label": "Columbia County, Washington",
+"short": "Columbia County",
+"units": 42
+},
+{
+"slug": "franklin-county-tn",
+"state": "TN",
+"geoid": "47051",
+"label": "Franklin County, Tennessee",
+"short": "Franklin County",
+"units": 81
+},
+{
+"slug": "harrison-county-wv",
+"state": "WV",
+"geoid": "54033",
+"label": "Harrison County, West Virginia",
+"short": "Harrison County",
+"units": 206
+},
+{
+"slug": "bay-county-mi",
+"state": "MI",
+"geoid": "26017",
+"label": "Bay County, Michigan",
+"short": "Bay County",
+"units": 460
+},
+{
+"slug": "madison-county-fl",
+"state": "FL",
+"geoid": "12079",
+"label": "Madison County, Florida",
+"short": "Madison County",
+"units": 91
+},
+{
+"slug": "shelby-county-ky",
+"state": "KY",
+"geoid": "21211",
+"label": "Shelby County, Kentucky",
+"short": "Shelby County",
+"units": 44
+},
+{
+"slug": "marion-county-tn",
+"state": "TN",
+"geoid": "47115",
+"label": "Marion County, Tennessee",
+"short": "Marion County",
+"units": 117
+},
+{
+"slug": "dallas-county-ia",
+"state": "IA",
+"geoid": "19049",
+"label": "Dallas County, Iowa",
+"short": "Dallas County",
+"units": 96
+},
+{
+"slug": "harrison-county-tx",
+"state": "TX",
+"geoid": "48203",
+"label": "Harrison County, Texas",
+"short": "Harrison County",
+"units": 187
+},
+{
+"slug": "essex-county-ny",
+"state": "NY",
+"geoid": "36031",
+"label": "Essex County, New York",
+"short": "Essex County",
+"units": 173
+},
+{
+"slug": "monroe-county-pa",
+"state": "PA",
+"geoid": "42089",
+"label": "Monroe County, Pennsylvania",
+"short": "Monroe County",
+"units": 428
+},
+{
+"slug": "fairfield-county-sc",
+"state": "SC",
+"geoid": "45039",
+"label": "Fairfield County, South Carolina",
+"short": "Fairfield County",
+"units": 179
+},
+{
+"slug": "jackson-county-mi",
+"state": "MI",
+"geoid": "26075",
+"label": "Jackson County, Michigan",
+"short": "Jackson County",
+"units": 186
+},
+{
+"slug": "union-county-fl",
+"state": "FL",
+"geoid": "12125",
+"label": "Union County, Florida",
+"short": "Union County",
+"units": 68
+},
+{
+"slug": "union-county-oh",
+"state": "OH",
+"geoid": "39159",
+"label": "Union County, Ohio",
+"short": "Union County",
+"units": 66
+},
+{
+"slug": "jackson-county-in",
+"state": "IN",
+"geoid": "18071",
+"label": "Jackson County, Indiana",
+"short": "Jackson County",
+"units": 176
+},
+{
+"slug": "washington-county-va",
+"state": "VA",
+"geoid": "51191",
+"label": "Washington County, Virginia",
+"short": "Washington County",
+"units": 133
+},
+{
+"slug": "martin-county-ky",
+"state": "KY",
+"geoid": "21159",
+"label": "Martin County, Kentucky",
+"short": "Martin County",
+"units": 151
+},
+{
+"slug": "jackson-county-ar",
+"state": "AR",
+"geoid": "05067",
+"label": "Jackson County, Arkansas",
+"short": "Jackson County",
+"units": 166
+},
+{
+"slug": "lee-county-nc",
+"state": "NC",
+"geoid": "37105",
+"label": "Lee County, North Carolina",
+"short": "Lee County",
+"units": 141
+},
+{
+"slug": "jefferson-county-ar",
+"state": "AR",
+"geoid": "05069",
+"label": "Jefferson County, Arkansas",
+"short": "Jefferson County",
+"units": 317
+},
+{
+"slug": "washington-county-ny",
+"state": "NY",
+"geoid": "36115",
+"label": "Washington County, New York",
+"short": "Washington County",
+"units": 128
+},
+{
+"slug": "washington-county-fl",
+"state": "FL",
+"geoid": "12133",
+"label": "Washington County, Florida",
+"short": "Washington County",
+"units": 126
+},
+{
+"slug": "union-county-il",
+"state": "IL",
+"geoid": "17181",
+"label": "Union County, Illinois",
+"short": "Union County",
+"units": 59
+},
+{
+"slug": "clay-county-wv",
+"state": "WV",
+"geoid": "54015",
+"label": "Clay County, West Virginia",
+"short": "Clay County",
+"units": 55
+},
+{
+"slug": "franklin-county-il",
+"state": "IL",
+"geoid": "17055",
+"label": "Franklin County, Illinois",
+"short": "Franklin County",
+"units": 54
+},
+{
+"slug": "hancock-county-wv",
+"state": "WV",
+"geoid": "54029",
+"label": "Hancock County, West Virginia",
+"short": "Hancock County",
+"units": 85
+},
+{
+"slug": "washington-county-me",
+"state": "ME",
+"geoid": "23029",
+"label": "Washington County, Maine",
+"short": "Washington County",
+"units": 122
+},
+{
+"slug": "jefferson-county-ny",
+"state": "NY",
+"geoid": "36045",
+"label": "Jefferson County, New York",
+"short": "Jefferson County",
+"units": 293
+},
+{
+"slug": "chatham-county-nc",
+"state": "NC",
+"geoid": "37037",
+"label": "Chatham County, North Carolina",
+"short": "Chatham County",
+"units": 229
+},
+{
+"slug": "clay-county-ky",
+"state": "KY",
+"geoid": "21051",
+"label": "Clay County, Kentucky",
+"short": "Clay County",
+"units": 52
+},
+{
+"slug": "washington-county-ia",
+"state": "IA",
+"geoid": "19183",
+"label": "Washington County, Iowa",
+"short": "Washington County",
+"units": 109
+},
+{
+"slug": "york-county-ne",
+"state": "NE",
+"geoid": "31185",
+"label": "York County, Nebraska",
+"short": "York County",
+"units": 66
+},
+{
+"slug": "hancock-county-ky",
+"state": "KY",
+"geoid": "21091",
+"label": "Hancock County, Kentucky",
+"short": "Hancock County",
+"units": 72
+},
+{
+"slug": "jackson-county-al",
+"state": "AL",
+"geoid": "01071",
+"label": "Jackson County, Alabama",
+"short": "Jackson County",
+"units": 129
+},
+{
+"slug": "lee-county-il",
+"state": "IL",
+"geoid": "17103",
+"label": "Lee County, Illinois",
+"short": "Lee County",
+"units": 109
+},
+{
+"slug": "clay-county-tx",
+"state": "TX",
+"geoid": "48077",
+"label": "Clay County, Texas",
+"short": "Clay County",
+"units": 44
+},
+{
+"slug": "jefferson-county-wa",
+"state": "WA",
+"geoid": "53031",
+"label": "Jefferson County, Washington",
+"short": "Jefferson County",
+"units": 246
+},
+{
+"slug": "jackson-county-il",
+"state": "IL",
+"geoid": "17077",
+"label": "Jackson County, Illinois",
+"short": "Jackson County",
+"units": 124
+},
+{
+"slug": "escambia-county-al",
+"state": "AL",
+"geoid": "01053",
+"label": "Escambia County, Alabama",
+"short": "Escambia County",
+"units": 136
+},
+{
+"slug": "harrison-county-ky",
+"state": "KY",
+"geoid": "21097",
+"label": "Harrison County, Kentucky",
+"short": "Harrison County",
+"units": 105
+},
+{
+"slug": "hancock-county-il",
+"state": "IL",
+"geoid": "17067",
+"label": "Hancock County, Illinois",
+"short": "Hancock County",
+"units": 64
+},
+{
+"slug": "monroe-county-ms",
+"state": "MS",
+"geoid": "28095",
+"label": "Monroe County, Mississippi",
+"short": "Monroe County",
+"units": 246
+},
+{
+"slug": "jackson-county-fl",
+"state": "FL",
+"geoid": "12063",
+"label": "Jackson County, Florida",
+"short": "Jackson County",
+"units": 110
+},
+{
+"slug": "cook-county-ga",
+"state": "GA",
+"geoid": "13075",
+"label": "Cook County, Georgia",
+"short": "Cook County",
+"units": 80
+},
+{
+"slug": "orange-county-vt",
+"state": "VT",
+"geoid": "50017",
+"label": "Orange County, Vermont",
+"short": "Orange County",
+"units": 139
+},
+{
+"slug": "martin-county-nc",
+"state": "NC",
+"geoid": "37117",
+"label": "Martin County, North Carolina",
+"short": "Martin County",
+"units": 91
+},
+{
+"slug": "jefferson-county-wv",
+"state": "WV",
+"geoid": "54037",
+"label": "Jefferson County, West Virginia",
+"short": "Jefferson County",
+"units": 188
+},
+{
+"slug": "jefferson-county-wi",
+"state": "WI",
+"geoid": "55055",
+"label": "Jefferson County, Wisconsin",
+"short": "Jefferson County",
+"units": 184
+},
+{
+"slug": "madison-county-oh",
+"state": "OH",
+"geoid": "39097",
+"label": "Madison County, Ohio",
+"short": "Madison County",
+"units": 38
+},
+{
+"slug": "harrison-county-in",
+"state": "IN",
+"geoid": "18061",
+"label": "Harrison County, Indiana",
+"short": "Harrison County",
+"units": 79
+},
+{
+"slug": "monroe-county-in",
+"state": "IN",
+"geoid": "18105",
+"label": "Monroe County, Indiana",
+"short": "Monroe County",
+"units": 197
+},
+{
+"slug": "jefferson-county-pa",
+"state": "PA",
+"geoid": "42065",
+"label": "Jefferson County, Pennsylvania",
+"short": "Jefferson County",
+"units": 170
+},
+{
+"slug": "monroe-county-il",
+"state": "IL",
+"geoid": "17133",
+"label": "Monroe County, Illinois",
+"short": "Monroe County",
+"units": 190
+},
+{
+"slug": "jackson-county-wv",
+"state": "WV",
+"geoid": "54035",
+"label": "Jackson County, West Virginia",
+"short": "Jackson County",
+"units": 85
+},
+{
+"slug": "lee-county-ar",
+"state": "AR",
+"geoid": "05077",
+"label": "Lee County, Arkansas",
+"short": "Lee County",
+"units": 71
+},
+{
+"slug": "washington-county-ne",
+"state": "NE",
+"geoid": "31177",
+"label": "Washington County, Nebraska",
+"short": "Washington County",
+"units": 64
+},
+{
+"slug": "jefferson-county-oh",
+"state": "OH",
+"geoid": "39081",
+"label": "Jefferson County, Ohio",
+"short": "Jefferson County",
+"units": 153
+},
+{
+"slug": "walton-county-ga",
+"state": "GA",
+"geoid": "13297",
+"label": "Walton County, Georgia",
+"short": "Walton County",
+"units": 81
+},
+{
+"slug": "washington-county-id",
+"state": "ID",
+"geoid": "16087",
+"label": "Washington County, Idaho",
+"short": "Washington County",
+"units": 57
+},
+{
+"slug": "jackson-county-oh",
+"state": "OH",
+"geoid": "39079",
+"label": "Jackson County, Ohio",
+"short": "Jackson County",
+"units": 72
+},
+{
+"slug": "cameron-county-pa",
+"state": "PA",
+"geoid": "42023",
+"label": "Cameron County, Pennsylvania",
+"short": "Cameron County",
+"units": 79
+},
+{
+"slug": "monroe-county-ar",
+"state": "AR",
+"geoid": "05095",
+"label": "Monroe County, Arkansas",
+"short": "Monroe County",
+"units": 129
+},
+{
+"slug": "orange-county-va",
+"state": "VA",
+"geoid": "51137",
+"label": "Orange County, Virginia",
+"short": "Orange County",
+"units": 72
+},
+{
+"slug": "jefferson-county-tn",
+"state": "TN",
+"geoid": "47089",
+"label": "Jefferson County, Tennessee",
+"short": "Jefferson County",
+"units": 99
+},
+{
+"slug": "jefferson-county-in",
+"state": "IN",
+"geoid": "18077",
+"label": "Jefferson County, Indiana",
+"short": "Jefferson County",
+"units": 97
+},
+{
+"slug": "monroe-county-wi",
+"state": "WI",
+"geoid": "55081",
+"label": "Monroe County, Wisconsin",
+"short": "Monroe County",
+"units": 110
+},
+{
+"slug": "jackson-county-ga",
+"state": "GA",
+"geoid": "13157",
+"label": "Jackson County, Georgia",
+"short": "Jackson County",
+"units": 43
+},
+{
+"slug": "jefferson-county-fl",
+"state": "FL",
+"geoid": "12065",
+"label": "Jefferson County, Florida",
+"short": "Jefferson County",
+"units": 79
+},
+{
+"slug": "jefferson-county-or",
+"state": "OR",
+"geoid": "41031",
+"label": "Jefferson County, Oregon",
+"short": "Jefferson County",
+"units": 77
+},
+{
+"slug": "monroe-county-ga",
+"state": "GA",
+"geoid": "13207",
+"label": "Monroe County, Georgia",
+"short": "Monroe County",
+"units": 82
+},
+{
+"slug": "monroe-county-tn",
+"state": "TN",
+"geoid": "47123",
+"label": "Monroe County, Tennessee",
+"short": "Monroe County",
+"units": 64
+},
+{
+"slug": "jefferson-county-ks",
+"state": "KS",
+"geoid": "20087",
+"label": "Jefferson County, Kansas",
+"short": "Jefferson County",
+"units": 54
+},
+{
+"slug": "jefferson-county-id",
+"state": "ID",
+"geoid": "16051",
+"label": "Jefferson County, Idaho",
+"short": "Jefferson County",
+"units": 42
+},
+{
+"slug": "prince-william-county-va",
+"state": "VA",
+"geoid": "51153",
+"label": "Prince William County, Virginia",
+"short": "Prince William County",
+"units": 1073
+},
+{
+"slug": "grand-forks-county-nd",
+"state": "ND",
+"geoid": "38035",
+"label": "Grand Forks County, North Dakota",
+"short": "Grand Forks County",
+"units": 389
+},
+{
+"slug": "elkhart-county-in",
+"state": "IN",
+"geoid": "18039",
+"label": "Elkhart County, Indiana",
+"short": "Elkhart County",
+"units": 422
+},
+{
+"slug": "raleigh-county-wv",
+"state": "WV",
+"geoid": "54081",
+"label": "Raleigh County, West Virginia",
+"short": "Raleigh County",
+"units": 109
+},
+{
+"slug": "pulaski-county-ar",
+"state": "AR",
+"geoid": "05119",
+"label": "Pulaski County, Arkansas",
+"short": "Pulaski County",
+"units": 1894
+},
+{
+"slug": "greene-county-ar",
+"state": "AR",
+"geoid": "05055",
+"label": "Greene County, Arkansas",
+"short": "Greene County",
+"units": 356
+},
+{
+"slug": "denver-county-co",
+"state": "CO",
+"geoid": "08031",
+"label": "Denver County, Colorado",
+"short": "Denver County",
+"units": 1057
+},
+{
+"slug": "ramsey-county-mn",
+"state": "MN",
+"geoid": "27123",
+"label": "Ramsey County, Minnesota",
+"short": "Ramsey County",
+"units": 455
+},
+{
+"slug": "burleigh-county-nd",
+"state": "ND",
+"geoid": "38015",
+"label": "Burleigh County, North Dakota",
+"short": "Burleigh County",
+"units": 646
+},
+{
+"slug": "pennington-county-sd",
+"state": "SD",
+"geoid": "46103",
+"label": "Pennington County, South Dakota",
+"short": "Pennington County",
+"units": 345
+},
+{
+"slug": "thurston-county-wa",
+"state": "WA",
+"geoid": "53067",
+"label": "Thurston County, Washington",
+"short": "Thurston County",
+"units": 767
+},
+{
+"slug": "champaign-county-il",
+"state": "IL",
+"geoid": "17019",
+"label": "Champaign County, Illinois",
+"short": "Champaign County",
+"units": 221
+},
+{
+"slug": "saginaw-county-mi",
+"state": "MI",
+"geoid": "26145",
+"label": "Saginaw County, Michigan",
+"short": "Saginaw County",
+"units": 1129
+},
+{
+"slug": "lincoln-county-ne",
+"state": "NE",
+"geoid": "31111",
+"label": "Lincoln County, Nebraska",
+"short": "Lincoln County",
+"units": 149
+},
+{
+"slug": "haywood-county-nc",
+"state": "NC",
+"geoid": "37087",
+"label": "Haywood County, North Carolina",
+"short": "Haywood County",
+"units": 693
+},
+{
+"slug": "miami-dade-county-fl",
+"state": "FL",
+"geoid": "12086",
+"label": "Miami-Dade County, Florida",
+"short": "Miami-Dade County",
+"units": 366669
+},
+{
+"slug": "honolulu-county-hi",
+"state": "HI",
+"geoid": "15003",
+"label": "Honolulu County, Hawaii",
+"short": "Honolulu County",
+"units": 45987
+},
+{
+"slug": "st-tammany-parish-la",
+"state": "LA",
+"geoid": "22103",
+"label": "St. Tammany Parish, Louisiana",
+"short": "St. Tammany Parish",
+"units": 41503
+},
+{
+"slug": "st-johns-county-fl",
+"state": "FL",
+"geoid": "12109",
+"label": "St. Johns County, Florida",
+"short": "St. Johns County",
+"units": 32726
+},
+{
+"slug": "worcester-county-md",
+"state": "MD",
+"geoid": "24047",
+"label": "Worcester County, Maryland",
+"short": "Worcester County",
+"units": 29373
+},
+{
+"slug": "sussex-county-de",
+"state": "DE",
+"geoid": "10005",
+"label": "Sussex County, Delaware",
+"short": "Sussex County",
+"units": 22022
+},
+{
+"slug": "virginia-beach-city-va",
+"state": "VA",
+"geoid": "51810",
+"label": "Virginia Beach city, Virginia",
+"short": "Virginia Beach city",
+"units": 20355
+},
+{
+"slug": "queens-county-ny",
+"state": "NY",
+"geoid": "36081",
+"label": "Queens County, New York",
+"short": "Queens County",
+"units": 19697
+},
+{
+"slug": "st-lucie-county-fl",
+"state": "FL",
+"geoid": "12111",
+"label": "St. Lucie County, Florida",
+"short": "St. Lucie County",
+"units": 19192
+},
+{
+"slug": "kings-county-ny",
+"state": "NY",
+"geoid": "36047",
+"label": "Kings County, New York",
+"short": "Kings County",
+"units": 18764
+},
+{
+"slug": "new-york-county-ny",
+"state": "NY",
+"geoid": "36061",
+"label": "New York County, New York",
+"short": "New York County",
+"units": 14670
+},
+{
+"slug": "norfolk-city-va",
+"state": "VA",
+"geoid": "51710",
+"label": "Norfolk city, Virginia",
+"short": "Norfolk city",
+"units": 11163
+},
+{
+"slug": "st-charles-parish-la",
+"state": "LA",
+"geoid": "22089",
+"label": "St. Charles Parish, Louisiana",
+"short": "St. Charles Parish",
+"units": 10664
+},
+{
+"slug": "barnstable-county-ma",
+"state": "MA",
+"geoid": "25001",
+"label": "Barnstable County, Massachusetts",
+"short": "Barnstable County",
+"units": 9896
+},
+{
+"slug": "hampton-city-va",
+"state": "VA",
+"geoid": "51650",
+"label": "Hampton city, Virginia",
+"short": "Hampton city",
+"units": 9314
+},
+{
+"slug": "st-bernard-parish-la",
+"state": "LA",
+"geoid": "22087",
+"label": "St. Bernard Parish, Louisiana",
+"short": "St. Bernard Parish",
+"units": 9243
+},
+{
+"slug": "travis-county-tx",
+"state": "TX",
+"geoid": "48453",
+"label": "Travis County, Texas",
+"short": "Travis County",
+"units": 8921
+},
+{
+"slug": "plymouth-county-ma",
+"state": "MA",
+"geoid": "25023",
+"label": "Plymouth County, Massachusetts",
+"short": "Plymouth County",
+"units": 8286
+},
+{
+"slug": "new-haven-county-ct",
+"state": "CT",
+"geoid": "09009",
+"label": "New Haven County, Connecticut",
+"short": "New Haven County",
+"units": 8263
+},
+{
+"slug": "chesapeake-city-va",
+"state": "VA",
+"geoid": "51550",
+"label": "Chesapeake city, Virginia",
+"short": "Chesapeake city",
+"units": 7428
+},
+{
+"slug": "richmond-county-ny",
+"state": "NY",
+"geoid": "36085",
+"label": "Richmond County, New York",
+"short": "Richmond County",
+"units": 6186
+},
+{
+"slug": "st-john-the-baptist-parish-la",
+"state": "LA",
+"geoid": "22095",
+"label": "St. John the Baptist Parish, Louisiana",
+"short": "St. John the Baptist Parish",
+"units": 5882
+},
+{
+"slug": "norfolk-county-ma",
+"state": "MA",
+"geoid": "25021",
+"label": "Norfolk County, Massachusetts",
+"short": "Norfolk County",
+"units": 5776
+},
+{
+"slug": "davidson-county-tn",
+"state": "TN",
+"geoid": "47037",
+"label": "Davidson County, Tennessee",
+"short": "Davidson County",
+"units": 4911
+},
+{
+"slug": "caddo-parish-la",
+"state": "LA",
+"geoid": "22017",
+"label": "Caddo Parish, Louisiana",
+"short": "Caddo Parish",
+"units": 4579
 },
 {
 "slug": "luzerne-county-pa",
@@ -1264,14 +4696,6 @@
 "units": 4464
 },
 {
-"slug": "union-county-nj",
-"state": "NJ",
-"geoid": "34039",
-"label": "Union County, New Jersey",
-"short": "Union County",
-"units": 4462
-},
-{
 "slug": "multnomah-county-or",
 "state": "OR",
 "geoid": "41051",
@@ -1288,100 +4712,12 @@
 "units": 4352
 },
 {
-"slug": "tulare-county-ca",
-"state": "CA",
-"geoid": "06107",
-"label": "Tulare County, California",
-"short": "Tulare County",
-"units": 4343
-},
-{
-"slug": "clay-county-fl",
-"state": "FL",
-"geoid": "12019",
-"label": "Clay County, Florida",
-"short": "Clay County",
-"units": 4275
-},
-{
-"slug": "essex-county-nj",
-"state": "NJ",
-"geoid": "34013",
-"label": "Essex County, New Jersey",
-"short": "Essex County",
-"units": 4224
-},
-{
-"slug": "san-mateo-county-ca",
-"state": "CA",
-"geoid": "06081",
-"label": "San Mateo County, California",
-"short": "San Mateo County",
-"units": 4223
-},
-{
-"slug": "hawaii-county-hi",
-"state": "HI",
-"geoid": "15001",
-"label": "Hawaii County, Hawaii",
-"short": "Hawaii County",
-"units": 4124
-},
-{
-"slug": "washington-county-ri",
-"state": "RI",
-"geoid": "44009",
-"label": "Washington County, Rhode Island",
-"short": "Washington County",
-"units": 4049
-},
-{
-"slug": "lake-county-fl",
-"state": "FL",
-"geoid": "12069",
-"label": "Lake County, Florida",
-"short": "Lake County",
-"units": 4039
-},
-{
-"slug": "jefferson-county-ky",
-"state": "KY",
-"geoid": "21111",
-"label": "Jefferson County, Kentucky",
-"short": "Jefferson County",
-"units": 4013
-},
-{
-"slug": "york-county-me",
-"state": "ME",
-"geoid": "23031",
-"label": "York County, Maine",
-"short": "York County",
-"units": 3863
-},
-{
-"slug": "riverside-county-ca",
-"state": "CA",
-"geoid": "06065",
-"label": "Riverside County, California",
-"short": "Riverside County",
-"units": 3854
-},
-{
 "slug": "kauai-county-hi",
 "state": "HI",
 "geoid": "15007",
 "label": "Kauai County, Hawaii",
 "short": "Kauai County",
 "units": 3848
-},
-{
-"slug": "hernando-county-fl",
-"state": "FL",
-"geoid": "12053",
-"label": "Hernando County, Florida",
-"short": "Hernando County",
-"units": 3829
 },
 {
 "slug": "rockingham-county-nh",
@@ -1400,28 +4736,12 @@
 "units": 3801
 },
 {
-"slug": "marion-county-fl",
-"state": "FL",
-"geoid": "12083",
-"label": "Marion County, Florida",
-"short": "Marion County",
-"units": 3797
-},
-{
 "slug": "portsmouth-city-va",
 "state": "VA",
 "geoid": "51740",
 "label": "Portsmouth city, Virginia",
 "short": "Portsmouth city",
 "units": 3747
-},
-{
-"slug": "santa-barbara-county-ca",
-"state": "CA",
-"geoid": "06083",
-"label": "Santa Barbara County, California",
-"short": "Santa Barbara County",
-"units": 3746
 },
 {
 "slug": "chambers-county-tx",
@@ -1432,36 +4752,12 @@
 "units": 3707
 },
 {
-"slug": "sutter-county-ca",
-"state": "CA",
-"geoid": "06101",
-"label": "Sutter County, California",
-"short": "Sutter County",
-"units": 3626
-},
-{
 "slug": "new-london-county-ct",
 "state": "CT",
 "geoid": "09011",
 "label": "New London County, Connecticut",
 "short": "New London County",
 "units": 3540
-},
-{
-"slug": "nye-county-nv",
-"state": "NV",
-"geoid": "32023",
-"label": "Nye County, Nevada",
-"short": "Nye County",
-"units": 3525
-},
-{
-"slug": "madison-county-al",
-"state": "AL",
-"geoid": "01089",
-"label": "Madison County, Alabama",
-"short": "Madison County",
-"units": 3450
 },
 {
 "slug": "baltimore-county-md",
@@ -1472,36 +4768,12 @@
 "units": 3449
 },
 {
-"slug": "bryan-county-ga",
-"state": "GA",
-"geoid": "13029",
-"label": "Bryan County, Georgia",
-"short": "Bryan County",
-"units": 3394
-},
-{
-"slug": "wake-county-nc",
-"state": "NC",
-"geoid": "37183",
-"label": "Wake County, North Carolina",
-"short": "Wake County",
-"units": 3387
-},
-{
 "slug": "dupage-county-il",
 "state": "IL",
 "geoid": "17043",
 "label": "DuPage County, Illinois",
 "short": "DuPage County",
 "units": 3366
-},
-{
-"slug": "montgomery-county-pa",
-"state": "PA",
-"geoid": "42091",
-"label": "Montgomery County, Pennsylvania",
-"short": "Montgomery County",
-"units": 3357
 },
 {
 "slug": "bristol-county-ma",
@@ -1520,60 +4792,12 @@
 "units": 3321
 },
 {
-"slug": "currituck-county-nc",
-"state": "NC",
-"geoid": "37053",
-"label": "Currituck County, North Carolina",
-"short": "Currituck County",
-"units": 3310
-},
-{
-"slug": "fulton-county-ga",
-"state": "GA",
-"geoid": "13121",
-"label": "Fulton County, Georgia",
-"short": "Fulton County",
-"units": 3307
-},
-{
-"slug": "beaufort-county-nc",
-"state": "NC",
-"geoid": "37013",
-"label": "Beaufort County, North Carolina",
-"short": "Beaufort County",
-"units": 3294
-},
-{
-"slug": "santa-cruz-county-ca",
-"state": "CA",
-"geoid": "06087",
-"label": "Santa Cruz County, California",
-"short": "Santa Cruz County",
-"units": 3283
-},
-{
-"slug": "kern-county-ca",
-"state": "CA",
-"geoid": "06029",
-"label": "Kern County, California",
-"short": "Kern County",
-"units": 3272
-},
-{
 "slug": "burlington-county-nj",
 "state": "NJ",
 "geoid": "34005",
 "label": "Burlington County, New Jersey",
 "short": "Burlington County",
 "units": 3255
-},
-{
-"slug": "contra-costa-county-ca",
-"state": "CA",
-"geoid": "06013",
-"label": "Contra Costa County, California",
-"short": "Contra Costa County",
-"units": 3252
 },
 {
 "slug": "bronx-county-ny",
@@ -1584,28 +4808,12 @@
 "units": 3230
 },
 {
-"slug": "bucks-county-pa",
-"state": "PA",
-"geoid": "42017",
-"label": "Bucks County, Pennsylvania",
-"short": "Bucks County",
-"units": 3219
-},
-{
 "slug": "prince-george-s-county-md",
 "state": "MD",
 "geoid": "24033",
 "label": "Prince George's County, Maryland",
 "short": "Prince George's County",
 "units": 3212
-},
-{
-"slug": "yolo-county-ca",
-"state": "CA",
-"geoid": "06113",
-"label": "Yolo County, California",
-"short": "Yolo County",
-"units": 3201
 },
 {
 "slug": "philadelphia-county-pa",
@@ -1616,68 +4824,12 @@
 "units": 3178
 },
 {
-"slug": "iberia-parish-la",
-"state": "LA",
-"geoid": "22045",
-"label": "Iberia Parish, Louisiana",
-"short": "Iberia Parish",
-"units": 3140
-},
-{
 "slug": "st-louis-county-mo",
 "state": "MO",
 "geoid": "29189",
 "label": "St. Louis County, Missouri",
 "short": "St. Louis County",
 "units": 3126
-},
-{
-"slug": "mecklenburg-county-nc",
-"state": "NC",
-"geoid": "37119",
-"label": "Mecklenburg County, North Carolina",
-"short": "Mecklenburg County",
-"units": 3094
-},
-{
-"slug": "dorchester-county-sc",
-"state": "SC",
-"geoid": "45035",
-"label": "Dorchester County, South Carolina",
-"short": "Dorchester County",
-"units": 3093
-},
-{
-"slug": "sumter-county-fl",
-"state": "FL",
-"geoid": "12119",
-"label": "Sumter County, Florida",
-"short": "Sumter County",
-"units": 3064
-},
-{
-"slug": "camden-county-ga",
-"state": "GA",
-"geoid": "13039",
-"label": "Camden County, Georgia",
-"short": "Camden County",
-"units": 3055
-},
-{
-"slug": "skagit-county-wa",
-"state": "WA",
-"geoid": "53057",
-"label": "Skagit County, Washington",
-"short": "Skagit County",
-"units": 3054
-},
-{
-"slug": "rapides-parish-la",
-"state": "LA",
-"geoid": "22079",
-"label": "Rapides Parish, Louisiana",
-"short": "Rapides Parish",
-"units": 3051
 },
 {
 "slug": "poquoson-city-va",
@@ -1688,36 +4840,12 @@
 "units": 3041
 },
 {
-"slug": "dekalb-county-ga",
-"state": "GA",
-"geoid": "13089",
-"label": "DeKalb County, Georgia",
-"short": "DeKalb County",
-"units": 3037
-},
-{
 "slug": "el-paso-county-tx",
 "state": "TX",
 "geoid": "48141",
 "label": "El Paso County, Texas",
 "short": "El Paso County",
 "units": 3002
-},
-{
-"slug": "accomack-county-va",
-"state": "VA",
-"geoid": "51001",
-"label": "Accomack County, Virginia",
-"short": "Accomack County",
-"units": 2944
-},
-{
-"slug": "alachua-county-fl",
-"state": "FL",
-"geoid": "12001",
-"label": "Alachua County, Florida",
-"short": "Alachua County",
-"units": 2941
 },
 {
 "slug": "st-mary-parish-la",
@@ -1728,30 +4856,6 @@
 "units": 2925
 },
 {
-"slug": "pima-county-az",
-"state": "AZ",
-"geoid": "04019",
-"label": "Pima County, Arizona",
-"short": "Pima County",
-"units": 2918
-},
-{
-"slug": "passaic-county-nj",
-"state": "NJ",
-"geoid": "34031",
-"label": "Passaic County, New Jersey",
-"short": "Passaic County",
-"units": 2842
-},
-{
-"slug": "morris-county-nj",
-"state": "NJ",
-"geoid": "34027",
-"label": "Morris County, New Jersey",
-"short": "Morris County",
-"units": 2828
-},
-{
 "slug": "allegheny-county-pa",
 "state": "PA",
 "geoid": "42003",
@@ -1760,44 +4864,12 @@
 "units": 2762
 },
 {
-"slug": "leon-county-fl",
-"state": "FL",
-"geoid": "12073",
-"label": "Leon County, Florida",
-"short": "Leon County",
-"units": 2745
-},
-{
-"slug": "hardin-county-tx",
-"state": "TX",
-"geoid": "48199",
-"label": "Hardin County, Texas",
-"short": "Hardin County",
-"units": 2745
-},
-{
-"slug": "lane-county-or",
-"state": "OR",
-"geoid": "41039",
-"label": "Lane County, Oregon",
-"short": "Lane County",
-"units": 2723
-},
-{
 "slug": "matagorda-county-tx",
 "state": "TX",
 "geoid": "48321",
 "label": "Matagorda County, Texas",
 "short": "Matagorda County",
 "units": 2631
-},
-{
-"slug": "york-county-va",
-"state": "VA",
-"geoid": "51199",
-"label": "York County, Virginia",
-"short": "York County",
-"units": 2626
 },
 {
 "slug": "hinds-county-ms",
@@ -1824,46 +4896,6 @@
 "units": 2586
 },
 {
-"slug": "pierce-county-wa",
-"state": "WA",
-"geoid": "53053",
-"label": "Pierce County, Washington",
-"short": "Pierce County",
-"units": 2581
-},
-{
-"slug": "middlesex-county-ct",
-"state": "CT",
-"geoid": "09007",
-"label": "Middlesex County, Connecticut",
-"short": "Middlesex County",
-"units": 2574
-},
-{
-"slug": "cobb-county-ga",
-"state": "GA",
-"geoid": "13067",
-"label": "Cobb County, Georgia",
-"short": "Cobb County",
-"units": 2481
-},
-{
-"slug": "san-patricio-county-tx",
-"state": "TX",
-"geoid": "48409",
-"label": "San Patricio County, Texas",
-"short": "San Patricio County",
-"units": 2464
-},
-{
-"slug": "marion-county-in",
-"state": "IN",
-"geoid": "18097",
-"label": "Marion County, Indiana",
-"short": "Marion County",
-"units": 2454
-},
-{
 "slug": "guadalupe-county-tx",
 "state": "TX",
 "geoid": "48187",
@@ -1880,28 +4912,12 @@
 "units": 2413
 },
 {
-"slug": "sonoma-county-ca",
-"state": "CA",
-"geoid": "06097",
-"label": "Sonoma County, California",
-"short": "Sonoma County",
-"units": 2394
-},
-{
 "slug": "san-bernardino-county-ca",
 "state": "CA",
 "geoid": "06071",
 "label": "San Bernardino County, California",
 "short": "San Bernardino County",
 "units": 2384
-},
-{
-"slug": "acadia-parish-la",
-"state": "LA",
-"geoid": "22001",
-"label": "Acadia Parish, Louisiana",
-"short": "Acadia Parish",
-"units": 2382
 },
 {
 "slug": "st-martin-parish-la",
@@ -1928,62 +4944,6 @@
 "units": 2332
 },
 {
-"slug": "franklin-county-fl",
-"state": "FL",
-"geoid": "12037",
-"label": "Franklin County, Florida",
-"short": "Franklin County",
-"units": 2317
-},
-{
-"slug": "solano-county-ca",
-"state": "CA",
-"geoid": "06095",
-"label": "Solano County, California",
-"short": "Solano County",
-"units": 2282
-},
-{
-"slug": "valencia-county-nm",
-"state": "NM",
-"geoid": "35061",
-"label": "Valencia County, New Mexico",
-"short": "Valencia County",
-"units": 2282
-},
-{
-"slug": "shelby-county-tn",
-"state": "TN",
-"geoid": "47157",
-"label": "Shelby County, Tennessee",
-"short": "Shelby County",
-"units": 2277
-},
-{
-"slug": "lake-county-il",
-"state": "IL",
-"geoid": "17097",
-"label": "Lake County, Illinois",
-"short": "Lake County",
-"units": 2268
-},
-{
-"slug": "whatcom-county-wa",
-"state": "WA",
-"geoid": "53073",
-"label": "Whatcom County, Washington",
-"short": "Whatcom County",
-"units": 2256
-},
-{
-"slug": "denton-county-tx",
-"state": "TX",
-"geoid": "48121",
-"label": "Denton County, Texas",
-"short": "Denton County",
-"units": 2228
-},
-{
 "slug": "providence-county-ri",
 "state": "RI",
 "geoid": "44007",
@@ -1992,44 +4952,12 @@
 "units": 2224
 },
 {
-"slug": "snohomish-county-wa",
-"state": "WA",
-"geoid": "53061",
-"label": "Snohomish County, Washington",
-"short": "Snohomish County",
-"units": 2177
-},
-{
-"slug": "taylor-county-tx",
-"state": "TX",
-"geoid": "48441",
-"label": "Taylor County, Texas",
-"short": "Taylor County",
-"units": 2176
-},
-{
 "slug": "queen-anne-s-county-md",
 "state": "MD",
 "geoid": "24035",
 "label": "Queen Anne's County, Maryland",
 "short": "Queen Anne's County",
 "units": 2160
-},
-{
-"slug": "waller-county-tx",
-"state": "TX",
-"geoid": "48473",
-"label": "Waller County, Texas",
-"short": "Waller County",
-"units": 2108
-},
-{
-"slug": "williamson-county-tx",
-"state": "TX",
-"geoid": "48491",
-"label": "Williamson County, Texas",
-"short": "Williamson County",
-"units": 2084
 },
 {
 "slug": "delaware-county-pa",
@@ -2048,14 +4976,6 @@
 "units": 2007
 },
 {
-"slug": "hamilton-county-tn",
-"state": "TN",
-"geoid": "47065",
-"label": "Hamilton County, Tennessee",
-"short": "Hamilton County",
-"units": 2003
-},
-{
 "slug": "pamlico-county-nc",
 "state": "NC",
 "geoid": "37137",
@@ -2072,30 +4992,6 @@
 "units": 1996
 },
 {
-"slug": "washoe-county-nv",
-"state": "NV",
-"geoid": "32031",
-"label": "Washoe County, Nevada",
-"short": "Washoe County",
-"units": 1977
-},
-{
-"slug": "liberty-county-tx",
-"state": "TX",
-"geoid": "48291",
-"label": "Liberty County, Texas",
-"short": "Liberty County",
-"units": 1966
-},
-{
-"slug": "somerset-county-md",
-"state": "MD",
-"geoid": "24039",
-"label": "Somerset County, Maryland",
-"short": "Somerset County",
-"units": 1955
-},
-{
 "slug": "talbot-county-md",
 "state": "MD",
 "geoid": "24041",
@@ -2104,28 +5000,12 @@
 "units": 1948
 },
 {
-"slug": "pasquotank-county-nc",
-"state": "NC",
-"geoid": "37139",
-"label": "Pasquotank County, North Carolina",
-"short": "Pasquotank County",
-"units": 1942
-},
-{
 "slug": "colleton-county-sc",
 "state": "SC",
 "geoid": "45029",
 "label": "Colleton County, South Carolina",
 "short": "Colleton County",
 "units": 1932
-},
-{
-"slug": "ada-county-id",
-"state": "ID",
-"geoid": "16001",
-"label": "Ada County, Idaho",
-"short": "Ada County",
-"units": 1914
 },
 {
 "slug": "wharton-county-tx",
@@ -2168,68 +5048,12 @@
 "units": 1815
 },
 {
-"slug": "somerset-county-nj",
-"state": "NJ",
-"geoid": "34035",
-"label": "Somerset County, New Jersey",
-"short": "Somerset County",
-"units": 1783
-},
-{
 "slug": "grays-harbor-county-wa",
 "state": "WA",
 "geoid": "53027",
 "label": "Grays Harbor County, Washington",
 "short": "Grays Harbor County",
 "units": 1762
-},
-{
-"slug": "orange-county-ny",
-"state": "NY",
-"geoid": "36071",
-"label": "Orange County, New York",
-"short": "Orange County",
-"units": 1759
-},
-{
-"slug": "pitt-county-nc",
-"state": "NC",
-"geoid": "37147",
-"label": "Pitt County, North Carolina",
-"short": "Pitt County",
-"units": 1743
-},
-{
-"slug": "gulf-county-fl",
-"state": "FL",
-"geoid": "12045",
-"label": "Gulf County, Florida",
-"short": "Gulf County",
-"units": 1737
-},
-{
-"slug": "rankin-county-ms",
-"state": "MS",
-"geoid": "28121",
-"label": "Rankin County, Mississippi",
-"short": "Rankin County",
-"units": 1684
-},
-{
-"slug": "jefferson-county-co",
-"state": "CO",
-"geoid": "08059",
-"label": "Jefferson County, Colorado",
-"short": "Jefferson County",
-"units": 1661
-},
-{
-"slug": "collin-county-tx",
-"state": "TX",
-"geoid": "48085",
-"label": "Collin County, Texas",
-"short": "Collin County",
-"units": 1643
 },
 {
 "slug": "san-luis-obispo-county-ca",
@@ -2240,44 +5064,12 @@
 "units": 1632
 },
 {
-"slug": "cumberland-county-me",
-"state": "ME",
-"geoid": "23005",
-"label": "Cumberland County, Maine",
-"short": "Cumberland County",
-"units": 1622
-},
-{
 "slug": "alexandria-city-va",
 "state": "VA",
 "geoid": "51510",
 "label": "Alexandria city, Virginia",
 "short": "Alexandria city",
 "units": 1618
-},
-{
-"slug": "monterey-county-ca",
-"state": "CA",
-"geoid": "06053",
-"label": "Monterey County, California",
-"short": "Monterey County",
-"units": 1610
-},
-{
-"slug": "cumberland-county-nc",
-"state": "NC",
-"geoid": "37051",
-"label": "Cumberland County, North Carolina",
-"short": "Cumberland County",
-"units": 1610
-},
-{
-"slug": "camden-county-nj",
-"state": "NJ",
-"geoid": "34007",
-"label": "Camden County, New Jersey",
-"short": "Camden County",
-"units": 1605
 },
 {
 "slug": "salem-county-nj",
@@ -2288,60 +5080,12 @@
 "units": 1600
 },
 {
-"slug": "dorchester-county-md",
-"state": "MD",
-"geoid": "24019",
-"label": "Dorchester County, Maryland",
-"short": "Dorchester County",
-"units": 1588
-},
-{
-"slug": "broome-county-ny",
-"state": "NY",
-"geoid": "36007",
-"label": "Broome County, New York",
-"short": "Broome County",
-"units": 1585
-},
-{
 "slug": "macomb-county-mi",
 "state": "MI",
 "geoid": "26099",
 "label": "Macomb County, Michigan",
 "short": "Macomb County",
 "units": 1577
-},
-{
-"slug": "liberty-county-ga",
-"state": "GA",
-"geoid": "13179",
-"label": "Liberty County, Georgia",
-"short": "Liberty County",
-"units": 1574
-},
-{
-"slug": "franklin-county-oh",
-"state": "OH",
-"geoid": "39049",
-"label": "Franklin County, Ohio",
-"short": "Franklin County",
-"units": 1570
-},
-{
-"slug": "yavapai-county-az",
-"state": "AZ",
-"geoid": "04025",
-"label": "Yavapai County, Arizona",
-"short": "Yavapai County",
-"units": 1568
-},
-{
-"slug": "butte-county-ca",
-"state": "CA",
-"geoid": "06007",
-"label": "Butte County, California",
-"short": "Butte County",
-"units": 1568
 },
 {
 "slug": "worcester-county-ma",
@@ -2376,36 +5120,12 @@
 "units": 1545
 },
 {
-"slug": "oklahoma-county-ok",
-"state": "OK",
-"geoid": "40109",
-"label": "Oklahoma County, Oklahoma",
-"short": "Oklahoma County",
-"units": 1534
-},
-{
 "slug": "mora-county-nm",
 "state": "NM",
 "geoid": "35033",
 "label": "Mora County, New Mexico",
 "short": "Mora County",
 "units": 1532
-},
-{
-"slug": "erie-county-ny",
-"state": "NY",
-"geoid": "36029",
-"label": "Erie County, New York",
-"short": "Erie County",
-"units": 1531
-},
-{
-"slug": "jefferson-county-al",
-"state": "AL",
-"geoid": "01073",
-"label": "Jefferson County, Alabama",
-"short": "Jefferson County",
-"units": 1519
 },
 {
 "slug": "oakland-county-mi",
@@ -2440,30 +5160,6 @@
 "units": 1476
 },
 {
-"slug": "yuba-county-ca",
-"state": "CA",
-"geoid": "06115",
-"label": "Yuba County, California",
-"short": "Yuba County",
-"units": 1473
-},
-{
-"slug": "marion-county-or",
-"state": "OR",
-"geoid": "41047",
-"label": "Marion County, Oregon",
-"short": "Marion County",
-"units": 1467
-},
-{
-"slug": "williamson-county-tn",
-"state": "TN",
-"geoid": "47187",
-"label": "Williamson County, Tennessee",
-"short": "Williamson County",
-"units": 1425
-},
-{
 "slug": "milwaukee-county-wi",
 "state": "WI",
 "geoid": "55079",
@@ -2488,30 +5184,6 @@
 "units": 1404
 },
 {
-"slug": "tillamook-county-or",
-"state": "OR",
-"geoid": "41057",
-"label": "Tillamook County, Oregon",
-"short": "Tillamook County",
-"units": 1397
-},
-{
-"slug": "gloucester-county-va",
-"state": "VA",
-"geoid": "51073",
-"label": "Gloucester County, Virginia",
-"short": "Gloucester County",
-"units": 1396
-},
-{
-"slug": "washington-county-ms",
-"state": "MS",
-"geoid": "28151",
-"label": "Washington County, Mississippi",
-"short": "Washington County",
-"units": 1395
-},
-{
 "slug": "durham-county-nc",
 "state": "NC",
 "geoid": "37063",
@@ -2526,30 +5198,6 @@
 "label": "Kent County, Rhode Island",
 "short": "Kent County",
 "units": 1373
-},
-{
-"slug": "okeechobee-county-fl",
-"state": "FL",
-"geoid": "12093",
-"label": "Okeechobee County, Florida",
-"short": "Okeechobee County",
-"units": 1346
-},
-{
-"slug": "rockland-county-ny",
-"state": "NY",
-"geoid": "36087",
-"label": "Rockland County, New York",
-"short": "Rockland County",
-"units": 1346
-},
-{
-"slug": "monroe-county-ny",
-"state": "NY",
-"geoid": "36055",
-"label": "Monroe County, New York",
-"short": "Monroe County",
-"units": 1345
 },
 {
 "slug": "st-clair-county-mi",
@@ -2584,14 +5232,6 @@
 "units": 1333
 },
 {
-"slug": "douglas-county-ne",
-"state": "NE",
-"geoid": "31055",
-"label": "Douglas County, Nebraska",
-"short": "Douglas County",
-"units": 1330
-},
-{
 "slug": "clatsop-county-or",
 "state": "OR",
 "geoid": "41007",
@@ -2616,30 +5256,6 @@
 "units": 1309
 },
 {
-"slug": "napa-county-ca",
-"state": "CA",
-"geoid": "06055",
-"label": "Napa County, California",
-"short": "Napa County",
-"units": 1292
-},
-{
-"slug": "chester-county-pa",
-"state": "PA",
-"geoid": "42029",
-"label": "Chester County, Pennsylvania",
-"short": "Chester County",
-"units": 1288
-},
-{
-"slug": "iberville-parish-la",
-"state": "LA",
-"geoid": "22047",
-"label": "Iberville Parish, Louisiana",
-"short": "Iberville Parish",
-"units": 1287
-},
-{
 "slug": "kanawha-county-wv",
 "state": "WV",
 "geoid": "54039",
@@ -2656,52 +5272,12 @@
 "units": 1279
 },
 {
-"slug": "onondaga-county-ny",
-"state": "NY",
-"geoid": "36067",
-"label": "Onondaga County, New York",
-"short": "Onondaga County",
-"units": 1276
-},
-{
 "slug": "burnet-county-tx",
 "state": "TX",
 "geoid": "48053",
 "label": "Burnet County, Texas",
 "short": "Burnet County",
 "units": 1275
-},
-{
-"slug": "placer-county-ca",
-"state": "CA",
-"geoid": "06061",
-"label": "Placer County, California",
-"short": "Placer County",
-"units": 1267
-},
-{
-"slug": "wakulla-county-fl",
-"state": "FL",
-"geoid": "12129",
-"label": "Wakulla County, Florida",
-"short": "Wakulla County",
-"units": 1256
-},
-{
-"slug": "hamilton-county-oh",
-"state": "OH",
-"geoid": "39061",
-"label": "Hamilton County, Ohio",
-"short": "Hamilton County",
-"units": 1255
-},
-{
-"slug": "lewis-county-wa",
-"state": "WA",
-"geoid": "53041",
-"label": "Lewis County, Washington",
-"short": "Lewis County",
-"units": 1250
 },
 {
 "slug": "cuyahoga-county-oh",
@@ -2744,14 +5320,6 @@
 "units": 1217
 },
 {
-"slug": "putnam-county-fl",
-"state": "FL",
-"geoid": "12107",
-"label": "Putnam County, Florida",
-"short": "Putnam County",
-"units": 1201
-},
-{
 "slug": "hyde-county-nc",
 "state": "NC",
 "geoid": "37095",
@@ -2760,28 +5328,12 @@
 "units": 1200
 },
 {
-"slug": "will-county-il",
-"state": "IL",
-"geoid": "17197",
-"label": "Will County, Illinois",
-"short": "Will County",
-"units": 1199
-},
-{
 "slug": "robeson-county-nc",
 "state": "NC",
 "geoid": "37155",
 "label": "Robeson County, North Carolina",
 "short": "Robeson County",
 "units": 1199
-},
-{
-"slug": "polk-county-ia",
-"state": "IA",
-"geoid": "19153",
-"label": "Polk County, Iowa",
-"short": "Polk County",
-"units": 1178
 },
 {
 "slug": "mathews-county-va",
@@ -2800,14 +5352,6 @@
 "units": 1170
 },
 {
-"slug": "jackson-county-or",
-"state": "OR",
-"geoid": "41029",
-"label": "Jackson County, Oregon",
-"short": "Jackson County",
-"units": 1141
-},
-{
 "slug": "linn-county-ia",
 "state": "IA",
 "geoid": "19113",
@@ -2816,28 +5360,12 @@
 "units": 1130
 },
 {
-"slug": "fresno-county-ca",
-"state": "CA",
-"geoid": "06019",
-"label": "Fresno County, California",
-"short": "Fresno County",
-"units": 1125
-},
-{
 "slug": "llano-county-tx",
 "state": "TX",
 "geoid": "48299",
 "label": "Llano County, Texas",
 "short": "Llano County",
 "units": 1120
-},
-{
-"slug": "gwinnett-county-ga",
-"state": "GA",
-"geoid": "13135",
-"label": "Gwinnett County, Georgia",
-"short": "Gwinnett County",
-"units": 1119
 },
 {
 "slug": "st-james-parish-la",
@@ -2872,14 +5400,6 @@
 "units": 1093
 },
 {
-"slug": "greenville-county-sc",
-"state": "SC",
-"geoid": "45045",
-"label": "Greenville County, South Carolina",
-"short": "Greenville County",
-"units": 1092
-},
-{
 "slug": "lancaster-county-ne",
 "state": "NE",
 "geoid": "31109",
@@ -2896,22 +5416,6 @@
 "units": 1075
 },
 {
-"slug": "larimer-county-co",
-"state": "CO",
-"geoid": "08069",
-"label": "Larimer County, Colorado",
-"short": "Larimer County",
-"units": 1066
-},
-{
-"slug": "montgomery-county-oh",
-"state": "OH",
-"geoid": "39113",
-"label": "Montgomery County, Ohio",
-"short": "Montgomery County",
-"units": 1061
-},
-{
 "slug": "st-mary-s-county-md",
 "state": "MD",
 "geoid": "24037",
@@ -2925,14 +5429,6 @@
 "geoid": "22007",
 "label": "Assumption Parish, Louisiana",
 "short": "Assumption Parish",
-"units": 1053
-},
-{
-"slug": "ector-county-tx",
-"state": "TX",
-"geoid": "48135",
-"label": "Ector County, Texas",
-"short": "Ector County",
 "units": 1053
 },
 {
@@ -2968,44 +5464,12 @@
 "units": 1040
 },
 {
-"slug": "lake-county-in",
-"state": "IN",
-"geoid": "18089",
-"label": "Lake County, Indiana",
-"short": "Lake County",
-"units": 1035
-},
-{
-"slug": "highlands-county-fl",
-"state": "FL",
-"geoid": "12055",
-"label": "Highlands County, Florida",
-"short": "Highlands County",
-"units": 1031
-},
-{
 "slug": "lackawanna-county-pa",
 "state": "PA",
 "geoid": "42069",
 "label": "Lackawanna County, Pennsylvania",
 "short": "Lackawanna County",
 "units": 1024
-},
-{
-"slug": "lake-county-ca",
-"state": "CA",
-"geoid": "06033",
-"label": "Lake County, California",
-"short": "Lake County",
-"units": 1023
-},
-{
-"slug": "knox-county-tn",
-"state": "TN",
-"geoid": "47093",
-"label": "Knox County, Tennessee",
-"short": "Knox County",
-"units": 1020
 },
 {
 "slug": "coconino-county-az",
@@ -3016,14 +5480,6 @@
 "units": 1019
 },
 {
-"slug": "douglas-county-or",
-"state": "OR",
-"geoid": "41019",
-"label": "Douglas County, Oregon",
-"short": "Douglas County",
-"units": 1018
-},
-{
 "slug": "dougherty-county-ga",
 "state": "GA",
 "geoid": "13095",
@@ -3032,52 +5488,12 @@
 "units": 1014
 },
 {
-"slug": "howard-county-md",
-"state": "MD",
-"geoid": "24027",
-"label": "Howard County, Maryland",
-"short": "Howard County",
-"units": 1009
-},
-{
-"slug": "lucas-county-oh",
-"state": "OH",
-"geoid": "39095",
-"label": "Lucas County, Ohio",
-"short": "Lucas County",
-"units": 1009
-},
-{
 "slug": "mclennan-county-tx",
 "state": "TX",
 "geoid": "48309",
 "label": "McLennan County, Texas",
 "short": "McLennan County",
 "units": 1006
-},
-{
-"slug": "summit-county-oh",
-"state": "OH",
-"geoid": "39153",
-"label": "Summit County, Ohio",
-"short": "Summit County",
-"units": 1004
-},
-{
-"slug": "sedgwick-county-ks",
-"state": "KS",
-"geoid": "20173",
-"label": "Sedgwick County, Kansas",
-"short": "Sedgwick County",
-"units": 1000
-},
-{
-"slug": "orange-county-nc",
-"state": "NC",
-"geoid": "37135",
-"label": "Orange County, North Carolina",
-"short": "Orange County",
-"units": 992
 },
 {
 "slug": "kent-county-mi",
@@ -3104,22 +5520,6 @@
 "units": 983
 },
 {
-"slug": "lubbock-county-tx",
-"state": "TX",
-"geoid": "48303",
-"label": "Lubbock County, Texas",
-"short": "Lubbock County",
-"units": 979
-},
-{
-"slug": "madison-county-il",
-"state": "IL",
-"geoid": "17119",
-"label": "Madison County, Illinois",
-"short": "Madison County",
-"units": 973
-},
-{
 "slug": "cowlitz-county-wa",
 "state": "WA",
 "geoid": "53015",
@@ -3128,44 +5528,12 @@
 "units": 961
 },
 {
-"slug": "craighead-county-ar",
-"state": "AR",
-"geoid": "05031",
-"label": "Craighead County, Arkansas",
-"short": "Craighead County",
-"units": 960
-},
-{
-"slug": "guilford-county-nc",
-"state": "NC",
-"geoid": "37081",
-"label": "Guilford County, North Carolina",
-"short": "Guilford County",
-"units": 960
-},
-{
 "slug": "bell-county-tx",
 "state": "TX",
 "geoid": "48027",
 "label": "Bell County, Texas",
 "short": "Bell County",
 "units": 954
-},
-{
-"slug": "pinal-county-az",
-"state": "AZ",
-"geoid": "04021",
-"label": "Pinal County, Arizona",
-"short": "Pinal County",
-"units": 943
-},
-{
-"slug": "levy-county-fl",
-"state": "FL",
-"geoid": "12075",
-"label": "Levy County, Florida",
-"short": "Levy County",
-"units": 941
 },
 {
 "slug": "dukes-county-ma",
@@ -3200,54 +5568,6 @@
 "units": 926
 },
 {
-"slug": "gloucester-county-nj",
-"state": "NJ",
-"geoid": "34015",
-"label": "Gloucester County, New Jersey",
-"short": "Gloucester County",
-"units": 926
-},
-{
-"slug": "jackson-county-mo",
-"state": "MO",
-"geoid": "29095",
-"label": "Jackson County, Missouri",
-"short": "Jackson County",
-"units": 917
-},
-{
-"slug": "monroe-county-mi",
-"state": "MI",
-"geoid": "26115",
-"label": "Monroe County, Michigan",
-"short": "Monroe County",
-"units": 916
-},
-{
-"slug": "hillsborough-county-nh",
-"state": "NH",
-"geoid": "33011",
-"label": "Hillsborough County, New Hampshire",
-"short": "Hillsborough County",
-"units": 909
-},
-{
-"slug": "clark-county-wa",
-"state": "WA",
-"geoid": "53011",
-"label": "Clark County, Washington",
-"short": "Clark County",
-"units": 908
-},
-{
-"slug": "berks-county-pa",
-"state": "PA",
-"geoid": "42011",
-"label": "Berks County, Pennsylvania",
-"short": "Berks County",
-"units": 889
-},
-{
 "slug": "kent-county-de",
 "state": "DE",
 "geoid": "10001",
@@ -3264,28 +5584,12 @@
 "units": 878
 },
 {
-"slug": "james-city-county-va",
-"state": "VA",
-"geoid": "51095",
-"label": "James City County, Virginia",
-"short": "James City County",
-"units": 874
-},
-{
 "slug": "dodge-county-ne",
 "state": "NE",
 "geoid": "31053",
 "label": "Dodge County, Nebraska",
 "short": "Dodge County",
 "units": 867
-},
-{
-"slug": "montgomery-county-al",
-"state": "AL",
-"geoid": "01101",
-"label": "Montgomery County, Alabama",
-"short": "Montgomery County",
-"units": 861
 },
 {
 "slug": "pike-county-ky",
@@ -3302,14 +5606,6 @@
 "label": "Nantucket County, Massachusetts",
 "short": "Nantucket County",
 "units": 852
-},
-{
-"slug": "stanislaus-county-ca",
-"state": "CA",
-"geoid": "06099",
-"label": "Stanislaus County, California",
-"short": "Stanislaus County",
-"units": 850
 },
 {
 "slug": "cecil-county-md",
@@ -3344,36 +5640,12 @@
 "units": 826
 },
 {
-"slug": "york-county-pa",
-"state": "PA",
-"geoid": "42133",
-"label": "York County, Pennsylvania",
-"short": "York County",
-"units": 826
-},
-{
-"slug": "madison-county-ms",
-"state": "MS",
-"geoid": "28089",
-"label": "Madison County, Mississippi",
-"short": "Madison County",
-"units": 824
-},
-{
 "slug": "rock-island-county-il",
 "state": "IL",
 "geoid": "17161",
 "label": "Rock Island County, Illinois",
 "short": "Rock Island County",
 "units": 823
-},
-{
-"slug": "cochise-county-az",
-"state": "AZ",
-"geoid": "04003",
-"label": "Cochise County, Arizona",
-"short": "Cochise County",
-"units": 821
 },
 {
 "slug": "scott-county-mo",
@@ -3398,22 +5670,6 @@
 "label": "Suffolk city, Virginia",
 "short": "Suffolk city",
 "units": 815
-},
-{
-"slug": "mchenry-county-il",
-"state": "IL",
-"geoid": "17111",
-"label": "McHenry County, Illinois",
-"short": "McHenry County",
-"units": 811
-},
-{
-"slug": "garland-county-ar",
-"state": "AR",
-"geoid": "05051",
-"label": "Garland County, Arkansas",
-"short": "Garland County",
-"units": 804
 },
 {
 "slug": "arapahoe-county-co",
@@ -3456,36 +5712,12 @@
 "units": 785
 },
 {
-"slug": "mohave-county-az",
-"state": "AZ",
-"geoid": "04015",
-"label": "Mohave County, Arizona",
-"short": "Mohave County",
-"units": 778
-},
-{
 "slug": "lea-county-nm",
 "state": "NM",
 "geoid": "35025",
 "label": "Lea County, New Mexico",
 "short": "Lea County",
 "units": 778
-},
-{
-"slug": "johnson-county-ks",
-"state": "KS",
-"geoid": "20091",
-"label": "Johnson County, Kansas",
-"short": "Johnson County",
-"units": 773
-},
-{
-"slug": "douglas-county-nv",
-"state": "NV",
-"geoid": "32005",
-"label": "Douglas County, Nevada",
-"short": "Douglas County",
-"units": 773
 },
 {
 "slug": "chesterfield-county-va",
@@ -3534,14 +5766,6 @@
 "label": "Edgecombe County, North Carolina",
 "short": "Edgecombe County",
 "units": 764
-},
-{
-"slug": "hendry-county-fl",
-"state": "FL",
-"geoid": "12051",
-"label": "Hendry County, Florida",
-"short": "Hendry County",
-"units": 762
 },
 {
 "slug": "daviess-county-ky",
@@ -3608,14 +5832,6 @@
 "units": 739
 },
 {
-"slug": "clark-county-in",
-"state": "IN",
-"geoid": "18019",
-"label": "Clark County, Indiana",
-"short": "Clark County",
-"units": 737
-},
-{
 "slug": "wilson-county-tn",
 "state": "TN",
 "geoid": "47189",
@@ -3645,14 +5861,6 @@
 "geoid": "19163",
 "label": "Scott County, Iowa",
 "short": "Scott County",
-"units": 722
-},
-{
-"slug": "pearl-river-county-ms",
-"state": "MS",
-"geoid": "28109",
-"label": "Pearl River County, Mississippi",
-"short": "Pearl River County",
 "units": 722
 },
 {
@@ -3688,14 +5896,6 @@
 "units": 708
 },
 {
-"slug": "jefferson-county-mo",
-"state": "MO",
-"geoid": "29099",
-"label": "Jefferson County, Missouri",
-"short": "Jefferson County",
-"units": 701
-},
-{
 "slug": "butler-county-oh",
 "state": "OH",
 "geoid": "39017",
@@ -3710,22 +5910,6 @@
 "label": "Wichita County, Texas",
 "short": "Wichita County",
 "units": 698
-},
-{
-"slug": "columbia-county-fl",
-"state": "FL",
-"geoid": "12023",
-"label": "Columbia County, Florida",
-"short": "Columbia County",
-"units": 695
-},
-{
-"slug": "washington-county-ar",
-"state": "AR",
-"geoid": "05143",
-"label": "Washington County, Arkansas",
-"short": "Washington County",
-"units": 690
 },
 {
 "slug": "sumner-county-tn",
@@ -3784,14 +5968,6 @@
 "units": 670
 },
 {
-"slug": "camden-county-nc",
-"state": "NC",
-"geoid": "37029",
-"label": "Camden County, North Carolina",
-"short": "Camden County",
-"units": 670
-},
-{
 "slug": "waukesha-county-wi",
 "state": "WI",
 "geoid": "55133",
@@ -3832,14 +6008,6 @@
 "units": 657
 },
 {
-"slug": "johnson-county-ia",
-"state": "IA",
-"geoid": "19103",
-"label": "Johnson County, Iowa",
-"short": "Johnson County",
-"units": 655
-},
-{
 "slug": "mcintosh-county-ga",
 "state": "GA",
 "geoid": "13191",
@@ -3864,52 +6032,12 @@
 "units": 648
 },
 {
-"slug": "cumberland-county-pa",
-"state": "PA",
-"geoid": "42041",
-"label": "Cumberland County, Pennsylvania",
-"short": "Cumberland County",
-"units": 645
-},
-{
 "slug": "winnebago-county-il",
 "state": "IL",
 "geoid": "17201",
 "label": "Winnebago County, Illinois",
 "short": "Winnebago County",
 "units": 643
-},
-{
-"slug": "bullitt-county-ky",
-"state": "KY",
-"geoid": "21029",
-"label": "Bullitt County, Kentucky",
-"short": "Bullitt County",
-"units": 639
-},
-{
-"slug": "washington-county-pa",
-"state": "PA",
-"geoid": "42125",
-"label": "Washington County, Pennsylvania",
-"short": "Washington County",
-"units": 639
-},
-{
-"slug": "henderson-county-nc",
-"state": "NC",
-"geoid": "37089",
-"label": "Henderson County, North Carolina",
-"short": "Henderson County",
-"units": 629
-},
-{
-"slug": "vanderburgh-county-in",
-"state": "IN",
-"geoid": "18163",
-"label": "Vanderburgh County, Indiana",
-"short": "Vanderburgh County",
-"units": 623
 },
 {
 "slug": "tehama-county-ca",
@@ -3952,14 +6080,6 @@
 "units": 617
 },
 {
-"slug": "forsyth-county-nc",
-"state": "NC",
-"geoid": "37067",
-"label": "Forsyth County, North Carolina",
-"short": "Forsyth County",
-"units": 611
-},
-{
 "slug": "forrest-county-ms",
 "state": "MS",
 "geoid": "28035",
@@ -3984,14 +6104,6 @@
 "units": 606
 },
 {
-"slug": "shelby-county-al",
-"state": "AL",
-"geoid": "01117",
-"label": "Shelby County, Alabama",
-"short": "Shelby County",
-"units": 605
-},
-{
 "slug": "brown-county-wi",
 "state": "WI",
 "geoid": "55009",
@@ -4000,28 +6112,12 @@
 "units": 603
 },
 {
-"slug": "madera-county-ca",
-"state": "CA",
-"geoid": "06039",
-"label": "Madera County, California",
-"short": "Madera County",
-"units": 599
-},
-{
 "slug": "natchitoches-parish-la",
 "state": "LA",
 "geoid": "22069",
 "label": "Natchitoches Parish, Louisiana",
 "short": "Natchitoches Parish",
 "units": 599
-},
-{
-"slug": "vigo-county-in",
-"state": "IN",
-"geoid": "18167",
-"label": "Vigo County, Indiana",
-"short": "Vigo County",
-"units": 597
 },
 {
 "slug": "willacy-county-tx",
@@ -4048,36 +6144,12 @@
 "units": 594
 },
 {
-"slug": "loudoun-county-va",
-"state": "VA",
-"geoid": "51107",
-"label": "Loudoun County, Virginia",
-"short": "Loudoun County",
-"units": 593
-},
-{
-"slug": "hamilton-county-in",
-"state": "IN",
-"geoid": "18057",
-"label": "Hamilton County, Indiana",
-"short": "Hamilton County",
-"units": 589
-},
-{
 "slug": "frederick-county-md",
 "state": "MD",
 "geoid": "24021",
 "label": "Frederick County, Maryland",
 "short": "Frederick County",
 "units": 588
-},
-{
-"slug": "johnson-county-tx",
-"state": "TX",
-"geoid": "48251",
-"label": "Johnson County, Texas",
-"short": "Johnson County",
-"units": 585
 },
 {
 "slug": "charles-county-md",
@@ -4094,14 +6166,6 @@
 "label": "Black Hawk County, Iowa",
 "short": "Black Hawk County",
 "units": 582
-},
-{
-"slug": "shasta-county-ca",
-"state": "CA",
-"geoid": "06089",
-"label": "Shasta County, California",
-"short": "Shasta County",
-"units": 581
 },
 {
 "slug": "leflore-county-ms",
@@ -4128,35 +6192,11 @@
 "units": 574
 },
 {
-"slug": "polk-county-tx",
-"state": "TX",
-"geoid": "48373",
-"label": "Polk County, Texas",
-"short": "Polk County",
-"units": 572
-},
-{
 "slug": "benton-county-ar",
 "state": "AR",
 "geoid": "05007",
 "label": "Benton County, Arkansas",
 "short": "Benton County",
-"units": 571
-},
-{
-"slug": "taylor-county-fl",
-"state": "FL",
-"geoid": "12123",
-"label": "Taylor County, Florida",
-"short": "Taylor County",
-"units": 571
-},
-{
-"slug": "johnston-county-nc",
-"state": "NC",
-"geoid": "37101",
-"label": "Johnston County, North Carolina",
-"short": "Johnston County",
 "units": 571
 },
 {
@@ -4176,35 +6216,11 @@
 "units": 569
 },
 {
-"slug": "bradford-county-pa",
-"state": "PA",
-"geoid": "42015",
-"label": "Bradford County, Pennsylvania",
-"short": "Bradford County",
-"units": 569
-},
-{
-"slug": "dixie-county-fl",
-"state": "FL",
-"geoid": "12029",
-"label": "Dixie County, Florida",
-"short": "Dixie County",
-"units": 568
-},
-{
 "slug": "oneida-county-ny",
 "state": "NY",
 "geoid": "36065",
 "label": "Oneida County, New York",
 "short": "Oneida County",
-"units": 567
-},
-{
-"slug": "sumter-county-sc",
-"state": "SC",
-"geoid": "45085",
-"label": "Sumter County, South Carolina",
-"short": "Sumter County",
 "units": 567
 },
 {
@@ -4224,36 +6240,12 @@
 "units": 564
 },
 {
-"slug": "duplin-county-nc",
-"state": "NC",
-"geoid": "37061",
-"label": "Duplin County, North Carolina",
-"short": "Duplin County",
-"units": 564
-},
-{
 "slug": "evangeline-parish-la",
 "state": "LA",
 "geoid": "22039",
 "label": "Evangeline Parish, Louisiana",
 "short": "Evangeline Parish",
 "units": 563
-},
-{
-"slug": "columbia-county-pa",
-"state": "PA",
-"geoid": "42037",
-"label": "Columbia County, Pennsylvania",
-"short": "Columbia County",
-"units": 563
-},
-{
-"slug": "desoto-county-ms",
-"state": "MS",
-"geoid": "28033",
-"label": "DeSoto County, Mississippi",
-"short": "DeSoto County",
-"units": 559
 },
 {
 "slug": "berkshire-county-ma",
@@ -4280,14 +6272,6 @@
 "units": 550
 },
 {
-"slug": "niagara-county-ny",
-"state": "NY",
-"geoid": "36063",
-"label": "Niagara County, New York",
-"short": "Niagara County",
-"units": 543
-},
-{
 "slug": "tom-green-county-tx",
 "state": "TX",
 "geoid": "48451",
@@ -4312,36 +6296,12 @@
 "units": 540
 },
 {
-"slug": "morgan-county-al",
-"state": "AL",
-"geoid": "01103",
-"label": "Morgan County, Alabama",
-"short": "Morgan County",
-"units": 539
-},
-{
-"slug": "columbia-county-or",
-"state": "OR",
-"geoid": "41009",
-"label": "Columbia County, Oregon",
-"short": "Columbia County",
-"units": 537
-},
-{
 "slug": "steuben-county-ny",
 "state": "NY",
 "geoid": "36101",
 "label": "Steuben County, New York",
 "short": "Steuben County",
 "units": 536
-},
-{
-"slug": "columbia-county-ga",
-"state": "GA",
-"geoid": "13073",
-"label": "Columbia County, Georgia",
-"short": "Columbia County",
-"units": 534
 },
 {
 "slug": "moore-county-nc",
@@ -4376,22 +6336,6 @@
 "units": 523
 },
 {
-"slug": "jackson-county-tx",
-"state": "TX",
-"geoid": "48239",
-"label": "Jackson County, Texas",
-"short": "Jackson County",
-"units": 523
-},
-{
-"slug": "kerr-county-tx",
-"state": "TX",
-"geoid": "48265",
-"label": "Kerr County, Texas",
-"short": "Kerr County",
-"units": 516
-},
-{
 "slug": "smith-county-tx",
 "state": "TX",
 "geoid": "48423",
@@ -4408,35 +6352,11 @@
 "units": 515
 },
 {
-"slug": "austin-county-tx",
-"state": "TX",
-"geoid": "48015",
-"label": "Austin County, Texas",
-"short": "Austin County",
-"units": 515
-},
-{
-"slug": "chelan-county-wa",
-"state": "WA",
-"geoid": "53007",
-"label": "Chelan County, Washington",
-"short": "Chelan County",
-"units": 513
-},
-{
 "slug": "kosciusko-county-in",
 "state": "IN",
 "geoid": "18085",
 "label": "Kosciusko County, Indiana",
 "short": "Kosciusko County",
-"units": 510
-},
-{
-"slug": "bastrop-county-tx",
-"state": "TX",
-"geoid": "48021",
-"label": "Bastrop County, Texas",
-"short": "Bastrop County",
 "units": 510
 },
 {
@@ -4512,14 +6432,6 @@
 "units": 491
 },
 {
-"slug": "erie-county-oh",
-"state": "OH",
-"geoid": "39043",
-"label": "Erie County, Ohio",
-"short": "Erie County",
-"units": 490
-},
-{
 "slug": "hood-county-tx",
 "state": "TX",
 "geoid": "48221",
@@ -4544,14 +6456,6 @@
 "units": 487
 },
 {
-"slug": "desoto-county-fl",
-"state": "FL",
-"geoid": "12027",
-"label": "DeSoto County, Florida",
-"short": "DeSoto County",
-"units": 484
-},
-{
 "slug": "santa-fe-county-nm",
 "state": "NM",
 "geoid": "35049",
@@ -4566,22 +6470,6 @@
 "label": "Parker County, Texas",
 "short": "Parker County",
 "units": 478
-},
-{
-"slug": "lake-county-oh",
-"state": "OH",
-"geoid": "39085",
-"label": "Lake County, Ohio",
-"short": "Lake County",
-"units": 477
-},
-{
-"slug": "washington-county-oh",
-"state": "OH",
-"geoid": "39167",
-"label": "Washington County, Ohio",
-"short": "Washington County",
-"units": 476
 },
 {
 "slug": "brown-county-tx",
@@ -4608,14 +6496,6 @@
 "units": 470
 },
 {
-"slug": "bradford-county-fl",
-"state": "FL",
-"geoid": "12007",
-"label": "Bradford County, Florida",
-"short": "Bradford County",
-"units": 469
-},
-{
 "slug": "fond-du-lac-county-wi",
 "state": "WI",
 "geoid": "55039",
@@ -4632,44 +6512,12 @@
 "units": 467
 },
 {
-"slug": "bulloch-county-ga",
-"state": "GA",
-"geoid": "13031",
-"label": "Bulloch County, Georgia",
-"short": "Bulloch County",
-"units": 467
-},
-{
-"slug": "cabarrus-county-nc",
-"state": "NC",
-"geoid": "37025",
-"label": "Cabarrus County, North Carolina",
-"short": "Cabarrus County",
-"units": 467
-},
-{
 "slug": "florence-county-sc",
 "state": "SC",
 "geoid": "45041",
 "label": "Florence County, South Carolina",
 "short": "Florence County",
 "units": 467
-},
-{
-"slug": "suwannee-county-fl",
-"state": "FL",
-"geoid": "12121",
-"label": "Suwannee County, Florida",
-"short": "Suwannee County",
-"units": 465
-},
-{
-"slug": "fairfield-county-oh",
-"state": "OH",
-"geoid": "39045",
-"label": "Fairfield County, Ohio",
-"short": "Fairfield County",
-"units": 465
 },
 {
 "slug": "lenoir-county-nc",
@@ -4680,36 +6528,12 @@
 "units": 463
 },
 {
-"slug": "hancock-county-oh",
-"state": "OH",
-"geoid": "39063",
-"label": "Hancock County, Ohio",
-"short": "Hancock County",
-"units": 463
-},
-{
-"slug": "humboldt-county-ca",
-"state": "CA",
-"geoid": "06023",
-"label": "Humboldt County, California",
-"short": "Humboldt County",
-"units": 462
-},
-{
 "slug": "fayette-county-ga",
 "state": "GA",
 "geoid": "13113",
 "label": "Fayette County, Georgia",
 "short": "Fayette County",
 "units": 462
-},
-{
-"slug": "bay-county-mi",
-"state": "MI",
-"geoid": "26017",
-"label": "Bay County, Michigan",
-"short": "Bay County",
-"units": 460
 },
 {
 "slug": "jim-wells-county-tx",
@@ -4752,14 +6576,6 @@
 "units": 452
 },
 {
-"slug": "mason-county-wa",
-"state": "WA",
-"geoid": "53045",
-"label": "Mason County, Washington",
-"short": "Mason County",
-"units": 451
-},
-{
 "slug": "lauderdale-county-ms",
 "state": "MS",
 "geoid": "28075",
@@ -4776,14 +6592,6 @@
 "units": 447
 },
 {
-"slug": "york-county-sc",
-"state": "SC",
-"geoid": "45091",
-"label": "York County, South Carolina",
-"short": "York County",
-"units": 446
-},
-{
 "slug": "pacific-county-wa",
 "state": "WA",
 "geoid": "53049",
@@ -4797,14 +6605,6 @@
 "geoid": "33013",
 "label": "Merrimack County, New Hampshire",
 "short": "Merrimack County",
-"units": 442
-},
-{
-"slug": "cumberland-county-nj",
-"state": "NJ",
-"geoid": "34011",
-"label": "Cumberland County, New Jersey",
-"short": "Cumberland County",
 "units": 442
 },
 {
@@ -4886,30 +6686,6 @@
 "label": "Houston County, Georgia",
 "short": "Houston County",
 "units": 431
-},
-{
-"slug": "stark-county-oh",
-"state": "OH",
-"geoid": "39151",
-"label": "Stark County, Ohio",
-"short": "Stark County",
-"units": 431
-},
-{
-"slug": "polk-county-or",
-"state": "OR",
-"geoid": "41053",
-"label": "Polk County, Oregon",
-"short": "Polk County",
-"units": 430
-},
-{
-"slug": "monroe-county-pa",
-"state": "PA",
-"geoid": "42089",
-"label": "Monroe County, Pennsylvania",
-"short": "Monroe County",
-"units": 428
 },
 {
 "slug": "cheatham-county-tn",
@@ -5048,22 +6824,6 @@
 "units": 406
 },
 {
-"slug": "johnson-county-in",
-"state": "IN",
-"geoid": "18081",
-"label": "Johnson County, Indiana",
-"short": "Johnson County",
-"units": 406
-},
-{
-"slug": "knox-county-me",
-"state": "ME",
-"geoid": "23013",
-"label": "Knox County, Maine",
-"short": "Knox County",
-"units": 404
-},
-{
 "slug": "ottawa-county-mi",
 "state": "MI",
 "geoid": "26139",
@@ -5160,14 +6920,6 @@
 "units": 393
 },
 {
-"slug": "union-county-nc",
-"state": "NC",
-"geoid": "37179",
-"label": "Union County, North Carolina",
-"short": "Union County",
-"units": 392
-},
-{
 "slug": "windham-county-vt",
 "state": "VT",
 "geoid": "50025",
@@ -5190,14 +6942,6 @@
 "label": "Calhoun County, Alabama",
 "short": "Calhoun County",
 "units": 386
-},
-{
-"slug": "lee-county-ms",
-"state": "MS",
-"geoid": "28081",
-"label": "Lee County, Mississippi",
-"short": "Lee County",
-"units": 385
 },
 {
 "slug": "caldwell-parish-la",
@@ -5232,14 +6976,6 @@
 "units": 379
 },
 {
-"slug": "camden-county-mo",
-"state": "MO",
-"geoid": "29029",
-"label": "Camden County, Missouri",
-"short": "Camden County",
-"units": 377
-},
-{
 "slug": "clinton-county-pa",
 "state": "PA",
 "geoid": "42035",
@@ -5253,14 +6989,6 @@
 "geoid": "08067",
 "label": "La Plata County, Colorado",
 "short": "La Plata County",
-"units": 375
-},
-{
-"slug": "erie-county-pa",
-"state": "PA",
-"geoid": "42049",
-"label": "Erie County, Pennsylvania",
-"short": "Erie County",
 "units": 375
 },
 {
@@ -5376,14 +7104,6 @@
 "units": 362
 },
 {
-"slug": "santa-cruz-county-az",
-"state": "AZ",
-"geoid": "04023",
-"label": "Santa Cruz County, Arizona",
-"short": "Santa Cruz County",
-"units": 361
-},
-{
 "slug": "cabell-county-wv",
 "state": "WV",
 "geoid": "54011",
@@ -5496,28 +7216,12 @@
 "units": 353
 },
 {
-"slug": "davis-county-ut",
-"state": "UT",
-"geoid": "49011",
-"label": "Davis County, Utah",
-"short": "Davis County",
-"units": 352
-},
-{
 "slug": "lyon-county-nv",
 "state": "NV",
 "geoid": "32019",
 "label": "Lyon County, Nevada",
 "short": "Lyon County",
 "units": 350
-},
-{
-"slug": "douglas-county-co",
-"state": "CO",
-"geoid": "08035",
-"label": "Douglas County, Colorado",
-"short": "Douglas County",
-"units": 349
 },
 {
 "slug": "carroll-county-nh",
@@ -5576,52 +7280,12 @@
 "units": 345
 },
 {
-"slug": "gaston-county-nc",
-"state": "NC",
-"geoid": "37071",
-"label": "Gaston County, North Carolina",
-"short": "Gaston County",
-"units": 345
-},
-{
-"slug": "clay-county-mo",
-"state": "MO",
-"geoid": "29047",
-"label": "Clay County, Missouri",
-"short": "Clay County",
-"units": 343
-},
-{
-"slug": "hancock-county-me",
-"state": "ME",
-"geoid": "23009",
-"label": "Hancock County, Maine",
-"short": "Hancock County",
-"units": 340
-},
-{
 "slug": "allen-parish-la",
 "state": "LA",
 "geoid": "22003",
 "label": "Allen Parish, Louisiana",
 "short": "Allen Parish",
 "units": 338
-},
-{
-"slug": "madison-county-ny",
-"state": "NY",
-"geoid": "36053",
-"label": "Madison County, New York",
-"short": "Madison County",
-"units": 337
-},
-{
-"slug": "clark-county-oh",
-"state": "OH",
-"geoid": "39023",
-"label": "Clark County, Ohio",
-"short": "Clark County",
-"units": 337
 },
 {
 "slug": "cheshire-county-nh",
@@ -5648,14 +7312,6 @@
 "units": 333
 },
 {
-"slug": "washington-county-mn",
-"state": "MN",
-"geoid": "27163",
-"label": "Washington County, Minnesota",
-"short": "Washington County",
-"units": 330
-},
-{
 "slug": "isle-of-wight-county-va",
 "state": "VA",
 "geoid": "51093",
@@ -5670,14 +7326,6 @@
 "label": "Schoharie County, New York",
 "short": "Schoharie County",
 "units": 329
-},
-{
-"slug": "middlesex-county-va",
-"state": "VA",
-"geoid": "51119",
-"label": "Middlesex County, Virginia",
-"short": "Middlesex County",
-"units": 328
 },
 {
 "slug": "butler-county-mo",
@@ -5702,14 +7350,6 @@
 "label": "Sullivan County, Tennessee",
 "short": "Sullivan County",
 "units": 327
-},
-{
-"slug": "summit-county-co",
-"state": "CO",
-"geoid": "08117",
-"label": "Summit County, Colorado",
-"short": "Summit County",
-"units": 325
 },
 {
 "slug": "midland-county-mi",
@@ -5744,27 +7384,11 @@
 "units": 323
 },
 {
-"slug": "washington-county-wi",
-"state": "WI",
-"geoid": "55131",
-"label": "Washington County, Wisconsin",
-"short": "Washington County",
-"units": 323
-},
-{
 "slug": "crawford-county-pa",
 "state": "PA",
 "geoid": "42039",
 "label": "Crawford County, Pennsylvania",
 "short": "Crawford County",
-"units": 322
-},
-{
-"slug": "logan-county-wv",
-"state": "WV",
-"geoid": "54045",
-"label": "Logan County, West Virginia",
-"short": "Logan County",
 "units": 322
 },
 {
@@ -5781,14 +7405,6 @@
 "geoid": "13111",
 "label": "Fannin County, Georgia",
 "short": "Fannin County",
-"units": 320
-},
-{
-"slug": "roanoke-county-va",
-"state": "VA",
-"geoid": "51161",
-"label": "Roanoke County, Virginia",
-"short": "Roanoke County",
 "units": 320
 },
 {
@@ -5832,14 +7448,6 @@
 "units": 316
 },
 {
-"slug": "otsego-county-ny",
-"state": "NY",
-"geoid": "36077",
-"label": "Otsego County, New York",
-"short": "Otsego County",
-"units": 315
-},
-{
 "slug": "blount-county-tn",
 "state": "TN",
 "geoid": "47009",
@@ -5864,28 +7472,12 @@
 "units": 309
 },
 {
-"slug": "douglas-county-ks",
-"state": "KS",
-"geoid": "20045",
-"label": "Douglas County, Kansas",
-"short": "Douglas County",
-"units": 308
-},
-{
 "slug": "jasper-county-tx",
 "state": "TX",
 "geoid": "48241",
 "label": "Jasper County, Texas",
 "short": "Jasper County",
 "units": 308
-},
-{
-"slug": "montgomery-county-tn",
-"state": "TN",
-"geoid": "47125",
-"label": "Montgomery County, Tennessee",
-"short": "Montgomery County",
-"units": 307
 },
 {
 "slug": "albemarle-county-va",
@@ -5912,14 +7504,6 @@
 "units": 306
 },
 {
-"slug": "washington-county-md",
-"state": "MD",
-"geoid": "24043",
-"label": "Washington County, Maryland",
-"short": "Washington County",
-"units": 305
-},
-{
 "slug": "coos-county-or",
 "state": "OR",
 "geoid": "41011",
@@ -5941,14 +7525,6 @@
 "geoid": "08097",
 "label": "Pitkin County, Colorado",
 "short": "Pitkin County",
-"units": 300
-},
-{
-"slug": "putnam-county-ny",
-"state": "NY",
-"geoid": "36079",
-"label": "Putnam County, New York",
-"short": "Putnam County",
 "units": 300
 },
 {
@@ -5976,14 +7552,6 @@
 "units": 300
 },
 {
-"slug": "washington-county-ut",
-"state": "UT",
-"geoid": "49053",
-"label": "Washington County, Utah",
-"short": "Washington County",
-"units": 300
-},
-{
 "slug": "carter-county-tn",
 "state": "TN",
 "geoid": "47019",
@@ -6000,35 +7568,11 @@
 "units": 298
 },
 {
-"slug": "somerset-county-pa",
-"state": "PA",
-"geoid": "42111",
-"label": "Somerset County, Pennsylvania",
-"short": "Somerset County",
-"units": 298
-},
-{
-"slug": "marion-county-sc",
-"state": "SC",
-"geoid": "45067",
-"label": "Marion County, South Carolina",
-"short": "Marion County",
-"units": 298
-},
-{
 "slug": "kings-county-ca",
 "state": "CA",
 "geoid": "06031",
 "label": "Kings County, California",
 "short": "Kings County",
-"units": 297
-},
-{
-"slug": "hardin-county-ky",
-"state": "KY",
-"geoid": "21093",
-"label": "Hardin County, Kentucky",
-"short": "Hardin County",
 "units": 297
 },
 {
@@ -6048,44 +7592,12 @@
 "units": 295
 },
 {
-"slug": "washington-county-tn",
-"state": "TN",
-"geoid": "47179",
-"label": "Washington County, Tennessee",
-"short": "Washington County",
-"units": 295
-},
-{
 "slug": "eddy-county-nm",
 "state": "NM",
 "geoid": "35015",
 "label": "Eddy County, New Mexico",
 "short": "Eddy County",
 "units": 294
-},
-{
-"slug": "jefferson-county-ny",
-"state": "NY",
-"geoid": "36045",
-"label": "Jefferson County, New York",
-"short": "Jefferson County",
-"units": 293
-},
-{
-"slug": "rogers-county-ok",
-"state": "OK",
-"geoid": "40131",
-"label": "Rogers County, Oklahoma",
-"short": "Rogers County",
-"units": 293
-},
-{
-"slug": "jackson-county-nc",
-"state": "NC",
-"geoid": "37099",
-"label": "Jackson County, North Carolina",
-"short": "Jackson County",
-"units": 292
 },
 {
 "slug": "minnehaha-county-sd",
@@ -6157,14 +7669,6 @@
 "geoid": "22041",
 "label": "Franklin Parish, Louisiana",
 "short": "Franklin Parish",
-"units": 284
-},
-{
-"slug": "summit-county-ut",
-"state": "UT",
-"geoid": "49043",
-"label": "Summit County, Utah",
-"short": "Summit County",
 "units": 284
 },
 {
@@ -6256,22 +7760,6 @@
 "units": 277
 },
 {
-"slug": "morgan-county-in",
-"state": "IN",
-"geoid": "18109",
-"label": "Morgan County, Indiana",
-"short": "Morgan County",
-"units": 275
-},
-{
-"slug": "union-county-pa",
-"state": "PA",
-"geoid": "42119",
-"label": "Union County, Pennsylvania",
-"short": "Union County",
-"units": 275
-},
-{
 "slug": "colfax-county-ne",
 "state": "NE",
 "geoid": "31037",
@@ -6285,22 +7773,6 @@
 "geoid": "48463",
 "label": "Uvalde County, Texas",
 "short": "Uvalde County",
-"units": 274
-},
-{
-"slug": "spokane-county-wa",
-"state": "WA",
-"geoid": "53063",
-"label": "Spokane County, Washington",
-"short": "Spokane County",
-"units": 274
-},
-{
-"slug": "putnam-county-wv",
-"state": "WV",
-"geoid": "54079",
-"label": "Putnam County, West Virginia",
-"short": "Putnam County",
 "units": 274
 },
 {
@@ -6384,14 +7856,6 @@
 "units": 270
 },
 {
-"slug": "franklin-county-pa",
-"state": "PA",
-"geoid": "42055",
-"label": "Franklin County, Pennsylvania",
-"short": "Franklin County",
-"units": 269
-},
-{
 "slug": "bradley-county-tn",
 "state": "TN",
 "geoid": "47011",
@@ -6406,14 +7870,6 @@
 "label": "Bowie County, Texas",
 "short": "Bowie County",
 "units": 269
-},
-{
-"slug": "lee-county-al",
-"state": "AL",
-"geoid": "01081",
-"label": "Lee County, Alabama",
-"short": "Lee County",
-"units": 268
 },
 {
 "slug": "canadian-county-ok",
@@ -6432,14 +7888,6 @@
 "units": 267
 },
 {
-"slug": "anoka-county-mn",
-"state": "MN",
-"geoid": "27003",
-"label": "Anoka County, Minnesota",
-"short": "Anoka County",
-"units": 267
-},
-{
 "slug": "iroquois-county-il",
 "state": "IL",
 "geoid": "17075",
@@ -6454,14 +7902,6 @@
 "label": "Bedford County, Pennsylvania",
 "short": "Bedford County",
 "units": 266
-},
-{
-"slug": "franklin-county-ky",
-"state": "KY",
-"geoid": "21073",
-"label": "Franklin County, Kentucky",
-"short": "Franklin County",
-"units": 265
 },
 {
 "slug": "spotsylvania-county-va",
@@ -6504,14 +7944,6 @@
 "units": 263
 },
 {
-"slug": "logan-county-oh",
-"state": "OH",
-"geoid": "39091",
-"label": "Logan County, Ohio",
-"short": "Logan County",
-"units": 263
-},
-{
 "slug": "st-joseph-county-in",
 "state": "IN",
 "geoid": "18141",
@@ -6526,14 +7958,6 @@
 "label": "Avery County, North Carolina",
 "short": "Avery County",
 "units": 262
-},
-{
-"slug": "madison-county-ky",
-"state": "KY",
-"geoid": "21151",
-"label": "Madison County, Kentucky",
-"short": "Madison County",
-"units": 260
 },
 {
 "slug": "rowan-county-ky",
@@ -6574,14 +7998,6 @@
 "label": "Laramie County, Wyoming",
 "short": "Laramie County",
 "units": 258
-},
-{
-"slug": "henderson-county-ky",
-"state": "KY",
-"geoid": "21101",
-"label": "Henderson County, Kentucky",
-"short": "Henderson County",
-"units": 256
 },
 {
 "slug": "san-francisco-county-ca",
@@ -6656,14 +8072,6 @@
 "units": 248
 },
 {
-"slug": "henderson-county-tx",
-"state": "TX",
-"geoid": "48213",
-"label": "Henderson County, Texas",
-"short": "Henderson County",
-"units": 248
-},
-{
 "slug": "wyoming-county-wv",
 "state": "WV",
 "geoid": "54109",
@@ -6680,43 +8088,11 @@
 "units": 246
 },
 {
-"slug": "forsyth-county-ga",
-"state": "GA",
-"geoid": "13117",
-"label": "Forsyth County, Georgia",
-"short": "Forsyth County",
-"units": 246
-},
-{
-"slug": "monroe-county-ms",
-"state": "MS",
-"geoid": "28095",
-"label": "Monroe County, Mississippi",
-"short": "Monroe County",
-"units": 246
-},
-{
-"slug": "jefferson-county-wa",
-"state": "WA",
-"geoid": "53031",
-"label": "Jefferson County, Washington",
-"short": "Jefferson County",
-"units": 246
-},
-{
 "slug": "genesee-county-ny",
 "state": "NY",
 "geoid": "36037",
 "label": "Genesee County, New York",
 "short": "Genesee County",
-"units": 245
-},
-{
-"slug": "weber-county-ut",
-"state": "UT",
-"geoid": "49057",
-"label": "Weber County, Utah",
-"short": "Weber County",
 "units": 245
 },
 {
@@ -6904,14 +8280,6 @@
 "units": 232
 },
 {
-"slug": "mesa-county-co",
-"state": "CO",
-"geoid": "08077",
-"label": "Mesa County, Colorado",
-"short": "Mesa County",
-"units": 231
-},
-{
 "slug": "wood-county-wv",
 "state": "WV",
 "geoid": "54107",
@@ -6933,14 +8301,6 @@
 "geoid": "26077",
 "label": "Kalamazoo County, Michigan",
 "short": "Kalamazoo County",
-"units": 229
-},
-{
-"slug": "chatham-county-nc",
-"state": "NC",
-"geoid": "37037",
-"label": "Chatham County, North Carolina",
-"short": "Chatham County",
 "units": 229
 },
 {
@@ -6968,22 +8328,6 @@
 "units": 228
 },
 {
-"slug": "essex-county-va",
-"state": "VA",
-"geoid": "51057",
-"label": "Essex County, Virginia",
-"short": "Essex County",
-"units": 228
-},
-{
-"slug": "lee-county-ga",
-"state": "GA",
-"geoid": "13177",
-"label": "Lee County, Georgia",
-"short": "Lee County",
-"units": 227
-},
-{
 "slug": "saline-county-ks",
 "state": "KS",
 "geoid": "20169",
@@ -6998,14 +8342,6 @@
 "label": "Salem city, Virginia",
 "short": "Salem city",
 "units": 227
-},
-{
-"slug": "dallas-county-al",
-"state": "AL",
-"geoid": "01047",
-"label": "Dallas County, Alabama",
-"short": "Dallas County",
-"units": 226
 },
 {
 "slug": "fremont-county-co",
@@ -7024,27 +8360,11 @@
 "units": 226
 },
 {
-"slug": "madison-county-in",
-"state": "IN",
-"geoid": "18095",
-"label": "Madison County, Indiana",
-"short": "Madison County",
-"units": 226
-},
-{
 "slug": "jones-county-ms",
 "state": "MS",
 "geoid": "28067",
 "label": "Jones County, Mississippi",
 "short": "Jones County",
-"units": 225
-},
-{
-"slug": "franklin-county-mo",
-"state": "MO",
-"geoid": "29071",
-"label": "Franklin County, Missouri",
-"short": "Franklin County",
 "units": 225
 },
 {
@@ -7080,14 +8400,6 @@
 "units": 223
 },
 {
-"slug": "lonoke-county-ar",
-"state": "AR",
-"geoid": "05085",
-"label": "Lonoke County, Arkansas",
-"short": "Lonoke County",
-"units": 222
-},
-{
 "slug": "carson-city-nv",
 "state": "NV",
 "geoid": "32510",
@@ -7112,27 +8424,11 @@
 "units": 222
 },
 {
-"slug": "logan-county-co",
-"state": "CO",
-"geoid": "08075",
-"label": "Logan County, Colorado",
-"short": "Logan County",
-"units": 221
-},
-{
 "slug": "strafford-county-nh",
 "state": "NH",
 "geoid": "33017",
 "label": "Strafford County, New Hampshire",
 "short": "Strafford County",
-"units": 221
-},
-{
-"slug": "madison-county-tn",
-"state": "TN",
-"geoid": "47113",
-"label": "Madison County, Tennessee",
-"short": "Madison County",
 "units": 221
 },
 {
@@ -7149,14 +8445,6 @@
 "geoid": "18015",
 "label": "Carroll County, Indiana",
 "short": "Carroll County",
-"units": 219
-},
-{
-"slug": "harrison-county-ia",
-"state": "IA",
-"geoid": "19085",
-"label": "Harrison County, Iowa",
-"short": "Harrison County",
 "units": 219
 },
 {
@@ -7192,14 +8480,6 @@
 "units": 217
 },
 {
-"slug": "marion-county-ms",
-"state": "MS",
-"geoid": "28091",
-"label": "Marion County, Mississippi",
-"short": "Marion County",
-"units": 217
-},
-{
 "slug": "benton-county-wa",
 "state": "WA",
 "geoid": "53005",
@@ -7224,22 +8504,6 @@
 "units": 215
 },
 {
-"slug": "shelby-county-in",
-"state": "IN",
-"geoid": "18145",
-"label": "Shelby County, Indiana",
-"short": "Shelby County",
-"units": 214
-},
-{
-"slug": "washington-county-nc",
-"state": "NC",
-"geoid": "37187",
-"label": "Washington County, North Carolina",
-"short": "Washington County",
-"units": 214
-},
-{
 "slug": "marathon-county-wi",
 "state": "WI",
 "geoid": "55073",
@@ -7256,14 +8520,6 @@
 "units": 213
 },
 {
-"slug": "douglas-county-ga",
-"state": "GA",
-"geoid": "13097",
-"label": "Douglas County, Georgia",
-"short": "Douglas County",
-"units": 213
-},
-{
 "slug": "eaton-county-mi",
 "state": "MI",
 "geoid": "26045",
@@ -7277,14 +8533,6 @@
 "geoid": "19193",
 "label": "Woodbury County, Iowa",
 "short": "Woodbury County",
-"units": 211
-},
-{
-"slug": "perry-county-pa",
-"state": "PA",
-"geoid": "42099",
-"label": "Perry County, Pennsylvania",
-"short": "Perry County",
 "units": 211
 },
 {
@@ -7344,14 +8592,6 @@
 "units": 207
 },
 {
-"slug": "union-county-sd",
-"state": "SD",
-"geoid": "46127",
-"label": "Union County, South Dakota",
-"short": "Union County",
-"units": 207
-},
-{
 "slug": "okanogan-county-wa",
 "state": "WA",
 "geoid": "53047",
@@ -7384,30 +8624,6 @@
 "units": 206
 },
 {
-"slug": "columbia-county-ny",
-"state": "NY",
-"geoid": "36021",
-"label": "Columbia County, New York",
-"short": "Columbia County",
-"units": 206
-},
-{
-"slug": "harrison-county-wv",
-"state": "WV",
-"geoid": "54033",
-"label": "Harrison County, West Virginia",
-"short": "Harrison County",
-"units": 206
-},
-{
-"slug": "johnson-county-ky",
-"state": "KY",
-"geoid": "21115",
-"label": "Johnson County, Kentucky",
-"short": "Johnson County",
-"units": 205
-},
-{
 "slug": "androscoggin-county-me",
 "state": "ME",
 "geoid": "23001",
@@ -7432,28 +8648,12 @@
 "units": 204
 },
 {
-"slug": "washington-county-ok",
-"state": "OK",
-"geoid": "40147",
-"label": "Washington County, Oklahoma",
-"short": "Washington County",
-"units": 204
-},
-{
 "slug": "hanover-county-va",
 "state": "VA",
 "geoid": "51085",
 "label": "Hanover County, Virginia",
 "short": "Hanover County",
 "units": 203
-},
-{
-"slug": "clay-county-mn",
-"state": "MN",
-"geoid": "27027",
-"label": "Clay County, Minnesota",
-"short": "Clay County",
-"units": 202
 },
 {
 "slug": "buffalo-county-ne",
@@ -7464,14 +8664,6 @@
 "units": 202
 },
 {
-"slug": "hancock-county-in",
-"state": "IN",
-"geoid": "18059",
-"label": "Hancock County, Indiana",
-"short": "Hancock County",
-"units": 201
-},
-{
 "slug": "lincoln-county-mo",
 "state": "MO",
 "geoid": "29113",
@@ -7480,27 +8672,11 @@
 "units": 201
 },
 {
-"slug": "washington-county-tx",
-"state": "TX",
-"geoid": "48477",
-"label": "Washington County, Texas",
-"short": "Washington County",
-"units": 201
-},
-{
 "slug": "carroll-county-md",
 "state": "MD",
 "geoid": "24013",
 "label": "Carroll County, Maryland",
 "short": "Carroll County",
-"units": 200
-},
-{
-"slug": "marion-county-oh",
-"state": "OH",
-"geoid": "39101",
-"label": "Marion County, Ohio",
-"short": "Marion County",
 "units": 200
 },
 {
@@ -7526,14 +8702,6 @@
 "label": "Coffee County, Alabama",
 "short": "Coffee County",
 "units": 198
-},
-{
-"slug": "monroe-county-in",
-"state": "IN",
-"geoid": "18105",
-"label": "Monroe County, Indiana",
-"short": "Monroe County",
-"units": 197
 },
 {
 "slug": "tippecanoe-county-in",
@@ -7624,14 +8792,6 @@
 "units": 193
 },
 {
-"slug": "montgomery-county-ny",
-"state": "NY",
-"geoid": "36057",
-"label": "Montgomery County, New York",
-"short": "Montgomery County",
-"units": 193
-},
-{
 "slug": "bladen-county-nc",
 "state": "NC",
 "geoid": "37017",
@@ -7712,14 +8872,6 @@
 "units": 191
 },
 {
-"slug": "monroe-county-il",
-"state": "IL",
-"geoid": "17133",
-"label": "Monroe County, Illinois",
-"short": "Monroe County",
-"units": 190
-},
-{
 "slug": "allegan-county-mi",
 "state": "MI",
 "geoid": "26005",
@@ -7776,14 +8928,6 @@
 "units": 188
 },
 {
-"slug": "jefferson-county-wv",
-"state": "WV",
-"geoid": "54037",
-"label": "Jefferson County, West Virginia",
-"short": "Jefferson County",
-"units": 188
-},
-{
 "slug": "crisp-county-ga",
 "state": "GA",
 "geoid": "13081",
@@ -7800,27 +8944,11 @@
 "units": 187
 },
 {
-"slug": "harrison-county-tx",
-"state": "TX",
-"geoid": "48203",
-"label": "Harrison County, Texas",
-"short": "Harrison County",
-"units": 187
-},
-{
 "slug": "desha-county-ar",
 "state": "AR",
 "geoid": "05041",
 "label": "Desha County, Arkansas",
 "short": "Desha County",
-"units": 186
-},
-{
-"slug": "jackson-county-mi",
-"state": "MI",
-"geoid": "26075",
-"label": "Jackson County, Michigan",
-"short": "Jackson County",
 "units": 186
 },
 {
@@ -7853,14 +8981,6 @@
 "geoid": "19057",
 "label": "Des Moines County, Iowa",
 "short": "Des Moines County",
-"units": 184
-},
-{
-"slug": "jefferson-county-wi",
-"state": "WI",
-"geoid": "55055",
-"label": "Jefferson County, Wisconsin",
-"short": "Jefferson County",
 "units": 184
 },
 {
@@ -7952,14 +9072,6 @@
 "units": 180
 },
 {
-"slug": "fairfield-county-sc",
-"state": "SC",
-"geoid": "45039",
-"label": "Fairfield County, South Carolina",
-"short": "Fairfield County",
-"units": 179
-},
-{
 "slug": "olmsted-county-mn",
 "state": "MN",
 "geoid": "27109",
@@ -7990,14 +9102,6 @@
 "label": "Warren County, Pennsylvania",
 "short": "Warren County",
 "units": 177
-},
-{
-"slug": "jackson-county-in",
-"state": "IN",
-"geoid": "18071",
-"label": "Jackson County, Indiana",
-"short": "Jackson County",
-"units": 176
 },
 {
 "slug": "carter-county-ky",
@@ -8048,14 +9152,6 @@
 "units": 173
 },
 {
-"slug": "essex-county-ny",
-"state": "NY",
-"geoid": "36031",
-"label": "Essex County, New York",
-"short": "Essex County",
-"units": 173
-},
-{
 "slug": "mahoning-county-oh",
 "state": "OH",
 "geoid": "39099",
@@ -8072,14 +9168,6 @@
 "units": 173
 },
 {
-"slug": "howard-county-in",
-"state": "IN",
-"geoid": "18067",
-"label": "Howard County, Indiana",
-"short": "Howard County",
-"units": 172
-},
-{
 "slug": "east-carroll-parish-la",
 "state": "LA",
 "geoid": "22035",
@@ -8093,14 +9181,6 @@
 "geoid": "48395",
 "label": "Robertson County, Texas",
 "short": "Robertson County",
-"units": 172
-},
-{
-"slug": "montgomery-county-va",
-"state": "VA",
-"geoid": "51121",
-"label": "Montgomery County, Virginia",
-"short": "Montgomery County",
 "units": 172
 },
 {
@@ -8160,27 +9240,11 @@
 "units": 171
 },
 {
-"slug": "perry-county-ky",
-"state": "KY",
-"geoid": "21193",
-"label": "Perry County, Kentucky",
-"short": "Perry County",
-"units": 170
-},
-{
 "slug": "caldwell-county-nc",
 "state": "NC",
 "geoid": "37027",
 "label": "Caldwell County, North Carolina",
 "short": "Caldwell County",
-"units": 170
-},
-{
-"slug": "jefferson-county-pa",
-"state": "PA",
-"geoid": "42065",
-"label": "Jefferson County, Pennsylvania",
-"short": "Jefferson County",
 "units": 170
 },
 {
@@ -8232,30 +9296,6 @@
 "units": 167
 },
 {
-"slug": "jackson-county-ar",
-"state": "AR",
-"geoid": "05067",
-"label": "Jackson County, Arkansas",
-"short": "Jackson County",
-"units": 166
-},
-{
-"slug": "dekalb-county-il",
-"state": "IL",
-"geoid": "17037",
-"label": "DeKalb County, Illinois",
-"short": "DeKalb County",
-"units": 166
-},
-{
-"slug": "hendricks-county-in",
-"state": "IN",
-"geoid": "18063",
-"label": "Hendricks County, Indiana",
-"short": "Hendricks County",
-"units": 166
-},
-{
 "slug": "allegany-county-md",
 "state": "MD",
 "geoid": "24001",
@@ -8264,27 +9304,11 @@
 "units": 166
 },
 {
-"slug": "hardin-county-tn",
-"state": "TN",
-"geoid": "47071",
-"label": "Hardin County, Tennessee",
-"short": "Hardin County",
-"units": 166
-},
-{
 "slug": "palo-pinto-county-tx",
 "state": "TX",
 "geoid": "48363",
 "label": "Palo Pinto County, Texas",
 "short": "Palo Pinto County",
-"units": 166
-},
-{
-"slug": "columbia-county-wi",
-"state": "WI",
-"geoid": "55021",
-"label": "Columbia County, Wisconsin",
-"short": "Columbia County",
 "units": 166
 },
 {
@@ -8309,14 +9333,6 @@
 "geoid": "05145",
 "label": "White County, Arkansas",
 "short": "White County",
-"units": 165
-},
-{
-"slug": "franklin-county-ma",
-"state": "MA",
-"geoid": "25011",
-"label": "Franklin County, Massachusetts",
-"short": "Franklin County",
 "units": 165
 },
 {
@@ -8400,14 +9416,6 @@
 "units": 164
 },
 {
-"slug": "williamson-county-il",
-"state": "IL",
-"geoid": "17199",
-"label": "Williamson County, Illinois",
-"short": "Williamson County",
-"units": 163
-},
-{
 "slug": "gallia-county-oh",
 "state": "OH",
 "geoid": "39053",
@@ -8432,14 +9440,6 @@
 "units": 163
 },
 {
-"slug": "baker-county-fl",
-"state": "FL",
-"geoid": "12003",
-"label": "Baker County, Florida",
-"short": "Baker County",
-"units": 162
-},
-{
 "slug": "letcher-county-ky",
 "state": "KY",
 "geoid": "21133",
@@ -8453,14 +9453,6 @@
 "geoid": "48349",
 "label": "Navarro County, Texas",
 "short": "Navarro County",
-"units": 162
-},
-{
-"slug": "marion-county-wv",
-"state": "WV",
-"geoid": "54049",
-"label": "Marion County, West Virginia",
-"short": "Marion County",
 "units": 162
 },
 {
@@ -8581,14 +9573,6 @@
 "geoid": "48013",
 "label": "Atascosa County, Texas",
 "short": "Atascosa County",
-"units": 159
-},
-{
-"slug": "berkeley-county-wv",
-"state": "WV",
-"geoid": "54003",
-"label": "Berkeley County, West Virginia",
-"short": "Berkeley County",
 "units": 159
 },
 {
@@ -8752,14 +9736,6 @@
 "units": 154
 },
 {
-"slug": "jefferson-county-oh",
-"state": "OH",
-"geoid": "39081",
-"label": "Jefferson County, Ohio",
-"short": "Jefferson County",
-"units": 153
-},
-{
 "slug": "wood-county-oh",
 "state": "OH",
 "geoid": "39173",
@@ -8773,14 +9749,6 @@
 "geoid": "48277",
 "label": "Lamar County, Texas",
 "short": "Lamar County",
-"units": 153
-},
-{
-"slug": "franklin-county-vt",
-"state": "VT",
-"geoid": "50011",
-"label": "Franklin County, Vermont",
-"short": "Franklin County",
 "units": 153
 },
 {
@@ -8824,27 +9792,11 @@
 "units": 151
 },
 {
-"slug": "martin-county-ky",
-"state": "KY",
-"geoid": "21159",
-"label": "Martin County, Kentucky",
-"short": "Martin County",
-"units": 151
-},
-{
 "slug": "calhoun-county-mi",
 "state": "MI",
 "geoid": "26025",
 "label": "Calhoun County, Michigan",
 "short": "Calhoun County",
-"units": 151
-},
-{
-"slug": "lake-county-sd",
-"state": "SD",
-"geoid": "46079",
-"label": "Lake County, South Dakota",
-"short": "Lake County",
 "units": 151
 },
 {
@@ -8928,22 +9880,6 @@
 "units": 148
 },
 {
-"slug": "putnam-county-oh",
-"state": "OH",
-"geoid": "39137",
-"label": "Putnam County, Ohio",
-"short": "Putnam County",
-"units": 148
-},
-{
-"slug": "union-county-ga",
-"state": "GA",
-"geoid": "13291",
-"label": "Union County, Georgia",
-"short": "Union County",
-"units": 147
-},
-{
 "slug": "cass-county-il",
 "state": "IL",
 "geoid": "17017",
@@ -8958,14 +9894,6 @@
 "label": "East Feliciana Parish, Louisiana",
 "short": "East Feliciana Parish",
 "units": 147
-},
-{
-"slug": "clay-county-ar",
-"state": "AR",
-"geoid": "05021",
-"label": "Clay County, Arkansas",
-"short": "Clay County",
-"units": 146
 },
 {
 "slug": "winona-county-mn",
@@ -8997,22 +9925,6 @@
 "geoid": "18159",
 "label": "Tipton County, Indiana",
 "short": "Tipton County",
-"units": 145
-},
-{
-"slug": "somerset-county-me",
-"state": "ME",
-"geoid": "23025",
-"label": "Somerset County, Maine",
-"short": "Somerset County",
-"units": 145
-},
-{
-"slug": "knox-county-oh",
-"state": "OH",
-"geoid": "39083",
-"label": "Knox County, Ohio",
-"short": "Knox County",
 "units": 145
 },
 {
@@ -9120,14 +10032,6 @@
 "units": 141
 },
 {
-"slug": "lee-county-nc",
-"state": "NC",
-"geoid": "37105",
-"label": "Lee County, North Carolina",
-"short": "Lee County",
-"units": 141
-},
-{
 "slug": "van-zandt-county-tx",
 "state": "TX",
 "geoid": "48467",
@@ -9160,14 +10064,6 @@
 "units": 140
 },
 {
-"slug": "clay-county-ms",
-"state": "MS",
-"geoid": "28025",
-"label": "Clay County, Mississippi",
-"short": "Clay County",
-"units": 140
-},
-{
 "slug": "sandusky-county-oh",
 "state": "OH",
 "geoid": "39143",
@@ -9197,22 +10093,6 @@
 "geoid": "26121",
 "label": "Muskegon County, Michigan",
 "short": "Muskegon County",
-"units": 139
-},
-{
-"slug": "clay-county-nc",
-"state": "NC",
-"geoid": "37043",
-"label": "Clay County, North Carolina",
-"short": "Clay County",
-"units": 139
-},
-{
-"slug": "orange-county-vt",
-"state": "VT",
-"geoid": "50017",
-"label": "Orange County, Vermont",
-"short": "Orange County",
 "units": 139
 },
 {
@@ -9296,14 +10176,6 @@
 "units": 137
 },
 {
-"slug": "escambia-county-al",
-"state": "AL",
-"geoid": "01053",
-"label": "Escambia County, Alabama",
-"short": "Escambia County",
-"units": 136
-},
-{
 "slug": "leelanau-county-mi",
 "state": "MI",
 "geoid": "26089",
@@ -9326,14 +10198,6 @@
 "label": "Smyth County, Virginia",
 "short": "Smyth County",
 "units": 136
-},
-{
-"slug": "franklin-county-me",
-"state": "ME",
-"geoid": "23007",
-"label": "Franklin County, Maine",
-"short": "Franklin County",
-"units": 135
 },
 {
 "slug": "marshall-county-wv",
@@ -9424,14 +10288,6 @@
 "units": 133
 },
 {
-"slug": "washington-county-va",
-"state": "VA",
-"geoid": "51191",
-"label": "Washington County, Virginia",
-"short": "Washington County",
-"units": 133
-},
-{
 "slug": "goshen-county-wy",
 "state": "WY",
 "geoid": "56015",
@@ -9469,14 +10325,6 @@
 "geoid": "39059",
 "label": "Guernsey County, Ohio",
 "short": "Guernsey County",
-"units": 132
-},
-{
-"slug": "pottawatomie-county-ok",
-"state": "OK",
-"geoid": "40125",
-"label": "Pottawatomie County, Oklahoma",
-"short": "Pottawatomie County",
 "units": 132
 },
 {
@@ -9536,14 +10384,6 @@
 "units": 131
 },
 {
-"slug": "richland-county-oh",
-"state": "OH",
-"geoid": "39139",
-"label": "Richland County, Ohio",
-"short": "Richland County",
-"units": 131
-},
-{
 "slug": "van-buren-county-mi",
 "state": "MI",
 "geoid": "26159",
@@ -9568,27 +10408,11 @@
 "units": 130
 },
 {
-"slug": "jackson-county-al",
-"state": "AL",
-"geoid": "01071",
-"label": "Jackson County, Alabama",
-"short": "Jackson County",
-"units": 129
-},
-{
 "slug": "lawrence-county-ar",
 "state": "AR",
 "geoid": "05075",
 "label": "Lawrence County, Arkansas",
 "short": "Lawrence County",
-"units": 129
-},
-{
-"slug": "monroe-county-ar",
-"state": "AR",
-"geoid": "05095",
-"label": "Monroe County, Arkansas",
-"short": "Monroe County",
 "units": 129
 },
 {
@@ -9624,14 +10448,6 @@
 "units": 128
 },
 {
-"slug": "seminole-county-ga",
-"state": "GA",
-"geoid": "13253",
-"label": "Seminole County, Georgia",
-"short": "Seminole County",
-"units": 128
-},
-{
 "slug": "goodhue-county-mn",
 "state": "MN",
 "geoid": "27049",
@@ -9661,14 +10477,6 @@
 "geoid": "35057",
 "label": "Torrance County, New Mexico",
 "short": "Torrance County",
-"units": 128
-},
-{
-"slug": "washington-county-ny",
-"state": "NY",
-"geoid": "36115",
-"label": "Washington County, New York",
-"short": "Washington County",
 "units": 128
 },
 {
@@ -9712,14 +10520,6 @@
 "units": 127
 },
 {
-"slug": "clark-county-ky",
-"state": "KY",
-"geoid": "21049",
-"label": "Clark County, Kentucky",
-"short": "Clark County",
-"units": 127
-},
-{
 "slug": "elko-county-nv",
 "state": "NV",
 "geoid": "32007",
@@ -9728,36 +10528,12 @@
 "units": 127
 },
 {
-"slug": "washington-county-fl",
-"state": "FL",
-"geoid": "12133",
-"label": "Washington County, Florida",
-"short": "Washington County",
-"units": 126
-},
-{
 "slug": "page-county-va",
 "state": "VA",
 "geoid": "51139",
 "label": "Page County, Virginia",
 "short": "Page County",
 "units": 126
-},
-{
-"slug": "morgan-county-wv",
-"state": "WV",
-"geoid": "54065",
-"label": "Morgan County, West Virginia",
-"short": "Morgan County",
-"units": 126
-},
-{
-"slug": "calaveras-county-ca",
-"state": "CA",
-"geoid": "06009",
-"label": "Calaveras County, California",
-"short": "Calaveras County",
-"units": 125
 },
 {
 "slug": "hardee-county-fl",
@@ -9808,14 +10584,6 @@
 "units": 124
 },
 {
-"slug": "jackson-county-il",
-"state": "IL",
-"geoid": "17077",
-"label": "Jackson County, Illinois",
-"short": "Jackson County",
-"units": 124
-},
-{
 "slug": "bedford-county-va",
 "state": "VA",
 "geoid": "51019",
@@ -9848,14 +10616,6 @@
 "units": 123
 },
 {
-"slug": "shelby-county-oh",
-"state": "OH",
-"geoid": "39149",
-"label": "Shelby County, Ohio",
-"short": "Shelby County",
-"units": 123
-},
-{
 "slug": "obion-county-tn",
 "state": "TN",
 "geoid": "47131",
@@ -9885,14 +10645,6 @@
 "geoid": "22061",
 "label": "Lincoln Parish, Louisiana",
 "short": "Lincoln Parish",
-"units": 122
-},
-{
-"slug": "washington-county-me",
-"state": "ME",
-"geoid": "23029",
-"label": "Washington County, Maine",
-"short": "Washington County",
 "units": 122
 },
 {
@@ -10024,14 +10776,6 @@
 "units": 119
 },
 {
-"slug": "polk-county-ga",
-"state": "GA",
-"geoid": "13233",
-"label": "Polk County, Georgia",
-"short": "Polk County",
-"units": 119
-},
-{
 "slug": "jasper-county-in",
 "state": "IN",
 "geoid": "18073",
@@ -10120,14 +10864,6 @@
 "units": 117
 },
 {
-"slug": "marion-county-tn",
-"state": "TN",
-"geoid": "47115",
-"label": "Marion County, Tennessee",
-"short": "Marion County",
-"units": 117
-},
-{
 "slug": "tyler-county-tx",
 "state": "TX",
 "geoid": "48457",
@@ -10165,14 +10901,6 @@
 "geoid": "18129",
 "label": "Posey County, Indiana",
 "short": "Posey County",
-"units": 116
-},
-{
-"slug": "polk-county-mn",
-"state": "MN",
-"geoid": "27119",
-"label": "Polk County, Minnesota",
-"short": "Polk County",
 "units": 116
 },
 {
@@ -10232,14 +10960,6 @@
 "units": 115
 },
 {
-"slug": "montgomery-county-ks",
-"state": "KS",
-"geoid": "20125",
-"label": "Montgomery County, Kansas",
-"short": "Montgomery County",
-"units": 115
-},
-{
 "slug": "issaquena-county-ms",
 "state": "MS",
 "geoid": "28055",
@@ -10254,14 +10974,6 @@
 "label": "Lampasas County, Texas",
 "short": "Lampasas County",
 "units": 115
-},
-{
-"slug": "pottawatomie-county-ks",
-"state": "KS",
-"geoid": "20149",
-"label": "Pottawatomie County, Kansas",
-"short": "Pottawatomie County",
-"units": 114
 },
 {
 "slug": "quitman-county-ms",
@@ -10392,22 +11104,6 @@
 "units": 111
 },
 {
-"slug": "perry-county-oh",
-"state": "OH",
-"geoid": "39127",
-"label": "Perry County, Ohio",
-"short": "Perry County",
-"units": 111
-},
-{
-"slug": "jackson-county-fl",
-"state": "FL",
-"geoid": "12063",
-"label": "Jackson County, Florida",
-"short": "Jackson County",
-"units": 110
-},
-{
 "slug": "sabine-parish-la",
 "state": "LA",
 "geoid": "22085",
@@ -10448,14 +11144,6 @@
 "units": 110
 },
 {
-"slug": "monroe-county-wi",
-"state": "WI",
-"geoid": "55081",
-"label": "Monroe County, Wisconsin",
-"short": "Monroe County",
-"units": 110
-},
-{
 "slug": "butts-county-ga",
 "state": "GA",
 "geoid": "13035",
@@ -10469,22 +11157,6 @@
 "geoid": "13139",
 "label": "Hall County, Georgia",
 "short": "Hall County",
-"units": 109
-},
-{
-"slug": "lee-county-il",
-"state": "IL",
-"geoid": "17103",
-"label": "Lee County, Illinois",
-"short": "Lee County",
-"units": 109
-},
-{
-"slug": "washington-county-ia",
-"state": "IA",
-"geoid": "19183",
-"label": "Washington County, Iowa",
-"short": "Washington County",
 "units": 109
 },
 {
@@ -10616,14 +11288,6 @@
 "units": 105
 },
 {
-"slug": "harrison-county-ky",
-"state": "KY",
-"geoid": "21097",
-"label": "Harrison County, Kentucky",
-"short": "Harrison County",
-"units": 105
-},
-{
 "slug": "jessamine-county-ky",
 "state": "KY",
 "geoid": "21113",
@@ -10637,14 +11301,6 @@
 "geoid": "26067",
 "label": "Ionia County, Michigan",
 "short": "Ionia County",
-"units": 105
-},
-{
-"slug": "madison-county-ne",
-"state": "NE",
-"geoid": "31119",
-"label": "Madison County, Nebraska",
-"short": "Madison County",
 "units": 105
 },
 {
@@ -10712,14 +11368,6 @@
 "units": 103
 },
 {
-"slug": "morgan-county-co",
-"state": "CO",
-"geoid": "08087",
-"label": "Morgan County, Colorado",
-"short": "Morgan County",
-"units": 103
-},
-{
 "slug": "humphreys-county-ms",
 "state": "MS",
 "geoid": "28053",
@@ -10736,14 +11384,6 @@
 "units": 103
 },
 {
-"slug": "madison-county-nc",
-"state": "NC",
-"geoid": "37115",
-"label": "Madison County, North Carolina",
-"short": "Madison County",
-"units": 103
-},
-{
 "slug": "delaware-county-ok",
 "state": "OK",
 "geoid": "40041",
@@ -10757,14 +11397,6 @@
 "geoid": "40049",
 "label": "Garvin County, Oklahoma",
 "short": "Garvin County",
-"units": 103
-},
-{
-"slug": "baker-county-or",
-"state": "OR",
-"geoid": "41001",
-"label": "Baker County, Oregon",
-"short": "Baker County",
 "units": 103
 },
 {
@@ -10864,14 +11496,6 @@
 "units": 100
 },
 {
-"slug": "douglas-county-il",
-"state": "IL",
-"geoid": "17041",
-"label": "Douglas County, Illinois",
-"short": "Douglas County",
-"units": 100
-},
-{
 "slug": "mcpherson-county-ks",
 "state": "KS",
 "geoid": "20113",
@@ -10885,14 +11509,6 @@
 "geoid": "21017",
 "label": "Bourbon County, Kentucky",
 "short": "Bourbon County",
-"units": 100
-},
-{
-"slug": "stark-county-nd",
-"state": "ND",
-"geoid": "38089",
-"label": "Stark County, North Dakota",
-"short": "Stark County",
 "units": 100
 },
 {
@@ -10928,14 +11544,6 @@
 "units": 99
 },
 {
-"slug": "jefferson-county-tn",
-"state": "TN",
-"geoid": "47089",
-"label": "Jefferson County, Tennessee",
-"short": "Jefferson County",
-"units": 99
-},
-{
 "slug": "cache-county-ut",
 "state": "UT",
 "geoid": "49005",
@@ -10960,14 +11568,6 @@
 "units": 99
 },
 {
-"slug": "sumter-county-ga",
-"state": "GA",
-"geoid": "13261",
-"label": "Sumter County, Georgia",
-"short": "Sumter County",
-"units": 98
-},
-{
 "slug": "bannock-county-id",
 "state": "ID",
 "geoid": "16005",
@@ -10976,27 +11576,11 @@
 "units": 98
 },
 {
-"slug": "montgomery-county-ia",
-"state": "IA",
-"geoid": "19137",
-"label": "Montgomery County, Iowa",
-"short": "Montgomery County",
-"units": 98
-},
-{
 "slug": "crow-wing-county-mn",
 "state": "MN",
 "geoid": "27035",
 "label": "Crow Wing County, Minnesota",
 "short": "Crow Wing County",
-"units": 98
-},
-{
-"slug": "fulton-county-ny",
-"state": "NY",
-"geoid": "36035",
-"label": "Fulton County, New York",
-"short": "Fulton County",
 "units": 98
 },
 {
@@ -11013,14 +11597,6 @@
 "geoid": "05111",
 "label": "Poinsett County, Arkansas",
 "short": "Poinsett County",
-"units": 97
-},
-{
-"slug": "jefferson-county-in",
-"state": "IN",
-"geoid": "18077",
-"label": "Jefferson County, Indiana",
-"short": "Jefferson County",
 "units": 97
 },
 {
@@ -11088,14 +11664,6 @@
 "units": 96
 },
 {
-"slug": "dallas-county-ia",
-"state": "IA",
-"geoid": "19049",
-"label": "Dallas County, Iowa",
-"short": "Dallas County",
-"units": 96
-},
-{
 "slug": "dubuque-county-ia",
 "state": "IA",
 "geoid": "19061",
@@ -11133,14 +11701,6 @@
 "geoid": "39135",
 "label": "Preble County, Ohio",
 "short": "Preble County",
-"units": 95
-},
-{
-"slug": "union-county-or",
-"state": "OR",
-"geoid": "41061",
-"label": "Union County, Oregon",
-"short": "Union County",
 "units": 95
 },
 {
@@ -11192,27 +11752,11 @@
 "units": 94
 },
 {
-"slug": "knox-county-ky",
-"state": "KY",
-"geoid": "21121",
-"label": "Knox County, Kentucky",
-"short": "Knox County",
-"units": 94
-},
-{
 "slug": "newaygo-county-mi",
 "state": "MI",
 "geoid": "26123",
 "label": "Newaygo County, Michigan",
 "short": "Newaygo County",
-"units": 94
-},
-{
-"slug": "franklin-county-nc",
-"state": "NC",
-"geoid": "37069",
-"label": "Franklin County, North Carolina",
-"short": "Franklin County",
 "units": 94
 },
 {
@@ -11248,14 +11792,6 @@
 "units": 93
 },
 {
-"slug": "polk-county-nc",
-"state": "NC",
-"geoid": "37149",
-"label": "Polk County, North Carolina",
-"short": "Polk County",
-"units": 93
-},
-{
 "slug": "pend-oreille-county-wa",
 "state": "WA",
 "geoid": "53051",
@@ -11272,27 +11808,11 @@
 "units": 92
 },
 {
-"slug": "union-county-ar",
-"state": "AR",
-"geoid": "05139",
-"label": "Union County, Arkansas",
-"short": "Union County",
-"units": 91
-},
-{
 "slug": "broomfield-county-co",
 "state": "CO",
 "geoid": "08014",
 "label": "Broomfield County, Colorado",
 "short": "Broomfield County",
-"units": 91
-},
-{
-"slug": "madison-county-fl",
-"state": "FL",
-"geoid": "12079",
-"label": "Madison County, Florida",
-"short": "Madison County",
 "units": 91
 },
 {
@@ -11309,14 +11829,6 @@
 "geoid": "18013",
 "label": "Brown County, Indiana",
 "short": "Brown County",
-"units": 91
-},
-{
-"slug": "clay-county-ia",
-"state": "IA",
-"geoid": "19041",
-"label": "Clay County, Iowa",
-"short": "Clay County",
 "units": 91
 },
 {
@@ -11341,14 +11853,6 @@
 "geoid": "22125",
 "label": "West Feliciana Parish, Louisiana",
 "short": "West Feliciana Parish",
-"units": 91
-},
-{
-"slug": "martin-county-nc",
-"state": "NC",
-"geoid": "37117",
-"label": "Martin County, North Carolina",
-"short": "Martin County",
 "units": 91
 },
 {
@@ -11381,14 +11885,6 @@
 "geoid": "16019",
 "label": "Bonneville County, Idaho",
 "short": "Bonneville County",
-"units": 90
-},
-{
-"slug": "morgan-county-il",
-"state": "IL",
-"geoid": "17137",
-"label": "Morgan County, Illinois",
-"short": "Morgan County",
 "units": 90
 },
 {
@@ -11488,27 +11984,11 @@
 "units": 88
 },
 {
-"slug": "morgan-county-mo",
-"state": "MO",
-"geoid": "29141",
-"label": "Morgan County, Missouri",
-"short": "Morgan County",
-"units": 88
-},
-{
 "slug": "white-pine-county-nv",
 "state": "NV",
 "geoid": "32033",
 "label": "White Pine County, Nevada",
 "short": "White Pine County",
-"units": 88
-},
-{
-"slug": "franklin-county-ny",
-"state": "NY",
-"geoid": "36033",
-"label": "Franklin County, New York",
-"short": "Franklin County",
 "units": 88
 },
 {
@@ -11549,14 +12029,6 @@
 "geoid": "48223",
 "label": "Hopkins County, Texas",
 "short": "Hopkins County",
-"units": 88
-},
-{
-"slug": "lewis-county-wv",
-"state": "WV",
-"geoid": "54041",
-"label": "Lewis County, West Virginia",
-"short": "Lewis County",
 "units": 88
 },
 {
@@ -11606,14 +12078,6 @@
 "label": "Wythe County, Virginia",
 "short": "Wythe County",
 "units": 87
-},
-{
-"slug": "henderson-county-il",
-"state": "IL",
-"geoid": "17071",
-"label": "Henderson County, Illinois",
-"short": "Henderson County",
-"units": 86
 },
 {
 "slug": "doniphan-county-ks",
@@ -11720,30 +12184,6 @@
 "units": 85
 },
 {
-"slug": "hancock-county-wv",
-"state": "WV",
-"geoid": "54029",
-"label": "Hancock County, West Virginia",
-"short": "Hancock County",
-"units": 85
-},
-{
-"slug": "jackson-county-wv",
-"state": "WV",
-"geoid": "54035",
-"label": "Jackson County, West Virginia",
-"short": "Jackson County",
-"units": 85
-},
-{
-"slug": "mason-county-wv",
-"state": "WV",
-"geoid": "54053",
-"label": "Mason County, West Virginia",
-"short": "Mason County",
-"units": 85
-},
-{
 "slug": "marinette-county-wi",
 "state": "WI",
 "geoid": "55075",
@@ -11773,14 +12213,6 @@
 "geoid": "40097",
 "label": "Mayes County, Oklahoma",
 "short": "Mayes County",
-"units": 84
-},
-{
-"slug": "johnson-county-tn",
-"state": "TN",
-"geoid": "47091",
-"label": "Johnson County, Tennessee",
-"short": "Johnson County",
 "units": 84
 },
 {
@@ -11845,22 +12277,6 @@
 "geoid": "01095",
 "label": "Marshall County, Alabama",
 "short": "Marshall County",
-"units": 82
-},
-{
-"slug": "monroe-county-ga",
-"state": "GA",
-"geoid": "13207",
-"label": "Monroe County, Georgia",
-"short": "Monroe County",
-"units": 82
-},
-{
-"slug": "knox-county-in",
-"state": "IN",
-"geoid": "18083",
-"label": "Knox County, Indiana",
-"short": "Knox County",
 "units": 82
 },
 {
@@ -11976,14 +12392,6 @@
 "units": 81
 },
 {
-"slug": "walton-county-ga",
-"state": "GA",
-"geoid": "13297",
-"label": "Walton County, Georgia",
-"short": "Walton County",
-"units": 81
-},
-{
 "slug": "ray-county-mo",
 "state": "MO",
 "geoid": "29177",
@@ -12000,27 +12408,11 @@
 "units": 81
 },
 {
-"slug": "franklin-county-tn",
-"state": "TN",
-"geoid": "47051",
-"label": "Franklin County, Tennessee",
-"short": "Franklin County",
-"units": 81
-},
-{
 "slug": "cullman-county-al",
 "state": "AL",
 "geoid": "01043",
 "label": "Cullman County, Alabama",
 "short": "Cullman County",
-"units": 80
-},
-{
-"slug": "cook-county-ga",
-"state": "GA",
-"geoid": "13075",
-"label": "Cook County, Georgia",
-"short": "Cook County",
 "units": 80
 },
 {
@@ -12080,35 +12472,11 @@
 "units": 79
 },
 {
-"slug": "jefferson-county-fl",
-"state": "FL",
-"geoid": "12065",
-"label": "Jefferson County, Florida",
-"short": "Jefferson County",
-"units": 79
-},
-{
 "slug": "colquitt-county-ga",
 "state": "GA",
 "geoid": "13071",
 "label": "Colquitt County, Georgia",
 "short": "Colquitt County",
-"units": 79
-},
-{
-"slug": "harris-county-ga",
-"state": "GA",
-"geoid": "13145",
-"label": "Harris County, Georgia",
-"short": "Harris County",
-"units": 79
-},
-{
-"slug": "harrison-county-in",
-"state": "IN",
-"geoid": "18061",
-"label": "Harrison County, Indiana",
-"short": "Harrison County",
 "units": 79
 },
 {
@@ -12125,14 +12493,6 @@
 "geoid": "38057",
 "label": "Mercer County, North Dakota",
 "short": "Mercer County",
-"units": 79
-},
-{
-"slug": "cameron-county-pa",
-"state": "PA",
-"geoid": "42023",
-"label": "Cameron County, Pennsylvania",
-"short": "Cameron County",
 "units": 79
 },
 {
@@ -12328,14 +12688,6 @@
 "units": 77
 },
 {
-"slug": "jefferson-county-or",
-"state": "OR",
-"geoid": "41031",
-"label": "Jefferson County, Oregon",
-"short": "Jefferson County",
-"units": 77
-},
-{
 "slug": "grant-county-in",
 "state": "IN",
 "geoid": "18053",
@@ -12349,14 +12701,6 @@
 "geoid": "24023",
 "label": "Garrett County, Maryland",
 "short": "Garrett County",
-"units": 76
-},
-{
-"slug": "johnson-county-mo",
-"state": "MO",
-"geoid": "29101",
-"label": "Johnson County, Missouri",
-"short": "Johnson County",
 "units": 76
 },
 {
@@ -12430,22 +12774,6 @@
 "label": "Hamlin County, South Dakota",
 "short": "Hamlin County",
 "units": 75
-},
-{
-"slug": "dekalb-county-al",
-"state": "AL",
-"geoid": "01049",
-"label": "DeKalb County, Alabama",
-"short": "DeKalb County",
-"units": 74
-},
-{
-"slug": "lewis-county-ky",
-"state": "KY",
-"geoid": "21135",
-"label": "Lewis County, Kentucky",
-"short": "Lewis County",
-"units": 74
 },
 {
 "slug": "wabasha-county-mn",
@@ -12576,22 +12904,6 @@
 "units": 72
 },
 {
-"slug": "hancock-county-ky",
-"state": "KY",
-"geoid": "21091",
-"label": "Hancock County, Kentucky",
-"short": "Hancock County",
-"units": 72
-},
-{
-"slug": "jackson-county-oh",
-"state": "OH",
-"geoid": "39079",
-"label": "Jackson County, Ohio",
-"short": "Jackson County",
-"units": 72
-},
-{
 "slug": "seneca-county-oh",
 "state": "OH",
 "geoid": "39147",
@@ -12624,14 +12936,6 @@
 "units": 72
 },
 {
-"slug": "orange-county-va",
-"state": "VA",
-"geoid": "51137",
-"label": "Orange County, Virginia",
-"short": "Orange County",
-"units": 72
-},
-{
 "slug": "dale-county-al",
 "state": "AL",
 "geoid": "01045",
@@ -12645,14 +12949,6 @@
 "geoid": "01113",
 "label": "Russell County, Alabama",
 "short": "Russell County",
-"units": 71
-},
-{
-"slug": "lee-county-ar",
-"state": "AR",
-"geoid": "05077",
-"label": "Lee County, Arkansas",
-"short": "Lee County",
 "units": 71
 },
 {
@@ -12688,14 +12984,6 @@
 "units": 71
 },
 {
-"slug": "perry-county-tn",
-"state": "TN",
-"geoid": "47135",
-"label": "Perry County, Tennessee",
-"short": "Perry County",
-"units": 71
-},
-{
 "slug": "wayne-county-tn",
 "state": "TN",
 "geoid": "47181",
@@ -12717,14 +13005,6 @@
 "geoid": "54021",
 "label": "Gilmer County, West Virginia",
 "short": "Gilmer County",
-"units": 71
-},
-{
-"slug": "douglas-county-wi",
-"state": "WI",
-"geoid": "55031",
-"label": "Douglas County, Wisconsin",
-"short": "Douglas County",
 "units": 71
 },
 {
@@ -12781,14 +13061,6 @@
 "geoid": "41045",
 "label": "Malheur County, Oregon",
 "short": "Malheur County",
-"units": 70
-},
-{
-"slug": "putnam-county-tn",
-"state": "TN",
-"geoid": "47141",
-"label": "Putnam County, Tennessee",
-"short": "Putnam County",
 "units": 70
 },
 {
@@ -12872,14 +13144,6 @@
 "units": 68
 },
 {
-"slug": "union-county-fl",
-"state": "FL",
-"geoid": "12125",
-"label": "Union County, Florida",
-"short": "Union County",
-"units": 68
-},
-{
 "slug": "wayne-county-ga",
 "state": "GA",
 "geoid": "13305",
@@ -12920,14 +13184,6 @@
 "units": 68
 },
 {
-"slug": "lewis-county-ny",
-"state": "NY",
-"geoid": "36049",
-"label": "Lewis County, New York",
-"short": "Lewis County",
-"units": 68
-},
-{
 "slug": "dickson-county-tn",
 "state": "TN",
 "geoid": "47043",
@@ -12949,14 +13205,6 @@
 "geoid": "55071",
 "label": "Manitowoc County, Wisconsin",
 "short": "Manitowoc County",
-"units": 68
-},
-{
-"slug": "pierce-county-wi",
-"state": "WI",
-"geoid": "55093",
-"label": "Pierce County, Wisconsin",
-"short": "Pierce County",
 "units": 68
 },
 {
@@ -13000,14 +13248,6 @@
 "units": 66
 },
 {
-"slug": "dekalb-county-in",
-"state": "IN",
-"geoid": "18033",
-"label": "DeKalb County, Indiana",
-"short": "DeKalb County",
-"units": 66
-},
-{
 "slug": "miami-county-in",
 "state": "IN",
 "geoid": "18103",
@@ -13024,14 +13264,6 @@
 "units": 66
 },
 {
-"slug": "york-county-ne",
-"state": "NE",
-"geoid": "31185",
-"label": "York County, Nebraska",
-"short": "York County",
-"units": 66
-},
-{
 "slug": "orleans-county-ny",
 "state": "NY",
 "geoid": "36073",
@@ -13045,22 +13277,6 @@
 "geoid": "37165",
 "label": "Scotland County, North Carolina",
 "short": "Scotland County",
-"units": 66
-},
-{
-"slug": "fulton-county-oh",
-"state": "OH",
-"geoid": "39051",
-"label": "Fulton County, Ohio",
-"short": "Fulton County",
-"units": 66
-},
-{
-"slug": "union-county-oh",
-"state": "OH",
-"geoid": "39159",
-"label": "Union County, Ohio",
-"short": "Union County",
 "units": 66
 },
 {
@@ -13104,14 +13320,6 @@
 "units": 65
 },
 {
-"slug": "clark-county-ar",
-"state": "AR",
-"geoid": "05019",
-"label": "Clark County, Arkansas",
-"short": "Clark County",
-"units": 65
-},
-{
 "slug": "mclean-county-ky",
 "state": "KY",
 "geoid": "21149",
@@ -13136,14 +13344,6 @@
 "units": 65
 },
 {
-"slug": "hardin-county-oh",
-"state": "OH",
-"geoid": "39065",
-"label": "Hardin County, Ohio",
-"short": "Hardin County",
-"units": 65
-},
-{
 "slug": "sullivan-county-pa",
 "state": "PA",
 "geoid": "42113",
@@ -13152,27 +13352,11 @@
 "units": 65
 },
 {
-"slug": "hancock-county-il",
-"state": "IL",
-"geoid": "17067",
-"label": "Hancock County, Illinois",
-"short": "Hancock County",
-"units": 64
-},
-{
 "slug": "warren-county-mo",
 "state": "MO",
 "geoid": "29219",
 "label": "Warren County, Missouri",
 "short": "Warren County",
-"units": 64
-},
-{
-"slug": "washington-county-ne",
-"state": "NE",
-"geoid": "31177",
-"label": "Washington County, Nebraska",
-"short": "Washington County",
 "units": 64
 },
 {
@@ -13189,22 +13373,6 @@
 "geoid": "37167",
 "label": "Stanly County, North Carolina",
 "short": "Stanly County",
-"units": 64
-},
-{
-"slug": "logan-county-ok",
-"state": "OK",
-"geoid": "40083",
-"label": "Logan County, Oklahoma",
-"short": "Logan County",
-"units": 64
-},
-{
-"slug": "monroe-county-tn",
-"state": "TN",
-"geoid": "47123",
-"label": "Monroe County, Tennessee",
-"short": "Monroe County",
 "units": 64
 },
 {
@@ -13293,14 +13461,6 @@
 "geoid": "47013",
 "label": "Campbell County, Tennessee",
 "short": "Campbell County",
-"units": 62
-},
-{
-"slug": "polk-county-tn",
-"state": "TN",
-"geoid": "47139",
-"label": "Polk County, Tennessee",
-"short": "Polk County",
 "units": 62
 },
 {
@@ -13413,14 +13573,6 @@
 "geoid": "17011",
 "label": "Bureau County, Illinois",
 "short": "Bureau County",
-"units": 59
-},
-{
-"slug": "union-county-il",
-"state": "IL",
-"geoid": "17181",
-"label": "Union County, Illinois",
-"short": "Union County",
 "units": 59
 },
 {
@@ -13560,14 +13712,6 @@
 "units": 57
 },
 {
-"slug": "washington-county-id",
-"state": "ID",
-"geoid": "16087",
-"label": "Washington County, Idaho",
-"short": "Washington County",
-"units": 57
-},
-{
 "slug": "lapeer-county-mi",
 "state": "MI",
 "geoid": "26087",
@@ -13614,14 +13758,6 @@
 "label": "Hertford County, North Carolina",
 "short": "Hertford County",
 "units": 57
-},
-{
-"slug": "logan-county-il",
-"state": "IL",
-"geoid": "17107",
-"label": "Logan County, Illinois",
-"short": "Logan County",
-"units": 56
 },
 {
 "slug": "ford-county-ks",
@@ -13688,14 +13824,6 @@
 "units": 55
 },
 {
-"slug": "richland-county-nd",
-"state": "ND",
-"geoid": "38077",
-"label": "Richland County, North Dakota",
-"short": "Richland County",
-"units": 55
-},
-{
 "slug": "laurens-county-sc",
 "state": "SC",
 "geoid": "45059",
@@ -13720,14 +13848,6 @@
 "units": 55
 },
 {
-"slug": "clay-county-wv",
-"state": "WV",
-"geoid": "54015",
-"label": "Clay County, West Virginia",
-"short": "Clay County",
-"units": 55
-},
-{
 "slug": "dunn-county-wi",
 "state": "WI",
 "geoid": "55033",
@@ -13744,35 +13864,11 @@
 "units": 54
 },
 {
-"slug": "franklin-county-il",
-"state": "IL",
-"geoid": "17055",
-"label": "Franklin County, Illinois",
-"short": "Franklin County",
-"units": 54
-},
-{
 "slug": "owen-county-in",
 "state": "IN",
 "geoid": "18119",
 "label": "Owen County, Indiana",
 "short": "Owen County",
-"units": 54
-},
-{
-"slug": "perry-county-in",
-"state": "IN",
-"geoid": "18123",
-"label": "Perry County, Indiana",
-"short": "Perry County",
-"units": 54
-},
-{
-"slug": "jefferson-county-ks",
-"state": "KS",
-"geoid": "20087",
-"label": "Jefferson County, Kansas",
-"short": "Jefferson County",
 "units": 54
 },
 {
@@ -13824,14 +13920,6 @@
 "units": 52
 },
 {
-"slug": "clay-county-ky",
-"state": "KY",
-"geoid": "21051",
-"label": "Clay County, Kentucky",
-"short": "Clay County",
-"units": 52
-},
-{
 "slug": "neshoba-county-ms",
 "state": "MS",
 "geoid": "28099",
@@ -13861,14 +13949,6 @@
 "geoid": "38099",
 "label": "Walsh County, North Dakota",
 "short": "Walsh County",
-"units": 52
-},
-{
-"slug": "morgan-county-oh",
-"state": "OH",
-"geoid": "39115",
-"label": "Morgan County, Ohio",
-"short": "Morgan County",
 "units": 52
 },
 {
@@ -13960,14 +14040,6 @@
 "units": 50
 },
 {
-"slug": "tooele-county-ut",
-"state": "UT",
-"geoid": "49045",
-"label": "Tooele County, Utah",
-"short": "Tooele County",
-"units": 50
-},
-{
 "slug": "culpeper-county-va",
 "state": "VA",
 "geoid": "51047",
@@ -14008,14 +14080,6 @@
 "units": 48
 },
 {
-"slug": "mason-county-il",
-"state": "IL",
-"geoid": "17125",
-"label": "Mason County, Illinois",
-"short": "Mason County",
-"units": 48
-},
-{
 "slug": "vermilion-county-il",
 "state": "IL",
 "geoid": "17183",
@@ -14045,14 +14109,6 @@
 "geoid": "18023",
 "label": "Clinton County, Indiana",
 "short": "Clinton County",
-"units": 47
-},
-{
-"slug": "howard-county-ne",
-"state": "NE",
-"geoid": "31093",
-"label": "Howard County, Nebraska",
-"short": "Howard County",
 "units": 47
 },
 {
@@ -14144,14 +14200,6 @@
 "units": 44
 },
 {
-"slug": "shelby-county-ky",
-"state": "KY",
-"geoid": "21211",
-"label": "Shelby County, Kentucky",
-"short": "Shelby County",
-"units": 44
-},
-{
 "slug": "gladwin-county-mi",
 "state": "MI",
 "geoid": "26051",
@@ -14173,14 +14221,6 @@
 "geoid": "41023",
 "label": "Grant County, Oregon",
 "short": "Grant County",
-"units": 44
-},
-{
-"slug": "clay-county-tx",
-"state": "TX",
-"geoid": "48077",
-"label": "Clay County, Texas",
-"short": "Clay County",
 "units": 44
 },
 {
@@ -14216,14 +14256,6 @@
 "units": 43
 },
 {
-"slug": "jackson-county-ga",
-"state": "GA",
-"geoid": "13157",
-"label": "Jackson County, Georgia",
-"short": "Jackson County",
-"units": 43
-},
-{
 "slug": "williams-county-oh",
 "state": "OH",
 "geoid": "39171",
@@ -14237,14 +14269,6 @@
 "geoid": "13013",
 "label": "Barrow County, Georgia",
 "short": "Barrow County",
-"units": 42
-},
-{
-"slug": "jefferson-county-id",
-"state": "ID",
-"geoid": "16051",
-"label": "Jefferson County, Idaho",
-"short": "Jefferson County",
 "units": 42
 },
 {
@@ -14269,14 +14293,6 @@
 "geoid": "51099",
 "label": "King George County, Virginia",
 "short": "King George County",
-"units": 42
-},
-{
-"slug": "columbia-county-wa",
-"state": "WA",
-"geoid": "53013",
-"label": "Columbia County, Washington",
-"short": "Columbia County",
 "units": 42
 },
 {
@@ -14320,14 +14336,6 @@
 "units": 41
 },
 {
-"slug": "putnam-county-in",
-"state": "IN",
-"geoid": "18133",
-"label": "Putnam County, Indiana",
-"short": "Putnam County",
-"units": 40
-},
-{
 "slug": "wells-county-in",
 "state": "IN",
 "geoid": "18179",
@@ -14365,14 +14373,6 @@
 "geoid": "37045",
 "label": "Cleveland County, North Carolina",
 "short": "Cleveland County",
-"units": 38
-},
-{
-"slug": "madison-county-oh",
-"state": "OH",
-"geoid": "39097",
-"label": "Madison County, Ohio",
-"short": "Madison County",
 "units": 38
 },
 {
