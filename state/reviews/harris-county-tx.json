@@ -1,0 +1,8 @@
+{
+ "slug": "harris-county-tx",
+ "verdict": "PASS",
+ "template": "cb95d8797bde7a4c",
+ "defects": [],
+ "reviewer": "hater round 63 (fresh agent, docs/HATER-PROMPT.md)",
+ "notes": ""
+}

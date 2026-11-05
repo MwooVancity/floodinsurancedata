@@ -181,6 +181,10 @@ s.addEventListener('input',function(){{var q=s.value.toLowerCase();
  var n=[].filter.call(document.querySelectorAll('#st tbody tr,#t tbody tr'),function(r){{return r.style.display!=='none';}}).length;
  document.getElementById('nomatch').textContent=(q&&!n)?"No page matches yet. Every county's typical cost is in its state page's county table: find your state below.":'';}});
 </script>{FOOT}"""
+_org = json.dumps({"@context": "https://schema.org", "@graph": [   # audit 11-04: the site as an entity; nothing invented (no person, address, sameAs)
+    {"@type": "Organization", "@id": BASE + "/#org", "name": "Flood Insurance Data", "url": BASE + "/"},
+    {"@type": "WebSite", "@id": BASE + "/#site", "name": "Flood Insurance Data", "url": BASE + "/", "publisher": {"@id": BASE + "/#org"}}]})
+home = home.replace("</body>", f'<script type="application/ld+json">{_org}</script></body>', 1) if "</body>" in home else home + f'<script type="application/ld+json">{_org}</script>'
 wr(os.path.join(DIST, "index.html"), home)
 
 # ---- /flood-insurance/ hub (the Breadcrumb target + county directory; previously a hard 404) ----
@@ -432,7 +436,9 @@ sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps
      "</urlset>\n"
 wr(os.path.join(DIST, "sitemap.xml"), sm)
 wr(os.path.join(DIST, "robots.txt"), f"User-agent: *\nAllow: /\nSitemap: {BASE}/sitemap.xml\n")
-wr(os.path.join(DIST, "_headers"), "/flood-insurance/*/data.csv\n  X-Robots-Tag: noindex\n")   # a download, not a search result
+wr(os.path.join(DIST, "_headers"), "/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n"
+   "  X-Frame-Options: DENY\n  Strict-Transport-Security: max-age=31536000\n"   # audit 11-04; no CSP: inline scripts + GA tag
+   "/flood-insurance/*/data.csv\n  X-Robots-Tag: noindex\n")   # a download, not a search result
 wr(os.path.join(DIST, "llms.txt"),
    "# Flood insurance data\n\n> Per-county NFIP flood-insurance statistics from public FEMA data: what "
    "policyholders pay, the gap to FEMA's full-risk price, claims history, flood risk, and CRS discounts.\n\n"

@@ -1,8 +1,8 @@
 {
  "slug": "bossier-parish-la",
  "verdict": "PASS",
- "template": "e99a08b0823f476a",
+ "template": "cb95d8797bde7a4c",
  "defects": [],
- "reviewer": "hater round 62 (fresh agent, docs/HATER-PROMPT.md)",
+ "reviewer": "hater round 63 (fresh agent, docs/HATER-PROMPT.md)",
  "notes": ""
 }

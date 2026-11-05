@@ -333,7 +333,7 @@ def card_zone_cost():
 def _gap_parts():
     MX.compare("prem_median", "frp_median")   # like-for-like or it raises
     gap_lead = ((m('share_below', str(P['share_below']) + '%') + " of policies in " + CS + " pay less than FEMA's full-risk price, so "
-                 + claim("their bills are rising", "rising", ("share_below", ">", 0)) + " toward it." if P.get("share_below") else
+                 + claim("those policies' bills are rising", "rising", ("share_below", ">", 0)) + " toward it." if P.get("share_below") else
                  "No policy here pays less than FEMA's full-risk price.")
                 + f" Median premium {m('prem_median', money(PREM_MED))}, full-risk {m('frp_median', money(P['frp_median']))} (premiums only, before fees).")
     # Years-to-full-risk glide path — derived from data we already hold + the statutory annual cap (a RULE,
@@ -1260,7 +1260,7 @@ table{{width:100%}}}}
 <div class="stat"><div class="n">{m('cost_p50', money(P['p50']))}</div><div class="l">Median / yr, single-family primary home</div></div>
 <div class="stat"><div class="n">{m('cost_mo', median_mo)}</div><div class="l">A month, spread over the year</div></div>
 {_spread_tile()}
-<div class="stat"><div class="n">{m('share_below', str(P['share_below']) + '%')}</div><div class="l">Of these homes, pay below FEMA's full-risk price</div></div>
+<div class="stat"><div class="n">{m('share_below', str(P['share_below']) + '%')}</div><div class="l">Share of these homes below FEMA's full-risk price</div></div>
 </div>
 {cmp_line}{_jump}
 <a class="btn" href="https://msc.fema.gov/portal/home" rel="noopener" target="_blank">Check your address on FEMA's flood map →</a>
