@@ -31,6 +31,6 @@ print("flag self-test OK")
 # carry with no slugs must take every page on the samples' approved template, never a FAIL
 import hater as _H
 _s = _H.stamped_slugs()
-assert {"home", "louisiana", "palm-beach-county-fl", "broward-county-fl", "new-york-county-ny"} <= set(_s), _s
+assert {"home", "louisiana", "palm-beach-county-fl", "new-york-county-ny"} <= set(_s), _s   # the samples + one flagged page; Broward left 11-04 (not re-reviewed, not required by S12)
 assert "horry-county-sc" not in _s and "atlantic-county-nj" not in _s, _s   # a FAIL and an older template stay out
 print("carry slug list OK:", len(_s))
