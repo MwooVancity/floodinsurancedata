@@ -123,7 +123,7 @@ MUTATIONS = [   # (defect class from THE EVIDENCE table, what we reintroduce, ex
     ("hater r1", "unpaid table shows only some reasons", "C8",
      re.sub(r"(<th>Reason recorded</th><th>Claims</th></tr></thead><tbody>)<tr>.*?</tr>", r"\1", PAGE, count=1, flags=re.S), None),
     ("hater r1", "a rule printed twice on the page", "E2",
-     PAGE.replace("<p class='note'>Policy records keep", "<p class='note'>Standard homeowners insurance does not cover flood damage; flood insurance is bought separately, through the federal NFIP or a private insurer. Policy records keep", 1), None),
+     PAGE.replace("<p class='note'>Policy records keep", "<p class='note'>" + _RULES["purchase_short"]["text"] + " Policy records keep", 1), None),   # read from the registry: typed text went stale when the rule changed (11-04)
     ("edge 11-02", "count with a plural noun", "T2", sub("; other sites count other policies", "; 1 federal disasters; other sites count other policies"), None),
     ("edge 11-02", "builder note on the page", "T2", sub("; other sites count other policies", "; Next source to pull; other sites count other policies"), None),
     ("edge 11-02", "spread tile beside its suppression", "T3", sub("; other sites count other policies", "; Suppressed percentile spread; other sites count other policies"), None),

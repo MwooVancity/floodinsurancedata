@@ -289,7 +289,7 @@ def _cost_parts():
                      f"<li><b>Median annual cost</b><span>{m('cost_p50', money(P['p50']))}</span></li></ul>"
                      f"<p class='note'>Suppressed percentile spread: fewer than {tp('threshold', 'const.spread_min', q='spread_min')} policies with a valid recorded cost.</p>")
     else:
-        cost_lead = (f"Typically about {m('cost_p50', money(P['p50']))} a year ({m('cost_mo', money(P['p50'] / 12))} a month), "
+        cost_lead = (f"In {CS}, typically about {m('cost_p50', money(P['p50']))} a year ({m('cost_mo', money(P['p50'] / 12))} a month), "
                      f"fees included. Half of homeowners here pay between {m('cost_p25', money(P['p25']))} and "
                      f"{m('cost_p75', money(P['p75']))}. To check a quote, use the checker at the top.")
         cost_body = (spread_svg() + "<p class='note'>Each policy's annual cost (premium plus the federal policy fee, "
@@ -332,7 +332,7 @@ def card_zone_cost():
 
 def _gap_parts():
     MX.compare("prem_median", "frp_median")   # like-for-like or it raises
-    gap_lead = ((m('share_below', str(P['share_below']) + '%') + " of policies here pay less than FEMA's full-risk price, so "
+    gap_lead = ((m('share_below', str(P['share_below']) + '%') + " of policies in " + CS + " pay less than FEMA's full-risk price, so "
                  + claim("their bills are rising", "rising", ("share_below", ">", 0)) + " toward it." if P.get("share_below") else
                  "No policy here pays less than FEMA's full-risk price.")
                 + f" Median premium {m('prem_median', money(PREM_MED))}, full-risk {m('frp_median', money(P['frp_median']))} (premiums only, before fees).")
@@ -351,7 +351,7 @@ def _gap_parts():
     return gap_lead, glide_note
 
 def _claims_parts():
-    claims_lead = (f"Floods here have led to {m('claims_filed', num(C['rows']))} NFIP flood {pl(C['rows'], 'claim')} and "
+    claims_lead = (f"Floods in {CS} have led to {m('claims_filed', num(C['rows']))} NFIP flood {pl(C['rows'], 'claim')} and "
                    f"{m('claims_total', big(C['total_paid']))} in payouts since {C['year_min']}"
                    + (f"; the worst {pl(len(top_paid), 'year was', 'years were')} {and_list(y for y, _ in top_paid)}." if top_paid else "."))
     # the ratio reads like a risk score, so it is demoted to a note with both numbers shown, never the headline.
@@ -795,7 +795,7 @@ def card_payout():
         if _top and C.get("total_paid") and _top[1]["paid"] > 0.5 * C["total_paid"]:
             _nm = re.sub(r"(?<=[a-z])(?=[A-Z])", " ", re.sub(r"^\d{4}-\d{2}-", "", _top[1]["name"]).replace("-", " ")).strip()
             _evtop = (html.escape(_nm), tp("event_paid", f"extras.claims.events.{_top[0]}.paid", big, q=_top[1]["name"]))
-        _ans = (claim("Most do", "most", ("cwop_share", "<", 50)) + f": {m('paid_share', str(_paid_pct) + '%')} of claims here paid something"
+        _ans = (claim("Most do", "most", ("cwop_share", "<", 50)) + f": {m('paid_share', str(_paid_pct) + '%')} of claims in {CS} paid something"
                 if cx["cwop_share"] < 50 else
                 f"{m('cwop_share', str(cx['cwop_share']) + '%')} of claims here closed with no payment"
                 + (f"; the top specific reason FEMA recorded was “{html.escape(_why[0]['label']).lower()}” (all reasons below)" if _why else "")
@@ -971,7 +971,7 @@ _cxq = data.get("claims_extra") or {}
 if _cxq.get("claims") and _cxq.get("avg_paid") and P.get("p50"):
     _sroot = ROOT_DATA.get("state") if isinstance(ROOT_DATA.get("state"), dict) else {}   # on a state page "state" is just its code
     _scx = (_sroot.get("data") or {}).get("claims_extra") or {}
-    _qa.append(f'<a href="#payout"><b>Does it pay out here?</b> {m("paid_share", str(round(100 - _cxq["cwop_share"], 1)) + "%")} of claims here paid '
+    _qa.append(f'<a href="#payout"><b>Does it pay out here?</b> {m("paid_share", str(round(100 - _cxq["cwop_share"], 1)) + "%")} of NFIP claims in {CS} (all years on record) paid '
                + (f'something ({html.escape(STATE_NAMES[agg["state"]])}: {m("paid_share", str(round(100 - _scx["cwop_share"], 1)) + "%", q="state")}); '
                   if _scx.get("cwop_share") is not None else 'something; ')
                + (f'the typical paid building claim was {tp("paid_bldg_median", "extras.claims.paid_building_median", money)} (all years, not inflation-adjusted).' if _xc.get("paid_building_median") else f'the average paid claim was {tp("avg_paid", "data.claims_extra.avg_paid", money)} (all years, not inflation-adjusted).')
@@ -1014,11 +1014,11 @@ jsonld = json.dumps([
      "dateModified": P["asof"][:10],   # the data's real change date, not the download day; no datePublished (it would move with every refresh)
      "citation": "@@CITATION@@",
      "isBasedOn": "https://www.fema.gov/about/openfema/data-sets", "license": "https://www.fema.gov/about/openfema/terms-conditions"},
-    {"@context": "https://schema.org", "@type": "Place", "name": CL,
-     "address": {"@type": "PostalAddress", "addressRegion": agg.get("state") or ((agg.get("nri") or {}).get("state")), "addressCountry": "US"}},
-    {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
-        {"@type": "ListItem", "position": 1, "name": "Flood insurance", "item": f"{BASE_URL}/flood-insurance/"},
-        {"@type": "ListItem", "position": 2, "name": CS, "item": CANON}]},
+    {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [   # mirrors the visible trail (audit 11-04: state was missing)
+        {"@type": "ListItem", "position": 1, "name": "Flood insurance", "item": f"{BASE_URL}/flood-insurance/"}]
+        + ([{"@type": "ListItem", "position": 2, "name": STATE_NAMES[_state], "item": f"{BASE_URL}/flood-insurance/{state_slug(_state)}/"}]
+           if (not IS_STATE and _state in _built_states) else [])
+        + [{"@type": "ListItem", "position": 3 if (not IS_STATE and _state in _built_states) else 2, "name": CS, "item": CANON}]},
 ])
 # quote-compare widget (client-side; a position in the distribution, never a quote)
 # plan item 1: compare the quote with the reader's own zone too (cost_by_zone medians; no estimate, no new figure on the page)
@@ -1064,6 +1064,7 @@ def write_og(dirpath):
     try:
         from PIL import Image, ImageDraw, ImageFont
     except Exception:
+        if os.environ.get("CI"): raise   # the cloud build silently shipped pages with no share image (audit 11-04)
         return None
     def font(sz, bold=True):
         for p in (("C:/Windows/Fonts/arialbd.ttf" if bold else "C:/Windows/Fonts/arial.ttf"),
@@ -1253,13 +1254,13 @@ table{{width:100%}}}}
 <header class="topbar"><div class="wrap"><a class="brand" href="../../">Flood Insurance Data</a><span class="crumb">Flood insurance › {(f'<a href="../{state_slug(_state)}/" style="color:inherit">{html.escape(STATE_NAMES[_state])}</a> › ' if (not IS_STATE and _state in _built_states) else '')}{CS}</span></div></header>
 <main class="wrap">
 <section class="hero">
-<p class="kicker">NFIP records · {CS} · policies as of {POL_ASOF}</p>
 <h1>Flood insurance in {CL}</h1>
+<p class="lede">In {CL}, the median NFIP flood insurance policy on a single-family primary home costs {m('cost_p50', money(P['p50']))} a year (premium plus fees, policies in force as of {POL_ASOF}).</p>
 <div class="stats">
 <div class="stat"><div class="n">{m('cost_p50', money(P['p50']))}</div><div class="l">Median / yr, single-family primary home</div></div>
 <div class="stat"><div class="n">{m('cost_mo', median_mo)}</div><div class="l">A month, spread over the year</div></div>
 {_spread_tile()}
-<div class="stat"><div class="n">{m('share_below', str(P['share_below']) + '%')}</div><div class="l">Pay below FEMA's full-risk price; those bills move toward it each year</div></div>
+<div class="stat"><div class="n">{m('share_below', str(P['share_below']) + '%')}</div><div class="l">Of these homes, pay below FEMA's full-risk price</div></div>
 </div>
 {cmp_line}{_jump}
 <a class="btn" href="https://msc.fema.gov/portal/home" rel="noopener" target="_blank">Check your address on FEMA's flood map →</a>

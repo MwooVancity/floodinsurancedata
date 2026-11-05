@@ -70,7 +70,7 @@ jobs:
       - name: Phone check browser
         if: steps.add.outputs.none != '1'
         run: |
-          pip install -q playwright==1.64.1 && python -m playwright install --with-deps chromium webkit
+          pip install -q playwright==1.64.1 pillow==12.2.0 && python -m playwright install --with-deps chromium webkit
           sudo apt-get install -y -q fonts-roboto fonts-noto-core fonts-noto-mono   # measure with a phone's fonts
           mkdir -p ~/.config/fontconfig && cp tools/ci-fonts.conf ~/.config/fontconfig/fonts.conf && fc-cache -f
           fc-match sans-serif; fc-match system-ui; fc-match serif   # proof in the log: must print Roboto / Noto Serif

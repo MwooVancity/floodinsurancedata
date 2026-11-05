@@ -18,8 +18,7 @@ USC4012A = "https://www.law.cornell.edu/uscode/text/42/4012a"
 
 RULES = {
     "homeowners_excl": {
-        "text": "Standard homeowners insurance does not cover flood damage; flood insurance is bought separately, through the "
-                "federal NFIP or a private insurer.",
+        "text": "Most homeowners insurance does not cover flood damage.",
         "sources": [(FS + "/flood-insurance-basics", "most homeowners insurance does not cover flood damage", "curl")]},
     "wait_30": {
         "text": "Most NFIP policies take effect <b>30 days after you buy</b>, so a policy bought today will not cover a "
@@ -67,10 +66,14 @@ RULES = {
                     (FIM, "within 10 calendar days from the loan transaction closing", "manual"),
                     (FIM, "The effective date will be the date and time of the loan closing", "manual")]},
     "howto_answer": {
-        "text": "Most policies start <b>30 days</b> after you buy, but there is no wait if you buy it with a new "
-                "or refinanced mortgage.",
+        "text": "Most policies start <b>30 days</b> after you buy. Bought while making, increasing, extending or renewing a mortgage, "
+                "it can start at closing if the insurer is paid within 10 days (30 if the lender, title company or settlement attorney pays).",
         "sources": [(FS + "/get-insured/buy-a-policy", "will go into effect 30 days after your date of purchase", "curl"),
-                    (FS + "/get-insured/buy-a-policy", "There is no wait if you buy flood insurance while making", "curl")]},
+                    (FS + "/get-insured/buy-a-policy", "There is no wait if you buy flood insurance while making, increasing, extending or renewing a mortgage", "curl"),
+                    (FIM, "The effective date will be the date and time of the loan closing", "manual"),
+                    (FIM, "within 10 calendar days from the loan transaction closing", "manual"),
+                    (FIM, "If the lender, title company, or settlement attorney pays the premium", "manual"),
+                    (FIM, "within 30 calendar days from the closing", "manual")]},
     "howto_tiles": {
         "text": "<ul class='kv'><li><b>Waiting period</b><span>30 days</span></li>"
                 "<li><b>Bought with a new or refinanced mortgage</b><span>No wait</span></li>"
@@ -158,7 +161,7 @@ RULES = {
                     ("https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=61",
                      "It is your principal residence", "curl")]},
     "save_ways": {   # hater r5: every top result answers "how do I pay less"; FEMA's own list
-        "text": "FEMA's ways to lower an NFIP bill: a higher deductible (you pay more of any loss), work that lowers "
+        "text": "FEMA's ways that may lower an NFIP bill: a higher deductible (you pay more of any loss), work that lowers "
                 "the building's flood risk, and an Elevation Certificate.",
         "sources": [("https://agents.floodsmart.gov/articles/paying-less-flood-insurance",
                      "Choose a Higher Deductible", "curl"),   # 2026-10-28: FEMA moved the old headline into page metadata
@@ -174,12 +177,20 @@ RULES = {
                     (FS + "/premiumcosts", "Choosing a higher deductible means you will need to cover more out of pocket", "curl")]},
     "purchase_short": {   # the screen-1 summary; the full rule sits in its card (no sentence printed twice)
         "text": "Federal law requires it in a high-risk zone with a federally regulated or backed mortgage or federal "
-                "building help; a lender or insurer can require it anywhere.",
+                "building help; outside those zones a lender may still require it.",
         "sources": [("https://www.govinfo.gov/content/pkg/USCODE-2023-title42/html/USCODE-2023-title42-chap50-subchapI-sec4012a.htm",
-                     "regulated lending institutions", "curl")]},
+                     "regulated lending institutions", "curl"),
+                    ("https://www.govinfo.gov/content/pkg/USCODE-2023-title42/html/USCODE-2023-title42-chap50-subchapI-sec4012a.htm",
+                     "financial assistance for acquisition or construction purposes", "curl"),
+                    ("https://www.federalreserve.gov/frrs/regulations/interagency-questions-and-answers-regarding-flood-insurance.htm",
+                     "a lender may require flood insurance as a condition of making the loan, as a matter of safety and soundness", "curl")]},
     "howto_short": {
-        "text": "Usually 30 days after you buy; no wait with a new or refinanced mortgage.",
-        "sources": [(FS + "/get-insured/buy-a-policy", "will go into effect 30 days after your date of purchase", "curl")]},
+        "text": "Usually 30 days after you buy; bought while making, increasing, extending or renewing a mortgage, it can start "
+                "at closing if the insurer is paid in time.",
+        "sources": [(FS + "/get-insured/buy-a-policy", "will go into effect 30 days after your date of purchase", "curl"),
+                    (FS + "/get-insured/buy-a-policy", "There is no wait if you buy flood insurance while making, increasing, extending or renewing a mortgage", "curl"),
+                    (FIM, "The effective date will be the date and time of the loan closing", "manual"),
+                    (FIM, "within 10 calendar days from the loan transaction closing", "manual")]},
     "aid_insurance": {   # owner of a flood-damaged home in a high-risk zone: FEMA aid comes with an insurance duty
         "text": "If FEMA aid after a flood goes to buy or build a home in a high-risk zone, you must buy and keep flood insurance on it for at least the amount of the aid, or "
                 "you cannot get federal aid for later flood damage to it (44 CFR §206.110).",
@@ -194,7 +205,7 @@ RULES = {
                     ("https://www.govinfo.gov/content/pkg/USCODE-2023-title42/html/USCODE-2023-title42-chap50-subchapI-sec4012a.htm",
                      "financial assistance for acquisition or construction purposes", "curl")]},
     "lender_any_zone": {
-        "text": "Outside them, a lender can still require it.",
+        "text": "Outside them, a lender may still require it.",
         "sources": [("https://www.federalreserve.gov/frrs/regulations/interagency-questions-and-answers-regarding-flood-insurance.htm",
                      "a lender may require flood insurance as a condition of making the loan, as a matter of safety and soundness", "curl")]},
     "cap": {
