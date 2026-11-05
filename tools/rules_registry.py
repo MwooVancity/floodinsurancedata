@@ -278,6 +278,24 @@ RULES = {
                 "areas of minimal hazard (44 CFR §64.3). FEMA's map shows the moderate kind shaded and the minimal kind unshaded.",
         "sources": [(CFR64, "B, X Areas of moderate flood hazards", "curl"),
                     (CFR64, "C, X Area of minimal hazards", "curl")]},
+    "zone_a": {
+        "text": "Zone A is a high-risk area: land with a 1 percent or greater chance of flooding in any given year, where FEMA has "
+                "not worked out how high the water from that flood would reach (44 CFR §59.1, §64.3).",
+        "sources": [(CFR64, "Area of special flood hazard without water surface elevations determined", "curl"),
+                    (CFR59, "subject to a 1 percent or greater chance of flooding in any given year", "curl")]},
+    "zone_ao": {
+        "text": "Zone AO is a high-risk area of shallow flooding: shallow water depths and/or unpredictable flow paths between 1 and 3 feet, "
+                "on land with a 1 percent or greater chance of flooding in any given year (44 CFR §59.1, §64.3).",
+        "sources": [(CFR64, "Area of special flood hazards having shallow water depths and/or unpredictable flow paths between (1) and (3) ft", "curl"),
+                    (CFR59, "subject to a 1 percent or greater chance of flooding in any given year", "curl")]},
+    "zone_ah": {
+        "text": "Zone AH is a high-risk area of shallow flooding: shallow water depths and/or unpredictable flow paths between 1 and 3 feet, "
+                "where FEMA has worked out how high the water would reach (44 CFR §59.1, §64.3).",
+        "sources": [(CFR64, "between (1) and (3) feet, and with water surface elevations determined", "curl"),
+                    (CFR59, "subject to a 1 percent or greater chance of flooding in any given year", "curl")]},
+    "zone_d": {
+        "text": "Zone D is land where flood hazards are possible but have not been determined (44 CFR §64.3).",
+        "sources": [(CFR64, "D Area of undetermined but possible, flood hazards", "curl")]},
     "seller_assign": {
         "text": "Buying a finished home with an NFIP building policy: the seller can assign the policy to you in writing when title transfers.",
         "sources": [(CFR61, "You may assign this policy in writing when you transfer title of your property to someone else", "curl")]},

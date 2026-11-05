@@ -255,6 +255,7 @@ def _sea_line():   # PLAN 3e: NOAA's published sea-level trend at a tide gauge i
             + ". A plus sign means the water there got higher over that period. A tide gauge measures one spot on the coast; it is not your property's flood risk.</p>")
 
 # ---- zone card (policy UNITS) ----
+ZPAGES = {"AE", "X", "VE", "A", "AO", "AH", "D"}   # zones with a /flood-zones/ page (build_site.py ZONES)
 def _zone_body():
     zu = P["zone_units"]
     # compact table: zones holding >=1% of units; the rest fold into one disclosed "other" row (phone-friendly)
@@ -269,7 +270,7 @@ def _zone_body():
     _hr_l = [z for z, v in sorted(zu.items(), key=lambda kv: -kv[1]) if z not in _zshown_k and z[:1] in "AV"]
     _hr_names = ", ".join(_hr_l[:4]) + (" and others" if len(_hr_l) > 4 else "")
     zone_body = ("<table><thead><tr><th>Flood zone</th><th>Policy units</th><th>Share</th></tr></thead><tbody>"
-        + "".join(_zrow(f"Zone {html.escape(z)}" + (" (high-risk)" if z[:1] in "AV" else ""), v, z) for z, v in _zshown)
+        + "".join(_zrow((f"<a href='/flood-zones/{z.lower()}/'>Zone {z}</a>" if z in ZPAGES else f"Zone {html.escape(z)}") + (" (high-risk)" if z[:1] in "AV" else ""), v, z) for z, v in _zshown)
         + (_zrow(f"Other high-risk zones ({html.escape(_hr_names)})", _zrest_hr, "other_hr") if _zrest_hr > 0 else "")
         + (_zrow("Other low-risk or unclassified zones", _zrest, "other") if _zrest > 0 else "")
         + "</tbody></table><p class='note'>Policy records keep the code they were rated with, so older labels such as A1 to A30 are counted on their own. " + rule("zone_labels") + "</p>")

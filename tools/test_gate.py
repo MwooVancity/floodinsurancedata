@@ -119,7 +119,7 @@ MUTATIONS = [   # (defect class from THE EVIDENCE table, what we reintroduce, ex
     ("hater r1", "claims chart drawn as claim counts", "C5",
      re.sub(r'height="([\d.]+)"(?=[^>]*><title>\d{4}: [\d,]+ claims, \$[\d,]+</title>)', lambda mm: f'height="{float(mm.group(1)) * 0.5 + 3:.1f}"', PAGE, count=3), None),
     ("hater r1", "pre-2021 'other areas' CRS discount column", "C6", sub("<th>Discount</th>", "<th>Discount</th><th>Other areas</th>"), None),
-    ("hater r1", "high-risk zone hidden in 'other'", "C7", re.sub(r"(<tr><td>Zone A[^<]*?) \(high-risk\)", r"\1", PAGE, count=1), None),
+    ("hater r1", "high-risk zone hidden in 'other'", "C7", re.sub(r"(<tr><td>(?:<a [^>]*>)?Zone A[^<]*?(?:</a>)?) \(high-risk\)", r"\1", PAGE, count=1), None),
     ("hater r1", "unpaid table shows only some reasons", "C8",
      re.sub(r"(<th>Reason recorded</th><th>Claims</th></tr></thead><tbody>)<tr>.*?</tr>", r"\1", PAGE, count=1, flags=re.S), None),
     ("hater r1", "a rule printed twice on the page", "E2",

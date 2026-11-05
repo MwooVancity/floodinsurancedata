@@ -146,7 +146,7 @@ for n in re.findall(r"([\d,]+) paid (?:NFIP )?(?:flood )?claims", TEXT, re.I):
         fail("C3", f"'{n} paid claims' on the page, but {VALS['claims_paid_n']} claims paid")
 req = re.search(r'id="required".*?<tbody>(.*?)</tbody>', page, re.S)
 if req and units:
-    tot = sum(int(x.replace(",", "")) for x in re.findall(r"<tr><td>[^<]*</td><td>(?:<span[^>]*>)?([\d,]+)(?:</span>)?</td>", req.group(1)))
+    tot = sum(int(x.replace(",", "")) for x in re.findall(r"<tr><td>(?:(?!</td>).)*</td><td>(?:<span[^>]*>)?([\d,]+)(?:</span>)?</td>", req.group(1)))   # label may hold a zone-page link
     if tot != units: fail("C4", f"zone table rows sum to {tot}, not the {units} units shown")
 
 # ---------------- 4 WORDS agree with the numbers ----------------
@@ -200,7 +200,7 @@ if _bars and max(d for _, d in _bars) > 0:
 # C7 the zone table's high-risk rows add to the high-risk share the card states (hater r1: VE/AH hid in "other")
 _zt = re.search(r"<th>Flood zone</th><th>Policy units</th><th>Share</th></tr></thead><tbody>(.*?)</tbody>", page, re.S)
 if _zt and P.get("sfha_share_units") is not None:
-    _hr = sum(float(s) for lab, s in re.findall(r"<tr><td>([^<]*)</td><td>.*?</td><td><span[^>]*>([\d.]+)%</span></td></tr>", _zt.group(1))
+    _hr = sum(float(s) for lab, s in re.findall(r"<tr><td>((?:(?!</td>).)*)</td><td>.*?</td><td><span[^>]*>([\d.]+)%</span></td></tr>", _zt.group(1))
               if "high-risk" in lab)
     if abs(_hr - P["sfha_share_units"]) > 0.3: fail("C7", f"zone table high-risk rows add to {_hr:.1f}%, page states {P['sfha_share_units']}%")
 # C8 the unpaid-reasons table accounts for every unpaid claim (hater r1: 3 rows covered 45%)

@@ -124,7 +124,7 @@ if len(states) == 51:   # U.S. figures only once every state is built and gated:
                       f'(premium plus fees) of existing single-family primary-home policies, by the zone each policy is rated in.</p>'
                       f'<table><thead><tr><th>Flood zone</th><th>Median / yr</th><th>Policies</th></tr></thead><tbody>{_zrows}</tbody></table>'
                       f'<p class="mut">NFIP policies in force on {_ASOF_TXT}; zone D and policies with no zone are left out. Your state page '
-                      'breaks this down by every zone code. What each means: <a href="/flood-zones/ae/">zone AE</a>, <a href="/flood-zones/x/">zone X</a>, <a href="/flood-zones/ve/">zone VE</a>.</p></div>')
+                      'breaks this down by every zone code. What each means: ' + ", ".join(f'<a href="/flood-zones/{z}/">zone {z.upper()}</a>' for z in ("ae", "x", "a", "ao", "ah", "ve", "d")) + '.</p></div>')
     national = (f'<div class="stats"><div class="stat"><div class="n">{money(_med)}</div><div class="l">U.S. median a year</div></div>'
                 f'<div class="stat"><div class="n">{money(_med / 12)}</div><div class="l">Per month</div></div>'
                 f'<div class="stat"><div class="n">{_units / 1e6:.1f}M</div><div class="l">Insured units in force</div></div></div>'
@@ -369,14 +369,19 @@ zone_urls = []
 if len(states) == 51 and len(_zh) == 51:
     ZONES = {"ae": ("AE", "A", "all A zones (AE, A, AH, AO and others)", "zone_ae"),
              "x": ("X", "X", "X, B and C zones", "zone_x"),
-             "ve": ("VE", "V", "all V zones (VE, V and others)", "zone_ve")}
+             "ve": ("VE", "V", "all V zones (VE, V and others)", "zone_ve"),
+             "a": ("A", "A", "all A zones (AE, A, AH, AO and others)", "zone_a"),
+             "ao": ("AO", "A", "all A zones (AE, A, AH, AO and others)", "zone_ao"),
+             "ah": ("AH", "A", "all A zones (AE, A, AH, AO and others)", "zone_ah"),
+             "d": ("D", None, "", "zone_d")}   # D: no national cost group, units and state table only
     def _st(sl, f): return json.load(open(os.path.join(DATADIR, "states", sl, f), encoding="utf-8"))
     _sagg = {s["slug"]: _st(s["slug"], "agg.json")["policies"] for s in states}
     _links = lambda me: " · ".join(f'<a href="/flood-zones/{k}/">Zone {v[0]}</a>' for k, v in ZONES.items() if k != me)
     for zk, (code, grp, glab, rk) in ZONES.items():
-        h = {s: v.get(grp) or {} for s, v in _zh.items()}
+        # group median only where the zone dominates its group (AE in A, X in X, VE in V); on A/AO/AH it would pose as their price
+        h = {s: v.get(grp) or {} for s, v in _zh.items()} if code in ("AE", "X", "VE") else {}
         n = sum(sum(v.values()) for v in h.values())
-        med, p25, p75 = _hq(h, 0.5), _hq(h, 0.25), _hq(h, 0.75)
+        med, p25, p75 = (_hq(h, 0.5), _hq(h, 0.25), _hq(h, 0.75)) if n else (None, None, None)
         rows = [(((_sagg[s["slug"]].get("zone_units") or {}).get(code) or 0), s) for s in states]
         rows = [(u, s) for u, s in sorted(rows, key=lambda r: -r[0]) if u]
         units = sum(u for u, _ in rows)
@@ -399,10 +404,10 @@ if len(states) == 51 and len(_zh) == 51:
                          desc=f"What FEMA flood zone {code} means, when flood insurance is required there, and what NFIP policies in {code} cost, from FEMA's public records.",
                          canon=BASE + f"/flood-zones/{zk}/") + f"""
 <h1>Flood zone {code}</h1>
-<div class="stats"><div class="stat"><div class="n">{money(med)}</div><div class="l">Median / yr, {glab}; zone {code} alone is in the state table</div></div>
-<div class="stat"><div class="n">{money(p25)}–{money(p75)}</div><div class="l">Half pay between</div></div>
+<div class="stats">{f'''<div class="stat"><div class="n">{money(med)}</div><div class="l">Median / yr, {glab}; zone {code} alone is in the state table</div></div>
+<div class="stat"><div class="n">{money(p25)}–{money(p75)}</div><div class="l">Half pay between</div></div>''' if n else ""}
 <div class="stat"><div class="n">{units:,}</div><div class="l">NFIP policy units rated {code}</div></div></div>
-<p class="mut">Median and range: {n:,} existing single-family primary-home policies, premium plus fees, in force on {_ASOF_TXT}. Not a quote. Condo buildings, second homes and businesses count in the units, not the median.</p>
+{f'<p class="mut">Median and range: {n:,} existing single-family primary-home policies, premium plus fees, in force on {_ASOF_TXT}. Not a quote. Condo buildings, second homes and businesses count in the units, not the median.</p>' if n else f'<p class="mut">Units in force on {_ASOF_TXT}. No national median for zone {code} alone: the national cost figures on this site cover whole zone groups (all A, all V, all X zones), not single zones. The state table has a median only where 30 or more priced policies exist.</p>'}
 <a class="btn" href="https://msc.fema.gov/portal/home" rel="noopener" target="_blank">Check your address on FEMA's flood map →</a>
 <div class="card"><h2>What does zone {code} mean?</h2><p class="stand">{rule(rk)}</p></div>
 <div class="card"><h2>Am I required to buy flood insurance?</h2><p class="stand">{rule("purchase_answer")} {rule("lender_any_zone")}</p></div>
