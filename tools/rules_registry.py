@@ -143,7 +143,7 @@ RULES = {
     "zone_codes": {   # round 16: B, C, A99, AH, A01-A30 shown with no plain words
         "text": "What the zone codes mean (44 CFR §64.3): A, AE and A1–A30 are high-risk; AO and AH are high-risk with "
                 "shallow flooding; A99 is high-risk behind a flood barrier FEMA treats as complete; V, VE and V1–V30 are "
-                "coastal high-risk with velocity, flooded by tides; B and X are areas of moderate flood hazard, C and X areas of minimal hazard; D has possible but undetermined flood hazards.",
+                "coastal high-risk, flooded by tides with fast-moving water (velocity); B and X are areas of moderate flood hazard, C and X areas of minimal hazard; D has possible but undetermined flood hazards.",
         "sources": [("https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=64", "B, X Areas of moderate flood hazards", "curl"),
                     ("https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=64", "C, X Area of minimal hazards", "curl"),
                     ("https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=64", "D Area of undetermined but possible, flood hazards", "curl"),
@@ -207,7 +207,7 @@ RULES = {
                     ("https://www.govinfo.gov/content/pkg/USCODE-2023-title42/html/USCODE-2023-title42-chap50-subchapI-sec4012a.htm",
                      "financial assistance for acquisition or construction purposes", "curl")]},
     "lender_any_zone": {
-        "text": "Outside them, a lender may still require it.",
+        "text": "Outside those zones, a lender may still require it.",
         "sources": [("https://www.federalreserve.gov/frrs/regulations/interagency-questions-and-answers-regarding-flood-insurance.htm",
                      "a lender may require flood insurance as a condition of making the loan, as a matter of safety and soundness", "curl")]},
     "cap": {

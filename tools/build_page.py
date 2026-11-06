@@ -1107,11 +1107,11 @@ def card_required():
 def card_cost():
     cost_lead, cost_body = _cost_parts()
     cost_body += f"<p class='note'>{rule('other_buyers')} The median here is for single-family primary-home policies, not businesses or second homes. {rule('surcharge')}</p>"
-    return card("How much does it cost here?", cost_lead, cost_body, src(["cost_p50", "prem_median", "frp_median", "coverage"], POL_ASOF, RETR) + src_rules(["other_buyers", "surcharge"]))
+    return card(f"Flood insurance cost in {CL}", cost_lead, cost_body, src(["cost_p50", "prem_median", "frp_median", "coverage"], POL_ASOF, RETR) + src_rules(["other_buyers", "surcharge"]))
 
 def card_claims():
     claims_lead, claims_ratio_note = _claims_parts()
-    return card("What do floods actually pay out here?", claims_lead, claims_svg() +
+    return card(f"Flood insurance claims in {CL}: what floods pay out", claims_lead, claims_svg() +
       f"<p class='note'>Bar height is dollars paid that year. Orange bars are the three costliest years: " + ", ".join(f"{y} ({tp('claims_year_paid', f'claims.by_year.{y}.1', money, q=str(y))})" for y, p in top_paid) +
       f". Total paid {tp('claims_total', 'claims.total_paid', money, q='exact')}. Totals for the latest two years are not final while their claims stay open.{how('claims')}</p>" + claims_ratio_note,
       src(["claims_filed", "claims_total"], f"{C['year_min']}–{C['year_max']}", RETR))

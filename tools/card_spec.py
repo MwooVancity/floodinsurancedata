@@ -34,7 +34,7 @@ CARDS = [
      "must": ["includes Increased Cost of Compliance"],
      "never": ["your claim will"],
      "shown_when": lambda a, d, x: bool((d.get("claims_extra") or {}).get("claims"))},
-    {"title": r"What do floods actually pay out here",
+    {"title": r"Flood insurance claims in .+: what floods pay out",
      "covers": "paid NFIP claim dollars by year of loss (building + contents; ICC excluded)",
      "must": ["not final while their claims stay open"],
      "never": [],

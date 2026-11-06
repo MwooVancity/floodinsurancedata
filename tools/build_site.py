@@ -83,7 +83,10 @@ hrows = "".join(f'<tr data-k="{html.escape((p["short"]+" "+(p.get("state") or ""
                 f'<td><a href="/flood-insurance/{p["slug"]}/">{html.escape(p["short"])}, {html.escape(p.get("state") or "")}</a></td>'
                 f'<td>{money(p.get("median"))}</td><td>{format(p.get("units") or 0, ",")}</td></tr>' for p in places)
 srows = "".join(f'<tr data-k="{html.escape((s["name"] + " " + s["abbr"]).lower())}"><td><a href="/flood-insurance/{s["slug"]}/">{html.escape(s["name"])}</a></td>'
-                f'<td>{money(s["median"])}</td><td>{format(s["units"], ",")}</td></tr>' for s in sorted(states, key=lambda s: -s["median"]))
+                f'<td>{money(s["median"])}</td><td>{format(s["units"], ",")}</td><td>{format(s["claims"], ",")}</td><td>{money(s["paid"])}</td></tr>' for s in sorted(states, key=lambda s: -s["median"]))
+_cy = [json.load(open(os.path.join(DATADIR, "states", s["slug"], "agg.json")))["claims"] for s in states]
+_cnote = (f'<p class="mut">NFIP claims on record: every claim record, paid or not, for losses from {min(c["year_min"] for c in _cy)} to {max(c["year_max"] for c in _cy)}. '
+          'Paid on them: building plus contents payments, in dollars as paid, not adjusted for inflation.</p>') if states else ""
 _bycost = sorted(states, key=lambda s: -s["median"])
 extremes = (f'<p class="stand">Highest typical cost: {", ".join(html.escape(s["name"]) + " " + money(s["median"]) for s in _bycost[:3])}. '
             f'Lowest: {", ".join(html.escape(s["name"]) + " " + money(s["median"]) for s in _bycost[-3:])}. Sorted by typical cost.</p>') if len(states) > 6 else ""
@@ -168,9 +171,9 @@ home = HEAD.format(title="Flood insurance cost by state and county (FEMA data)",
 <p class="stand"><b>Am I required to buy it?</b> {rule("purchase_answer")} {rule("lender_any_zone")} {rule("fl_citizens_short")} Check your zone on <a href="https://msc.fema.gov/portal/home" rel="noopener" target="_blank">FEMA's flood map</a>.</p>
 <p class="stand"><b>Does my homeowners policy cover floods?</b> {rule("homeowners_excl")}</p></div>
 {home_cards}
-<div class="card"><h2>Flood insurance by state</h2>{extremes}
-<table id="st"><thead><tr><th>State</th><th>Median / yr</th><th>Insured units</th></tr></thead>
-<tbody>{srows or '<tr><td colspan=3 class=mut>State pages are being built.</td></tr>'}</tbody></table></div>
+<div class="card"><h2>Flood insurance policies and claims by state</h2>{extremes}
+<table id="st"><thead><tr><th>State</th><th>Median / yr</th><th>Insured units</th><th>NFIP claims on record</th><th>Paid on them</th></tr></thead>
+<tbody>{srows or '<tr><td colspan=5 class=mut>State pages are being built.</td></tr>'}</tbody></table>{_cnote}</div>
 <div class="card"><h2>County pages</h2><p class="stand">{len(places)} counties so far, listed by insured units; more are added as each passes review. Every county's figures also sit in its state page's county table.</p>
 <table id="t"><thead><tr><th>County</th><th>Median / yr</th><th>Insured units</th></tr></thead>
 <tbody>{rows or '<tr><td colspan=3 class=mut>No counties published yet.</td></tr>'}</tbody></table></div>
@@ -196,8 +199,8 @@ hub = HEAD.format(title="Flood insurance by state and county (FEMA data)",
 <p class="lede">Find your state or county for what people there pay, whether you're required to buy it, and what floods have paid out.</p>
 <input id="s" placeholder="Type your state or county…" aria-label="Find your state or county" autocomplete="off"><p id="nomatch" class="mut" aria-live="polite"></p></section>
 <div class="card"><h2>States</h2>
-<table id="st"><thead><tr><th>State</th><th>Median / yr</th><th>Insured units</th></tr></thead>
-<tbody>{srows or '<tr><td colspan=3 class=mut>State pages are being built.</td></tr>'}</tbody></table></div>
+<table id="st"><thead><tr><th>State</th><th>Median / yr</th><th>Insured units</th><th>NFIP claims on record</th><th>Paid on them</th></tr></thead>
+<tbody>{srows or '<tr><td colspan=5 class=mut>State pages are being built.</td></tr>'}</tbody></table>{_cnote}</div>
 <div class="card"><h2>Counties</h2>
 <table id="t"><thead><tr><th>County</th><th>Median / yr</th><th>Insured units</th></tr></thead>
 <tbody>{hrows or '<tr><td colspan=3 class=mut>No counties published yet.</td></tr>'}</tbody></table></div>
@@ -433,7 +436,7 @@ if len(states) == 51 and len(_zh) == 51:
                       f'<p class="mut">Zone as rated on each claim, not today\'s map; dollars as paid, not adjusted for inflation; every building type. '
                       f'A count of claims is not a chance of flooding for any one home.</p></div>')
         elif xcol:   # until the refresh lands: the state column below is the only claims figure
-            claims = ('<div class="card"><h2>Do homes in zone X flood?</h2><p class="stand">The last column of the state table below shows, state by state, the share of NFIP claim dollars '
+            claims = ('<div class="card"><h2>How much of the claim money is outside zones A and V?</h2><p class="stand">The last column of the state table below shows, state by state, the share of NFIP claim dollars '
                       "paid on claims rated outside zones A and V, in every year on record: every zone other than A and V, not zone X alone. "
                       "It uses the zone on each claim, not today's map, and leaves out claims with no zone. That share is not a chance of flooding for any one home.</p></div>")
         cant = ("whether a zone X home is in a moderate or a minimal hazard area, because policy records do not separate them. " if xcol
