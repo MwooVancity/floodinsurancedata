@@ -112,3 +112,97 @@ Delete in the same batches: the `data-p` attributes (2.8 KB a page, no reader), 
 The research changes what "map first" means. Map searchers do not need another map; they have FEMA's. They need what FEMA's map cannot say: whether that zone forces a purchase, what it costs and pays out locally, and whether the map is about to change. The site already holds most of those numbers, so the redesign is mostly reordering, retitling and one new local key. It is not a mapping project, and it should be judged by Search Console within four weeks rather than by how it looks.
 
 Two caveats limit any ranking promise. First, demand is a fifth of what PLAN.md recorded, so the county-map prize is about 7,350 searches a month at the band floor, not 34,000. Second, the Google top 3 for several categories is unmeasured because the test index was overrun with spam. Two facts gate the most valuable truth features, the map-status line and any future embed: whether FEMA's servers answer a cloud job, and whether the MSC address link works. Settle both before anything that depends on FEMA data is built.
+
+
+=== APPENDIX A: live pages (open them) ===
+https://floodinsurancedata.com/
+https://floodinsurancedata.com/flood-insurance/florida/
+https://floodinsurancedata.com/flood-insurance/palm-beach-county-fl/
+https://floodinsurancedata.com/flood-zones/ae/
+https://floodinsurancedata.com/flood-zones/x/
+
+=== APPENDIX B: first ~120 words each page shows today (live text, 2026-11-06) ===
+
+[/]
+Flood Insurance Data NFIP records · 50 states and DC · 212 counties What flood insurance costs in your state From FEMA's own records of existing policies and claims, not quotes: what policyholders pay, whether you're required to buy it, and how fast it starts. $1,066 U.S. median a year $89 Per month 4.5M Insured units in force Median and per month: what existing single-family primary-home policies pay, premium plus fees. Insured units: every NFIP policy unit in force on August 31, 2026, including condos, rentals and businesses. Buying? Policies first bought in the past year typically pay $1,011 (187,522 policies). Why sites differ . Built from 3,446,101 NFIP policy records and 2,680,429 claim records downloaded from FEMA (one record can cover several insured units, such
+
+
+[/flood-insurance/palm-beach-county-fl/]
+Flood Insurance Data Flood insurance › Florida › Palm Beach County Flood insurance in Palm Beach County, Florida In Palm Beach County, Florida, the median NFIP flood insurance policy on a single-family primary home costs $673 a year (premium plus fees, policies in force as of August 31, 2026). $673 Median / yr, single-family primary home $56 A month, spread over the year $518 – $1,041 Half pay between 23.2% Share of these homes below FEMA's full-risk price That is 32% below the Florida median of $985 and 37% below the U.S. median of $1,066 ; 8th lowest of 55 Florida counties with 100 + priced policies. By ZIP it ranges from $451 ( 33484 ) to $1,830 ( 33480 Palm Beach ); find your ZIP
+
+
+[/flood-zones/ae/]
+Flood Insurance Data Flood zone AE: what it means, who must insure, what it costs Zone AE is a high-risk area: land with a 1 percent or greater chance of flooding in any given year, where FEMA has worked out how high the water from that flood would reach (44 CFR §59.1, §64.3). A 1 percent or greater chance a year works out to a 26% or greater chance of at least one such flood over 30 years. Must I buy? Federal law requires it only in a high-risk zone (A or V) with a federally regulated or backed mortgage, or federal help to buy or build (42 U.S.C. §4012a). Outside those zones, a lender may still require it. Check your address on FEMA's flood map
+
+
+=== APPENDIX C: top search terms per group (Keyword Planner US; band floor per month) ===
+
+== generic: 428 keywords, 28 with 10+/mo, floor total 38,800/mo
+  50000.0  flood zone map
+  50000.0  flood insurance
+  50000.0  fema flood map by address
+  5000.0  nfip
+  5000.0  how much is flood insurance
+  5000.0  flood zone map by address
+  5000.0  flood zone by address
+  5000.0  flood insurance quote
+  5000.0  flood insurance for renters
+  5000.0  flood insurance cost
+  5000.0  fema flood insurance
+  500.0  what flood zone am i in
+
+== state: 153 keywords, 109 with 10+/mo, floor total 13,510/mo
+  5000.0  flood zone map north carolina
+  5000.0  flood zone map new york
+  5000.0  flood zone map new jersey
+  5000.0  flood zone map louisiana
+  5000.0  flood zone map florida
+  5000.0  flood insurance texas
+  5000.0  flood insurance florida
+  5000.0  flood insurance california
+  500.0  flood zone map wisconsin
+  500.0  flood zone map washington
+  500.0  flood zone map virginia
+  500.0  flood zone map texas
+
+== zone: 33 keywords, 24 with 10+/mo, floor total 7,530/mo
+  5000.0  flood zone x meaning
+  5000.0  flood zone x
+  5000.0  flood zone ao
+  5000.0  flood zone ae meaning
+  5000.0  flood zone ae
+  5000.0  flood zone a
+  500.0  flood zone ve meaning
+  500.0  flood zone ve
+  500.0  flood zone v
+  500.0  flood zone shaded x
+  500.0  flood zone d meaning
+  500.0  flood zone d
+
+== county: 3657 keywords, 285 with 10+/mo, floor total 7,350/mo
+  5000.0  pinellas county flood zone map
+  5000.0  harris county flood zone map
+  500.0  volusia county flood zone map
+  500.0  st tammany parish flood zone map
+  500.0  st johns county flood zone map
+  500.0  skagit county flood zone map
+  500.0  sarasota county flood zone map
+  500.0  polk county flood zone map
+  500.0  pima county flood zone map
+  500.0  pierce county flood zone map
+  500.0  pasco county flood zone map
+  500.0  palm beach county flood zone map
+
+== town: 5181 keywords, 170 with 10+/mo, floor total 3,050/mo
+  5000.0  flood insurance chicago
+  500.0  flood insurance sacramento
+  500.0  flood insurance new orleans
+  500.0  flood insurance houston
+  500.0  flood insurance hartford
+  50.0  flood insurance west sacramento
+  50.0  flood insurance west palm beach
+  50.0  flood insurance visalia
+  50.0  flood insurance virginia beach
+  50.0  flood insurance victoria
+  50.0  flood insurance vero beach
+  50.0  flood insurance vancouver
