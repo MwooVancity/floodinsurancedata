@@ -46,6 +46,7 @@ else:
     if "--ship" not in sys.argv: sys.exit(print("READY TO SHIP: release.py --ship [--hotfix \"reason\"]"))
     # deploy.yml deploys the COMMITTED dist on any push that changes it, so commit the built pages before anything ships
     R = os.path.dirname(T); g = lambda *a: subprocess.run(["git", *a], cwd=R, check=True)
+    base = subprocess.run(["git", "rev-parse", "HEAD"], cwd=R, capture_output=True, text=True).stdout.strip()   # IndexNow: pages changed since here
     g("add", "-A", "dist", "data/c", "data/states", "places.json", "tools", "state")
     if subprocess.run(["git", "diff", "--cached", "--quiet"], cwd=R).returncode:
         g("commit", "-q", "-m", "release: built site" + (f" (hotfix, hater review skipped: {hot})" if hot else "")
@@ -54,4 +55,5 @@ else:
     if subprocess.run("npx --yes wrangler@4.86.0 deploy", cwd=R, shell=True).returncode: sys.exit("RELEASE STOPPED at: deploy")
     import time; time.sleep(45)
     step("live", os.path.join(T, "release.py"), "--live")
+    subprocess.run([sys.executable, "-I", os.path.join(T, "indexnow.py"), base], cwd=R)   # notice only; never stops a release
     print("SHIPPED")

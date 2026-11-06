@@ -14,6 +14,7 @@ RR2_NEW = "2021-10-01"     # new NFIP policies from this date are rated under Ri
 import datetime
 from agg_raw import asof as _asof
 _A = datetime.date.fromisoformat(_asof())
+RECENT_FROM = "2020"   # fixed start, so the period never drifts between refreshes
 LOSS_TO = str(_A.year - 1); LOSS_FROM = str(_A.year - 10)   # ten whole loss years before the as-of year (debate 11-05: no 1978+ average)
 NB_FROM = str(_A.replace(year=_A.year - 1) + datetime.timedelta(days=1))   # first written in the 12 months to the as-of date
 
@@ -113,7 +114,8 @@ def claims(st):
                                            "depth": [], "event": collections.defaultdict(lambda: [0, 0.0, collections.Counter()]), "icc_n": 0, "icc": [],
                                            "dmg": [], "paid_b": [], "over_cov": 0, "dmg_n": 0, "elev_paid": [], "low_paid": [],
                                            "dec": collections.defaultdict(lambda: [0, 0]),   # decade of loss: [claims, paid something]
-                                           "zone": collections.defaultdict(lambda: [0, 0, 0.0])})   # zone on the claim, loss years LOSS_FROM..LOSS_TO: [claims, paid, dollars]
+                                           "zone": collections.defaultdict(lambda: [0, 0, 0.0]),
+                                           "recent": [0, 0, collections.Counter()]})   # loss year RECENT_FROM+: [claims, paid, reason codes of the unpaid] (claims research page)   # zone on the claim, loss years LOSS_FROM..LOSS_TO: [claims, paid, dollars]
     for r in rows("NfipClaims", st):
         paid = net(r)
         for k in ["ST"] + [g for g in [r["countyCode"] or ""] if g[:2] == FIPS[st]]:
@@ -124,6 +126,10 @@ def claims(st):
             if k == "ST" and LOSS_FROM <= str(r["yearOfLoss"] or "")[:4] <= LOSS_TO:
                 zc = a["zone"][(r["ratedFloodZone"] or "").strip().upper() or "blank"]; zc[0] += 1
                 if paid > 0: zc[1] += 1; zc[2] += paid
+            if str(r["yearOfLoss"] or "")[:4] >= RECENT_FROM:
+                rc = a["recent"]; rc[0] += 1
+                if paid > 0: rc[1] += 1
+                else: rc[2][r["nonPaymentReasonBuilding"] if r["nonPaymentReasonBuilding"] in NONPAY_REASON else "none"] += 1
             if paid <= 0:
                 a["unpaid"] += 1
                 if r["nonPaymentReasonBuilding"] in NONPAY_REASON: a["reason"][r["nonPaymentReasonBuilding"]] += 1
@@ -158,6 +164,8 @@ def claims(st):
                   "avg_paid_not_elevated": round(statistics.mean(a["low_paid"])) if len(a["low_paid"]) >= 30 else None,
                   "elevated_paid_n": len(a["elev_paid"]), "paid_n": paid_n,
                   "by_decade": {d: {"n": v[0], "paid_pct": pct(v[1], v[0])} for d, v in sorted(a["dec"].items())}}
+        rc = a["recent"]   # FEMA's data has no open/closed field: a zero-payment claim is "no recorded payment", never "denied"
+        out[k]["recent"] = {"from": RECENT_FROM, "n": rc[0], "paid_n": rc[1], "unpaid_reasons": dict(rc[2])}
         if k == "ST": out[k]["by_zone"] = {z: {"n": v[0], "paid_n": v[1], "paid": round(v[2])} for z, v in a["zone"].items()}
     return out
 
