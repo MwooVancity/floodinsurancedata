@@ -7,10 +7,14 @@ jobs:
     timeout-minutes: 5
     steps:
       - run: |
-          for u in "https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer?f=json" \
-                   "https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer/28/query?geometry=-82.7942,27.9659&geometryType=esriGeometryPoint&inSR=4326&outFields=FLD_ZONE,ZONE_SUBTY,DFIRM_ID&returnGeometry=false&f=json" \
-                   "https://msc.fema.gov/portal/home" \
-                   "https://msc.fema.gov/portal/search?AddressQuery=315%20Court%20St%2C%20Clearwater%2C%20FL%2033756"; do
-            echo "== $u"; curl -s -o out.txt -w "%{http_code} %{time_total}s %{size_download}B\n" --max-time 40 -A "Mozilla/5.0" "$u" || echo "curl failed $?"
-            head -c 400 out.txt; echo
-          done
+          B="https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer"
+          echo "== layers"; curl -s "$B?f=json" | python3 -c "import json,sys;[print(l['id'],l['name']) for l in json.load(sys.stdin)['layers']]"
+          echo "== CORS on a point query (Origin: our site)"
+          curl -s -D - -o /dev/null -H "Origin: https://floodinsurancedata.com" "$B/28/query?geometry=-82.7942,27.9659&geometryType=esriGeometryPoint&inSR=4326&outFields=FLD_ZONE&returnGeometry=false&f=json" | grep -i "access-control\|HTTP/"
+          echo "== export image (Clearwater)"; curl -s -o img.png -w "%{http_code} %{content_type} %{size_download}B
+" "$B/export?bbox=-82.82,27.95,-82.76,27.99&bboxSR=4326&size=600,400&layers=show:28&format=png&transparent=true&f=image"
+          echo "== point query result"; curl -s "$B/28/query?geometry=-82.7942,27.9659&geometryType=esriGeometryPoint&inSR=4326&outFields=FLD_ZONE,ZONE_SUBTY,STATIC_BFE,DFIRM_ID&returnGeometry=false&f=json" | head -c 600; echo
+          echo "== Palm Beach zone areas (statistics by zone)"
+          curl -s "$B/28/query?where=DFIRM_ID%3D%2712099C%27&outStatistics=%5B%7B%22statisticType%22%3A%22count%22%2C%22onStatisticField%22%3A%22OBJECTID%22%2C%22outStatisticFieldName%22%3A%22n%22%7D%5D&groupByFieldsForStatistics=FLD_ZONE,ZONE_SUBTY&f=json" | head -c 1500; echo
+          echo "== WMS capabilities"; curl -s -o /dev/null -w "%{http_code}
+" "https://hazards.fema.gov/gis/nfhl/services/public/NFHLWMS/MapServer/WMSServer?request=GetCapabilities&service=WMS"
