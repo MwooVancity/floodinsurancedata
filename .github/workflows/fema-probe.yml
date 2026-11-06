@@ -8,13 +8,13 @@ jobs:
     steps:
       - run: |
           B="https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer"
+          Q="geometry=-82.7942,27.9659&geometryType=esriGeometryPoint&inSR=4326&returnGeometry=false&f=json"
           echo "== layers"; curl -s "$B?f=json" | python3 -c "import json,sys;[print(l['id'],l['name']) for l in json.load(sys.stdin)['layers']]"
-          echo "== CORS on a point query (Origin: our site)"
-          curl -s -D - -o /dev/null -H "Origin: https://floodinsurancedata.com" "$B/28/query?geometry=-82.7942,27.9659&geometryType=esriGeometryPoint&inSR=4326&outFields=FLD_ZONE&returnGeometry=false&f=json" | grep -i "access-control\|HTTP/"
-          echo "== export image (Clearwater)"; curl -s -o img.png -w "%{http_code} %{content_type} %{size_download}B
-" "$B/export?bbox=-82.82,27.95,-82.76,27.99&bboxSR=4326&size=600,400&layers=show:28&format=png&transparent=true&f=image"
-          echo "== point query result"; curl -s "$B/28/query?geometry=-82.7942,27.9659&geometryType=esriGeometryPoint&inSR=4326&outFields=FLD_ZONE,ZONE_SUBTY,STATIC_BFE,DFIRM_ID&returnGeometry=false&f=json" | head -c 600; echo
-          echo "== Palm Beach zone areas (statistics by zone)"
-          curl -s "$B/28/query?where=DFIRM_ID%3D%2712099C%27&outStatistics=%5B%7B%22statisticType%22%3A%22count%22%2C%22onStatisticField%22%3A%22OBJECTID%22%2C%22outStatisticFieldName%22%3A%22n%22%7D%5D&groupByFieldsForStatistics=FLD_ZONE,ZONE_SUBTY&f=json" | head -c 1500; echo
-          echo "== WMS capabilities"; curl -s -o /dev/null -w "%{http_code}
-" "https://hazards.fema.gov/gis/nfhl/services/public/NFHLWMS/MapServer/WMSServer?request=GetCapabilities&service=WMS"
+          echo "== CORS on a point query"
+          curl -s -D - -o /dev/null -H "Origin: https://floodinsurancedata.com" "$B/28/query?$Q&outFields=FLD_ZONE" | grep -i -E "access-control|HTTP/"
+          echo "== export image"
+          curl -s -o img.png -w "%{http_code} %{content_type} %{size_download}B" "$B/export?bbox=-82.82,27.95,-82.76,27.99&bboxSR=4326&size=600,400&layers=show:28&format=png&transparent=true&f=image"; echo
+          echo "== point query"; curl -s "$B/28/query?$Q&outFields=FLD_ZONE,ZONE_SUBTY,STATIC_BFE,DFIRM_ID" | head -c 600; echo
+          echo "== Palm Beach polygons by zone"
+          curl -s -G "$B/28/query" --data-urlencode "where=DFIRM_ID='12099C'" --data-urlencode 'outStatistics=[{"statisticType":"count","onStatisticField":"OBJECTID","outStatisticFieldName":"n"}]' --data-urlencode "groupByFieldsForStatistics=FLD_ZONE,ZONE_SUBTY" --data-urlencode "f=json" | head -c 1500; echo
+          echo "== WMS"; curl -s -o /dev/null -w "%{http_code}" "https://hazards.fema.gov/gis/nfhl/services/public/NFHLWMS/MapServer/WMSServer?request=GetCapabilities&service=WMS"; echo
