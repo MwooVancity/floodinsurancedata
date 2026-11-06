@@ -13,6 +13,7 @@ IA_META = "https://www.fema.gov/api/open/v1/OpenFemaDataSets?$filter=name%20eq%2
 CFR64 = "https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=64"
 CFR59 = "https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=59&section=59.1"
 WIND_FS = "https://agents.floodsmart.gov/sites/default/files/media/document/2025-07/fema-nfip-wind-vs-floodwater-damage-fact-sheet-03-2023.pdf"   # pdf, read by hand 2026-11-03
+CFR70 = "https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=70"
 CFR61 ="https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=61"
 USC4012A = "https://www.law.cornell.edu/uscode/text/42/4012a"
 
@@ -142,10 +143,11 @@ RULES = {
     "zone_codes": {   # round 16: B, C, A99, AH, A01-A30 shown with no plain words
         "text": "What the zone codes mean (44 CFR §64.3): A, AE and A1–A30 are high-risk; AO and AH are high-risk with "
                 "shallow flooding; A99 is high-risk behind a flood barrier FEMA treats as complete; V, VE and V1–V30 are "
-                "coastal high-risk with waves; B and X are areas of moderate flood hazard, C and X areas of minimal hazard; D is not yet studied.",
+                "coastal high-risk with velocity, flooded by tides; B and X are areas of moderate flood hazard, C and X areas of minimal hazard; D has possible but undetermined flood hazards.",
         "sources": [("https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=64", "B, X Areas of moderate flood hazards", "curl"),
                     ("https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=64", "C, X Area of minimal hazards", "curl"),
                     ("https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=64", "D Area of undetermined but possible, flood hazards", "curl"),
+                    ("https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=64", "and with velocity, that is inundated by tidal floods (coastal high hazard area)", "curl"),
                     ("https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=64", "A99 Area of special flood hazard where enough progress has been made on a protective system", "curl")]},
     "private_accept": {   # backlog 2: lenders must take a qualifying private policy (FDIC rule; OCC, Fed, NCUA, FCA rules match)
         "text": "A private flood policy can meet a lender's flood requirement: federally regulated lenders must accept a private "
@@ -274,10 +276,13 @@ RULES = {
         "sources": [(CFR64, "with water surface elevations determined and with velocity, that is inundated by tidal floods", "curl"),
                     (CFR59, "subject to a 1 percent or greater chance of flooding in any given year", "curl")]},
     "zone_x": {
-        "text": "Zone X is outside the high-risk zones. Federal rules use it for two kinds of land: areas of moderate flood hazard, and "
-                "areas of minimal hazard (44 CFR §64.3). The same rule lists zone B with the moderate kind and zone C with the minimal kind.",
+        "text": "Zone X is outside the high-risk zones and covers two kinds of land (44 CFR §64.3). FEMA labels the moderate-hazard kind Zone B or Zone X (shaded): land between the limits of the 1 percent flood and the "
+                "0.2-percent-annual-chance (500-year) flood. It labels the minimal-hazard kind Zone C or Zone X (unshaded): land outside the "
+                "high-risk areas and higher than the 0.2-percent-annual-chance flood.",
         "sources": [(CFR64, "B, X Areas of moderate flood hazards", "curl"),
-                    (CFR64, "C, X Area of minimal hazards", "curl")]},
+                    (CFR64, "C, X Area of minimal hazards", "curl"),
+                    ("https://www.fema.gov/about/glossary/flood-zones", "Moderate flood hazard areas, labeled Zone B or Zone X (shaded) are also shown on the FIRM, and are the areas between the limits of the base flood and the 0.2-percent-annual-chance (or 500-year) flood", "browser"),
+                    ("https://www.fema.gov/about/glossary/flood-zones", "the areas outside the SFHA and higher than the elevation of the 0.2-percent-annual-chance flood, are labeled Zone C or Zone X (unshaded)", "browser")]},
     "zone_a": {
         "text": "Zone A is a high-risk area: land with a 1 percent or greater chance of flooding in any given year, where FEMA has "
                 "not worked out how high the water from that flood would reach (44 CFR §59.1, §64.3).",
@@ -311,9 +316,21 @@ RULES = {
                 "the lender's notice; a fee applies (44 CFR §65.17).",
         "sources": [("https://www.law.cornell.edu/cfr/text/44/65.17", "must be submitted within 45 days of the lender's notification to the borrower", "curl")]},
     "odds_30": {
-        "text": "A 1 percent chance a year works out to about a 26% chance of at least one such flood over 30 years.",
+        "text": "A 1 percent or greater chance a year works out to a 26% or greater chance of at least one such flood over 30 years.",
         # arithmetic, tested in test_calc.py: 1 - 0.99**30 = 0.2603; the 1 percent is the regulation's
         "sources": [(CFR59, "subject to a 1 percent or greater chance of flooding in any given year", "curl")]},
+    "bfe": {   # debate 11-05: readers see elevations on the map; the term comes from 59.1, read raw 11-06
+        "text": "In zones AE, AH and VE, FEMA has worked out the water surface elevation of the base flood: the flood level that has a 1 "
+                "percent or greater chance of occurrence in any given year (44 CFR §59.1, §64.3).",
+        "sources": [(CFR59, "water surface elevations of the base flood, that is, the flood level that has a one percent or greater chance of occurrence in any given year", "curl"),
+                    (CFR64, "with water surface elevations determined", "curl")]},
+    "loma": {   # 44 CFR 70.1 and 70.5, read raw 11-06; scope: a property shown in an A or V zone by how the line was drawn
+        "text": "An owner or renter who believes the property was put in a high-risk A or V zone by mistake, because of how the zone line "
+                "was drawn against streets or other features, can send FEMA technical information and ask for a Letter of Map Amendment, "
+                "which identifies the property to be excluded from the zone (44 CFR part 70).",
+        "sources": [(CFR70, "believes his property has been inadvertently included in designated A, AO, A1-30, AE, AH, A99", "curl"),
+                    (CFR70, "the transposition of the curvilinear line to either street or to other readily identifiable features", "curl"),
+                    (CFR70, "The identification of the property to be excluded from a designated", "curl")]},
     "flood_def": {
         "text": "The policy generally counts a flood only when water covers two or more acres of normally dry land or two or more properties, "
                 "one of them yours.",

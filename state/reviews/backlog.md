@@ -236,3 +236,6 @@ Ranked by reader value. hater.py record appends each round's **GAP** lines below
 - How the home "Three things to know first" card cites its rules: decide ONE format for the whole site (today county
   pages name the official hosts; home names none). A per-claim link vs a host list; then apply everywhere at once.
 - Define "Citizens" (Florida's state-backed insurer) where the Florida rule appears; split its three dates.
+
+## home (round 69)
+- AE and VE screen 1 shows the all-A-zones / all-V-zones median, correctly labelled right under the figure; exact-zone data due next refresh. D and AH show no national cost (honest gap line). No local contacts list, error-report route, print stylesheet, Spanish.

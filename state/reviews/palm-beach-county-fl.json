@@ -1,8 +1,8 @@
 {
  "slug": "palm-beach-county-fl",
  "verdict": "PASS",
- "template": "18547c3b7b14425d",
+ "template": "8253617e7faaf63e",
  "defects": [],
- "reviewer": "hater round 67 (fresh agent, docs/HATER-PROMPT.md)",
+ "reviewer": "hater round 69 (fresh agent, docs/HATER-PROMPT.md)",
  "notes": ""
 }
