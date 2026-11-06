@@ -195,7 +195,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Brazoria County, Texas",ml_srl,,18,count,FEMA OpenFEMA — Individual Assistance Multiple-Loss Flood Properties,highRiskPropertyType,"August 31, 2026"
 "Brazoria County, Texas",declarations,,23,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"August 31, 2026"
 "Brazoria County, Texas",ia_paid,,$146.7 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"August 31, 2026"
-"Brazoria County, Texas",ia_per_reg,,"$1,449",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
+"Brazoria County, Texas",ia_per_reg,,"$1,450",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Brazoria County, Texas",records_total,rows,"28,825",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Brazoria County, Texas",records_total,policies:fetched,"28,825",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Brazoria County, Texas",records_total,policies:reported,"28,825",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

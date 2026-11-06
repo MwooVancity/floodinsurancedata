@@ -326,7 +326,7 @@ Washington,ml_total,,"1,729",count,FEMA OpenFEMA — Individual Assistance Multi
 Washington,ml_srl,,39,count,FEMA OpenFEMA — Individual Assistance Multiple-Loss Flood Properties,highRiskPropertyType,"August 31, 2026"
 Washington,declarations,,50,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"August 31, 2026"
 Washington,ia_paid,,$52.7 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"August 31, 2026"
-Washington,ia_per_reg,,"$3,229",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
+Washington,ia_per_reg,,"$3,231",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 Washington,records_total,rows,"26,722",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 Washington,records_total,policies:fetched,"26,722",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 Washington,records_total,policies:reported,"26,722",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

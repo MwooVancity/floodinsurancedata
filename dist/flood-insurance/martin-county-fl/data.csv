@@ -184,7 +184,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Martin County, Florida",ml_uncoded,,5,count,FEMA OpenFEMA — Individual Assistance Multiple-Loss Flood Properties,fipsCountyCode,"August 31, 2026"
 "Martin County, Florida",declarations,,19,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"August 31, 2026"
 "Martin County, Florida",ia_paid,,$27.6 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"August 31, 2026"
-"Martin County, Florida",ia_per_reg,,$795,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
+"Martin County, Florida",ia_per_reg,,$796,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Martin County, Florida",records_total,rows,"10,133",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Martin County, Florida",records_total,policies:fetched,"10,133",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Martin County, Florida",records_total,policies:reported,"10,133",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

@@ -65,7 +65,7 @@ def check_page(code, page, states, agg):
         t = p.get("zone_units") or {}
         return t.get(code, 0) if code in t or len(t) < 12 else None
     few = sum(1 for s in states if not want[s["slug"]] and units(agg[s["slug"]]))
-    mf = re.search(r"(\d+) more states have zone \w+ policies", text)
+    mf = re.search(r"(\d+) more (?:states have|state has) zone \w+ policies", text)
     if (int(mf[1]) if mf else 0) != few: bad.append(f"Z2 {code}: page says {mf[1] if mf else 0} more states, data {few}")
     # Z3/Z4: headline tile and title
     tile = re.search(r'<div class="stat"><div class="n">(\$[\d,]+)</div>', page)

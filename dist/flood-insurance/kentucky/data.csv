@@ -517,7 +517,7 @@ Kentucky,ml_total,,"11,392",count,FEMA OpenFEMA — Individual Assistance Multip
 Kentucky,ml_srl,,805,count,FEMA OpenFEMA — Individual Assistance Multiple-Loss Flood Properties,highRiskPropertyType,"August 31, 2026"
 Kentucky,declarations,,63,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"August 31, 2026"
 Kentucky,ia_paid,,$338.3 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"August 31, 2026"
-Kentucky,ia_per_reg,,"$4,542",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
+Kentucky,ia_per_reg,,"$4,543",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 Kentucky,records_total,rows,"16,678",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 Kentucky,records_total,policies:fetched,"16,678",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 Kentucky,records_total,policies:reported,"16,678",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

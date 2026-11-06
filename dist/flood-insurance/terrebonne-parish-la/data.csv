@@ -195,7 +195,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Terrebonne Parish, Louisiana",ml_srl,,621,count,FEMA OpenFEMA — Individual Assistance Multiple-Loss Flood Properties,highRiskPropertyType,"August 31, 2026"
 "Terrebonne Parish, Louisiana",declarations,,38,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"August 31, 2026"
 "Terrebonne Parish, Louisiana",ia_paid,,$217.4 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"August 31, 2026"
-"Terrebonne Parish, Louisiana",ia_per_reg,,"$2,656",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
+"Terrebonne Parish, Louisiana",ia_per_reg,,"$2,657",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Terrebonne Parish, Louisiana",records_total,rows,"11,812",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Terrebonne Parish, Louisiana",records_total,policies:fetched,"11,812",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Terrebonne Parish, Louisiana",records_total,policies:reported,"11,812",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

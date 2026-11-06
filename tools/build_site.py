@@ -411,11 +411,13 @@ if len(states) == 51 and len(_zh) == 51:
             return f'{c["outside_sfha_pct"]}%' if c.get("outside_sfha_pct") is not None and (c.get("paid_n") or 0) >= 10 else "too few"
         hr = code[0] in "AV"   # A and V zones: the 1 percent flood, the federal purchase rule, a Letter of Map Amendment
         xcol = zk == "x"
-        xth = "<th>Share of the state's paid claim dollars outside zones A and V</th>" if xcol else ""
+        xth = "<th>Share of the state's paid claim dollars outside zones A and V (all years, all buildings)</th>" if xcol else ""
         priced = sorted(((((_sagg[s["slug"]].get("cost_by_zone") or {}).get(code) or {}), s) for s in states), key=lambda r: -r[0].get("n", 0))
         trs = "".join(f'<tr><td><a href="/flood-insurance/{s["slug"]}/">{s["name"]}</a></td><td>{money(d["median"])}</td><td>{d["n"]:,}</td>'
                       + (f'<td>{zout(s)}</td>' if xcol else "") + "</tr>" for d, s in priced if d)
-        few = sum(1 for d, s in priced if not d and zu(s))   # known units only: an uncounted state is never claimed to have policies
+        few = sum(1 for d, s in priced if not d and zu(s))
+        fewline = f" {few} more {'states have' if few > 1 else 'state has'} zone {code} policies but under {ZONE_MIN} priced ones, too few for a median." if few else ""
+        xfoot = " Last column: every NFIP claim since 1978 on every building type, by the zone on the claim." if xcol else ""   # known units only: an uncounted state is never claimed to have policies
         keys = [rk, "lender_any_zone", "price_drivers", "cap", "save_ways", "howto_answer", "how_to_buy", "seller_assign", "private_accept",
                 "nfip_not_sold"] + (["odds_30", "loma", "zone_review"] if hr else []) + (["bfe"] if code in ("AE", "AH", "VE") else []) + (["tx_twia"] if zk == "ve" else [])
         vnote = (f'<p class="mut">Most insured units in this zone are not in the median: {"at least " if units is None else ""}{known:,} units are rated VE '
@@ -430,10 +432,11 @@ if len(states) == 51 and len(_zh) == 51:
         claims = ""
         if cc and cc[1] >= 10:
             out_d = sum(c[2] for z, c in cz.items() if z != "blank" and z[0] not in "AV"); all_d = sum(c[2] for z, c in cz.items() if z != "blank")
-            xs = (f' Of all paid claim dollars with a zone on the claim, {round(100 * out_d / all_d)}% were on claims rated outside zones A and V (X, B, C, D and others).' if xcol and all_d else "")
-            claims = (f'<div class="card"><h2>Do homes in zone {code} flood?</h2><p class="stand">NFIP claims rated {code}, losses in {yrs}: {cc[0]:,} claims, '
-                      f'{cc[1]:,} paid, {money(cc[2])} paid in total, {money(cc[2] / cc[1])} on average per paid claim.{xs}</p>'
-                      f'<p class="mut">Zone as rated on each claim, not today\'s map; dollars as paid, not adjusted for inflation; every building type. '
+            xs = (f' Of all paid claim dollars with a zone on the claim, {round(100 * out_d / all_d)}% were on claims rated outside zones A and V (zones X, B, C and D).' if xcol and all_d else "")
+            claims = (f'<div class="card"><h2>What have NFIP claims in zone {code} paid?</h2><p class="stand">NFIP claims rated {code} on every building type '
+                      f'(homes, condo buildings, businesses), losses in {yrs}: {cc[0]:,} claims, {cc[1]:,} paid, {money(cc[2])} paid in total, '
+                      f'{money(cc[2] / cc[1])} on average per paid claim across all those buildings, not what a single home gets.{xs}</p>'
+                      f'<p class="mut">Zone as rated on each claim, not today\'s map; dollars as paid, not adjusted for inflation. '
                       f'A count of claims is not a chance of flooding for any one home.</p></div>')
         elif xcol:   # until the refresh lands: the state column below is the only claims figure
             claims = ('<div class="card"><h2>How much of the claim money is outside zones A and V?</h2><p class="stand">The last column of the state table below shows, state by state, the share of NFIP claim dollars '
@@ -455,12 +458,9 @@ if len(states) == 51 and len(_zh) == 51:
         keys += ["zone_codes", "purchase_answer"]
         if not _zx: ztab = ""   # until the refresh lands every median cell would read "—"
         if exact and n:
-            tiles = (f'<div class="stat"><div class="n">{money(med)}</div><div class="l">Median / yr in zone {code}, existing policies</div></div>'
-                     + (f'<div class="stat"><div class="n">{money(fmed)}</div><div class="l">Full-risk premium median, before fees</div></div>' if fmed else
-                        f'<div class="stat"><div class="n">{money(p25)}–{money(p75)}</div><div class="l">Half pay between</div></div>'))
-            base = (f'<p class="mut">{n:,} existing single-family primary-home policies rated {code}, premium plus fees, in force on {_ASOF_TXT}; half pay '
-                    f'{money(p25)}–{money(p75)}.{top_line} '
-                    + (f'Full-risk premium: FEMA\'s premium for the building before any yearly limit on rises, premium only, from {fn:,} of those policies. ' if fmed else "")
+            tiles = (f'<div class="stat"><div class="n">{money(med)}</div><div class="l">Median / yr in zone {code}, policies in force</div></div>'
+                     f'<div class="stat"><div class="n">{money(p25)}–{money(p75)}</div><div class="l">Half pay between</div></div>')   # round 72: a premium-only full-risk tile beside a with-fees median misled; back only on the same base
+            base = (f'<p class="mut">{n:,} single-family primary-home policies rated {code}, premium plus fees, in force on {_ASOF_TXT}.{top_line} '
                     + 'Not a quote.</p>')
         elif n:
             tiles = (f'<div class="stat"><div class="n">{money(med)}</div><div class="l">Median / yr, {glab}</div></div>'
@@ -483,7 +483,7 @@ if len(states) == 51 and len(_zh) == 51:
 {claims}{ztab}
 <div class="card" id="states"><h2>What does it cost in zone {code}, by state?</h2>{vnote}
 <table><thead><tr><th>State</th><th>Median / yr, zone {code}</th><th>Policies in the median</th>{xth}</tr></thead><tbody>{trs}</tbody></table>
-<p class="mut">Single-family primary homes rated exactly {code}, premium plus fees, in force on {_ASOF_TXT}.{f" {few} more states have zone {code} policies but under {ZONE_MIN} priced ones, too few for a median." if few else ""}</p></div>
+<p class="mut">Median and policy count: single-family primary homes rated exactly {code}, premium plus fees, in force on {_ASOF_TXT}.{xfoot}{fewline}</p></div>
 <div class="card"><h2>Buying, refinancing or questioning the zone</h2><p class="stand">{rule("seller_assign")} {rule("private_accept")}</p>
 {f'<p class="stand">{rule("loma")} {rule("zone_review")}</p>' if hr else ""}{f'<p class="stand">{rule("bfe")}</p>' if code in ("AE", "AH", "VE") else ""}{f'<p class="stand">{rule("tx_twia")}</p>' if zk == "ve" else ""}
 <p class="stand">{rule("nfip_not_sold")}</p></div>
