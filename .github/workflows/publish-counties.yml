@@ -91,6 +91,7 @@ jobs:
           git commit -m "publish: ${{ steps.add.outputs.msg }}"
           git pull --rebase origin master && git push
           bash tools/deploy_verified.sh   # deploy; live must equal what passed, else the previous release goes back
+          python -I tools/indexnow.py HEAD~1 || true   # tell Bing which pages changed (notice only)
       - name: Live site check on days with nothing to publish (queue empty; a lapsed domain or deleted site shows here)
         if: steps.add.outputs.none == '1' && inputs.drill != 'rollback' && inputs.drill != 'fail'
         env:
