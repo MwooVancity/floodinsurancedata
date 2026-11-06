@@ -14,6 +14,7 @@ RR2_NEW = "2021-10-01"     # new NFIP policies from this date are rated under Ri
 import datetime
 from agg_raw import asof as _asof
 _A = datetime.date.fromisoformat(_asof())
+LOSS_TO = str(_A.year - 1); LOSS_FROM = str(_A.year - 10)   # ten whole loss years before the as-of year (debate 11-05: no 1978+ average)
 NB_FROM = str(_A.replace(year=_A.year - 1) + datetime.timedelta(days=1))   # first written in the 12 months to the as-of date
 
 def f(v):
@@ -31,7 +32,7 @@ def new_acc():
     return {"units": 0, "mand_units": 0, "tenant_units": 0, "condo_unit_units": 0, "rcbap_units": 0, "elev_units": 0,
             "gf_units": 0, "prem_new": [], "prem_old": [], "prem_elev": [], "prem_low": [], "sf_n": 0, "sf_max_cov": 0,
             "rc_n": 0, "rc_over": 0, "fee": [], "hfiaa": [], "reserve": [], "icc": [], "ded": collections.Counter(),
-            "cost_hist": collections.Counter(), "cost_hist_new": collections.Counter(), "zone_hist": {}, "all_cost": [], "sf_cost": [], "sf_prem": [], "sf_new_cost": []}
+            "cost_hist": collections.Counter(), "cost_hist_new": collections.Counter(), "zone_hist": {}, "zone_hist_exact": {}, "frp_hist_exact": {}, "all_cost": [], "sf_cost": [], "sf_prem": [], "sf_new_cost": []}
 
 def policies(st):
     acc = collections.defaultdict(new_acc)
@@ -58,6 +59,10 @@ def policies(st):
                     _z = (r["ratedFloodZone"] or "").upper()[:1]
                     _zg = "A" if _z == "A" else "V" if _z == "V" else "X" if _z in ("B", "C", "X") else None
                     if _zg: a["zone_hist"].setdefault(_zg, collections.Counter())[round(cost)] += 1
+                    _ze = (r["ratedFloodZone"] or "").strip().upper()   # exact zone (AE, X, VE, AO...): zone pages' own median
+                    if _ze: a["zone_hist_exact"].setdefault(_ze, collections.Counter())[round(cost)] += 1
+                    _frp = f(r["fullRiskPremium"])   # premium only, before fees: what the rate moves toward
+                    if _ze and _frp and _frp > 0: a["frp_hist_exact"].setdefault(_ze, collections.Counter())[round(_frp)] += 1
                 if (r["originalNBDate"] or "")[:10] >= NB_FROM: a["sf_new_cost"].append(cost); a["cost_hist_new"][round(cost)] += 1
                 a["sf_cost"].append(cost)
             if prem and prem > 0: a["sf_prem"].append(prem)
@@ -92,6 +97,8 @@ def policies(st):
         if k == "ST":   # histograms and counts the home page sums into exact U.S. figures
             out[k]["cost_hist"] = dict(a["cost_hist"]); out[k]["cost_hist_new"] = dict(a["cost_hist_new"])
             out[k]["cost_hist_zone"] = {g: dict(h) for g, h in a["zone_hist"].items()}
+            out[k]["cost_hist_zone_exact"] = {g: dict(h) for g, h in a["zone_hist_exact"].items()}
+            out[k]["frp_hist_zone_exact"] = {g: dict(h) for g, h in a["frp_hist_exact"].items()}
             out[k]["ded_counts"] = {str(d): c for d, c in a["ded"].items()}
         out[k]["averages"] = {"sf_cost_median": med(a["sf_cost"]), "sf_cost_mean": round(statistics.mean(a["sf_cost"])) if a["sf_cost"] else None,   # every state and county (hater r5)
                               "sf_prem_median": med(a["sf_prem"]), "sf_prem_mean": round(statistics.mean(a["sf_prem"])) if a["sf_prem"] else None,
@@ -105,7 +112,8 @@ def claims(st):
     acc = collections.defaultdict(lambda: {"n": 0, "unpaid": 0, "reason": collections.Counter(), "cause": collections.Counter(),
                                            "depth": [], "event": collections.defaultdict(lambda: [0, 0.0, collections.Counter()]), "icc_n": 0, "icc": [],
                                            "dmg": [], "paid_b": [], "over_cov": 0, "dmg_n": 0, "elev_paid": [], "low_paid": [],
-                                           "dec": collections.defaultdict(lambda: [0, 0])})   # decade of loss: [claims, paid something]
+                                           "dec": collections.defaultdict(lambda: [0, 0]),   # decade of loss: [claims, paid something]
+                                           "zone": collections.defaultdict(lambda: [0, 0, 0.0])})   # zone on the claim, loss years LOSS_FROM..LOSS_TO: [claims, paid, dollars]
     for r in rows("NfipClaims", st):
         paid = net(r)
         for k in ["ST"] + [g for g in [r["countyCode"] or ""] if g[:2] == FIPS[st]]:
@@ -113,6 +121,9 @@ def claims(st):
             a = acc[k]; a["n"] += 1
             if r["yearOfLoss"]:   # hater r6/r7: is a low paid share one era or every era?
                 dc = a["dec"][str(r["yearOfLoss"])[:3] + "0s"]; dc[0] += 1; dc[1] += paid > 0
+            if k == "ST" and LOSS_FROM <= str(r["yearOfLoss"] or "")[:4] <= LOSS_TO:
+                zc = a["zone"][(r["ratedFloodZone"] or "").strip().upper() or "blank"]; zc[0] += 1
+                if paid > 0: zc[1] += 1; zc[2] += paid
             if paid <= 0:
                 a["unpaid"] += 1
                 if r["nonPaymentReasonBuilding"] in NONPAY_REASON: a["reason"][r["nonPaymentReasonBuilding"]] += 1
@@ -147,6 +158,7 @@ def claims(st):
                   "avg_paid_not_elevated": round(statistics.mean(a["low_paid"])) if len(a["low_paid"]) >= 30 else None,
                   "elevated_paid_n": len(a["elev_paid"]), "paid_n": paid_n,
                   "by_decade": {d: {"n": v[0], "paid_pct": pct(v[1], v[0])} for d, v in sorted(a["dec"].items())}}
+        if k == "ST": out[k]["by_zone"] = {z: {"n": v[0], "paid_n": v[1], "paid": round(v[2])} for z, v in a["zone"].items()}
     return out
 
 def run(st):
@@ -155,10 +167,13 @@ def run(st):
     p, c = policies(st), claims(st)
     d = os.path.join(ROOT, "data", "states", slug(st)); os.makedirs(d, exist_ok=True)
     os.makedirs(os.path.join(ROOT, "data", "us"), exist_ok=True)
-    for key in ("cost_hist", "cost_hist_new", "cost_hist_zone"):   # all single-family policies / those first bought in the past year / by zone group
+    for key in ("cost_hist", "cost_hist_new", "cost_hist_zone", "cost_hist_zone_exact", "frp_hist_zone_exact"):   # all single-family policies / those first bought in the past year / by zone group
         hp = os.path.join(ROOT, "data", "us", key + ".json")
         allh = json.load(open(hp)) if os.path.exists(hp) else {}
         allh[st] = p["ST"].pop(key); json.dump(allh, open(hp, "w"))
+    hp = os.path.join(ROOT, "data", "us", "claims_zone.json")   # national claims by zone: summed over all 51 on the zone pages
+    allh = json.load(open(hp)) if os.path.exists(hp) else {}
+    allh[st] = {"from": LOSS_FROM, "to": LOSS_TO, "by_zone": c.get("ST", {}).pop("by_zone", {})}; json.dump(allh, open(hp, "w"))
     json.dump({"policies": p["ST"], "claims": c.get("ST", {})}, open(os.path.join(d, "extras.json"), "w"))
     for g in set(p) | set(c):
         if g == "ST": continue
