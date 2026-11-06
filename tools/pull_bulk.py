@@ -27,8 +27,12 @@ def fmt(v):   # the text pull_raw's csv gets from the API's JSON for the same va
     return str(v)
 
 def head(url):
-    h = subprocess.run(["curl", "-s", "-r", "0-0", "-D", "-", "-o", os.devnull, url], capture_output=True, text=True, check=True).stdout
-    g = {l.split(":", 1)[0].strip().lower(): l.split(":", 1)[1].strip() for l in h.splitlines() if ":" in l}
+    for i in range(5):   # 11-06: FEMA answered once without its file headers (an error page); retry, then stop with a reason
+        h = subprocess.run(["curl", "-s", "-r", "0-0", "-D", "-", "-o", os.devnull, url], capture_output=True, text=True, check=True).stdout
+        g = {l.split(":", 1)[0].strip().lower(): l.split(":", 1)[1].strip() for l in h.splitlines() if ":" in l}
+        if "last-modified" in g and "content-range" in g: break
+        time.sleep(30 * (i + 1))
+    else: sys.exit(f"STOP: FEMA sent no file headers for {url} after 5 tries: {h.splitlines()[:1]}")
     lm = datetime.datetime.strptime(g["last-modified"], "%a, %d %b %Y %H:%M:%S GMT").date()
     return int(g["content-range"].split("/")[1]), g.get("etag", ""), lm
 
