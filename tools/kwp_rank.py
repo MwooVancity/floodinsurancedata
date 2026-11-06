@@ -12,9 +12,13 @@ STATES = {s.lower() for s in NAMES.values()}
 import json
 TOWNS = {t.lower() for t in json.load(open(os.path.join(ROOT, "data", "us", "zip_places.json"), encoding="utf-8")).values()}
 
-def low(v):  # "100 – 1K" -> 100; "1K – 10K" -> 1000; "0 – 10" -> 0
+BAND_FLOOR = {50: 10, 500: 100, 5000: 1000, 50000: 10000, 500000: 100000}   # the export writes each band (10-100, 100-1K...) as 50, 500...: read 5x high until 11-06
+
+def low(v):  # band floor: "500.0" -> 100; "100 – 1K" -> 100; an exact figure stays as is
     m = re.match(r"\s*([\d.]+)(K?)", v or "")
-    return int(float(m[1]) * (1000 if m[2] else 1)) if m else 0
+    if not m: return 0
+    n = int(float(m[1]) * (1000 if m[2] else 1))
+    return BAND_FLOOR.get(n, n) if not m[2] else n
 
 def kind(k):
     if re.search(r"\bzone (a|ae|ah|ao|v|ve|x|shaded x|d|b|c)\b", k): return "zone"
