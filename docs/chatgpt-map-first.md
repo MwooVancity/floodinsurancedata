@@ -135,7 +135,7 @@ Flood Insurance Data Flood insurance › Florida › Palm Beach County Flood ins
 Flood Insurance Data Flood zone AE: what it means, who must insure, what it costs Zone AE is a high-risk area: land with a 1 percent or greater chance of flooding in any given year, where FEMA has worked out how high the water from that flood would reach (44 CFR §59.1, §64.3). A 1 percent or greater chance a year works out to a 26% or greater chance of at least one such flood over 30 years. Must I buy? Federal law requires it only in a high-risk zone (A or V) with a federally regulated or backed mortgage, or federal help to buy or build (42 U.S.C. §4012a). Outside those zones, a lender may still require it. Check your address on FEMA's flood map
 
 
-=== APPENDIX C: top search terms per group (Keyword Planner US; band floor per month) ===
+=== APPENDIX C: top search terms per group (Keyword Planner US). Left column is Google's stored band value: 50 = 10-100, 500 = 100-1K, 5000 = 1K-10K, 50000 = 10K-100K a month. Group totals are band floors. ===
 
 == generic: 428 keywords, 28 with 10+/mo, floor total 38,800/mo
   50000.0  flood zone map
