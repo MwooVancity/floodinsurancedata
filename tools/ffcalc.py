@@ -101,6 +101,7 @@ def aggregate_policies(rows):
         "cost_by_floors": _median_by(coh, "numberOfFloorsInInsuredBuilding", "policyCost"),
         "contents_share": round(100 * sum(1 for r in coh if (r.get("totalContentsInsuranceCoverage") or 0) > 0) / len(coh), 1) if coh else None,   # of single-family primary policies
         "zone_units": dict(sorted(zu.items(), key=lambda x: -x[1])[:12]),
+        "zone_units_all": dict(zu),   # uncapped: national zone pages sum this; the top-12 cut above undercounted VE, AO, AH, D
         "sfha_units": sfha, "sfha_share_units": round(100 * sfha / units, 1) if units else None,
         "spread_ok": len(cost) >= SMALL_COHORT,         # publish the spread only on enough VALID cost obs
         "cost_by_zone": cost_by_zone, "cost_by_year": cost_by_year,

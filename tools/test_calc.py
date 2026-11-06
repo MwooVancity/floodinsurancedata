@@ -23,6 +23,7 @@ assert P["cost_n"] == 3, P["cost_n"]                                # ids 1,2,3 
 assert P["cost_excluded"] == 2, P["cost_excluded"]
 assert P["p50"] == 2000, P["p50"]
 assert P["zone_units"] == {"AE": 4, "VE": 4, "X": 1}, P["zone_units"]   # zone mix counts all policies, not just valid-cost ones
+assert P["zone_units_all"] == P["zone_units"], P["zone_units_all"]   # uncapped copy (zone pages); differs only past 12 zones
 assert P["sfha_units"] == 8 and P["sfha_share_units"] == round(100 * 8 / 9, 1), (P["sfha_units"], P["sfha_share_units"])
 assert P["share_below"] == 100.0 and P["below_n"] == 3, (P["share_below"], P["below_n"])  # ids 1,2,3 below on premium basis
 assert P["gap_basis"] == "premium" and P["prem_median"] == 1400 and P["frp_median"] == 3000, P

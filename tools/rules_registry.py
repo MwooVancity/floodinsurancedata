@@ -142,7 +142,7 @@ RULES = {
     "zone_codes": {   # round 16: B, C, A99, AH, A01-A30 shown with no plain words
         "text": "What the zone codes mean (44 CFR §64.3): A, AE and A1–A30 are high-risk; AO and AH are high-risk with "
                 "shallow flooding; A99 is high-risk behind a flood barrier FEMA treats as complete; V, VE and V1–V30 are "
-                "coastal high-risk with waves; B and shaded X are moderate risk; C and unshaded X are minimal risk; D is not yet studied.",
+                "coastal high-risk with waves; B and X are areas of moderate flood hazard, C and X areas of minimal hazard; D is not yet studied.",
         "sources": [("https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=64", "B, X Areas of moderate flood hazards", "curl"),
                     ("https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=64", "C, X Area of minimal hazards", "curl"),
                     ("https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=64", "D Area of undetermined but possible, flood hazards", "curl"),
@@ -275,7 +275,7 @@ RULES = {
                     (CFR59, "subject to a 1 percent or greater chance of flooding in any given year", "curl")]},
     "zone_x": {
         "text": "Zone X is outside the high-risk zones. Federal rules use it for two kinds of land: areas of moderate flood hazard, and "
-                "areas of minimal hazard (44 CFR §64.3). FEMA's map shows the moderate kind shaded and the minimal kind unshaded.",
+                "areas of minimal hazard (44 CFR §64.3). The same rule lists zone B with the moderate kind and zone C with the minimal kind.",
         "sources": [(CFR64, "B, X Areas of moderate flood hazards", "curl"),
                     (CFR64, "C, X Area of minimal hazards", "curl")]},
     "zone_a": {

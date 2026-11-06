@@ -71,6 +71,7 @@ HEAD = HEAD.replace("<title>", GA_TAG.replace("{", "{{").replace("}", "}}") + "<
 def _rule_hosts(keys):   # the official sites behind these rules, from rules_registry sources
     from urllib.parse import urlparse
     return ", ".join(sorted({urlparse(u).netloc.replace('www.', '') for k in keys for u, *_ in RULES[k]['sources']}))
+from ffcalc import ZONE_MIN
 from agg_raw import asof as _asof   # the data's as-of date, set by the pull (one place)
 _ASOF_TXT = _dtm.date.fromisoformat(_asof()).strftime("%B %d, %Y").replace(" 0", " ")
 _bp = os.path.join(DATADIR, "states", "built.json")
@@ -382,38 +383,45 @@ if len(states) == 51 and len(_zh) == 51:
         h = {s: v.get(grp) or {} for s, v in _zh.items()} if code in ("AE", "X", "VE") else {}
         n = sum(sum(v.values()) for v in h.values())
         med, p25, p75 = (_hq(h, 0.5), _hq(h, 0.25), _hq(h, 0.75)) if n else (None, None, None)
-        rows = [(((_sagg[s["slug"]].get("zone_units") or {}).get(code) or 0), s) for s in states]
-        rows = [(u, s) for u, s in sorted(rows, key=lambda r: -r[0]) if u]
-        units = sum(u for u, _ in rows)
+        def zu(s):   # None = not counted: the old top-12 field may have cut this zone off (zone_units_all lands with the next refresh)
+            a = _sagg[s["slug"]].get("zone_units_all")
+            if a is not None: return a.get(code, 0)
+            t = _sagg[s["slug"]].get("zone_units") or {}
+            return t.get(code, 0) if code in t or len(t) < 12 else None
         def zmed(s):
             d = (_sagg[s["slug"]].get("cost_by_zone") or {}).get(code)
-            return money(d["median"]) if d and d["n"] >= 30 else "too few"
+            return money(d["median"]) if d else "too few"
+        rows = [(zu(s), s) for s in states]
+        rows = [(u, s) for u, s in sorted(rows, key=lambda r: -(r[0] if r[0] is not None else -1)) if u or (u is None and zmed(s) != "too few")]
+        uncounted = sum(1 for s in states if zu(s) is None)
+        units = None if uncounted else sum(u for u, _ in rows)
         def zout(s):
             c = _st(s["slug"], "data.json").get("claims_extra") or {}
             return f'{c["outside_sfha_pct"]}%' if c.get("outside_sfha_pct") is not None and (c.get("paid_n") or 0) >= 10 else "too few"
         xcol = zk == "x"
         xth = "<th>Share of state's paid claim dollars outside zones A and V</th>" if xcol else ""
-        trs = "".join(f'<tr><td><a href="/flood-insurance/{s["slug"]}/">{s["name"]}</a></td><td>{u:,}</td><td>{zmed(s)}</td>' + (f'<td>{zout(s)}</td>' if xcol else "") + "</tr>" for u, s in rows)
+        trs = "".join(f'<tr><td><a href="/flood-insurance/{s["slug"]}/">{s["name"]}</a></td><td>{"not counted" if u is None else f"{u:,}"}</td><td>{zmed(s)}</td>' + (f'<td>{zout(s)}</td>' if xcol else "") + "</tr>" for u, s in rows)
         keys = [rk, "purchase_answer", "lender_any_zone", "rr2_zone", "howto_answer", "how_to_buy"]
-        vnote = (f'<p class="mut">Most insured units in this zone are not in the median: {units:,} units are rated VE, while the median above rests on '
+        known = sum(u for u, _ in rows if u)
+        vnote = (f'<p class="mut">Most insured units in this zone are not in the median: {"at least " if units is None else ""}{known:,} units are rated VE, while the median above rests on '
                  f'{n:,} single-family primary-home policies.</p>') if zk == "ve" else ""
         claims = ('<div class="card"><h2>Does zone X flood?</h2><p class="stand">Yes. The last column of the table above shows, state by state, the share of NFIP claim dollars paid on claims rated outside zones A and V, in every year on record. That is every zone other than A and V, not zone X alone. '
                   "It uses the zone on each claim, not today's map, and leaves out claims with no zone. That share is not a chance of flooding for any one home.</p></div>") if xcol else ""
-        cant = ("whether a home is in the shaded or unshaded part of zone X, because policy records do not separate them. " if xcol else "claims paid in this exact zone across the country. ")
+        cant = ("whether a zone X home is in a moderate or a minimal hazard area, because policy records do not separate them. " if xcol else "claims paid in this exact zone across the country. ")
         pg = HEAD.format(title=f"Flood zone {code}: what it means, who must insure, what it costs",
                          desc=f"What FEMA flood zone {code} means, when flood insurance is required there, and what NFIP policies in {code} cost, from FEMA's public records.",
                          canon=BASE + f"/flood-zones/{zk}/") + f"""
 <h1>Flood zone {code}</h1>
 <div class="stats">{f'''<div class="stat"><div class="n">{money(med)}</div><div class="l">Median / yr, {glab}; zone {code} alone is in the state table</div></div>
 <div class="stat"><div class="n">{money(p25)}–{money(p75)}</div><div class="l">Half pay between</div></div>''' if n else ""}
-<div class="stat"><div class="n">{units:,}</div><div class="l">NFIP policy units rated {code}</div></div></div>
-{f'<p class="mut">Median and range: {n:,} existing single-family primary-home policies, premium plus fees, in force on {_ASOF_TXT}. Not a quote. Condo buildings, second homes and businesses count in the units, not the median.</p>' if n else f'<p class="mut">Units in force on {_ASOF_TXT}. No national median for zone {code} alone: the national cost figures on this site cover whole zone groups (all A, all V, all X zones), not single zones. The state table has a median only where 30 or more priced policies exist.</p>'}
+{f'<div class="stat"><div class="n">{units:,}</div><div class="l">NFIP policy units rated {code}</div></div>' if units is not None else ""}</div>
+{f'<p class="mut">Median and range: {n:,} existing single-family primary-home policies, premium plus fees, in force on {_ASOF_TXT}. Not a quote. Condo buildings, second homes and businesses count in the units, not the median.</p>' if n else f'<p class="mut">Units in force on {_ASOF_TXT}. No national median for zone {code} alone: the national cost figures on this site cover whole zone groups (all A, all V, all X zones), not single zones. The state table has a median only where {ZONE_MIN} or more priced policies exist.</p>'}
 <a class="btn" href="https://msc.fema.gov/portal/home" rel="noopener" target="_blank">Check your address on FEMA's flood map →</a>
 <div class="card"><h2>What does zone {code} mean?</h2><p class="stand">{rule(rk)}</p></div>
 <div class="card"><h2>Am I required to buy flood insurance?</h2><p class="stand">{rule("purchase_answer")} {rule("lender_any_zone")}</p></div>
 <div class="card"><h2>What does it cost in zone {code}, by state?</h2><p class="stand">{rule("rr2_zone")}</p>{vnote}
 <table><thead><tr><th>State</th><th>Units rated {code}</th><th>Median / yr, zone {code}</th>{xth}</tr></thead><tbody>{trs}</tbody></table>
-<p class="mut">Median: single-family primary homes rated exactly {code}, premium plus fees; too few = under 30 priced policies. Units: every NFIP policy unit rated {code}. In force on {_ASOF_TXT}.</p></div>
+<p class="mut">Median: single-family primary homes rated exactly {code}, premium plus fees; too few = under {ZONE_MIN} priced policies. Units: every NFIP policy unit rated {code}{"; not counted = this data extract kept only each state&#39;s 12 largest zones, so no national unit total is shown" if uncounted else ""}. In force on {_ASOF_TXT}.</p></div>
 {claims}<div class="card"><h2>How do I get covered?</h2><p class="stand">{rule("howto_answer")} {rule("how_to_buy")}</p></div>
 <div class="card"><h2>What this page cannot tell you</h2><p class="stand">Your premium, private insurers' prices, your exact zone, why prices rise, and {cant}FEMA's map and an agent's quote answer those for your address.</p>
 <p>Other zones: {_links(zk)}. <a href="/flood-insurance/">Your state and county</a>.</p>
