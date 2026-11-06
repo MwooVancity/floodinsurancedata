@@ -2118,5 +2118,205 @@
   "label": "Poquoson city, Virginia",
   "short": "Poquoson city",
   "official": 0
+ },
+ {
+  "slug": "pima-county-az",
+  "state": "AZ",
+  "geoid": "04019",
+  "county": "PIMA",
+  "countytitle": "Pima",
+  "label": "Pima County, Arizona",
+  "short": "Pima County",
+  "official": 0
+ },
+ {
+  "slug": "pierce-county-wa",
+  "state": "WA",
+  "geoid": "53053",
+  "county": "PIERCE",
+  "countytitle": "Pierce",
+  "label": "Pierce County, Washington",
+  "short": "Pierce County",
+  "official": 0
+ },
+ {
+  "slug": "polk-county-ia",
+  "state": "IA",
+  "geoid": "19153",
+  "county": "POLK",
+  "countytitle": "Polk",
+  "label": "Polk County, Iowa",
+  "short": "Polk County",
+  "official": 0
+ },
+ {
+  "slug": "accomack-county-va",
+  "state": "VA",
+  "geoid": "51001",
+  "county": "ACCOMACK",
+  "countytitle": "Accomack",
+  "label": "Accomack County, Virginia",
+  "short": "Accomack County",
+  "official": 0
+ },
+ {
+  "slug": "alachua-county-fl",
+  "state": "FL",
+  "geoid": "12001",
+  "county": "ALACHUA",
+  "countytitle": "Alachua",
+  "label": "Alachua County, Florida",
+  "short": "Alachua County",
+  "official": 0
+ },
+ {
+  "slug": "passaic-county-nj",
+  "state": "NJ",
+  "geoid": "34031",
+  "county": "PASSAIC",
+  "countytitle": "Passaic",
+  "label": "Passaic County, New Jersey",
+  "short": "Passaic County",
+  "official": 0
+ },
+ {
+  "slug": "morris-county-nj",
+  "state": "NJ",
+  "geoid": "34027",
+  "county": "MORRIS",
+  "countytitle": "Morris",
+  "label": "Morris County, New Jersey",
+  "short": "Morris County",
+  "official": 0
+ },
+ {
+  "slug": "leon-county-fl",
+  "state": "FL",
+  "geoid": "12073",
+  "county": "LEON",
+  "countytitle": "Leon",
+  "label": "Leon County, Florida",
+  "short": "Leon County",
+  "official": 0
+ },
+ {
+  "slug": "lane-county-or",
+  "state": "OR",
+  "geoid": "41039",
+  "county": "LANE",
+  "countytitle": "Lane",
+  "label": "Lane County, Oregon",
+  "short": "Lane County",
+  "official": 0
+ },
+ {
+  "slug": "cobb-county-ga",
+  "state": "GA",
+  "geoid": "13067",
+  "county": "COBB",
+  "countytitle": "Cobb",
+  "label": "Cobb County, Georgia",
+  "short": "Cobb County",
+  "official": 0
+ },
+ {
+  "slug": "san-patricio-county-tx",
+  "state": "TX",
+  "geoid": "48409",
+  "county": "SAN PATRICIO",
+  "countytitle": "San Patricio",
+  "label": "San Patricio County, Texas",
+  "short": "San Patricio County",
+  "official": 0
+ },
+ {
+  "slug": "acadia-parish-la",
+  "state": "LA",
+  "geoid": "22001",
+  "county": "ACADIA",
+  "countytitle": "Acadia",
+  "label": "Acadia Parish, Louisiana",
+  "short": "Acadia Parish",
+  "official": 0
+ },
+ {
+  "slug": "solano-county-ca",
+  "state": "CA",
+  "geoid": "06095",
+  "county": "SOLANO",
+  "countytitle": "Solano",
+  "label": "Solano County, California",
+  "short": "Solano County",
+  "official": 0
+ },
+ {
+  "slug": "valencia-county-nm",
+  "state": "NM",
+  "geoid": "35061",
+  "county": "VALENCIA",
+  "countytitle": "Valencia",
+  "label": "Valencia County, New Mexico",
+  "short": "Valencia County",
+  "official": 0
+ },
+ {
+  "slug": "whatcom-county-wa",
+  "state": "WA",
+  "geoid": "53073",
+  "county": "WHATCOM",
+  "countytitle": "Whatcom",
+  "label": "Whatcom County, Washington",
+  "short": "Whatcom County",
+  "official": 0
+ },
+ {
+  "slug": "denton-county-tx",
+  "state": "TX",
+  "geoid": "48121",
+  "county": "DENTON",
+  "countytitle": "Denton",
+  "label": "Denton County, Texas",
+  "short": "Denton County",
+  "official": 0
+ },
+ {
+  "slug": "snohomish-county-wa",
+  "state": "WA",
+  "geoid": "53061",
+  "county": "SNOHOMISH",
+  "countytitle": "Snohomish",
+  "label": "Snohomish County, Washington",
+  "short": "Snohomish County",
+  "official": 0
+ },
+ {
+  "slug": "waller-county-tx",
+  "state": "TX",
+  "geoid": "48473",
+  "county": "WALLER",
+  "countytitle": "Waller",
+  "label": "Waller County, Texas",
+  "short": "Waller County",
+  "official": 0
+ },
+ {
+  "slug": "washoe-county-nv",
+  "state": "NV",
+  "geoid": "32031",
+  "county": "WASHOE",
+  "countytitle": "Washoe",
+  "label": "Washoe County, Nevada",
+  "short": "Washoe County",
+  "official": 0
+ },
+ {
+  "slug": "pasquotank-county-nc",
+  "state": "NC",
+  "geoid": "37139",
+  "county": "PASQUOTANK",
+  "countytitle": "Pasquotank",
+  "label": "Pasquotank County, North Carolina",
+  "short": "Pasquotank County",
+  "official": 0
  }
 ]

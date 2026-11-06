@@ -1840,6 +1840,156 @@
 "indexable": true
 },
 {
+"slug": "accomack-county-va",
+"label": "Accomack County, Virginia",
+"short": "Accomack County",
+"geoid": "51001",
+"state": "VA",
+"units": 2903,
+"median": 1015,
+"indexable": true
+},
+{
+"slug": "alachua-county-fl",
+"label": "Alachua County, Florida",
+"short": "Alachua County",
+"geoid": "12001",
+"state": "FL",
+"units": 2874,
+"median": 682,
+"indexable": true
+},
+{
+"slug": "pima-county-az",
+"label": "Pima County, Arizona",
+"short": "Pima County",
+"geoid": "04019",
+"state": "AZ",
+"units": 2864,
+"median": 1086,
+"indexable": true
+},
+{
+"slug": "passaic-county-nj",
+"label": "Passaic County, New Jersey",
+"short": "Passaic County",
+"geoid": "34031",
+"state": "NJ",
+"units": 2820,
+"median": 2011,
+"indexable": true
+},
+{
+"slug": "morris-county-nj",
+"label": "Morris County, New Jersey",
+"short": "Morris County",
+"geoid": "34027",
+"state": "NJ",
+"units": 2790,
+"median": 1404,
+"indexable": true
+},
+{
+"slug": "leon-county-fl",
+"label": "Leon County, Florida",
+"short": "Leon County",
+"geoid": "12073",
+"state": "FL",
+"units": 2717,
+"median": 898,
+"indexable": true
+},
+{
+"slug": "lane-county-or",
+"label": "Lane County, Oregon",
+"short": "Lane County",
+"geoid": "41039",
+"state": "OR",
+"units": 2704,
+"median": 1079,
+"indexable": true
+},
+{
+"slug": "pierce-county-wa",
+"label": "Pierce County, Washington",
+"short": "Pierce County",
+"geoid": "53053",
+"state": "WA",
+"units": 2566,
+"median": 886,
+"indexable": true
+},
+{
+"slug": "cobb-county-ga",
+"label": "Cobb County, Georgia",
+"short": "Cobb County",
+"geoid": "13067",
+"state": "GA",
+"units": 2466,
+"median": 880,
+"indexable": true
+},
+{
+"slug": "san-patricio-county-tx",
+"label": "San Patricio County, Texas",
+"short": "San Patricio County",
+"geoid": "48409",
+"state": "TX",
+"units": 2433,
+"median": 781,
+"indexable": true
+},
+{
+"slug": "acadia-parish-la",
+"label": "Acadia Parish, Louisiana",
+"short": "Acadia Parish",
+"geoid": "22001",
+"state": "LA",
+"units": 2354,
+"median": 1151,
+"indexable": true
+},
+{
+"slug": "solano-county-ca",
+"label": "Solano County, California",
+"short": "Solano County",
+"geoid": "06095",
+"state": "CA",
+"units": 2268,
+"median": 1354,
+"indexable": true
+},
+{
+"slug": "valencia-county-nm",
+"label": "Valencia County, New Mexico",
+"short": "Valencia County",
+"geoid": "35061",
+"state": "NM",
+"units": 2259,
+"median": 1070,
+"indexable": true
+},
+{
+"slug": "whatcom-county-wa",
+"label": "Whatcom County, Washington",
+"short": "Whatcom County",
+"geoid": "53073",
+"state": "WA",
+"units": 2247,
+"median": 1031,
+"indexable": true
+},
+{
+"slug": "denton-county-tx",
+"label": "Denton County, Texas",
+"short": "Denton County",
+"geoid": "48121",
+"state": "TX",
+"units": 2204,
+"median": 739,
+"indexable": true
+},
+{
 "slug": "richland-county-sc",
 "label": "Richland County, South Carolina",
 "short": "Richland County",
@@ -1850,6 +2000,16 @@
 "indexable": true
 },
 {
+"slug": "snohomish-county-wa",
+"label": "Snohomish County, Washington",
+"short": "Snohomish County",
+"geoid": "53061",
+"state": "WA",
+"units": 2151,
+"median": 1092,
+"indexable": true
+},
+{
 "slug": "montgomery-county-md",
 "label": "Montgomery County, Maryland",
 "short": "Montgomery County",
@@ -1857,6 +2017,36 @@
 "state": "MD",
 "units": 2124,
 "median": 445,
+"indexable": true
+},
+{
+"slug": "waller-county-tx",
+"label": "Waller County, Texas",
+"short": "Waller County",
+"geoid": "48473",
+"state": "TX",
+"units": 2080,
+"median": 873,
+"indexable": true
+},
+{
+"slug": "washoe-county-nv",
+"label": "Washoe County, Nevada",
+"short": "Washoe County",
+"geoid": "32031",
+"state": "NV",
+"units": 1958,
+"median": 882,
+"indexable": true
+},
+{
+"slug": "pasquotank-county-nc",
+"label": "Pasquotank County, North Carolina",
+"short": "Pasquotank County",
+"geoid": "37139",
+"state": "NC",
+"units": 1916,
+"median": 853,
 "indexable": true
 },
 {
@@ -1927,6 +2117,16 @@
 "state": "UT",
 "units": 1193,
 "median": 548,
+"indexable": true
+},
+{
+"slug": "polk-county-ia",
+"label": "Polk County, Iowa",
+"short": "Polk County",
+"geoid": "19153",
+"state": "IA",
+"units": 1156,
+"median": 841,
 "indexable": true
 },
 {
