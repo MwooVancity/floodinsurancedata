@@ -1,0 +1,16 @@
+name: fema-probe
+# Agreed plan 11-06 step 8: can a US cloud runner reach FEMA's map servers? Hand-run only; no alert, no deploy.
+on: workflow_dispatch
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - run: |
+          for u in "https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer?f=json" \
+                   "https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer/28/query?geometry=-82.7942,27.9659&geometryType=esriGeometryPoint&inSR=4326&outFields=FLD_ZONE,ZONE_SUBTY,DFIRM_ID&returnGeometry=false&f=json" \
+                   "https://msc.fema.gov/portal/home" \
+                   "https://msc.fema.gov/portal/search?AddressQuery=315%20Court%20St%2C%20Clearwater%2C%20FL%2033756"; do
+            echo "== $u"; curl -s -o out.txt -w "%{http_code} %{time_total}s %{size_download}B\n" --max-time 40 -A "Mozilla/5.0" "$u" || echo "curl failed $?"
+            head -c 400 out.txt; echo
+          done
