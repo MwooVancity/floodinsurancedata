@@ -10,6 +10,7 @@ if "--refresh" in sys.argv:   # only counties whose review page passed the gate,
     q = [{k: p[k] for k in ("slug", "state", "geoid", "label", "short", "units")} for p in json.load(open(os.path.join(ROOT, "review", "places.json")))]
     json.dump(q, open(QUEUE, "w", encoding="utf-8"), indent=0, ensure_ascii=False); print(f"queue: {len(q)} counties"); sys.exit()
 N = int(sys.argv[1]) if len(sys.argv) > 1 else 10
+if N == 0: print("added 0: county publishing frozen (owner 11-06)"); sys.exit()   # freeze, not a stall: no alert
 path = os.path.join(ROOT, "tools", "counties.json")
 cur = json.load(open(path, encoding="utf-8"))
 have = {c["geoid"] for c in cur}

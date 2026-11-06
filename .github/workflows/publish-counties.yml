@@ -63,7 +63,7 @@ jobs:
         id: add
         run: |
           if [ -n "${{ inputs.drill }}" ] && [ "${{ inputs.drill }}" != none ]; then echo "none=1" >> "$GITHUB_OUTPUT"; echo "drill: nothing added"; exit 0; fi
-          out=$(python -I tools/add_counties.py 20); echo "$out"
+          out=$(python -I tools/add_counties.py 0); echo "$out"   # owner 11-06: counties frozen until a county page earns clicks (was 20)
           echo "msg=$out" >> "$GITHUB_OUTPUT"
           # queue empty and the site already holds the latest data: nothing to build (a monthly refresh must still ship)
           if git diff --quiet tools/counties.json && [ "$(python -I tools/refresh_shipped.py)" = yes ]; then echo "queue empty"; echo "none=1" >> "$GITHUB_OUTPUT"; fi
