@@ -412,7 +412,7 @@ if len(states) == 51 and len(_zh) == 51:
         priced = sorted(((((_sagg[s["slug"]].get("cost_by_zone") or {}).get(code) or {}), s) for s in states), key=lambda r: -r[0].get("n", 0))
         trs = "".join(f'<tr><td><a href="/flood-insurance/{s["slug"]}/">{s["name"]}</a></td><td>{money(d["median"])}</td><td>{d["n"]:,}</td>'
                       + (f'<td>{zout(s)}</td>' if xcol else "") + "</tr>" for d, s in priced if d)
-        few = sum(1 for d, s in priced if not d and zu(s) != 0)
+        few = sum(1 for d, s in priced if not d and zu(s))   # known units only: an uncounted state is never claimed to have policies
         keys = [rk, "lender_any_zone", "price_drivers", "cap", "save_ways", "howto_answer", "how_to_buy", "seller_assign", "private_accept",
                 "nfip_not_sold"] + (["odds_30", "loma", "zone_review"] if hr else []) + (["bfe"] if code in ("AE", "AH", "VE") else []) + (["tx_twia"] if zk == "ve" else [])
         vnote = (f'<p class="mut">Most insured units in this zone are not in the median: {"at least " if units is None else ""}{known:,} units are rated VE '
