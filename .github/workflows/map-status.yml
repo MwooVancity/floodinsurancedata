@@ -1,0 +1,42 @@
+name: map-status
+# County flood-map facts from FEMA's live map service (tools/pull_mapstatus.py): map age, map revisions, individual
+# exemptions. Runs here because FEMA's map servers refuse non-US connections. Monthly on the 4th, plus by hand.
+# Commits data/us/map_status.json only; nothing ships from here (the daily publish job builds and gates it).
+on:
+  schedule:
+    - cron: '0 7 4 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+  actions: read
+
+concurrency: site-deploy
+
+jobs:
+  mapstatus:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - name: Pull county map status from FEMA
+        run: python -I tools/pull_mapstatus.py
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898+github-actions[bot]@users.noreply.github.com"
+          git add data/us/map_status.json
+          git diff --cached --quiet && { echo "unchanged"; exit 0; }
+          git commit -m "data: county flood-map status from FEMA's map service"
+          git pull --rebase origin master && git push
+      - name: Alert on failure (one issue per problem)
+        if: failure() || cancelled()
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: bash tools/job_alert.sh fail "map-status"
+      - name: Close the alert when passing again
+        if: success()
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: bash tools/job_alert.sh ok "map-status"
