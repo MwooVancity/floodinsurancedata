@@ -1,5 +1,5 @@
 name: fema-probe
-# Agreed plan 11-06 step 8: can a US cloud runner reach FEMA's map servers? Hand-run only; no alert, no deploy.
+# Hand-run only: what FEMA's NFHL map service offers from a US runner (fields, sample stats). No alert, no deploy.
 on: workflow_dispatch
 jobs:
   probe:
@@ -8,13 +8,9 @@ jobs:
     steps:
       - run: |
           B="https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer"
-          Q="geometry=-82.7942,27.9659&geometryType=esriGeometryPoint&inSR=4326&returnGeometry=false&f=json"
-          echo "== layers"; curl -s "$B?f=json" | python3 -c "import json,sys;[print(l['id'],l['name']) for l in json.load(sys.stdin)['layers']]"
-          echo "== CORS on a point query"
-          curl -s -D - -o /dev/null -H "Origin: https://floodinsurancedata.com" "$B/28/query?$Q&outFields=FLD_ZONE" | grep -i -E "access-control|HTTP/"
-          echo "== export image"
-          curl -s -o img.png -w "%{http_code} %{content_type} %{size_download}B" "$B/export?bbox=-82.82,27.95,-82.76,27.99&bboxSR=4326&size=600,400&layers=show:28&format=png&transparent=true&f=image"; echo
-          echo "== point query"; curl -s "$B/28/query?$Q&outFields=FLD_ZONE,ZONE_SUBTY,STATIC_BFE,DFIRM_ID" | head -c 600; echo
-          echo "== Palm Beach polygons by zone"
-          curl -s -G "$B/28/query" --data-urlencode "where=DFIRM_ID='12099C'" --data-urlencode 'outStatistics=[{"statisticType":"count","onStatisticField":"OBJECTID","outStatisticFieldName":"n"}]' --data-urlencode "groupByFieldsForStatistics=FLD_ZONE,ZONE_SUBTY" --data-urlencode "f=json" | head -c 1500; echo
-          echo "== WMS"; curl -s -o /dev/null -w "%{http_code}" "https://hazards.fema.gov/gis/nfhl/services/public/NFHLWMS/MapServer/WMSServer?request=GetCapabilities&service=WMS"; echo
+          for L in 3 1 34 0; do echo "== layer $L fields"; curl -s "$B/$L?f=json" | python3 -c "import json,sys;d=json.load(sys.stdin);print(d.get('name'),[f['name'] for f in d.get('fields') or []])"; done
+          for L in 3 1 34; do echo "== layer $L sample for 12099C"; curl -s -G "$B/$L/query" --data-urlencode "where=DFIRM_ID='12099C'" --data-urlencode "outFields=*" --data-urlencode "returnGeometry=false" --data-urlencode "resultRecordCount=2" --data-urlencode "f=json" | head -c 900; echo; done
+          echo "== layer 3 panel dates, Palm Beach"; curl -s -G "$B/3/query" --data-urlencode "where=DFIRM_ID='12099C'" --data-urlencode 'outStatistics=[{"statisticType":"min","onStatisticField":"EFF_DATE","outStatisticFieldName":"oldest"},{"statisticType":"max","onStatisticField":"EFF_DATE","outStatisticFieldName":"newest"},{"statisticType":"count","onStatisticField":"OBJECTID","outStatisticFieldName":"n"}]' --data-urlencode "f=json" | head -c 600; echo
+          echo "== legend"; curl -s "$B/legend?f=json" | python3 -c "import json,sys;d=json.load(sys.stdin);l=[x for x in d['layers'] if x['layerId']==28][0];[print(x['label'],len(x.get('imageData',''))) for x in l['legend']]"
+          echo "== census geocoder CORS"; curl -s -D - -o /dev/null -H "Origin: https://floodinsurancedata.com" "https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address=315%20Court%20St%2C%20Clearwater%2C%20FL&benchmark=Public_AR_Current&format=json" | grep -i -E "access-control|HTTP/"
+          echo "== msc address link"; curl -s "https://msc.fema.gov/portal/search?AddressQuery=315%20Court%20St%2C%20Clearwater%2C%20FL%2033756" | grep -o -i "addressquery[^\"']\{0,80\}" | head -3
