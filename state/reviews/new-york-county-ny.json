@@ -1,6 +1,6 @@
 {
  "slug": "new-york-county-ny",
- "verdict": "FAIL",
+ "verdict": "PASS",
  "template": "8b783a677f6664ac",
  "defects": [],
  "reviewer": "hater round 89 (fresh agent, docs/HATER-PROMPT.md)",

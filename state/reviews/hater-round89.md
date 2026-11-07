@@ -9,10 +9,14 @@ Title: "Palm Beach County, FL (Boca Raton) flood zones and flood insurance: $673
 - MINOR: Boca Raton is not the county's biggest-name town; "ranked by NFIP policy units" is not visible in the title (a reader may take it as the seat or largest). Not false.
 - No BLOCKER. No MAJOR.
 
+Verdict: PASS
+
 ## new-york-county-ny
 Title: "New York County, NY flood zones and flood insurance: $1,021/yr median, single-family"
 - No parenthesis; the page has no "Towns here" list (under 2 towns). Correct per the rule. Nothing misleading.
 - No BLOCKER. No MAJOR.
+
+Verdict: PASS
 
 ## Other county titles skimmed (5)
 - accomack-county-va "(Chincoteague)": top of its list; right county. OK.
