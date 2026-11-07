@@ -17,7 +17,7 @@ Volumes: Keyword Planner US band floors/mo. "Perfect" = numbers recomputed by a 
 | 10 | ~100 claims | /flood-insurance/claims/ | LIVE 11-07 | owner: reporter pitches |
 Not targeted: "flood insurance" head term (FloodSmart), quote, companies.
 
-EXECUTION ORDER (owner 11-07 "plan to execute the plan"). One batch = build > its check + mutations > gates > one light review > ship > live read > PLAN line. Counties OFF (publish-counties adds 0) until rows 1-7 are done.
+EXECUTION ORDER (owner 11-07 "plan to execute the plan"). One batch = build > its check + mutations > gates > one light review > ship > live read > PLAN line. Counties ON 11-07 (rows 1-7 done), 20/day.
 - DONE 11-07 Batch A (live, r83 PASS): home H2 "How much is flood insurance?" + $715-$1,330 half, $2,170 top tenth; zone X H2; titles "/yr". Code review (high) 11-07: 7 of 9 fixed (15 m box now real meters, --refresh re-ranks kw, map-status own concurrency group, stale ZIP files cleared, pull_bulk head retries curl errors, pre-build STOP sets batch aside); open: LOMA counts by Community Status Book county can include a multi-county city's rulings (label or spatial filter), zone_check/zu duplicate fallback.
 - (was) Batch A: row 4 home H2 "How much is flood insurance?" + national half-pay range; row 3 zone X H2 "Zones B and C: old names for X" (zone_x rule already quotes FEMA); title "/yr" minor (r82).
 - DONE 11-07 Batch B: /nfip/ "The NFIP in numbers" live (4,529,364 units, $1,066 median, 2,680,429 claims paid or not, $88.4B paid; `claims_check.py --nfip` + mutations; r85 FAIL > r86 PASS). Open MINOR: `limits` rule needs residential scope.
@@ -25,7 +25,7 @@ EXECUTION ORDER (owner 11-07 "plan to execute the plan"). One batch = build > it
 - (was) Batch B: row 5 /nfip/ "The NFIP in numbers": policy units, median cost, claims and dollars paid since 1978 and since 2020, by state; program rules only via rule() (nfip_not_sold, nfip_lapse, how_to_buy); check script recomputes every figure.
 - DONE 11-07 Batch D: every county ZIP card names its top 5 towns (Census places summed over their ZIPs) and the meta description lists them; a town counts only if Census puts both the place and one of its ZIPs in that county (data/us/zip_place_counties.json, `town_check.py` + 3 mutations; caught "Islamorada, Village of Islands" read as two towns). Titles unchanged: already ~85 characters, Google cuts the rest. Ends the 20-county towns test early (PLAN row 7).
 - Batch E (11-20): rows 1-2 tool to all pages: first a US-runner live test of the tool against real FEMA (fema-probe + Playwright), then tools_flags "zonemap": "all".
-- Then row 8: publish-counties back to 20/day, kw > 0 (97 searched counties), then the 8 flagged ones after their own light review.
+- DONE 11-07 row 8 started: publish-counties back to 20/day, kw > 0 only (97 searched counties, ~5 days); flagged counties are set aside by S12 until their own light review (Sonoma first).
 
 ## Goal and scoreboard
 Most helpful flood-insurance page for every US county, for a scared reader on a phone. Measure: pages indexed, impressions, clicks, page-1 queries, AI citations. We built before proving demand: the weekly scoreboard decides; polish only where a number says a page fails.
