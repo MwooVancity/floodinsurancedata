@@ -5,13 +5,13 @@ State and next moves only; rules in CLAUDE.md, history in git. Under 80 lines: d
 Volumes: Keyword Planner US band floors/mo. "Perfect" = numbers recomputed by a check with mutations, one light review PASS, phone check, live read, linked from home.
 | # | Searches | Page | Status | Next action |
 |---|---|---|---|---|
-| 1 | 22,100 flood zone map / fema flood map by address / by address | /flood-zone-map/ + tool | LIVE 11-06 (tool tested on fixtures; live FEMA answer unverified from US) | 11-20: tool to all pages after 2 weeks with no errors |
-| 2 | 7,790 flood zone map [state] + 13,510 state | 51 state pages | Retitle "<State> flood zones and flood insurance" 11-07 (review r82) | tool on all states 11-20 |
-| 3 | 7,530 zone words | 7 zone pages | LIVE, exact-zone figures | "Zones B and C: old names for X" heading |
-| 4 | ~2,100 how much is flood insurance / cost / average | home | LIVE (median $1,066) | literal H2 "How much is flood insurance?" + national middle-half range |
-| 5 | ~2,000 nfip / fema flood insurance | new /nfip/ "The NFIP in numbers" | NOT BUILT | policies in force, claims paid, by state, from our data; FEMA owns the term, so judge by impressions |
-| 6 | ~1,000 flood insurance for renters | /flood-insurance/renters/ | WAITING: renter count in refresh 42328128363 | build if the count passes the floor |
-| 7 | ~1,000+ towns ("flood insurance chicago") | county pages | town names in 20 counties only | town names in every county title/lede where Census gives them |
+| 1 | 22,100 flood zone map / fema flood map by address / by address | /flood-zone-map/ + tool | LIVE 11-06; live US test vs real FEMA PASS 11-07 (5 addresses, Chromium + WebKit, `live_zonemap.py` in fema-probe) | 11-20: tool to all pages after 2 weeks with no errors |
+| 2 | 7,790 flood zone map [state] + 13,510 state | 51 state pages | LIVE, retitled 11-07 | tool on all states 11-20 |
+| 3 | 7,530 zone words | 7 zone pages | DONE 11-07 | — |
+| 4 | ~2,100 how much is flood insurance / cost / average | home | DONE 11-07 | — |
+| 5 | ~2,000 nfip / fema flood insurance | new /nfip/ "The NFIP in numbers" | DONE 11-07 | judge by impressions |
+| 6 | ~1,000 flood insurance for renters | /flood-insurance/renters/ | LIVE 11-07: 6,397 priced homes-only renter policies, median $369 (middle half $307-$513); r88 PASS | backlog r88 MINORs |
+| 7 | ~1,000+ towns ("flood insurance chicago") | county pages | DONE 11-07, every county | — |
 | 8 | 7,240 [county] flood zone map | county pages, 20/day by GitHub | 232 live; 97 searched counties queued (majority-share rule), ~5 days | 8 flagged searched counties (sonoma-ca first) need own light review |
 | 9 | ~100 rates by zip code | /flood-insurance/zip/ | LIVE 11-07 | — |
 | 10 | ~100 claims | /flood-insurance/claims/ | LIVE 11-07 | owner: reporter pitches |
@@ -21,7 +21,7 @@ EXECUTION ORDER (owner 11-07 "plan to execute the plan"). One batch = build > it
 - DONE 11-07 Batch A (live, r83 PASS): home H2 "How much is flood insurance?" + $715-$1,330 half, $2,170 top tenth; zone X H2; titles "/yr". Code review (high) 11-07: 7 of 9 fixed (15 m box now real meters, --refresh re-ranks kw, map-status own concurrency group, stale ZIP files cleared, pull_bulk head retries curl errors, pre-build STOP sets batch aside); open: LOMA counts by Community Status Book county can include a multi-county city's rulings (label or spatial filter), zone_check/zu duplicate fallback.
 - (was) Batch A: row 4 home H2 "How much is flood insurance?" + national half-pay range; row 3 zone X H2 "Zones B and C: old names for X" (zone_x rule already quotes FEMA); title "/yr" minor (r82).
 - DONE 11-07 Batch B: /nfip/ "The NFIP in numbers" live (4,529,364 units, $1,066 median, 2,680,429 claims paid or not, $88.4B paid; `claims_check.py --nfip` + mutations; r85 FAIL > r86 PASS). Open MINOR: `limits` rule needs residential scope.
-- Batch C: renter filter fixed 11-07: extras_raw counts only FEMA residential occupancy codes 1, 2, 3, 11, 12, 13, 14, 16 (data dictionary in metric_defs.json); old wrong data/us/renter_hist.json deleted. Next: next refresh-data run writes the new count; page only if the median rests on 100+ priced policies.
+- DONE 11-07 Batch C: renter count homes only (occupancy 1,2,3,11,12,13,14,16; was 23,035 at $985 with businesses, now 6,397 at $369); /flood-insurance/renters/ live, `claims_check.py --renters` + 2 mutations. Also 11-07: limits rule scoped (home/renter/business), LOMA count label (CSB communities), towns early in descriptions, live tool test vs real FEMA PASS (`live_zonemap.py`, 5 addresses, Chromium + WebKit).
 - (was) Batch B: row 5 /nfip/ "The NFIP in numbers": policy units, median cost, claims and dollars paid since 1978 and since 2020, by state; program rules only via rule() (nfip_not_sold, nfip_lapse, how_to_buy); check script recomputes every figure.
 - DONE 11-07 Batch D: every county ZIP card names its top 5 towns (Census places summed over their ZIPs) and the meta description lists them; a town counts only if Census puts both the place and one of its ZIPs in that county (data/us/zip_place_counties.json, `town_check.py` + 3 mutations; caught "Islamorada, Village of Islands" read as two towns). Titles unchanged: already ~85 characters, Google cuts the rest. Ends the 20-county towns test early (PLAN row 7).
 - Batch E (11-20): rows 1-2 tool to all pages: first a US-runner live test of the tool against real FEMA (fema-probe + Playwright), then tools_flags "zonemap": "all".

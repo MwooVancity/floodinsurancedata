@@ -20,6 +20,7 @@ def data_dir(slug):
     return ""
 def query(slug):   # the query a real reader types for this page
     if slug == "home": return "flood insurance cost"
+    if not data_dir(slug): return "flood insurance " + slug.replace("-", " ")   # a national page (renters): its own words
     a = json.load(open(os.path.join(data_dir(slug), "agg.json")))
     return f"flood insurance cost {a.get('name') or slug.replace('-', ' ')}" if a.get("level") == "state" else \
            f"flood insurance cost {slug.rsplit('-', 1)[0].replace('-', ' ')} {a.get('state', '')}"
