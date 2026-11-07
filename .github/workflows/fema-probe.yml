@@ -2,6 +2,16 @@ name: fema-probe
 # Hand-run only: what FEMA's NFHL map service offers from a US runner (fields, sample stats). No alert, no deploy.
 on: workflow_dispatch
 jobs:
+  live-tool:   # Batch E gate: the live address tool vs real FEMA + Census, Chromium and WebKit
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install -q playwright==1.64.1 && python -m playwright install --with-deps chromium webkit
+      - run: python -I tools/live_zonemap.py --browser chromium
+      - run: python -I tools/live_zonemap.py --browser webkit
   probe:
     runs-on: ubuntu-latest
     timeout-minutes: 5
