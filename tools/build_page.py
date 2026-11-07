@@ -877,6 +877,7 @@ BASE_URL = os.environ.get("FF_BASEURL", "https://floodinsurancedata.com").rstrip
 CANON = f"{BASE_URL}/flood-insurance/{SLUG}/"
 GEOID = os.environ.get("FF_GEOID", "12071")
 _TW = _towns([z for z in (agg["policies"].get("by_zip") or []) if re.fullmatch(r"\d{5}", str(z.get("zip")))])
+_T1 = f" ({_TW[0]})" if len(_TW) > 1 and _TW[0].lower() not in CS.lower() else ""   # money audit 11-07: "flood insurance chicago" > all county-map money
 _CSX = CS + (" (" + ", ".join(_TW[:3]) + ")" if len(_TW) > 1 else "")   # towns early: Google cuts descriptions near 155 characters (r87)
 META_DESC = (f"Median NFIP flood insurance cost for a single-family primary home in {_CSX} is {money(P['p50'])} a year "
              f"(middle half {money(P['p25'])}–{money(P['p75'])}); {P['share_below']}% pay below FEMA's "
@@ -1227,7 +1228,7 @@ _jump = f'<p class="cmp"><a href="#counties">Find your {UNIT} in the table ↓</
 
 HTML = f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">{'<meta name="robots" content="noindex,follow">' if os.environ.get("FF_NOINDEX") == "1" else ""}
-{GA_TAG}<title>{CL if IS_STATE else CS + ', ' + agg.get('state', '')} flood zones and flood insurance: {money(P['p50'])}/yr median, single-family</title>
+{GA_TAG}<title>{CL if IS_STATE else CS + ', ' + agg.get('state', '') + _T1} flood zones and flood insurance: {money(P['p50'])}/yr median, single-family</title>
 <meta name="description" content="{html.escape(META_DESC)}">
 <link rel="canonical" href="{CANON}">
 <meta property="og:type" content="website"><meta property="og:title" content="Flood insurance in {html.escape(CL)}">

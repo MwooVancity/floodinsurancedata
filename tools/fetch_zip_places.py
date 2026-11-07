@@ -28,7 +28,7 @@ for r in csv.DictReader(open(get(PBC, "place_county.txt"), encoding="utf-8-sig")
     cty.setdefault(r["STATEFP"] + r["PLACEFP"], []).append(r["STATEFP"] + r["COUNTYFP"])
 # "Boca Raton city" -> "Boca Raton"; "Jupiter Farms CDP" -> "Jupiter Farms"
 strip = r"\s+(city|town|village|borough|CDP|municipality|city and borough|urban county|consolidated government.*|metro government.*|unified government.*|\(balance\))$"
-out = {z: re.sub(strip, "", n.split(",")[0], flags=re.I) for z, (n, _, _) in best.items()}   # "Islamorada, Village of Islands" read as two towns in a list (11-07)
+out = {z: re.sub(strip, "", re.sub(strip, "", n.split(",")[0])) for z, (n, _, _) in best.items()}   # twice: "Milford city (balance)"; case-exact, so "Salt Lake City" keeps its City (r89)   # "Islamorada, Village of Islands" read as two towns in a list (11-07)
 zcty = {}   # the counties the ZIP itself lies in: a stray downtown-Houston ZIP on a Montgomery policy never names Houston there
 for r in csv.DictReader(open(get(ZC, "zcta_county.txt"), encoding="utf-8-sig"), delimiter="|"):
     if r["GEOID_ZCTA5_20"] and int(r["AREALAND_PART"] or 0) > 0: zcty.setdefault(r["GEOID_ZCTA5_20"], set()).add(r["GEOID_COUNTY_20"])
