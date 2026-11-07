@@ -67,6 +67,7 @@ import sys as _sys, datetime as _dtm
 _sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from rules_registry import rule, RULES
 from notes import GA_TAG
+_zm_zip = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "tools_flags.json"), encoding="utf-8")).get("zip") or []
 _zm_on_home = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "tools_flags.json"), encoding="utf-8")).get("zonemap") or []
 HEAD = HEAD.replace("<title>", GA_TAG.replace("{", "{{").replace("}", "}}") + "<title>", 1)   # HEAD goes through .format
 def _rule_hosts(keys):   # the official sites behind these rules, from rules_registry sources
@@ -166,7 +167,7 @@ home = HEAD.format(title="Flood insurance cost by state and county (FEMA data)",
 <p class="lede">From FEMA's own records of existing policies and claims, not quotes: what policyholders pay, whether you're required to buy it, and how fast it starts.</p>
 {national}
 {prov}
-<input id="s" placeholder="Type your state or county…" aria-label="Find your state or county" autocomplete="off"><p id="nomatch" class="mut" aria-live="polite"></p></section>
+<input id="s" placeholder="Type your state or county…" aria-label="Find your state or county" autocomplete="off"><p id="nomatch" class="mut" aria-live="polite"></p>{'<p>Or <a href="/flood-insurance/zip/">look up a ZIP code</a>.</p>' if (_zm_zip == "all" or "zip" in _zm_zip) else ""}</section>
 <div class="card"><h2>Three things to know first</h2>
 <p class="stand"><b>How fast does it start?</b> {rule("howto_answer")}</p>
 <p class="stand"><b>Am I required to buy it?</b> {rule("purchase_answer")} {rule("lender_any_zone")} {rule("fl_citizens_short")} Check your zone on <a href="https://msc.fema.gov/portal/home" rel="noopener" target="_blank">FEMA's flood map</a>{' or with the <a href="/flood-zone-map/">flood zone lookup</a>' if (_zm_on_home == "all" or "flood-zone-map" in _zm_on_home) else ""}.</p>
@@ -198,7 +199,7 @@ hub = HEAD.format(title="Flood insurance by state and county (FEMA data)",
     canon=BASE + "/flood-insurance/") + f"""
 <section class="hero"><p class="kicker">{len(states)} state{"" if len(states) == 1 else "s"} · {len(places)} counties</p><h1>Flood insurance by state and county</h1>
 <p class="lede">Find your state or county for what people there pay, whether you're required to buy it, and what floods have paid out.</p>
-<input id="s" placeholder="Type your state or county…" aria-label="Find your state or county" autocomplete="off"><p id="nomatch" class="mut" aria-live="polite"></p></section>
+<input id="s" placeholder="Type your state or county…" aria-label="Find your state or county" autocomplete="off"><p id="nomatch" class="mut" aria-live="polite"></p>{'<p>Or <a href="/flood-insurance/zip/">look up a ZIP code</a>.</p>' if (_zm_zip == "all" or "zip" in _zm_zip) else ""}</section>
 <div class="card"><h2>States</h2>
 <table id="st"><thead><tr><th>State</th><th>Median / yr</th><th>Insured units</th><th>NFIP claims on record</th><th>Paid on them</th></tr></thead>
 <tbody>{srows or '<tr><td colspan=5 class=mut>State pages are being built.</td></tr>'}</tbody></table>{_cnote}</div>
@@ -561,6 +562,56 @@ if len(states) == 51:
 <p class="mut">Source: FEMA OpenFEMA NFIP Claims v3 (fema.gov/openfema-data-page/nfip-redacted-claims-v3). Reason labels from FEMA's data dictionary. <a href="/methodology/">How we check them</a>.</p></div>{FOOT}"""
         wr(os.path.join(DIST, "flood-insurance", "claims", "index.html"), pg)
         zone_urls.append((BASE + "/flood-insurance/claims/", None))
+
+# ---- /flood-insurance/zip/: national ZIP lookup (PLAN target C). Static JSON per 3-digit ZIP prefix, a few KB per lookup.
+# Figures exactly as each county's agg holds them (by_zip: units, priced single-family policies, median at ZIP_MIN+); a ZIP
+# below the floor shows no ZIP median, and the county median labelled as the county. tools/test_ziptool.py = oracle.
+_zip_on = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "tools_flags.json"), encoding="utf-8")).get("zip") or []
+if len(states) == 51 and (_zip_on == "all" or "zip" in _zip_on):
+    from ffcalc import ZIP_MIN
+    _names = json.load(open(os.path.join(DATADIR, "us", "county_names.json"), encoding="utf-8"))
+    _stof = {v: k for k, v in _FIPS.items()}
+    _live = {p.get("geoid"): p["slug"] for p in places}
+    _z3, _cty = {}, {}
+    for p in sorted(glob.glob(os.path.join(DATADIR, "all-counties", "*.json"))):
+        g = os.path.basename(p)[:-5]; P = json.load(open(p))["policies"]
+        for r in P.get("by_zip") or []:
+            z = str(r["zip"]).strip()
+            if len(z) != 5 or not z.isdigit(): continue
+            _z3.setdefault(z[:3], {}).setdefault(z, []).append([g, r["units"], r["cost_n"], r["median"]])
+            _cty[g] = [_names.get(g, g), _stof.get(g[:2], ""), P["p50"] if (P.get("cost_n") or 0) >= 30 else None, _live.get(g)]
+    _zd = os.path.join(DIST, "data", "zip"); os.makedirs(_zd, exist_ok=True)
+    for k, zs in _z3.items():
+        for v in zs.values(): v.sort(key=lambda x: -x[1])   # most policy units first
+        used = {x[0] for v in zs.values() for x in v}
+        json.dump({"z": zs, "c": {g: _cty[g] for g in used}}, open(os.path.join(_zd, k + ".json"), "w"), separators=(",", ":"))
+    _zjs = """<script>(function(){var f=document.getElementById('zf'),i=document.getElementById('zi'),o=document.getElementById('zo');
+function m(n){return '$'+Math.round(n).toLocaleString('en-US')}function c(n){return Number(n).toLocaleString('en-US')}
+function e(s){return String(s).replace(/[&<>"]/g,function(x){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[x]})}
+function say(z,d){var r=d&&d.z&&d.z[z];if(!r)return['No NFIP policy in FEMA\\'s records lists ZIP '+z+'.'];var L=[];
+if(r.length>1)L.push('ZIP '+z+' appears on NFIP policies in '+r.length+' counties:');
+r.forEach(function(x){var k=d.c[x[0]]||[x[0],'',null,null],nm=k[0]+(k[1]?', '+k[1]:'');
+L.push(nm+': '+c(x[1])+' policy units. '+(x[3]!=null?'Median '+m(x[3])+' a year ('+c(x[2])+' priced single-family policies).':
+'Too few priced single-family policies ('+c(x[2])+') for a ZIP median'+(k[2]!=null?'; the '+k[0]+' median is '+m(k[2])+' a year.':'.')))});return L}
+window.__zipSay=say;
+f.addEventListener('submit',function(ev){ev.preventDefault();var z=(i.value||'').replace(/\\s+/g,'').slice(0,5);
+if(!/^\\d{5}$/.test(z)){o.innerHTML='<p>Enter a five-digit ZIP code.</p>';return}o.innerHTML='<p>Looking up '+z+'…</p>';
+fetch('/data/zip/'+z.slice(0,3)+'.json').then(function(r){return r.status===404?{z:{}}:r.ok?r.json():null}).then(function(d){
+if(!d){o.innerHTML='<p>The ZIP data did not load. Try again, or <a href="/flood-insurance/">find your county</a>.</p>';return}
+o.innerHTML=say(z,d).map(function(s){return '<p>'+e(s)+'</p>'}).join('')}).catch(function(){o.innerHTML='<p>The ZIP data did not load. Try again, or <a href="/flood-insurance/">find your county</a>.</p>'})})})();</script>"""
+    pg = HEAD.format(title="Flood insurance cost by ZIP code: NFIP median for your ZIP (FEMA data)",
+                     desc="Type a ZIP code to see the median yearly cost of NFIP flood insurance on single-family homes there, how many policies it rests on, and the county figure when a ZIP has too few.",
+                     canon=BASE + "/flood-insurance/zip/") + f"""
+<h1>Flood insurance cost by ZIP code</h1>
+<p class="lede">Type a ZIP code to see what existing NFIP flood insurance policies on single-family homes there typically cost a year, and how many policies that rests on.</p>
+<form id="zf" class="zm"><label for="zi"><b>ZIP code</b></label><input id="zi" inputmode="numeric" autocomplete="postal-code" maxlength="10" style="width:100%;min-height:44px">
+<p><button type="submit" class="btn">Look up</button></p></form><div id="zo" aria-live="polite"></div>
+<noscript><p>This lookup needs JavaScript. <a href="/flood-insurance/">Find your state and county</a> instead: each county page lists its ZIPs.</p></noscript>
+<p class="mut">Median: existing single-family primary-home NFIP policies, premium plus fees, in force on {_ASOF_TXT}; shown only where {ZIP_MIN} or more priced policies exist. Policy units: every NFIP policy unit with that ZIP, all building types. ZIPs exactly as FEMA recorded them on policies; a ZIP with only a policy or two in a county may have been entered with the wrong county. Not a quote.</p>
+<div class="card"><h2>Why one ZIP's figure is not your price</h2><p class="stand">{rule("price_drivers")}</p><p>For the full picture where you live, open <a href="/flood-insurance/">your state and county</a>.</p>
+<p class="mut">Source: FEMA OpenFEMA NFIP Policies v3; rules from {_rule_hosts(["price_drivers"])}. <a href="/methodology/">How we check them</a>.</p></div>{_zjs}{FOOT}"""
+    wr(os.path.join(DIST, "flood-insurance", "zip", "index.html"), pg)
+    zone_urls.append((BASE + "/flood-insurance/zip/", None))
 
 # ---- address tool: static files + the /flood-zone-map/ hub (map debate 11-06; kill switch "zonemap" in tools_flags.json) ----
 import shutil

@@ -421,6 +421,8 @@ def _map_line():   # PLAN 3e: when this place's FEMA map took effect, and which 
 
 _ZMF = json.load(open(os.path.join(HERE, "tools_flags.json"), encoding="utf-8")).get("zonemap") or []
 _HUB_ON = _ZMF == "all" or "flood-zone-map" in _ZMF
+_ZF = json.load(open(os.path.join(HERE, "tools_flags.json"), encoding="utf-8")).get("zip") or []
+_ZIP_ON = _ZF == "all" or "zip" in _ZF
 _MS = json.load(open(os.path.join(os.path.dirname(HERE), "data", "us", "map_status.json"))) if os.path.exists(os.path.join(os.path.dirname(HERE), "data", "us", "map_status.json")) else {}
 def _nfhl_lines():   # map debate 11-06: map age, revisions, exemption rulings, from FEMA's map service (tools/pull_mapstatus.py)
     s = _MS.get(GEOID) if not IS_STATE else None
@@ -609,7 +611,8 @@ def _zip_county():
             _town_line(bz) + f'<input id="zq" inputmode="numeric" maxlength="5" placeholder="e.g. {bz[0]["zip"]}" aria-label="Your ZIP code" '
             f'style="font-size:18px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;width:160px">'
             f'<p id="zout" class="note" style="margin-top:10px">Enter a five-digit ZIP above.</p>'
-            '<p class="note">ZIPs exactly as FEMA recorded them on policies here; a ZIP with only a policy or two may be a ZIP from elsewhere, as entered on the policy.</p>'
+            '<p class="note">ZIPs exactly as FEMA recorded them on policies here; a ZIP with only a policy or two may be a ZIP from elsewhere, as entered on the policy.'
+            + (" A ZIP outside this county: <a href='/flood-insurance/zip/'>look up any U.S. ZIP</a>." if _ZIP_ON else "") + '</p>'
             f'<table style="margin-top:12px"><thead><tr><th>ZIP</th><th>Median / yr</th><th>Priced policies</th><th>Policy units</th></tr></thead>'
             f'<tbody>{toprows}</tbody></table>'
             f'<p class="note">The ZIPs with the largest number of priced single-family policies.{how("zip")}</p>'
