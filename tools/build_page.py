@@ -447,7 +447,8 @@ def _nfhl_lines():   # map debate 11-06: map age, revisions, exemption rulings, 
                    f"high-risk zone (Letters of Map Amendment). In FEMA's own outcome groups: the building taken out while part of the lot stayed in, {q('bldg')}; "
                    f"the whole property taken out, {q('whole')}; part of the property taken out, {q('part')}; the building already outside the zone as mapped "
                    f"(part of the lot inside), {q('bldg_out')}; the property or part of it already outside as mapped, {q('out')}; denied, {q('denied')}; "
-                   f"other or mixed, {q('other')}. These are rulings for owners who applied, not a share of all homes." if t else
+                   f"other or mixed, {q('other')}. These are rulings for owners who applied, not a share of all homes. They are counted by "
+                   f"the NFIP communities FEMA's Community Status Book files under this {UNIT}, so a city that reaches into a neighboring {UNIT} counts in full here." if t else
                    "FEMA's map service lists no rulings for owners here who asked to take a building or lot out of the high-risk zone (Letters of Map Amendment).")
     return out
 
@@ -875,11 +876,11 @@ SLUG = os.environ.get("FF_SLUG", "lee-county-fl")
 BASE_URL = os.environ.get("FF_BASEURL", "https://floodinsurancedata.com").rstrip("/")   # never example.com
 CANON = f"{BASE_URL}/flood-insurance/{SLUG}/"
 GEOID = os.environ.get("FF_GEOID", "12071")
-META_DESC = (f"Median NFIP flood insurance cost for a single-family primary home in {CS} is {money(P['p50'])} a year "
+_TW = _towns([z for z in (agg["policies"].get("by_zip") or []) if re.fullmatch(r"\d{5}", str(z.get("zip")))])
+_CSX = CS + (" (" + ", ".join(_TW[:3]) + ")" if len(_TW) > 1 else "")   # towns early: Google cuts descriptions near 155 characters (r87)
+META_DESC = (f"Median NFIP flood insurance cost for a single-family primary home in {_CSX} is {money(P['p50'])} a year "
              f"(middle half {money(P['p25'])}–{money(P['p75'])}); {P['share_below']}% pay below FEMA's "
              f"full-risk price. {num(P['units'])} insured units, claims, flood risk and community discounts, from FEMA's own records.")
-_TW = _towns([z for z in (agg["policies"].get("by_zip") or []) if re.fullmatch(r"\d{5}", str(z.get("zip")))])
-if len(_TW) > 1: META_DESC += " Includes " + ", ".join(_TW[:-1]) + " and " + _TW[-1] + "."
 # register this place so home/lookup/sitemap/siblings know it exists
 PLACES = os.environ.get("FF_PLACES", os.path.join(HERE, "places.json"))
 try: places = json.load(open(PLACES))

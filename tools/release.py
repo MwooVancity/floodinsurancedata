@@ -29,6 +29,8 @@ else:
     step("ZIP tool: oracle on every ZIP, form edges, JS off", os.path.join(T, "test_ziptool.py"))
     step("nfip page: figures recomputed", os.path.join(T, "claims_check.py"), "--nfip")
     step("nfip check mutations", os.path.join(T, "claims_check.py"), "--nfip", "--test")
+    step("renters page: figures recomputed", os.path.join(T, "claims_check.py"), "--renters")
+    step("renters check mutations", os.path.join(T, "claims_check.py"), "--renters", "--test")
     step("claims page: every figure recomputed", os.path.join(T, "claims_check.py"))
     step("claims check mutations", os.path.join(T, "claims_check.py"), "--test")
     step("zone pages: every figure recomputed", os.path.join(T, "zone_check.py"))

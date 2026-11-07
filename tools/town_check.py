@@ -21,9 +21,9 @@ def check(page, geoid):
     got = [html.unescape(re.sub(r"<[^>]+>", "", t)) for t in m[1].split(", ")] if m else []
     bad = [f"T1 town line {got} vs {want}"] if got != want else []
     if any(tot.get(t, 0) < tot.get(u, 0) for t, u in zip(got, got[1:])): bad.append("T2 towns out of order")
-    d = re.search(r'<meta name="description" content="[^"]*? Includes ([^"]*)\."', page)
-    dw = ", ".join(want[:-1]) + " and " + want[-1] if want else None
-    if (html.unescape(d[1]) if d else None) != dw: bad.append(f"T3 description towns {d and d[1]} vs {dw}")
+    d = re.search(r'<meta name="description" content="[^"]*? primary home in [^"(]*?(?: \(([^)]*)\))? is \$', page)
+    dw = ", ".join(want[:3]) if want else None
+    if not d or (html.unescape(d[1]) if d[1] else None) != dw: bad.append(f"T3 description towns {d and d[1]} vs {dw}")
     return bad
 
 def pages():
@@ -38,7 +38,7 @@ if __name__ == "__main__":
         w = expect(g)[0]
         muts = {"swap order": pg.replace(f"{w[0]}</span>, <span data-name>{w[1]}", f"{w[1]}</span>, <span data-name>{w[0]}", 1),
                 "foreign town": pg.replace(f"their ZIPs: <span data-name>{w[0]}<", "their ZIPs: <span data-name>Houston<", 1),
-                "description town": pg.replace(f" Includes {w[0]}", " Includes Atlantis", 1)}
+                "description town": pg.replace(f" ({w[0]}, ", " (Atlantis, ", 1)}
         for k, mp in muts.items(): assert mp != pg and check(mp, g), f"mutation not caught: {k}"
         print(f"town check mutations: {len(muts)} caught ({sl})"); sys.exit()
     bad, n = [], 0

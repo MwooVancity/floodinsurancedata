@@ -99,6 +99,7 @@ def _man(sl):   # records downloaded for a built state (its pull manifest)
 _tp = sum(_man(s["slug"])[0] for s in states); _tc = sum(_man(s["slug"])[1] for s in states)
 prov = (f'<p class="mut" style="font-size:14px">Built from {_tp:,} NFIP policy records and {_tc:,} claim records downloaded from FEMA (one record can cover several insured units, such as a condo building): '
         f'every record the download listed for each state, none missing. <a href="/methodology/">How we check them</a></p>') if states else ""
+RENT_ON = False
 if len(states) == 51:   # U.S. figures only once every state is built and gated: never a partial total called national
     _h = json.load(open(os.path.join(DATADIR, "us", "cost_hist.json")))
     _units = sum(s["units"] for s in states)
@@ -110,6 +111,12 @@ if len(states) == 51:   # U.S. figures only once every state is built and gated:
     _hn = json.load(open(os.path.join(DATADIR, "us", "cost_hist_new.json")))
     _new_med, _new_n = _hq(_hn, 0.5), sum(c for st in _hn.values() for c in st.values())
     _med = _hq(_h, 0.5); _q = {k: _hq(_h, k) for k in (0.25, 0.75, 0.9)}
+    # renters (PAGE QUEUE row 6): tenant, residential occupancy, contents-only (extras_raw RENTER_OCC); a page only when all
+    # 51 states carry the homes-only count and the U.S. median rests on 100+ priced policies (owner floor, PLAN Batch C)
+    _rp = os.path.join(DATADIR, "us", "renter_hist.json")
+    _rh = json.load(open(_rp)) if os.path.exists(_rp) else {}
+    _rn = sum(c for st in _rh.values() for c in st.values())
+    RENT_ON = len(_rh) == 51 and _rn >= 100
     _ex = [json.load(open(os.path.join(DATADIR, "states", s["slug"], "extras.json")))["policies"] for s in states]
     _wmean = lambda mk, nk: round(sum((e["averages"][mk] or 0) * e["averages"][nk] for e in _ex) / sum(e["averages"][nk] for e in _ex))
     _sf_mean, _all_mean = _wmean("sf_cost_mean", "sf_n"), _wmean("all_cost_mean", "all_n")
@@ -133,11 +140,11 @@ if len(states) == 51:   # U.S. figures only once every state is built and gated:
                       'breaks this down by every zone code. What each means: ' + ", ".join(f'<a href="/flood-zones/{z}/">zone {z.upper()}</a>' for z in ("ae", "x", "a", "ao", "ah", "ve", "d")) + '.</p></div>')
     national = (f'<div class="stats"><div class="stat"><div class="n">{money(_med)}</div><div class="l">U.S. median a year</div></div>'
                 f'<div class="stat"><div class="n">{money(_med / 12)}</div><div class="l">Per month</div></div>'
-                f'<div class="stat"><div class="n">{_units / 1e6:.1f}M</div><div class="l">Insured units in force</div></div></div>'
+                f'<div class="stat"><div class="n">{_units / 1e6:.1f}M</div><div class="l">Policy units in force</div></div></div>'
                 f'<p class="mut">Median and per month: what existing single-family primary-home policies pay, premium plus fees. Insured units: every NFIP policy unit in force on {_ASOF_TXT}, including condos, rentals and businesses.</p>'
                 f'<h2>How much is flood insurance?</h2><p class="stand">Existing NFIP policies on single-family primary homes cost a median of {money(_med)} a year, '
                 f'premium plus fees; half pay between {money(_q[0.25])} and {money(_q[0.75])}, and one in ten pays {money(_q[0.9])} or more.</p>'
-                f'<p class="cmp"><b>Buying?</b> Policies first bought in the past year typically pay {money(_new_med)} ({_new_n:,} policies). <a href="#prices">Why sites differ</a>. <a href="/nfip/">The NFIP in numbers</a>.</p>')
+                f'<p class="cmp"><b>Buying?</b> Policies first bought in the past year typically pay {money(_new_med)} ({_new_n:,} policies). <a href="#prices">Why sites differ</a>. <a href="/nfip/">The NFIP in numbers</a>.' + (' <a href="/flood-insurance/renters/">What renters pay</a>.' if RENT_ON else '') + '</p>')
     # hater r5 (home): price drivers, ways to pay less, a quote check and the averages other sites quote, all from the same records
     home_cards = (f'<div class="card" id="check"><h2>Is my quote normal?</h2><p class="stand">Type your yearly cost (premium plus fees) to see where it '
         f'sits among U.S. single-family policies; your state page compares it with your area.</p>'
@@ -589,6 +596,32 @@ if len(states) == 51:
 <p class="mut">Sources: FEMA OpenFEMA NFIP Policies v3 and Claims v3; rules from {_rule_hosts(_nk)}. <a href="/methodology/">How we check them</a>.</p></div>{FOOT}"""
     wr(os.path.join(DIST, "nfip", "index.html"), pg)
     zone_urls.append((BASE + "/nfip/", None))
+
+# ---- /flood-insurance/renters/ (PAGE QUEUE row 6: "flood insurance for renters"). Base: NFIP policies in force marked tenant,
+# residential occupancy, no building coverage, contents above $0; priced = policyCost above $0. claims_check.py --renters recomputes.
+if RENT_ON:
+    _rq = {k: _hq(_rh, k) for k in (0.25, 0.5, 0.75)}
+    _rs = sorted(((st, sum(h.values()), _hq({st: h}, 0.5)) for st, h in _rh.items() if sum(h.values()) >= 30), key=lambda r: -r[1])
+    _snm = {s["abbr"]: s for s in states} if states and "abbr" in states[0] else {}
+    _rtr = "".join(f'<tr><td>{(f'<a href="/flood-insurance/{_snm[st]["slug"]}/">' + html.escape(_snm[st]["name"]) + "</a>") if st in _snm else st}</td><td>{money(md)}</td><td>{n:,}</td></tr>' for st, n, md in _rs)
+    _rk = ["renters_cover", "wait_30", "how_to_buy", "private_accept"]
+    pg = HEAD.format(title=f"Flood insurance for renters: {money(_rq[0.5])}/yr NFIP median, by state",
+                     desc=f"What renters pay for NFIP flood insurance on their belongings: a median of {money(_rq[0.5])} a year on {_rn:,} priced renter policies, by state, from FEMA's own records.",
+                     canon=BASE + "/flood-insurance/renters/") + f"""
+<h1>Flood insurance for renters</h1>
+<p class="lede">Renters with an NFIP policy on their belongings paid a median of {money(_rq[0.5])} a year, premium plus fees, across {_rn:,} priced renter policies in force on {_ASOF_TXT}. The middle half paid {money(_rq[0.25])} to {money(_rq[0.75])}.</p>
+<div class="stats"><div class="stat"><div class="n">{money(_rq[0.5])}</div><div class="l">Median / yr, NFIP renter policy</div></div>
+<div class="stat"><div class="n">{money(_rq[0.25])}–{money(_rq[0.75])}</div><div class="l">Middle half / yr</div></div>
+<div class="stat"><div class="n">{_rn:,}</div><div class="l">Priced renter policies</div></div></div>
+<p class="mut">FEMA OpenFEMA NFIP Policies v3, as of {_ASOF_TXT}. Renter policy: FEMA marks the policyholder a tenant, the building residential, no building coverage and some contents coverage. Priced: a policy cost above $0. <a href="/methodology/">How we check them</a>.</p>
+<div class="card"><h2>What does renters flood insurance cover?</h2><p class="stand">{rule("renters_cover")}</p><p class="stand">{rule("wait_30")}</p><p class="stand">{rule("how_to_buy")}</p><p class="stand">{rule("private_accept")}</p></div>
+<div class="card"><h2>What do renters pay in each state?</h2><p class="stand">States with at least 30 priced NFIP renter policies, most policies first.</p>
+<table><thead><tr><th>State</th><th>Median / yr</th><th>Priced renter policies</th></tr></thead><tbody>{_rtr}</tbody></table>
+<p class="mut">What homeowners pay: <a href="/nfip/">the NFIP in numbers</a>. <a href="/flood-insurance/zip/">Cost by ZIP code</a> (single-family homes).</p></div>
+<div class="card"><h2>What these numbers cannot tell you</h2><p class="stand">Your premium, private insurers' prices, or why a price changed. The median is what existing NFIP renter policies pay, not a quote.</p>
+<p class="mut">Sources: FEMA OpenFEMA NFIP Policies v3; rules from {_rule_hosts(_rk)}.</p></div>{FOOT}"""
+    wr(os.path.join(DIST, "flood-insurance", "renters", "index.html"), pg)
+    zone_urls.append((BASE + "/flood-insurance/renters/", None))
 
 # ---- /flood-insurance/zip/: national ZIP lookup (PLAN target C). Static JSON per 3-digit ZIP prefix, a few KB per lookup.
 # Figures exactly as each county's agg holds them (by_zip: units, priced single-family policies, median at ZIP_MIN+); a ZIP

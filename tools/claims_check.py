@@ -53,7 +53,34 @@ def check_nfip(page):   # /nfip/: lede and tiles recomputed from built.json + co
         if want not in text: bad.append(f"{label}: '{want}' not on the page")
     return bad
 
+def check_renters(page):   # /flood-insurance/renters/: lede, tiles and state rows recomputed from renter_hist.json alone
+    h = json.load(open(os.path.join(D, "us", "renter_hist.json")))
+    def q(hs, p):
+        vs = sorted((int(k), c) for v in hs for k, c in v.items()); tot = sum(c for _, c in vs); run = 0
+        for v, c in vs:
+            run += c
+            if run >= tot * p: return v
+    n = sum(sum(v.values()) for v in h.values()); lo, md, hi = (q(h.values(), p) for p in (0.25, 0.5, 0.75))
+    text = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", page)); bad = []
+    if f"paid a median of ${md:,} a year, premium plus fees, across {n:,} priced renter policies" not in text: bad.append(f"R1 lede: ${md:,} on {n:,}")
+    if f"The middle half paid ${lo:,} to ${hi:,}." not in text: bad.append(f"R2 middle half ${lo:,}-${hi:,}")
+    want = sorted((sum(v.values()), q([v], 0.5)) for v in h.values() if sum(v.values()) >= 30)
+    got = sorted((int(b.replace(",", "")), int(a.replace(",", ""))) for a, b in re.findall(r"<tr><td>(?:<a [^>]*>)?[^<]*(?:</a>)?</td><td>\$([\d,]+)</td><td>([\d,]+)</td></tr>", page))
+    if got != want: bad.append(f"R3 state rows {len(got)} vs {len(want)}")
+    return bad
+
 if __name__ == "__main__":
+    if "--renters" in sys.argv:
+        f = os.path.join(ROOT, "dist", "flood-insurance", "renters", "index.html")
+        if not os.path.exists(f): print("RENTERS CHECK: no page (floor not met)"); sys.exit()
+        pg = open(f, encoding="utf-8").read(); bad = check_renters(pg)
+        if "--test" in sys.argv:
+            assert not bad, bad
+            assert check_renters(re.sub(r"paid a median of \$[\d,]+", "paid a median of $1", pg, count=1)), "mutation not caught: median"
+            assert check_renters(re.sub(r"</td><td>([\d,]+)</td></tr>", "</td><td>9</td></tr>", pg, count=1)), "mutation not caught: row"
+            print("renters check mutations: 2 caught"); sys.exit()
+        for b in bad: print("  -", b)
+        print("RENTERS CHECK", "FAIL" if bad else "PASS"); sys.exit(1 if bad else 0)
     if "--nfip" in sys.argv:
         pg = open(os.path.join(ROOT, "dist", "nfip", "index.html"), encoding="utf-8").read()
         bad = check_nfip(pg)
