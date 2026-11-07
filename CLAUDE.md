@@ -46,7 +46,7 @@ User, not Google: if something helps SEO but confuses or slows the reader, the r
 - Ship `python -I tools/release.py --ship` (all gates incl. review stamp, commit dist, push, deploy, live gate). `--hotfix "reason"` skips only the review, only to remove or correct wrong live text. Live gate `--live`.
 - Ship only via `release.py`; no wrangler by hand; a push redeploys committed dist, so hand-push docs and workflows only.
 - Cloud, never the laptop, for data: `refresh-data.yml` monthly; `publish-counties.yml` daily via `add_counties.py`. Locally only build and gates. No dry runs: drills or the next scheduled run; a failing gate ships nothing.
-- A failed job opens one GitHub issue (emails owner), closes on pass; nothing else emails. Jobs fail closed and self-heal (PLAN).
+- No emails (owner 2026-11-07): a failed job writes a note on its run page only, no GitHub issue; Claude reads failed runs at every session start and fixes them. Jobs fail closed and self-heal (PLAN).
 - One background job; no polling; one writer; pull before work. Gap backlog `state/reviews/backlog.md` (S14 fails an item 3 rounds old).
 
 ## Every fix

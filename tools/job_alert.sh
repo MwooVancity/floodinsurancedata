@@ -10,9 +10,12 @@ mode=$1; name=$2; other=${3:-}; maxdays=${4:-0}
 run_url="${GITHUB_SERVER_URL:-https://github.com}/${GITHUB_REPOSITORY:-}/actions/runs/${GITHUB_RUN_ID:-}"
 owner=${GITHUB_REPOSITORY_OWNER:-}
 
-open_issue() {   # $1 title, $2 body: create the issue unless one with this title is open (owner 2026-11-03: one email per problem, not per retry)
-  n=$(gh issue list --state open --search "in:title \"$1\"" --json number,title -q ".[] | select(.title==\"$1\") | .number" | head -1)
-  [ -n "$n" ] || gh issue create --title "$1" --body "@$owner $2"
+open_issue() {   # owner 2026-11-07: "I don't need GitHub failure emails": no issue (issues email), only a note on the run page;
+  # Claude reads failed runs at every session start (CLAUDE.md first reply) and fixes them
+  echo "::warning::$1: $2"
+  [ -n "${GITHUB_STEP_SUMMARY:-}" ] && echo "### $1"$'
+'"$2" >> "$GITHUB_STEP_SUMMARY"
+  return 0
 }
 
 if [ "$mode" = warn ]; then   # job_alert.sh warn "<title>" "<body>": an early warning; the job still passes
