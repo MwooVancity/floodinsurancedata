@@ -135,6 +135,8 @@ if len(states) == 51:   # U.S. figures only once every state is built and gated:
                 f'<div class="stat"><div class="n">{money(_med / 12)}</div><div class="l">Per month</div></div>'
                 f'<div class="stat"><div class="n">{_units / 1e6:.1f}M</div><div class="l">Insured units in force</div></div></div>'
                 f'<p class="mut">Median and per month: what existing single-family primary-home policies pay, premium plus fees. Insured units: every NFIP policy unit in force on {_ASOF_TXT}, including condos, rentals and businesses.</p>'
+                f'<h2>How much is flood insurance?</h2><p class="stand">Existing NFIP policies on single-family primary homes cost a median of {money(_med)} a year, '
+                f'premium plus fees; half pay between {money(_q[0.25])} and {money(_q[0.75])}, and one in ten pays {money(_q[0.9])} or more.</p>'
                 f'<p class="cmp"><b>Buying?</b> Policies first bought in the past year typically pay {money(_new_med)} ({_new_n:,} policies). <a href="#prices">Why sites differ</a>.</p>')
     # hater r5 (home): price drivers, ways to pay less, a quote check and the averages other sites quote, all from the same records
     home_cards = (f'<div class="card" id="check"><h2>Is my quote normal?</h2><p class="stand">Type your yearly cost (premium plus fees) to see where it '
@@ -478,7 +480,7 @@ if len(states) == 51 and len(_zh) == 51:
                          desc=f"What FEMA flood zone {code} means, when flood insurance is required there, and what NFIP policies in {code} cost, from FEMA's public records.",
                          canon=BASE + f"/flood-zones/{zk}/") + f"""
 <h1>Flood zone {code}: what it means, who must insure, what it costs</h1>
-<p class="stand">{rule(rk)}{" " + rule("odds_30") if hr else ""}</p>
+{"<h2>Zone X, shaded X, zone B and zone C</h2>" if xcol else ""}<p class="stand">{rule(rk)}{" " + rule("odds_30") if hr else ""}</p>
 <p class="stand"><b>Must I buy?</b> {rule("purchase_answer")} {rule("lender_any_zone")}</p>
 <a class="btn" href="https://msc.fema.gov/portal/home" rel="noopener" target="_blank">Check your address on FEMA's flood map →</a>
 {'<p><a href="/flood-zone-map/">Or look up your zone by address here</a>, with FEMA' + "'" + 's map.</p>' if (_zm_on_home == "all" or "flood-zone-map" in _zm_on_home) else ""}

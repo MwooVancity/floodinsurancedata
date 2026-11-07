@@ -1216,7 +1216,7 @@ _jump = f'<p class="cmp"><a href="#counties">Find your {UNIT} in the table ↓</
 
 HTML = f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">{'<meta name="robots" content="noindex,follow">' if os.environ.get("FF_NOINDEX") == "1" else ""}
-{GA_TAG}<title>{CL if IS_STATE else CS + ', ' + agg.get('state', '')} flood zones and flood insurance: {money(P['p50'])} median, single-family</title>
+{GA_TAG}<title>{CL if IS_STATE else CS + ', ' + agg.get('state', '')} flood zones and flood insurance: {money(P['p50'])}/yr median, single-family</title>
 <meta name="description" content="{html.escape(META_DESC)}">
 <link rel="canonical" href="{CANON}">
 <meta property="og:type" content="website"><meta property="og:title" content="Flood insurance in {html.escape(CL)}">

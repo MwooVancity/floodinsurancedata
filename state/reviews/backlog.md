@@ -242,3 +242,6 @@ Ranked by reader value. hater.py record appends each round's **GAP** lines below
 
 ## new-york-county-ny (round 82)
 - Query 'flood insurance cost new york county NY' is a Manhattan reader; the H1 does not say Manhattan. Not wrong.
+
+## new-york-county-ny (round 83)
+- Manhattan not named in H1 (unchanged).
