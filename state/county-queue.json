@@ -285,7 +285,7 @@
 "label": "Polk County, Iowa",
 "short": "Polk County",
 "units": 1178,
-"kw": 100
+"kw": 0
 },
 {
 "slug": "montgomery-county-pa",
@@ -294,7 +294,7 @@
 "label": "Montgomery County, Pennsylvania",
 "short": "Montgomery County",
 "units": 3357,
-"kw": 100
+"kw": 0
 },
 {
 "slug": "anne-arundel-county-md",
@@ -1986,7 +1986,7 @@
 "label": "Orange County, Florida",
 "short": "Orange County",
 "units": 17219,
-"kw": 20
+"kw": 0
 },
 {
 "slug": "sumter-county-fl",
@@ -2076,7 +2076,7 @@
 "label": "Montgomery County, Maryland",
 "short": "Montgomery County",
 "units": 2156,
-"kw": 100
+"kw": 0
 },
 {
 "slug": "shelby-county-tn",
@@ -2175,7 +2175,7 @@
 "label": "Orange County, Texas",
 "short": "Orange County",
 "units": 12097,
-"kw": 20
+"kw": 0
 },
 {
 "slug": "williamson-county-tx",
@@ -2202,7 +2202,7 @@
 "label": "Polk County, Texas",
 "short": "Polk County",
 "units": 572,
-"kw": 100
+"kw": 0
 },
 {
 "slug": "bradford-county-pa",
@@ -2283,7 +2283,7 @@
 "label": "Suffolk County, Massachusetts",
 "short": "Suffolk County",
 "units": 9676,
-"kw": 20
+"kw": 0
 },
 {
 "slug": "york-county-me",
@@ -2292,7 +2292,7 @@
 "label": "York County, Maine",
 "short": "York County",
 "units": 3863,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "somerset-county-md",
@@ -2301,7 +2301,7 @@
 "label": "Somerset County, Maryland",
 "short": "Somerset County",
 "units": 1955,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "desoto-county-fl",
@@ -2310,7 +2310,7 @@
 "label": "DeSoto County, Florida",
 "short": "DeSoto County",
 "units": 484,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "pottawatomie-county-ks",
@@ -2319,7 +2319,7 @@
 "label": "Pottawatomie County, Kansas",
 "short": "Pottawatomie County",
 "units": 114,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "orange-county-ca",
@@ -2328,7 +2328,7 @@
 "label": "Orange County, California",
 "short": "Orange County",
 "units": 9496,
-"kw": 20
+"kw": 0
 },
 {
 "slug": "bradford-county-fl",
@@ -2337,7 +2337,7 @@
 "label": "Bradford County, Florida",
 "short": "Bradford County",
 "units": 469,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "lake-county-fl",
@@ -2346,7 +2346,7 @@
 "label": "Lake County, Florida",
 "short": "Lake County",
 "units": 4039,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "liberty-county-ga",
@@ -2355,7 +2355,7 @@
 "label": "Liberty County, Georgia",
 "short": "Liberty County",
 "units": 1574,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "marion-county-fl",
@@ -2364,7 +2364,7 @@
 "label": "Marion County, Florida",
 "short": "Marion County",
 "units": 3797,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "franklin-county-fl",
@@ -2373,7 +2373,7 @@
 "label": "Franklin County, Florida",
 "short": "Franklin County",
 "units": 2317,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "somerset-county-nj",
@@ -2382,7 +2382,7 @@
 "label": "Somerset County, New Jersey",
 "short": "Somerset County",
 "units": 1783,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "morgan-county-al",
@@ -2391,7 +2391,7 @@
 "label": "Morgan County, Alabama",
 "short": "Morgan County",
 "units": 539,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "polk-county-or",
@@ -2400,7 +2400,7 @@
 "label": "Polk County, Oregon",
 "short": "Polk County",
 "units": 430,
-"kw": 100
+"kw": 0
 },
 {
 "slug": "gloucester-county-nj",
@@ -2409,7 +2409,7 @@
 "label": "Gloucester County, New Jersey",
 "short": "Gloucester County",
 "units": 926,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "clark-county-nv",
@@ -2418,7 +2418,7 @@
 "label": "Clark County, Nevada",
 "short": "Clark County",
 "units": 1388,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "baker-county-or",
@@ -2427,7 +2427,7 @@
 "label": "Baker County, Oregon",
 "short": "Baker County",
 "units": 103,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "williamson-county-tn",
@@ -2436,7 +2436,7 @@
 "label": "Williamson County, Tennessee",
 "short": "Williamson County",
 "units": 1425,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "cumberland-county-me",
@@ -2445,7 +2445,7 @@
 "label": "Cumberland County, Maine",
 "short": "Cumberland County",
 "units": 1622,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "cumberland-county-nc",
@@ -2454,7 +2454,7 @@
 "label": "Cumberland County, North Carolina",
 "short": "Cumberland County",
 "units": 1610,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "nassau-county-fl",
@@ -2463,7 +2463,7 @@
 "label": "Nassau County, Florida",
 "short": "Nassau County",
 "units": 9020,
-"kw": 20
+"kw": 0
 },
 {
 "slug": "logan-county-wv",
@@ -2472,7 +2472,7 @@
 "label": "Logan County, West Virginia",
 "short": "Logan County",
 "units": 322,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "montgomery-county-oh",
@@ -2481,7 +2481,7 @@
 "label": "Montgomery County, Ohio",
 "short": "Montgomery County",
 "units": 1061,
-"kw": 100
+"kw": 0
 },
 {
 "slug": "perry-county-pa",
@@ -2490,7 +2490,7 @@
 "label": "Perry County, Pennsylvania",
 "short": "Perry County",
 "units": 211,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "dorchester-county-md",
@@ -2499,7 +2499,7 @@
 "label": "Dorchester County, Maryland",
 "short": "Dorchester County",
 "units": 1588,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "york-county-va",
@@ -2508,7 +2508,7 @@
 "label": "York County, Virginia",
 "short": "York County",
 "units": 2626,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "hamilton-county-oh",
@@ -2517,7 +2517,7 @@
 "label": "Hamilton County, Ohio",
 "short": "Hamilton County",
 "units": 1255,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "washington-county-ri",
@@ -2526,7 +2526,7 @@
 "label": "Washington County, Rhode Island",
 "short": "Washington County",
 "units": 4049,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "douglas-county-ne",
@@ -2535,7 +2535,7 @@
 "label": "Douglas County, Nebraska",
 "short": "Douglas County",
 "units": 1330,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "essex-county-nj",
@@ -2544,7 +2544,7 @@
 "label": "Essex County, New Jersey",
 "short": "Essex County",
 "units": 4224,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "franklin-county-oh",
@@ -2553,7 +2553,7 @@
 "label": "Franklin County, Ohio",
 "short": "Franklin County",
 "units": 1570,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "forsyth-county-ga",
@@ -2562,7 +2562,7 @@
 "label": "Forsyth County, Georgia",
 "short": "Forsyth County",
 "units": 246,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "logan-county-oh",
@@ -2571,7 +2571,7 @@
 "label": "Logan County, Ohio",
 "short": "Logan County",
 "units": 263,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "marion-county-in",
@@ -2580,7 +2580,7 @@
 "label": "Marion County, Indiana",
 "short": "Marion County",
 "units": 2454,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "camden-county-nj",
@@ -2589,7 +2589,7 @@
 "label": "Camden County, New Jersey",
 "short": "Camden County",
 "units": 1605,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "montgomery-county-al",
@@ -2598,7 +2598,7 @@
 "label": "Montgomery County, Alabama",
 "short": "Montgomery County",
 "units": 861,
-"kw": 100
+"kw": 0
 },
 {
 "slug": "johnson-county-ks",
@@ -2607,7 +2607,7 @@
 "label": "Johnson County, Kansas",
 "short": "Johnson County",
 "units": 773,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "perry-county-ky",
@@ -2616,7 +2616,7 @@
 "label": "Perry County, Kentucky",
 "short": "Perry County",
 "units": 170,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "pierce-county-wi",
@@ -2625,7 +2625,7 @@
 "label": "Pierce County, Wisconsin",
 "short": "Pierce County",
 "units": 68,
-"kw": 100
+"kw": 0
 },
 {
 "slug": "clark-county-wa",
@@ -2634,7 +2634,7 @@
 "label": "Clark County, Washington",
 "short": "Clark County",
 "units": 908,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "columbia-county-fl",
@@ -2643,7 +2643,7 @@
 "label": "Columbia County, Florida",
 "short": "Columbia County",
 "units": 695,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "lake-county-il",
@@ -2652,7 +2652,7 @@
 "label": "Lake County, Illinois",
 "short": "Lake County",
 "units": 2268,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "douglas-county-or",
@@ -2661,7 +2661,7 @@
 "label": "Douglas County, Oregon",
 "short": "Douglas County",
 "units": 1018,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "logan-county-co",
@@ -2670,7 +2670,7 @@
 "label": "Logan County, Colorado",
 "short": "Logan County",
 "units": 221,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "johnson-county-ia",
@@ -2679,7 +2679,7 @@
 "label": "Johnson County, Iowa",
 "short": "Johnson County",
 "units": 655,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "middlesex-county-nj",
@@ -2688,7 +2688,7 @@
 "label": "Middlesex County, New Jersey",
 "short": "Middlesex County",
 "units": 3126,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "knox-county-me",
@@ -2697,7 +2697,7 @@
 "label": "Knox County, Maine",
 "short": "Knox County",
 "units": 404,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "morgan-county-in",
@@ -2706,7 +2706,7 @@
 "label": "Morgan County, Indiana",
 "short": "Morgan County",
 "units": 275,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "johnson-county-tx",
@@ -2715,7 +2715,7 @@
 "label": "Johnson County, Texas",
 "short": "Johnson County",
 "units": 585,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "henderson-county-ky",
@@ -2724,7 +2724,7 @@
 "label": "Henderson County, Kentucky",
 "short": "Henderson County",
 "units": 256,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "taylor-county-fl",
@@ -2733,7 +2733,7 @@
 "label": "Taylor County, Florida",
 "short": "Taylor County",
 "units": 571,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "clark-county-in",
@@ -2742,7 +2742,7 @@
 "label": "Clark County, Indiana",
 "short": "Clark County",
 "units": 737,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "columbia-county-pa",
@@ -2751,7 +2751,7 @@
 "label": "Columbia County, Pennsylvania",
 "short": "Columbia County",
 "units": 563,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "erie-county-oh",
@@ -2760,7 +2760,7 @@
 "label": "Erie County, Ohio",
 "short": "Erie County",
 "units": 490,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "henderson-county-tx",
@@ -2769,7 +2769,7 @@
 "label": "Henderson County, Texas",
 "short": "Henderson County",
 "units": 248,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "summit-county-co",
@@ -2778,7 +2778,7 @@
 "label": "Summit County, Colorado",
 "short": "Summit County",
 "units": 325,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "columbia-county-or",
@@ -2787,7 +2787,7 @@
 "label": "Columbia County, Oregon",
 "short": "Columbia County",
 "units": 537,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "columbia-county-ga",
@@ -2796,7 +2796,7 @@
 "label": "Columbia County, Georgia",
 "short": "Columbia County",
 "units": 534,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "middlesex-county-ct",
@@ -2805,7 +2805,7 @@
 "label": "Middlesex County, Connecticut",
 "short": "Middlesex County",
 "units": 2574,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "stark-county-nd",
@@ -2814,7 +2814,7 @@
 "label": "Stark County, North Dakota",
 "short": "Stark County",
 "units": 100,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "douglas-county-nv",
@@ -2823,7 +2823,7 @@
 "label": "Douglas County, Nevada",
 "short": "Douglas County",
 "units": 773,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "shelby-county-al",
@@ -2832,7 +2832,7 @@
 "label": "Shelby County, Alabama",
 "short": "Shelby County",
 "units": 605,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "perry-county-oh",
@@ -2841,7 +2841,7 @@
 "label": "Perry County, Ohio",
 "short": "Perry County",
 "units": 111,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "summit-county-ut",
@@ -2850,7 +2850,7 @@
 "label": "Summit County, Utah",
 "short": "Summit County",
 "units": 284,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "marion-county-or",
@@ -2859,7 +2859,7 @@
 "label": "Marion County, Oregon",
 "short": "Marion County",
 "units": 1467,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "erie-county-pa",
@@ -2868,7 +2868,7 @@
 "label": "Erie County, Pennsylvania",
 "short": "Erie County",
 "units": 375,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "hamilton-county-in",
@@ -2877,7 +2877,7 @@
 "label": "Hamilton County, Indiana",
 "short": "Hamilton County",
 "units": 589,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "sumter-county-sc",
@@ -2886,7 +2886,7 @@
 "label": "Sumter County, South Carolina",
 "short": "Sumter County",
 "units": 567,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "hillsborough-county-nh",
@@ -2895,7 +2895,7 @@
 "label": "Hillsborough County, New Hampshire",
 "short": "Hillsborough County",
 "units": 909,
-"kw": 110
+"kw": 0
 },
 {
 "slug": "cumberland-county-pa",
@@ -2904,7 +2904,7 @@
 "label": "Cumberland County, Pennsylvania",
 "short": "Cumberland County",
 "units": 645,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "putnam-county-ny",
@@ -2913,7 +2913,7 @@
 "label": "Putnam County, New York",
 "short": "Putnam County",
 "units": 300,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "madison-county-il",
@@ -2922,7 +2922,7 @@
 "label": "Madison County, Illinois",
 "short": "Madison County",
 "units": 973,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "johnson-county-in",
@@ -2931,7 +2931,7 @@
 "label": "Johnson County, Indiana",
 "short": "Johnson County",
 "units": 406,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "mason-county-wv",
@@ -2940,7 +2940,7 @@
 "label": "Mason County, West Virginia",
 "short": "Mason County",
 "units": 85,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "howard-county-in",
@@ -2949,7 +2949,7 @@
 "label": "Howard County, Indiana",
 "short": "Howard County",
 "units": 172,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "putnam-county-wv",
@@ -2958,7 +2958,7 @@
 "label": "Putnam County, West Virginia",
 "short": "Putnam County",
 "units": 274,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "jefferson-county-ky",
@@ -2967,7 +2967,7 @@
 "label": "Jefferson County, Kentucky",
 "short": "Jefferson County",
 "units": 4013,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "madison-county-ms",
@@ -2976,7 +2976,7 @@
 "label": "Madison County, Mississippi",
 "short": "Madison County",
 "units": 824,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "washington-county-or",
@@ -2985,7 +2985,7 @@
 "label": "Washington County, Oregon",
 "short": "Washington County",
 "units": 1498,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "camden-county-nc",
@@ -2994,7 +2994,7 @@
 "label": "Camden County, North Carolina",
 "short": "Camden County",
 "units": 670,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "lake-county-in",
@@ -3003,7 +3003,7 @@
 "label": "Lake County, Indiana",
 "short": "Lake County",
 "units": 1035,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "perry-county-tn",
@@ -3012,7 +3012,7 @@
 "label": "Perry County, Tennessee",
 "short": "Perry County",
 "units": 71,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "polk-county-ga",
@@ -3021,7 +3021,7 @@
 "label": "Polk County, Georgia",
 "short": "Polk County",
 "units": 119,
-"kw": 100
+"kw": 0
 },
 {
 "slug": "lake-county-ca",
@@ -3030,7 +3030,7 @@
 "label": "Lake County, California",
 "short": "Lake County",
 "units": 1023,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "washington-county-ms",
@@ -3039,7 +3039,7 @@
 "label": "Washington County, Mississippi",
 "short": "Washington County",
 "units": 1395,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "polk-county-mn",
@@ -3048,7 +3048,7 @@
 "label": "Polk County, Minnesota",
 "short": "Polk County",
 "units": 116,
-"kw": 100
+"kw": 0
 },
 {
 "slug": "york-county-pa",
@@ -3057,7 +3057,7 @@
 "label": "York County, Pennsylvania",
 "short": "York County",
 "units": 826,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "cumberland-county-nj",
@@ -3066,7 +3066,7 @@
 "label": "Cumberland County, New Jersey",
 "short": "Cumberland County",
 "units": 442,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "montgomery-county-tn",
@@ -3075,7 +3075,7 @@
 "label": "Montgomery County, Tennessee",
 "short": "Montgomery County",
 "units": 307,
-"kw": 100
+"kw": 0
 },
 {
 "slug": "santa-cruz-county-az",
@@ -3084,7 +3084,7 @@
 "label": "Santa Cruz County, Arizona",
 "short": "Santa Cruz County",
 "units": 361,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "morgan-county-wv",
@@ -3093,7 +3093,7 @@
 "label": "Morgan County, West Virginia",
 "short": "Morgan County",
 "units": 126,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "clark-county-oh",
@@ -3102,7 +3102,7 @@
 "label": "Clark County, Ohio",
 "short": "Clark County",
 "units": 337,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "hardin-county-ky",
@@ -3111,7 +3111,7 @@
 "label": "Hardin County, Kentucky",
 "short": "Hardin County",
 "units": 297,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "polk-county-nc",
@@ -3120,7 +3120,7 @@
 "label": "Polk County, North Carolina",
 "short": "Polk County",
 "units": 93,
-"kw": 100
+"kw": 0
 },
 {
 "slug": "perry-county-in",
@@ -3129,7 +3129,7 @@
 "label": "Perry County, Indiana",
 "short": "Perry County",
 "units": 54,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "orange-county-ny",
@@ -3138,7 +3138,7 @@
 "label": "Orange County, New York",
 "short": "Orange County",
 "units": 1759,
-"kw": 20
+"kw": 0
 },
 {
 "slug": "douglas-county-co",
@@ -3147,7 +3147,7 @@
 "label": "Douglas County, Colorado",
 "short": "Douglas County",
 "units": 349,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "knox-county-oh",
@@ -3156,7 +3156,7 @@
 "label": "Knox County, Ohio",
 "short": "Knox County",
 "units": 145,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "mason-county-il",
@@ -3165,7 +3165,7 @@
 "label": "Mason County, Illinois",
 "short": "Mason County",
 "units": 48,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "morgan-county-co",
@@ -3174,7 +3174,7 @@
 "label": "Morgan County, Colorado",
 "short": "Morgan County",
 "units": 103,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "columbia-county-ny",
@@ -3183,7 +3183,7 @@
 "label": "Columbia County, New York",
 "short": "Columbia County",
 "units": 206,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "douglas-county-ks",
@@ -3192,7 +3192,7 @@
 "label": "Douglas County, Kansas",
 "short": "Douglas County",
 "units": 308,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "johnson-county-ky",
@@ -3201,7 +3201,7 @@
 "label": "Johnson County, Kentucky",
 "short": "Johnson County",
 "units": 205,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "putnam-county-oh",
@@ -3210,7 +3210,7 @@
 "label": "Putnam County, Ohio",
 "short": "Putnam County",
 "units": 148,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "jackson-county-or",
@@ -3219,7 +3219,7 @@
 "label": "Jackson County, Oregon",
 "short": "Jackson County",
 "units": 1141,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "somerset-county-pa",
@@ -3228,7 +3228,7 @@
 "label": "Somerset County, Pennsylvania",
 "short": "Somerset County",
 "units": 298,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "morgan-county-il",
@@ -3237,7 +3237,7 @@
 "label": "Morgan County, Illinois",
 "short": "Morgan County",
 "units": 90,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "henderson-county-il",
@@ -3246,7 +3246,7 @@
 "label": "Henderson County, Illinois",
 "short": "Henderson County",
 "units": 86,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "morgan-county-mo",
@@ -3255,7 +3255,7 @@
 "label": "Morgan County, Missouri",
 "short": "Morgan County",
 "units": 88,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "logan-county-ok",
@@ -3264,7 +3264,7 @@
 "label": "Logan County, Oklahoma",
 "short": "Logan County",
 "units": 64,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "washington-county-vt",
@@ -3273,7 +3273,7 @@
 "label": "Washington County, Vermont",
 "short": "Washington County",
 "units": 857,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "union-county-nc",
@@ -3282,7 +3282,7 @@
 "label": "Union County, North Carolina",
 "short": "Union County",
 "units": 392,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "camden-county-mo",
@@ -3291,7 +3291,7 @@
 "label": "Camden County, Missouri",
 "short": "Camden County",
 "units": 377,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "beaufort-county-nc",
@@ -3300,7 +3300,7 @@
 "label": "Beaufort County, North Carolina",
 "short": "Beaufort County",
 "units": 3294,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "shelby-county-in",
@@ -3309,7 +3309,7 @@
 "label": "Shelby County, Indiana",
 "short": "Shelby County",
 "units": 214,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "montgomery-county-ny",
@@ -3318,7 +3318,7 @@
 "label": "Montgomery County, New York",
 "short": "Montgomery County",
 "units": 193,
-"kw": 100
+"kw": 0
 },
 {
 "slug": "clay-county-mo",
@@ -3327,7 +3327,7 @@
 "label": "Clay County, Missouri",
 "short": "Clay County",
 "units": 343,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "columbia-county-wi",
@@ -3336,7 +3336,7 @@
 "label": "Columbia County, Wisconsin",
 "short": "Columbia County",
 "units": 166,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "logan-county-il",
@@ -3345,7 +3345,7 @@
 "label": "Logan County, Illinois",
 "short": "Logan County",
 "units": 56,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "polk-county-tn",
@@ -3354,7 +3354,7 @@
 "label": "Polk County, Tennessee",
 "short": "Polk County",
 "units": 62,
-"kw": 100
+"kw": 0
 },
 {
 "slug": "lewis-county-wv",
@@ -3363,7 +3363,7 @@
 "label": "Lewis County, West Virginia",
 "short": "Lewis County",
 "units": 88,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "jackson-county-mo",
@@ -3372,7 +3372,7 @@
 "label": "Jackson County, Missouri",
 "short": "Jackson County",
 "units": 917,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "york-county-sc",
@@ -3381,7 +3381,7 @@
 "label": "York County, South Carolina",
 "short": "York County",
 "units": 446,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "montgomery-county-va",
@@ -3390,7 +3390,7 @@
 "label": "Montgomery County, Virginia",
 "short": "Montgomery County",
 "units": 172,
-"kw": 100
+"kw": 0
 },
 {
 "slug": "richland-county-oh",
@@ -3399,7 +3399,7 @@
 "label": "Richland County, Ohio",
 "short": "Richland County",
 "units": 131,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "washington-county-ar",
@@ -3408,7 +3408,7 @@
 "label": "Washington County, Arkansas",
 "short": "Washington County",
 "units": 690,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "jefferson-county-co",
@@ -3417,7 +3417,7 @@
 "label": "Jefferson County, Colorado",
 "short": "Jefferson County",
 "units": 1661,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "knox-county-ky",
@@ -3426,7 +3426,7 @@
 "label": "Knox County, Kentucky",
 "short": "Knox County",
 "units": 94,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "hancock-county-oh",
@@ -3435,7 +3435,7 @@
 "label": "Hancock County, Ohio",
 "short": "Hancock County",
 "units": 463,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "lake-county-oh",
@@ -3444,7 +3444,7 @@
 "label": "Lake County, Ohio",
 "short": "Lake County",
 "units": 477,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "douglas-county-ga",
@@ -3453,7 +3453,7 @@
 "label": "Douglas County, Georgia",
 "short": "Douglas County",
 "units": 213,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "washington-county-pa",
@@ -3462,7 +3462,7 @@
 "label": "Washington County, Pennsylvania",
 "short": "Washington County",
 "units": 639,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "madison-county-ny",
@@ -3471,7 +3471,7 @@
 "label": "Madison County, New York",
 "short": "Madison County",
 "units": 337,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "hardin-county-tn",
@@ -3480,7 +3480,7 @@
 "label": "Hardin County, Tennessee",
 "short": "Hardin County",
 "units": 166,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "lewis-county-ky",
@@ -3489,7 +3489,7 @@
 "label": "Lewis County, Kentucky",
 "short": "Lewis County",
 "units": 74,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "franklin-county-pa",
@@ -3498,7 +3498,7 @@
 "label": "Franklin County, Pennsylvania",
 "short": "Franklin County",
 "units": 269,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "dekalb-county-il",
@@ -3507,7 +3507,7 @@
 "label": "DeKalb County, Illinois",
 "short": "DeKalb County",
 "units": 166,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "jefferson-county-al",
@@ -3516,7 +3516,7 @@
 "label": "Jefferson County, Alabama",
 "short": "Jefferson County",
 "units": 1519,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "franklin-county-ky",
@@ -3525,7 +3525,7 @@
 "label": "Franklin County, Kentucky",
 "short": "Franklin County",
 "units": 265,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "orange-county-nc",
@@ -3534,7 +3534,7 @@
 "label": "Orange County, North Carolina",
 "short": "Orange County",
 "units": 992,
-"kw": 20
+"kw": 0
 },
 {
 "slug": "knox-county-in",
@@ -3543,7 +3543,7 @@
 "label": "Knox County, Indiana",
 "short": "Knox County",
 "units": 82,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "union-county-pa",
@@ -3552,7 +3552,7 @@
 "label": "Union County, Pennsylvania",
 "short": "Union County",
 "units": 275,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "lewis-county-ny",
@@ -3561,7 +3561,7 @@
 "label": "Lewis County, New York",
 "short": "Lewis County",
 "units": 68,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "williamson-county-il",
@@ -3570,7 +3570,7 @@
 "label": "Williamson County, Illinois",
 "short": "Williamson County",
 "units": 163,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "franklin-county-mo",
@@ -3579,7 +3579,7 @@
 "label": "Franklin County, Missouri",
 "short": "Franklin County",
 "units": 225,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "morgan-county-oh",
@@ -3588,7 +3588,7 @@
 "label": "Morgan County, Ohio",
 "short": "Morgan County",
 "units": 52,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "madison-county-ky",
@@ -3597,7 +3597,7 @@
 "label": "Madison County, Kentucky",
 "short": "Madison County",
 "units": 260,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "hancock-county-me",
@@ -3606,7 +3606,7 @@
 "label": "Hancock County, Maine",
 "short": "Hancock County",
 "units": 340,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "howard-county-ne",
@@ -3615,7 +3615,7 @@
 "label": "Howard County, Nebraska",
 "short": "Howard County",
 "units": 47,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "washington-county-oh",
@@ -3624,7 +3624,7 @@
 "label": "Washington County, Ohio",
 "short": "Washington County",
 "units": 476,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "monroe-county-ny",
@@ -3633,7 +3633,7 @@
 "label": "Monroe County, New York",
 "short": "Monroe County",
 "units": 1345,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "shelby-county-oh",
@@ -3642,7 +3642,7 @@
 "label": "Shelby County, Ohio",
 "short": "Shelby County",
 "units": 123,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "montgomery-county-ks",
@@ -3651,7 +3651,7 @@
 "label": "Montgomery County, Kansas",
 "short": "Montgomery County",
 "units": 115,
-"kw": 100
+"kw": 0
 },
 {
 "slug": "clay-county-mn",
@@ -3660,7 +3660,7 @@
 "label": "Clay County, Minnesota",
 "short": "Clay County",
 "units": 202,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "clark-county-ky",
@@ -3669,7 +3669,7 @@
 "label": "Clark County, Kentucky",
 "short": "Clark County",
 "units": 127,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "union-county-sd",
@@ -3678,7 +3678,7 @@
 "label": "Union County, South Dakota",
 "short": "Union County",
 "units": 207,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "somerset-county-me",
@@ -3687,7 +3687,7 @@
 "label": "Somerset County, Maine",
 "short": "Somerset County",
 "units": 145,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "harris-county-ga",
@@ -3696,7 +3696,7 @@
 "label": "Harris County, Georgia",
 "short": "Harris County",
 "units": 79,
-"kw": 1010
+"kw": 0
 },
 {
 "slug": "putnam-county-tn",
@@ -3705,7 +3705,7 @@
 "label": "Putnam County, Tennessee",
 "short": "Putnam County",
 "units": 70,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "marion-county-sc",
@@ -3714,7 +3714,7 @@
 "label": "Marion County, South Carolina",
 "short": "Marion County",
 "units": 298,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "madison-county-in",
@@ -3723,7 +3723,7 @@
 "label": "Madison County, Indiana",
 "short": "Madison County",
 "units": 226,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "madison-county-tn",
@@ -3732,7 +3732,7 @@
 "label": "Madison County, Tennessee",
 "short": "Madison County",
 "units": 221,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "jackson-county-tx",
@@ -3741,7 +3741,7 @@
 "label": "Jackson County, Texas",
 "short": "Jackson County",
 "units": 523,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "montgomery-county-ia",
@@ -3750,7 +3750,7 @@
 "label": "Montgomery County, Iowa",
 "short": "Montgomery County",
 "units": 98,
-"kw": 100
+"kw": 0
 },
 {
 "slug": "dallas-county-al",
@@ -3759,7 +3759,7 @@
 "label": "Dallas County, Alabama",
 "short": "Dallas County",
 "units": 226,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "fairfield-county-oh",
@@ -3768,7 +3768,7 @@
 "label": "Fairfield County, Ohio",
 "short": "Fairfield County",
 "units": 465,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "franklin-county-ma",
@@ -3777,7 +3777,7 @@
 "label": "Franklin County, Massachusetts",
 "short": "Franklin County",
 "units": 165,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "johnson-county-tn",
@@ -3786,7 +3786,7 @@
 "label": "Johnson County, Tennessee",
 "short": "Johnson County",
 "units": 84,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "lee-county-ms",
@@ -3795,7 +3795,7 @@
 "label": "Lee County, Mississippi",
 "short": "Lee County",
 "units": 385,
-"kw": 100
+"kw": 0
 },
 {
 "slug": "franklin-county-vt",
@@ -3804,7 +3804,7 @@
 "label": "Franklin County, Vermont",
 "short": "Franklin County",
 "units": 153,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "fulton-county-ny",
@@ -3813,7 +3813,7 @@
 "label": "Fulton County, New York",
 "short": "Fulton County",
 "units": 98,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "johnson-county-mo",
@@ -3822,7 +3822,7 @@
 "label": "Johnson County, Missouri",
 "short": "Johnson County",
 "units": 76,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "clay-county-ar",
@@ -3831,7 +3831,7 @@
 "label": "Clay County, Arkansas",
 "short": "Clay County",
 "units": 146,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "washington-county-mn",
@@ -3840,7 +3840,7 @@
 "label": "Washington County, Minnesota",
 "short": "Washington County",
 "units": 330,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "sumter-county-ga",
@@ -3849,7 +3849,7 @@
 "label": "Sumter County, Georgia",
 "short": "Sumter County",
 "units": 98,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "monroe-county-mi",
@@ -3858,7 +3858,7 @@
 "label": "Monroe County, Michigan",
 "short": "Monroe County",
 "units": 916,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "washington-county-wi",
@@ -3867,7 +3867,7 @@
 "label": "Washington County, Wisconsin",
 "short": "Washington County",
 "units": 323,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "clay-county-ms",
@@ -3876,7 +3876,7 @@
 "label": "Clay County, Mississippi",
 "short": "Clay County",
 "units": 140,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "clay-county-nc",
@@ -3885,7 +3885,7 @@
 "label": "Clay County, North Carolina",
 "short": "Clay County",
 "units": 139,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "union-county-ga",
@@ -3894,7 +3894,7 @@
 "label": "Union County, Georgia",
 "short": "Union County",
 "units": 147,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "franklin-county-me",
@@ -3903,7 +3903,7 @@
 "label": "Franklin County, Maine",
 "short": "Franklin County",
 "units": 135,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "marion-county-ms",
@@ -3912,7 +3912,7 @@
 "label": "Marion County, Mississippi",
 "short": "Marion County",
 "units": 217,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "middlesex-county-va",
@@ -3921,7 +3921,7 @@
 "label": "Middlesex County, Virginia",
 "short": "Middlesex County",
 "units": 328,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "washington-county-md",
@@ -3930,7 +3930,7 @@
 "label": "Washington County, Maryland",
 "short": "Washington County",
 "units": 305,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "douglas-county-il",
@@ -3939,7 +3939,7 @@
 "label": "Douglas County, Illinois",
 "short": "Douglas County",
 "units": 100,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "washington-county-ut",
@@ -3948,7 +3948,7 @@
 "label": "Washington County, Utah",
 "short": "Washington County",
 "units": 300,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "washington-county-tn",
@@ -3957,7 +3957,7 @@
 "label": "Washington County, Tennessee",
 "short": "Washington County",
 "units": 295,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "richland-county-nd",
@@ -3966,7 +3966,7 @@
 "label": "Richland County, North Dakota",
 "short": "Richland County",
 "units": 55,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "hancock-county-in",
@@ -3975,7 +3975,7 @@
 "label": "Hancock County, Indiana",
 "short": "Hancock County",
 "units": 201,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "marion-county-oh",
@@ -3984,7 +3984,7 @@
 "label": "Marion County, Ohio",
 "short": "Marion County",
 "units": 200,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "jefferson-county-mo",
@@ -3993,7 +3993,7 @@
 "label": "Jefferson County, Missouri",
 "short": "Jefferson County",
 "units": 701,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "dekalb-county-al",
@@ -4002,7 +4002,7 @@
 "label": "DeKalb County, Alabama",
 "short": "DeKalb County",
 "units": 74,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "berkeley-county-wv",
@@ -4011,7 +4011,7 @@
 "label": "Berkeley County, West Virginia",
 "short": "Berkeley County",
 "units": 159,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "hardin-county-oh",
@@ -4020,7 +4020,7 @@
 "label": "Hardin County, Ohio",
 "short": "Hardin County",
 "units": 65,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "lee-county-al",
@@ -4029,7 +4029,7 @@
 "label": "Lee County, Alabama",
 "short": "Lee County",
 "units": 268,
-"kw": 100
+"kw": 0
 },
 {
 "slug": "dekalb-county-in",
@@ -4038,7 +4038,7 @@
 "label": "DeKalb County, Indiana",
 "short": "DeKalb County",
 "units": 66,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "putnam-county-in",
@@ -4047,7 +4047,7 @@
 "label": "Putnam County, Indiana",
 "short": "Putnam County",
 "units": 40,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "fulton-county-oh",
@@ -4056,7 +4056,7 @@
 "label": "Fulton County, Ohio",
 "short": "Fulton County",
 "units": 66,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "marion-county-wv",
@@ -4065,7 +4065,7 @@
 "label": "Marion County, West Virginia",
 "short": "Marion County",
 "units": 162,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "jackson-county-nc",
@@ -4074,7 +4074,7 @@
 "label": "Jackson County, North Carolina",
 "short": "Jackson County",
 "units": 292,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "clark-county-ar",
@@ -4083,7 +4083,7 @@
 "label": "Clark County, Arkansas",
 "short": "Clark County",
 "units": 65,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "franklin-county-nc",
@@ -4092,7 +4092,7 @@
 "label": "Franklin County, North Carolina",
 "short": "Franklin County",
 "units": 94,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "washington-county-nc",
@@ -4101,7 +4101,7 @@
 "label": "Washington County, North Carolina",
 "short": "Washington County",
 "units": 214,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "douglas-county-wi",
@@ -4110,7 +4110,7 @@
 "label": "Douglas County, Wisconsin",
 "short": "Douglas County",
 "units": 71,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "seminole-county-ga",
@@ -4119,7 +4119,7 @@
 "label": "Seminole County, Georgia",
 "short": "Seminole County",
 "units": 128,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "lake-county-sd",
@@ -4128,7 +4128,7 @@
 "label": "Lake County, South Dakota",
 "short": "Lake County",
 "units": 151,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "lee-county-ga",
@@ -4137,7 +4137,7 @@
 "label": "Lee County, Georgia",
 "short": "Lee County",
 "units": 227,
-"kw": 100
+"kw": 0
 },
 {
 "slug": "essex-county-va",
@@ -4146,7 +4146,7 @@
 "label": "Essex County, Virginia",
 "short": "Essex County",
 "units": 228,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "clay-county-ia",
@@ -4155,7 +4155,7 @@
 "label": "Clay County, Iowa",
 "short": "Clay County",
 "units": 91,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "washington-county-ok",
@@ -4164,7 +4164,7 @@
 "label": "Washington County, Oklahoma",
 "short": "Washington County",
 "units": 204,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "franklin-county-ny",
@@ -4173,7 +4173,7 @@
 "label": "Franklin County, New York",
 "short": "Franklin County",
 "units": 88,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "union-county-or",
@@ -4182,7 +4182,7 @@
 "label": "Union County, Oregon",
 "short": "Union County",
 "units": 95,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "washington-county-tx",
@@ -4191,7 +4191,7 @@
 "label": "Washington County, Texas",
 "short": "Washington County",
 "units": 201,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "madison-county-ne",
@@ -4200,7 +4200,7 @@
 "label": "Madison County, Nebraska",
 "short": "Madison County",
 "units": 105,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "madison-county-nc",
@@ -4209,7 +4209,7 @@
 "label": "Madison County, North Carolina",
 "short": "Madison County",
 "units": 103,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "union-county-ar",
@@ -4218,7 +4218,7 @@
 "label": "Union County, Arkansas",
 "short": "Union County",
 "units": 91,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "harrison-county-ia",
@@ -4227,7 +4227,7 @@
 "label": "Harrison County, Iowa",
 "short": "Harrison County",
 "units": 219,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "columbia-county-wa",
@@ -4236,7 +4236,7 @@
 "label": "Columbia County, Washington",
 "short": "Columbia County",
 "units": 42,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "franklin-county-tn",
@@ -4245,7 +4245,7 @@
 "label": "Franklin County, Tennessee",
 "short": "Franklin County",
 "units": 81,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "harrison-county-wv",
@@ -4254,7 +4254,7 @@
 "label": "Harrison County, West Virginia",
 "short": "Harrison County",
 "units": 206,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "bay-county-mi",
@@ -4263,7 +4263,7 @@
 "label": "Bay County, Michigan",
 "short": "Bay County",
 "units": 460,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "madison-county-fl",
@@ -4272,7 +4272,7 @@
 "label": "Madison County, Florida",
 "short": "Madison County",
 "units": 91,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "shelby-county-ky",
@@ -4281,7 +4281,7 @@
 "label": "Shelby County, Kentucky",
 "short": "Shelby County",
 "units": 44,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "marion-county-tn",
@@ -4290,7 +4290,7 @@
 "label": "Marion County, Tennessee",
 "short": "Marion County",
 "units": 117,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "dallas-county-ia",
@@ -4299,7 +4299,7 @@
 "label": "Dallas County, Iowa",
 "short": "Dallas County",
 "units": 96,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "harrison-county-tx",
@@ -4308,7 +4308,7 @@
 "label": "Harrison County, Texas",
 "short": "Harrison County",
 "units": 187,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "essex-county-ny",
@@ -4317,7 +4317,7 @@
 "label": "Essex County, New York",
 "short": "Essex County",
 "units": 173,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "monroe-county-pa",
@@ -4326,7 +4326,7 @@
 "label": "Monroe County, Pennsylvania",
 "short": "Monroe County",
 "units": 428,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "fairfield-county-sc",
@@ -4335,7 +4335,7 @@
 "label": "Fairfield County, South Carolina",
 "short": "Fairfield County",
 "units": 179,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "jackson-county-mi",
@@ -4344,7 +4344,7 @@
 "label": "Jackson County, Michigan",
 "short": "Jackson County",
 "units": 186,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "union-county-fl",
@@ -4353,7 +4353,7 @@
 "label": "Union County, Florida",
 "short": "Union County",
 "units": 68,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "union-county-oh",
@@ -4362,7 +4362,7 @@
 "label": "Union County, Ohio",
 "short": "Union County",
 "units": 66,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "jackson-county-in",
@@ -4371,7 +4371,7 @@
 "label": "Jackson County, Indiana",
 "short": "Jackson County",
 "units": 176,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "washington-county-va",
@@ -4380,7 +4380,7 @@
 "label": "Washington County, Virginia",
 "short": "Washington County",
 "units": 133,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "martin-county-ky",
@@ -4389,7 +4389,7 @@
 "label": "Martin County, Kentucky",
 "short": "Martin County",
 "units": 151,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "jackson-county-ar",
@@ -4398,7 +4398,7 @@
 "label": "Jackson County, Arkansas",
 "short": "Jackson County",
 "units": 166,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "lee-county-nc",
@@ -4407,7 +4407,7 @@
 "label": "Lee County, North Carolina",
 "short": "Lee County",
 "units": 141,
-"kw": 100
+"kw": 0
 },
 {
 "slug": "jefferson-county-ar",
@@ -4416,7 +4416,7 @@
 "label": "Jefferson County, Arkansas",
 "short": "Jefferson County",
 "units": 317,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "washington-county-ny",
@@ -4425,7 +4425,7 @@
 "label": "Washington County, New York",
 "short": "Washington County",
 "units": 128,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "washington-county-fl",
@@ -4434,7 +4434,7 @@
 "label": "Washington County, Florida",
 "short": "Washington County",
 "units": 126,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "union-county-il",
@@ -4443,7 +4443,7 @@
 "label": "Union County, Illinois",
 "short": "Union County",
 "units": 59,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "clay-county-wv",
@@ -4452,7 +4452,7 @@
 "label": "Clay County, West Virginia",
 "short": "Clay County",
 "units": 55,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "franklin-county-il",
@@ -4461,7 +4461,7 @@
 "label": "Franklin County, Illinois",
 "short": "Franklin County",
 "units": 54,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "hancock-county-wv",
@@ -4470,7 +4470,7 @@
 "label": "Hancock County, West Virginia",
 "short": "Hancock County",
 "units": 85,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "washington-county-me",
@@ -4479,7 +4479,7 @@
 "label": "Washington County, Maine",
 "short": "Washington County",
 "units": 122,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "jefferson-county-ny",
@@ -4488,7 +4488,7 @@
 "label": "Jefferson County, New York",
 "short": "Jefferson County",
 "units": 293,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "chatham-county-nc",
@@ -4497,7 +4497,7 @@
 "label": "Chatham County, North Carolina",
 "short": "Chatham County",
 "units": 229,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "clay-county-ky",
@@ -4506,7 +4506,7 @@
 "label": "Clay County, Kentucky",
 "short": "Clay County",
 "units": 52,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "washington-county-ia",
@@ -4515,7 +4515,7 @@
 "label": "Washington County, Iowa",
 "short": "Washington County",
 "units": 109,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "york-county-ne",
@@ -4524,7 +4524,7 @@
 "label": "York County, Nebraska",
 "short": "York County",
 "units": 66,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "hancock-county-ky",
@@ -4533,7 +4533,7 @@
 "label": "Hancock County, Kentucky",
 "short": "Hancock County",
 "units": 72,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "jackson-county-al",
@@ -4542,7 +4542,7 @@
 "label": "Jackson County, Alabama",
 "short": "Jackson County",
 "units": 129,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "lee-county-il",
@@ -4551,7 +4551,7 @@
 "label": "Lee County, Illinois",
 "short": "Lee County",
 "units": 109,
-"kw": 100
+"kw": 0
 },
 {
 "slug": "clay-county-tx",
@@ -4560,7 +4560,7 @@
 "label": "Clay County, Texas",
 "short": "Clay County",
 "units": 44,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "jefferson-county-wa",
@@ -4569,7 +4569,7 @@
 "label": "Jefferson County, Washington",
 "short": "Jefferson County",
 "units": 246,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "jackson-county-il",
@@ -4578,7 +4578,7 @@
 "label": "Jackson County, Illinois",
 "short": "Jackson County",
 "units": 124,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "escambia-county-al",
@@ -4587,7 +4587,7 @@
 "label": "Escambia County, Alabama",
 "short": "Escambia County",
 "units": 136,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "harrison-county-ky",
@@ -4596,7 +4596,7 @@
 "label": "Harrison County, Kentucky",
 "short": "Harrison County",
 "units": 105,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "hancock-county-il",
@@ -4605,7 +4605,7 @@
 "label": "Hancock County, Illinois",
 "short": "Hancock County",
 "units": 64,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "monroe-county-ms",
@@ -4614,7 +4614,7 @@
 "label": "Monroe County, Mississippi",
 "short": "Monroe County",
 "units": 246,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "jackson-county-fl",
@@ -4623,7 +4623,7 @@
 "label": "Jackson County, Florida",
 "short": "Jackson County",
 "units": 110,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "cook-county-ga",
@@ -4632,7 +4632,7 @@
 "label": "Cook County, Georgia",
 "short": "Cook County",
 "units": 80,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "orange-county-vt",
@@ -4641,7 +4641,7 @@
 "label": "Orange County, Vermont",
 "short": "Orange County",
 "units": 139,
-"kw": 20
+"kw": 0
 },
 {
 "slug": "martin-county-nc",
@@ -4650,7 +4650,7 @@
 "label": "Martin County, North Carolina",
 "short": "Martin County",
 "units": 91,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "jefferson-county-wv",
@@ -4659,7 +4659,7 @@
 "label": "Jefferson County, West Virginia",
 "short": "Jefferson County",
 "units": 188,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "jefferson-county-wi",
@@ -4668,7 +4668,7 @@
 "label": "Jefferson County, Wisconsin",
 "short": "Jefferson County",
 "units": 184,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "madison-county-oh",
@@ -4677,7 +4677,7 @@
 "label": "Madison County, Ohio",
 "short": "Madison County",
 "units": 38,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "harrison-county-in",
@@ -4686,7 +4686,7 @@
 "label": "Harrison County, Indiana",
 "short": "Harrison County",
 "units": 79,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "monroe-county-in",
@@ -4695,7 +4695,7 @@
 "label": "Monroe County, Indiana",
 "short": "Monroe County",
 "units": 197,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "jefferson-county-pa",
@@ -4704,7 +4704,7 @@
 "label": "Jefferson County, Pennsylvania",
 "short": "Jefferson County",
 "units": 170,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "monroe-county-il",
@@ -4713,7 +4713,7 @@
 "label": "Monroe County, Illinois",
 "short": "Monroe County",
 "units": 190,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "jackson-county-wv",
@@ -4722,7 +4722,7 @@
 "label": "Jackson County, West Virginia",
 "short": "Jackson County",
 "units": 85,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "lee-county-ar",
@@ -4731,7 +4731,7 @@
 "label": "Lee County, Arkansas",
 "short": "Lee County",
 "units": 71,
-"kw": 100
+"kw": 0
 },
 {
 "slug": "washington-county-ne",
@@ -4740,7 +4740,7 @@
 "label": "Washington County, Nebraska",
 "short": "Washington County",
 "units": 64,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "jefferson-county-oh",
@@ -4749,7 +4749,7 @@
 "label": "Jefferson County, Ohio",
 "short": "Jefferson County",
 "units": 153,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "walton-county-ga",
@@ -4758,7 +4758,7 @@
 "label": "Walton County, Georgia",
 "short": "Walton County",
 "units": 81,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "washington-county-id",
@@ -4767,7 +4767,7 @@
 "label": "Washington County, Idaho",
 "short": "Washington County",
 "units": 57,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "jackson-county-oh",
@@ -4776,7 +4776,7 @@
 "label": "Jackson County, Ohio",
 "short": "Jackson County",
 "units": 72,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "cameron-county-pa",
@@ -4785,7 +4785,7 @@
 "label": "Cameron County, Pennsylvania",
 "short": "Cameron County",
 "units": 79,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "monroe-county-ar",
@@ -4794,7 +4794,7 @@
 "label": "Monroe County, Arkansas",
 "short": "Monroe County",
 "units": 129,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "orange-county-va",
@@ -4803,7 +4803,7 @@
 "label": "Orange County, Virginia",
 "short": "Orange County",
 "units": 72,
-"kw": 20
+"kw": 0
 },
 {
 "slug": "jefferson-county-tn",
@@ -4812,7 +4812,7 @@
 "label": "Jefferson County, Tennessee",
 "short": "Jefferson County",
 "units": 99,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "jefferson-county-in",
@@ -4821,7 +4821,7 @@
 "label": "Jefferson County, Indiana",
 "short": "Jefferson County",
 "units": 97,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "monroe-county-wi",
@@ -4830,7 +4830,7 @@
 "label": "Monroe County, Wisconsin",
 "short": "Monroe County",
 "units": 110,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "jackson-county-ga",
@@ -4839,7 +4839,7 @@
 "label": "Jackson County, Georgia",
 "short": "Jackson County",
 "units": 43,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "jefferson-county-fl",
@@ -4848,7 +4848,7 @@
 "label": "Jefferson County, Florida",
 "short": "Jefferson County",
 "units": 79,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "jefferson-county-or",
@@ -4857,7 +4857,7 @@
 "label": "Jefferson County, Oregon",
 "short": "Jefferson County",
 "units": 77,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "monroe-county-ga",
@@ -4866,7 +4866,7 @@
 "label": "Monroe County, Georgia",
 "short": "Monroe County",
 "units": 82,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "monroe-county-tn",
@@ -4875,7 +4875,7 @@
 "label": "Monroe County, Tennessee",
 "short": "Monroe County",
 "units": 64,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "jefferson-county-ks",
@@ -4884,7 +4884,7 @@
 "label": "Jefferson County, Kansas",
 "short": "Jefferson County",
 "units": 54,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "jefferson-county-id",
@@ -4893,7 +4893,7 @@
 "label": "Jefferson County, Idaho",
 "short": "Jefferson County",
 "units": 42,
-"kw": 10
+"kw": 0
 },
 {
 "slug": "prince-william-county-va",

@@ -65,6 +65,8 @@ jobs:
           if [ -n "${{ inputs.drill }}" ] && [ "${{ inputs.drill }}" != none ]; then echo "none=1" >> "$GITHUB_OUTPUT"; echo "drill: nothing added"; exit 0; fi
           out=$(python -I tools/add_counties.py 20); echo "$out"   # owner 11-06: 20 a day, only counties with Keyword Planner searches (queue "kw" > 0)
           echo "msg=$out" >> "$GITHUB_OUTPUT"
+          new=$(git diff -U0 tools/counties.json | grep -o '^+ *"geoid": "[0-9]*"' | grep -o '[0-9]\{5\}' | xargs)
+          [ -n "$new" ] && { python -I tools/pull_mapstatus.py $new || echo "::warning::map status not pulled for $new; the monthly run fills it"; }   # audit 11-07: same-day FEMA map facts
           # queue empty and the site already holds the latest data: nothing to build (a monthly refresh must still ship)
           if git diff --quiet tools/counties.json && [ "$(python -I tools/refresh_shipped.py)" = yes ]; then echo "queue empty"; echo "none=1" >> "$GITHUB_OUTPUT"; fi
       - name: Phone check browser
@@ -86,7 +88,7 @@ jobs:
           set -e
           git config user.name "github-actions[bot]"
           git config user.email "41898+github-actions[bot]@users.noreply.github.com"
-          git add -A tools/counties.json places.json dist data/c data/states state
+          git add -A tools/counties.json places.json dist data/c data/states data/us/map_status.json state
           git diff --cached --quiet && { echo "nothing changed"; exit 0; }
           git commit -m "publish: ${{ steps.add.outputs.msg }}"
           git pull --rebase origin master && git push
