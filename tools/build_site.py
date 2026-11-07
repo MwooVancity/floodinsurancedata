@@ -31,7 +31,7 @@ def wr(path, s):
 HEAD = """<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="google-site-verification" content="geYcfFcAsSIVIT2iHnH60suuJ4t3fx7unryWmcbos6A"><title>{title}</title>
 <meta name="description" content="{desc}"><link rel="canonical" href="{canon}">
-<style>:root{{--bg:#f4f7f8;--surface:#fff;--ink:#132029;--mut:#55656f;--faint:#7d8c96;--line:#dbe3e7;--brand:#15617f;--brand-d:#0e4a61;--accent:#c2591f;--r:12px;--gut:20px;
+<style>.btn{{display:inline-block;color:#fff;text-decoration:none;padding:12px 20px;min-height:44px}}:root{{--bg:#f4f7f8;--surface:#fff;--ink:#132029;--mut:#55656f;--faint:#7d8c96;--line:#dbe3e7;--brand:#15617f;--brand-d:#0e4a61;--accent:#c2591f;--r:12px;--gut:20px;
  --serif:"Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;--mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;--shadow:none}}
 *{{box-sizing:border-box}}body{{margin:0;background:var(--bg);color:var(--ink);font:17px/1.62 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}}
 .wrap{{max-width:740px;margin:0 auto;padding:0 var(--gut)}}

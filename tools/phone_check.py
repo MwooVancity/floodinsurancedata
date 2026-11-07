@@ -23,6 +23,7 @@ if not slugs:
     _bp = os.path.join(ROOT, "data", "states", "built.json")   # plus the largest and smallest state page
     st = sorted(json.load(open(_bp)), key=lambda s: s["units"]) if os.path.exists(_bp) else []
     slugs += list(dict.fromkeys(s["slug"] for s in st[-1:] + st[:1]))
+    slugs += ["/flood-zones/x/", "/flood-zone-map/"]   # 11-06: zone pages shipped a blue-on-blue button for days; P1/P2/P7 only (no county blocks)
 
 # vw is the DEVICE width, not innerWidth: given wide content a phone widens the layout viewport and zooms the whole
 # page out, so measuring against innerWidth would hide exactly the overflow a reader suffers.
@@ -70,16 +71,18 @@ with sync_playwright() as p:
     br = p.chromium.launch()
     pg = br.new_context(viewport={"width": W, "height": H}, is_mobile=True, has_touch=True).new_page()
     for s in slugs:
-        url = f"{base}/flood-insurance/{s}/" + ("index.html" if base.startswith("file:") else "")
+        site = s.startswith("/")
+        if site and not os.path.exists(os.path.join(ROOT, "dist", s.strip("/"), "index.html")) and base.startswith("file:"): continue
+        url = (f"{base}{s}" if site else f"{base}/flood-insurance/{s}/") + ("index.html" if base.startswith("file:") else "")
         pg.goto(url, wait_until="networkidle")
         r = pg.evaluate(JS)
         bad = []
         if r["wide"]: bad.append(f"P1 wider than screen: {r['wide'][:4]}")
         if r["small"]: bad.append(f"P2 text under {MIN_PX}px: {r['small'][:4]}")
         if r["faint"]: bad.append(f"P7 text too faint (contrast under 4.5:1, 3:1 if large): {r['faint'][:4]}")
-        for k in ("median", "map", "jump"):
+        for k in (() if site else ("median", "map", "jump")):
             if r[k] is None or r[k] > H: bad.append(f"P3 {k} not on screen 1 (top {r[k]})")
-        if r["compare"] is None or r["compare"] > 2 * H: bad.append(f"P4 quote checker not within screen 2 (top {r['compare']})")
+        if not site and (r["compare"] is None or r["compare"] > 2 * H): bad.append(f"P4 quote checker not within screen 2 (top {r['compare']})")
         if r["hidden"]: bad.append(f"P5 {r['hidden']} collapsed <details> hide data")
         if r["overlap"]: bad.append(f"P6 chart labels overlap: {r['overlap'][:3]}")
         print(("PHONE FAIL " if bad else "PHONE PASS ") + f"{s} (height {r['height']}px = {r['height'] / H:.1f} screens)")
