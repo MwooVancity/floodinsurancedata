@@ -29,6 +29,11 @@ def rows(ds, st):
     for p in sorted(glob.glob(os.path.join(RAW, ds, st, "*.csv.gz"))):
         yield from csv.DictReader(gzip.open(p, "rt", encoding="utf-8"))
 
+# Renters (11-07): residential occupancy only, codes from FEMA's NfipPolicies data dictionary (metric_defs.json, sha-checked
+# by recheck): 1, 2, 3 legacy residential; 11, 12, 13, 14 (mobile home), 16 (unit in a multi-unit building) Risk Rating 2.0.
+# Out: 4, 6, 17, 18, 19 non-residential; 15 condo association; blank or any code FEMA adds later.
+RENTER_OCC = {"1", "2", "3", "11", "12", "13", "14", "16"}
+
 def new_acc():
     return {"units": 0, "mand_units": 0, "tenant_units": 0, "condo_unit_units": 0, "rcbap_units": 0, "elev_units": 0,
             "gf_units": 0, "prem_new": [], "prem_old": [], "prem_elev": [], "prem_low": [], "sf_n": 0, "sf_max_cov": 0,
@@ -47,7 +52,7 @@ def policies(st):
             a = acc[k]; a["units"] += u
             if truthy(r["mandatoryPurchaseFlag"]): a["mand_units"] += u
             if truthy(r["tenantIndicator"]): a["tenant_units"] += u
-            if k == "ST" and truthy(r["tenantIndicator"]) and not (f(r["totalBuildingInsuranceCoverage"]) or 0) and (f(r["totalContentsInsuranceCoverage"]) or 0) > 0:
+            if k == "ST" and r["occupancyType"].strip() in RENTER_OCC and truthy(r["tenantIndicator"]) and not (f(r["totalBuildingInsuranceCoverage"]) or 0) and (f(r["totalContentsInsuranceCoverage"]) or 0) > 0:
                 a["renter_units"] += u   # renters page (owner 11-06): tenant, contents-only policies; cost histogram below
                 if cost and cost > 0: a["renter_hist"][round(cost)] += 1
             if r["condominiumCoverageTypeCode"] == "U": a["condo_unit_units"] += u

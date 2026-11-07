@@ -2,7 +2,7 @@
 River-style: white cards, every number has a unit, one line of context, source + as-of once.
 No verdict, no advice prose. Writes directly to the repo dist path. -> OUT_HTML."""
 import datetime, json, html, os, re, sys
-from collections import defaultdict
+from collections import defaultdict, Counter
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))  # -I drops script dir; restore for ffcalc
 import ffcalc
 import metrics as MX
@@ -586,10 +586,18 @@ GEOID_SELF = os.environ.get("FF_GEOID", "12071")   # this page's own county (sta
 try: ZIPTOWN = json.load(open(os.path.join(os.path.dirname(HERE), "data", "us", "zip_places.json"), encoding="utf-8"))
 except Exception: ZIPTOWN = {}
 def _zl(z): return html.escape(z) + (f" <span data-name>{html.escape(ZIPTOWN[z])}</span>" if z in ZIPTOWN else "")
-def _town_line(zips):   # demand test (PLAN): flagged counties only; a stray ZIP from elsewhere never tops the list
-    towns = list(dict.fromkeys(ZIPTOWN[z["zip"]] for z in sorted(zips, key=lambda z: -z["units"]) if z["zip"] in ZIPTOWN))[:5]
-    if not _tool_on("towns") or len(towns) < 2: return ""
-    return "<p class='note'>Towns here, ranked by NFIP policy units per ZIP: " + ", ".join(f"<span data-name>{html.escape(t)}</span>" for t in towns) + ".</p>"
+try: ZIPCTY = json.load(open(os.path.join(os.path.dirname(HERE), "data", "us", "zip_place_counties.json"), encoding="utf-8"))
+except Exception: ZIPCTY = {}
+def _towns(zips):   # every county (PLAN row 7): a town counts only if Census puts its place in this county; units summed over its ZIPs
+    tot = Counter()
+    if IS_STATE: return []   # GEOID_SELF is any county on a state page
+    for z in zips:
+        if z.get("units") and z["zip"] in ZIPTOWN and GEOID_SELF in ZIPCTY.get(z["zip"], ()): tot[ZIPTOWN[z["zip"]]] += z["units"]
+    return [t for t, _ in tot.most_common(5)]
+def _town_line(zips):
+    towns = _towns(zips)
+    if len(towns) < 2: return ""
+    return "<p class='note'>Towns here, ranked by NFIP policy units in their ZIPs: " + ", ".join(f"<span data-name>{html.escape(t)}</span>" for t in towns) + ".</p>"
 
 def _zip_county():
     bz = [z for z in (agg["policies"].get("by_zip") or []) if z.get("units") and re.fullmatch(r"\d{5}", str(z.get("zip")))]   # hater r7: ZIP+4 strings are not ZIPs
@@ -870,6 +878,8 @@ GEOID = os.environ.get("FF_GEOID", "12071")
 META_DESC = (f"Median NFIP flood insurance cost for a single-family primary home in {CS} is {money(P['p50'])} a year "
              f"(middle half {money(P['p25'])}–{money(P['p75'])}); {P['share_below']}% pay below FEMA's "
              f"full-risk price. {num(P['units'])} insured units, claims, flood risk and community discounts, from FEMA's own records.")
+_TW = _towns([z for z in (agg["policies"].get("by_zip") or []) if re.fullmatch(r"\d{5}", str(z.get("zip")))])
+if len(_TW) > 1: META_DESC += " Includes " + ", ".join(_TW[:-1]) + " and " + _TW[-1] + "."
 # register this place so home/lookup/sitemap/siblings know it exists
 PLACES = os.environ.get("FF_PLACES", os.path.join(HERE, "places.json"))
 try: places = json.load(open(PLACES))

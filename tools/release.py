@@ -33,6 +33,8 @@ else:
     step("claims check mutations", os.path.join(T, "claims_check.py"), "--test")
     step("zone pages: every figure recomputed", os.path.join(T, "zone_check.py"))
     step("zone check mutations", os.path.join(T, "zone_check.py"), "--test")
+    step("county towns: Census place and ZIP in this county", os.path.join(T, "town_check.py"))
+    step("town check mutations", os.path.join(T, "town_check.py"), "--test")
     step("unit tests", os.path.join(T, "test_calc.py"))
     step("mutation suite", os.path.join(T, "test_gate.py"))
     step("hater verdict parser", os.path.join(T, "test_hater.py"))
