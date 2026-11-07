@@ -2318,5 +2318,205 @@
   "label": "Pasquotank County, North Carolina",
   "short": "Pasquotank County",
   "official": 0
+ },
+ {
+  "slug": "ada-county-id",
+  "state": "ID",
+  "geoid": "16001",
+  "county": "ADA",
+  "countytitle": "Ada",
+  "label": "Ada County, Idaho",
+  "short": "Ada County",
+  "official": 0
+ },
+ {
+  "slug": "pitt-county-nc",
+  "state": "NC",
+  "geoid": "37147",
+  "county": "PITT",
+  "countytitle": "Pitt",
+  "label": "Pitt County, North Carolina",
+  "short": "Pitt County",
+  "official": 0
+ },
+ {
+  "slug": "gulf-county-fl",
+  "state": "FL",
+  "geoid": "12045",
+  "county": "GULF",
+  "countytitle": "Gulf",
+  "label": "Gulf County, Florida",
+  "short": "Gulf County",
+  "official": 0
+ },
+ {
+  "slug": "rankin-county-ms",
+  "state": "MS",
+  "geoid": "28121",
+  "county": "RANKIN",
+  "countytitle": "Rankin",
+  "label": "Rankin County, Mississippi",
+  "short": "Rankin County",
+  "official": 0
+ },
+ {
+  "slug": "collin-county-tx",
+  "state": "TX",
+  "geoid": "48085",
+  "county": "COLLIN",
+  "countytitle": "Collin",
+  "label": "Collin County, Texas",
+  "short": "Collin County",
+  "official": 0
+ },
+ {
+  "slug": "monterey-county-ca",
+  "state": "CA",
+  "geoid": "06053",
+  "county": "MONTEREY",
+  "countytitle": "Monterey",
+  "label": "Monterey County, California",
+  "short": "Monterey County",
+  "official": 0
+ },
+ {
+  "slug": "broome-county-ny",
+  "state": "NY",
+  "geoid": "36007",
+  "county": "BROOME",
+  "countytitle": "Broome",
+  "label": "Broome County, New York",
+  "short": "Broome County",
+  "official": 0
+ },
+ {
+  "slug": "yavapai-county-az",
+  "state": "AZ",
+  "geoid": "04025",
+  "county": "YAVAPAI",
+  "countytitle": "Yavapai",
+  "label": "Yavapai County, Arizona",
+  "short": "Yavapai County",
+  "official": 0
+ },
+ {
+  "slug": "butte-county-ca",
+  "state": "CA",
+  "geoid": "06007",
+  "county": "BUTTE",
+  "countytitle": "Butte",
+  "label": "Butte County, California",
+  "short": "Butte County",
+  "official": 0
+ },
+ {
+  "slug": "oklahoma-county-ok",
+  "state": "OK",
+  "geoid": "40109",
+  "county": "OKLAHOMA",
+  "countytitle": "Oklahoma",
+  "label": "Oklahoma County, Oklahoma",
+  "short": "Oklahoma County",
+  "official": 0
+ },
+ {
+  "slug": "yuba-county-ca",
+  "state": "CA",
+  "geoid": "06115",
+  "county": "YUBA",
+  "countytitle": "Yuba",
+  "label": "Yuba County, California",
+  "short": "Yuba County",
+  "official": 0
+ },
+ {
+  "slug": "tillamook-county-or",
+  "state": "OR",
+  "geoid": "41057",
+  "county": "TILLAMOOK",
+  "countytitle": "Tillamook",
+  "label": "Tillamook County, Oregon",
+  "short": "Tillamook County",
+  "official": 0
+ },
+ {
+  "slug": "okeechobee-county-fl",
+  "state": "FL",
+  "geoid": "12093",
+  "county": "OKEECHOBEE",
+  "countytitle": "Okeechobee",
+  "label": "Okeechobee County, Florida",
+  "short": "Okeechobee County",
+  "official": 0
+ },
+ {
+  "slug": "rockland-county-ny",
+  "state": "NY",
+  "geoid": "36087",
+  "county": "ROCKLAND",
+  "countytitle": "Rockland",
+  "label": "Rockland County, New York",
+  "short": "Rockland County",
+  "official": 0
+ },
+ {
+  "slug": "napa-county-ca",
+  "state": "CA",
+  "geoid": "06055",
+  "county": "NAPA",
+  "countytitle": "Napa",
+  "label": "Napa County, California",
+  "short": "Napa County",
+  "official": 0
+ },
+ {
+  "slug": "chester-county-pa",
+  "state": "PA",
+  "geoid": "42029",
+  "county": "CHESTER",
+  "countytitle": "Chester",
+  "label": "Chester County, Pennsylvania",
+  "short": "Chester County",
+  "official": 0
+ },
+ {
+  "slug": "iberville-parish-la",
+  "state": "LA",
+  "geoid": "22047",
+  "county": "IBERVILLE",
+  "countytitle": "Iberville",
+  "label": "Iberville Parish, Louisiana",
+  "short": "Iberville Parish",
+  "official": 0
+ },
+ {
+  "slug": "onondaga-county-ny",
+  "state": "NY",
+  "geoid": "36067",
+  "county": "ONONDAGA",
+  "countytitle": "Onondaga",
+  "label": "Onondaga County, New York",
+  "short": "Onondaga County",
+  "official": 0
+ },
+ {
+  "slug": "placer-county-ca",
+  "state": "CA",
+  "geoid": "06061",
+  "county": "PLACER",
+  "countytitle": "Placer",
+  "label": "Placer County, California",
+  "short": "Placer County",
+  "official": 0
+ },
+ {
+  "slug": "wakulla-county-fl",
+  "state": "FL",
+  "geoid": "12129",
+  "county": "WAKULLA",
+  "countytitle": "Wakulla",
+  "label": "Wakulla County, Florida",
+  "short": "Wakulla County",
+  "official": 0
  }
 ]

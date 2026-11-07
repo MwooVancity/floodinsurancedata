@@ -2060,6 +2060,16 @@
 "indexable": true
 },
 {
+"slug": "ada-county-id",
+"label": "Ada County, Idaho",
+"short": "Ada County",
+"geoid": "16001",
+"state": "ID",
+"units": 1854,
+"median": 1081,
+"indexable": true
+},
+{
 "slug": "tulsa-county-ok",
 "label": "Tulsa County, Oklahoma",
 "short": "Tulsa County",
@@ -2067,6 +2077,96 @@
 "state": "OK",
 "units": 1809,
 "median": 1066,
+"indexable": true
+},
+{
+"slug": "gulf-county-fl",
+"label": "Gulf County, Florida",
+"short": "Gulf County",
+"geoid": "12045",
+"state": "FL",
+"units": 1716,
+"median": 1260,
+"indexable": true
+},
+{
+"slug": "pitt-county-nc",
+"label": "Pitt County, North Carolina",
+"short": "Pitt County",
+"geoid": "37147",
+"state": "NC",
+"units": 1706,
+"median": 791,
+"indexable": true
+},
+{
+"slug": "rankin-county-ms",
+"label": "Rankin County, Mississippi",
+"short": "Rankin County",
+"geoid": "28121",
+"state": "MS",
+"units": 1659,
+"median": 872,
+"indexable": true
+},
+{
+"slug": "collin-county-tx",
+"label": "Collin County, Texas",
+"short": "Collin County",
+"geoid": "48085",
+"state": "TX",
+"units": 1617,
+"median": 826,
+"indexable": true
+},
+{
+"slug": "monterey-county-ca",
+"label": "Monterey County, California",
+"short": "Monterey County",
+"geoid": "06053",
+"state": "CA",
+"units": 1599,
+"median": 1382,
+"indexable": true
+},
+{
+"slug": "yavapai-county-az",
+"label": "Yavapai County, Arizona",
+"short": "Yavapai County",
+"geoid": "04025",
+"state": "AZ",
+"units": 1585,
+"median": 1162,
+"indexable": true
+},
+{
+"slug": "broome-county-ny",
+"label": "Broome County, New York",
+"short": "Broome County",
+"geoid": "36007",
+"state": "NY",
+"units": 1567,
+"median": 1198,
+"indexable": true
+},
+{
+"slug": "butte-county-ca",
+"label": "Butte County, California",
+"short": "Butte County",
+"geoid": "06007",
+"state": "CA",
+"units": 1555,
+"median": 889,
+"indexable": true
+},
+{
+"slug": "oklahoma-county-ok",
+"label": "Oklahoma County, Oklahoma",
+"short": "Oklahoma County",
+"geoid": "40109",
+"state": "OK",
+"units": 1528,
+"median": 959,
 "indexable": true
 },
 {
@@ -2080,6 +2180,16 @@
 "indexable": true
 },
 {
+"slug": "yuba-county-ca",
+"label": "Yuba County, California",
+"short": "Yuba County",
+"geoid": "06115",
+"state": "CA",
+"units": 1467,
+"median": 1233,
+"indexable": true
+},
+{
 "slug": "clark-county-nv",
 "label": "Clark County, Nevada",
 "short": "Clark County",
@@ -2087,6 +2197,16 @@
 "state": "NV",
 "units": 1377,
 "median": 836,
+"indexable": true
+},
+{
+"slug": "tillamook-county-or",
+"label": "Tillamook County, Oregon",
+"short": "Tillamook County",
+"geoid": "41057",
+"state": "OR",
+"units": 1376,
+"median": 1234,
 "indexable": true
 },
 {
@@ -2100,6 +2220,66 @@
 "indexable": true
 },
 {
+"slug": "rockland-county-ny",
+"label": "Rockland County, New York",
+"short": "Rockland County",
+"geoid": "36087",
+"state": "NY",
+"units": 1355,
+"median": 976,
+"indexable": true
+},
+{
+"slug": "okeechobee-county-fl",
+"label": "Okeechobee County, Florida",
+"short": "Okeechobee County",
+"geoid": "12093",
+"state": "FL",
+"units": 1325,
+"median": 907,
+"indexable": true
+},
+{
+"slug": "napa-county-ca",
+"label": "Napa County, California",
+"short": "Napa County",
+"geoid": "06055",
+"state": "CA",
+"units": 1287,
+"median": 1840,
+"indexable": true
+},
+{
+"slug": "chester-county-pa",
+"label": "Chester County, Pennsylvania",
+"short": "Chester County",
+"geoid": "42029",
+"state": "PA",
+"units": 1274,
+"median": 1082,
+"indexable": true
+},
+{
+"slug": "onondaga-county-ny",
+"label": "Onondaga County, New York",
+"short": "Onondaga County",
+"geoid": "36067",
+"state": "NY",
+"units": 1272,
+"median": 1197,
+"indexable": true
+},
+{
+"slug": "placer-county-ca",
+"label": "Placer County, California",
+"short": "Placer County",
+"geoid": "06061",
+"state": "CA",
+"units": 1268,
+"median": 1005,
+"indexable": true
+},
+{
 "slug": "kanawha-county-wv",
 "label": "Kanawha County, West Virginia",
 "short": "Kanawha County",
@@ -2107,6 +2287,26 @@
 "state": "WV",
 "units": 1262,
 "median": 1464,
+"indexable": true
+},
+{
+"slug": "iberville-parish-la",
+"label": "Iberville Parish, Louisiana",
+"short": "Iberville Parish",
+"geoid": "22047",
+"state": "LA",
+"units": 1259,
+"median": 802,
+"indexable": true
+},
+{
+"slug": "wakulla-county-fl",
+"label": "Wakulla County, Florida",
+"short": "Wakulla County",
+"geoid": "12129",
+"state": "FL",
+"units": 1244,
+"median": 1471,
 "indexable": true
 },
 {
