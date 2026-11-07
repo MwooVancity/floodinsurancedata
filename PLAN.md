@@ -12,7 +12,7 @@ Volumes: Keyword Planner US band floors/mo. "Perfect" = numbers recomputed by a 
 | 5 | ~2,000 nfip / fema flood insurance | new /nfip/ "The NFIP in numbers" | DONE 11-07 | judge by impressions |
 | 6 | ~1,000 flood insurance for renters | /flood-insurance/renters/ | LIVE 11-07: 6,397 priced homes-only renter policies, median $369 (middle half $307-$513); r88 PASS | backlog r88 MINORs |
 | 7 | ~1,000+ towns ("flood insurance chicago") | county pages | DONE 11-07, every county | — |
-| 8 | 7,240 [county] flood zone map | county pages, 20/day by GitHub | 232 live; 97 searched counties queued (majority-share rule), ~5 days | 8 flagged searched counties (sonoma-ca first) need own light review |
+| 8 | 7,240 [county] flood zone map (money rank 11 of 15) | county pages | FROZEN at 232 (audit 11-07: a 20/day restart broke the debate rule) | only on the Jan 4 county rule |
 | 9 | ~100 rates by zip code | /flood-insurance/zip/ | LIVE 11-07 | — |
 | 10 | ~100 claims | /flood-insurance/claims/ | LIVE 11-07 | owner: reporter pitches |
 Not targeted: "flood insurance" head term (FloodSmart), quote, companies.
@@ -25,7 +25,8 @@ EXECUTION ORDER (owner 11-07 "plan to execute the plan"). One batch = build > it
 - (was) Batch B: row 5 /nfip/ "The NFIP in numbers": policy units, median cost, claims and dollars paid since 1978 and since 2020, by state; program rules only via rule() (nfip_not_sold, nfip_lapse, how_to_buy); check script recomputes every figure.
 - DONE 11-07 Batch D: every county ZIP card names its top 5 towns (Census places summed over their ZIPs) and the meta description lists them; a town counts only if Census puts both the place and one of its ZIPs in that county (data/us/zip_place_counties.json, `town_check.py` + 3 mutations; caught "Islamorada, Village of Islands" read as two towns). Titles unchanged: already ~85 characters, Google cuts the rest. Ends the 20-county towns test early (PLAN row 7).
 - Batch E (11-20): rows 1-2 tool to all pages: first a US-runner live test of the tool against real FEMA (fema-probe + Playwright), then tools_flags "zonemap": "all".
-- DONE 11-07 row 8 started: publish-counties back to 20/day, kw > 0 only (97 searched counties, ~5 days); flagged counties are set aside by S12 until their own light review (Sonoma first).
+- 11-07 row 8 REVERSED: fresh audit found the 20/day restart broke the debate consensus (no county expansion; Jan 4 rule: 1+ genuine US click first). Counties stay 0. Money order (Keyword Planner volume x top bid, 186 of 9,452 terms bid): head term $382k (not targeted), state insurance $190k, map $90k, quote $59k (forbidden), towns $47k, zones $37k, cost $37k, NFIP $36k, state map $25k, renters $18k, county map $15.5k, county insurance $1.5k.
+- Batch F (money): state titles lead "flood insurance" (state insurance is #2 money, "flood insurance florida" position 20.5); county titles + H1 name the top town ("flood insurance chicago" > all county map money).
 
 ## Goal and scoreboard
 Most helpful flood-insurance page for every US county, for a scared reader on a phone. Measure: pages indexed, impressions, clicks, page-1 queries, AI citations. We built before proving demand: the weekly scoreboard decides; polish only where a number says a page fails.
@@ -126,7 +127,7 @@ Rules tested: truth, no advice, 2,000 ceiling, no name-swap pages stay. Open: co
    - Dropped: renewal-jump check.
 5. Links, guards first: monthly dead-link check stopping a release; outside links only .gov or FloodSmart; 3-5 related links from data; link text names the destination. Add DisasterAssistance.gov, FEMA provider finder, state insurance departments (sourced 51), bordering county. Sea level on state pages (open).
 6. One data story: "counties paying furthest below FEMA's full-risk price". Local-news pitch needs the owner.
-7. Pace: 20 a day (owner 11-01), no pauses, no noindex holds; queue done about late January; 31 flagged counties need own looks. Watch indexed count weekly. Towns test ended 11-07: town line now on every county (Batch D).
+7. Pace: counties frozen (11-07); see Jan 4 county rule. Watch indexed count weekly. Towns test ended 11-07: town line now on every county (Batch D).
 
 ## Runs on its own (owner goes to the Pro plan about 2026-11-19; Claude stays, smaller token budget)
 A failed check ships nothing; the live site stays. Failed job = one issue "Job failed: <job>" (`tools/job_alert.sh`). Timeouts and cancels alert too. `watch.yml` checks the daily job every night (alert after 2 days); daily and monthly also watch each other (3 and 34 days; 11-03 GitHub dropped the scheduled refresh, hand-dispatched 12:27 UTC, so a missed 3rd now alerts by the 6th). Group site-deploy: one deploy at a time; deploy.yml uses latest master.

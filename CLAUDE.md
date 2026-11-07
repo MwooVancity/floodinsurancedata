@@ -28,7 +28,7 @@ User, not Google: if something helps SEO but confuses or slows the reader, the r
   8. Claims about the law or program never typed in a template; `rule()` only. A new FEMA code gets its label from the data dictionary before it is shown.
 
 ## Site (HARD)
-- 51 states; counties (floor: 30 priced single-family policies for a median); ZIPs fold into the county page (standalone only with enough policies, a decision-changing difference and an answer the county lacks); no city pages; ceiling ~2,000. New counties: 0 a day until PLAN PAGE QUEUE rows 1-7 are done (owner 2026-11-07: "county pages last"); then 20 a day, only queue "kw" > 0; live pages stay indexed, no noindex holds.
+- 51 states; counties (floor: 30 priced single-family policies for a median); ZIPs fold into the county page (standalone only with enough policies, a decision-changing difference and an answer the county lacks); no city pages; ceiling ~2,000. New counties: 0 a day (owner 2026-11-07: "county pages last"; debate 11-06) until the PLAN Jan 4 county rule passes (a county page earns a genuine US click, 5+ with US impressions, 3+ in the top 30); then small batches, queue "kw" > 0 only; live pages stay indexed, no noindex holds.
 - No stuffing, doorway, near-duplicate pages, fake freshness, hidden text. One colour system; answers on screen 1; static, no client frameworks. No card or page-length caps.
 - Separate from calcscrape and river: own domain, Search Console, ad account; no shared template or links.
 - No paid referrals until a state-licensing + FTC check; no ads until a four-week Search Console review passes. A free link to FEMA's agent finder is allowed.
