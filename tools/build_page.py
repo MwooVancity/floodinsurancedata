@@ -1216,7 +1216,7 @@ _jump = f'<p class="cmp"><a href="#counties">Find your {UNIT} in the table ↓</
 
 HTML = f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">{'<meta name="robots" content="noindex,follow">' if os.environ.get("FF_NOINDEX") == "1" else ""}
-{GA_TAG}<title>Flood insurance cost in {CL}: {money(P['p50'])} median a year, single-family homes (FEMA data)</title>
+{GA_TAG}<title>{CL if IS_STATE else CS + ', ' + agg.get('state', '')} flood zones and flood insurance: {money(P['p50'])} median, single-family</title>
 <meta name="description" content="{html.escape(META_DESC)}">
 <link rel="canonical" href="{CANON}">
 <meta property="og:type" content="website"><meta property="og:title" content="Flood insurance in {html.escape(CL)}">
@@ -1292,7 +1292,7 @@ table{{width:100%}}}}
 <header class="topbar"><div class="wrap"><a class="brand" href="../../">Flood Insurance Data</a><span class="crumb">Flood insurance › {(f'<a href="../{state_slug(_state)}/" style="color:inherit">{html.escape(STATE_NAMES[_state])}</a> › ' if (not IS_STATE and _state in _built_states) else '')}{CS}</span></div></header>
 <main class="wrap">
 <section class="hero">
-<h1>Flood insurance in {CL}</h1>
+<h1>{CL} flood zones and flood insurance</h1>
 <p class="lede">In {CL}, the median NFIP flood insurance policy on a single-family primary home costs {m('cost_p50', money(P['p50']))} a year (premium plus fees, policies in force as of {POL_ASOF}).</p>
 <div class="stats">
 <div class="stat"><div class="n">{m('cost_p50', money(P['p50']))}</div><div class="l">Median / yr, single-family primary home</div></div>

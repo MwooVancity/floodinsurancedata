@@ -239,3 +239,6 @@ Ranked by reader value. hater.py record appends each round's **GAP** lines below
 
 ## home (round 69)
 - AE and VE screen 1 shows the all-A-zones / all-V-zones median, correctly labelled right under the figure; exact-zone data due next refresh. D and AH show no national cost (honest gap line). No local contacts list, error-report route, print stylesheet, Spanish.
+
+## new-york-county-ny (round 82)
+- Query 'flood insurance cost new york county NY' is a Manhattan reader; the H1 does not say Manhattan. Not wrong.
