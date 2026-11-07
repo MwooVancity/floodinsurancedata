@@ -12,7 +12,7 @@ permissions:
   issues: write
   actions: read
 
-concurrency: site-deploy
+concurrency: map-status   # own group: sharing site-deploy let GitHub cancel a pending daily publish (review 11-07)
 
 jobs:
   mapstatus:
