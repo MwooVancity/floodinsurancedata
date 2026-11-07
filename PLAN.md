@@ -18,7 +18,8 @@ Volumes: Keyword Planner US band floors/mo. "Perfect" = numbers recomputed by a 
 Not targeted: "flood insurance" head term (FloodSmart), quote, companies.
 
 EXECUTION ORDER (owner 11-07 "plan to execute the plan"). One batch = build > its check + mutations > gates > one light review > ship > live read > PLAN line. Counties OFF (publish-counties adds 0) until rows 1-7 are done.
-- Batch A (now): row 4 home H2 "How much is flood insurance?" + national half-pay range; row 3 zone X H2 "Zones B and C: old names for X" (zone_x rule already quotes FEMA); title "/yr" minor (r82).
+- DONE 11-07 Batch A (live, r83 PASS): home H2 "How much is flood insurance?" + $715-$1,330 half, $2,170 top tenth; zone X H2; titles "/yr". Code review (high) 11-07: 7 of 9 fixed (15 m box now real meters, --refresh re-ranks kw, map-status own concurrency group, stale ZIP files cleared, pull_bulk head retries curl errors, pre-build STOP sets batch aside); open: LOMA counts by Community Status Book county can include a multi-county city's rulings (label or spatial filter), zone_check/zu duplicate fallback.
+- (was) Batch A: row 4 home H2 "How much is flood insurance?" + national half-pay range; row 3 zone X H2 "Zones B and C: old names for X" (zone_x rule already quotes FEMA); title "/yr" minor (r82).
 - Batch B: row 5 /nfip/ "The NFIP in numbers": policy units, median cost, claims and dollars paid since 1978 and since 2020, by state; program rules only via rule() (nfip_not_sold, nfip_lapse, how_to_buy); check script recomputes every figure.
 - Batch C: row 6 renters, as soon as refresh 42328128363 lands with data/us/renter_hist.json: count first (51-state sum); page only if the median rests on 100+ priced policies.
 - Batch D: row 7 town names in county titles/ledes from Census places (data/us/zip_places.json), every county, not only the 20 test counties.
