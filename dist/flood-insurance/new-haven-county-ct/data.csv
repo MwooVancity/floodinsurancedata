@@ -132,7 +132,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "New Haven County, Connecticut",zone_cost_n,A,65,count,FEMA OpenFEMA — NFIP Policies,policyCost + ratedFloodZone,"August 31, 2026"
 "New Haven County, Connecticut",threshold,zone_min,50,count,FEMA OpenFEMA — NFIP Policies,policyCost,"August 31, 2026"
 "New Haven County, Connecticut",zip_count,all,43,count,FEMA OpenFEMA — NFIP Policies,reportedZipCode,"August 31, 2026"
-"New Haven County, Connecticut",zip,06460,06460 Milford city,count,FEMA OpenFEMA — NFIP Policies,reportedZipCode,"August 31, 2026"
+"New Haven County, Connecticut",zip,06460,06460 Milford,count,FEMA OpenFEMA — NFIP Policies,reportedZipCode,"August 31, 2026"
 "New Haven County, Connecticut",zip_cost,06460,"$1,684",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"August 31, 2026"
 "New Haven County, Connecticut",zip_cost_n,06460,967,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"August 31, 2026"
 "New Haven County, Connecticut",zip_units,06460,"2,171",count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"August 31, 2026"
