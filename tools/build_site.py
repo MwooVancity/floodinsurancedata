@@ -1,7 +1,7 @@
 """Build the shared site pages from places.json: home+lookup, methodology, data (CSV),
 sitemap.xml, robots.txt, llms.txt. Reads per-county agg.json for the download table.
 Env: FF_PLACES (places.json), FF_DIST (dist dir), FF_DATADIR (per-county data root), FF_BASEURL."""
-import csv, json, os, html, sys
+import csv, json, os, html, shutil, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from theme import THEME
 
@@ -582,7 +582,7 @@ if len(states) == 51 and (_zip_on == "all" or "zip" in _zip_on):
             if len(z) != 5 or not z.isdigit(): continue
             _z3.setdefault(z[:3], {}).setdefault(z, []).append([g, r["units"], r["cost_n"], r["median"]])
             _cty[g] = [_names.get(g, g), _stof.get(g[:2], ""), P["p50"] if (P.get("cost_n") or 0) >= 30 else None, _live.get(g)]
-    _zd = os.path.join(DIST, "data", "zip"); os.makedirs(_zd, exist_ok=True)
+    _zd = os.path.join(DIST, "data", "zip"); shutil.rmtree(_zd, ignore_errors=True); os.makedirs(_zd)   # no stale prefix files (review 11-07)
     for k, zs in _z3.items():
         for v in zs.values(): v.sort(key=lambda x: -x[1])   # most policy units first
         used = {x[0] for v in zs.values() for x in v}

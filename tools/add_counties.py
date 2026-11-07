@@ -8,7 +8,9 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 QUEUE = os.path.join(ROOT, "state", "county-queue.json")
 if "--refresh" in sys.argv:   # only counties whose review page passed the gate, largest first
     q = [{k: p[k] for k in ("slug", "state", "geoid", "label", "short", "units")} for p in json.load(open(os.path.join(ROOT, "review", "places.json")))]
-    json.dump(q, open(QUEUE, "w", encoding="utf-8"), indent=0, ensure_ascii=False); print(f"queue: {len(q)} counties"); sys.exit()
+    json.dump(q, open(QUEUE, "w", encoding="utf-8"), indent=0, ensure_ascii=False); print(f"queue: {len(q)} counties")
+    import subprocess   # review 11-07: a rewritten queue has no "kw"; re-rank at once or every county reads as unsearched
+    sys.exit(subprocess.run([sys.executable, "-I", os.path.join(ROOT, "tools", "kwp_rank.py"), "--queue"]).returncode)
 N = int(sys.argv[1]) if len(sys.argv) > 1 else 10
 if N == 0: print("added 0: county publishing frozen (owner 11-06)"); sys.exit()   # freeze, not a stall: no alert
 path = os.path.join(ROOT, "tools", "counties.json")
@@ -29,6 +31,8 @@ if new:   # audit 11-07: a new county that fails a gate must not stop the whole 
     r = subprocess.run([sys.executable, "-I", os.path.join(ROOT, "tools", "build_counties.py"), "--only", ",".join(p["slug"] for p in new)],
                        capture_output=True, text=True)
     blocked = dict(re.findall(r"COUNTY BLOCKED (\S+) (.*)", r.stdout))
+    if r.returncode and not blocked:   # a STOP (missing extras, unmatched rows) names no county: set the whole batch aside (review 11-07)
+        blocked = {p["slug"]: "build stopped: " + (r.stderr or r.stdout).strip()[-150:] for p in new}
     if blocked:
         cur = [c for c in cur if c["slug"] not in blocked]; json.dump(cur, open(path, "w", encoding="utf-8"), indent=1, ensure_ascii=False)
         for p in passed:

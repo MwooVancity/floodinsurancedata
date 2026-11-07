@@ -100,7 +100,8 @@
       var base = { geometryType: "esriGeometryPoint", inSR: 4326, returnGeometry: "false", f: "json" };
       Promise.all([
         get(NFHL + "/28/query", Object.assign({ geometry: g, outFields: "FLD_ZONE,ZONE_SUBTY,SFHA_TF" }, base)),
-        get(NFHL + "/28/query", { geometry: [m.x - NEAR_M, m.y - NEAR_M, m.x + NEAR_M, m.y + NEAR_M].join(","), geometryType: "esriGeometryEnvelope",
+        // Web Mercator units are stretched by 1/cos(latitude): scale so the box really reaches NEAR_M meters on the ground
+        get(NFHL + "/28/query", { geometry: (function (k) { return [m.x - k, m.y - k, m.x + k, m.y + k]; })(NEAR_M / Math.cos(ll.lat * Math.PI / 180)).join(","), geometryType: "esriGeometryEnvelope",
                                   inSR: 3857, outFields: "FLD_ZONE,ZONE_SUBTY", returnGeometry: "false", f: "json" }),
         get(NFHL + "/3/query", Object.assign({ geometry: g, outFields: "FIRM_PAN,EFF_DATE" }, base))
       ]).then(function (r) {
