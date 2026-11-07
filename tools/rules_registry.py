@@ -246,7 +246,7 @@ RULES = {
         "text": "It is automatic, already in these prices, and the same in every flood zone.",
         "sources": [(FS + "/premiumcosts", "Applies to all eligible policies within the community, regardless of flood zone.", "curl")]},
     "cwop": {
-        "text": "FEMA's claim records give a reason when a building claim closes without payment, such as damage less than the deductible, not an actual flood, "
+        "text": "FEMA's claim records give a reason when a building claim has no recorded payment, such as damage less than the deductible, not an actual flood, "
                 "seepage or backed-up drains.",
         "sources": [("https://www.fema.gov/api/open/v1/OpenFemaDataSetFields?$filter=name%20eq%20%27nonPaymentReasonBuilding%27", "Claim denied that was less than deductible", "curl"),
                     ("https://www.fema.gov/api/open/v1/OpenFemaDataSetFields?$filter=name%20eq%20%27nonPaymentReasonBuilding%27", "Not actual flood", "curl")]},

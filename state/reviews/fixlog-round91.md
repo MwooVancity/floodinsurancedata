@@ -1,0 +1,6 @@
+# Fixlog round 91 (from hcu-critique-2026-11-07.md BLOCKERs, plus the 11-07 county-run failure)
+
+- BLOCKER "closed with no payment" on county/state pages: FEMA Claims v3 has no open/closed field. Root: build_page.py payout card + quick answer wording, notes.py "unpaid" note, build_site.py /data/ text. Fix: "no recorded payment" everywhere; payout note says a recent claim may still be paid. Proof: grep of every dist/*.html finds 0 "closed with/without payment".
+- BLOCKER same county, two payout shares (Harris 51.1% county page vs 57.9% claims page). Root: claims page drops FEMA codes 98/99 (entered in error), county pages count them; neither said so. Fix: county payout note names the base and points at the claims page. Open: one base everywhere needs the cloud refresh (extras_raw excluding 98/99) plus recheck.py; backlog.
+- County run 42404143419 failed: build needs PIL, installed only in a later step, so all 20 new counties hit ModuleNotFoundError; multi-line message broke GITHUB_OUTPUT. Fix: pillow installed in the add step; message = last line; add_counties.py stops (sets nothing aside) on ModuleNotFoundError/ImportError.
+- ZIP JSON key order changed every build (set iteration): 1,000 files churned per deploy. Fix: sorted(used). Proof: two builds, diff -rq identical.

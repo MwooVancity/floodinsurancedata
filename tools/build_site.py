@@ -375,7 +375,7 @@ with open(csv_path, "w", newline="", encoding="utf-8") as f:
                     cx.get("avg_paid"), cx.get("cwop_share")])
 data = HEAD.format(title="Download the flood-insurance data", desc="Per-county NFIP flood-insurance aggregates as CSV.", canon=BASE + "/data/") + f"""
 <h1>Download the data</h1>
-<p>Per-county aggregates computed from FEMA OpenFEMA records: policy units, cost spread, full-risk gap, claims, average paid claim and share closed without payment. Blank = not available for that county.</p>
+<p>Per-county aggregates computed from FEMA OpenFEMA records: policy units, cost spread, full-risk gap, claims, average paid claim and share with no recorded payment. Blank = not available for that county.</p>
 <p><a href="/data/counties.csv">counties.csv</a> — {len(places)} places.</p>
 <p class="mut">Reuse freely with attribution: "This product uses FEMA's OpenFEMA API, but is not endorsed by FEMA."</p>{FOOT}"""
 wr(os.path.join(DIST, "data", "index.html"), data)
@@ -644,7 +644,7 @@ if len(states) == 51 and (_zip_on == "all" or "zip" in _zip_on):
     for k, zs in _z3.items():
         for v in zs.values(): v.sort(key=lambda x: -x[1])   # most policy units first
         used = {x[0] for v in zs.values() for x in v}
-        json.dump({"z": zs, "c": {g: _cty[g] for g in used}}, open(os.path.join(_zd, k + ".json"), "w"), separators=(",", ":"))
+        json.dump({"z": zs, "c": {g: _cty[g] for g in sorted(used)}}, open(os.path.join(_zd, k + ".json"), "w"), separators=(",", ":"))
     _zjs = """<script>(function(){var f=document.getElementById('zf'),i=document.getElementById('zi'),o=document.getElementById('zo');
 function m(n){return '$'+Math.round(n).toLocaleString('en-US')}function c(n){return Number(n).toLocaleString('en-US')}
 function e(s){return String(s).replace(/[&<>"]/g,function(x){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[x]})}

@@ -757,12 +757,12 @@ def card_unpaid():
     unpaid_card = ""
     if _why and (_xc.get("unpaid_n") or 0) >= 10:
         unpaid_card = card("Why do flood claims here go unpaid?",
-            f"Of the {tp('unpaid_n', 'extras.claims.unpaid_n')} claims here closed without payment, the top specific reason FEMA recorded was "
+            f"Of the {tp('unpaid_n', 'extras.claims.unpaid_n')} claims here with no recorded payment, the top specific reason FEMA recorded was "
             f"“{html.escape(_why[0]['label']).lower()}” ({tp('unpaid_reason_n', f'extras.claims.unpaid_reasons.{_why[0][chr(105)]}.n', q=_why[0]['code'])} {pl(_why[0]['n'], 'claim')}).",
             "<table><thead><tr><th>Reason recorded</th><th>Claims</th></tr></thead><tbody>"
             + "".join(f"<tr><td>{html.escape(r['label'])}</td><td>{tp('unpaid_reason_n', f'extras.claims.unpaid_reasons.{r[chr(105)]}.n', q=r['code'])}</td></tr>" for r in _whyall)
             + (f"<tr><td>Smaller reasons, or none recorded</td><td>{m('unpaid_reason_n', num(_why_rest), q='rest')}</td></tr>" if _why_rest > 0 else "")
-            + f"</tbody></table><p class='note'>Closed without payment can mean paperwork (a duplicate, a claim opened in error) or damage the policy did not count as flood damage; the table shows which here.{how('unpaid')} <a href='/flood-insurance/claims/'>How often claims get paid, county by county</a>.</p>",
+            + f"</tbody></table><p class='note'>No recorded payment can mean paperwork (a duplicate, a claim opened in error) or damage the policy did not count as flood damage; the table shows which here.{how('unpaid')} <a href='/flood-insurance/claims/'>How often claims get paid, county by county</a>.</p>",
             src(["unpaid_n", "unpaid_reason_n"], f"{C['year_min']}–{C['year_max']}", RETR))
     return unpaid_card
 
@@ -844,9 +844,9 @@ def card_payout():
             _evtop = (html.escape(_nm), tp("event_paid", f"extras.claims.events.{_top[0]}.paid", big, q=_top[1]["name"]))
         _ans = (claim("Most do", "most", ("cwop_share", "<", 50)) + f": {m('paid_share', str(_paid_pct) + '%')} of claims in {CS} paid something"
                 if cx["cwop_share"] < 50 else
-                f"{m('cwop_share', str(cx['cwop_share']) + '%')} of claims here closed with no payment"
+                f"{m('cwop_share', str(cx['cwop_share']) + '%')} of claims here have no recorded payment"
                 + (f"; the top specific reason FEMA recorded was “{html.escape(_why[0]['label']).lower()}” (all reasons below)" if _why else "")
-                if cx["cwop_share"] > 50 else f"About half: {m('cwop_share', str(cx['cwop_share']) + '%')} of claims here closed with no payment")
+                if cx["cwop_share"] > 50 else f"About half: {m('cwop_share', str(cx['cwop_share']) + '%')} of claims here have no recorded payment")
         payout_card = card("Do flood claims here actually pay out?",
             f"{_ans}. The average paid claim was {tp('avg_paid', 'data.claims_extra.avg_paid', money)} (all years, in dollars of the day, not adjusted for inflation).",
             # round 31: the typical claim, and a storm that paid most of the money, beside the average (a note: F1 caps the opening)
@@ -854,7 +854,7 @@ def card_payout():
               + (f"; {_evtop[0]} alone paid {_evtop[1]} including code-upgrade (ICC) pay, which pulls the average up" if _evtop else "")
               + ".</p>") if _xc.get('paid_building_median') else "")
             + f"<ul class='kv'><li><b>Average paid claim, incl. code-upgrade (ICC) pay</b><span>{tp('avg_paid', 'data.claims_extra.avg_paid', money)}</span>{vs_state('avg_paid', 'data.claims_extra.avg_paid', money)}</li>"
-            f"<li><b>Closed with no payment</b><span>{tp('cwop_share', 'data.claims_extra.cwop_share', pct)}</span>{vs_state('cwop_share', 'data.claims_extra.cwop_share', pct)}</li>"
+            f"<li><b>No recorded payment</b><span>{tp('cwop_share', 'data.claims_extra.cwop_share', pct)}</span>{vs_state('cwop_share', 'data.claims_extra.cwop_share', pct)}</li>"
             f"<li><b>Claims that paid</b><span>{tp('claims_paid_n', 'data.claims_extra.paid_n')}</span></li></ul>"
             + (("<table><thead><tr><th>Decade of the flood</th><th>Claims filed</th><th>Share that paid something</th></tr></thead><tbody>"
                 + "".join(f"<tr><td>{m('decade', html.escape(d), q=d)}</td><td>{tp('decade_claims', f'extras.claims.by_decade.{d}.n', q=d)}</td>"
@@ -862,7 +862,7 @@ def card_payout():
                 + "</tbody></table>") if len(_decs) > 1 else "")
             + f"<p class='note'>{rule('cwop')} The average is over claims that paid something and includes Increased Cost of "
             "Compliance payments (help to elevate or rebuild to code), which the yearly totals above leave out. Dollars are "
-            "as paid at the time, not adjusted for inflation; a single home can file across several floods over the years.</p>",
+            "as paid at the time, not adjusted for inflation; a single home can file across several floods over the years. These shares count every FEMA claim record from every year, including ones FEMA coded as entered in error; <a href='/flood-insurance/claims/'>the claims page</a> counts only losses from 2020 on and leaves those records out, so its shares differ. FEMA's data has no open or closed field, so a recent claim with no payment may still be paid.</p>",
             src(["claims_filed", "avg_paid", "cwop_share"], f"{C['year_min']}–{C['year_max']}", cx.get("retrieved", RETR)), id="payout")
     return payout_card
 
@@ -1027,7 +1027,7 @@ if _cxq.get("claims") and _cxq.get("avg_paid") and P.get("p50"):
                + (f'the typical paid building claim was {tp("paid_bldg_median", "extras.claims.paid_building_median", money)} (all years, not inflation-adjusted).' if _xc.get("paid_building_median") else f'the average paid claim was {tp("avg_paid", "data.claims_extra.avg_paid", money)} (all years, not inflation-adjusted).')
                + (f' Claims filed for losses in the {m("decade", html.escape(_decs[-1]), q=_decs[-1])}: '
                   f'{tp("decade_paid_share", f"extras.claims.by_decade.{_decs[-1]}.paid_pct", pct, q=_decs[-1])} paid something.' if len(_decs) > 1 else '')
-               + ' Unpaid can mean paperwork or damage the policy did not count as flood.</a>')
+               + ' No recorded payment can mean paperwork or damage the policy did not count as flood.</a>')
 _qa.append('<a href="#covered"><b>Already flooded?</b> What to do now, and what FEMA aid covers.</a>')
 _qa.append('<a href="#compare"><b>Is my quote normal?</b> These are existing policies, not a quote; type yours in to see where it sits.</a>')
 quick_answers = '<nav class="jump qa">' + "".join(_qa) + "</nav>"

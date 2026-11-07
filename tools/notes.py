@@ -22,9 +22,9 @@ NOTES = {
                 "Rebuilding cost is the replacement-cost figure on single-family primary-home policies that report one. Many "
                 "owners insure to the building maximum even when that figure is lower, so the two shares measure different "
                 "things. The damage share counts every paid claim with a damage figure, all building types."),
-    "unpaid": ("Claims closed without payment",
-               "The building non-payment reason on each NFIP claim closed with nothing paid, every claim counted once. "
-               "“Assigned in error” and “Other” are FEMA's own labels; some closed claims are paperwork, "
+    "unpaid": ("Claims with no recorded payment",
+               "The building non-payment reason on each NFIP claim with nothing paid, every claim counted once. "
+               "“Assigned in error” and “Other” are FEMA's own labels; some are paperwork, "
                "not a denied flood."),
     "events": ("Flood events",
                "Paid NFIP claims grouped by the flood event FEMA assigned (FEMA's name). A catch-all "

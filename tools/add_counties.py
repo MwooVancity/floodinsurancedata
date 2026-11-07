@@ -33,6 +33,8 @@ if new:   # audit 11-07: a new county that fails a gate must not stop the whole 
     blocked = dict(re.findall(r"COUNTY BLOCKED (\S+) (.*)", r.stdout))
     if r.returncode and not blocked:   # a STOP (missing extras, unmatched rows) names no county: set the whole batch aside (review 11-07)
         blocked = {p["slug"]: "build stopped: " + (r.stderr or r.stdout).strip()[-150:] for p in new}
+    env = [v for v in blocked.values() if "ModuleNotFoundError" in v or "ImportError" in v]
+    if env: sys.exit("STOP: the build machine is missing a library, not a county fault; nothing set aside: " + env[0][:150])   # 11-07
     if blocked:
         cur = [c for c in cur if c["slug"] not in blocked]; json.dump(cur, open(path, "w", encoding="utf-8"), indent=1, ensure_ascii=False)
         for p in passed:
