@@ -12,7 +12,7 @@ Volumes: Keyword Planner US band floors/mo. "Perfect" = numbers recomputed by a 
 | 5 | ~2,000 nfip / fema flood insurance | new /nfip/ "The NFIP in numbers" | DONE 11-07 | judge by impressions |
 | 6 | ~1,000 flood insurance for renters | /flood-insurance/renters/ | LIVE 11-07: 6,397 priced homes-only renter policies, median $369 (middle half $307-$513); r88 PASS | backlog r88 MINORs |
 | 7 | ~1,000+ towns ("flood insurance chicago") | county pages | DONE 11-07, every county | — |
-| 8 | 7,240 [county] flood zone map (money rank 11 of 15) | county pages | FROZEN at 232 (audit 11-07: a 20/day restart broke the debate rule) | only on the Jan 4 county rule |
+| 8 | 7,240 [county] flood zone map (money rank 11 of 15) | county pages | 232 live; LAST (owner 11-07) | 20/day once money groups are done |
 | 9 | ~100 rates by zip code | /flood-insurance/zip/ | LIVE 11-07 | — |
 | 10 | ~100 claims | /flood-insurance/claims/ | LIVE 11-07 | owner: reporter pitches |
 Not targeted: "flood insurance" head term (FloodSmart), quote, companies.
@@ -25,8 +25,8 @@ EXECUTION ORDER (owner 11-07 "plan to execute the plan"). One batch = build > it
 - (was) Batch B: row 5 /nfip/ "The NFIP in numbers": policy units, median cost, claims and dollars paid since 1978 and since 2020, by state; program rules only via rule() (nfip_not_sold, nfip_lapse, how_to_buy); check script recomputes every figure.
 - DONE 11-07 Batch D: every county ZIP card names its top 5 towns (Census places summed over their ZIPs) and the meta description lists them; a town counts only if Census puts both the place and one of its ZIPs in that county (data/us/zip_place_counties.json, `town_check.py` + 3 mutations; caught "Islamorada, Village of Islands" read as two towns). Titles unchanged: already ~85 characters, Google cuts the rest. Ends the 20-county towns test early (PLAN row 7).
 - Batch E (11-20): rows 1-2 tool to all pages: first a US-runner live test of the tool against real FEMA (fema-probe + Playwright), then tools_flags "zonemap": "all".
-- 11-07 row 8 REVERSED: fresh audit found the 20/day restart broke the debate consensus (no county expansion; Jan 4 rule: 1+ genuine US click first). Counties stay 0. Money order (Keyword Planner volume x top bid, 186 of 9,452 terms bid): head term $382k (not targeted), state insurance $190k, map $90k, quote $59k (forbidden), towns $47k, zones $37k, cost $37k, NFIP $36k, state map $25k, renters $18k, county map $15.5k, county insurance $1.5k.
-- Batch F (money): state titles lead "flood insurance" (state insurance is #2 money, "flood insurance florida" position 20.5); county titles + H1 name the top town ("flood insurance chicago" > all county map money).
+- 11-07 OWNER: "money keywords first then county last" (debate does not decide). Counties 0 until the money groups above them are done. Money order (Keyword Planner volume x top bid, 186 of 9,452 terms bid): head term $382k (not targeted), state insurance $190k, map $90k, quote $59k (forbidden), towns $47k, zones $37k, cost $37k, NFIP $36k, state map $25k, renters $18k, county map $15.5k, county insurance $1.5k.
+- DONE 11-07 Batch F (money): state titles + H1 "<State> flood insurance and flood zones" (state insurance $190k vs state map $25k; ends the 12-04 flood-zones-first title test for states); county titles name the top town (Cook County, IL (Chicago)). Left in money order: head term "flood insurance" (home title already leads "Flood insurance cost"), quote/companies (forbidden). Then counties.
 
 ## Goal and scoreboard
 Most helpful flood-insurance page for every US county, for a scared reader on a phone. Measure: pages indexed, impressions, clicks, page-1 queries, AI citations. We built before proving demand: the weekly scoreboard decides; polish only where a number says a page fails.
