@@ -319,6 +319,10 @@ RULES = {
         "text": "A 1 percent or greater chance a year works out to a 26% or greater chance of at least one such flood over 30 years.",
         # arithmetic, tested in test_calc.py: 1 - 0.99**30 = 0.2603; the 1 percent is the regulation's
         "sources": [(CFR59, "subject to a 1 percent or greater chance of flooding in any given year", "curl")]},
+    "fema_asis": {   # address tool (owner 11-06): FEMA's own disclaimer on the NFHL, read raw 11-06 from its catalog record
+        "text": "FEMA provides its flood map data \"as is\", with no guarantee of its accuracy.",
+        "sources": [("https://www.arcgis.com/sharing/rest/content/items/ae38b6f94eaf4abf97f986fa01921e13?f=json",
+                     "express or implied guarantees of accuracy of the data", "curl")]},
     "bfe": {   # debate 11-05: readers see elevations on the map; the term comes from 59.1, read raw 11-06
         "text": "In zones AE, AH and VE, FEMA has worked out the water surface elevation of the base flood: the flood level that has a 1 "
                 "percent or greater chance of occurrence in any given year (44 CFR §59.1, §64.3).",

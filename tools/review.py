@@ -11,7 +11,7 @@ Usage: python -I tools/review.py status"""
 import hashlib, json, os, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DIR = os.path.join(ROOT, "state", "reviews")
-TEMPLATE = [os.path.join(ROOT, "tools", f) for f in ("build_page.py", "build_site.py", "metrics.py", "rules_registry.py", "notes.py", "codes.py")]
+TEMPLATE = [os.path.join(ROOT, "tools", f) for f in ("build_page.py", "build_site.py", "metrics.py", "rules_registry.py", "notes.py", "codes.py", "zonemap_block.py", "static/zonemap.js")]
 SAMPLES = ("home", "louisiana", "palm-beach-county-fl")   # one page per template, the ones the hater reads in depth
 
 def template_hash():

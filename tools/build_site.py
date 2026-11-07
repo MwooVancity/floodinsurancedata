@@ -67,6 +67,7 @@ import sys as _sys, datetime as _dtm
 _sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from rules_registry import rule, RULES
 from notes import GA_TAG
+_zm_on_home = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "tools_flags.json"), encoding="utf-8")).get("zonemap") or []
 HEAD = HEAD.replace("<title>", GA_TAG.replace("{", "{{").replace("}", "}}") + "<title>", 1)   # HEAD goes through .format
 def _rule_hosts(keys):   # the official sites behind these rules, from rules_registry sources
     from urllib.parse import urlparse
@@ -168,7 +169,7 @@ home = HEAD.format(title="Flood insurance cost by state and county (FEMA data)",
 <input id="s" placeholder="Type your state or county…" aria-label="Find your state or county" autocomplete="off"><p id="nomatch" class="mut" aria-live="polite"></p></section>
 <div class="card"><h2>Three things to know first</h2>
 <p class="stand"><b>How fast does it start?</b> {rule("howto_answer")}</p>
-<p class="stand"><b>Am I required to buy it?</b> {rule("purchase_answer")} {rule("lender_any_zone")} {rule("fl_citizens_short")} Check your zone on <a href="https://msc.fema.gov/portal/home" rel="noopener" target="_blank">FEMA's flood map</a>.</p>
+<p class="stand"><b>Am I required to buy it?</b> {rule("purchase_answer")} {rule("lender_any_zone")} {rule("fl_citizens_short")} Check your zone on <a href="https://msc.fema.gov/portal/home" rel="noopener" target="_blank">FEMA's flood map</a>{' or with the <a href="/flood-zone-map/">flood zone lookup</a>' if (_zm_on_home == "all" or "flood-zone-map" in _zm_on_home) else ""}.</p>
 <p class="stand"><b>Does my homeowners policy cover floods?</b> {rule("homeowners_excl")}</p></div>
 {home_cards}
 <div class="card"><h2>Flood insurance policies and claims by state</h2>{extremes}
@@ -228,8 +229,9 @@ meth = HEAD.format(title="Methodology — flood insurance data", desc="Definitio
 <li><b>NOAA Sea Level Trends</b> — NOAA Tides &amp; Currents (tidesandcurrents.noaa.gov/sltrends). NOAA's own published trend per tide station, in inches per decade with its period; county pages show only a gauge inside the county, never one from another county.</li>
 <li><b>National Risk Index (counties)</b> — FEMA ArcGIS (FEMA_NationalRiskIndex). Flood expected annual loss + percentile.</li>
 <li><b>Multiple-Loss Flood Properties</b> — OpenFEMA (Individual Assistance). One record per property per declared disaster that damaged it, for properties that flooded more than once; FEMA's disaster-aid data flags some as severe repeat-loss (SRL).</li>
+<li><b>National Flood Hazard Layer</b> — FEMA's map service (hazards.fema.gov NFHL MapServer). County map panels and their effective dates, Letters of Map Revision and Letters of Map Amendment, counted monthly; the address tool relays FEMA's zone at a confirmed point.</li>
 <li>Official <b>Policy Information by State and Community</b> workbook — listed for reference; the pages are not yet checked against it.</li></ul>
-<p class="mut">Eight federal datasets; the full-risk premium is a field within Policies and the PIF workbook is a reference, not a separate fetch. Each page lists the ones it uses.</p></div>
+<p class="mut">Nine federal datasets; the full-risk premium is a field within Policies and the PIF workbook is a reference, not a separate fetch. Each page lists the ones it uses.</p></div>
 <div class="card"><h2>Definitions &amp; rules</h2><ul>
 <li><b>Policy units</b> = sum of <code>policyCount</code>, never a row count — condo-association records carry more than one unit.</li>
 <li><b>Cost cohort</b>: single-family primary-residence policies (occupancy 1/11, primary residence), annual cost = premium + fees.</li>
@@ -478,6 +480,7 @@ if len(states) == 51 and len(_zh) == 51:
 <p class="stand">{rule(rk)}{" " + rule("odds_30") if hr else ""}</p>
 <p class="stand"><b>Must I buy?</b> {rule("purchase_answer")} {rule("lender_any_zone")}</p>
 <a class="btn" href="https://msc.fema.gov/portal/home" rel="noopener" target="_blank">Check your address on FEMA's flood map →</a>
+{'<p><a href="/flood-zone-map/">Or look up your zone by address here</a>, with FEMA' + "'" + 's map.</p>' if (_zm_on_home == "all" or "flood-zone-map" in _zm_on_home) else ""}
 <div class="stats">{tiles}</div>
 {base}
 {claims}{ztab}
@@ -494,6 +497,32 @@ if len(states) == 51 and len(_zh) == 51:
 <p class="mut">Sources: FEMA OpenFEMA NFIP Policies v3 and Claims v3; rules from {_rule_hosts(keys)}. <a href="/methodology/">How we check them</a>.</p></div>{FOOT}"""
         wr(os.path.join(DIST, "flood-zones", zk, "index.html"), pg)
         zone_urls.append((BASE + f"/flood-zones/{zk}/", None))
+
+# ---- address tool: static files + the /flood-zone-map/ hub (map debate 11-06; kill switch "zonemap" in tools_flags.json) ----
+import shutil
+from zonemap_block import block as _zm_block
+_ST = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
+_zm_on = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "tools_flags.json"), encoding="utf-8")).get("zonemap") or []
+if _zm_on:
+    shutil.copytree(os.path.join(_ST, "vendor"), os.path.join(DIST, "vendor"), dirs_exist_ok=True)
+    shutil.copy(os.path.join(_ST, "zonemap.js"), os.path.join(DIST, "zonemap.js"))
+if _zm_on == "all" or "flood-zone-map" in _zm_on:
+    _zkeys = ["zone_codes", "purchase_answer", "lender_any_zone", "zone_review", "loma", "fema_asis"]
+    pg = HEAD.format(title="Flood zone map: find your FEMA flood zone by address",
+                     desc="Type an address or use your location, confirm the pin on your building, and see the flood zone FEMA's own map shows there, with its map panel and date.",
+                     canon=BASE + "/flood-zone-map/") + f"""
+<h1>Flood zone map: find your FEMA flood zone by address</h1>
+<p class="lede">Type an address or use your location, put the pin on your building, and see the zone FEMA's own map shows there, with its map panel and the date it took effect.</p>
+{_zm_block(rule)}
+<div class="card"><h2>What the zones mean</h2><p class="stand">{rule("zone_codes")}</p>
+<p>Each zone, with what it costs and what claims there paid: {" · ".join(f'<a href="/flood-zones/{k}/">Zone {v[0]}</a>' for k, v in ZONES.items())}.</p></div>
+<div class="card"><h2>Must I buy flood insurance in my zone?</h2><p class="stand">{rule("purchase_answer")} {rule("lender_any_zone")}</p></div>
+<div class="card"><h2>If the zone looks wrong</h2><p class="stand">{rule("loma")} {rule("zone_review")}</p></div>
+<div class="card"><h2>What this tool cannot tell you</h2><p class="stand">Your premium, whether your lender will require a policy, and anything FEMA's digital map does not cover. The zone shown is FEMA's map, not an official determination.</p>
+<p><a href="/flood-insurance/">Your state and county</a>: what policies there cost and what floods there paid.</p>
+<p class="mut">Sources: FEMA National Flood Hazard Layer (map service), U.S. Census Bureau geocoder; rules from {_rule_hosts(_zkeys)}. <a href="/methodology/">How we check them</a>.</p></div>{FOOT}"""
+    wr(os.path.join(DIST, "flood-zone-map", "index.html"), pg)
+    zone_urls.append((BASE + "/flood-zone-map/", None))
 
 # ---- sitemap, robots, llms.txt ----
 # lastmod = the data's effective date (real data change), per-county from its agg; site pages use the max.

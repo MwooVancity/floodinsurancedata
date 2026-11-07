@@ -72,8 +72,9 @@ button{font:600 16px var(--serif);background:var(--brand);color:#fff;border:0;bo
 <li><b>NOAA Sea Level Trends</b> — NOAA Tides &amp; Currents (tidesandcurrents.noaa.gov/sltrends). NOAA's own published trend per tide station, in inches per decade with its period; county pages show only a gauge inside the county, never one from another county.</li>
 <li><b>National Risk Index (counties)</b> — FEMA ArcGIS (FEMA_NationalRiskIndex). Flood expected annual loss + percentile.</li>
 <li><b>Multiple-Loss Flood Properties</b> — OpenFEMA (Individual Assistance). One record per property per declared disaster that damaged it, for properties that flooded more than once; FEMA's disaster-aid data flags some as severe repeat-loss (SRL).</li>
+<li><b>National Flood Hazard Layer</b> — FEMA's map service (hazards.fema.gov NFHL MapServer). County map panels and their effective dates, Letters of Map Revision and Letters of Map Amendment, counted monthly; the address tool relays FEMA's zone at a confirmed point.</li>
 <li>Official <b>Policy Information by State and Community</b> workbook — listed for reference; the pages are not yet checked against it.</li></ul>
-<p class="mut">Eight federal datasets; the full-risk premium is a field within Policies and the PIF workbook is a reference, not a separate fetch. Each page lists the ones it uses.</p></div>
+<p class="mut">Nine federal datasets; the full-risk premium is a field within Policies and the PIF workbook is a reference, not a separate fetch. Each page lists the ones it uses.</p></div>
 <div class="card"><h2>Definitions &amp; rules</h2><ul>
 <li><b>Policy units</b> = sum of <code>policyCount</code>, never a row count — condo-association records carry more than one unit.</li>
 <li><b>Cost cohort</b>: single-family primary-residence policies (occupancy 1/11, primary residence), annual cost = premium + fees.</li>

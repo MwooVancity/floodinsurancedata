@@ -31,5 +31,11 @@
     "marin-county-ca",
     "st-john-the-baptist-parish-la",
     "polk-county-fl"
+  ],
+  "zonemap": [
+    "flood-zone-map",
+    "palm-beach-county-fl",
+    "harris-county-tx",
+    "louisiana"
   ]
 }

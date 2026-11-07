@@ -1,7 +1,7 @@
 """Build one county's flood page from data.json (small datasets) + agg.json (bulk); parameterized by env.
 River-style: white cards, every number has a unit, one line of context, source + as-of once.
 No verdict, no advice prose. Writes directly to the repo dist path. -> OUT_HTML."""
-import json, html, os, re, sys
+import datetime, json, html, os, re, sys
 from collections import defaultdict
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))  # -I drops script dir; restore for ffcalc
 import ffcalc
@@ -413,10 +413,44 @@ def _map_line():   # PLAN 3e: when this place's FEMA map took effect, and which 
     elif new:
         out.append(f"{m('map_new_n', str(len(new)))} {pl(len(new), 'community', 'communities')} in {CS} {pl(len(new), 'gets', 'get')} a new FEMA flood map after FEMA's latest report, "
                    f"the first on {m('map_date', _mdate(new[0][2]), q='first_new')}.")
+    out += _nfhl_lines()
     if not out: return ""
     return (f"<p class='note'><b>Flood map:</b> {' '.join(out)} Check your own address on "
-            "<a href='https://msc.fema.gov/portal/home' rel='noopener' target='_blank'>FEMA's flood map</a>.</p>")
+            "<a href='https://msc.fema.gov/portal/home' rel='noopener' target='_blank'>FEMA's flood map</a>"
+            + (" or with the <a href='/flood-zone-map/'>flood zone lookup</a>" if _HUB_ON else "") + ".</p>")
 
+_ZMF = json.load(open(os.path.join(HERE, "tools_flags.json"), encoding="utf-8")).get("zonemap") or []
+_HUB_ON = _ZMF == "all" or "flood-zone-map" in _ZMF
+_MS = json.load(open(os.path.join(os.path.dirname(HERE), "data", "us", "map_status.json"))) if os.path.exists(os.path.join(os.path.dirname(HERE), "data", "us", "map_status.json")) else {}
+def _nfhl_lines():   # map debate 11-06: map age, revisions, exemption rulings, from FEMA's map service (tools/pull_mapstatus.py)
+    s = _MS.get(GEOID) if not IS_STATE else None
+    if not s or not s.get("panels"): return []   # no countywide digital FEMA map: say nothing rather than guess
+    d = lambda v: _mdate(datetime.date.fromisoformat(v))
+    out = [f"FEMA's digital flood map for {CS} has {m('map_panels', format(s['panels'], ','))} map panels, the oldest in effect since "
+           f"{m('map_panel_date', d(s['oldest']), q='oldest')} and the newest since {m('map_panel_date', d(s['newest']), q='newest')}."]
+    if "lomr" in s:
+        out.append(f"FEMA has revised that map by {m('lomr_n', format(s['lomr'], ','), q='all')} Letters of Map Revision, "
+                   f"{m('lomr_n', format(s['lomr_recent'], ','), q='recent')} of them in effect since {d(s['lomr_since'])}." if s["lomr"] else
+                   "FEMA's map service lists no Letters of Map Revision on that map.")
+    lo = s.get("loma")
+    if lo is not None:   # round 74: FEMA's own outcome groups; "removed" = out of the high-risk zone, never demolished
+        g = dict.fromkeys(("bldg", "whole", "part", "bldg_out", "out", "denied", "other"), 0)
+        for k, n in lo.items():
+            o = k.split("|")[0].lower()
+            g["denied" if "denied" in o else "bldg" if o.startswith("structure removed") else "part" if o.startswith("portion of property removed")
+              else "whole" if o.startswith("property removed") else "bldg_out" if o.startswith("structure out as shown")
+              else "out" if "out as shown" in o else "other"] += n
+        t = sum(g.values()); q = lambda k: m('loma_n', format(g[k], ','), q=k)
+        out.append(f"FEMA's map service lists {m('loma_n', format(t, ','), q='all')} rulings for owners here who asked FEMA to take a building or lot out of the "
+                   f"high-risk zone (Letters of Map Amendment). In FEMA's own outcome groups: the building taken out while part of the lot stayed in, {q('bldg')}; "
+                   f"the whole property taken out, {q('whole')}; part of the property taken out, {q('part')}; the building already outside the zone as mapped "
+                   f"(part of the lot inside), {q('bldg_out')}; the property or part of it already outside as mapped, {q('out')}; denied, {q('denied')}; "
+                   f"other or mixed, {q('other')}. These are rulings for owners who applied, not a share of all homes." if t else
+                   "FEMA's map service lists no rulings for owners here who asked to take a building or lot out of the high-risk zone (Letters of Map Amendment).")
+    return out
+
+from zonemap_block import block as _zm_block
+ZONEMAP = _zm_block(rule)
 def _crs_parts():
     _has_disc = [c for c in crs if _pct(c.get("sfhaDiscount")) or _pct(c.get("nonSfhaDiscount"))]
     _no_disc = sorted((c for c in crs if c not in _has_disc), key=lambda c: html.unescape(_cname_plain(c)).casefold())   # A to Z as shown (gate H8)
@@ -1102,7 +1136,7 @@ def card_required():
       + (f"<p class='note'><b>Not in the NFIP ({m('crs_count', str(len(crs_out)), q='not_nfip')} {pl(len(crs_out), 'community', 'communities')} here)"
          + (": " + "; ".join(sorted((_cname(c) + (" (unincorporated area only)" if re.search(r"\b(COUNTY|PARISH|BOROUGH)\b", (c.get("communityName") or "").upper()) else "") for c in crs_out), key=lambda h: html.unescape(re.sub("<[^>]+>", "", h)).casefold())))
          + f".</b> {rule('nfip_not_sold')}</p>" if crs_out else ""),
-      src(["units", "sfha_share"], POL_ASOF, RETR) + (src(["outside_sfha_dollars"], f"{C['year_min']}–{C['year_max']}", RETR) if _outside_line() else "") + (src(["map_date"], "FEMA's current Community Status Book", RETR) if _map_line() else "") + src_rules(["purchase_answer", "lender_any_zone", "private_accept", "lender_amount", "lender_force", "zone_review", "seller_assign"] + (["fl_citizens", "fl_disclosure"] if agg.get("state") == "FL" else []) + (["tx_twia"] if agg.get("state") == "TX" else []) + (["nfip_not_sold"] if crs_out else [])), id="required")
+      src(["units", "sfha_share"], POL_ASOF, RETR) + (src(["outside_sfha_dollars"], f"{C['year_min']}–{C['year_max']}", RETR) if _outside_line() else "") + (src(["map_date"], "FEMA's current Community Status Book", RETR) if _map_line() else "") + (src(["map_panels", "lomr_n", "loma_n"], f"FEMA's map service, retrieved {_MS.get('_retrieved')}", RETR) if _nfhl_lines() else "") + src_rules(["purchase_answer", "lender_any_zone", "private_accept", "lender_amount", "lender_force", "zone_review", "seller_assign"] + (["fl_citizens", "fl_disclosure"] if agg.get("state") == "FL" else []) + (["tx_twia"] if agg.get("state") == "TX" else []) + (["nfip_not_sold"] if crs_out else [])), id="required")
 
 def card_cost():
     cost_lead, cost_body = _cost_parts()
@@ -1264,7 +1298,7 @@ table{{width:100%}}}}
 <div class="stat"><div class="n">{m('share_below', str(P['share_below']) + '%')}</div><div class="l">Share of these homes below FEMA's full-risk price</div></div>
 </div>
 {cmp_line}{_jump}
-<a class="btn" href="https://msc.fema.gov/portal/home" rel="noopener" target="_blank">Check your address on FEMA's flood map →</a>
+{ZONEMAP if _tool_on("zonemap") else '<a class="btn" href="https://msc.fema.gov/portal/home" rel="noopener" target="_blank">Check your address on FEMA' + "'" + 's flood map →</a>'}
 {quick_answers}
 {_renew_line}
 <p class="note">{rule('zone_price')}</p>

@@ -5,7 +5,7 @@ lists each builder passes in. Anything else changing (a new county in the state,
 import glob, hashlib, json, os
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 T = os.path.join(ROOT, "tools")
-CODE = ["build_page.py", "theme.py", "build_site.py", "metrics.py", "rules_registry.py", "notes.py", "codes.py", "mapdate.py",
+CODE = ["zonemap_block.py", "build_page.py", "theme.py", "build_site.py", "metrics.py", "rules_registry.py", "notes.py", "codes.py", "mapdate.py",
         "gate.py", "card_spec.py", "ffcalc.py", "tools_flags.json", "metric_defs.json"]
 _G = None
 def _h(*parts):

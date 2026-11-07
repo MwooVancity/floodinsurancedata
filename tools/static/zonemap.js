@@ -14,7 +14,8 @@
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
   function day(ms) {
     if (typeof ms !== "number" || !isFinite(ms)) return null;
-    var d = new Date(ms); return MONTHS[d.getUTCMonth()] + " " + d.getUTCDate() + ", " + d.getUTCFullYear();
+    var d = new Date(ms); if (isNaN(d.getTime())) return null;   // fuzz 11-06: 1e300 printed "undefined NaN, NaN"
+    return MONTHS[d.getUTCMonth()] + " " + d.getUTCDate() + ", " + d.getUTCFullYear();
   }
   function zoneName(a) {
     var z = String(a.FLD_ZONE || "").trim(), s = String(a.ZONE_SUBTY || "").trim();
@@ -37,7 +38,7 @@
     else lines.push("FEMA's map shows " + main + " at this pin.");
     var sfha = String(here[0].SFHA_TF || "").toUpperCase();
     if (sfha === "T") lines.push("FEMA marks this spot as a Special Flood Hazard Area (high-risk).");
-    else if (sfha === "F" && near.length === 1) lines.push("FEMA does not mark this spot as a Special Flood Hazard Area.");
+    else if (sfha === "F" && near.length === 1 && String(here[0].FLD_ZONE).trim() === "X") lines.push("FEMA does not mark this spot as a Special Flood Hazard Area.");
     var p = panel && !panel.error && (panel.features || [])[0] ? panel.features[0].attributes || {} : null;
     if (p && p.FIRM_PAN) lines.push("FEMA map panel " + String(p.FIRM_PAN).trim() + (day(p.EFF_DATE) ? ", in effect since " + day(p.EFF_DATE) : "") + ".");
     return { kind: near.length > 1 ? "near" : "one", zone: String(here[0].FLD_ZONE).trim(), lines: lines };
