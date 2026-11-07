@@ -150,7 +150,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Monroe County, Florida",zip_cost,33070,"$1,744",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"August 31, 2026"
 "Monroe County, Florida",zip_cost_n,33070,918,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"August 31, 2026"
 "Monroe County, Florida",zip_units,33070,"2,251",count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"August 31, 2026"
-"Monroe County, Florida",zip,33036,"33036 Islamorada, Village of Islands",count,FEMA OpenFEMA — NFIP Policies,reportedZipCode,"August 31, 2026"
+"Monroe County, Florida",zip,33036,33036 Islamorada,count,FEMA OpenFEMA — NFIP Policies,reportedZipCode,"August 31, 2026"
 "Monroe County, Florida",zip_cost,33036,"$1,776",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"August 31, 2026"
 "Monroe County, Florida",zip_cost_n,33036,555,count,FEMA OpenFEMA — NFIP Policies,policyCost + reportedZipCode,"August 31, 2026"
 "Monroe County, Florida",zip_units,33036,"2,574",count,FEMA OpenFEMA — NFIP Policies,policyCount + reportedZipCode,"August 31, 2026"
