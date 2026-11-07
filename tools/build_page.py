@@ -750,7 +750,7 @@ def card_unpaid():
             "<table><thead><tr><th>Reason recorded</th><th>Claims</th></tr></thead><tbody>"
             + "".join(f"<tr><td>{html.escape(r['label'])}</td><td>{tp('unpaid_reason_n', f'extras.claims.unpaid_reasons.{r[chr(105)]}.n', q=r['code'])}</td></tr>" for r in _whyall)
             + (f"<tr><td>Smaller reasons, or none recorded</td><td>{m('unpaid_reason_n', num(_why_rest), q='rest')}</td></tr>" if _why_rest > 0 else "")
-            + f"</tbody></table><p class='note'>Closed without payment can mean paperwork (a duplicate, a claim opened in error) or damage the policy did not count as flood damage; the table shows which here.{how('unpaid')}</p>",
+            + f"</tbody></table><p class='note'>Closed without payment can mean paperwork (a duplicate, a claim opened in error) or damage the policy did not count as flood damage; the table shows which here.{how('unpaid')} <a href='/flood-insurance/claims/'>How often claims get paid, county by county</a>.</p>",
             src(["unpaid_n", "unpaid_reason_n"], f"{C['year_min']}–{C['year_max']}", RETR))
     return unpaid_card
 

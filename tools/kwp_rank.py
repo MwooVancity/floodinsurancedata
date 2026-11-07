@@ -39,6 +39,7 @@ if "--queue" in sys.argv:   # reorder state/county-queue.json by Keyword Planner
     for p in q: same[p["short"].lower()] += p.get("units") or 0
     key = lambda ip: (-(vol[ip[1]["short"].lower()] * (ip[1].get("units") or 0) / (same[ip[1]["short"].lower()] or 1)), ip[0])
     q2 = [p for _, p in sorted(enumerate(q), key=key)]
+    for p in q2: p["kw"] = vol[p["short"].lower()]   # band floor of searches for this county name; add_counties publishes only kw > 0 (owner 11-06)
     json.dump(q2, open(qp, "w", encoding="utf-8"), indent=0, ensure_ascii=False)
     print("queue reordered:", len(q2), "| first 10:", [p["slug"] for p in q2[:10]]); sys.exit()
 

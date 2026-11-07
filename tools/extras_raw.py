@@ -33,7 +33,7 @@ def new_acc():
     return {"units": 0, "mand_units": 0, "tenant_units": 0, "condo_unit_units": 0, "rcbap_units": 0, "elev_units": 0,
             "gf_units": 0, "prem_new": [], "prem_old": [], "prem_elev": [], "prem_low": [], "sf_n": 0, "sf_max_cov": 0,
             "rc_n": 0, "rc_over": 0, "fee": [], "hfiaa": [], "reserve": [], "icc": [], "ded": collections.Counter(),
-            "cost_hist": collections.Counter(), "cost_hist_new": collections.Counter(), "zone_hist": {}, "zone_hist_exact": {}, "frp_hist_exact": {}, "all_cost": [], "sf_cost": [], "sf_prem": [], "sf_new_cost": []}
+            "cost_hist": collections.Counter(), "cost_hist_new": collections.Counter(), "zone_hist": {}, "zone_hist_exact": {}, "renter_hist": collections.Counter(), "renter_units": 0, "frp_hist_exact": {}, "all_cost": [], "sf_cost": [], "sf_prem": [], "sf_new_cost": []}
 
 def policies(st):
     acc = collections.defaultdict(new_acc)
@@ -47,6 +47,9 @@ def policies(st):
             a = acc[k]; a["units"] += u
             if truthy(r["mandatoryPurchaseFlag"]): a["mand_units"] += u
             if truthy(r["tenantIndicator"]): a["tenant_units"] += u
+            if k == "ST" and truthy(r["tenantIndicator"]) and not (f(r["totalBuildingInsuranceCoverage"]) or 0) and (f(r["totalContentsInsuranceCoverage"]) or 0) > 0:
+                a["renter_units"] += u   # renters page (owner 11-06): tenant, contents-only policies; cost histogram below
+                if cost and cost > 0: a["renter_hist"][round(cost)] += 1
             if r["condominiumCoverageTypeCode"] == "U": a["condo_unit_units"] += u
             if r["condominiumCoverageTypeCode"] in ("H", "L"): a["rcbap_units"] += u
             if truthy(r["elevatedBuildingIndicator"]): a["elev_units"] += u
@@ -99,6 +102,7 @@ def policies(st):
             out[k]["cost_hist"] = dict(a["cost_hist"]); out[k]["cost_hist_new"] = dict(a["cost_hist_new"])
             out[k]["cost_hist_zone"] = {g: dict(h) for g, h in a["zone_hist"].items()}
             out[k]["cost_hist_zone_exact"] = {g: dict(h) for g, h in a["zone_hist_exact"].items()}
+            out[k]["renter_hist"] = dict(a["renter_hist"]); out[k]["renter_units"] = a["renter_units"]
             out[k]["frp_hist_zone_exact"] = {g: dict(h) for g, h in a["frp_hist_exact"].items()}
             out[k]["ded_counts"] = {str(d): c for d, c in a["ded"].items()}
         out[k]["averages"] = {"sf_cost_median": med(a["sf_cost"]), "sf_cost_mean": round(statistics.mean(a["sf_cost"])) if a["sf_cost"] else None,   # every state and county (hater r5)
@@ -175,7 +179,7 @@ def run(st):
     p, c = policies(st), claims(st)
     d = os.path.join(ROOT, "data", "states", slug(st)); os.makedirs(d, exist_ok=True)
     os.makedirs(os.path.join(ROOT, "data", "us"), exist_ok=True)
-    for key in ("cost_hist", "cost_hist_new", "cost_hist_zone", "cost_hist_zone_exact", "frp_hist_zone_exact"):   # all single-family policies / those first bought in the past year / by zone group
+    for key in ("cost_hist", "cost_hist_new", "cost_hist_zone", "cost_hist_zone_exact", "frp_hist_zone_exact", "renter_hist"):   # all single-family policies / those first bought in the past year / by zone group
         hp = os.path.join(ROOT, "data", "us", key + ".json")
         allh = json.load(open(hp)) if os.path.exists(hp) else {}
         allh[st] = p["ST"].pop(key); json.dump(allh, open(hp, "w"))

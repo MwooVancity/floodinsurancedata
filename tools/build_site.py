@@ -87,7 +87,7 @@ srows = "".join(f'<tr data-k="{html.escape((s["name"] + " " + s["abbr"]).lower()
                 f'<td>{money(s["median"])}</td><td>{format(s["units"], ",")}</td><td>{format(s["claims"], ",")}</td><td>{money(s["paid"])}</td></tr>' for s in sorted(states, key=lambda s: -s["median"]))
 _cy = [json.load(open(os.path.join(DATADIR, "states", s["slug"], "agg.json")))["claims"] for s in states]
 _cnote = (f'<p class="mut">NFIP claims on record: every claim record, paid or not, for losses from {min(c["year_min"] for c in _cy)} to {max(c["year_max"] for c in _cy)}. '
-          'Paid on them: building plus contents payments, in dollars as paid, not adjusted for inflation.</p>') if states else ""
+          'Paid on them: building plus contents payments, in dollars as paid, not adjusted for inflation. <a href="/flood-insurance/claims/">How often claims get paid, county by county</a>.</p>') if states else ""
 _bycost = sorted(states, key=lambda s: -s["median"])
 extremes = (f'<p class="stand">Highest typical cost: {", ".join(html.escape(s["name"]) + " " + money(s["median"]) for s in _bycost[:3])}. '
             f'Lowest: {", ".join(html.escape(s["name"]) + " " + money(s["median"]) for s in _bycost[-3:])}. Sorted by typical cost.</p>') if len(states) > 6 else ""
@@ -497,6 +497,70 @@ if len(states) == 51 and len(_zh) == 51:
 <p class="mut">Sources: FEMA OpenFEMA NFIP Policies v3 and Claims v3; rules from {_rule_hosts(keys)}. <a href="/methodology/">How we check them</a>.</p></div>{FOOT}"""
         wr(os.path.join(DIST, "flood-zones", zk, "index.html"), pg)
         zone_urls.append((BASE + f"/flood-zones/{zk}/", None))
+
+# ---- /flood-insurance/claims/: how often NFIP claims get any payment, county by county (agreed strategy 11-06, step 4) ----
+# Loss years 2020+ (extras_raw "recent"). FEMA's data has no open/closed field, so "no recorded payment" is never "denied".
+# Records FEMA coded 98 "Claim deleted in error" / 99 "Assigned in error" are bookkeeping, not claims: left out, and said so.
+from codes import NONPAY_REASON as _NR
+from agg_raw import FIPS as _FIPS
+ERR_CODES, CLAIMS_MIN = ("98", "99"), 500
+def claims_rows():   # shared with tools/claims_check.py's independent recompute only through the data files, never this code
+    st_of = {v: k for k, v in _FIPS.items()}
+    names = json.load(open(os.path.join(DATADIR, "us", "county_names.json"), encoding="utf-8"))
+    live = {p.get("geoid"): p["slug"] for p in places}
+    out = []
+    for p in sorted(glob.glob(os.path.join(DATADIR, "all-counties", "*.json"))):
+        g = os.path.basename(p)[:-5]
+        rc = ((json.load(open(p)).get("extras") or {}).get("claims") or {}).get("recent")
+        if not rc: continue
+        err = sum(rc["unpaid_reasons"].get(c, 0) for c in ERR_CODES); n = rc["n"] - err
+        if n < CLAIMS_MIN: continue
+        un = {k: v for k, v in rc["unpaid_reasons"].items() if k not in ERR_CODES}
+        top = max((k for k in un if k != "none"), key=lambda k: un[k], default=None)
+        out.append({"geoid": g, "county": names.get(g, g), "state": st_of.get(g[:2], ""), "n": n, "paid": rc["paid_n"], "err": err,
+                    "pct": round(100 * rc["paid_n"] / n, 1), "top": top, "top_n": un.get(top, 0), "unpaid": n - rc["paid_n"], "slug": live.get(g)})
+    return sorted(out, key=lambda r: r["pct"])
+import glob
+if len(states) == 51:
+    _cr = claims_rows()
+    _us = [json.load(open(os.path.join(DATADIR, "states", s["slug"], "extras.json")))["claims"].get("recent") for s in states]
+    if _cr and all(_us):
+        _err = sum(sum(r["unpaid_reasons"].get(c, 0) for c in ERR_CODES) for r in _us)
+        _n = sum(r["n"] for r in _us) - _err; _paid = sum(r["paid_n"] for r in _us); _pct = round(100 * _paid / _n, 1)
+        _rs = {}
+        for r in _us:
+            for k, v in r["unpaid_reasons"].items():
+                if k not in ERR_CODES: _rs[k] = _rs.get(k, 0) + v
+        _un = _n - _paid
+        _why = "".join(f'<tr><td>{html.escape(_NR.get(k, "No reason recorded") if k != "none" else "No reason recorded, or a code without a FEMA label")}</td><td>{v:,}</td><td>{round(100 * v / _un, 1)}%</td></tr>'
+                       for k, v in sorted(_rs.items(), key=lambda kv: -kv[1])[:10])
+        lo, hi = _cr[0], _cr[-1]
+        cname = lambda r: f'{html.escape(r["county"])}, {r["state"]}'
+        clink = lambda r: f'<a href="/flood-insurance/{r["slug"]}/">{cname(r)}</a>' if r["slug"] else cname(r)
+        _rows = "".join(f'<tr><td>{clink(r)}</td><td>{r["n"]:,}</td><td>{r["pct"]}%</td><td>{html.escape(_NR.get(r["top"], "—")) if r["top"] else "—"}</td></tr>' for r in _cr)
+        with open(os.path.join(DIST, "data", "claims-2020-counties.csv"), "w", newline="", encoding="utf-8") as f:
+            w = csv.writer(f); w.writerow(["county_fips", "county", "state", "claims_loss_year_2020_on", "claims_with_recorded_payment", "share_with_payment_pct",
+                                           "records_coded_deleted_or_assigned_in_error_left_out", "most_recorded_reason_for_no_payment", "claims_with_that_reason"])
+            for r in _cr: w.writerow([r["geoid"], r["county"], r["state"], r["n"], r["paid"], r["pct"], r["err"], _NR.get(r["top"], "") if r["top"] else "", r["top_n"]])
+        pg = HEAD.format(title=f"How often do NFIP flood claims get paid? {len(_cr)} counties compared (FEMA data)",
+                         desc=f"Share of NFIP flood claims with a recorded payment, losses from 2020 on, for the {len(_cr)} counties with {CLAIMS_MIN} or more claims, and FEMA's recorded reasons when nothing was paid.",
+                         canon=BASE + "/flood-insurance/claims/") + f"""
+<h1>How often do NFIP flood claims get paid?</h1>
+<p class="lede">Of {_n:,} NFIP flood claims for losses from 2020 on, {_pct}% had a recorded payment. In the {len(_cr)} counties with {CLAIMS_MIN} or more such claims, the share runs from {lo["pct"]}% in {cname(lo)} to {hi["pct"]}% in {cname(hi)}.</p>
+<div class="stats"><div class="stat"><div class="n">{_pct}%</div><div class="l">Claims with a recorded payment, U.S., losses 2020 on</div></div>
+<div class="stat"><div class="n">{_n:,}</div><div class="l">NFIP claims counted</div></div></div>
+<p class="mut">FEMA OpenFEMA NFIP Claims v3, as of {_ASOF_TXT}. A recorded payment is any building, contents or Increased Cost of Compliance payment above $0. Left out: {_err:,} records FEMA coded "Claim deleted in error" or "Assigned in error"; counted as claims with no payment, the U.S. share would be {round(100 * _paid / (_n + _err), 1)}%. FEMA's data does not say whether a claim is still open, so a recent claim with no payment may still be paid.</p>
+<div class="card"><h2>Why claims had no recorded payment</h2><p class="stand">FEMA's recorded reason on the building part of each of the {_un:,} U.S. claims with no recorded payment, losses from 2020 on.</p>
+<table><thead><tr><th>FEMA's recorded reason</th><th>Claims</th><th>Share of claims with no payment</th></tr></thead><tbody>{_why}</tbody></table>
+<p class="mut">The ten most common reasons, as FEMA labels its codes. A reason is FEMA's record, not a finding about what happened to the building.</p></div>
+<div class="card" id="counties"><h2>County by county</h2><p class="stand">Every county with {CLAIMS_MIN} or more NFIP claims for losses from 2020 on, lowest share with a payment first. Recent claims with no payment may still be paid: FEMA's data has no open or closed field.</p>
+<table><thead><tr><th>County</th><th>Claims</th><th>With a recorded payment</th><th>Most recorded reason when nothing was paid</th></tr></thead><tbody>{_rows}</tbody></table>
+<p class="mut">County as coded on each claim record, which can differ from where the building stands. <a href="/data/claims-2020-counties.csv">Download this table (CSV)</a>.</p></div>
+<div class="card"><h2>What these numbers cannot tell you</h2><p class="stand">No recorded payment does not mean a claim was denied: it includes damage under the deductible, claims not pursued and reasons FEMA does not record. These are shares of claims filed, not a chance that any one claim gets paid.</p>
+<p><a href="/flood-insurance/">Your state and county</a>: what policies there cost and every claim paid since 1978.</p>
+<p class="mut">Source: FEMA OpenFEMA NFIP Claims v3 (fema.gov/openfema-data-page/nfip-redacted-claims-v3). Reason labels from FEMA's data dictionary. <a href="/methodology/">How we check them</a>.</p></div>{FOOT}"""
+        wr(os.path.join(DIST, "flood-insurance", "claims", "index.html"), pg)
+        zone_urls.append((BASE + "/flood-insurance/claims/", None))
 
 # ---- address tool: static files + the /flood-zone-map/ hub (map debate 11-06; kill switch "zonemap" in tools_flags.json) ----
 import shutil

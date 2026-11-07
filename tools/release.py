@@ -26,6 +26,8 @@ else:
     step("reader tools: oracle, edge cases, fuzz, JS off (CLAUDE.md ship standard)", os.path.join(T, "test_tools.py"))
     step("rule sources: every rule's quoted wording is still on its official page", os.path.join(T, "recheck.py"), "--rules-only")
     step("address tool: oracle, fuzz, click path with FEMA fixtures, JS off", os.path.join(T, "test_zonemap.py"))
+    step("claims page: every figure recomputed", os.path.join(T, "claims_check.py"))
+    step("claims check mutations", os.path.join(T, "claims_check.py"), "--test")
     step("zone pages: every figure recomputed", os.path.join(T, "zone_check.py"))
     step("zone check mutations", os.path.join(T, "zone_check.py"), "--test")
     step("unit tests", os.path.join(T, "test_calc.py"))

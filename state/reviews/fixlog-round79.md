@@ -1,0 +1,4 @@
+# Fixlog round 79
+- MAJOR 1, "record keeping, not claims" unsupported: layer template (build_site claims page). Fix: only FEMA's labels quoted; the effect printed: "counted as claims with no payment, the U.S. share would be 79.0%" (recomputed; claims_check C5 recomputes it). Proof: dist/flood-insurance/claims/ text.
+- MAJOR 2, open-claims caveat far from the figures: layer template. Fix: "FEMA's data does not say whether a claim is still open, so a recent claim with no payment may still be paid" directly under the headline tiles; "Recent claims with no payment may still be paid: FEMA's data has no open or closed field" under the county table heading; duplicate in the closing card removed. Proof: dist text.
+- MINORs open: county card lists "Assigned in error" while the claims page drops it; title reads as a chance for one claim; no table search (GAP).
