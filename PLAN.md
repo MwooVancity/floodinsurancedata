@@ -17,6 +17,14 @@ Volumes: Keyword Planner US band floors/mo. "Perfect" = numbers recomputed by a 
 | 10 | ~100 claims | /flood-insurance/claims/ | LIVE 11-07 | owner: reporter pitches |
 Not targeted: "flood insurance" head term (FloodSmart), quote, companies.
 
+EXECUTION ORDER (owner 11-07 "plan to execute the plan"). One batch = build > its check + mutations > gates > one light review > ship > live read > PLAN line. Counties OFF (publish-counties adds 0) until rows 1-7 are done.
+- Batch A (now): row 4 home H2 "How much is flood insurance?" + national half-pay range; row 3 zone X H2 "Zones B and C: old names for X" (zone_x rule already quotes FEMA); title "/yr" minor (r82).
+- Batch B: row 5 /nfip/ "The NFIP in numbers": policy units, median cost, claims and dollars paid since 1978 and since 2020, by state; program rules only via rule() (nfip_not_sold, nfip_lapse, how_to_buy); check script recomputes every figure.
+- Batch C: row 6 renters, as soon as refresh 42328128363 lands with data/us/renter_hist.json: count first (51-state sum); page only if the median rests on 100+ priced policies.
+- Batch D: row 7 town names in county titles/ledes from Census places (data/us/zip_places.json), every county, not only the 20 test counties.
+- Batch E (11-20): rows 1-2 tool to all pages: first a US-runner live test of the tool against real FEMA (fema-probe + Playwright), then tools_flags "zonemap": "all".
+- Then row 8: publish-counties back to 20/day, kw > 0 (97 searched counties), then the 8 flagged ones after their own light review.
+
 ## Goal and scoreboard
 Most helpful flood-insurance page for every US county, for a scared reader on a phone. Measure: pages indexed, impressions, clicks, page-1 queries, AI citations. We built before proving demand: the weekly scoreboard decides; polish only where a number says a page fails.
 2026-10-29 Search Console (data 10-23..27): 101 impressions, 1 click, position 46; sitemap 110 read, 0 errors. Read: `tools/gsc_read.mjs`.

@@ -63,7 +63,7 @@ jobs:
         id: add
         run: |
           if [ -n "${{ inputs.drill }}" ] && [ "${{ inputs.drill }}" != none ]; then echo "none=1" >> "$GITHUB_OUTPUT"; echo "drill: nothing added"; exit 0; fi
-          out=$(python -I tools/add_counties.py 20); echo "$out"   # owner 11-06: 20 a day, only counties with Keyword Planner searches (queue "kw" > 0)
+          out=$(python -I tools/add_counties.py 0); echo "$out"   # owner 11-07: counties last; 0 until PAGE QUEUE rows 1-7 in PLAN.md are done (then 20, kw > 0)
           echo "msg=$out" >> "$GITHUB_OUTPUT"
           new=$(git diff -U0 tools/counties.json | grep -o '^+ *"geoid": "[0-9]*"' | grep -o '[0-9]\{5\}' | xargs)
           [ -n "$new" ] && { python -I tools/pull_mapstatus.py $new || echo "::warning::map status not pulled for $new; the monthly run fills it"; }   # audit 11-07: same-day FEMA map facts
