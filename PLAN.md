@@ -1,6 +1,22 @@
 # PLAN: floodinsurancedata.com
 State and next moves only; rules in CLAUDE.md, history in git. Under 80 lines: done = delete.
 
+## PAGE QUEUE (owner 11-07: highest search volume first; Claude works top-down, no skipping; GitHub only auto-prints counties)
+Volumes: Keyword Planner US band floors/mo. "Perfect" = numbers recomputed by a check with mutations, one light review PASS, phone check, live read, linked from home.
+| # | Searches | Page | Status | Next action |
+|---|---|---|---|---|
+| 1 | 22,100 flood zone map / fema flood map by address / by address | /flood-zone-map/ + tool | LIVE 11-06 (tool tested on fixtures; live FEMA answer unverified from US) | 11-20: tool to all pages after 2 weeks with no errors |
+| 2 | 7,790 flood zone map [state] + 13,510 state | 51 state pages | Retitle "<State> flood zones and flood insurance" 11-07 (review r82) | tool on all states 11-20 |
+| 3 | 7,530 zone words | 7 zone pages | LIVE, exact-zone figures | "Zones B and C: old names for X" heading |
+| 4 | ~2,100 how much is flood insurance / cost / average | home | LIVE (median $1,066) | literal H2 "How much is flood insurance?" + national middle-half range |
+| 5 | ~2,000 nfip / fema flood insurance | new /nfip/ "The NFIP in numbers" | NOT BUILT | policies in force, claims paid, by state, from our data; FEMA owns the term, so judge by impressions |
+| 6 | ~1,000 flood insurance for renters | /flood-insurance/renters/ | WAITING: renter count in refresh 42328128363 | build if the count passes the floor |
+| 7 | ~1,000+ towns ("flood insurance chicago") | county pages | town names in 20 counties only | town names in every county title/lede where Census gives them |
+| 8 | 7,240 [county] flood zone map | county pages, 20/day by GitHub | 232 live; 97 searched counties queued (majority-share rule), ~5 days | 8 flagged searched counties (sonoma-ca first) need own light review |
+| 9 | ~100 rates by zip code | /flood-insurance/zip/ | LIVE 11-07 | — |
+| 10 | ~100 claims | /flood-insurance/claims/ | LIVE 11-07 | owner: reporter pitches |
+Not targeted: "flood insurance" head term (FloodSmart), quote, companies.
+
 ## Goal and scoreboard
 Most helpful flood-insurance page for every US county, for a scared reader on a phone. Measure: pages indexed, impressions, clicks, page-1 queries, AI citations. We built before proving demand: the weekly scoreboard decides; polish only where a number says a page fails.
 2026-10-29 Search Console (data 10-23..27): 101 impressions, 1 click, position 46; sitemap 110 read, 0 errors. Read: `tools/gsc_read.mjs`.
