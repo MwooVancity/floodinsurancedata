@@ -39,7 +39,31 @@ def check(page, csvtext):
     if re.search(r"\bdenied\b", text.replace("does not mean a claim was denied", ""), re.I): bad.append("C4 'denied' printed")
     return bad
 
+def check_nfip(page):   # /nfip/: lede and tiles recomputed from built.json + cost_hist.json, sharing no code with build_site
+    st = json.load(open(os.path.join(D, "states", "built.json")))
+    units, claims, paid = sum(s["units"] for s in st), sum(s["claims"] for s in st), sum(s["paid"] for s in st)
+    h = json.load(open(os.path.join(D, "us", "cost_hist.json")))
+    vs = sorted((int(k), c) for v in h.values() for k, c in v.items()); tot = sum(c for _, c in vs); run = 0
+    for med, c in vs:
+        run += c
+        if run >= tot / 2: break
+    text = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", page)); bad = []
+    for want, label in ((f"had {units:,} policy units", "N1 units"), (f"median of ${med:,} a year", "N2 median"),
+                        (f"list {claims:,} NFIP claims, paid or not, and ${paid:,} paid in total", "N3 claims"), (f"${paid / 1e9:.1f}B", "N4 paid tile")):
+        if want not in text: bad.append(f"{label}: '{want}' not on the page")
+    return bad
+
 if __name__ == "__main__":
+    if "--nfip" in sys.argv:
+        pg = open(os.path.join(ROOT, "dist", "nfip", "index.html"), encoding="utf-8").read()
+        bad = check_nfip(pg)
+        if "--test" in sys.argv:
+            assert not bad, bad
+            assert check_nfip(pg.replace(" policy units in force on", "9 policy units in force on", 1)), "mutation not caught: units"
+            assert check_nfip(re.sub(r"\$[\d.]+B", "$1.0B", pg, count=1)), "mutation not caught: paid tile"
+            print("nfip check mutations: 2 caught"); sys.exit()
+        for b in bad: print("  -", b)
+        print("NFIP CHECK", "FAIL" if bad else "PASS"); sys.exit(1 if bad else 0)
     pg = open(os.path.join(ROOT, "dist", "flood-insurance", "claims", "index.html"), encoding="utf-8").read()
     cv = open(os.path.join(ROOT, "dist", "data", "claims-2020-counties.csv"), encoding="utf-8").read()
     if "--test" in sys.argv:

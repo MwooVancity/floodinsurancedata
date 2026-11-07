@@ -137,7 +137,7 @@ if len(states) == 51:   # U.S. figures only once every state is built and gated:
                 f'<p class="mut">Median and per month: what existing single-family primary-home policies pay, premium plus fees. Insured units: every NFIP policy unit in force on {_ASOF_TXT}, including condos, rentals and businesses.</p>'
                 f'<h2>How much is flood insurance?</h2><p class="stand">Existing NFIP policies on single-family primary homes cost a median of {money(_med)} a year, '
                 f'premium plus fees; half pay between {money(_q[0.25])} and {money(_q[0.75])}, and one in ten pays {money(_q[0.9])} or more.</p>'
-                f'<p class="cmp"><b>Buying?</b> Policies first bought in the past year typically pay {money(_new_med)} ({_new_n:,} policies). <a href="#prices">Why sites differ</a>.</p>')
+                f'<p class="cmp"><b>Buying?</b> Policies first bought in the past year typically pay {money(_new_med)} ({_new_n:,} policies). <a href="#prices">Why sites differ</a>. <a href="/nfip/">The NFIP in numbers</a>.</p>')
     # hater r5 (home): price drivers, ways to pay less, a quote check and the averages other sites quote, all from the same records
     home_cards = (f'<div class="card" id="check"><h2>Is my quote normal?</h2><p class="stand">Type your yearly cost (premium plus fees) to see where it '
         f'sits among U.S. single-family policies; your state page compares it with your area.</p>'
@@ -564,6 +564,31 @@ if len(states) == 51:
 <p class="mut">Source: FEMA OpenFEMA NFIP Claims v3 (fema.gov/openfema-data-page/nfip-redacted-claims-v3). Reason labels from FEMA's data dictionary. <a href="/methodology/">How we check them</a>.</p></div>{FOOT}"""
         wr(os.path.join(DIST, "flood-insurance", "claims", "index.html"), pg)
         zone_urls.append((BASE + "/flood-insurance/claims/", None))
+
+# ---- /nfip/: "The NFIP in numbers" (PAGE QUEUE row 5: "nfip", "fema flood insurance"). Every figure from the same files the
+# home page uses (cost_hist, built.json); program facts only via rule(). tools/claims_check.py --nfip recomputes them.
+if len(states) == 51:
+    _paid_all = sum(s["paid"] for s in states); _cl_all = sum(s["claims"] for s in states)
+    _top = sorted(states, key=lambda s: -s["units"])[:10]
+    _trs = "".join(f'<tr><td><a href="/flood-insurance/{s["slug"]}/">{html.escape(s["name"])}</a></td><td>{s["units"]:,}</td><td>{round(100 * s["units"] / _units, 1)}%</td></tr>' for s in _top)
+    _nk = ["nfip_not_sold", "how_to_buy", "limits", "wait_30", "nfip_lapse", "private_accept"]
+    pg = HEAD.format(title=f"The NFIP in numbers: {_units / 1e6:.1f} million policy units, {money(_med)}/yr median, claims since 1978",
+                     desc="The National Flood Insurance Program from FEMA's own records: policy units in force, what single-family homes pay, claims and dollars paid since 1978, and where the policies are.",
+                     canon=BASE + "/nfip/") + f"""
+<h1>The NFIP in numbers</h1>
+<p class="lede">The National Flood Insurance Program had {_units:,} policy units in force on {_ASOF_TXT}. Existing single-family primary-home policies cost a median of {money(_med)} a year, premium plus fees. Since 1978 FEMA's records list {_cl_all:,} NFIP claims, paid or not, and {money(_paid_all)} paid in total on them.</p>
+<div class="stats"><div class="stat"><div class="n">{_units / 1e6:.1f}M</div><div class="l">Policy units in force</div></div>
+<div class="stat"><div class="n">{money(_med)}</div><div class="l">Median / yr, single-family primary home</div></div>
+<div class="stat"><div class="n">${_paid_all / 1e9:.1f}B</div><div class="l">Paid on NFIP claims since 1978, dollars as paid</div></div></div>
+<p class="mut">FEMA OpenFEMA NFIP Policies v3 and Claims v3, as of {_ASOF_TXT}. Policy units: every NFIP policy unit, including condos, rentals and businesses. Claims paid: building plus contents payments, not adjusted for inflation. <a href="/flood-insurance/claims/">How often claims get paid, county by county</a>.</p>
+<div class="card"><h2>How does the NFIP work?</h2><p class="stand">{rule("nfip_not_sold")} {rule("limits")} {rule("wait_30")}</p><p class="stand">{rule("how_to_buy")}</p><p class="stand">{rule("nfip_lapse")}</p><p class="stand">{rule("private_accept")}</p></div>
+<div class="card"><h2>Where are the NFIP policies?</h2><p class="stand">The ten states with the most NFIP policy units, and their share of all units in force.</p>
+<table><thead><tr><th>State</th><th>Policy units</th><th>Share of U.S.</th></tr></thead><tbody>{_trs}</tbody></table>
+<p class="mut">Every state, with costs and claims: <a href="/flood-insurance/">states and counties</a>. Cost in each flood zone: <a href="/flood-zones/ae/">zone AE</a>, <a href="/flood-zones/x/">zone X</a>. <a href="/flood-insurance/zip/">Cost by ZIP code</a>.</p></div>
+<div class="card"><h2>What these numbers cannot tell you</h2><p class="stand">Your premium, private insurers' prices, or why a price changed. The median is what existing policies pay, not a quote.</p>
+<p class="mut">Sources: FEMA OpenFEMA NFIP Policies v3 and Claims v3; rules from {_rule_hosts(_nk)}. <a href="/methodology/">How we check them</a>.</p></div>{FOOT}"""
+    wr(os.path.join(DIST, "nfip", "index.html"), pg)
+    zone_urls.append((BASE + "/nfip/", None))
 
 # ---- /flood-insurance/zip/: national ZIP lookup (PLAN target C). Static JSON per 3-digit ZIP prefix, a few KB per lookup.
 # Figures exactly as each county's agg holds them (by_zip: units, priced single-family policies, median at ZIP_MIN+); a ZIP

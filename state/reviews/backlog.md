@@ -245,3 +245,6 @@ Ranked by reader value. hater.py record appends each round's **GAP** lines below
 
 ## new-york-county-ny (round 83)
 - Manhattan not named in H1 (unchanged).
+
+## home (round 86)
+- No "am I required to buy" line on /nfip/.
