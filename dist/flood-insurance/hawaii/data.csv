@@ -158,7 +158,7 @@ Hawaii,crs_count,none,0,count,FEMA OpenFEMA — NFIP Community Status Book (CRS)
 Hawaii,ml_total,,178,count,FEMA OpenFEMA — Individual Assistance Multiple-Loss Flood Properties,highRiskPropertyType,"August 31, 2026"
 Hawaii,declarations,,29,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"August 31, 2026"
 Hawaii,ia_paid,,$22.0 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"August 31, 2026"
-Hawaii,ia_per_reg,,"$6,023",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
+Hawaii,ia_per_reg,,"$6,024",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 Hawaii,records_total,rows,"13,667",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 Hawaii,records_total,policies:fetched,"13,667",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 Hawaii,records_total,policies:reported,"13,667",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

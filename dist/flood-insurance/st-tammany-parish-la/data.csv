@@ -228,7 +228,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "St. Tammany Parish, Louisiana",ml_total,,"9,560",count,FEMA OpenFEMA — Individual Assistance Multiple-Loss Flood Properties,highRiskPropertyType,"August 31, 2026"
 "St. Tammany Parish, Louisiana",ml_srl,,"1,050",count,FEMA OpenFEMA — Individual Assistance Multiple-Loss Flood Properties,highRiskPropertyType,"August 31, 2026"
 "St. Tammany Parish, Louisiana",declarations,,35,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"August 31, 2026"
-"St. Tammany Parish, Louisiana",ia_paid,,$316.6 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"August 31, 2026"
+"St. Tammany Parish, Louisiana",ia_paid,,$316.7 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"August 31, 2026"
 "St. Tammany Parish, Louisiana",ia_per_reg,,"$2,170",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "St. Tammany Parish, Louisiana",records_total,rows,"39,739",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "St. Tammany Parish, Louisiana",records_total,policies:fetched,"39,739",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

@@ -943,7 +943,7 @@ Texas,ml_total,,"130,104",count,FEMA OpenFEMA — Individual Assistance Multiple
 Texas,ml_srl,,"8,799",count,FEMA OpenFEMA — Individual Assistance Multiple-Loss Flood Properties,highRiskPropertyType,"August 31, 2026"
 Texas,declarations,,82,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"August 31, 2026"
 Texas,ia_paid,,$3.4 billion,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"August 31, 2026"
-Texas,ia_per_reg,,"$1,690",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
+Texas,ia_per_reg,,"$1,689",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 Texas,records_total,rows,"540,859",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 Texas,records_total,policies:fetched,"540,859",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 Texas,records_total,policies:reported,"540,859",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

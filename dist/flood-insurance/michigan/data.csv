@@ -397,7 +397,7 @@ Michigan,crs_count,none,1055,count,FEMA OpenFEMA — NFIP Community Status Book 
 Michigan,ml_total,,"288,404",count,FEMA OpenFEMA — Individual Assistance Multiple-Loss Flood Properties,highRiskPropertyType,"August 31, 2026"
 Michigan,ml_srl,,"53,255",count,FEMA OpenFEMA — Individual Assistance Multiple-Loss Flood Properties,highRiskPropertyType,"August 31, 2026"
 Michigan,declarations,,22,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"August 31, 2026"
-Michigan,ia_paid,,$737.9 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"August 31, 2026"
+Michigan,ia_paid,,$738.0 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"August 31, 2026"
 Michigan,ia_per_reg,,"$2,533",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 Michigan,records_total,rows,"17,744",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 Michigan,records_total,policies:fetched,"17,744",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
