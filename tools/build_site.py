@@ -450,6 +450,18 @@ if len(states) == 51 and len(_zh) == 51:
         yrs = f'{next(iter(_cz.values()))["from"]}–{next(iter(_cz.values()))["to"]}' if _cz else ""
         cc = cz.get(code)
         claims = ""
+        # 11-08 links (CLAUDE.md Internal links): the county pages holding the most units in this zone; recomputed by zone_check Z8
+        _cz10 = []
+        for _p in indexable:
+            _a = (json.load(open(os.path.join(cdir(_p['slug']), 'agg.json'), encoding='utf-8')).get('policies') or {}) if os.path.exists(os.path.join(cdir(_p['slug']), 'agg.json')) else {}
+            _u = (_a.get('zone_units_all') or {}).get(code, 0)
+            if _u: _cz10.append((-_u, _p['slug'], _p, ((_a.get('cost_by_zone') or {}).get(code) or {}).get('median')))
+        _cz10 = sorted(_cz10)[:10]
+        ctab = (f'<div class="card" id="counties"><h2>Which county pages have the largest numbers of zone {code} policies?</h2>'
+                f'<table><thead><tr><th>County</th><th>Policy units rated {code}</th><th>Median / yr, zone {code}, single-family primary homes</th></tr></thead><tbody>'
+                + ''.join(f'<tr><td><a href="/flood-insurance/{sl}/">{html.escape(pp["label"])}</a></td><td>{-nu:,}</td><td>{money(md) if md else "too few priced"}</td></tr>' for nu, sl, pp, md in _cz10)
+                + f'</tbody></table><p class="mut">The {len(_cz10)} largest of the {len(indexable):,} county pages on this site by policy count, not by flood risk, and not every U.S. county. Policy units: every NFIP policy type rated exactly {code}, '
+                f'in force on {_ASOF_TXT}. Median: single-family primary homes rated {code}, premium plus fees; &quot;too few priced&quot; means under {ZONE_MIN} such policies.</p></div>') if _cz10 else ''
         if cc and cc[1] >= 10:
             out_d = sum(c[2] for z, c in cz.items() if z != "blank" and z[0] not in "AV"); all_d = sum(c[2] for z, c in cz.items() if z != "blank")
             xs = (f' Of all paid claim dollars with a zone on the claim, {round(100 * out_d / all_d)}% were on claims rated outside zones A and V (zones X, B, C and D).' if xcol and all_d else "")
@@ -507,6 +519,7 @@ if len(states) == 51 and len(_zh) == 51:
 <div class="card" id="states"><h2>What does it cost in zone {code}, by state?</h2>{vnote}
 <table><thead><tr><th>State</th><th>Median / yr, zone {code}</th><th>Policies in the median</th>{xth}</tr></thead><tbody>{trs}</tbody></table>
 <p class="mut">Median and policy count: single-family primary homes rated exactly {code}, premium plus fees, in force on {_ASOF_TXT}.{xfoot}{fewline}</p></div>
+{ctab}
 <div class="card"><h2>Buying, refinancing or questioning the zone</h2><p class="stand">{rule("seller_assign")} {rule("private_accept")}</p>
 {f'<p class="stand">{rule("loma")} {rule("loma_fee")} {rule("loma_online")} {rule("zone_review")}</p>' if hr else ""}{f'<p class="stand">{rule("bfe")}</p>' if code in ("AE", "AH", "VE") else ""}{f'<p class="stand">{rule("tx_twia")}</p>' if zk == "ve" else ""}
 <p class="stand">{rule("nfip_not_sold")}</p></div>

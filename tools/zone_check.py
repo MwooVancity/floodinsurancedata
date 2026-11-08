@@ -11,6 +11,7 @@ undercounted VE/AO/AH/D units for days). Fails on:
   Z6 claims card: counts or dollars differ from claims_zone.json summed over 51 states; any claims figure with fewer
      than 51 states or under 10 paid claims
   Z7 a "Full-risk" tile without its "before fees" label
+  Z8 county card: rows differ from the 10 indexable county pages with the most units rated exactly this zone (agg.json)
 Usage: python -I tools/zone_check.py [dist dir]   |   --test runs the mutations (each must make the check fail)."""
 import glob, html, json, os, re, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -46,7 +47,7 @@ def expected(code, states, agg):
     if code in GROUP and len(zh) == 51: return quantile([h.get(GROUP[code]) or {} for h in zh.values()], 0.5)
     return None
 
-def check_page(code, page, states, agg):
+def check_page(code, page, states, agg, counties=None):
     bad = []
     text = html.unescape(re.sub(r"<[^>]+>", " ", page))
     # Z1/Z2: the state cost table
@@ -92,23 +93,41 @@ def check_page(code, page, states, agg):
             if shown != t: bad.append(f"Z6 {code}: claims {shown}, data {t}")
             if t[1] < 10: bad.append(f"Z6 {code}: claims shown on {t[1]} paid claims")
             elif dollars(mc[7]) != round(t[2] / t[1]): bad.append(f"Z6 {code}: average {mc[7]}, data {round(t[2] / t[1])}")
+    # Z8: the county card (11-08), recomputed from each published county's agg.json
+    if counties is not None:
+        cm = re.search(r'id="counties".*?<tbody>(.*?)</tbody>', page, re.S)
+        got = re.findall(r'<tr><td><a href="/flood-insurance/([^/]+)/">[^<]*</a></td><td>([\d,]+)</td><td>([^<]+)</td>', cm[1]) if cm else []
+        want = sorted((-u, sl, md) for sl, (u, md) in ((sl, ((c.get('zone_units_all') or {}).get(code, 0), ((c.get('cost_by_zone') or {}).get(code) or {}).get('median'))) for sl, c in counties.items()) if u)[:10]
+        want = [(sl, f'{-u:,}', f'${md:,}' if md else 'too few priced') for u, sl, md in want]
+        if got != want: bad.append(f"Z8 {code}: county card {got[:3]} vs recompute {want[:3]}")
     # Z7: full-risk label
     for lab in re.findall(r'<div class="l">([^<]*Full-risk[^<]*)</div>', page):
         if "before fees" not in lab: bad.append(f"Z7 {code}: full-risk tile without 'before fees': {lab}")
     return bad
+
+def county_aggs(dist):   # indexable county pages that exist in this build
+    out = {}
+    for p in load(os.path.join(ROOT, "places.json"), []):
+        f = os.path.join(dist, "flood-insurance", p["slug"], "index.html")
+        if not p.get("indexable", True) or not os.path.exists(f) or 'content="noindex' in open(f, encoding="utf-8").read(): continue
+        a = next((x for x in (os.path.join(DATA, "c", p["slug"], "agg.json"), os.path.join(DATA, p["slug"], "agg.json")) if os.path.exists(x)), None)
+        if a: out[p["slug"]] = load(a)["policies"]
+    return out
 
 def run(dist):
     states = load(os.path.join(DATA, "states", "built.json"), [])
     agg = {s["slug"]: load(os.path.join(DATA, "states", s["slug"], "agg.json"))["policies"] for s in states}
     pages = {z: open(p, encoding="utf-8").read() for z in CODES for p in [os.path.join(dist, "flood-zones", z, "index.html")] if os.path.exists(p)}
     if len(states) == 51 and len(pages) != len(CODES): return [f"Z0 zone pages built: {sorted(pages)}"]
-    return [b for z, pg in pages.items() for b in check_page(CODES[z], pg, states, agg)]
+    return [b for z, pg in pages.items() for b in check_page(CODES[z], pg, states, agg, county_aggs(dist))]
 
 def test(dist):
     states = load(os.path.join(DATA, "states", "built.json"), [])
     agg = {s["slug"]: load(os.path.join(DATA, "states", s["slug"], "agg.json"))["policies"] for s in states}
     ae = open(os.path.join(dist, "flood-zones", "ae", "index.html"), encoding="utf-8").read()
-    assert not check_page("AE", ae, states, agg), check_page("AE", ae, states, agg)
+    ca = county_aggs(dist)
+    assert not check_page("AE", ae, states, agg, ca), check_page("AE", ae, states, agg, ca)
+    crow = re.search(r'(id="counties".*?<tr><td><a href="/flood-insurance/[^/]+/">[^<]*</a></td><td>)([\d,]+)', ae, re.S)
     row = re.search(r'(<tr><td><a href="/flood-insurance/[^/]+/">[^<]*</a></td><td>)(\$[\d,]+)', ae)
     tile = re.search(r'<div class="stat"><div class="n">(\$[\d,]+)', ae)
     muts = {
@@ -118,9 +137,10 @@ def test(dist):
         "Z3 headline": ae.replace(tile[0], '<div class="stat"><div class="n">$1', 1),
         "Z5 threshold": ae + " under 30 priced policies",
         "Z7 label": ae + '<div class="l">Full-risk premium median</div>',
+        "Z8 county units": ae.replace(crow[0], crow[1] + "1", 1),
     }
     for name, m in muts.items():
-        assert check_page("AE", m, states, agg), f"mutation not caught: {name}"
+        assert check_page("AE", m, states, agg, ca), f"mutation not caught: {name}"
     print(f"zone_check mutations: {len(muts)} caught")
 
 if __name__ == "__main__":
