@@ -249,3 +249,7 @@ Ranked by reader value. hater.py record appends each round's **GAP** lines below
 ## home (round 86)
 - No "am I required to buy" line on /nfip/.
 - r88 (11-07) renters: drop `private_accept` (lender rule, off-topic for renters); add rule()-quoted line on what a renters policy does not cover (actual cash value, living costs) and a gap line "required? only a lender or landlord can say"; limits rule: say one-to-four-family only if a source says so.
+
+## screen-1 quick answers (round 94)
+- Risk line: say "FEMA's county rating" (a bare "Very High" can differ from the loss percentile).
+- Zone cost line: say "Most common zones here" so readers in other zones look in the table.

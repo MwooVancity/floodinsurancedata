@@ -1017,14 +1017,24 @@ sources_li = "@@SOURCES_LI@@"
 _qa = [f'<a href="#required"><b>Am I required to buy it?</b> {rule("purchase_short")}'
        + (f' {rule("fl_citizens_short")}' if agg.get("state") == "FL" else "") + '</a>',
        f'<a href="#covered"><b>How fast does it start?</b> {rule("howto_short")}</a>']
+# hcu-critique 11-07: screen 1 answered "how risky" and "what does my zone cost" only in sections 9 and 15
+_rk = [(b, w) for b, w in (("coastal", "coastal"), ("inland", "inland (river)")) if _present(((NRI or {}).get(b) or {}).get("risk_rating"))]
+if _rk:   # short: P4 keeps the quote checker inside screen 2
+    _qa.insert(0, f'<a href="#c-how-much-flood-risk-is-here"><b>How risky is it here?</b> FEMA: '
+               + ", ".join(f'{html.escape(str(NRI[b]["risk_rating"]))} {w}' for b, w in _rk)
+               + f' flood risk vs other {dict(county="counties", parish="parishes").get(UNIT, UNIT + "s")}; not for your address.</a>')
+_zq = [(z, d) for z, d in (P.get("cost_by_zone") or {}).items() if z != "Unknown"][:2]
+if _zq:
+    _qa.insert(2 if _rk else 1, '<a href="#zone-cost"><b>Cost in my zone?</b> '
+               + ", ".join(f"Zone {html.escape(z)} {tp('zone_cost', f'policies.cost_by_zone.{z}.median', money, q=z)}" for z, d in _zq)
+               + ' a year (median, single-family primary homes).</a>')
 _cxq = data.get("claims_extra") or {}
 if _cxq.get("claims") and _cxq.get("avg_paid") and P.get("p50"):
     _sroot = ROOT_DATA.get("state") if isinstance(ROOT_DATA.get("state"), dict) else {}   # on a state page "state" is just its code
     _scx = (_sroot.get("data") or {}).get("claims_extra") or {}
     _qa.append(f'<a href="#payout"><b>Does it pay out here?</b> {m("paid_share", str(round(100 - _cxq["cwop_share"], 1)) + "%")} of NFIP claims in {CS} (all years on record) paid '
-               + (f'something ({html.escape(STATE_NAMES[agg["state"]])}: {m("paid_share", str(round(100 - _scx["cwop_share"], 1)) + "%", q="state")}); '
-                  if _scx.get("cwop_share") is not None else 'something; ')
-               + (f'the typical paid building claim was {tp("paid_bldg_median", "extras.claims.paid_building_median", money)} (all years, not inflation-adjusted).' if _xc.get("paid_building_median") else f'the average paid claim was {tp("avg_paid", "data.claims_extra.avg_paid", money)} (all years, not inflation-adjusted).')
+               + (f'something ({html.escape(STATE_NAMES[agg["state"]])}: {m("paid_share", str(round(100 - _scx["cwop_share"], 1)) + "%", q="state")}).'
+                  if _scx.get("cwop_share") is not None else 'something.')
                + (f' Claims filed for losses in the {m("decade", html.escape(_decs[-1]), q=_decs[-1])}: '
                   f'{tp("decade_paid_share", f"extras.claims.by_decade.{_decs[-1]}.paid_pct", pct, q=_decs[-1])} paid something.' if len(_decs) > 1 else '')
                + ' No recorded payment can mean paperwork or damage the policy did not count as flood.</a>')
@@ -1316,7 +1326,6 @@ table{{width:100%}}}}
 {ZONEMAP if _tool_on("zonemap") else '<a class="btn" href="https://msc.fema.gov/portal/home" rel="noopener" target="_blank">Check your address on FEMA' + "'" + 's flood map →</a>'}
 {quick_answers}
 {_renew_line}
-<p class="note">{rule('zone_price')}</p>
 </section>
 
 {quote_widget}

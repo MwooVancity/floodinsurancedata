@@ -1,8 +1,8 @@
 {
  "slug": "home",
  "verdict": "PASS",
- "template": "bd7a11a75d8ff130",
+ "template": "33c3845f8c08193a",
  "defects": [],
- "reviewer": "hater round 92 (fresh agent, docs/HATER-PROMPT.md)",
+ "reviewer": "hater round 94 (fresh agent, docs/HATER-PROMPT.md)",
  "notes": ""
 }
