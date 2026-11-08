@@ -406,7 +406,7 @@ def _map_line():   # PLAN 3e: when this place's FEMA map took effect, and which 
                        + (" or later" if len({r[2] for r in new}) > 1 else "") + " for "
                        + and_list(names[:8] + ([f"{m('map_new_n', str(len(names) - 8), q='more')} more"] if len(names) > 8 else [])) + ".")
         elif rows:   # hcu 11-07: say so when FEMA's book lists no new map, so "is my map changing?" is answered either way
-            out.append(f"FEMA's latest Community Status Book lists no new flood map taking effect for the NFIP communities filed under this {UNIT}.")
+            out.append(f"FEMA's latest Community Status Book lists no new flood map taking effect for the NFIP communities filed under this {UNIT}; that does not cover maps still preliminary (below).")
     elif new:
         out.append(f"{m('map_new_n', str(len(new)))} {pl(len(new), 'community', 'communities')} in {CS} {pl(len(new), 'gets', 'get')} a new FEMA flood map after FEMA's latest report, "
                    f"the first on {m('map_date', _mdate(new[0][2]), q='first_new')}.")
@@ -1025,9 +1025,9 @@ if _rk:   # short: P4 keeps the quote checker inside screen 2
                + f' flood risk vs other {dict(county="counties", parish="parishes").get(UNIT, UNIT + "s")}; not for your address.</a>')
 _zq = [(z, d) for z, d in (P.get("cost_by_zone") or {}).items() if z != "Unknown"][:2]
 if _zq:
-    _qa.insert(2 if _rk else 1, '<a href="#zone-cost"><b>Cost in my zone?</b> Zones with the largest policy counts here: '
+    _qa.insert(2 if _rk else 1, '<a href="#zone-cost"><b>Cost in my zone?</b> Largest zones by priced policies here: '
                + ", ".join(f"Zone {html.escape(z)} {tp('zone_cost', f'policies.cost_by_zone.{z}.median', money, q=z)}" for z, d in _zq)
-               + ' a year (median, single-family primary homes).</a>')
+               + ' a year (single-family primary-home median; others in the table).</a>')
 _cxq = data.get("claims_extra") or {}
 if _cxq.get("claims") and _cxq.get("avg_paid") and P.get("p50"):
     _sroot = ROOT_DATA.get("state") if isinstance(ROOT_DATA.get("state"), dict) else {}   # on a state page "state" is just its code
@@ -1244,7 +1244,7 @@ _jump = f'<p class="cmp"><a href="#counties">Find your {UNIT} in the table ↓</
 # hcu 11-07: a state page is a router; the reader's own county page one tap away on screen 1 (native details, no JS)
 _own = sorted((q for q in _PL_ALL if str(q.get("geoid") or "")[:2] == os.environ.get("FF_GEOID", "")[:2]), key=lambda q: q.get("short", "").casefold()) if IS_STATE else []
 if _own:
-    _jump = (f'<details class="pick"><summary><b>Pick your {UNIT}</b></summary><p>'
+    _jump = (f'<details class="pick"><summary><b>Pick your {UNIT}</b> (those with their own page)</summary><p>'
              + " · ".join(f'<a href="/flood-insurance/{q["slug"]}/">{html.escape(q.get("short") or q["slug"])}</a>' for q in _own)
              + f'</p></details>' + _jump)
 
@@ -1332,7 +1332,7 @@ table{{width:100%}}}}
 <div class="stat"><div class="n">{m('cost_p50', money(P['p50']))}</div><div class="l">Median / yr, single-family primary home</div></div>
 <div class="stat"><div class="n">{m('cost_mo', median_mo)}</div><div class="l">A month, spread over the year</div></div>
 {_spread_tile()}
-<div class="stat"><div class="n">{m('share_below', str(P['share_below']) + '%')}</div><div class="l">Still pay less than FEMA's full-risk price{'; ' + claim('their bills rise toward it', 'rise', ('share_below', '>', 0)) + ' (<a href="#gap">how fast</a>)' if P.get('share_below') else ''}</div></div>
+<div class="stat"><div class="n">{m('share_below', str(P['share_below']) + '%')}</div><div class="l">Single-family primary homes paying under FEMA's full-risk price{' (<a href="#gap">' + claim('bills rise toward it', 'rise', ('share_below', '>', 0)) + '</a>)' if P.get('share_below') else ''}</div></div>
 </div>
 {cmp_line}{_jump}
 {ZONEMAP if _tool_on("zonemap") else '<a class="btn" href="https://msc.fema.gov/portal/home" rel="noopener" target="_blank">Check your address on FEMA' + "'" + 's flood map →</a>'}

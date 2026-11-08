@@ -362,7 +362,7 @@ RULES = {
                 "one of them yours.",
         "sources": [(CFR61, "two or more acres of normally dry land area or of two or more properties", "curl")]},
     "not_covered": {
-        "text": "A standard NFIP home policy does not pay for a hotel or other living costs while you are out of the home, or for belongings outside the "
+        "text": "The standard NFIP Dwelling Policy does not pay for a hotel or other living costs while you are out of the home, or for belongings outside the "
                 "building, and it limits what it pays for in a basement. Belongings are paid at actual cash value (their used value), not the cost of new ones.",
         "sources": [(CFR61, "Any additional living expenses incurred while the insured building is being repaired", "curl"),
                     (CFR61, "Personal property not inside", "curl"),

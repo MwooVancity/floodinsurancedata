@@ -263,3 +263,9 @@ Ranked by reader value. hater.py record appends each round's **GAP** lines below
 - LOMA "no fee" sits beside Letter of Map Change, which can cost: scope.
 - AE zone: Elevation Certificate who/where (needs a raw FEMA source; FEMA.gov refuses the laptop, use the US runner).
 - Insurance regulators: 12 states fell back to NAIC (403 from the laptop); retry from the US runner.
+
+## round 97 MINORs (11-08)
+- Zone quick answer says "Largest zones" when only one zone has enough priced policies (NY County: X only; AE 41.8% of units, under the floor): singular wording + name the left-out zone.
+- Tile "paying under FEMA's full-risk price": say "premium" (premium before fees vs headline with fees); tile says homes, gap card says policies.
+- not_covered rule: FEMA's form name is "Dwelling Form" (44 CFR 61 App. A(1)); condo unit owners use another form (gap).
+- Condo note "(FEMA's condominium coverage code)" vague; map note "NFIP communities filed under this county" jargon.
