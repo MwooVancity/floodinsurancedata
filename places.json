@@ -1940,6 +1940,16 @@
 "indexable": true
 },
 {
+"slug": "sonoma-county-ca",
+"label": "Sonoma County, California",
+"short": "Sonoma County",
+"geoid": "06097",
+"state": "CA",
+"units": 2368,
+"median": 1266,
+"indexable": true
+},
+{
 "slug": "acadia-parish-la",
 "label": "Acadia Parish, Louisiana",
 "short": "Acadia Parish",
@@ -2320,6 +2330,16 @@
 "indexable": true
 },
 {
+"slug": "will-county-il",
+"label": "Will County, Illinois",
+"short": "Will County",
+"geoid": "17197",
+"state": "IL",
+"units": 1188,
+"median": 1220,
+"indexable": true
+},
+{
 "slug": "polk-county-ia",
 "label": "Polk County, Iowa",
 "short": "Polk County",
@@ -2327,6 +2347,16 @@
 "state": "IA",
 "units": 1156,
 "median": 841,
+"indexable": true
+},
+{
+"slug": "fresno-county-ca",
+"label": "Fresno County, California",
+"short": "Fresno County",
+"geoid": "06019",
+"state": "CA",
+"units": 1126,
+"median": 936,
 "indexable": true
 },
 {
@@ -2340,6 +2370,26 @@
 "indexable": true
 },
 {
+"slug": "gwinnett-county-ga",
+"label": "Gwinnett County, Georgia",
+"short": "Gwinnett County",
+"geoid": "13135",
+"state": "GA",
+"units": 1108,
+"median": 841,
+"indexable": true
+},
+{
+"slug": "greenville-county-sc",
+"label": "Greenville County, South Carolina",
+"short": "Greenville County",
+"geoid": "45045",
+"state": "SC",
+"units": 1081,
+"median": 954,
+"indexable": true
+},
+{
 "slug": "prince-william-county-va",
 "label": "Prince William County, Virginia",
 "short": "Prince William County",
@@ -2347,6 +2397,26 @@
 "state": "VA",
 "units": 1059,
 "median": 666,
+"indexable": true
+},
+{
+"slug": "larimer-county-co",
+"label": "Larimer County, Colorado",
+"short": "Larimer County",
+"geoid": "08069",
+"state": "CO",
+"units": 1052,
+"median": 633,
+"indexable": true
+},
+{
+"slug": "ector-county-tx",
+"label": "Ector County, Texas",
+"short": "Ector County",
+"geoid": "48135",
+"state": "TX",
+"units": 1047,
+"median": 700,
 "indexable": true
 },
 {
@@ -2360,6 +2430,36 @@
 "indexable": true
 },
 {
+"slug": "highlands-county-fl",
+"label": "Highlands County, Florida",
+"short": "Highlands County",
+"geoid": "12055",
+"state": "FL",
+"units": 1017,
+"median": 556,
+"indexable": true
+},
+{
+"slug": "lucas-county-oh",
+"label": "Lucas County, Ohio",
+"short": "Lucas County",
+"geoid": "39095",
+"state": "OH",
+"units": 1000,
+"median": 780,
+"indexable": true
+},
+{
+"slug": "sedgwick-county-ks",
+"label": "Sedgwick County, Kansas",
+"short": "Sedgwick County",
+"geoid": "20173",
+"state": "KS",
+"units": 991,
+"median": 1189,
+"indexable": true
+},
+{
 "slug": "hennepin-county-mn",
 "label": "Hennepin County, Minnesota",
 "short": "Hennepin County",
@@ -2367,6 +2467,56 @@
 "state": "MN",
 "units": 975,
 "median": 831,
+"indexable": true
+},
+{
+"slug": "lubbock-county-tx",
+"label": "Lubbock County, Texas",
+"short": "Lubbock County",
+"geoid": "48303",
+"state": "TX",
+"units": 964,
+"median": 834,
+"indexable": true
+},
+{
+"slug": "craighead-county-ar",
+"label": "Craighead County, Arkansas",
+"short": "Craighead County",
+"geoid": "05031",
+"state": "AR",
+"units": 942,
+"median": 712,
+"indexable": true
+},
+{
+"slug": "guilford-county-nc",
+"label": "Guilford County, North Carolina",
+"short": "Guilford County",
+"geoid": "37081",
+"state": "NC",
+"units": 937,
+"median": 999,
+"indexable": true
+},
+{
+"slug": "pinal-county-az",
+"label": "Pinal County, Arizona",
+"short": "Pinal County",
+"geoid": "04021",
+"state": "AZ",
+"units": 933,
+"median": 864,
+"indexable": true
+},
+{
+"slug": "levy-county-fl",
+"label": "Levy County, Florida",
+"short": "Levy County",
+"geoid": "12075",
+"state": "FL",
+"units": 932,
+"median": 1628,
 "indexable": true
 },
 {
@@ -2380,6 +2530,26 @@
 "indexable": true
 },
 {
+"slug": "berks-county-pa",
+"label": "Berks County, Pennsylvania",
+"short": "Berks County",
+"geoid": "42011",
+"state": "PA",
+"units": 880,
+"median": 1194,
+"indexable": true
+},
+{
+"slug": "james-city-county-va",
+"label": "James City County, Virginia",
+"short": "James City County",
+"geoid": "51095",
+"state": "VA",
+"units": 862,
+"median": 720,
+"indexable": true
+},
+{
 "slug": "washington-county-vt",
 "label": "Washington County, Vermont",
 "short": "Washington County",
@@ -2387,6 +2557,36 @@
 "state": "VT",
 "units": 859,
 "median": 1532,
+"indexable": true
+},
+{
+"slug": "stanislaus-county-ca",
+"label": "Stanislaus County, California",
+"short": "Stanislaus County",
+"geoid": "06099",
+"state": "CA",
+"units": 838,
+"median": 833,
+"indexable": true
+},
+{
+"slug": "cochise-county-az",
+"label": "Cochise County, Arizona",
+"short": "Cochise County",
+"geoid": "04003",
+"state": "AZ",
+"units": 816,
+"median": 1094,
+"indexable": true
+},
+{
+"slug": "mchenry-county-il",
+"label": "McHenry County, Illinois",
+"short": "McHenry County",
+"geoid": "17111",
+"state": "IL",
+"units": 807,
+"median": 1156,
 "indexable": true
 },
 {

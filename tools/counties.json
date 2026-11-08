@@ -2518,5 +2518,205 @@
   "label": "Wakulla County, Florida",
   "short": "Wakulla County",
   "official": 0
+ },
+ {
+  "slug": "sonoma-county-ca",
+  "state": "CA",
+  "geoid": "06097",
+  "county": "SONOMA",
+  "countytitle": "Sonoma",
+  "label": "Sonoma County, California",
+  "short": "Sonoma County",
+  "official": 0
+ },
+ {
+  "slug": "will-county-il",
+  "state": "IL",
+  "geoid": "17197",
+  "county": "WILL",
+  "countytitle": "Will",
+  "label": "Will County, Illinois",
+  "short": "Will County",
+  "official": 0
+ },
+ {
+  "slug": "fresno-county-ca",
+  "state": "CA",
+  "geoid": "06019",
+  "county": "FRESNO",
+  "countytitle": "Fresno",
+  "label": "Fresno County, California",
+  "short": "Fresno County",
+  "official": 0
+ },
+ {
+  "slug": "gwinnett-county-ga",
+  "state": "GA",
+  "geoid": "13135",
+  "county": "GWINNETT",
+  "countytitle": "Gwinnett",
+  "label": "Gwinnett County, Georgia",
+  "short": "Gwinnett County",
+  "official": 0
+ },
+ {
+  "slug": "greenville-county-sc",
+  "state": "SC",
+  "geoid": "45045",
+  "county": "GREENVILLE",
+  "countytitle": "Greenville",
+  "label": "Greenville County, South Carolina",
+  "short": "Greenville County",
+  "official": 0
+ },
+ {
+  "slug": "larimer-county-co",
+  "state": "CO",
+  "geoid": "08069",
+  "county": "LARIMER",
+  "countytitle": "Larimer",
+  "label": "Larimer County, Colorado",
+  "short": "Larimer County",
+  "official": 0
+ },
+ {
+  "slug": "ector-county-tx",
+  "state": "TX",
+  "geoid": "48135",
+  "county": "ECTOR",
+  "countytitle": "Ector",
+  "label": "Ector County, Texas",
+  "short": "Ector County",
+  "official": 0
+ },
+ {
+  "slug": "highlands-county-fl",
+  "state": "FL",
+  "geoid": "12055",
+  "county": "HIGHLANDS",
+  "countytitle": "Highlands",
+  "label": "Highlands County, Florida",
+  "short": "Highlands County",
+  "official": 0
+ },
+ {
+  "slug": "lucas-county-oh",
+  "state": "OH",
+  "geoid": "39095",
+  "county": "LUCAS",
+  "countytitle": "Lucas",
+  "label": "Lucas County, Ohio",
+  "short": "Lucas County",
+  "official": 0
+ },
+ {
+  "slug": "sedgwick-county-ks",
+  "state": "KS",
+  "geoid": "20173",
+  "county": "SEDGWICK",
+  "countytitle": "Sedgwick",
+  "label": "Sedgwick County, Kansas",
+  "short": "Sedgwick County",
+  "official": 0
+ },
+ {
+  "slug": "lubbock-county-tx",
+  "state": "TX",
+  "geoid": "48303",
+  "county": "LUBBOCK",
+  "countytitle": "Lubbock",
+  "label": "Lubbock County, Texas",
+  "short": "Lubbock County",
+  "official": 0
+ },
+ {
+  "slug": "craighead-county-ar",
+  "state": "AR",
+  "geoid": "05031",
+  "county": "CRAIGHEAD",
+  "countytitle": "Craighead",
+  "label": "Craighead County, Arkansas",
+  "short": "Craighead County",
+  "official": 0
+ },
+ {
+  "slug": "guilford-county-nc",
+  "state": "NC",
+  "geoid": "37081",
+  "county": "GUILFORD",
+  "countytitle": "Guilford",
+  "label": "Guilford County, North Carolina",
+  "short": "Guilford County",
+  "official": 0
+ },
+ {
+  "slug": "pinal-county-az",
+  "state": "AZ",
+  "geoid": "04021",
+  "county": "PINAL",
+  "countytitle": "Pinal",
+  "label": "Pinal County, Arizona",
+  "short": "Pinal County",
+  "official": 0
+ },
+ {
+  "slug": "levy-county-fl",
+  "state": "FL",
+  "geoid": "12075",
+  "county": "LEVY",
+  "countytitle": "Levy",
+  "label": "Levy County, Florida",
+  "short": "Levy County",
+  "official": 0
+ },
+ {
+  "slug": "berks-county-pa",
+  "state": "PA",
+  "geoid": "42011",
+  "county": "BERKS",
+  "countytitle": "Berks",
+  "label": "Berks County, Pennsylvania",
+  "short": "Berks County",
+  "official": 0
+ },
+ {
+  "slug": "james-city-county-va",
+  "state": "VA",
+  "geoid": "51095",
+  "county": "JAMES CITY",
+  "countytitle": "James City",
+  "label": "James City County, Virginia",
+  "short": "James City County",
+  "official": 0
+ },
+ {
+  "slug": "stanislaus-county-ca",
+  "state": "CA",
+  "geoid": "06099",
+  "county": "STANISLAUS",
+  "countytitle": "Stanislaus",
+  "label": "Stanislaus County, California",
+  "short": "Stanislaus County",
+  "official": 0
+ },
+ {
+  "slug": "cochise-county-az",
+  "state": "AZ",
+  "geoid": "04003",
+  "county": "COCHISE",
+  "countytitle": "Cochise",
+  "label": "Cochise County, Arizona",
+  "short": "Cochise County",
+  "official": 0
+ },
+ {
+  "slug": "mchenry-county-il",
+  "state": "IL",
+  "geoid": "17111",
+  "county": "MCHENRY",
+  "countytitle": "McHenry",
+  "label": "McHenry County, Illinois",
+  "short": "McHenry County",
+  "official": 0
  }
 ]

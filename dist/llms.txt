@@ -250,6 +250,7 @@
 - [Pierce County](https://floodinsurancedata.com/flood-insurance/pierce-county-wa/): median $886
 - [Cobb County](https://floodinsurancedata.com/flood-insurance/cobb-county-ga/): median $880
 - [San Patricio County](https://floodinsurancedata.com/flood-insurance/san-patricio-county-tx/): median $781
+- [Sonoma County](https://floodinsurancedata.com/flood-insurance/sonoma-county-ca/): median $1,266
 - [Acadia Parish](https://floodinsurancedata.com/flood-insurance/acadia-parish-la/): median $1,151
 - [Solano County](https://floodinsurancedata.com/flood-insurance/solano-county-ca/): median $1,354
 - [Valencia County](https://floodinsurancedata.com/flood-insurance/valencia-county-nm/): median $1,070
@@ -288,13 +289,32 @@
 - [Iberville Parish](https://floodinsurancedata.com/flood-insurance/iberville-parish-la/): median $802
 - [Wakulla County](https://floodinsurancedata.com/flood-insurance/wakulla-county-fl/): median $1,471
 - [Salt Lake County](https://floodinsurancedata.com/flood-insurance/salt-lake-county-ut/): median $548
+- [Will County](https://floodinsurancedata.com/flood-insurance/will-county-il/): median $1,220
 - [Polk County](https://floodinsurancedata.com/flood-insurance/polk-county-ia/): median $841
+- [Fresno County](https://floodinsurancedata.com/flood-insurance/fresno-county-ca/): median $936
 - [Saginaw County](https://floodinsurancedata.com/flood-insurance/saginaw-county-mi/): median $910
+- [Gwinnett County](https://floodinsurancedata.com/flood-insurance/gwinnett-county-ga/): median $841
+- [Greenville County](https://floodinsurancedata.com/flood-insurance/greenville-county-sc/): median $954
 - [Prince William County](https://floodinsurancedata.com/flood-insurance/prince-william-county-va/): median $666
+- [Larimer County](https://floodinsurancedata.com/flood-insurance/larimer-county-co/): median $633
+- [Ector County](https://floodinsurancedata.com/flood-insurance/ector-county-tx/): median $700
 - [Denver County](https://floodinsurancedata.com/flood-insurance/denver-county-co/): median $660
+- [Highlands County](https://floodinsurancedata.com/flood-insurance/highlands-county-fl/): median $556
+- [Lucas County](https://floodinsurancedata.com/flood-insurance/lucas-county-oh/): median $780
+- [Sedgwick County](https://floodinsurancedata.com/flood-insurance/sedgwick-county-ks/): median $1,189
 - [Hennepin County](https://floodinsurancedata.com/flood-insurance/hennepin-county-mn/): median $831
+- [Lubbock County](https://floodinsurancedata.com/flood-insurance/lubbock-county-tx/): median $834
+- [Craighead County](https://floodinsurancedata.com/flood-insurance/craighead-county-ar/): median $712
+- [Guilford County](https://floodinsurancedata.com/flood-insurance/guilford-county-nc/): median $999
+- [Pinal County](https://floodinsurancedata.com/flood-insurance/pinal-county-az/): median $864
+- [Levy County](https://floodinsurancedata.com/flood-insurance/levy-county-fl/): median $1,628
 - [Kitsap County](https://floodinsurancedata.com/flood-insurance/kitsap-county-wa/): median $693
+- [Berks County](https://floodinsurancedata.com/flood-insurance/berks-county-pa/): median $1,194
+- [James City County](https://floodinsurancedata.com/flood-insurance/james-city-county-va/): median $720
 - [Washington County](https://floodinsurancedata.com/flood-insurance/washington-county-vt/): median $1,532
+- [Stanislaus County](https://floodinsurancedata.com/flood-insurance/stanislaus-county-ca/): median $833
+- [Cochise County](https://floodinsurancedata.com/flood-insurance/cochise-county-az/): median $1,094
+- [McHenry County](https://floodinsurancedata.com/flood-insurance/mchenry-county-il/): median $1,156
 - [Thurston County](https://floodinsurancedata.com/flood-insurance/thurston-county-wa/): median $884
 - [Utah County](https://floodinsurancedata.com/flood-insurance/utah-county-ut/): median $756
 - [Haywood County](https://floodinsurancedata.com/flood-insurance/haywood-county-nc/): median $1,221
