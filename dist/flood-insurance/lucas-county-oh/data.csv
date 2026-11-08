@@ -72,6 +72,8 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Lucas County, Ohio",decade_claims,2000s,389,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
 "Lucas County, Ohio",decade_paid_share,2000s,76.1%,pct,FEMA OpenFEMA — NFIP Claims,yearOfLoss + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Lucas County, Ohio",decade_claims,2010s,159,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
+"Lucas County, Ohio",decade,2020s,2020s,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
+"Lucas County, Ohio",decade_claims,2020s,26,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
 "Lucas County, Ohio",unpaid_n,,380,count,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Lucas County, Ohio",unpaid_reason_n,01,133,count,FEMA OpenFEMA — NFIP Claims,nonPaymentReasonBuilding,"August 31, 2026"
 "Lucas County, Ohio",unpaid_reason_n,06,58,count,FEMA OpenFEMA — NFIP Claims,nonPaymentReasonBuilding,"August 31, 2026"

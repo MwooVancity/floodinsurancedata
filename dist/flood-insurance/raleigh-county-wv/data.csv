@@ -60,6 +60,8 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Raleigh County, West Virginia",decade_claims,2000s,223,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
 "Raleigh County, West Virginia",decade_paid_share,2000s,81.6%,pct,FEMA OpenFEMA — NFIP Claims,yearOfLoss + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Raleigh County, West Virginia",decade_claims,2010s,103,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
+"Raleigh County, West Virginia",decade,2020s,2020s,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
+"Raleigh County, West Virginia",decade_claims,2020s,16,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
 "Raleigh County, West Virginia",unpaid_n,,87,count,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Raleigh County, West Virginia",unpaid_reason_n,01,27,count,FEMA OpenFEMA — NFIP Claims,nonPaymentReasonBuilding,"August 31, 2026"
 "Raleigh County, West Virginia",unpaid_reason_n,97,18,count,FEMA OpenFEMA — NFIP Claims,nonPaymentReasonBuilding,"August 31, 2026"

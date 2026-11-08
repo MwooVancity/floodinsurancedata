@@ -80,6 +80,8 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Monroe County, Florida",decade_claims,2010s,"8,319",count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
 "Monroe County, Florida",decade_paid_share,2010s,67.9%,pct,FEMA OpenFEMA — NFIP Claims,yearOfLoss + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Monroe County, Florida",decade_claims,2020s,725,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
+"Monroe County, Florida",decade,1970s,1970s,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
+"Monroe County, Florida",decade_claims,1970s,20,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
 "Monroe County, Florida",unpaid_n,,"8,711",count,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Monroe County, Florida",unpaid_reason_n,01,"2,217",count,FEMA OpenFEMA — NFIP Claims,nonPaymentReasonBuilding,"August 31, 2026"
 "Monroe County, Florida",unpaid_reason_n,20,"1,903",count,FEMA OpenFEMA — NFIP Claims,nonPaymentReasonBuilding,"August 31, 2026"

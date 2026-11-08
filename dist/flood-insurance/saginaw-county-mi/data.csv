@@ -76,6 +76,8 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Saginaw County, Michigan",decade_claims,2010s,135,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
 "Saginaw County, Michigan",decade_paid_share,2010s,66.7%,pct,FEMA OpenFEMA — NFIP Claims,yearOfLoss + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Saginaw County, Michigan",decade_claims,2020s,233,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
+"Saginaw County, Michigan",decade,1970s,1970s,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
+"Saginaw County, Michigan",decade_claims,1970s,6,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
 "Saginaw County, Michigan",unpaid_n,,209,count,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Saginaw County, Michigan",unpaid_reason_n,01,65,count,FEMA OpenFEMA — NFIP Claims,nonPaymentReasonBuilding,"August 31, 2026"
 "Saginaw County, Michigan",unpaid_reason_n,97,28,count,FEMA OpenFEMA — NFIP Claims,nonPaymentReasonBuilding,"August 31, 2026"

@@ -78,6 +78,8 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Whatcom County, Washington",decade_claims,2010s,41,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
 "Whatcom County, Washington",decade_paid_share,2010s,58.5%,pct,FEMA OpenFEMA — NFIP Claims,yearOfLoss + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Whatcom County, Washington",decade_claims,2020s,688,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
+"Whatcom County, Washington",decade,1970s,1970s,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
+"Whatcom County, Washington",decade_claims,1970s,13,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
 "Whatcom County, Washington",unpaid_n,,188,count,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Whatcom County, Washington",unpaid_reason_n,01,56,count,FEMA OpenFEMA — NFIP Claims,nonPaymentReasonBuilding,"August 31, 2026"
 "Whatcom County, Washington",unpaid_reason_n,97,38,count,FEMA OpenFEMA — NFIP Claims,nonPaymentReasonBuilding,"August 31, 2026"

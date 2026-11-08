@@ -77,6 +77,8 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Hennepin County, Minnesota",decade_claims,2000s,94,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
 "Hennepin County, Minnesota",decade_paid_share,2000s,54.3%,pct,FEMA OpenFEMA — NFIP Claims,yearOfLoss + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Hennepin County, Minnesota",decade_claims,2010s,178,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
+"Hennepin County, Minnesota",decade,2020s,2020s,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
+"Hennepin County, Minnesota",decade_claims,2020s,12,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
 "Hennepin County, Minnesota",unpaid_n,,246,count,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Hennepin County, Minnesota",unpaid_reason_n,06,77,count,FEMA OpenFEMA — NFIP Claims,nonPaymentReasonBuilding,"August 31, 2026"
 "Hennepin County, Minnesota",unpaid_reason_n,01,42,count,FEMA OpenFEMA — NFIP Claims,nonPaymentReasonBuilding,"August 31, 2026"

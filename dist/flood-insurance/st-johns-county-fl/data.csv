@@ -83,6 +83,8 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "St. Johns County, Florida",decade_claims,2010s,"5,356",count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
 "St. Johns County, Florida",decade_paid_share,2010s,81.5%,pct,FEMA OpenFEMA — NFIP Claims,yearOfLoss + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "St. Johns County, Florida",decade_claims,2020s,"1,156",count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
+"St. Johns County, Florida",decade,1970s,1970s,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
+"St. Johns County, Florida",decade_claims,1970s,11,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
 "St. Johns County, Florida",unpaid_n,,"1,802",count,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "St. Johns County, Florida",unpaid_reason_n,01,398,count,FEMA OpenFEMA — NFIP Claims,nonPaymentReasonBuilding,"August 31, 2026"
 "St. Johns County, Florida",unpaid_reason_n,06,358,count,FEMA OpenFEMA — NFIP Claims,nonPaymentReasonBuilding,"August 31, 2026"

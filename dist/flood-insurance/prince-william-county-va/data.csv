@@ -80,6 +80,8 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Prince William County, Virginia",decade_claims,2010s,182,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
 "Prince William County, Virginia",decade_paid_share,2010s,58.2%,pct,FEMA OpenFEMA — NFIP Claims,yearOfLoss + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Prince William County, Virginia",decade_claims,2020s,42,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
+"Prince William County, Virginia",decade,1970s,1970s,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
+"Prince William County, Virginia",decade_claims,1970s,27,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
 "Prince William County, Virginia",unpaid_n,,177,count,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Prince William County, Virginia",unpaid_reason_n,06,51,count,FEMA OpenFEMA — NFIP Claims,nonPaymentReasonBuilding,"August 31, 2026"
 "Prince William County, Virginia",unpaid_reason_n,01,29,count,FEMA OpenFEMA — NFIP Claims,nonPaymentReasonBuilding,"August 31, 2026"

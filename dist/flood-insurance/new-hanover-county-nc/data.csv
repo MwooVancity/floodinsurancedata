@@ -76,6 +76,8 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "New Hanover County, North Carolina",decade_claims,2010s,"1,993",count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
 "New Hanover County, North Carolina",decade_paid_share,2010s,72.6%,pct,FEMA OpenFEMA — NFIP Claims,yearOfLoss + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "New Hanover County, North Carolina",decade_claims,2020s,552,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
+"New Hanover County, North Carolina",decade,1970s,1970s,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
+"New Hanover County, North Carolina",decade_claims,1970s,21,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
 "New Hanover County, North Carolina",unpaid_n,,"2,901",count,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "New Hanover County, North Carolina",unpaid_reason_n,01,772,count,FEMA OpenFEMA — NFIP Claims,nonPaymentReasonBuilding,"August 31, 2026"
 "New Hanover County, North Carolina",unpaid_reason_n,97,598,count,FEMA OpenFEMA — NFIP Claims,nonPaymentReasonBuilding,"August 31, 2026"

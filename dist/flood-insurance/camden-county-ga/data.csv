@@ -74,6 +74,8 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Camden County, Georgia",decade_claims,2010s,212,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
 "Camden County, Georgia",decade_paid_share,2010s,77.8%,pct,FEMA OpenFEMA — NFIP Claims,yearOfLoss + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Camden County, Georgia",decade_claims,2020s,32,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
+"Camden County, Georgia",decade,1970s,1970s,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
+"Camden County, Georgia",decade_claims,1970s,1,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
 "Camden County, Georgia",unpaid_n,,96,count,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Camden County, Georgia",unpaid_reason_n,06,25,count,FEMA OpenFEMA — NFIP Claims,nonPaymentReasonBuilding,"August 31, 2026"
 "Camden County, Georgia",unpaid_reason_n,01,24,count,FEMA OpenFEMA — NFIP Claims,nonPaymentReasonBuilding,"August 31, 2026"

@@ -80,6 +80,8 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Flagler County, Florida",decade_claims,2010s,"1,270",count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
 "Flagler County, Florida",decade_paid_share,2010s,75.9%,pct,FEMA OpenFEMA — NFIP Claims,yearOfLoss + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Flagler County, Florida",decade_claims,2020s,511,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
+"Flagler County, Florida",decade,1980s,1980s,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
+"Flagler County, Florida",decade_claims,1980s,10,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
 "Flagler County, Florida",unpaid_n,,598,count,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Flagler County, Florida",unpaid_reason_n,06,150,count,FEMA OpenFEMA — NFIP Claims,nonPaymentReasonBuilding,"August 31, 2026"
 "Flagler County, Florida",unpaid_reason_n,20,96,count,FEMA OpenFEMA — NFIP Claims,nonPaymentReasonBuilding,"August 31, 2026"

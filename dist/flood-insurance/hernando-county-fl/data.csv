@@ -82,6 +82,8 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Hernando County, Florida",decade_claims,2010s,440,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
 "Hernando County, Florida",decade_paid_share,2010s,75.7%,pct,FEMA OpenFEMA — NFIP Claims,yearOfLoss + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Hernando County, Florida",decade_claims,2020s,"1,361",count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
+"Hernando County, Florida",decade,1970s,1970s,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
+"Hernando County, Florida",decade_claims,1970s,12,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
 "Hernando County, Florida",unpaid_n,,496,count,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Hernando County, Florida",unpaid_reason_n,01,155,count,FEMA OpenFEMA — NFIP Claims,nonPaymentReasonBuilding,"August 31, 2026"
 "Hernando County, Florida",unpaid_reason_n,06,79,count,FEMA OpenFEMA — NFIP Claims,nonPaymentReasonBuilding,"August 31, 2026"

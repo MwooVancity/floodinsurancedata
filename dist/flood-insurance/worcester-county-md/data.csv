@@ -82,6 +82,8 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Worcester County, Maryland",decade_claims,2010s,747,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
 "Worcester County, Maryland",decade_paid_share,2010s,72.0%,pct,FEMA OpenFEMA — NFIP Claims,yearOfLoss + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Worcester County, Maryland",decade_claims,2020s,33,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
+"Worcester County, Maryland",decade,1970s,1970s,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
+"Worcester County, Maryland",decade_claims,1970s,27,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
 "Worcester County, Maryland",unpaid_n,,845,count,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Worcester County, Maryland",unpaid_reason_n,01,194,count,FEMA OpenFEMA — NFIP Claims,nonPaymentReasonBuilding,"August 31, 2026"
 "Worcester County, Maryland",unpaid_reason_n,97,202,count,FEMA OpenFEMA — NFIP Claims,nonPaymentReasonBuilding,"August 31, 2026"

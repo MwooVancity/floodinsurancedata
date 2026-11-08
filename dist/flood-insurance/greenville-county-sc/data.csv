@@ -74,6 +74,8 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Greenville County, South Carolina",decade_claims,2010s,150,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
 "Greenville County, South Carolina",decade_paid_share,2010s,70.7%,pct,FEMA OpenFEMA — NFIP Claims,yearOfLoss + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Greenville County, South Carolina",decade_claims,2020s,248,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
+"Greenville County, South Carolina",decade,1970s,1970s,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
+"Greenville County, South Carolina",decade_claims,1970s,21,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
 "Greenville County, South Carolina",unpaid_n,,182,count,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Greenville County, South Carolina",unpaid_reason_n,06,36,count,FEMA OpenFEMA — NFIP Claims,nonPaymentReasonBuilding,"August 31, 2026"
 "Greenville County, South Carolina",unpaid_reason_n,97,38,count,FEMA OpenFEMA — NFIP Claims,nonPaymentReasonBuilding,"August 31, 2026"

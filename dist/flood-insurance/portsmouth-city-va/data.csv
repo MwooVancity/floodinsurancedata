@@ -67,6 +67,8 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Portsmouth city, Virginia",decade_claims,2010s,511,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
 "Portsmouth city, Virginia",decade_paid_share,2010s,78.9%,pct,FEMA OpenFEMA — NFIP Claims,yearOfLoss + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Portsmouth city, Virginia",decade_claims,2020s,47,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
+"Portsmouth city, Virginia",decade,1970s,1970s,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
+"Portsmouth city, Virginia",decade_claims,1970s,13,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
 "Portsmouth city, Virginia",unpaid_n,,407,count,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Portsmouth city, Virginia",unpaid_reason_n,01,96,count,FEMA OpenFEMA — NFIP Claims,nonPaymentReasonBuilding,"August 31, 2026"
 "Portsmouth city, Virginia",unpaid_reason_n,97,98,count,FEMA OpenFEMA — NFIP Claims,nonPaymentReasonBuilding,"August 31, 2026"

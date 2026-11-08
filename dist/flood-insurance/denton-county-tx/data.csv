@@ -77,6 +77,8 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Denton County, Texas",decade_claims,2010s,181,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
 "Denton County, Texas",decade_paid_share,2010s,66.9%,pct,FEMA OpenFEMA — NFIP Claims,yearOfLoss + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Denton County, Texas",decade_claims,2020s,63,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
+"Denton County, Texas",decade,1970s,1970s,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
+"Denton County, Texas",decade_claims,1970s,3,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
 "Denton County, Texas",unpaid_n,,167,count,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Denton County, Texas",unpaid_reason_n,06,57,count,FEMA OpenFEMA — NFIP Claims,nonPaymentReasonBuilding,"August 31, 2026"
 "Denton County, Texas",unpaid_reason_n,97,25,count,FEMA OpenFEMA — NFIP Claims,nonPaymentReasonBuilding,"August 31, 2026"

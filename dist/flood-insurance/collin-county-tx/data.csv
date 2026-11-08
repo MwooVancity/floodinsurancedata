@@ -77,6 +77,8 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Collin County, Texas",decade_claims,2010s,102,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
 "Collin County, Texas",decade_paid_share,2010s,68.6%,pct,FEMA OpenFEMA — NFIP Claims,yearOfLoss + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Collin County, Texas",decade_claims,2020s,41,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
+"Collin County, Texas",decade,1970s,1970s,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
+"Collin County, Texas",decade_claims,1970s,9,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
 "Collin County, Texas",unpaid_n,,106,count,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Collin County, Texas",unpaid_reason_n,06,37,count,FEMA OpenFEMA — NFIP Claims,nonPaymentReasonBuilding,"August 31, 2026"
 "Collin County, Texas",unpaid_reason_n,97,23,count,FEMA OpenFEMA — NFIP Claims,nonPaymentReasonBuilding,"August 31, 2026"
