@@ -160,3 +160,14 @@ if os.path.exists(_zh):
         assert _zone_counts_agree(_a, _b), (_gr, _a, _b)
 
 print("test_calc: all assertions passed (exercising ffcalc production functions)")
+
+
+# S16 internal links (11-08): a county page missing a hub link fails; the same page with it passes
+import linkcheck
+_pg = {"/nfip/": "", "/flood-insurance/harris-county-tx/": "<a href='/nfip/'>n</a> <a href='/flood-zones/ae/'>AE</a>"}
+assert linkcheck.fails(_pg, set(_pg)) == [], linkcheck.fails(_pg, set(_pg))
+_pg["/flood-insurance/harris-county-tx/"] = "<a href='/flood-zones/ae/'>AE</a>"
+assert linkcheck.fails(_pg, set(_pg)) == ["/flood-insurance/harris-county-tx/: no link to /nfip/"]
+_pg["/flood-insurance/harris-county-tx/"] = "<a href='../../nfip/'>n</a>"
+assert linkcheck.fails(_pg, set(_pg)) == ["/flood-insurance/harris-county-tx/: no link to a zone page"]
+print("S16 link check: 3 cases ok")

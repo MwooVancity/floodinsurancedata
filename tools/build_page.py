@@ -414,7 +414,7 @@ def _map_line():   # PLAN 3e: when this place's FEMA map took effect, and which 
     if not out: return ""
     return (f"<p class='note'><b>Flood map:</b> {' '.join(out)} {rule('prelim')} Check your own address on "
             "<a href='https://msc.fema.gov/portal/home' rel='noopener' target='_blank'>FEMA's flood map</a>"
-            + (" or with the <a href='/flood-zone-map/'>flood zone lookup</a>" if _HUB_ON else "") + ".</p>")
+            + (" or with our <a href='/flood-zone-map/'>flood zone map lookup by address</a>" if _HUB_ON else "") + ".</p>")
 
 _ZMF = json.load(open(os.path.join(HERE, "tools_flags.json"), encoding="utf-8")).get("zonemap") or []
 _HUB_ON = _ZMF == "all" or "flood-zone-map" in _ZMF
@@ -493,7 +493,7 @@ def card_howto():
     howto_card = card("How do I actually get covered — and how fast?",   # limits live in the tiles once (no second copy)
         rule("howto_answer"),
         rule("howto_tiles")
-        + f"<p class='note'>{rule('homeowners_excl')} {rule('wait_exceptions')} {rule('how_to_buy')}</p>"
+        + f"<p class='note'>{rule('homeowners_excl')} {rule('wait_exceptions')} {rule('how_to_buy')} The program nationwide: <a href='/nfip/'>the NFIP in numbers</a>.</p>"
         + f"<p class='note'>{rule('nfip_lapse')}</p>"
         + f"<p class='note'><b>What it won't pay:</b> {rule('flood_def')} {rule('not_covered')} {rule('wind_excl')}</p>"
         + f"<p class='note'>{rule('already_flooded')} {rule('aid_insurance')}</p>"
@@ -1163,7 +1163,7 @@ def card_required():
       f"<p class='note'><b>At a closing:</b> {rule('lender_amount')} {rule('lender_force')} {rule('zone_review')} {rule('seller_assign')}" + (f" {rule('fl_disclosure')}" if agg.get("state") == "FL" else "") + "</p>" +
       (f"<p class='note'>{rule('tx_twia')}</p>" if agg.get("state") == "TX" else "") +
       f"<p class='note'>{m('sfha_share', str(P['sfha_share_units']) + '%')} of {CS}'s NFIP policy units are in high-risk zones (not {tp('sfha_share', 'policies.sfha_share_units', pct)} of all buildings, and not an answer about your own home).</p>" + _outside_line() +
-      f"{_zone_body()}<p class='note'>Insured units by the zone each policy is rated in.{how('zones')} What each means: <a href='/flood-zones/ae/'>zone AE</a>, <a href='/flood-zones/x/'>zone X</a>, <a href='/flood-zones/ve/'>zone VE</a>.</p>" + ("" if P.get("cost_by_zone") else f"<p class='note'>{rule('zone_codes')}</p>") + _map_line()
+      f"{_zone_body()}<p class='note'>Insured units by the zone each policy is rated in.{how('zones')} What each means: <a href='/flood-zones/ae/'>zone AE</a>, <a href='/flood-zones/x/'>zone X</a>, <a href='/flood-zones/ve/'>zone VE</a>." + (" Find yours with the <a href='/flood-zone-map/'>flood zone map lookup by address</a>." if _HUB_ON and IS_STATE else "") + "</p>" + ("" if P.get("cost_by_zone") else f"<p class='note'>{rule('zone_codes')}</p>") + _map_line()
       + (f"<p class='note'><b>Not in the NFIP ({m('crs_count', str(len(crs_out)), q='not_nfip')} {pl(len(crs_out), 'community', 'communities')} here)"
          + (": " + "; ".join(sorted((_cname(c) + (" (unincorporated area only)" if re.search(r"\b(COUNTY|PARISH|BOROUGH)\b", (c.get("communityName") or "").upper()) else "") for c in crs_out), key=lambda h: html.unescape(re.sub("<[^>]+>", "", h)).casefold())))
          + f".</b> {rule('nfip_not_sold')}</p>" if crs_out else ""),
@@ -1171,7 +1171,7 @@ def card_required():
 
 def card_cost():
     cost_lead, cost_body = _cost_parts()
-    cost_body += f"<p class='note'>{rule('other_buyers')} The median here is for single-family primary-home policies, not businesses or second homes. {rule('surcharge')}</p>"
+    cost_body += f"<p class='note'>{rule('other_buyers')} The median here is for single-family primary-home policies, not businesses or second homes. Renting? See <a href='/flood-insurance/renters/'>what renters pay</a>. {rule('surcharge')}</p>"
     return card(f"Flood insurance cost in {CL}", cost_lead, cost_body, src(["cost_p50", "prem_median", "frp_median", "coverage"], POL_ASOF, RETR) + src_rules(["other_buyers", "surcharge"]))
 
 def card_claims():
@@ -1182,7 +1182,9 @@ def card_claims():
       src(["claims_filed", "claims_total"], f"{C['year_min']}–{C['year_max']}", RETR))
 
 def card_zip():   # state pages: the county table in the same slot
-    return _counties_table() if IS_STATE else _zip_county()
+    if not IS_STATE: return _zip_county()
+    _t = _counties_table()   # 11-08 S16: the state page links the ZIP lookup too (beside its county table)
+    return _t.replace("</section>", "<p class='note'>Cost by ZIP code: <a href='/flood-insurance/zip/'>look up any U.S. ZIP</a>.</p></section>", 1) if _ZIP_ON and "</section>" in _t else _t
 
 def card_gap():
     gap_lead, glide_note = _gap_parts()

@@ -96,6 +96,10 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); from notes impor
 for p, h in pages.items():
     if GA_TAG not in h: fail("S15", f"{p}: Google Analytics tag missing")
 
+# S16 internal links: every state/county page links each money hub and a zone page (tools/linkcheck.py)
+import linkcheck
+for _m in linkcheck.fails(pages, indexable): fail("S16", _m)
+
 # S5 hidden text
 for p, h in pages.items():
     body = re.sub(r"<(script|style|head)\b.*?</\1>", " ", h, flags=re.S)
