@@ -16,15 +16,9 @@ Most helpful flood-insurance page for every US place a homeowner or buyer search
 Keyword Planner volume x top bid: state insurance $190k, map $90k, towns $47k, zones $37k, cost $37k, NFIP $36k, state map $25k, renters $18k, county map $15.5k. Not targeted: head term "flood insurance" (FloodSmart), quote and companies (forbidden). Every money page is live; counties now run 20 a day, queue "kw" > 0 only (~1,200 zero-demand counties wait for the Jan 4 rule).
 
 ## Next, in order
-0. Zone map must be sound before "all" on 11-20 (fresh audit 11-08, `state/reviews/fresh-audit-2026-11-08.md`; no BLOCKER):
-   - D1 drag the pin while FEMA answers = old point's zone under the new pin (`zonemap.js:96-119`): ignore stale answers; test with a 2 s FEMA delay.
-   - D4 nobody learns the tool broke: `live_zonemap.py` must fail unless 4 of 5 addresses get a zone; run nightly in `watch.yml`. "all" only after 7 green nights.
-   - D2 raw FEMA codes ("OPEN WATER", "AREA NOT INCLUDED") printed as zones: only codes with a data-dictionary label; test keeps its own label table.
-   - D5 "within 15 m" is a square (corners 21 m): probe FEMA `distance=15` from the US runner; else reword "about 15 to 20 m".
-   - D3 LOMA/LOMR letters near the pin not shown: show FEMA's own records (case, date, outcome) + line that one-building letters are not drawn.
-   - D6 hurricane-week load (6-12 FEMA images a view): measure before 11-20.
+0. Zone map before "all" on 11-20 (fresh audit 11-08): D1 stale answer dropped, D2 non-letter FEMA values quoted not named, D5 true 15 m circle (FEMA honours distance, probe 11-08), all live 11-08 with tests that fail without them. D4: live test needs 4 of 5 real zones, nightly in watch.yml; "all" only after 7 green nights. D6 measured: map image 0.9 s, 17 KB each (6-12 a view), fine. D3 (FEMA letters near the pin): beyond the address-tool rule, owner decision.
 1. DONE 11-08: condo filter; S16 link gate; zone pages link their top 10 counties (Z8). Next: round-97 MINORs (backlog).
-2. Weekly Search Console read (last 11-04: slipped). Owner decisions from the audit: BFE in the address tool; share of homes insured; Esri copy as fallback (audit: no).
+2. Weekly Search Console read (last 11-04: slipped). Owner decisions from the audit: BFE in the address tool; FEMA map letters (LOMA/LOMR) near the pin; share of homes insured; Esri copy as fallback (audit: no).
 3. US-runner raw reads (fema-probe links job): Elevation Certificate who/where (AE page); retry the 12 NAIC-fallback regulators (AK AZ KS LA MA MI MN NH NJ RI WV WY).
 4. One claims base everywhere: county payout shares drop FEMA codes 98/99 like the claims page (extras_raw + recheck, lands with the next refresh).
 5. Renter tenant-flag check (does FEMA's data catch every renter policy?). County floodplain contacts: no dataset, so a printed gap line.
