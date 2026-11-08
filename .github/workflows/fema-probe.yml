@@ -12,6 +12,16 @@ jobs:
       - run: pip install -q playwright==1.64.1 && python -m playwright install --with-deps chromium webkit
       - run: python -I tools/live_zonemap.py --browser chromium
       - run: python -I tools/live_zonemap.py --browser webkit
+  depts:   # 11-08: 12 state regulators refuse the laptop (bot walls); read them from a US runner, keep only title-checked pages
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: python -I tools/fetch_insurance_depts.py && python3 -c "import json;d=json.load(open('data/us/insurance_depts.json'));print(len(d),'kept');[print(k,d.get(k)) for k in 'AK AZ KS LA MA MI MN NH NJ RI WV WY'.split()]"
+      - uses: actions/upload-artifact@v4
+        with: { name: insurance-depts, path: data/us/insurance_depts.json }
   links:   # 11-07: FEMA hosts refuse the laptop; check reader-facing FEMA links (status, title, key words) from a US runner
     runs-on: ubuntu-latest
     timeout-minutes: 5
