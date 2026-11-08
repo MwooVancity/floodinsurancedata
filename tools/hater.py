@@ -33,7 +33,12 @@ def query(slug):   # the query a real reader types for this page
 SNAP = os.path.join(DIR, "snap")   # visible text the reviewer saw (prep) and the last text that PASSed (record)
 def vis_text(h):
     h = re.sub(r"<(script|style)\b.*?</\1>", "", h, flags=re.S)   # CSS is not text a reader sees
-    return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", h)).strip()
+    # 11-08: the county index grows every day by design (each row is gated on its own page); its rows and "N counties"
+    # count are data, not template wording, so a carry compares everything else word for word
+    h = re.sub(r'<tr data-k="[^"]*">.*?</tr>', " ", h, flags=re.S)
+    t = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", h)).strip()
+    t = re.sub(r"\bretrieved \d{4}-\d{2}-\d{2}\b", "retrieved DATE", t)   # a fetch date is data, not wording
+    return re.sub(r"\b[\d,]+ (count(?:y|ies)|parish(?:es)?|places)\b", r"N \1", t)
 def snap(rnd, slugs):
     d = os.path.join(SNAP, f"round{rnd}"); os.makedirs(d, exist_ok=True)
     old = sorted((x for x in os.listdir(SNAP) if x.startswith("round")), key=lambda x: int(x[5:]))[:-3]   # cap: last 3 rounds + passed

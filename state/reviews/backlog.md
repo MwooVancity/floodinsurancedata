@@ -269,3 +269,11 @@ Ranked by reader value. hater.py record appends each round's **GAP** lines below
 - not_covered rule: FEMA's form name is "Dwelling Form" (44 CFR 61 App. A(1)); condo unit owners use another form (gap).
 - Condo note "(FEMA's condominium coverage code)" vague; map note "NFIP communities filed under this county" jargon.
 
+
+## levy-county-fl (round 113)
+- The LOMA counts have no time span (all rulings since when?). The oldest/newest panel dates are given, but the 44 rulings have no "since" year, so a reader cannot tell if these are recent. Top results for LOMA give no span either, so not blocking.
+- No plain-words line that the outcomes of past rulings do not predict the reader's own result (the "not a share of all homes" line comes close).
+
+## sonoma-county-ca (round 113)
+- "364 took the building or some or all of the lot out" out of 483 can read as a high odds of success. The sentence "rulings for owners who applied" helps, but it is not said that owners who applied are a self-selected group. Not blocking.
+- Same missing time span for the LOMA counts.
