@@ -3,7 +3,8 @@ State, dated numbers, next moves, owner-only items. Rules: CLAUDE.md. History: g
 
 ## Goal and scoreboard
 Most helpful flood-insurance page for every US place a homeowner or buyer searches, on a phone. Scoreboard: pages indexed, impressions, clicks, page-1 queries, AI citations. Polish only where a number says a page fails.
-- Search Console 10-24..11-04: 3 clicks (likely owner), position ~44-64; best query "flood insurance florida" pos 20.5. No outside reader proven yet.
+- Search Console 28 days to 11-06: 5 clicks, 872 impressions, 225 pages and 235 queries seen, avg position 39.5. Best: Brevard pos 8.2 (41 impr, 1 click), New London CT pos 2 (2 clicks), Florida state pos 25.9, zone X 83, zone AE 75; /flood-zone-map/ not yet in the top 10 pages by impressions.
+- GA4 11-01..11-08 (read 11-08): 20 sessions, but 13 "Direct" at 0 s were our own nightly live zone-map test (10 of 22 views on /flood-zone-map/). Fixed 11-08: GA skips automated browsers (navigator.webdriver). Real visitors: 4 from AI assistants (23 s), 3 organic (57 s), all engaged; best page Santa Clara 2m14s. Next GA read 11-15, with the bot gone.
 - Index 11-06: home, 51/51 states, 204/232 counties, 6/7 zones indexed; our canonical kept everywhere. Low rank = age and no links, not a technical block.
 
 ## Live now (11-08)
