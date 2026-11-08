@@ -15,3 +15,12 @@ jobs:
       - name: Open an issue if the daily job has not succeeded for 2 days
         env: { GH_TOKEN: "${{ github.token }}" }
         run: bash tools/job_alert.sh ok "watch" publish-counties.yml 1
+  live-tool:   # fresh audit 11-08 D4: the address tool against real FEMA + Census every night; a red run is read at session start
+    runs-on: ubuntu-26.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install -q playwright==1.64.1 && python -m playwright install --with-deps chromium
+      - run: python -I tools/live_zonemap.py --browser chromium

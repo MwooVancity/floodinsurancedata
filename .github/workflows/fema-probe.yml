@@ -29,6 +29,18 @@ jobs:
     steps:
       - run: |
           B="https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer"
+          # 11-08 audit D5: does a point + distance=15 m query work (a true circle, not the 21 m-corner square)?
+          for P in "-80.0533,26.7153" "-95.3698,29.7604" "-90.0715,29.9511"; do
+            echo "== D5 $P point"; curl -s -G "$B/28/query" --data-urlencode "geometry=$P" -d geometryType=esriGeometryPoint -d inSR=4326 -d outFields=FLD_ZONE,ZONE_SUBTY -d returnGeometry=false -d f=json | head -c 300; echo
+            echo "== D5 $P distance 15 m"; curl -s -G "$B/28/query" --data-urlencode "geometry=$P" -d geometryType=esriGeometryPoint -d inSR=4326 -d distance=15 -d units=esriSRUnit_Meter -d outFields=FLD_ZONE,ZONE_SUBTY -d returnGeometry=false -d f=json | head -c 400; echo
+            echo "== D3 $P LOMR layer 1 within 15 m"; curl -s -G "$B/1/query" --data-urlencode "geometry=$P" -d geometryType=esriGeometryPoint -d inSR=4326 -d distance=15 -d units=esriSRUnit_Meter -d outFields=* -d returnGeometry=false -d f=json | head -c 700; echo
+            echo "== D3 $P LOMA layer 34 within 150 m"; curl -s -G "$B/34/query" --data-urlencode "geometry=$P" -d geometryType=esriGeometryPoint -d inSR=4326 -d distance=150 -d units=esriSRUnit_Meter -d outFields=* -d returnGeometry=false -d f=json | head -c 900; echo
+          done
+          # D6: time of one export image and one query (a map view pulls ~6-12 export images)
+          for i in 1 2 3; do curl -s -o /dev/null -w "export %{http_code} %{time_total}s %{size_download}B\n" "$B/export?bbox=-8912000,3091000,-8911000,3092000&bboxSR=3857&imageSR=3857&size=256,256&layers=show:28&transparent=true&format=png32&f=image"; done
+          for i in 1 2 3; do curl -s -o /dev/null -w "query %{http_code} %{time_total}s\n" -G "$B/28/query" --data-urlencode "geometry=-80.0533,26.7153" -d geometryType=esriGeometryPoint -d inSR=4326 -d outFields=FLD_ZONE -d returnGeometry=false -d f=json; done
+          echo "== layer 28 FLD_ZONE domain"; curl -s "$B/28?f=json" | python3 -c "import json,sys;d=json.load(sys.stdin);[print(f['name'],f.get('domain')) for f in d.get('fields') or [] if f['name'] in ('FLD_ZONE','ZONE_SUBTY')]"
+          B="https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer"
           for L in 3 1 34 0; do echo "== layer $L fields"; curl -s "$B/$L?f=json" | python3 -c "import json,sys;d=json.load(sys.stdin);print(d.get('name'),[f['name'] for f in d.get('fields') or []])"; done
           for L in 3 1 34; do echo "== layer $L sample for 12099C"; curl -s -G "$B/$L/query" --data-urlencode "where=DFIRM_ID='12099C'" --data-urlencode "outFields=*" --data-urlencode "returnGeometry=false" --data-urlencode "resultRecordCount=2" --data-urlencode "f=json" | head -c 900; echo; done
           echo "== layer 3 panel dates, Palm Beach"; curl -s -G "$B/3/query" --data-urlencode "where=DFIRM_ID='12099C'" --data-urlencode 'outStatistics=[{"statisticType":"min","onStatisticField":"EFF_DATE","outStatisticFieldName":"oldest"},{"statisticType":"max","onStatisticField":"EFF_DATE","outStatisticFieldName":"newest"},{"statisticType":"count","onStatisticField":"OBJECTID","outStatisticFieldName":"n"}]' --data-urlencode "f=json" | head -c 600; echo

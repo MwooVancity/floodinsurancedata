@@ -53,6 +53,10 @@ with sync_playwright() as p:
         pg.context.close()
     b.close()
 for a, z in zones: print(f"  {a}: FEMA zone {z}")
+# fresh audit 11-08 D4: page == oracle also holds when FEMA is down (both say "did not answer"), so that alone proves nothing.
+# The tool is only working when FEMA named a zone for at least 4 of the 5 real addresses.
+named = sum(1 for _, z in zones if z)
+if named < 4: bad.append(f"only {named} of {len(ADDRS)} real addresses got a zone from FEMA: FEMA down, blocked or changed")
 for x in bad: print("  -", x)
 print(f"LIVE ZONEMAP {'FAIL' if bad else 'PASS'} ({BROWSER}): {len(zones)} real addresses, page == FEMA via oracle")
 sys.exit(1 if bad else 0)
