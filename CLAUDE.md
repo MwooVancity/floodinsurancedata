@@ -31,6 +31,9 @@ US homeowner or buyer at one place, on a phone, 30-60 seconds, urgent. Above tab
 - Links sit in the sentence where the reader needs them; never a link block, keyword list or footer farm; screen 1 holds answers only (P4).
 - A new page type joins `HUBS` and gets home and state links the same day. After a template change, re-count inbound links (script, no review): a hub linked from under half of state + county pages is a defect.
 
+## Backlinks (HARD, owner 11-08)
+Links are a basic, not an extra: every keyword group has a link asset, a named target list and a drafted pitch with one exact figure (PLAN "Backlinks"); Claude builds all of it, the owner only sends. Never buy, swap or farm links.
+
 ## Decide before building (HARD)
 Name the scoreboard number it moves; none = delete it. Each defect becomes a check with a mutation test the same day; reader-harm logic gets one oracle check. Phone bytes (gzipped) and tokens are the hot paths; never trade a wrong-number check for speed. A build writes no tracked file; a step skips when its input did not change.
 

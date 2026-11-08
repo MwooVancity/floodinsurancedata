@@ -16,8 +16,15 @@ Most helpful flood-insurance page for every US place a homeowner or buyer search
 Keyword Planner volume x top bid: state insurance $190k, map $90k, towns $47k, zones $37k, cost $37k, NFIP $36k, state map $25k, renters $18k, county map $15.5k. Not targeted: head term "flood insurance" (FloodSmart), quote and companies (forbidden). Every money page is live; counties now run 20 a day, queue "kw" > 0 only (~1,200 zero-demand counties wait for the Jan 4 rule).
 
 ## Next, in order
-1. DONE 11-08: condo filter live; link audit + S16 gate (every money hub linked from ~305 pages, was /nfip/ 2, renters 1).
-2. Zone pages link down to the counties with the most homes in that zone (zone pages, best #1 odds, link 0 counties today; 11-08 link audit). Then round-97 MINORs (backlog). One light review.
+0. Zone map must be sound before "all" on 11-20 (fresh audit 11-08, `state/reviews/fresh-audit-2026-11-08.md`; no BLOCKER):
+   - D1 drag the pin while FEMA answers = old point's zone under the new pin (`zonemap.js:96-119`): ignore stale answers; test with a 2 s FEMA delay.
+   - D4 nobody learns the tool broke: `live_zonemap.py` must fail unless 4 of 5 addresses get a zone; run nightly in `watch.yml`. "all" only after 7 green nights.
+   - D2 raw FEMA codes ("OPEN WATER", "AREA NOT INCLUDED") printed as zones: only codes with a data-dictionary label; test keeps its own label table.
+   - D5 "within 15 m" is a square (corners 21 m): probe FEMA `distance=15` from the US runner; else reword "about 15 to 20 m".
+   - D3 LOMA/LOMR letters near the pin not shown: show FEMA's own records (case, date, outcome) + line that one-building letters are not drawn.
+   - D6 hurricane-week load (6-12 FEMA images a view): measure before 11-20.
+1. DONE 11-08: condo filter; S16 link gate; zone pages link their top 10 counties (Z8). Next: round-97 MINORs (backlog).
+2. Weekly Search Console read (last 11-04: slipped). Owner decisions from the audit: BFE in the address tool; share of homes insured; Esri copy as fallback (audit: no).
 3. US-runner raw reads (fema-probe links job): Elevation Certificate who/where (AE page); retry the 12 NAIC-fallback regulators (AK AZ KS LA MA MI MN NH NJ RI WV WY).
 4. One claims base everywhere: county payout shares drop FEMA codes 98/99 like the claims page (extras_raw + recheck, lands with the next refresh).
 5. Renter tenant-flag check (does FEMA's data catch every renter policy?). County floodplain contacts: no dataset, so a printed gap line.
@@ -25,6 +32,16 @@ Keyword Planner volume x top bid: state insurance $190k, map $90k, towns $47k, z
 7. 12-12: did Congress extend the NFIP past 2026-12-11? During a lapse set `start` to [].
 8. Open truth item: "policies whose term began in 2025" on an 08-31 as-of holds only Sep-Dec 2025; label the month span or drop the partial year.
 9. Backlog (`state/reviews/backlog.md`): table search on 16+ rows, glossary, titles over 70 / descriptions over 160 chars if CTR is low.
+
+## Backlinks (owner 11-08: basics, Claude drives; owner only presses send)
+Why: 0 referring domains, position ~44; page 1 for money terms needs links. Claude builds each asset, the named target list and the draft pitch; the owner sends.
+- First, owner: a corrections/contact address (reporters and .gov pages won't link a source they can't write to).
+- Assets: claims page + CSV (live); all-counties CSV; dated fact box on counties with a new flood declaration; oldest-FEMA-map tracker by county (oldest panel today: Prince William County VA, 1995); counties still paying under FEMA's full-risk price.
+- Targets: local newsrooms within 48 h of a flood declaration; data desks (Floodlight, Inside Climate News, ProPublica, E&E); ASFPM state chapters and CRS coordinators; extension (UF IFAS, LSU AgCenter, Sea Grant); realtor associations; library research guides; county/state "flood resources" pages.
+- Lead pitch (live, checked): 83.4% of 267,655 NFIP claims since 2020 had a recorded payment, 52.7% Terrebonne Parish LA to 94.4% Somerset County NJ.
+- Never: paid links, PBNs, link swaps, self-added Wikipedia links.
+- Numbers (Search Console Links): 11-26 baseline; 12-15 2+ referring domains; 01-15 5+ incl. one news/.gov/.edu; 03-01 15+. An asset with 0 links after 15 pitches is cut.
+- Trust basics with it: About page and corrections route without naming the owner.
 
 ## Checkpoints (continue or kill)
 - 11-26: master audit (`docs/AUDIT-PROMPT.md`) + 4-week Search Console review in one pass. Sameness: if over 25% of 3-week-old county pages are crawled-not-indexed or duplicate, cut the shared rule paragraphs (gate S2 today: 53% median, 60% max, under 80%).
