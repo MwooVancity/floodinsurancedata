@@ -25,7 +25,7 @@ Keyword Planner volume x top bid: state insurance $190k, map $90k, towns $47k, z
 5. Renter tenant-flag check (does FEMA's data catch every renter policy?). County floodplain contacts: no dataset, so a printed gap line.
 6. 11-18 start-date tool "all", 11-20 address tool "all", if no errors on the samples (first a US-runner live test vs real FEMA).
 7. 12-12: did Congress extend the NFIP past 2026-12-11? During a lapse set `start` to [].
-7b. Gates (11-08): labels now checked against data (C10-C14) and `test_factory.py` (18 data edge cases x county/small state/big state) runs in release. Next: edge data for site-wide pages (home, zones, claims, nfip, renters, ZIP); base-word check (homes/policies/units).
+7b. Gates (11-08): labels now checked against data (C10-C14) and `test_factory.py` (18 data edge cases x county/small state/big state) runs in release. `test_site_factory.py` (14 national edge cases: no crash, garbage text or dead link) covers home, zones, claims, nfip, renters, ZIP, map; found a half-refreshed state crashing the whole site (fixed). Next: base-word check (homes/policies/units).
 8. Backlog (`state/reviews/backlog.md`): table search on 16+ rows, glossary, titles over 70 / descriptions over 160 chars if CTR is low.
 
 ## Backlinks (owner 11-08: basics, Claude drives; owner only presses send)

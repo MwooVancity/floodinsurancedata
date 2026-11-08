@@ -78,6 +78,9 @@ from agg_raw import asof as _asof   # the data's as-of date, set by the pull (on
 _ASOF_TXT = _dtm.date.fromisoformat(_asof()).strftime("%B %d, %Y").replace(" 0", " ")
 _bp = os.path.join(DATADIR, "states", "built.json")
 states = json.load(open(_bp)) if os.path.exists(_bp) else []
+# test_site_factory 11-08: built.json and the state folders are two copies; a half-finished refresh left a listed state with
+# no agg.json and crashed the whole site. Trust only states whose data exists; national pages then hold (they need all 51).
+states = [s for s in states if os.path.exists(os.path.join(DATADIR, "states", s["slug"], "agg.json"))]
 rows = "".join(f'<tr data-k="{html.escape((p["short"]+" "+(p.get("state") or "")).lower())}">'
                f'<td><a href="/flood-insurance/{p["slug"]}/">{html.escape(p["short"])}, {html.escape(p.get("state") or "")}</a></td>'
                f'<td>{money(p.get("median"))}</td><td>{format(p.get("units") or 0, ",")}</td></tr>' for p in indexable)
@@ -399,14 +402,14 @@ wr(os.path.join(DIST, "data", "index.html"), data)
 
 # ---- one page per zone a reader meets on a letter (PLAN demand test 1): national NFIP figures, not a page per place ----
 zone_urls = []
+ZONES = {"ae": ("AE", "A", "all A zones (AE, A, AH, AO and others)", "zone_ae"),   # fixed text: defined even when the pages hold
+         "x": ("X", "X", "X, B and C zones", "zone_x"),
+         "ve": ("VE", "V", "all V zones (VE, V and others)", "zone_ve"),
+         "a": ("A", "A", "all A zones (AE, A, AH, AO and others)", "zone_a"),
+         "ao": ("AO", "A", "all A zones (AE, A, AH, AO and others)", "zone_ao"),
+         "ah": ("AH", "A", "all A zones (AE, A, AH, AO and others)", "zone_ah"),
+         "d": ("D", None, "", "zone_d")}   # D: no national cost group, units and state table only
 if len(states) == 51 and len(_zh) == 51:
-    ZONES = {"ae": ("AE", "A", "all A zones (AE, A, AH, AO and others)", "zone_ae"),
-             "x": ("X", "X", "X, B and C zones", "zone_x"),
-             "ve": ("VE", "V", "all V zones (VE, V and others)", "zone_ve"),
-             "a": ("A", "A", "all A zones (AE, A, AH, AO and others)", "zone_a"),
-             "ao": ("AO", "A", "all A zones (AE, A, AH, AO and others)", "zone_ao"),
-             "ah": ("AH", "A", "all A zones (AE, A, AH, AO and others)", "zone_ah"),
-             "d": ("D", None, "", "zone_d")}   # D: no national cost group, units and state table only
     def _st(sl, f): return json.load(open(os.path.join(DATADIR, "states", sl, f), encoding="utf-8"))
     _sagg = {s["slug"]: _st(s["slug"], "agg.json")["policies"] for s in states}
     _links = lambda me: " · ".join(f'<a href="/flood-zones/{k}/">Zone {v[0]}</a>' for k, v in ZONES.items() if k != me)
@@ -722,7 +725,7 @@ if _zm_on == "all" or "flood-zone-map" in _zm_on:
 <p class="lede">Type an address or use your location, put the pin on your building, and see the zone FEMA's own map shows there, with its map panel and the date it took effect.</p>
 {_zm_block(rule)}
 <div class="card"><h2>What the zones mean</h2><p class="stand">{rule("zone_codes")}</p>
-<p>Each zone, with what it costs and what claims there paid: {" · ".join(f'<a href="/flood-zones/{k}/">Zone {v[0]}</a>' for k, v in ZONES.items())}.</p></div>
+{("<p>Each zone, with what it costs and what claims there paid: " + " · ".join(f'<a href="/flood-zones/{k}/">Zone {v[0]}</a>' for k, v in ZONES.items() if os.path.exists(os.path.join(DIST, "flood-zones", k, "index.html"))) + ".</p>") if any(os.path.exists(os.path.join(DIST, "flood-zones", k, "index.html")) for k in ZONES) else ""}</div>
 <div class="card"><h2>Must I buy flood insurance in my zone?</h2><p class="stand">{rule("purchase_answer")} {rule("lender_any_zone")}</p></div>
 <div class="card"><h2>If the zone looks wrong</h2><p class="stand">{rule("loma")} {rule("loma_fee")} {rule("loma_online")} {rule("zone_review")}</p></div>
 <div class="card"><h2>Is my map about to change?</h2><p class="stand">{rule("prelim")}</p></div>

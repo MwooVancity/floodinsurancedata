@@ -40,6 +40,7 @@ else:
     step("unit tests", os.path.join(T, "test_calc.py"))
     step("mutation suite", os.path.join(T, "test_gate.py"))
     step("factory stress (edge-case data, no crash)", os.path.join(T, "test_factory.py"))
+    step("site factory stress (national edge cases: no crash, garbage, dead link)", os.path.join(T, "test_site_factory.py"))
     step("hater verdict parser", os.path.join(T, "test_hater.py"))
     step("phone check (dist)", os.path.join(T, "phone_check.py"))
     # Google gate; S12 (hater review) is skipped only by --hotfix "<reason>", for a fix that removes wrong text from live pages
