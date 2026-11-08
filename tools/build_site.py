@@ -1,7 +1,7 @@
 """Build the shared site pages from places.json: home+lookup, methodology, data (CSV),
 sitemap.xml, robots.txt, llms.txt. Reads per-county agg.json for the download table.
 Env: FF_PLACES (places.json), FF_DIST (dist dir), FF_DATADIR (per-county data root), FF_BASEURL."""
-import csv, json, os, html, shutil, sys
+import collections, csv, json, os, html, shutil, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from theme import THEME
 
@@ -127,14 +127,23 @@ if len(states) == 51:   # U.S. figures only once every state is built and gated:
     # backlog 1: U.S. cost by flood zone, summed from every state's zone histograms (extras_raw); shown once all 51 have one
     _zp = os.path.join(DATADIR, "us", "cost_hist_zone.json")
     _zh = json.load(open(_zp)) if os.path.exists(_zp) else {}
-    _zone_card = ""
+    _zone_card = ""; _zleft = "Zone D and policies with no zone are left out"   # the grouped table (no exact-zone file yet)
     _zxp = os.path.join(DATADIR, "us", "cost_hist_zone_exact.json")   # hcu 11-07: every zone a letter names, linked, not 3 groups
     _zxh = json.load(open(_zxp)) if os.path.exists(_zxp) else {}
     if len(_zh) == 51 and len(_zxh) == 51:
-        _zrows = ""
+        _zrows = ""; _zshown_h = set()
         for _zc in ("AE", "X", "VE", "A", "AO", "AH"):
             _hz = {s: h.get(_zc) or {} for s, h in _zxh.items()}; _nn = sum(sum(v.values()) for v in _hz.values())
-            if _nn >= ZONE_MIN: _zrows += f'<tr><td><a href="/flood-zones/{_zc.lower()}/">Zone {_zc}</a></td><td>{money(_hq(_hz, 0.5))}</td><td>{_nn:,}</td></tr>'
+            if _nn >= ZONE_MIN: _zrows += f'<tr><td><a href="/flood-zones/{_zc.lower()}/">Zone {_zc}</a></td><td>{money(_hq(_hz, 0.5))}</td><td>{_nn:,}</td></tr>'; _zshown_h.add(_zc)
+        # hater r107: the note said only zone D was left out; A99, C, B and the old numbered zones were too. Name them from the data.
+        _zoth = collections.Counter()
+        for _h in _zxh.values():
+            for _z, _v in _h.items():
+                if _z not in _zshown_h and _z not in ("", "Unknown"): _zoth[_z] += sum(_v.values())
+        _zleft = (f'{sum(_zoth.values()):,} policies rated in other zone codes are left out ('
+                  + ", ".join(f"{z} {n:,}" for z, n in _zoth.most_common(3))
+                  + f" and {len(_zoth) - 3} smaller codes, including zone D and the old numbered A and V zones), as are policies with no zone") if len(_zoth) > 3 else \
+                 (f'Left out: {", ".join(f"zone {z} ({n:,})" for z, n in _zoth.most_common())} and policies with no zone' if _zoth else "Policies with no zone are left out")
     elif len(_zh) == 51:
         _zrows = "".join(f'<tr><td>{lab}</td><td>{money(_hq({s: h.get(g) or {} for s, h in _zh.items()}, 0.5))}</td>'
                          f'<td>{sum(sum(h.get(g, {}).values()) for h in _zh.values()):,}</td></tr>'
@@ -144,7 +153,7 @@ if len(states) == 51:   # U.S. figures only once every state is built and gated:
         _zone_card = (f'<div class="card" id="zones"><h2>What does it cost by flood zone?</h2><p class="stand">Typical yearly cost '
                       f'(premium plus fees) of existing single-family primary-home policies, by the zone each policy is rated in.</p>'
                       f'<table><thead><tr><th>Flood zone</th><th>Median / yr</th><th>Policies</th></tr></thead><tbody>{_zrows}</tbody></table>'
-                      f'<p class="mut">NFIP policies in force on {_ASOF_TXT}; zone D and policies with no zone are left out. Your state page '
+                      f'<p class="mut">NFIP policies in force on {_ASOF_TXT}. {_zleft}. Your state page '
                       'breaks this down by every zone code. What each means: ' + ", ".join(f'<a href="/flood-zones/{z}/">zone {z.upper()}</a>' for z in ("ae", "x", "a", "ao", "ah", "ve", "d")) + '.</p></div>')
     national = (f'<div class="stats"><div class="stat"><div class="n">{money(_med)}</div><div class="l">U.S. median a year</div></div>'
                 f'<div class="stat"><div class="n">{money(_med / 12)}</div><div class="l">Per month</div></div>'

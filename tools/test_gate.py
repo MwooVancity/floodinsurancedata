@@ -1,7 +1,8 @@
-"""Mutation suite: every gate check is proven by reintroducing the bug it exists for (docs/GATE-PROMPT.md).
+"""Mutation suite: every gate check is proven by reintroducing the bug it exists for (ids listed in gate.py).
 Builds a real county page with the shipping build_page.py, confirms the clean page passes gate 2 (and gate 3 when
 Playwright is installed), then applies each mutation and asserts the intended check id fires. Prints which ids
-caught which mutation, so a check that never fires can be deleted. Run: python -I tools/test_gate.py"""
+caught which mutation, so a check that never fires can be deleted. Run: python -I tools/test_gate.py
+Edge-case DATA (not a broken page) lives in test_factory.py; both run in release.py."""
 import io, json, os, re, shutil, subprocess, sys, tempfile, tokenize
 T = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(T)
 sys.path.insert(0, T)
@@ -82,6 +83,7 @@ def sub(old, new, count=1):
     return PAGE.replace(old, new, count)
 def agg_with(**kw):
     a = json.loads(json.dumps(AGG)); a["policies"].update(kw); return a
+_EV = json.load(open(os.path.join(d, "extras.json")))["claims"]["events"]   # C12 mutation points the lead at the smallest row
 STORM = re.search(r'<p class="src" data-src="ml_total">Source: [^.]*\.', PAGE).group()   # weather card cut 2026-10-28: the repeat-flood line carries the test
 MUTATIONS = [   # (defect class from THE EVIDENCE table, what we reintroduce, expected id, page or agg)
     ("1 fee-vs-premium basis", "gap computed on policyCost", "L17", None, agg_with(gap_basis="cost")),
@@ -149,6 +151,32 @@ MUTATIONS = [   # (defect class from THE EVIDENCE table, what we reintroduce, ex
     ("round 16", "identical disaster lines", "H15", sub("</main>", "<ul><li>May 2023 — Flooding</li><li>May 2023 — Flooding</li></ul></main>"), None),
     ("round 16", "county in not-in-NFIP list without its scope", "H16",
      sub("</main>", "<p class='note'><b>Not in the NFIP (1 communities here): <span data-name>Box Butte County</span>.</b></p></main>"), None),
+    # 11-08 silent drops and broken label promises (hater r97, r103)
+    ("round 103", "decade dropped from the table without a word", "C10",
+     re.sub(r'<tr><td><span data-m="decade"[^>]*>.*?</tr>', "", PAGE, count=1, flags=re.S), None),
+    ("round 97/103", "big zone missing from the cost answer", "C11",
+     re.sub(r'(<a href="#zone-cost">.*?</span>)(?:, Zone [^<]+<span data-m="zone_cost"[^>]*>[^<]*</span>)+', r"\1", PAGE, count=1, flags=re.S), None),
+    ("11-08 own slip", "priced zone called too few to price", "C11",
+     re.sub(r'(<a href="#zone-cost">.*?) a year \(single-family primary-home median', r"\1 a year (single-family primary-home median; Zone X, 1.0% of policy units, has too few to price", PAGE, count=1, flags=re.S), None),
+    ("round 103", "'costliest flood' beaten by its own table", "C12",
+     (lambda i, js: re.sub(rf"(costliest flood FEMA named here was.*?)extras\.claims\.events\.{i}\.paid", rf"\g<1>extras.claims.events.{min(js, key=lambda j: _EV[int(j)].get('paid') or 0)}.paid", PAGE, count=1, flags=re.S))(
+         re.search(r'costliest flood FEMA named here was.*?events\.(\d+)\.paid', PAGE, re.S).group(1),
+         re.findall(r'<td><span data-m="event_paid"[^>]*data-p="extras\.claims\.events\.(\d+)\.paid"', PAGE)), None),
+    ("factory 11-08", "'Largest zones' not the largest (file order)", "C11", None,
+     agg_with(cost_by_zone={z: dict(d, n=(1 if i < 2 else 10 ** 6)) for i, (z, d) in enumerate(AGG["policies"]["cost_by_zone"].items())})),
+    ("round 109", "'no flood in the table' for a year the table lists", "C15",
+     sub("</main>", "<p class='note'>Among the five costliest years, these have no flood of their own in the table above: "
+         + re.search(r"\((\d{4})\)</td>", PAGE[PAGE.index("<th>Flood (FEMA"):]).group(1) + " (their totals are in the yearly chart above).</p></main>"), None),
+    ("round 107", "multi-year catch-all row reads as one flood", "C12",
+     sub(": many floods; FEMA's records use this name for claims in several years", ""), None),
+    ("round 106", "events table not biggest first", "C12",
+     re.sub(r"(<th>Flood \(FEMA's name\)</th>.*?<tbody>)(.*?)(</tbody>)", lambda mm: mm.group(1) + "".join(reversed(re.findall(r"<tr>.*?</tr>", mm.group(2), re.S))) + mm.group(3), PAGE, count=1, flags=re.S), None),
+    ("round 106", "bigger catch-all labelled but not in the lead", "C12",
+     (lambda h: re.sub(r"(<th>Flood \(FEMA's name\)</th>.*?<tbody>)(.*?)(</tbody>)", lambda mm: mm.group(1) + mm.group(2).replace('</td><td><span data-m="event_claims"', ' (many floods)</td><td><span data-m="event_claims"') + mm.group(3), h, count=1, flags=re.S))(
+         (lambda i, js: re.sub(rf"(costliest flood FEMA named here was.*?)extras\.claims\.events\.{i}\.paid", rf"\g<1>extras.claims.events.{min(js, key=lambda j: _EV[int(j)].get('paid') or 0)}.paid", PAGE, count=1, flags=re.S))(
+             re.search(r'costliest flood FEMA named here was.*?events\.(\d+)\.paid', PAGE, re.S).group(1),
+             re.findall(r'<td><span data-m="event_paid"[^>]*data-p="extras\.claims\.events\.(\d+)\.paid"', PAGE))), None),
+    ("round 103", "'not final' on long-settled years", "C13", re.sub(r"Totals for [^.]* are not final", "Totals for the latest two years are not final", PAGE, count=1), None),
 ]
 table, ok = [], True
 for cls, what, want, html, agg in MUTATIONS:

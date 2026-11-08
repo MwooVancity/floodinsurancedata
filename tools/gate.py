@@ -4,7 +4,8 @@ Seven questions; the phone (phone_check.py) and the live site (gate_live.py) are
 below is proven by a mutation in tools/test_gate.py that reintroduces a real shipped defect and must fail here.
   1 INPUTS    is the data complete and on the right basis?
   2 NUMBERS   is every number on the page tagged, and equal to the data it names?        (V1, V2: the core)
-  3 MEANING   does each number carry the right noun and basis, and do panels agree?
+  3 MEANING   does each number carry the right noun and basis, do panels agree, and does every label (left out,
+              costliest, largest, not final) hold for the data under it? (C10-C14, 11-08)
   4 WORDS     do words that carry direction or size agree with the numbers?
   5 SOURCES   is every source line, dataset list and rule text generated and current?
   6 READER    names not codes, no jargon or dead pointers, storms dated, caveats present
@@ -221,6 +222,63 @@ if _et:
     for _i, _e in enumerate((EXTRAS.get("claims") or {}).get("events") or []):
         if (_e.get("claims") or 0) >= 20 and _e.get("years") and str(_i) not in _shown:
             fail("C9", f"flood event '{_e['name']}' ({_e['claims']} paid claims) is in the data but not in the events table")
+# ---- silent drops and broken label promises (11-08: hater r97/r103 found six; numbers matched the data, labels did not)
+# C10 a decade the claims data holds is in the decade table or named in its "not listed" note (r103 Dixie: 1980s dropped)
+_dt = re.search(r"<th>Decade of the flood</th>.*?</tbody></table>(<p class='note'>Decades with too few[^<]*(?:<[^>]+>[^<]*)*?</p>)?", page, re.S)
+if _dt:
+    _dshown = set(re.findall(r'data-m="decade" data-q="([^"]+)"', _dt.group(0)))
+    for _d, _v in ((EXTRAS.get("claims") or {}).get("by_decade") or {}).items():
+        if (_v.get("n") or 0) > 0 and _d not in _dshown: fail("C10", f"decade {_d} ({_v['n']} claims) neither in the decade table nor named as left out")
+# C11 the cost answer names every zone holding 10%+ of policy units, priced or not (r97 NY County AE, r103 Levy VE)
+_zc = re.search(r'<a href="#zone-cost">(.*?)</a>', page, re.S)
+if _zc and units:
+    _zt_ = norm(re.sub(r"<[^>]+>", "", _zc.group(1)))
+    for _z, _v in (P.get("zone_units") or {}).items():
+        if _v >= 0.10 * units and _z not in ("Unknown", "other", "other_hr") and not re.search(rf"\bZone {re.escape(_z)}\b", _zt_):
+            fail("C11", f"Zone {_z} holds {100 * _v / units:.1f}% of policy units but the cost answer leaves it out: {_zt_[:90]}")
+    for _z in re.findall(r"Zone (\w+), [\d.]+% of policy units, has too few to price", _zt_):
+        if _z in (P.get("cost_by_zone") or {}): fail("C11", f"Zone {_z} called too few to price, but it has a median")
+    _named = re.findall(r'data-m="zone_cost"[^>]*data-q="([^"]+)"|data-m="zone_cost" data-q="([^"]+)"', _zc.group(1))
+    _named = [x or y for x, y in _named]
+    _rank = [z for z, _ in sorted(((z, d) for z, d in (P.get("cost_by_zone") or {}).items() if z != "Unknown"), key=lambda zd: -(zd[1].get("n") or 0))]
+    if _named[:2] and set(_named[:2]) != set(_rank[:len(_named[:2])]): fail("C11", f"'Largest zones' shows {_named[:2]}, largest by priced policies are {_rank[:2]}")
+    if "Largest zones" in _zt_ and len(re.findall(r'data-m="zone_cost"', _zc.group(1))) < 2: fail("C11", "'Largest zones' (plural) over one priced zone")
+# C12 a "costliest" flood is not beaten by a row of its own table, unless that row says it is many floods (r103 Sonoma)
+_el = re.search(r"costliest (?:single )?flood FEMA named here was.*?data-p=\"extras\.claims\.events\.(\d+)\.paid\"", page, re.S)
+_evs = (EXTRAS.get("claims") or {}).get("events") or []
+if _el and _et and int(_el.group(1)) < len(_evs):
+    _top = _evs[int(_el.group(1))].get("paid") or 0
+    for _row in re.findall(r"<tr>(.*?)</tr>", _et.group(1), re.S):
+        _ri = re.search(r'data-p="extras\.claims\.events\.(\d+)\.paid"', _row)
+        if _ri and int(_ri.group(1)) < len(_evs) and (_evs[int(_ri.group(1))].get("paid") or 0) > _top and "many floods" not in _row:
+            fail("C12", f"'costliest flood' {money(_top)} is beaten by a row not labelled many floods: {norm(re.sub(r'<[^>]+>', ' ', _row))[:80]}")
+    # r107 NY: a row spanning years, or FEMA's no-name label, is many floods and must say so
+    for _row in re.findall(r"<tr>(.*?)</tr>", _et.group(1), re.S):
+        _lab = norm(re.sub(r"<[^>]+>", " ", re.split(r"</td>", _row)[0]))
+        _sp = re.search(r"\((\d{4})–(\d{4})\)", _lab)
+        if _sp and int(_sp.group(2)) - int(_sp.group(1)) > (0 if "did not name" in _lab or "Unnamed" in _lab else 1) and "many floods" not in _lab:
+            fail("C12", f"events row reads as one flood but is many: '{_lab[:70]}'")
+    # r106 Sonoma: labelling the bigger row is not enough; the lead names the biggest catch-all that beats the named flood
+    _lead = page[_el.start():page.find("<table", _el.start())]
+    _big = max((i for i, e in enumerate(_evs) if (e.get("paid") or 0) > _top and f"events.{i}.paid" in _et.group(1)), key=lambda i: _evs[i].get("paid") or 0, default=None)
+    if _big is not None and f"events.{_big}.paid" not in _lead:
+        fail("C12", f"lead calls {money(_top)} the costliest flood, but the lead never names the {money(_evs[_big].get('paid') or 0)} row above it")
+    _rows_paid = [float(_evs[int(i)].get("paid") or 0) for i in re.findall(r'<td><span data-m="event_paid"[^>]*events\.(\d+)\.paid', _et.group(1)) if int(i) < len(_evs)]
+    if _rows_paid != sorted(_rows_paid, reverse=True): fail("C12", "flood events table not ordered by total paid")
+# C13 "not final" names only the as-of year and the one before, and is there when those years are charted (r103 Dixie)
+_asy = int(str(P.get("asof") or "0000")[:4] or 0)
+_nf = re.search(r"Totals for ([^.]*?) are not final", TEXT)
+if _nf and any(int(y) < _asy - 1 for y in re.findall(r"\b(?:19|20)\d\d\b", _nf.group(1))): fail("C13", f"'not final' on years long settled: {_nf.group(0)}")
+if _nf and not re.findall(r"\b(?:19|20)\d\d\b", _nf.group(1)): fail("C13", f"'not final' names no year: {_nf.group(0)}")
+if _asy and not _nf and any(str(y) in (C.get("by_year") or {}) for y in (_asy - 1, _asy)): fail("C13", "recent claim years charted without the not-final note")
+# C14 no county median under the 30 priced-policy floor (CLAUDE.md Site; test_factory 11-08: a 29-policy county printed one)
+if (P.get("cost_n") or 0) < MX.CONST["min_priced"] and 'data-m="cost_p50"' in page: fail("C14", f"median shown on {P.get('cost_n')} priced policies (floor {MX.CONST['min_priced']})")
+# C15 "no flood of their own in the table" lists no year that has its own one-year row in that table (r109 NY 2023)
+_un = " ".join(re.findall(r"no flood of their own in the table above: ([^(<]*)", page))   # every such note, not the first
+if _un and _et:
+    _single = set(re.findall(r"\((\d{4})\)</td>", _et.group(1)))
+    _bad15 = sorted(set(re.findall(r"\b\d{4}\b", _un)) & _single)
+    if _bad15: fail("C15", f"note says {_bad15} have no flood in the table, but the table has a row for them")
 # C6 CRS discounts under Risk Rating 2.0 are one rate for every zone: no separate "other areas" rate
 if re.search(r"<th>Other areas</th>", page): fail("C6", "CRS table shows a separate non-high-risk discount (pre-2021 rule; Risk Rating 2.0 is one rate in every zone)")
 _foot = re.search(r"<footer>(.*?)</footer>", page, re.S)
@@ -255,7 +313,7 @@ if re.search(r"Each (county|parish|borough) page lists|Open a county below", REA
         and not re.search(r'<a href="\.\./[a-z0-9-]+-(county|parish|borough|city)-[a-z]{2}/"', page):
     fail("H2", "points the reader to county pages, but links none")
 for _j in re.findall(r"\b(p25|p75|p90|policyCount|policyCost|censusGeoid|ratedFloodZone|fullRiskPremium)\b", READ): fail("H3", f"jargon '{_j}' in reader text")
-_sv = re.search(r"costliest flood FEMA named here was (.*?):", READ)
+_sv = re.search(r"costliest (?:single )?flood FEMA named here was (.*?):", READ)
 if _sv and not re.search(r"\(\d{4}(–\d{4})?\)", _sv.group(1)): fail("H5", f"storm named without its year: {_sv.group(1)[:50]}")
 for y in re.findall(r"<li>(\d{4}) — ", page):
     if int(y) > datetime.date.today().year: fail("L10", f"declaration shows future year {y}")
@@ -275,7 +333,7 @@ for _ld in re.findall(r'<script type="application/ld\+json">(.*?)</script>', pag
 for _mm in re.finditer(r"\b(?:[2-9]|\d{2,}) in \d+ homes(?: here)? has\b", READ): fail("H11", f"plural count with 'has': {_mm.group(0)}")
 if not agg.get("nri") and agg.get("level") != "state" and "Gap:" not in page: fail("L8", "NRI missing without a gap line")
 if P.get("spread_ok", (P.get("cost_n") or 0) >= 100) != ("Annual NFIP cost spread" in page): fail("L9", "cost spread shown for a small cohort (or hidden for a large one)")
-if ("Of the NFIP claim dollars paid here" in page) != (data.get("claims_extra", {}).get("outside_sfha_pct") is not None and (data["claims_extra"].get("paid_n") or 0) >= 10): fail("L19", "outside-zone claim share shown under 10 paid claims (or missing above)")
+if ("Of the NFIP claim dollars paid here" in page) != ((data.get("claims_extra") or {}).get("outside_sfha_pct") is not None and ((data.get("claims_extra") or {}).get("paid_n") or 0) >= 10): fail("L19", "outside-zone claim share shown under 10 paid claims (or missing above)")
 if P.get("sfha_units") is not None and units and "of all buildings" not in page: fail("L12", "SFHA share shown without its denominator disclosure")
 if re.search(r"per 100\b", page, re.I) and not re.search(r"cumulative|not an annual rate", page, re.I): fail("L14", "a per-100 ratio without its caveat")
 if P.get("frp_median") and money(P["frp_median"]) in page and not re.search(r"not a quote", page, re.I): fail("L16", "full-risk shown without a 'not a quote' caveat")

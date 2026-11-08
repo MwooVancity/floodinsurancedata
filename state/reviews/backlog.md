@@ -265,15 +265,7 @@ Ranked by reader value. hater.py record appends each round's **GAP** lines below
 - Insurance regulators: 12 states fell back to NAIC (403 from the laptop); retry from the US runner.
 
 ## round 97 MINORs (11-08)
-- Zone quick answer says "Largest zones" when only one zone has enough priced policies (NY County: X only; AE 41.8% of units, under the floor): singular wording + name the left-out zone.
 - Tile "paying under FEMA's full-risk price": say "premium" (premium before fees vs headline with fees); tile says homes, gap card says policies.
 - not_covered rule: FEMA's form name is "Dwelling Form" (44 CFR 61 App. A(1)); condo unit owners use another form (gap).
 - Condo note "(FEMA's condominium coverage code)" vague; map note "NFIP communities filed under this county" jargon.
 
-## round 103 MINORs (11-08, flagged queue counties Sonoma CA, Levy FL, Dixie FL; all PASS)
-- Decade claims table drops a decade with few claims (Dixie: 1980s, 27 claims; rows sum 889 of 916): show every decade or say "decades under N claims left out".
-- "COVID aid excluded" while the aid total includes a COVID registration (Levy $1,185, Dixie $0): filter at source or reword.
-- "Costliest flood" ($3.5M, Sonoma) smaller than a 1978-1997 lumped row ($67.3M): say the lumped row is many floods.
-- Claims lead count includes records deleted in error / not an actual flood (Sonoma 187 of 7,403): label the base or drop those codes.
-- Zone price range omits a zone under the floor (Levy VE 21.5% of policies): name the left-out zone (same class as round 97 item 1).
-- "Latest two years not final" note attached to data two years old (Dixie): tie the note to the as-of date.

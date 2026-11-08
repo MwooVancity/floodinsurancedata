@@ -8,6 +8,7 @@ import json, os, re, subprocess, sys, unicodedata
 from concurrent.futures import ThreadPoolExecutor
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from agg_raw import NAMES, slug as state_slug, FIPS
+import metrics as MX
 
 T = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(T)
 REVIEW = "--all" in sys.argv   # every eligible county, built into review/ (git-ignored, never deployed) to prove the gate at scale
@@ -16,7 +17,7 @@ DIST = os.path.join(ROOT, "review" if REVIEW else "dist", "flood-insurance")
 PLACES = os.path.join(ROOT, "review", "places.json") if REVIEW else os.path.join(ROOT, "places.json")
 CDATA = os.path.join(ROOT, "review", "c") if REVIEW else os.path.join(DATA, "c")   # unpublished county data never enters git
 BASE = os.environ.get("FF_BASEURL", "https://floodinsurancedata.com")
-MIN_PRICED = 30   # a median from 30+ priced policies, with its small-sample caveat (no spread chart under 100); fewer = no honest median
+MIN_PRICED = MX.CONST["min_priced"]   # one home: metrics.CONST; a median from 30+ priced policies, with its small-sample caveat (no spread chart under 100); fewer = no honest median
 ST_OF = {v: k for k, v in FIPS.items()}
 UNMATCHED_OK = {"VALDEZ-CORDOVA CENSUS AREA"}   # split in two in 2019; FEMA's row cannot say which side
 INDEXED = {c["geoid"]: c for c in json.load(open(os.path.join(T, "counties.json")))}   # live and indexed before 2026-10-26

@@ -255,11 +255,12 @@ def _sea_line():   # PLAN 3e: NOAA's published sea-level trend at a tide gauge i
             + ". A plus sign means the water there got higher over that period. A tide gauge measures one spot on the coast; it is not your property's flood risk.</p>")
 
 # ---- zone card (policy UNITS) ----
+ZONE_NAME_SHARE = 0.10   # a zone holding 10%+ of policy units is named in the cost answer even when it cannot be priced (gate C11 reads it)
 ZPAGES = {"AE", "X", "VE", "A", "AO", "AH", "D"}   # zones with a /flood-zones/ page (build_site.py ZONES)
 def _zone_body():
     zu = P["zone_units"]
     # compact table: zones holding >=1% of units; the rest fold into one disclosed "other" row (phone-friendly)
-    _zshown = [(z, v) for z, v in list(zu.items())[:8] if v >= 0.01 * P["units"]]
+    _zshown = [(z, v) for z, v in sorted(zu.items(), key=lambda kv: -kv[1])[:8] if v >= 0.01 * P["units"]]   # largest first, not file order
     _zshown_k = {z for z, _ in _zshown}
     # VE, AH, AO, A01-A30...: still high-risk. From the full high-risk total, because zone_units keeps only the largest zones
     _zrest_hr = (P.get("sfha_units") or 0) - sum(v for z, v in _zshown if z[:1] in "AV")
@@ -368,7 +369,7 @@ try: _PL_ALL = json.load(open(os.environ.get("FF_PLACES", "")))
 except Exception: _PL_ALL = []
 HAS_CPAGES = any(str(p.get("geoid") or "")[:2] == os.environ.get("FF_GEOID", "12071")[:2] and p.get("slug") != os.environ.get("FF_SLUG")
                  for p in _PL_ALL)
-MIN_PRICED = 30   # a county median is shown from 30 priced policies (with its count); never a dash for a real number
+MIN_PRICED = MX.CONST["min_priced"]   # one home: metrics.CONST; a county median is shown from 30 priced policies (with its count); never a dash for a real number
 _LEGAL = r",\s*(city|town|village|borough|township|county|parish)\s+of\s*$"
 def _short(c):   # FEMA admin notes ("HOUMA, CITY OF-USE CID 225206": file under another community number) are not part of the name
     n = re.sub(r"\s*-\s*(USE\s+CID\s*)?\d{6}.*$", "", c['communityName'].replace('*', '').strip(), flags=re.I)
@@ -650,6 +651,7 @@ _why = [r for r in _whyall if r["code"] not in ("97", "98", "99")]   # the lead 
 _why_rest = (_xc.get("unpaid_n") or 0) - sum(r["n"] for r in _whyall)   # smaller reasons and claims with no reason recorded
 cx = data.get("claims_extra") or {}
 _decs = [d for d, v in (_xc.get("by_decade") or {}).items() if (v.get("n") or 0) >= 30 and v.get("paid_pct") is not None]   # hater r6/r7: one bad era or every era?
+_decs_out = [d for d, v in (_xc.get("by_decade") or {}).items() if d not in _decs and (v.get("n") or 0) > 0]   # hater r103 Dixie: never dropped silently
 def card_averages():
     averages_card = ""
     _av = _xpp.get("averages") or {}
@@ -766,42 +768,45 @@ def card_unpaid():
             src(["unpaid_n", "unpaid_reason_n"], f"{C['year_min']}–{C['year_max']}", RETR))
     return unpaid_card
 
+_NONAME = re.compile(r"(?:\d{4}-\d{2}-)?not a named", re.I)   # hater r107 NY: FEMA's no-name label is many floods, never one (catch-all row)
 def card_events():
     events_card = ""
     def _evname(e):   # FEMA's event name plus its year(s) of loss: "Vermont/New York Flooding (2023)"
         y = e.get("years") or []
         n = re.sub(r"^\d{4}-\d{2}-", "", e["name"])                       # FEMA codes like "2026-03-KonaStorm"
-        n = re.sub(r"(?<=[a-z])(?=[A-Z])", " ", n.replace("-", " ")).strip()   # -> "Kona Storm"
-        if re.match(r"not a named (storm|event)", n, re.I): n = "Unnamed flood"     # FEMA's label for a flood with no name
+        n = re.sub(r"(?<=[a-z])(?=[A-Z])", " ", (n if " " in n else n.replace("-", " "))).strip()   # -> "Kona Storm"; a spaced name keeps its dash (r109 "December Storm - Nor'easter")
+        if re.match(r"not a named (storm|event)", n, re.I): n = "Floods FEMA did not name"     # FEMA's no-name label: one flood or several (hater r107)
         return html.escape(n) +(f" ({y[0]})" if len(y) == 1 else f" ({y[0]}–{y[-1]})" if y else "")
     # an event is a label whose paid claims fall within two calendar years; a label spanning more ("Flooding" 1979-2024)
     # is FEMA's catch-all, not one flood, and is left out
     _ev = [dict(e, i=i) for i, e in enumerate(_xc.get("events") or [])
-           if e.get("years") and int(e["years"][-1]) - int(e["years"][0]) <= 1
+           if e.get("years") and int(e["years"][-1]) - int(e["years"][0]) <= (0 if _NONAME.match(e["name"]) else 1)
            and (e.get("claims") or 0) >= MX.CONST["event_min"]]   # a handful of claims under a far-away storm's name is a coding slip, not a flood here
     # hater r6: the catch-all labels are shown as their own rows (dropping them hid Louisiana's $1.1 billion "Flooding" claims)
     _ev_all = [dict(e, i=i) for i, e in enumerate(_xc.get("events") or [])
-               if e.get("years") and int(e["years"][-1]) - int(e["years"][0]) > 1 and (e.get("claims") or 0) >= MX.CONST["event_min"]]
+               if e.get("years") and int(e["years"][-1]) - int(e["years"][0]) > (0 if _NONAME.match(e["name"]) else 1) and (e.get("claims") or 0) >= MX.CONST["event_min"]]
     _ev_years = {int(y) for e in _ev for y in e["years"]}   # hater r5/r6: Louisiana's 1995 (4th costliest year) sat under the catch-all label
     _top5 = sorted(((y, by[str(y)][1]) for y in years), key=lambda x: -x[1])[:5]
     _unnamed = [(y, p) for y, p in _top5 if int(y) not in _ev_years]
-    _unnamed_note = ("<p class='note'>Among the five costliest years, these have no flood FEMA named for that year alone: "
+    _unnamed_note = ("<p class='note'>Among the five costliest years, these have no flood of their own in the table above: "
                      + ", ".join(str(y) for y, _ in _unnamed) + " (their totals are in the yearly chart above).</p>") if _unnamed else ""
-    _ev1 = next((e for e in _ev if not re.match(r"not a named", e["name"], re.I)), None)
+    # test_factory 11-08: "costliest" is the largest by dollars, never the first row in FEMA's file order
+    _ev1 = max((e for e in _ev if not re.match(r"not a named", e["name"], re.I)), key=lambda e: e.get("paid") or 0, default=None)
     if len(_ev) >= 2 and _ev1:
         events_card = card("Which floods paid out the biggest totals here?",
-            f"The costliest flood FEMA named here was {_evname(_ev1)}: {tp('event_paid', f'extras.claims.events.{_ev1[chr(105)]}.paid', big, q=_ev1['name'])} across "
-            f"{tp('event_claims', f'extras.claims.events.{_ev1[chr(105)]}.claims', q=_ev1['name'])} NFIP flood claims."
+            f"The costliest flood FEMA named here was {_evname(_ev1)}: {tp('event_paid', f'extras.claims.events.{_ev1[chr(105)]}.paid', big, q=_ev1['name'])} over "
+            f"{tp('event_claims', f'extras.claims.events.{_ev1[chr(105)]}.claims', q=_ev1['name'])} claims."
             # round 16 (Maine): a costlier year with no flood FEMA named for it alone is said in the lead, not only in a note
             + (f" The costliest year, {_top5[0][0]} ({tp('claims_year_paid', f'claims.by_year.{_top5[0][0]}.1', money, q=str(_top5[0][0]))}), has no single named flood."
-               if _top5 and int(_top5[0][0]) not in _ev_years and _top5[0][1] > (_ev1.get("paid") or 0) else ""),
+               if _top5 and int(_top5[0][0]) not in _ev_years and _top5[0][1] > (_ev1.get("paid") or 0) else "")
+            # hater r103/r106 Sonoma: a catch-all label that paid more than the named flood is said in the lead (gate C12)
+            + "".join(f" Catch-all {_evname(e)}, many floods: {tp('event_paid', f'extras.claims.events.{e[chr(105)]}.paid', big, q=e['name'])}."
+                      for e in sorted(_ev_all, key=lambda e: -(e.get("paid") or 0))[:1] if (e.get("paid") or 0) > (_ev1.get("paid") or 0)),
             "<table><thead><tr><th>Flood (FEMA's name)</th><th>Claims</th><th>Total paid</th><th>Average</th></tr></thead><tbody>"
-            + "".join(f"<tr><td>{_evname(e)}</td><td>{tp('event_claims', f'extras.claims.events.{e[chr(105)]}.claims', q=e['name'])}</td>"
+            + "".join(f"<tr><td>{_evname(e)}{": many floods; FEMA's records use this name for claims in several years" if e in _ev_all else ''}</td><td>{tp('event_claims', f'extras.claims.events.{e[chr(105)]}.claims', q=e['name'])}</td>"
                       f"<td>{tp('event_paid', f'extras.claims.events.{e[chr(105)]}.paid', big, q=e['name'])}</td>"
-                      f"<td>{tp('event_avg', f'extras.claims.events.{e[chr(105)]}.avg', money, q=e['name'])}</td></tr>" for e in _ev)
-            + "".join(f"<tr><td>{_evname(e)}: FEMA's records use this name for claims in several years</td><td>{tp('event_claims', f'extras.claims.events.{e[chr(105)]}.claims', q=e['name'])}</td>"
-                      f"<td>{tp('event_paid', f'extras.claims.events.{e[chr(105)]}.paid', big, q=e['name'])}</td>"
-                      f"<td>{tp('event_avg', f'extras.claims.events.{e[chr(105)]}.avg', money, q=e['name'])}</td></tr>" for e in _ev_all)
+                      f"<td>{tp('event_avg', f'extras.claims.events.{e[chr(105)]}.avg', money, q=e['name'])}</td></tr>"
+                      for e in sorted(_ev + _ev_all, key=lambda e: -(e.get("paid") or 0)))   # one list, biggest first (r106: catch-all sat last)
             + f"</tbody></table><p class='note'>Grouped by the flood event FEMA named; only claims that paid something, and only floods with {tp('threshold', 'const.event_min', q='event_min')} or more paid claims here. Totals include code-upgrade (ICC) payments, which the yearly chart leaves out.{how('events')}</p>" + _unnamed_note,
             src(["event_paid", "event_claims"], f"{C['year_min']}–{C['year_max']}", RETR))
     return events_card
@@ -859,7 +864,10 @@ def card_payout():
             + (("<table><thead><tr><th>Decade of the flood</th><th>Claims filed</th><th>Share that paid something</th></tr></thead><tbody>"
                 + "".join(f"<tr><td>{m('decade', html.escape(d), q=d)}</td><td>{tp('decade_claims', f'extras.claims.by_decade.{d}.n', q=d)}</td>"
                           f"<td>{tp('decade_paid_share', f'extras.claims.by_decade.{d}.paid_pct', pct, q=d)}</td></tr>" for d in _decs)
-                + "</tbody></table>") if len(_decs) > 1 else "")
+                + "</tbody></table>"
+                + (("<p class='note'>Decades with too few claims for a share are not listed: "
+                    + ", ".join(f"{m('decade', html.escape(d), q=d)} ({tp('decade_claims', f'extras.claims.by_decade.{d}.n', q=d)} {pl(_xc['by_decade'][d]['n'], 'claim')})" for d in _decs_out)
+                    + ".</p>") if _decs_out else "")) if len(_decs) > 1 else "")
             + f"<p class='note'>{rule('cwop')} The average is over claims that paid something and includes Increased Cost of "
             "Compliance payments (help to elevate or rebuild to code), which the yearly totals above leave out. Dollars are "
             "as paid at the time, not adjusted for inflation; a single home can file across several floods over the years. These shares count every FEMA claim record from every year, including ones FEMA coded as entered in error; <a href='/flood-insurance/claims/'>the claims page</a> counts only losses from 2020 on and leaves those records out, so its shares differ. FEMA's data has no open or closed field, so a recent claim with no payment may still be paid.</p>",
@@ -1023,11 +1031,19 @@ if _rk:   # short: P4 keeps the quote checker inside screen 2
     _qa.insert(0, f'<a href="#c-how-much-flood-risk-is-here"><b>How risky is it here?</b> FEMA&#39;s {UNIT} rating: '
                + ", ".join(f'{html.escape(str(NRI[b]["risk_rating"]))} {w}' for b, w in _rk)
                + f' flood risk vs other {dict(county="counties", parish="parishes").get(UNIT, UNIT + "s")}; not for your address.</a>')
-_zq = [(z, d) for z, d in (P.get("cost_by_zone") or {}).items() if z != "Unknown"][:2]
+_zq = sorted(((z, d) for z, d in (P.get("cost_by_zone") or {}).items() if z != "Unknown"), key=lambda zd: -(zd[1].get("n") or 0))[:2]   # by count, not file order
+# hater r97 (NY County AE 41.8%) / r103 (Levy VE 22%): a big zone with too few priced policies is named, never silently
+# missing from the answer (gate C11)
+_zbig = [z for z, v in (P.get("zone_units") or {}).items() if P.get("units") and v >= ZONE_NAME_SHARE * P["units"]
+         and z not in dict(_zq) and z not in ("Unknown", "other", "other_hr")]
+_zq += [(z, (P.get("cost_by_zone") or {})[z]) for z in _zbig if z in (P.get("cost_by_zone") or {})]   # priced, just not top 2: show its price
+_zbig = [z for z in _zbig if z not in (P.get("cost_by_zone") or {})]   # only a truly unpriced zone "has too few to price"
 if _zq:
-    _qa.insert(2 if _rk else 1, '<a href="#zone-cost"><b>Cost in my zone?</b> Largest zones by priced policies here: '
+    _qa.insert(2 if _rk else 1, '<a href="#zone-cost"><b>Cost in my zone?</b> ' + ("Largest zones" if len(_zq) > 1 else "Largest zone") + ' by priced policies here: '
                + ", ".join(f"Zone {html.escape(z)} {tp('zone_cost', f'policies.cost_by_zone.{z}.median', money, q=z)}" for z, d in _zq)
-               + ' a year (single-family primary-home median; others in the table).</a>')
+               + ' a year (single-family primary-home median'
+               + "".join(f"; Zone {html.escape(z)}, {m('zone_share', str(round(100 * P['zone_units'][z] / P['units'], 1)) + '%', q=z)} of policy units, has too few to price" for z in _zbig)
+               + ').</a>')
 _cxq = data.get("claims_extra") or {}
 if _cxq.get("claims") and _cxq.get("avg_paid") and P.get("p50"):
     _sroot = ROOT_DATA.get("state") if isinstance(ROOT_DATA.get("state"), dict) else {}   # on a state page "state" is just its code
@@ -1174,11 +1190,15 @@ def card_cost():
     cost_body += f"<p class='note'>{rule('other_buyers')} The median here is for single-family primary-home policies, not businesses or second homes. Renting? See <a href='/flood-insurance/renters/'>what renters pay</a>. {rule('surcharge')}</p>"
     return card(f"Flood insurance cost in {CL}", cost_lead, cost_body, src(["cost_p50", "prem_median", "frp_median", "coverage"], POL_ASOF, RETR) + src_rules(["other_buyers", "surcharge"]))
 
+def _open_note():   # hater r103 Dixie: "latest two years" sat on 2024 data in 2026; name the years, only when they are charted (gate C13)
+    _a = int(P["asof"][:4]); _ys = [y for y in (_a - 1, _a) if str(y) in (C.get("by_year") or {})]
+    return f" Totals for {' and '.join(map(str, _ys))} are not final while their claims stay open." if _ys else ""
+
 def card_claims():
     claims_lead, claims_ratio_note = _claims_parts()
     return card(f"Flood insurance claims in {CL}: what floods pay out", claims_lead, claims_svg() +
       f"<p class='note'>Bar height is dollars paid that year. Orange bars are the three costliest years: " + ", ".join(f"{y} ({tp('claims_year_paid', f'claims.by_year.{y}.1', money, q=str(y))})" for y, p in top_paid) +
-      f". Total paid {tp('claims_total', 'claims.total_paid', money, q='exact')}. Totals for the latest two years are not final while their claims stay open.{how('claims')}</p>" + claims_ratio_note,
+      f". Total paid {tp('claims_total', 'claims.total_paid', money, q='exact')}. {_open_note()}{how('claims')}</p>" + claims_ratio_note,
       src(["claims_filed", "claims_total"], f"{C['year_min']}–{C['year_max']}", RETR))
 
 def card_zip():   # state pages: the county table in the same slot

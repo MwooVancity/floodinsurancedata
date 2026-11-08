@@ -60,7 +60,10 @@ Write {out}. For EACH page a section headed exactly `## <slug>` (slugs: {slugs})
 - defects worst-first, each tagged **BLOCKER** (wrong or misleading info a reader could act on), **MAJOR**
   (confusing, untrustworthy or broken: a figure or sentence that a reader would misread), **GAP** (something #1 has
   that we do not; ranked, never blocking) or **MINOR** (polish); the screenshot or exact quoted text; what is wrong;
-  why the reader is hurt. A missing feature is a GAP, never a MAJOR;
+  why the reader is hurt. A missing feature is a GAP, never a MAJOR. Never MINOR (11-08: six of these sat as MINOR
+  while live): a label the data under it breaks — a table, list or range that leaves rows out without saying so; a
+  "costliest/largest/most" a nearby row beats; "excluded", "only", "not final", "since" contradicted by the data; a
+  count whose base differs from its label. Each is at least MAJOR, and names the check that should have caught it;
 - a last line exactly `Verdict: PASS` or `Verdict: FAIL`. PASS only with zero BLOCKER and zero MAJOR.
 Then a "Classes" section: defects likely on every page of that template (home / state / county).
 Edit no other file. Reply with per-page counts, the 10 worst defects one line each, and the previous-items tally.
