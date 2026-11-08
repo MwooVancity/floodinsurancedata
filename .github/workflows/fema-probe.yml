@@ -12,6 +12,17 @@ jobs:
       - run: pip install -q playwright==1.64.1 && python -m playwright install --with-deps chromium webkit
       - run: python -I tools/live_zonemap.py --browser chromium
       - run: python -I tools/live_zonemap.py --browser webkit
+  links:   # 11-07: FEMA hosts refuse the laptop; check reader-facing FEMA links (status, title, key words) from a US runner
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - run: |
+          for u in https://hazards.fema.gov/femaportal/onlinelomc/signin https://hazards.fema.gov/femaportal/prelimdownload/ \
+                   https://www.fema.gov/flood-maps/change-your-flood-zone/loma-lomr-f https://www.fema.gov/flood-maps/tools-resources/flood-map-products/preliminary-flood-hazard-data \
+                   https://www.fema.gov/flood-maps/change-your-flood-zone; do
+            echo "== $u"; curl -sL -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64)" -o p.html -w "%{http_code} %{url_effective}\n" "$u"
+            python3 -c "import re,html;t=open('p.html',errors='ignore').read();print('title:',(re.search(r'<title>(.*?)</title>',t,re.S) or [0,''])[1].strip()[:120]);t=re.sub(r'\s+',' ',html.unescape(re.sub(r'<[^>]+>',' ',re.sub(r'(?s)<(script|style).*?</\1>','',t))));[print('  ['+k+']',t[max(0,t.find(k)-160):t.find(k)+220]) for k in ('fee','Online LOMC','preliminary','Preliminary','elevation certificate','Elevation Certificate') if k in t]"
+          done
   probe:
     runs-on: ubuntu-latest
     timeout-minutes: 5
