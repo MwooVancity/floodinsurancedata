@@ -127,9 +127,14 @@ def claims(st):
                                            "recent": [0, 0, collections.Counter()]})   # loss year RECENT_FROM+: [claims, paid, reason codes of the unpaid] (claims research page)   # zone on the claim, loss years LOSS_FROM..LOSS_TO: [claims, paid, dollars]
     for r in rows("NfipClaims", st):
         paid = net(r)
+        err = r["nonPaymentReasonBuilding"] in ("98", "99")   # bookkeeping, not claims (agg_raw drops them too)
         for k in ["ST"] + [g for g in [r["countyCode"] or ""] if g[:2] == FIPS[st]]:
             if len(k) not in (2, 5): continue
-            a = acc[k]; a["n"] += 1
+            a = acc[k]
+            if err:   # only the claims page's "left out" count sees them (build_site subtracts ERR_CODES from "recent")
+                if str(r["yearOfLoss"] or "")[:4] >= RECENT_FROM: a["recent"][0] += 1; a["recent"][2][r["nonPaymentReasonBuilding"]] += 1
+                continue
+            a["n"] += 1
             if r["yearOfLoss"]:   # hater r6/r7: is a low paid share one era or every era?
                 dc = a["dec"][str(r["yearOfLoss"])[:3] + "0s"]; dc[0] += 1; dc[1] += paid > 0
             if k == "ST" and LOSS_FROM <= str(r["yearOfLoss"] or "")[:4] <= LOSS_TO:

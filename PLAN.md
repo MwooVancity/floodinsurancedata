@@ -21,12 +21,11 @@ Keyword Planner volume x top bid: state insurance $190k, map $90k, towns $47k, z
 1. DONE 11-08: condo filter; S16 link gate; zone pages link their top 10 counties (Z8). Next: round-97 MINORs (backlog).
 2. Weekly Search Console read (last 11-04: slipped). Owner decisions from the audit: BFE in the address tool; FEMA map letters (LOMA/LOMR) near the pin; share of homes insured; Esri copy as fallback (audit: no).
 3. US-runner raw reads (fema-probe links job): Elevation Certificate who/where (AE page); retry the 12 NAIC-fallback regulators (AK AZ KS LA MA MI MN NH NJ RI WV WY).
-4. One claims base everywhere: county payout shares drop FEMA codes 98/99 like the claims page (extras_raw + recheck, lands with the next refresh).
+4. One claims base everywhere: code done 11-08 (agg_raw, extras_raw, recheck drop FEMA codes 98/99; claims page keeps its left-out count). Numbers change with the 12-03 refresh; check Sonoma's claim count drops by about 187.
 5. Renter tenant-flag check (does FEMA's data catch every renter policy?). County floodplain contacts: no dataset, so a printed gap line.
 6. 11-18 start-date tool "all", 11-20 address tool "all", if no errors on the samples (first a US-runner live test vs real FEMA).
 7. 12-12: did Congress extend the NFIP past 2026-12-11? During a lapse set `start` to [].
-8. Open truth item: "policies whose term began in 2025" on an 08-31 as-of holds only Sep-Dec 2025; label the month span or drop the partial year.
-9. Backlog (`state/reviews/backlog.md`): table search on 16+ rows, glossary, titles over 70 / descriptions over 160 chars if CTR is low.
+8. Backlog (`state/reviews/backlog.md`): table search on 16+ rows, glossary, titles over 70 / descriptions over 160 chars if CTR is low.
 
 ## Backlinks (owner 11-08: basics, Claude drives; owner only presses send)
 Why: 0 referring domains, position ~44; page 1 for money terms needs links. Claude builds each asset, the named target list and the draft pitch; the owner sends.

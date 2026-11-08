@@ -95,7 +95,10 @@ def run(st):
     if os.path.exists(os.path.join(RAW, "asof.txt")):
         json.dump({"asof": open(os.path.join(RAW, "asof.txt")).read().strip()}, open(ASOF_FILE, "w"))
     pol = load("NfipPolicies", st, POL_NUM, POL_STR)
-    clm = load("NfipClaims", st, CLM_NUM, CLM_STR)
+    # FEMA codes 98 "Claim deleted in error" / 99 "Assigned in error" are bookkeeping, not claims: out of every count
+    # (the claims page already did this; county pages counted them, hater r103 Sonoma 187 of 7,403). extras_raw keeps
+    # their count for the claims page's "left out" line.
+    clm = [r for r in load("NfipClaims", st, CLM_NUM, CLM_STR) if (r["nonPaymentReasonBuilding"] or "") not in ("98", "99")]
     P = ffcalc.aggregate_policies(pol)
     C = ffcalc.aggregate_claims(clm, P["units"])
     by_c = {}

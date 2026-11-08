@@ -72,7 +72,8 @@ def recompute(c):
     pairs = [(r["totalInsurancePremiumOfThePolicy"], r["fullRiskPremium"]) for r in coh
              if all(isinstance(r.get(f), (int, float)) and r[f] > 0 for f in ("totalInsurancePremiumOfThePolicy", "fullRiskPremium"))]
     clm = pull("NfipClaims", f"state eq '{c['state']}' and countyCode eq '{c['geoid']}'",
-               "id,netBuildingPaymentAmount,netContentsPaymentAmount,netIccPaymentAmount,yearOfLoss")
+               "id,netBuildingPaymentAmount,netContentsPaymentAmount,netIccPaymentAmount,yearOfLoss,nonPaymentReasonBuilding")
+    clm = [r for r in clm if str(r.get("nonPaymentReasonBuilding") or "") not in ("98", "99")]   # bookkeeping, not claims (same rule as agg_raw)
     ispaid = lambda r: sum((r.get(f) or 0) for f in ("netBuildingPaymentAmount", "netContentsPaymentAmount", "netIccPaymentAmount")) > 0
     paid = sum(1 for r in clm if ispaid(r))
     # extras_raw figures (code review 2026-10-28: nothing recomputed them): past-year buyers' cost, latest decade's paid share
