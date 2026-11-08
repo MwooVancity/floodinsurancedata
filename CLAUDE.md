@@ -24,9 +24,12 @@ US homeowner or buyer at one place, on a phone, 30-60 seconds, urgent. Above tab
 - No paid referrals before a licensing + FTC check; no ads before a 4-week Search Console review. FEMA's agent finder link is fine.
 - Owner alone: domain, Search Console, ads and consent banner, publisher identity (site anonymous), opening pages to the index, paid referrals, cutting any block.
 
+## Rank #1 loop (HARD, owner 11-08; run per keyword group, nothing skipped)
+1 Intent: read the real top 3 pages; our page type must match the winning type. 2 Answer in the first 2 phone screens, searcher's words. 3 Information gain: what the top 3 cannot give; none = no page. 4 Trust: source + date beside numbers, methodology, corrections route. 5 Links (biggest lever while the site is young): each group gets a link-worthy asset, a named target list, a pitch with one exact figure, a send date; Claude builds all of it, the owner only sends; count referring domains weekly; never buy, swap or farm links. 6 Internal links (below). 7 Indexed, fast, one canonical. 8 Titles: test when impressions > 100 and CTR is low. 9 Search Console weekly per group; every build has a dated continue/kill number; no number moved = stop polishing, go back to 5 or 1.
+
 ## Internal links (HARD, owner 11-08; google_gate S16 = `tools/linkcheck.py`, tests in test_calc.py)
 - Every state and county page links home, its state, up to 6 bordering counties, the zone page for each zone it names, and every hub in `linkcheck.HUBS` (zone map lookup, /nfip/, renters, claims, ZIP). Home links every state and hub; a state links every live county. S16 fails a missing hub link, a broken internal link, an orphan.
-- Zone pages should link the counties with the most homes in that zone (OPEN).
+- Zone pages link the 10 county pages with the most policies in that zone (zone_check Z8).
 - Anchor = the destination in the searcher's words ("flood zone map lookup by address", "Zone AE", "Harris County"), never "here" or "click".
 - Links sit in the sentence where the reader needs them; never a link block, keyword list or footer farm; screen 1 holds answers only (P4).
 - A new page type joins `HUBS` and gets home and state links the same day. After a template change, re-count inbound links (script, no review): a hub linked from under half of state + county pages is a defect.
