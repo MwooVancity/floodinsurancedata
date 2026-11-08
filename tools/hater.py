@@ -13,7 +13,12 @@ LOCAL = "--local" in sys.argv   # review the new build in dist/ before it ships 
 def url(slug):
     if LOCAL: return "file:///" + html_path(slug).replace("\\", "/")
     return BASE + "/" if slug == "home" else f"{BASE}/flood-insurance/{slug}/"
-def html_path(slug): return os.path.join(ROOT, "dist", "index.html") if slug == "home" else os.path.join(ROOT, "dist", "flood-insurance", slug, "index.html")
+def html_path(slug):
+    if slug == "home": return os.path.join(ROOT, "dist", "index.html")
+    p = os.path.join(ROOT, "dist", "flood-insurance", slug, "index.html")
+    # a queued county held for its own review exists only in the review build (build_counties.py --all) until it ships
+    q = os.path.join(ROOT, "review", "flood-insurance", slug, "index.html")
+    return q if not os.path.exists(p) and os.path.exists(q) else p
 def data_dir(slug):
     for d in (os.path.join(ROOT, "data", "states", slug), os.path.join(ROOT, "data", "c", slug)):
         if os.path.isdir(d): return d
