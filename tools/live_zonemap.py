@@ -23,12 +23,9 @@ def fema(addr):
     mt = (g or {}).get("result", {}).get("addressMatches") or []
     if not mt: return None
     lon, lat = mt[0]["coordinates"]["x"], mt[0]["coordinates"]["y"]
-    x = lon * 20037508.342789244 / 180; y = math.log(math.tan((90 + lat) * math.pi / 360)) * 6378137
-    k = 15 / math.cos(lat * math.pi / 180)
     base = {"geometry": f"{lon},{lat}", "geometryType": "esriGeometryPoint", "inSR": 4326, "returnGeometry": "false", "f": "json"}
     pt = get(NFHL + "/28/query", dict(base, outFields="FLD_ZONE,ZONE_SUBTY,SFHA_TF"))
-    bx = get(NFHL + "/28/query", {"geometry": f"{x - k},{y - k},{x + k},{y + k}", "geometryType": "esriGeometryEnvelope", "inSR": 3857,
-                                  "outFields": "FLD_ZONE,ZONE_SUBTY", "returnGeometry": "false", "f": "json"})
+    bx = get(NFHL + "/28/query", dict(base, distance=15, units="esriSRUnit_Meter", outFields="FLD_ZONE,ZONE_SUBTY"))   # D5: true 15 m circle
     pn = get(NFHL + "/3/query", dict(base, outFields="FIRM_PAN,EFF_DATE"))
     return mt[0]["matchedAddress"], pt, bx, pn
 

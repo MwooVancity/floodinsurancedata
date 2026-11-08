@@ -9,6 +9,9 @@
   var MSC = "https://msc.fema.gov/portal/home";
   var NEAR_M = 15, WAIT_MS = 8000;
   var MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  // fresh audit 11-08 D2: only FEMA flood zone letters are named as zones; any other FLD_ZONE value (open water, area not
+  // included) is quoted as FEMA wrote it, never printed as "Zone ..."
+  var ZONE_RE = /^(A|A99|AE|AH|AO|AR|V|VE|X|D|B|C|A\d{1,2}|V\d{1,2})$/;
   var ZPAGES = { AE: "ae", X: "x", VE: "ve", A: "a", AO: "ao", AH: "ah", D: "d" };
 
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
@@ -19,7 +22,7 @@
   }
   function zoneName(a) {
     var z = String(a.FLD_ZONE || "").trim(), s = String(a.ZONE_SUBTY || "").trim();
-    if (!z) return null;
+    if (!z || !ZONE_RE.test(z)) return null;
     return "Zone " + z + (s ? " (" + s.toLowerCase() + ")" : "");
   }
 
@@ -27,6 +30,8 @@
   function describe(point, box, panel) {
     if (!point || !box || point.error || box.error) return { kind: "down", lines: ["FEMA's map service did not answer. Check this spot on FEMA's map."] };
     var here = (point.features || []).map(function (f) { return f.attributes || {}; }).filter(function (a) { return zoneName(a); });
+    var raw = ((point.features || []).map(function (f) { return String((f.attributes || {}).FLD_ZONE || "").trim(); }).filter(function (z) { return z && !ZONE_RE.test(z); })[0]) || "";
+    if (!here.length && raw) return { kind: "other", lines: ["FEMA's map labels this spot “" + raw + "” instead of a flood zone. That label says nothing about whether your property can flood. Check this spot on FEMA's map."] };
     if (!here.length) return { kind: "none", lines: ["FEMA's digital flood map shows no flood zone at this pin. That is not a finding of no flood risk: FEMA's digital map does not cover every place. Check this spot on FEMA's map."] };
     var seen = {}, near = [];
     here.concat((box.features || []).map(function (f) { return f.attributes || {}; })).forEach(function (a) {
@@ -68,7 +73,7 @@
   }
 
   function start(box) {
-    var out = box.querySelector(".zm-out"), mapEl = box.querySelector(".zm-map"), map, pin, fema;
+    var out = box.querySelector(".zm-out"), mapEl = box.querySelector(".zm-map"), map, pin, fema, seq = 0;   // seq: D1, an answer for a pin that moved is dropped
     var say = function (html) { out.innerHTML = html; };
     function showMap(lat, lon, note) {
       mapEl.style.display = "block";
@@ -90,21 +95,23 @@
       ask(note);
     }
     function ask(note) {
+      seq++;
       say((note ? "<p>" + note + "</p>" : "") + "<p><b>Is the pin on your building?</b> Drag it onto the building if not.</p>" +
           '<button type="button" class="btn zm-ok">Yes, the pin is on my building</button>');
       out.querySelector(".zm-ok").onclick = confirm;
     }
     function confirm() {
-      var ll = pin.getLatLng(), m = L.CRS.EPSG3857.project(ll), g = ll.lng + "," + ll.lat;
+      var ll = pin.getLatLng(), g = ll.lng + "," + ll.lat;
+      var my = ++seq;
       say("<p>Asking FEMA's map…</p>");
       var base = { geometryType: "esriGeometryPoint", inSR: 4326, returnGeometry: "false", f: "json" };
       Promise.all([
         get(NFHL + "/28/query", Object.assign({ geometry: g, outFields: "FLD_ZONE,ZONE_SUBTY,SFHA_TF" }, base)),
-        // Web Mercator units are stretched by 1/cos(latitude): scale so the box really reaches NEAR_M meters on the ground
-        get(NFHL + "/28/query", { geometry: (function (k) { return [m.x - k, m.y - k, m.x + k, m.y + k]; })(NEAR_M / Math.cos(ll.lat * Math.PI / 180)).join(","), geometryType: "esriGeometryEnvelope",
-                                  inSR: 3857, outFields: "FLD_ZONE,ZONE_SUBTY", returnGeometry: "false", f: "json" }),
+        // fresh audit 11-08 D5: a true circle of NEAR_M meters (FEMA honours distance + units, US-runner probe 11-08), not a box
+        get(NFHL + "/28/query", Object.assign({ geometry: g, distance: NEAR_M, units: "esriSRUnit_Meter", outFields: "FLD_ZONE,ZONE_SUBTY" }, base)),
         get(NFHL + "/3/query", Object.assign({ geometry: g, outFields: "FIRM_PAN,EFF_DATE" }, base))
       ]).then(function (r) {
+        if (my !== seq) return;   // the reader moved the pin while FEMA answered: that answer is for another spot
         var d = describe(r[0], r[1], r[2]);
         var zl = d.zone && ZPAGES[d.zone] ? ' <a href="/flood-zones/' + ZPAGES[d.zone] + '/">What zone ' + esc(d.zone) + " means and costs</a>." : "";
         say("<p>" + d.lines.map(esc).join("</p><p>") + "</p>" + (zl ? "<p>" + zl + "</p>" : "") + box.querySelector(".zm-label").innerHTML +

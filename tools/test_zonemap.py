@@ -10,15 +10,18 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BROWSER = sys.argv[sys.argv.index("--browser") + 1] if "--browser" in sys.argv else "chromium"
 M = "January February March April May June July August September October November December".split()
 
+ZONES = re.compile(r"(A|A99|AE|AH|AO|AR|V|VE|X|D|B|C|A\d{1,2}|V\d{1,2})")   # FEMA zone letters; anything else is quoted, never "Zone ..."
 def name(a):
     z, s = str(a.get("FLD_ZONE") or "").strip(), str(a.get("ZONE_SUBTY") or "").strip()
-    return ("Zone " + z + (f" ({s.lower()})" if s else "")) if z else None
+    return ("Zone " + z + (f" ({s.lower()})" if s else "")) if ZONES.fullmatch(z) else None
 
 def oracle(point, box, panel):   # written from the rule text in CLAUDE.md, not from the JS
     if point is None or box is None or "error" in point or "error" in box:
         return ["FEMA's map service did not answer. Check this spot on FEMA's map."]
     here = [f.get("attributes") or {} for f in point.get("features") or []]
+    raw = next((str(a.get("FLD_ZONE") or "").strip() for a in here if str(a.get("FLD_ZONE") or "").strip() and not name(a)), "")
     here = [a for a in here if name(a)]
+    if not here and raw: return [f"FEMA's map labels this spot “{raw}” instead of a flood zone. That label says nothing about whether your property can flood. Check this spot on FEMA's map."]
     if not here:
         return ["FEMA's digital flood map shows no flood zone at this pin. That is not a finding of no flood risk: FEMA's digital map does not cover every place. Check this spot on FEMA's map."]
     near = []
@@ -51,12 +54,15 @@ CASES = {   # every branch: one zone, zone line nearby, nothing, FEMA error, FEM
     "fema silent": (None, None, None),
     "box silent": (F({"FLD_ZONE": "VE", "SFHA_TF": "T"}), None, F()),
     "panel error": (F({"FLD_ZONE": "D", "SFHA_TF": "F"}), F({"FLD_ZONE": "D"}), {"error": {}}),
+    "open water": (F({"FLD_ZONE": "OPEN WATER", "SFHA_TF": "F"}), F({"FLD_ZONE": "OPEN WATER"}, {"FLD_ZONE": "AE"}), F()),
+    "open water beside AE": (F({"FLD_ZONE": "AE", "SFHA_TF": "T"}), F({"FLD_ZONE": "OPEN WATER"}), F()),
+    "area not included": (F({"FLD_ZONE": "AREA NOT INCLUDED"}), F(), F()),
     "panel no date": (F({"FLD_ZONE": "A", "SFHA_TF": "T"}), F(), F({"FIRM_PAN": "22071C0115E", "EFF_DATE": None})),
 }
 
 def fuzz(r):
     pick = lambda xs: r.choice(xs)
-    zone = lambda: {"FLD_ZONE": pick(["AE", "X", "VE", "A", "AO", "AH", "D", "", None, 7, "OPEN WATER"]),
+    zone = lambda: {"FLD_ZONE": pick(["AE", "X", "VE", "A", "AO", "AH", "D", "", None, 7, "OPEN WATER", "AREA NOT INCLUDED", "A12", "ae"]),
                     "ZONE_SUBTY": pick([None, "", "FLOODWAY", "0.2 PCT ANNUAL CHANCE FLOOD HAZARD", 3]), "SFHA_TF": pick(["T", "F", "t", None, ""])}
     resp = lambda mk: pick([None, {"error": {}}, {}, {"features": None}, F(*[mk() for _ in range(r.randint(0, 3))])])
     pan = lambda: {"FIRM_PAN": pick(["12099C0587F", None, "", 5]), "EFF_DATE": pick([1734652800000, None, "x", -1, 0, 1e300])}
@@ -91,7 +97,7 @@ def main():
                 cb = re.search(r"callback=([\w$]+)", u)[1]
                 body = cb + '({"result":{"addressMatches":[{"matchedAddress":"301 N OLIVE AVE, WEST PALM BEACH, FL, 33401","coordinates":{"x":-80.0533,"y":26.7153}}]}})'
                 return r.fulfill(status=200, content_type="application/javascript", body=body)
-            if "/MapServer/28/query" in u: return r.fulfill(status=200, content_type="application/json", body=json.dumps(bx if "Envelope" in u else pt))
+            if "/MapServer/28/query" in u: return r.fulfill(status=200, content_type="application/json", body=json.dumps(bx if "distance=15" in u and "esriSRUnit_Meter" in u else pt))   # D5: the nearby query must be a 15 m circle
             if "/MapServer/3/query" in u: return r.fulfill(status=200, content_type="application/json", body=json.dumps(pn))
             if "/export?" in u or "basemap.nationalmap.gov" in u: return r.fulfill(status=200, content_type="image/png", body=b"")
             if u.startswith(host): return r.continue_()
@@ -111,6 +117,22 @@ def main():
             for s in oracle(pt, bx, pn) + ["FEMA's map, not an official determination."]:
                 if s not in out: bad.append(f"click path: missing {s!r}")
             if "Check it on FEMA's map" not in out: bad.append("click path: no FEMA link after the answer")
+            # D1 (fresh audit 11-08): FEMA answers slowly, the reader drags the pin meanwhile; the old answer must not appear
+            pg.evaluate("() => { const f = window.fetch; window.fetch = (...a) => new Promise(r => setTimeout(() => r(f(...a)), 2000)); }")
+            def drag(dx):
+                mk = pg.locator("#zm .leaflet-marker-icon").bounding_box()
+                if not mk: return False
+                pg.mouse.move(mk["x"] + mk["width"] / 2, mk["y"] + mk["height"] - 4); pg.mouse.down()
+                pg.mouse.move(mk["x"] + dx, mk["y"] + 40, steps=8); pg.mouse.up(); return True
+            if not drag(60): bad.append("D1 test: no pin to drag")
+            elif pg.locator("#zm .zm-ok").count() != 1: bad.append("D1 test: drag did not ask to confirm")
+            else:
+                pg.click("#zm .zm-ok")   # FEMA now answering (2 s), and the reader moves the pin again
+                drag(-60)
+                pg.wait_for_timeout(2800)
+                late = pg.inner_text("#zm .zm-out")
+                if "FEMA's map shows" in late or "zone line" in late: bad.append("D1: an answer for the old pin appeared after the pin moved")
+                if pg.locator("#zm .zm-ok").count() != 1: bad.append("D1: after the drag the reader is not asked to confirm the new pin")
         # 3. JS off: a plain link to FEMA's map, no form
         nj = b.new_context(java_script_enabled=False).new_page(); nj.goto(page_url)
         a = nj.locator("#zm a.zm-open")
