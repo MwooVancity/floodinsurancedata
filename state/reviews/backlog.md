@@ -253,3 +253,13 @@ Ranked by reader value. hater.py record appends each round's **GAP** lines below
 ## screen-1 quick answers (round 94)
 - Risk line: say "FEMA's county rating" (a bare "Very High" can differ from the loss percentile).
 - Zone cost line: say "Most common zones here" so readers in other zones look in the table.
+
+## round 95 MINORs
+- Hero tile "Still pay less than FEMA's full-risk price": add its base (single-family primary homes) on screen 1.
+- Zone line: say when a zone with many units (NY County AE) is left out for too few priced policies.
+- "No new map" line: pair with "preliminary maps may exist" so it never reads as nothing coming.
+- State picker: say it lists only places with their own page.
+- Renters: not_covered says "home policy"; scope it to the contents policy.
+- LOMA "no fee" sits beside Letter of Map Change, which can cost: scope.
+- AE zone: Elevation Certificate who/where (needs a raw FEMA source; FEMA.gov refuses the laptop, use the US runner).
+- Insurance regulators: 12 states fell back to NAIC (403 from the laptop); retry from the US runner.

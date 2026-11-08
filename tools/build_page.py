@@ -297,9 +297,6 @@ def _cost_parts():
                      "reserve fund assessment and HFIAA surcharge), single-family primary residences. The bar is the middle "
                      "half of policies, from " + tp('cost_n', 'policies.cost_n') + " single-family primary-home policies. These are "
                      "existing policies, many still below FEMA's full-risk price.</p>")
-    if P.get("coverage_building"):
-        cost_body += (f"<p class='note'><b>Coverage in force:</b> {tp('coverage', 'policies.coverage_building', big, q='building')} of building and "
-                      f"{tp('coverage', 'policies.coverage_contents', big, q='contents')} of contents coverage across all {CS} policies.</p>")
     # monthly framing for the median
     return cost_lead, cost_body
 
@@ -356,9 +353,7 @@ def _claims_parts():
                    f"{m('claims_total', big(C['total_paid']))} in payouts since {C['year_min']}"
                    + (f"; the worst {pl(len(top_paid), 'year was', 'years were')} {and_list(y for y, _ in top_paid)}." if top_paid else "."))
     # the ratio reads like a risk score, so it is demoted to a note with both numbers shown, never the headline.
-    claims_ratio_note = (f"<p class='note'>That is {m('claims_filed', num(C['rows']))} {pl(C['rows'], 'claim')} since {C['year_min']} against "
-                         f"{m('units', num(P['units']))} policy units in force today — a cumulative tally spanning ~{m('claims_span_years', str(C['year_max']-C['year_min']+1))} "
-                         f"years over a present-day snapshot, not an annual claim rate or a flood probability.</p>")
+    claims_ratio_note = ""   # hcu 11-07 delete list: a disclaimer for a ratio the page no longer shows
     return claims_lead, claims_ratio_note
 
 def _pct(v):
@@ -410,12 +405,14 @@ def _map_line():   # PLAN 3e: when this place's FEMA map took effect, and which 
             out.append(f"New FEMA flood maps take effect {m('map_date', _mdate(new[0][2]), q='first_new')}"
                        + (" or later" if len({r[2] for r in new}) > 1 else "") + " for "
                        + and_list(names[:8] + ([f"{m('map_new_n', str(len(names) - 8), q='more')} more"] if len(names) > 8 else [])) + ".")
+        elif rows:   # hcu 11-07: say so when FEMA's book lists no new map, so "is my map changing?" is answered either way
+            out.append(f"FEMA's latest Community Status Book lists no new flood map taking effect for the NFIP communities filed under this {UNIT}.")
     elif new:
         out.append(f"{m('map_new_n', str(len(new)))} {pl(len(new), 'community', 'communities')} in {CS} {pl(len(new), 'gets', 'get')} a new FEMA flood map after FEMA's latest report, "
                    f"the first on {m('map_date', _mdate(new[0][2]), q='first_new')}.")
     out += _nfhl_lines()
     if not out: return ""
-    return (f"<p class='note'><b>Flood map:</b> {' '.join(out)} Check your own address on "
+    return (f"<p class='note'><b>Flood map:</b> {' '.join(out)} {rule('prelim')} Check your own address on "
             "<a href='https://msc.fema.gov/portal/home' rel='noopener' target='_blank'>FEMA's flood map</a>"
             + (" or with the <a href='/flood-zone-map/'>flood zone lookup</a>" if _HUB_ON else "") + ".</p>")
 
@@ -443,11 +440,11 @@ def _nfhl_lines():   # map debate 11-06: map age, revisions, exemption rulings, 
               else "whole" if o.startswith("property removed") else "bldg_out" if o.startswith("structure out as shown")
               else "out" if "out as shown" in o else "other"] += n
         t = sum(g.values()); q = lambda k: m('loma_n', format(g[k], ','), q=k)
+        qs = lambda ks, nm: m('loma_n', format(sum(g[k] for k in ks), ','), q=nm)   # hcu 11-07: seven groups read as noise; three answer "does asking work"
         out.append(f"FEMA's map service lists {m('loma_n', format(t, ','), q='all')} rulings for owners here who asked FEMA to take a building or lot out of the "
-                   f"high-risk zone (Letters of Map Amendment). In FEMA's own outcome groups: the building taken out while part of the lot stayed in, {q('bldg')}; "
-                   f"the whole property taken out, {q('whole')}; part of the property taken out, {q('part')}; the building already outside the zone as mapped "
-                   f"(part of the lot inside), {q('bldg_out')}; the property or part of it already outside as mapped, {q('out')}; denied, {q('denied')}; "
-                   f"other or mixed, {q('other')}. These are rulings for owners who applied, not a share of all homes. They are counted by "
+                   f"high-risk zone (Letters of Map Amendment): {qs(('bldg', 'whole', 'part'), 'removed')} took the building or some or all of the lot out, "
+                   f"{qs(('bldg_out', 'out'), 'as_mapped')} found it already outside the zone as mapped, {q('denied')} were denied"
+                   + (f", {q('other')} other or mixed" if g['other'] else "") + f". {rule('loma_fee')} {rule('loma_online')} These are rulings for owners who applied, not a share of all homes. They are counted by "
                    f"the NFIP communities FEMA's Community Status Book files under this {UNIT}, so a city that reaches into a neighboring {UNIT} counts in full here." if t else
                    "FEMA's map service lists no rulings for owners here who asked to take a building or lot out of the high-risk zone (Letters of Map Amendment).")
     return out
@@ -480,6 +477,16 @@ def _crs_parts():
                     (f"none of {CS}'s {m('crs_count', str(len(crs)), q='all')} NFIP communities has one." if len(crs) > 1 else f"{CS}'s only NFIP community has none.")) if crs else f"FEMA's community list shows no NFIP community for {CS}, so this page cannot show a discount."
     return crs_rows, crs_none_note, crs_lead
 
+# hcu 11-07 (checklist F): an official place to turn to. URL kept only when its own page title names insurance
+# (tools/fetch_insurance_depts.py, evidence in data/us/insurance_depts.json); else NAIC's directory.
+try: _INSD = json.load(open(os.path.join(os.path.dirname(HERE), "data", "us", "insurance_depts.json"), encoding="utf-8"))
+except FileNotFoundError: _INSD = {}
+def _regulator_line():
+    st = agg.get("state")   # a code on county and state pages alike
+    d = _INSD.get(st or "")
+    return ("<p class='note'><b>Your state's insurance regulator:</b> " + (f"<a href='{html.escape(d['url'])}' rel='noopener'>{html.escape(d['name'])}</a>." if d else
+            "find it in the <a href='https://content.naic.org/state-insurance-departments' rel='noopener'>NAIC's directory of state insurance departments</a>.") + "</p>")
+
 # ---- how to get covered (factual public NFIP rules — the reader's "what do I do next" + the 30-day catch) ----
 def card_howto():
     _HOWTO = ["howto_answer", "homeowners_excl", "howto_tiles", "wait_exceptions", "how_to_buy", "nfip_lapse", "flood_def", "not_covered", "wind_excl", "already_flooded", "aid_insurance", "claim_appeal", "substantial_damage"]
@@ -491,6 +498,7 @@ def card_howto():
         + f"<p class='note'><b>What it won't pay:</b> {rule('flood_def')} {rule('not_covered')} {rule('wind_excl')}</p>"
         + f"<p class='note'>{rule('already_flooded')} {rule('aid_insurance')}</p>"
         + f"<p class='note'>{rule('claim_appeal')} {rule('substantial_damage')}</p>"
+        + _regulator_line()
         + (_deadline_tool() if _tool_on("deadline") else "")
         + (_start_tool() if _tool_on("start") else ""),
         src_rules(_HOWTO + (["aid_register_60", "private_deadlines"] if _tool_on("deadline") else [])
@@ -671,7 +679,7 @@ def card_averages():
         + "".join(f"<tr><td>{a_}</td><td>{b_}</td><td>{c_}</td></tr>" for a_, b_, c_ in _avrows) + "</tbody></table>"
         + (f"<p class='note'><b>Condo owners:</b> condo-unit policies are {tp('condo_unit_pct', 'extras.policies.condo_unit_pct', pct)} of NFIP policy units here"
            + (f" and whole condo buildings {tp('condo_building_pct', 'extras.policies.condo_building_pct', pct)}" if _xpp.get('condo_building_pct') else "")
-           + f". The every-policy-type average includes them. The single-family figures use FEMA's occupancy code with no separate condo filter, so condo units could be in them.</p>" if (_xpp.get("condo_unit_pct") or 0) + (_xpp.get("condo_building_pct") or 0) >= 1 else "")
+           + f". The every-policy-type average includes them. " + ("The single-family figures leave out condo-unit and condo-building policies (FEMA's condominium coverage code)." if P.get("sf_no_condo") else "The single-family figures use FEMA's occupancy code with no separate condo filter, so condo units could be in them.") + "</p>" if (_xpp.get("condo_unit_pct") or 0) + (_xpp.get("condo_building_pct") or 0) >= 1 else "")
         + f"<p class='note'>All from the NFIP policies in force on {POL_ASOF}.{how('averages')}</p>",
         src(["cost_p50", "prem_median", "frp_median", "cost_year"] + (["cost_new"] if _new_ok else []) + (["cost_mean", "cost_all_mean"] if _av.get("sf_cost_mean") else []), POL_ASOF, RETR), id="prices")
     return averages_card
@@ -680,26 +688,18 @@ def card_averages():
 def card_save():
     save_card = ""
     _ded = _xpp.get("deductibles") or {}
-    if _ded or _xpp.get("prem_elevated_n"):
+    if _ded:   # hcu 11-07: elevated vs not-elevated medians deleted (the page had to tell readers not to use them)
         _top = max(_ded, key=lambda d: _ded[d]) if _ded else None
         _dl = lambda d: m("ded_amount", money(int(float(d))), q=d)   # a FEMA code label, tagged so the gate sees no loose number
         _rows = "".join(f"<tr><td>{_dl(d)}</td><td>{tp('ded_share', f'extras.policies.deductibles.{d}', pct, q=d)}</td></tr>"
                         for d in sorted(_ded, key=lambda d: float(d)))
-        _elev_ok = min(_xpp.get("prem_elevated_n") or 0, _xpp.get("prem_not_elevated_n") or 0) >= MX.CONST["year_min"]
         save_card = card("Can I pay less?",
             (f"The usual building deductible here is {_dl(_top)} ({tp('ded_share', f'extras.policies.deductibles.{_top}', pct, q=_top)} "
              "of single-family policies). " if _top else "") + rule("save_ways"),
             (f"<table><thead><tr><th>Building deductible</th><th>Share of policies</th></tr></thead><tbody>{_rows}</tbody></table>"
              "<p class='note'>Single-family primary homes; the commonest deductibles.</p>" if _rows else "")
-            + ("<p class='note'><b>Elevated vs not elevated is not what raising your home would save:</b> the two groups sit in "
-               "different zones and places, so compare like with like on your own quote.</p>" if _elev_ok else "")
-            + (f"<ul class='kv'><li><b>Median premium, elevated buildings</b><span>{tp('prem_elevated', 'extras.policies.prem_elevated_median', money)} "
-               f"({tp('prem_elevated_n', 'extras.policies.prem_elevated_n')} policies)</span></li>"
-               f"<li><b>Median premium, not elevated</b><span>{tp('prem_not_elevated', 'extras.policies.prem_not_elevated_median', money)} "
-               f"({tp('prem_not_elevated_n', 'extras.policies.prem_not_elevated_n')} policies)</span></li></ul>"
-               "<p class='note'>Premium before fees, single-family primary homes.</p>" if _elev_ok else "")
             + "<p class='note'>Community discount: see <a href='#crs'>Does my town get a community discount?</a></p>",
-            src(["ded_share"] + (["prem_elevated"] if _elev_ok else []), POL_ASOF, RETR) + src_rules(["save_ways"]), id="save")
+            src(["ded_share"], POL_ASOF, RETR) + src_rules(["save_ways"]), id="save")
     return save_card
 
 # ---- STATE-ONLY blocks: cost by county (the hub), why published averages differ, policies-in-force trend ----
@@ -1020,12 +1020,12 @@ _qa = [f'<a href="#required"><b>Am I required to buy it?</b> {rule("purchase_sho
 # hcu-critique 11-07: screen 1 answered "how risky" and "what does my zone cost" only in sections 9 and 15
 _rk = [(b, w) for b, w in (("coastal", "coastal"), ("inland", "inland (river)")) if _present(((NRI or {}).get(b) or {}).get("risk_rating"))]
 if _rk:   # short: P4 keeps the quote checker inside screen 2
-    _qa.insert(0, f'<a href="#c-how-much-flood-risk-is-here"><b>How risky is it here?</b> FEMA: '
+    _qa.insert(0, f'<a href="#c-how-much-flood-risk-is-here"><b>How risky is it here?</b> FEMA&#39;s {UNIT} rating: '
                + ", ".join(f'{html.escape(str(NRI[b]["risk_rating"]))} {w}' for b, w in _rk)
                + f' flood risk vs other {dict(county="counties", parish="parishes").get(UNIT, UNIT + "s")}; not for your address.</a>')
 _zq = [(z, d) for z, d in (P.get("cost_by_zone") or {}).items() if z != "Unknown"][:2]
 if _zq:
-    _qa.insert(2 if _rk else 1, '<a href="#zone-cost"><b>Cost in my zone?</b> '
+    _qa.insert(2 if _rk else 1, '<a href="#zone-cost"><b>Cost in my zone?</b> Zones with the largest policy counts here: '
                + ", ".join(f"Zone {html.escape(z)} {tp('zone_cost', f'policies.cost_by_zone.{z}.median', money, q=z)}" for z, d in _zq)
                + ' a year (median, single-family primary homes).</a>')
 _cxq = data.get("claims_extra") or {}
@@ -1039,7 +1039,13 @@ if _cxq.get("claims") and _cxq.get("avg_paid") and P.get("p50"):
                   f'{tp("decade_paid_share", f"extras.claims.by_decade.{_decs[-1]}.paid_pct", pct, q=_decs[-1])} paid something.' if len(_decs) > 1 else '')
                + ' No recorded payment can mean paperwork or damage the policy did not count as flood.</a>')
 _qa.append('<a href="#covered"><b>Already flooded?</b> What to do now, and what FEMA aid covers.</a>')
-_qa.append('<a href="#compare"><b>Is my quote normal?</b> These are existing policies, not a quote; type yours in to see where it sits.</a>')
+_qd = [c for c in crs if _pct(c.get("sfhaDiscount"))]   # hcu 11-07: the local savings fact sat in section 13
+if crs and not IS_STATE:
+    _qt = max(_qd, key=lambda c: int(_pct(c["sfhaDiscount"]).rstrip("%"))) if _qd else None
+    _qa.append('<a href="#crs"><b>Can I pay less?</b> ' + (f"Community discount in {m('crs_count', str(len(_qd)), q='sfha_discounted')} of {m('crs_count', str(len(crs)), q='all')} NFIP "
+               f"{pl(len(crs), 'community', 'communities')} here, up to {m('crs_discount', _pct(_qt['sfhaDiscount']), q=html.unescape(_cname_plain(_qt)) + ':sfha')} ({_cname(_qt)}). Other ways below.</a>"
+               if _qt else "No community discount here; other ways below.</a>"))
+_qa.append('<a href="#compare"><b>Is my quote normal?</b> Type it in to compare with existing policies here (not a quote).</a>')
 quick_answers = '<nav class="jump qa">' + "".join(_qa) + "</nav>"
 
 # provenance: we download every record FEMA publishes for the place and recompute; say so, with the counts
@@ -1161,7 +1167,7 @@ def card_required():
       + (f"<p class='note'><b>Not in the NFIP ({m('crs_count', str(len(crs_out)), q='not_nfip')} {pl(len(crs_out), 'community', 'communities')} here)"
          + (": " + "; ".join(sorted((_cname(c) + (" (unincorporated area only)" if re.search(r"\b(COUNTY|PARISH|BOROUGH)\b", (c.get("communityName") or "").upper()) else "") for c in crs_out), key=lambda h: html.unescape(re.sub("<[^>]+>", "", h)).casefold())))
          + f".</b> {rule('nfip_not_sold')}</p>" if crs_out else ""),
-      src(["units", "sfha_share"], POL_ASOF, RETR) + (src(["outside_sfha_dollars"], f"{C['year_min']}–{C['year_max']}", RETR) if _outside_line() else "") + (src(["map_date"], "FEMA's current Community Status Book", RETR) if _map_line() else "") + (src(["map_panels", "lomr_n", "loma_n"], f"FEMA's map service, retrieved {_MS.get('_retrieved')}", RETR) if _nfhl_lines() else "") + src_rules(["purchase_answer", "lender_any_zone", "private_accept", "lender_amount", "lender_force", "zone_review", "seller_assign"] + (["fl_citizens", "fl_disclosure"] if agg.get("state") == "FL" else []) + (["tx_twia"] if agg.get("state") == "TX" else []) + (["nfip_not_sold"] if crs_out else [])), id="required")
+      src(["units", "sfha_share"], POL_ASOF, RETR) + (src(["outside_sfha_dollars"], f"{C['year_min']}–{C['year_max']}", RETR) if _outside_line() else "") + (src(["map_date"], "FEMA's current Community Status Book", RETR) if _map_line() else "") + (src(["map_panels", "lomr_n", "loma_n"], f"FEMA's map service, retrieved {_MS.get('_retrieved')}", RETR) if _nfhl_lines() else "") + src_rules(["purchase_answer", "lender_any_zone", "private_accept", "lender_amount", "lender_force", "zone_review", "seller_assign", "prelim", "loma_fee", "loma_online"] + (["fl_citizens", "fl_disclosure"] if agg.get("state") == "FL" else []) + (["tx_twia"] if agg.get("state") == "TX" else []) + (["nfip_not_sold"] if crs_out else [])), id="required")
 
 def card_cost():
     cost_lead, cost_body = _cost_parts()
@@ -1184,7 +1190,7 @@ def card_gap():
       f"<ul class='kv'><li><b>Median premium charged (before fees)</b><span>{m('prem_median', money(PREM_MED))}</span></li>"
       f"<li><b>Median full-risk premium</b><span>{m('frp_median', money(P['frp_median']))}</span></li>"
       f"<li><b>Pay below full-risk</b><span>{m('share_below', str(P['share_below']) + '%')} of {tp('units_listed', 'policies.below_n', q='below_n')}</span>{vs_state('share_below', 'agg.policies.share_below', pct)}</li></ul>" + glide_note,
-      src(["prem_median", "frp_median", "share_below"], POL_ASOF, RETR) + src_rules(["cap", "lapse_discount"]))
+      src(["prem_median", "frp_median", "share_below"], POL_ASOF, RETR) + src_rules(["cap", "lapse_discount"]), id="gap")
 
 def card_crs():
     crs_rows, crs_none_note, crs_lead = _crs_parts()
@@ -1235,6 +1241,12 @@ _toc = ('<nav class="toc card"><h2>On this page</h2><ul>'
         + "</ul></nav>")
 # backlog 3: the county table is the state page's best tool and sits far down; screen 1 jumps to it
 _jump = f'<p class="cmp"><a href="#counties">Find your {UNIT} in the table ↓</a></p>' if IS_STATE and 'id="counties"' in CARDS else ""
+# hcu 11-07: a state page is a router; the reader's own county page one tap away on screen 1 (native details, no JS)
+_own = sorted((q for q in _PL_ALL if str(q.get("geoid") or "")[:2] == os.environ.get("FF_GEOID", "")[:2]), key=lambda q: q.get("short", "").casefold()) if IS_STATE else []
+if _own:
+    _jump = (f'<details class="pick"><summary><b>Pick your {UNIT}</b></summary><p>'
+             + " · ".join(f'<a href="/flood-insurance/{q["slug"]}/">{html.escape(q.get("short") or q["slug"])}</a>' for q in _own)
+             + f'</p></details>' + _jump)
 
 HTML = f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">{'<meta name="robots" content="noindex,follow">' if os.environ.get("FF_NOINDEX") == "1" else ""}
@@ -1320,15 +1332,15 @@ table{{width:100%}}}}
 <div class="stat"><div class="n">{m('cost_p50', money(P['p50']))}</div><div class="l">Median / yr, single-family primary home</div></div>
 <div class="stat"><div class="n">{m('cost_mo', median_mo)}</div><div class="l">A month, spread over the year</div></div>
 {_spread_tile()}
-<div class="stat"><div class="n">{m('share_below', str(P['share_below']) + '%')}</div><div class="l">Share of these homes below FEMA's full-risk price</div></div>
+<div class="stat"><div class="n">{m('share_below', str(P['share_below']) + '%')}</div><div class="l">Still pay less than FEMA's full-risk price{'; ' + claim('their bills rise toward it', 'rise', ('share_below', '>', 0)) + ' (<a href="#gap">how fast</a>)' if P.get('share_below') else ''}</div></div>
 </div>
 {cmp_line}{_jump}
 {ZONEMAP if _tool_on("zonemap") else '<a class="btn" href="https://msc.fema.gov/portal/home" rel="noopener" target="_blank">Check your address on FEMA' + "'" + 's flood map →</a>'}
 {quick_answers}
-{_renew_line}
 </section>
 
 {quote_widget}
+{('<section class="card">' + _renew_line + '</section>') if _renew_line else ''}
 
 {prov_line}
 

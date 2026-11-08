@@ -45,7 +45,7 @@ def policies(st):
     for r in rows("NfipPolicies", st):
         u = int(f(r["policyCount"]) or 0)
         keys = ["ST"] + [g for g in [(r["censusGeoid"] or "")[:5]] if g[:2] == FIPS[st]]   # never another state's county
-        sf = ffcalc.isone(r["occupancyType"]) and ffcalc.istrue(r["primaryResidenceIndicator"])
+        sf = ffcalc.is_sf_home(r)
         prem, cost = f(r[ffcalc.PREM]), f(r["policyCost"])
         for k in keys:
             if len(k) not in (2, 5): continue

@@ -49,7 +49,7 @@ for c in counties:
     rows = list(seen.values())
     if rows and ffcalc.PREM not in rows[0]:
         print(f"  {c['slug']}: SCHEMA DRIFT, {ffcalc.PREM} absent - skip"); continue
-    coh = [r for r in rows if ffcalc.isone(r.get("occupancyType")) and ffcalc.istrue(r.get("primaryResidenceIndicator"))]
+    coh = [r for r in rows if ffcalc.is_sf_home(r)]
     gap = ffcalc.premium_gap(coh)
     ap = os.path.join(DATA, c["slug"], "agg.json")
     a = json.load(open(ap))

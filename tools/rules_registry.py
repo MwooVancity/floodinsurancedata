@@ -14,6 +14,9 @@ CFR64 = "https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part
 CFR59 = "https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=59&section=59.1"
 WIND_FS = "https://agents.floodsmart.gov/sites/default/files/media/document/2025-07/fema-nfip-wind-vs-floodwater-damage-fact-sheet-03-2023.pdf"   # pdf, read by hand 2026-11-03
 CFR70 = "https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=70"
+LOMC = "https://hazards.fema.gov/femaportal/onlinelomc/signin"
+PRELIM = "https://hazards.fema.gov/femaportal/prelimdownload/"
+CFR72 = "https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=72"
 CFR61 ="https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=61"
 USC4012A = "https://www.law.cornell.edu/uscode/text/42/4012a"
 
@@ -77,11 +80,12 @@ RULES = {
                     (FIM, "within 30 calendar days from the closing", "manual")]},
     "howto_tiles": {
         "text": "<ul class='kv'><li><b>Waiting period</b><span>30 days</span></li>"
-                "<li><b>Bought with a new or refinanced mortgage</b><span>No wait</span></li>"
+                "<li><b>Bought with a new or refinanced mortgage</b><span>Can start at closing, if paid in time</span></li>"
                 "<li><b>NFIP building limit</b><span>$250,000</span></li>"
                 "<li><b>NFIP contents limit</b><span>$100,000</span></li></ul>",
         "sources": [(FS + "/get-insured/buy-a-policy", "will go into effect 30 days after your date of purchase", "curl"),
                     (FS + "/get-insured/buy-a-policy", "There is no wait if you buy flood insurance while making", "curl"),
+                    (FIM, "The effective date will be the date and time of the loan closing", "manual"),   # hcu 11-07: "No wait" dropped the paid-in-time condition
                     (FS + "/get-insured/buy-a-policy", "Building policies cover up to $250,000", "curl")]},
     "renters_cover": {   # renters page (11-07), FloodSmart's "Renters" section read raw with curl
         "text": "An NFIP renters policy protects the things you own inside your home, such as furniture, clothes, televisions, "
@@ -342,6 +346,17 @@ RULES = {
         "sources": [(CFR70, "believes his property has been inadvertently included in designated A, AO, A1-30, AE, AH, A99", "curl"),
                     (CFR70, "the transposition of the curvilinear line to either street or to other readily identifiable features", "curl"),
                     (CFR70, "The identification of the property to be excluded from a designated", "curl")]},
+    "loma_fee": {   # 44 CFR 72.5, read raw (eCFR, curl --compressed) 11-07
+        "text": "FEMA charges no review or processing fee for a Letter of Map Amendment request (44 CFR §72.5).",
+        "sources": [(CFR72, "Requesters are exempt from submitting review and processing fees for", "curl"),
+                    (CFR72, "Requests for a Letter of Map Amendment (LOMA)", "curl")]},
+    "loma_online": {   # read raw from a US runner 11-07 (fema-probe links job; FEMA refuses the laptop): manual-rule-read
+        "text": "FEMA's <a href='https://hazards.fema.gov/femaportal/onlinelomc/signin' rel='noopener'>Online LOMC site</a> lets home owners or their representatives ask FEMA for a Letter of Map Change.",
+        "sources": [(LOMC, "The Online LOMC web application allows home owners or their designated representatives to easily request a Letter of Map Change (LOMC)", "manual")]},
+    "prelim": {   # read raw from a US runner 11-07 (fema-probe links job): manual-rule-read
+        "text": "FEMA's <a href='https://hazards.fema.gov/femaportal/prelimdownload/' rel='noopener'>preliminary flood map data</a> give an early look at a home's or community's projected flood risk and may include new or revised flood maps.",
+        "sources": [(PRELIM, "Preliminary flood hazard data (preliminary data) provide the public an early look at their home or community", "manual"),
+                    (PRELIM, "Preliminary data may include: new or revised Flood Insurance Rate Maps (FIRM)", "manual")]},
     "flood_def": {
         "text": "The policy generally counts a flood only when water covers two or more acres of normally dry land or two or more properties, "
                 "one of them yours.",

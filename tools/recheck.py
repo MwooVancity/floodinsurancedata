@@ -60,10 +60,11 @@ def page_figures(slug):
     return out
 
 def recompute(c):
-    sfh = lambda r: str(r.get("occupancyType")) in ("1", "11") and str(r.get("primaryResidenceIndicator")) in ("True", "true", "1")
+    sfh = lambda r: str(r.get("occupancyType")) in ("1", "11") and str(r.get("primaryResidenceIndicator")) in ("True", "true", "1") \
+        and str(r.get("condominiumCoverageTypeCode") or "N").strip().upper() in ("N", "")   # hcu 11-07: condo units out
     pol = pull("NfipPolicies", f"propertyState eq '{c['state']}' and startswith(censusGeoid,'{c['geoid']}') and "
                f"policyEffectiveDate le '{ASOF}' and policyTerminationDate gt '{ASOF}'",
-               "id,policyCost,totalInsurancePremiumOfThePolicy,fullRiskPremium,occupancyType,primaryResidenceIndicator,policyCount,ratedFloodZone,originalNBDate")
+               "id,policyCost,totalInsurancePremiumOfThePolicy,fullRiskPremium,occupancyType,primaryResidenceIndicator,policyCount,ratedFloodZone,originalNBDate,condominiumCoverageTypeCode")
     units = sum(int(r.get("policyCount") or 0) for r in pol)
     hi = sum(int(r.get("policyCount") or 0) for r in pol if (r.get("ratedFloodZone") or "")[:1] in ("A", "V"))
     coh = [r for r in pol if sfh(r)]

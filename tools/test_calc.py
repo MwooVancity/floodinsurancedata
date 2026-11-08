@@ -32,6 +32,11 @@ _mb = ffcalc._median_by([{"z": "AE", "v": 100}] * 50 + [{"z": "X", "v": 100}] * 
 assert _mb == {"AE": {"median": 100, "n": 50}}, _mb                  # small groups, blanks and refunds stay out
 assert ffcalc.premium_gap([{ffcalc.PREM: 100, "fullRiskPremium": 400}, {ffcalc.PREM: 500, "fullRiskPremium": 400}])["below_gap_median"] == 300   # only policies below full risk count
 assert P["spread_ok"] is False, P["spread_ok"]                      # only 3 valid costs < 100 -> suppress
+# hcu 11-07: a condo-unit policy coded single-family (legacy code 1) stays out of every single-family figure
+_cu = dict(POL[0], id=7, policyCost=99999, condominiumCoverageTypeCode="U")
+_PC = ffcalc.aggregate_policies([dict(r, condominiumCoverageTypeCode="N") for r in POL] + [_cu])
+assert _PC["cohort_n"] == 5 and _PC["p50"] == 2000 and _PC["sf_no_condo"] is True, (_PC["cohort_n"], _PC["p50"])
+assert ffcalc.is_sf_home(dict(POL[0], condominiumCoverageTypeCode=" n ")) and not ffcalc.is_sf_home(dict(POL[0], condominiumCoverageTypeCode="L"))
 
 CLM = [
     {"yearOfLoss": 2017, "netBuildingPaymentAmount": 100, "netContentsPaymentAmount": 50},

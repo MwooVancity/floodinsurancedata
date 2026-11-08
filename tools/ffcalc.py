@@ -17,6 +17,9 @@ def years_to_full_risk(current, full_risk, cap=HFIAA_CAP):
 
 def isone(v): return v in (1, 11, "1", "11")          # single-family occupancy types
 def istrue(v): return v in (True, "true", "True", 1, "1")
+# hcu 11-07: the single-family primary-home cohort, one definition for every figure. FEMA's condominiumCoverageTypeCode
+# N = not a condominium; U/A/H/L = a condo unit, association or master policy, left out (legacy code 1 had no unit exclusion).
+def is_sf_home(r): return isone(r.get("occupancyType")) and istrue(r.get("primaryResidenceIndicator")) and str(r.get("condominiumCoverageTypeCode") or "N").strip().upper() in ("N", "")
 
 def pctl(values, p):
     a = sorted(values)
@@ -55,7 +58,7 @@ def _median_by(coh, key, val):
 
 def aggregate_policies(rows):
     units = sum(int(r.get("policyCount") or 0) for r in rows)
-    coh = [r for r in rows if isone(r.get("occupancyType")) and istrue(r.get("primaryResidenceIndicator"))]
+    coh = [r for r in rows if is_sf_home(r)]
     cost = [r["policyCost"] for r in coh if isinstance(r.get("policyCost"), (int, float)) and r["policyCost"] > 0]
     # cost by flood zone (median per zone, only where enough valid observations)
     zc = defaultdict(list)
@@ -105,6 +108,7 @@ def aggregate_policies(rows):
         "sfha_units": sfha, "sfha_share_units": round(100 * sfha / units, 1) if units else None,
         "spread_ok": len(cost) >= SMALL_COHORT,         # publish the spread only on enough VALID cost obs
         "cost_by_zone": cost_by_zone, "cost_by_year": cost_by_year,
+        "sf_no_condo": any("condominiumCoverageTypeCode" in r for r in rows[:1]),   # the page names the condo filter only when the column was read
         "coverage_building": round(cov_b), "coverage_contents": round(cov_c),
         "by_zip": by_zip,
     }

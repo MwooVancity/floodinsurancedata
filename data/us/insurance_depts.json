@@ -1,0 +1,236 @@
+{
+ "AL": {
+  "url": "https://www.aldoi.gov/",
+  "title": "Alabama Dept of Insurance Home",
+  "name": "Alabama Department of Insurance",
+  "read": "2026-11-07"
+ },
+ "AR": {
+  "url": "https://insurance.arkansas.gov/",
+  "title": "Home - Arkansas Insurance Department",
+  "name": "Arkansas Insurance Department",
+  "read": "2026-11-07"
+ },
+ "CA": {
+  "url": "https://www.insurance.ca.gov/",
+  "title": "CA Department of Insurance",
+  "name": "California Department of Insurance",
+  "read": "2026-11-07"
+ },
+ "CO": {
+  "url": "https://doi.colorado.gov/",
+  "title": "Home | DORA - Division of Insurance",
+  "name": "Colorado Division of Insurance",
+  "read": "2026-11-07"
+ },
+ "CT": {
+  "url": "https://portal.ct.gov/cid",
+  "title": "Connecticut Insurance Department",
+  "name": "Connecticut Insurance Department",
+  "read": "2026-11-07"
+ },
+ "DE": {
+  "url": "https://insurance.delaware.gov/",
+  "title": "Delaware Department of Insurance - State of Delaware",
+  "name": "Delaware Department of Insurance",
+  "read": "2026-11-07"
+ },
+ "DC": {
+  "url": "https://disb.dc.gov/",
+  "title": "| disb",
+  "name": "DC Department of Insurance, Securities and Banking",
+  "read": "2026-11-07"
+ },
+ "FL": {
+  "url": "https://www.myfloridacfo.com/division/consumers",
+  "title": "Home | Consumer Services | Florida Department of Financial Services",
+  "name": "Florida Department of Financial Services (consumer help)",
+  "read": "2026-11-07"
+ },
+ "GA": {
+  "url": "https://oci.georgia.gov/",
+  "title": "Office of the Commissioner of Insurance and Safety Fire",
+  "name": "Georgia Office of the Commissioner of Insurance and Safety Fire",
+  "read": "2026-11-07"
+ },
+ "HI": {
+  "url": "https://cca.hawaii.gov/ins/",
+  "title": "Insurance Division - DCCA Hawaii",
+  "name": "Hawaii Insurance Division",
+  "read": "2026-11-07"
+ },
+ "ID": {
+  "url": "https://doi.idaho.gov/",
+  "title": "Welcome to Department of Insurance",
+  "name": "Idaho Department of Insurance",
+  "read": "2026-11-07"
+ },
+ "IL": {
+  "url": "https://idoi.illinois.gov/",
+  "title": "Home - IDOI",
+  "name": "Illinois Department of Insurance",
+  "read": "2026-11-07"
+ },
+ "IN": {
+  "url": "https://www.in.gov/idoi/",
+  "title": "IDOI: Home",
+  "name": "Indiana Department of Insurance",
+  "read": "2026-11-07"
+ },
+ "IA": {
+  "url": "https://iid.iowa.gov/",
+  "title": "Iowa Insurance Division | Iowa Insurance Division",
+  "name": "Iowa Insurance Division",
+  "read": "2026-11-07"
+ },
+ "KY": {
+  "url": "https://insurance.ky.gov/",
+  "title": "DEPARTMENT OF INSURANCE",
+  "name": "Kentucky Department of Insurance",
+  "read": "2026-11-07"
+ },
+ "ME": {
+  "url": "https://www.maine.gov/pfr/insurance/",
+  "title": "Bureau of Insurance Home | PFR Insurance",
+  "name": "Maine Bureau of Insurance",
+  "read": "2026-11-07"
+ },
+ "MD": {
+  "url": "https://insurance.maryland.gov/",
+  "title": "Maryland Insurance Administration",
+  "name": "Maryland Insurance Administration",
+  "read": "2026-11-07"
+ },
+ "MS": {
+  "url": "https://www.mid.ms.gov/",
+  "title": "Mississippi Insurance Department - Official Website of the Mississippi Insurance Department",
+  "name": "Mississippi Insurance Department",
+  "read": "2026-11-07"
+ },
+ "MO": {
+  "url": "https://insurance.mo.gov/",
+  "title": "Homepage | Missouri Department of Insurance",
+  "name": "Missouri Department of Insurance",
+  "read": "2026-11-07"
+ },
+ "MT": {
+  "url": "https://csimt.gov/",
+  "title": "Home - Montana Commissioner of Securities and Insurance",
+  "name": "Montana Commissioner of Securities and Insurance",
+  "read": "2026-11-07"
+ },
+ "NE": {
+  "url": "https://doi.nebraska.gov/",
+  "title": "Welcome | Nebraska Department of Insurance",
+  "name": "Nebraska Department of Insurance",
+  "read": "2026-11-07"
+ },
+ "NV": {
+  "url": "https://doi.nv.gov/",
+  "title": "Nevada Division of Insurance",
+  "name": "Nevada Division of Insurance",
+  "read": "2026-11-07"
+ },
+ "NM": {
+  "url": "https://www.osi.state.nm.us/",
+  "title": "New Mexico Office Of the Superintendent of Insurance",
+  "name": "New Mexico Office of the Superintendent of Insurance",
+  "read": "2026-11-07"
+ },
+ "NY": {
+  "url": "https://www.dfs.ny.gov/",
+  "title": "Home | Department of Financial Services",
+  "name": "New York Department of Financial Services",
+  "read": "2026-11-07"
+ },
+ "NC": {
+  "url": "https://www.ncdoi.gov/",
+  "title": "Home Page | NC DOI",
+  "name": "North Carolina Department of Insurance",
+  "read": "2026-11-07"
+ },
+ "ND": {
+  "url": "https://www.insurance.nd.gov/",
+  "title": "Home | North Dakota Insurance Department",
+  "name": "North Dakota Insurance Department",
+  "read": "2026-11-07"
+ },
+ "OH": {
+  "url": "https://insurance.ohio.gov/",
+  "title": "Department of Insurance",
+  "name": "Ohio Department of Insurance",
+  "read": "2026-11-07"
+ },
+ "OK": {
+  "url": "https://www.oid.ok.gov/",
+  "title": "Oklahoma Insurance Department",
+  "name": "Oklahoma Insurance Department",
+  "read": "2026-11-07"
+ },
+ "OR": {
+  "url": "https://dfr.oregon.gov/",
+  "title": "Division of Financial Regulation : Oregon Division of Financial Regulation : State of Oregon",
+  "name": "Oregon Division of Financial Regulation",
+  "read": "2026-11-07"
+ },
+ "PA": {
+  "url": "https://www.pa.gov/agencies/insurance",
+  "title": "Insurance Department | Insurance Department | Commonwealth of Pennsylvania",
+  "name": "Pennsylvania Insurance Department",
+  "read": "2026-11-07"
+ },
+ "SC": {
+  "url": "https://doi.sc.gov/",
+  "title": "Department of Insurance, SC - Official Website | Official Website",
+  "name": "South Carolina Department of Insurance",
+  "read": "2026-11-07"
+ },
+ "SD": {
+  "url": "https://dlr.sd.gov/insurance/",
+  "title": "Department of Labor & Regulation Division of Insurance",
+  "name": "South Dakota Division of Insurance",
+  "read": "2026-11-07"
+ },
+ "TN": {
+  "url": "https://www.tn.gov/commerce/insurance.html",
+  "title": "Tennessee Insurance Division",
+  "name": "Tennessee Department of Commerce and Insurance",
+  "read": "2026-11-07"
+ },
+ "TX": {
+  "url": "https://www.tdi.texas.gov/",
+  "title": "Texas Department of Insurance",
+  "name": "Texas Department of Insurance",
+  "read": "2026-11-07"
+ },
+ "UT": {
+  "url": "https://insurance.utah.gov/",
+  "title": "Utah Insurance Department",
+  "name": "Utah Insurance Department",
+  "read": "2026-11-07"
+ },
+ "VT": {
+  "url": "https://dfr.vermont.gov/",
+  "title": "Home Page | Department of Financial Regulation",
+  "name": "Vermont Department of Financial Regulation",
+  "read": "2026-11-07"
+ },
+ "VA": {
+  "url": "https://www.scc.virginia.gov/pages/Bureau-of-Insurance",
+  "title": "Virginia SCC - Insurance Agents & Agencies",
+  "name": "Virginia Bureau of Insurance (State Corporation Commission)",
+  "read": "2026-11-07"
+ },
+ "WA": {
+  "url": "https://www.insurance.wa.gov/",
+  "title": "| Office of the Insurance Commissioner",
+  "name": "Washington Office of the Insurance Commissioner",
+  "read": "2026-11-07"
+ },
+ "WI": {
+  "url": "https://oci.wi.gov/",
+  "title": "OCI Office of the Commissioner of Insurance",
+  "name": "Wisconsin Office of the Commissioner of Insurance",
+  "read": "2026-11-07"
+ }
+}
