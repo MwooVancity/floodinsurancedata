@@ -2,8 +2,9 @@
 repeating the paragraph (hater r5: half of every county page's prose was the same notes; google_gate S13 measures it).
 A caveat a reader needs beside the figure (not a quote, not adjusted for inflation, not your home) stays on the page."""
 # Google Analytics (this site's own property, owner 2026-10-30). Real host only: gate and phone runs never count as visits
-# and never wait on Google. /privacy/ discloses it.
-GA_TAG = ('<script>if(location.hostname=="floodinsurancedata.com"){window.dataLayer=window.dataLayer||[];'
+# and never wait on Google. /privacy/ discloses it. 11-08: automated browsers (navigator.webdriver: our nightly live
+# zone-map test, Playwright, Selenium) never count either; they were 10 of 22 views 11-01..11-08, all "Direct", 0 s.
+GA_TAG = ('<script>if(location.hostname=="floodinsurancedata.com"&&!navigator.webdriver){window.dataLayer=window.dataLayer||[];'
           'window.gtag=function(){dataLayer.push(arguments)};gtag("js",new Date());gtag("config","G-EXCYW0PJYG");'
           'var s=document.createElement("script");s.async=true;s.src="https://www.googletagmanager.com/gtag/js?id=G-EXCYW0PJYG";'
           'document.head.appendChild(s)}</script>')
