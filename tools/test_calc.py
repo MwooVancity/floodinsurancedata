@@ -171,3 +171,10 @@ assert linkcheck.fails(_pg, set(_pg)) == ["/flood-insurance/harris-county-tx/: n
 _pg["/flood-insurance/harris-county-tx/"] = "<a href='../../nfip/'>n</a>"
 assert linkcheck.fails(_pg, set(_pg)) == ["/flood-insurance/harris-county-tx/: no link to a zone page"]
 print("S16 link check: 3 cases ok")
+
+# S16 graph: a broken internal link and an orphan both fail; a linked page passes
+_g = {"/": "<a href='/a/'>a</a>", "/a/": "<a href='../b/'>b</a> <a href='/'>home</a>", "/b/": ""}
+assert linkcheck.graph_fails(_g, set(_g)) == [], linkcheck.graph_fails(_g, set(_g))
+_g["/a/"] = "<a href='/gone/'>x</a>"
+assert sorted(linkcheck.graph_fails(_g, set(_g))) == ["/a/: links /gone/, which is not a built page", "/b/: orphan (no page links to it)"], linkcheck.graph_fails(_g, set(_g))
+print("S16 graph check: 2 cases ok")

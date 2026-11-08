@@ -16,8 +16,8 @@ Most helpful flood-insurance page for every US place a homeowner or buyer search
 Keyword Planner volume x top bid: state insurance $190k, map $90k, towns $47k, zones $37k, cost $37k, NFIP $36k, state map $25k, renters $18k, county map $15.5k. Not targeted: head term "flood insurance" (FloodSmart), quote and companies (forbidden). Every money page is live; counties now run 20 a day, queue "kw" > 0 only (~1,200 zero-demand counties wait for the Jan 4 rule).
 
 ## Next, in order
-1. Read refresh 42436345515; live read of one county's condo note.
-2. Ship round-95 MINORs (coded 11-08, not shipped): tile base named, "most priced policies" zone line, no-new-map vs preliminary, picker scope, Dwelling Policy scope. One light review.
+1. DONE 11-08: condo filter live; link audit + S16 gate (every money hub linked from ~305 pages, was /nfip/ 2, renters 1).
+2. Zone pages link down to the counties with the most homes in that zone (zone pages, best #1 odds, link 0 counties today; 11-08 link audit). Then round-97 MINORs (backlog). One light review.
 3. US-runner raw reads (fema-probe links job): Elevation Certificate who/where (AE page); retry the 12 NAIC-fallback regulators (AK AZ KS LA MA MI MN NH NJ RI WV WY).
 4. One claims base everywhere: county payout shares drop FEMA codes 98/99 like the claims page (extras_raw + recheck, lands with the next refresh).
 5. Renter tenant-flag check (does FEMA's data catch every renter policy?). County floodplain contacts: no dataset, so a printed gap line.

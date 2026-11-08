@@ -24,6 +24,13 @@ US homeowner or buyer at one place, on a phone, 30-60 seconds, urgent. Above tab
 - No paid referrals before a licensing + FTC check; no ads before a 4-week Search Console review. FEMA's agent finder link is fine.
 - Owner alone: domain, Search Console, ads and consent banner, publisher identity (site anonymous), opening pages to the index, paid referrals, cutting any block.
 
+## Internal links (HARD, owner 11-08; google_gate S16 = `tools/linkcheck.py`, tests in test_calc.py)
+- Every state and county page links home, its state, up to 6 bordering counties, the zone page for each zone it names, and every hub in `linkcheck.HUBS` (zone map lookup, /nfip/, renters, claims, ZIP). Home links every state and hub; a state links every live county. S16 fails a missing hub link, a broken internal link, an orphan.
+- Zone pages should link the counties with the most homes in that zone (OPEN).
+- Anchor = the destination in the searcher's words ("flood zone map lookup by address", "Zone AE", "Harris County"), never "here" or "click".
+- Links sit in the sentence where the reader needs them; never a link block, keyword list or footer farm; screen 1 holds answers only (P4).
+- A new page type joins `HUBS` and gets home and state links the same day. After a template change, re-count inbound links (script, no review): a hub linked from under half of state + county pages is a defect.
+
 ## Decide before building (HARD)
 Name the scoreboard number it moves; none = delete it. Each defect becomes a check with a mutation test the same day; reader-harm logic gets one oracle check. Phone bytes (gzipped) and tokens are the hot paths; never trade a wrong-number check for speed. A build writes no tracked file; a step skips when its input did not change.
 
