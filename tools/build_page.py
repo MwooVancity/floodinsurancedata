@@ -631,10 +631,16 @@ def _towns(zips):   # every county (PLAN row 7): a town counts only if Census pu
     for z in zips:
         if z.get("units") and z["zip"] in ZIPTOWN and GEOID_SELF in ZIPCTY.get(z["zip"], ()): tot[ZIPTOWN[z["zip"]]] += z["units"]
     return [t for t, _ in tot.most_common(5)]
+def _town_cover(zips):   # (policy units in ZIPs that map to a town in this county, all policy units in valid ZIPs)
+    zs = [z for z in zips if z.get("units") and re.fullmatch(r"\d{5}", str(z.get("zip")))]
+    return (sum(z["units"] for z in zs if z["zip"] in ZIPTOWN and GEOID_SELF in ZIPCTY.get(z["zip"], ())), sum(z["units"] for z in zs))
 def _town_line(zips):
     towns = _towns(zips)
     if len(towns) < 2: return ""
-    return "<p class='note'>Towns here, ranked by NFIP policy units in their ZIPs: " + ", ".join(f"<span data-name>{html.escape(t)}</span>" for t in towns) + ".</p>"
+    cov, tot = _town_cover(zips)
+    # hater r114 Sonoma: ZIPs mostly outside any Census place (95446, 611 units) have no town; say how much the ranking leaves out
+    return ("<p class='note'>Towns here, ranked by NFIP policy units in their ZIPs: " + ", ".join(f"<span data-name>{html.escape(t)}</span>" for t in towns) + ".</p>"
+            + (f"<p class='note'>ZIPs where no single town covers at least a quarter of the land hold {m('zip_units', num(tot - cov), q='no_town')} of the {m('zip_units', num(tot), q='all_zips')} policy units here, so they are not in that ranking.</p>" if tot - cov > 0 else ""))
 
 def _zip_county():
     bz = [z for z in (agg["policies"].get("by_zip") or []) if z.get("units") and re.fullmatch(r"\d{5}", str(z.get("zip")))]   # hater r7: ZIP+4 strings are not ZIPs
@@ -925,10 +931,11 @@ BASE_URL = os.environ.get("FF_BASEURL", "https://floodinsurancedata.com").rstrip
 CANON = f"{BASE_URL}/flood-insurance/{SLUG}/"
 GEOID = os.environ.get("FF_GEOID", "12071")
 _TW = _towns([z for z in (agg["policies"].get("by_zip") or []) if re.fullmatch(r"\d{5}", str(z.get("zip")))])
+_TWT = _TW   # 11-08: a title town says the page covers it (true), not that it is the largest; the ranking claim lives in the town line, which states what it leaves out
 # hater r82/r83: a New York City county is one borough (Census county subdivision "<name> borough"); searchers use the borough
 _BORO = {"36061": "Manhattan", "36047": "Brooklyn", "36081": "Queens", "36005": "the Bronx", "36085": "Staten Island"}.get(os.environ.get("FF_GEOID", ""))
-_T1 = f" ({_BORO})" if _BORO else f" ({_TW[0]})" if len(_TW) > 1 and _TW[0].lower() not in CS.lower() else ""   # money audit 11-07: "flood insurance chicago" > all county-map money
-_CSX = CS + (" (" + ", ".join(_TW[:3]) + ")" if len(_TW) > 1 else "")   # towns early: Google cuts descriptions near 155 characters (r87)
+_T1 = f" ({_BORO})" if _BORO else f" ({_TWT[0]})" if len(_TWT) > 1 and _TWT[0].lower() not in CS.lower() else ""   # money audit 11-07: "flood insurance chicago" > all county-map money
+_CSX = CS + (" (" + ", ".join(_TWT[:3]) + ")" if len(_TWT) > 1 else "")   # towns early: Google cuts descriptions near 155 characters (r87)
 META_DESC = (f"Median NFIP flood insurance cost for a single-family primary home in {_CSX} is {money(P['p50'])} a year "
              f"(middle half {money(P['p25'])}–{money(P['p75'])}); {P['share_below']}% pay below FEMA's "
              f"full-risk price. {num(P['units'])} insured units, claims, flood risk and community discounts, from FEMA's own records.")

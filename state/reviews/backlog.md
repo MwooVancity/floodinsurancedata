@@ -19,6 +19,9 @@ ask is either BUILDING or DECIDED with its reason. Reviewers: a DECIDED item is 
 - Spanish pages: built when Search Console shows Spanish queries (scoreboard rule); none on 11-06.
 - Error-report route: needs the owner's contact address (PLAN, owner only).
 - Thin zones in the zone table and quote-checker dropdown (Louisiana A12, 53 policies): kept; each row is a real, priced zone (50+ policies) with its count shown.
+- Home "Where do I buy it?" without the 30-day wait (r114): the wait is on the line directly above; no change.
+- "the land" vs "the ZIP's land" in the town-line note (r118 MINOR): the sentence's subject is the ZIPs; no change.
 - Already answered on the pages: Risk Rating 2.0 pace (cap + glide rules), wildfire wait exception (`wait_wildfire`, 11-08), Elevation Certificate step (`ec_get`, 11-08), state regulator "Get Ready" (regulator link, 42 states; 9 bot-walled states link NAIC's directory), claims outside high-risk zones, recent-buyer median (policies first bought in the past year), print stylesheet (11-08), back-to-top.
 - Years to full risk at 18% a year / premium-rise calculator: dropped by the owner (2026-10-28: "no calc. way too risky").
 - Page length, shared rule paragraphs, per-parish take-up, NOAA panel on state pages: closed 10-28 (card review, `tools/card_spec.py`).
+
