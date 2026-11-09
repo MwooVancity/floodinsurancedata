@@ -19,6 +19,8 @@ A new data shape becomes a line here and a case in the named test the same day (
 - Cost trend: old years with no cost on most policies: left out and named (fill 90%, 30 priced); `test_raw`, gate C17.
 - Cost trend pass fails mid-way: its files are deleted, no page shows a trend (`pull_bulk` main).
 - Older records in other county codes (Connecticut 2022 regions): a year whose policy count is under half or over twice today's is left out and named; `test_raw` 2021 row.
+- A feed collected once and never again (county NRI + take-up, collector deleted 10-29): written by the monthly state job again (`collect_state_small.write_detail`, `test_raw`).
+- A feed without its own date, or rows with mixed dates: no card, never the download day on it (`test_factory` takeup_no_date; state take-up date only when all rows agree; NRI version from FEMA's `NRI_VER`, two versions = none printed).
 - Unreachable law page: `recheck` stops the release; manual reads expire at 183 days.
 
 ## Scale

@@ -36,6 +36,27 @@ def count(filt, tries=6):
     return get("https://www.fema.gov/api/open/v3/NfipPolicies?" + urllib.parse.urlencode(
         {"$filter": filt, "$select": "id", "$top": 1, "$inlinecount": "allpages"}, quote_via=urllib.parse.quote), tries)["metadata"]["count"]
 
+def _nri_block(a, p):
+    return {"risk_rating": a.get(p + "_RISKR"), "risk_score": a.get(p + "_RISKS"), "eal_rating": a.get(p + "_EALR"),
+            "eal_national_pctl": a.get(p + "_ALR_NPCTL"), "eal_total_usd": a.get(p + "_EALT")}
+
+def write_detail(st, d, feats, pen):
+    """county_detail.json, the county pages' NRI and take-up (11-09 feed sweep: its collector was deleted 10-29 and the
+    file had not refreshed since 10-26). Each county's take-up keeps its own FEMA as-of date; the NRI version is FEMA's."""
+    det = {}
+    for f in feats:
+        a = f["attributes"]
+        det.setdefault(a["STCOFIPS"], {})["nri"] = {"county": a.get("COUNTY"), "state": st, "coastal": _nri_block(a, "CFLD"), "inland": _nri_block(a, "IFLD")}
+    for r in pen:
+        c, cs, s, ss = (int(r.get(k) or 0) for k in ("resContractsInForce", "resContractsInForceSfha", "totalResStructures", "totalResStructuresSfha"))
+        det.setdefault(r["fipsCode"], {})["penetration"] = {
+            "overall_pct": round(100 * c / s, 1) if s else None, "sfha_pct": round(100 * cs / ss, 1) if ss else None,
+            "contracts": c, "sfha_contracts": cs, "asof": (r.get("asOfDate") or "")[:10] or None,
+            "source": "OpenFEMA NfipResidentialPenetrationRates v1"}
+    vers = {f["attributes"].get("NRI_VER") for f in feats}
+    det["_nri"] = {"version": vers.pop() if len(vers) == 1 else None, "retrieved": time.strftime("%Y-%m-%d")}
+    json.dump(det, open(os.path.join(d, "county_detail.json"), "w"))
+
 def run(st):
     d = os.path.join(ROOT, "data", "states", slug(st)); os.makedirs(d, exist_ok=True)
     out = {}
@@ -58,17 +79,21 @@ def run(st):
     c, cs, s, ss = (sum(int(r.get(k) or 0) for r in pen) for k in
                     ("resContractsInForce", "resContractsInForceSfha", "totalResStructures", "totalResStructuresSfha"))
     out["penetration"] = {"overall_pct": round(100 * c / s, 1) if s else None, "sfha_pct": round(100 * cs / ss, 1) if ss else None,
-                          "contracts": c, "sfha_contracts": cs, "asof": (pen[0]["asOfDate"][:10] if pen else None),
+                          "contracts": c, "sfha_contracts": cs, "asof": (pen[0]["asOfDate"][:10] if pen and len({(r.get("asOfDate") or "")[:10] for r in pen}) == 1 else None),   # mixed dates: no single date to print, so no card (11-09)
                           "by_county": {r["fipsCode"]: {"overall_pct": round(100 * int(r["resContractsInForce"] or 0) / int(r["totalResStructures"]), 1)
                                                        if r.get("totalResStructures") else None} for r in pen},
                           "source": "OpenFEMA NfipResidentialPenetrationRates v1 (summed over the state's counties)"}
-    nri = get(NRI + "?" + urllib.parse.urlencode({"where": f"STATEABBRV='{st}'", "outFields": "STCOFIPS,COUNTY,CFLD_RISKR,IFLD_RISKR",
-                                                  "f": "json", "returnGeometry": "false", "resultRecordCount": 1000}))
+    # NRI per county, every field the county pages print; NRI_VER is FEMA's own version label (never typed)
+    _nf = "STCOFIPS,COUNTY,NRI_VER," + ",".join(f"{p}_{k}" for p in ("CFLD", "IFLD") for k in ("RISKR", "RISKS", "EALR", "ALR_NPCTL", "EALT"))
+    nri = get(NRI + "?" + urllib.parse.urlencode({"where": f"STATEABBRV='{st}'", "outFields": _nf,
+                                                  "f": "json", "returnGeometry": "false", "resultRecordCount": 2000}))
     if "features" not in nri: raise RuntimeError(f"NRI: {str(nri)[:80]}")   # the API answers 200 with an error body
+    if nri.get("exceededTransferLimit"): raise RuntimeError("NRI: more counties than one answer holds")
     out["nri_counties"] = [{"fips": f["attributes"]["STCOFIPS"], "county": f["attributes"]["COUNTY"],
                             "coastal": f["attributes"]["CFLD_RISKR"], "inland": f["attributes"]["IFLD_RISKR"],
                             "rating": ffcalc.worst_flood_rating(f["attributes"]["CFLD_RISKR"], f["attributes"]["IFLD_RISKR"])}
                            for f in nri.get("features", [])]
+    write_detail(st, d, nri["features"], pen)
     # FEMA's API times out (503 after ~147 s) on this count for the biggest states, sliced or not; then the
     # page simply has no trend card and says nothing about a trend (gap recorded here, never guessed)
     hist = {}

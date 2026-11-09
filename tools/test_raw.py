@@ -49,6 +49,18 @@ try:
     assert (z["19901"]["below_n"], z["19901"]["share_below"]) == (40, 75.0), z["19901"]   # 30 of 40 single-family; the 31 condo units are outside the base
     tr = [(t["year"], t["median"], t["n"], t["sf_n"]) for t in p["cost_trend"]]
     assert tr == [(2021, None, 81, 81), (2022, 900, 35, 35), (2023, None, 20, 30), (2024, 800, 57, 60), (2025, None, 35, 40), (X._A.year, 1000, 40, 40)], tr
-    print("test_raw: extras_raw policies()+claims() run on a synthetic download; condo cost, event paid share, cost trend OK")
+    # 11-09 feed sweep: county_detail.json is written by the monthly state job again (collector deleted 10-29)
+    import collect_state_small as CSS
+    CSS.write_detail("DE", tmp, [{"attributes": {"STCOFIPS": "10001", "COUNTY": "Kent", "NRI_VER": "December 2025", "CFLD_RISKR": "Relatively Low", "IFLD_RISKR": "Relatively High"}},
+                                 {"attributes": {"STCOFIPS": "10003", "COUNTY": "New Castle", "NRI_VER": "December 2025"}}],
+                     [{"fipsCode": "10001", "resContractsInForce": "50", "resContractsInForceSfha": "10", "totalResStructures": "1000", "totalResStructuresSfha": "20", "asOfDate": "2026-08-03T00:00:00.000Z"},
+                      {"fipsCode": "10003", "resContractsInForce": "5", "totalResStructures": "0", "asOfDate": ""}])
+    det = __import__("json").load(open(os.path.join(tmp, "county_detail.json")))
+    assert det["_nri"]["version"] == "December 2025" and det["10001"]["nri"]["inland"]["risk_rating"] == "Relatively High", det
+    assert det["10001"]["penetration"]["overall_pct"] == 5.0 and det["10001"]["penetration"]["sfha_pct"] == 50.0 and det["10001"]["penetration"]["asof"] == "2026-08-03"
+    assert det["10003"]["penetration"]["overall_pct"] is None and det["10003"]["penetration"]["asof"] is None   # no homes, no date: no card
+    CSS.write_detail("DE", tmp, [{"attributes": {"STCOFIPS": "10001", "NRI_VER": "a"}}, {"attributes": {"STCOFIPS": "10003", "NRI_VER": "b"}}], [])
+    assert __import__("json").load(open(os.path.join(tmp, "county_detail.json")))["_nri"]["version"] is None   # two versions: none printed
+    print("test_raw: extras_raw policies()+claims() run on a synthetic download; condo cost, event paid share, cost trend, county detail OK")
 finally:
     shutil.rmtree(tmp, ignore_errors=True)

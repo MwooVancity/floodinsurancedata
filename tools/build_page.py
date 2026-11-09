@@ -226,7 +226,7 @@ def card_risk():
         if _present(inl.get("risk_rating")): parts.append(f"{html.escape(str(inl['risk_rating']))} for inland (river) flooding")
         risk = card("How much flood risk is here?",
                     " and ".join(parts) + f", by FEMA's {UNIT} rating. That compares this {UNIT} with others; it is not a forecast for your address.",
-                    risk_body, src(["nri_rating", "nri_eal_usd"], f"NRI {data['nri_meta']['version']} release" if data.get("nri_meta") else "", pretty_date(data["nri_meta"]["retrieved"]) if data.get("nri_meta") else RETR))
+                    risk_body, src(["nri_rating", "nri_eal_usd"], f"NRI {data['nri_meta']['version']} release" if (data.get("nri_meta") or {}).get("version") else "", pretty_date(data["nri_meta"]["retrieved"]) if (data.get("nri_meta") or {}).get("version") else RETR))
     else:
         risk = card("How much flood risk is here?",
                     f"FEMA's National Risk Index has no usable flood rating for this {UNIT}."
@@ -259,7 +259,7 @@ def _state_risk():   # every county's FEMA flood rating, counted per rating word
             + f"</tbody></table><p class='note'>Each {UNIT} page shows its own rating. FEMA's rating weighs modeled loss with social "
             f"vulnerability and community resilience.{how('nri')}</p>")
     return card("How much flood risk is here?", lead, body,
-                src(["nri_rating"], f"NRI {data['nri_meta']['version']} release" if data.get("nri_meta") else f"every {UNIT}'s rating", pretty_date(data["nri_meta"]["retrieved"]) if data.get("nri_meta") else RETR))
+                src(["nri_rating"], f"NRI {data['nri_meta']['version']} release" if (data.get("nri_meta") or {}).get("version") else f"every {UNIT}'s rating", pretty_date(data["nri_meta"]["retrieved"]) if (data.get("nri_meta") or {}).get("version") else RETR))
 
 def _sea_line():   # PLAN 3e: NOAA's published sea-level trend at a tide gauge in this county, else in a bordering one
     try:
@@ -1336,7 +1336,7 @@ def _share_words(p):   # the words must match the number: 64.9% is "about 6 in 1
 
 def card_takeup():   # owner 11-08 ("do it"): share of homes insured, FEMA's NFIP Residential Penetration Rates (cut 10-28, restored)
     pen = data.get("penetration") or {}
-    if IS_STATE or pen.get("overall_pct") is None: return ""
+    if IS_STATE or pen.get("overall_pct") is None or not pen.get("asof"): return ""   # no date of its own = no card, never today's date on it
     o, s_ = pen["overall_pct"], pen.get("sfha_pct")
     lead = ((f"{m('pen_words', _share_words(o))} here {'has' if _share_words(o).startswith(('About 1 in', 'Almost')) else 'have'} NFIP flood insurance "
              f"({tp('pen_overall', 'data.penetration.overall_pct', pct)}). ") if o else
@@ -1351,7 +1351,7 @@ def card_takeup():   # owner 11-08 ("do it"): share of homes insured, FEMA's NFI
             "<p class='note'>FEMA's share of residential buildings here with an NFIP policy. NFIP only: private flood insurance is not "
             "counted, so the real share of insured homes can be higher.</p>")
     return card(f"How many homes in this {UNIT} carry flood insurance?", lead, body,
-                src(["pen_overall", "pen_sfha"], pretty_date(pen.get("asof") or RETR), RETR))
+                src(["pen_overall", "pen_sfha"], pretty_date(pen["asof"]), RETR))
 
 CARD_ORDER = [card_required, card_cost, card_trend, card_howto, card_claims, card_payout, card_unpaid, card_events, card_rebuild,
               card_zone_cost, card_zip, card_averages, card_gap, card_save, card_crs, card_risk, card_takeup, card_multiloss,
