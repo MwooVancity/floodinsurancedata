@@ -18,6 +18,7 @@ Keyword Planner volume x top bid: state insurance $190k, map $90k, towns $47k, z
 2. 11-15: weekly Search Console + GA4 read (bot-free GA from 11-08).
 3. 11-18 start-date tool "all"; 11-20 address tool "all" after 7 green nightly live tests (watch.yml; a FEMA outage fails safe, as on 11-08).
 4. 12-12: did Congress extend the NFIP past 2026-12-11? During a lapse set `start` to [].
+5. Top-3 compare (owner 11-09, ONLY GOAL): every keyword group's Google top 3 vs our page; each real gap built or given a gap line. Monthly; first run 11-09.
 Backlog (`state/reviews/backlog.md`): every item BUILDING or DECIDED (11-08).
 
 ## HCU + Google patent review (11-09)
