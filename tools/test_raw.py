@@ -25,7 +25,10 @@ pol = ([dict(base, policyCost=1000, **{ffcalc.PREM: 800, "fullRiskPremium": 1200
 clm = ([{"countyCode": "10001", "yearOfLoss": "2023", "floodEvent": "Storm A", "netBuildingPaymentAmount": 5000, "ratedFloodZone": "AE", "dateOfLoss": "2023-09-01"} for _ in range(6)]
        + [{"countyCode": "10001", "yearOfLoss": "2023", "floodEvent": "Storm A", "netBuildingPaymentAmount": 0, "nonPaymentReasonBuilding": "01"} for _ in range(2)]
        + [{"countyCode": "10001", "yearOfLoss": "2023", "floodEvent": "Storm A", "netBuildingPaymentAmount": 0, "nonPaymentReasonBuilding": "98"}]   # deleted in error: not a claim
-       + [{"countyCode": "10001", "yearOfLoss": "2024", "floodEvent": "Storm B", "netBuildingPaymentAmount": 0, "nonPaymentReasonBuilding": "01"}])   # unpaid only: no events row
+       + [{"countyCode": "10001", "yearOfLoss": "2024", "floodEvent": "Storm B", "netBuildingPaymentAmount": 0, "nonPaymentReasonBuilding": "01"}]   # unpaid only: no events row
+       + [{"countyCode": "10001", "yearOfLoss": "2024", "netBuildingPaymentAmount": 3000, "ratedFloodZone": " x "},   # 11-09 zone_split: outside A/V, lower case
+          {"countyCode": "10001", "yearOfLoss": "2024", "netBuildingPaymentAmount": 0, "ratedFloodZone": "X", "nonPaymentReasonBuilding": "01"},
+          {"countyCode": "10001", "yearOfLoss": "2005", "netBuildingPaymentAmount": 9000, "ratedFloodZone": "X"}])   # before the ten-year window: out of zone_split
 write("NfipPolicies", pol); write("NfipClaims", clm)
 # 11-09 cost trend (pull_bulk.trend's columns): 2022 all priced; 2023 under 30 priced; 2024 95 of 100 priced; 2025 35 of 40 (< 90%)
 _t = lambda y, n, cost, **k: [dict({"year": y, "propertyState": "DE", "censusGeoid": "10001040100", "occupancyType": "1",
@@ -47,6 +50,14 @@ try:
     assert (a["claims"], a["filed"], a["paid_pct"]) == (6, 8, 75.0), a    # 6 paid of 8 filed; the code-98 record is out
     z = {d["zip"]: d for d in ffcalc.aggregate_policies([dict(r, **{k: (float(v) if isinstance(v, (int, float)) else v) for k, v in r.items()}) for r in pol])["by_zip"]}
     assert (z["19901"]["below_n"], z["19901"]["share_below"]) == (40, 75.0), z["19901"]   # 30 of 40 single-family; the 31 condo units are outside the base
+    zs = C["10001"]["zone_split"]   # 6 AE paid $30,000; 2 X (1 paid $3,000); 3 with no zone; the 2005 claim outside the window
+    assert (zs["known_n"], zs["known_paid_n"], zs["known_paid"], zs["out_n"], zs["out_paid_n"], zs["out_paid"], zs["blank_n"]) == (8, 7, 33000, 2, 1, 3000, 3), zs
+    assert "zone_split" not in C["ST"] and "_pb" in C["ST"]
+    X.ROOT = tmp; os.makedirs(os.path.join(tmp, "data", "us")); cs = os.path.join(tmp, "data", "us", "claim_size.json")
+    X.NAT_PB.clear(); X.NAT_PB["DE"] = [1000] * 40; X.write_claim_size()
+    assert not os.path.exists(cs)   # one state ran: no national figure
+    X.NAT_PB.update({s: [] for s in A.NAMES}); X.NAT_PB["DE"] = [1000] * 20 + [3000] * 21; X.write_claim_size()
+    assert __import__("json").load(open(cs))["p50"] == 3000 and __import__("json").load(open(cs))["n"] == 41
     tr = [(t["year"], t["median"], t["n"], t["sf_n"]) for t in p["cost_trend"]]
     assert tr == [(2021, None, 81, 81), (2022, 900, 35, 35), (2023, None, 20, 30), (2024, 800, 57, 60), (2025, None, 35, 40), (X._A.year, 1000, 40, 40)], tr
     # 11-09 feed sweep: county_detail.json is written by the monthly state job again (collector deleted 10-29)

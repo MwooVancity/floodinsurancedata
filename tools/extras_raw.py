@@ -159,7 +159,7 @@ def claims(st):
             a["n"] += 1
             if r["yearOfLoss"]:   # hater r6/r7: is a low paid share one era or every era?
                 dc = a["dec"][str(r["yearOfLoss"])[:3] + "0s"]; dc[0] += 1; dc[1] += paid > 0
-            if k == "ST" and LOSS_FROM <= str(r["yearOfLoss"] or "")[:4] <= LOSS_TO:
+            if LOSS_FROM <= str(r["yearOfLoss"] or "")[:4] <= LOSS_TO:   # 11-09: counties too (zone_split: claims outside zones A and V)
                 zc = a["zone"][(r["ratedFloodZone"] or "").strip().upper() or "blank"]; zc[0] += 1
                 if paid > 0: zc[1] += 1; zc[2] += paid
             if str(r["yearOfLoss"] or "")[:4] >= RECENT_FROM:
@@ -205,8 +205,21 @@ def claims(st):
                   "by_decade": {d: {"n": v[0], "paid_pct": pct(v[1], v[0])} for d, v in sorted(a["dec"].items())}}
         rc = a["recent"]   # FEMA's data has no open/closed field: a zero-payment claim is "no recorded payment", never "denied"
         out[k]["recent"] = {"from": RECENT_FROM, "n": rc[0], "paid_n": rc[1], "unpaid_reasons": dict(rc[2])}
-        if k == "ST": out[k]["by_zone"] = {z: {"n": v[0], "paid_n": v[1], "paid": round(v[2])} for z, v in a["zone"].items()}
+        if k == "ST": out[k]["by_zone"] = {z: {"n": v[0], "paid_n": v[1], "paid": round(v[2])} for z, v in a["zone"].items()}; out[k]["_pb"] = a["paid_b"]
+        else:   # same split as the zone pages: a zone on the claim, first letter not A or V = outside the high-risk zones
+            kz = [(z, v) for z, v in a["zone"].items() if z != "blank"]; oz = [v for z, v in kz if z[0] not in "AV"]
+            out[k]["zone_split"] = {"from": LOSS_FROM, "to": LOSS_TO, "known_n": sum(v[0] for _, v in kz), "known_paid_n": sum(v[1] for _, v in kz),
+                                    "known_paid": round(sum(v[2] for _, v in kz)), "out_n": sum(v[0] for v in oz), "out_paid_n": sum(v[1] for v in oz),
+                                    "out_paid": round(sum(v[2] for v in oz)), "blank_n": (a["zone"].get("blank") or [0])[0]}
     return out
+
+NAT_PB = {}
+def write_claim_size():   # top-3 compare 11-09: the U.S. median paid building claim (same base as each state's paid_building_median)
+    if set(NAT_PB) != set(NAMES): return print("claim_size: not every state ran, file left as it was")
+    xs = [x for v in NAT_PB.values() for x in v]
+    if len(xs) < MX.CONST["min_priced"]: return
+    json.dump({"n": len(xs), "p50": med(xs), "asof": _asof()},
+              open(os.path.join(ROOT, "data", "us", "claim_size.json"), "w"))
 
 def run(st):
     if not all(os.path.exists(os.path.join(RAW, ds, st + ".done")) for ds in ("NfipPolicies", "NfipClaims")):
@@ -221,6 +234,7 @@ def run(st):
     hp = os.path.join(ROOT, "data", "us", "claims_zone.json")   # national claims by zone: summed over all 51 on the zone pages
     allh = json.load(open(hp)) if os.path.exists(hp) else {}
     allh[st] = {"from": LOSS_FROM, "to": LOSS_TO, "by_zone": c.get("ST", {}).pop("by_zone", {})}; json.dump(allh, open(hp, "w"))
+    NAT_PB[st] = c.get("ST", {}).pop("_pb", [])   # national claim size: only written when every state ran in this process
     json.dump({"policies": p["ST"], "claims": c.get("ST", {})}, open(os.path.join(d, "extras.json"), "w"))
     for g in set(p) | set(c):
         if g == "ST": continue
@@ -234,3 +248,4 @@ def run(st):
 if __name__ == "__main__":
     for st in (sys.argv[1:] or sorted(NAMES)):
         run(st)
+    write_claim_size()
