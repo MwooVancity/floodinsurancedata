@@ -1,4 +1,4 @@
-# Master prompt: fix every gate miss at its source, every edge case (owner 11-09)
+# Master prompt: every edge case fixed at its source, every feed (owner 11-09)
 Paste as the task, or run it whenever a reviewer, the owner or a live read finds something the gates passed.
 Rules it obeys: CLAUDE.md (Truth, Labels are claims, Every fix) and `docs/EDGE-CASES.md` (the master case list).
 
@@ -39,6 +39,29 @@ gate passed it. Gates passing is not proof: the gate was wrong too. Work these s
 
 Report: the defect, its source, pages hit, the new check and its failing mutation, edge shapes added, live proof.
 End with "Nothing left missing." only when every step above is done and seen.
+
+## The feeds (this site's "gauges")
+The river site's unit is a gauge; here it is a place's feed: one county's or state's rows in each dataset. Run steps 2-9
+for any feed that breaks, and sweep every feed below for its traps once a month (after `refresh-data.yml`) and whenever
+a source changes format. For each feed check: it arrived (rows = the source's own count), it is the right place
+(geoid as text, the right county), it is the right base (label says which), and a missing or short feed prints nothing,
+never last year's figure under this year's date.
+- **NFIP Policies v3:** SUM `policyCount`, never count rows; negative premiums are refunds; condo units out of the
+  single-family base; territories out; geoid text with leading zeros; older records may use other county codes
+  (Connecticut 2022 regions); costs on past snapshot days may be missing (trend fill rule).
+- **NFIP Claims v3:** codes 98/99 are not claims; `countyCode` may not be the property's county; the last two years are
+  not final; catch-all event names ("Flooding") span many floods; dollars of the day.
+- **FEMA NRI:** ratings are text that FEMA can rename; a county with no rating for a hazard; county, not address.
+- **Disaster Declarations:** declaration date vs incident dates; statewide and tribal rows; flood types only, named.
+- **Housing Assistance Owners:** flood-type declarations only; rows with no county stay at state level.
+- **Community Status Book:** unincorporated areas; communities not in the NFIP; CRS class 10 = no discount; map dates.
+- **IA Multiple-Loss:** counts only, never a property; suppressed small counts stay suppressed.
+- **NFIP Residential Penetration:** its own as-of date, printed; county base, not the address.
+- **NOAA Sea Level:** nearest station may be far or in another state (say which); no station = no line.
+- **FEMA NFHL (address tool, map letters):** service down or silent = print nothing; -9999 and metres never shown;
+  every zone within 15 m; LOMA counts only; "FEMA's map, not an official determination".
+- **Census crosswalks (ZIP to town and county):** a ZIP spans counties; a ZIP from elsewhere typed on a policy.
+- **Rules (laws, FEMA manuals):** raw text read this session, re-read by `recheck`; unreachable = manual read, 183 days.
 
 ## Never
 - A fix that names a slug, a state or one wording instead of the rule that made it.
