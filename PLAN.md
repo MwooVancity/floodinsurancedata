@@ -14,19 +14,17 @@ Most helpful flood-insurance page for every US place a homeowner or buyer search
 Keyword Planner volume x top bid: state insurance $190k, map $90k, towns $47k, zones $37k, cost $37k, NFIP $36k, state map $25k, renters $18k, county map $15.5k. Not targeted: head term "flood insurance" (FloodSmart), quote and companies (forbidden). Every money page is live; counties now run 20 a day, queue "kw" > 0 only (~1,200 zero-demand counties wait for the Jan 4 rule).
 
 ## Next, in order
-1. LIVE 11-09 (read on the live site): cost by year on all 323 state and county pages, from FEMA's bulk file (19.2M past policy rows, ~100% priced; Brevard $572 in 2021 to $866). Each left-out year states its own reason (gate C17 checks it against the data; Utah 2023). 14 states share a 2021 median of exactly $572: true medians, no explanation printed (none sourced). A screen-1 sentence was tried and cut (screen 1 full on big counties, P3/P4). Refresh took 2h28 of its 150 min: the side step is now bounded at 75 min and cannot sink the month's data.
 2. 11-15: weekly Search Console + GA4 read (bot-free GA from 11-08).
 3. 11-18 start-date tool "all"; 11-20 address tool "all" after 7 green nightly live tests (watch.yml; a FEMA outage fails safe, as on 11-08).
 4. 12-12: did Congress extend the NFIP past 2026-12-11? During a lapse set `start` to [].
-5. Top-3 compare (owner 11-09, ONLY GOAL): every keyword group's Google top 3 vs our page; each real gap built or given a gap line. Monthly; first run 11-09.
+5. Top-3 compare (owner 11-09, ONLY GOAL): every keyword group's Google top 3 vs our page; each real gap built or decided. Monthly: next 12-09. Run 11-09 built: claim limits on home; lowest-floor law (60.3(c)(2)) on AE/AH; 50% rule on high-risk zone pages (rewritten from raw 59.1 + SFIP D, live on every county); claims page: ten costliest loss years + claim-size range by state (claims_check C6-C8); ZIP result shows the county median beside the ZIP's. Decided, not printed: evacuation vs flood zone (Florida's official page calls evacuation zones flood zones: sources disagree); renters "landlord policy does not cover your things" (not in FloodSmart's raw text); ZIP-level preliminary-map compare (FEMA's tool, address-level); national median claim (needs per-claim amounts; state range shown instead).
 Backlog (`state/reviews/backlog.md`): every item BUILDING or DECIDED (11-08).
 
 ## HCU + Google patent review (11-09)
-- As a rater: local, sourced, labelled answers; real information gain (zone cost beside claims, unpaid reasons, full-risk gap, claims outside high-risk zones). Missing was past prices (built, Next 1).
-- Patents read: info gain US11354342 (pages must add what top results lack: ours do); site quality US9031929 (branded queries / clicks) and Panda US8682892 (independent links / reference queries): 0 links and 0 branded searches cap every page; only links and mentions move them (Backlinks, owner's contact address). Long clicks US10229166 / dwell US9195944: titles carry place + median; GA4 engagement read 11-15. Site vectors WO2020033805: one tight topic; anonymous publisher stays the owner's call.
-- Decided, not built: elevated / foundation medians (cut 11-07: confounded); author byline (owner: anonymous); zone-page breadcrumb schema (no reader number).
-- Master edge-case list with each guard: `docs/EDGE-CASES.md`; fix procedure for anything the gates passed, every data feed (this site's "gauges"): `docs/GATE-FIX-PROMPT.md`.
-- Feed sweep 11-09: county NRI + take-up refresh monthly again (collector deleted 10-29); undated / mixed-date feeds print no card; Connecticut take-up gap line; sitemap gate S6 now checks every page (missed /data/), with `test_google_gate.py`; accessibility and title/description sweep clean (titles kept until the 12-04 title check).
+- Rater view: local, sourced, labelled answers with real information gain; gaps now come from the monthly top-3 compare (Next 5).
+- Patents (info gain US11354342, site quality US9031929, Panda US8682892, long clicks US10229166): 0 links and 0 branded searches cap every page; only links and mentions move them (Backlinks).
+- Decided, not built: elevated / foundation medians (confounded); author byline (owner: anonymous); zone breadcrumb schema (no reader number).
+- Edge cases and guards: `docs/EDGE-CASES.md`; fix procedure for anything the gates passed and every data feed: `docs/GATE-FIX-PROMPT.md`.
 
 ## Backlinks (owner 11-08: basics, Claude drives; owner only presses send)
 Why: 0 referring domains, position ~44; page 1 for money terms needs links. Claude builds each asset, the named target list and the draft pitch; the owner sends.
