@@ -111,7 +111,7 @@ sm = open(os.path.join(DIST, "sitemap.xml"), encoding="utf-8").read()
 sm_paths = {re.sub(r"^https?://[^/]+", "", u) for u in re.findall(r"<loc>(.*?)</loc>", sm)}
 for p in sm_paths - set(pages): fail("S6", f"sitemap lists {p}, which is not built")
 for p in sm_paths & (set(pages) - indexable): fail("S6", f"sitemap lists {p}, which is noindex")
-for p in {q for q in indexable if q.startswith("/flood-insurance/")} - sm_paths: fail("S6", f"{p} is indexable but missing from the sitemap")
+for p in set(indexable) - sm_paths: fail("S6", f"{p} is indexable but missing from the sitemap")   # 11-09: every page (a /flood-insurance/-only filter hid /data/)
 for p, h in pages.items():
     c = re.search(r'<link rel="canonical" href="([^"]+)"', h)
     if p in indexable and (not c or re.sub(r"^https?://[^/]+", "", c.group(1)) != p): fail("S6", f"{p}: canonical is {c.group(1) if c else 'missing'}")

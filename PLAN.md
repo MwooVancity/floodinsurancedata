@@ -18,14 +18,14 @@ Keyword Planner volume x top bid: state insurance $190k, map $90k, towns $47k, z
 2. 11-15: weekly Search Console + GA4 read (bot-free GA from 11-08).
 3. 11-18 start-date tool "all"; 11-20 address tool "all" after 7 green nightly live tests (watch.yml; a FEMA outage fails safe, as on 11-08).
 4. 12-12: did Congress extend the NFIP past 2026-12-11? During a lapse set `start` to [].
-5. Regulators: 42 states link their own (US runner 11-08); AK AZ KS LA MA NH NJ WV WY block automated reading and link NAIC's directory.
 Backlog (`state/reviews/backlog.md`): every item BUILDING or DECIDED (11-08).
 
 ## HCU + Google patent review (11-09)
 - As a rater: local, sourced, labelled answers; real information gain (zone cost beside claims, unpaid reasons, full-risk gap, claims outside high-risk zones). Missing was past prices (built, Next 1).
 - Patents read: info gain US11354342 (pages must add what top results lack: ours do); site quality US9031929 (branded queries / clicks) and Panda US8682892 (independent links / reference queries): 0 links and 0 branded searches cap every page; only links and mentions move them (Backlinks, owner's contact address). Long clicks US10229166 / dwell US9195944: titles carry place + median; GA4 engagement read 11-15. Site vectors WO2020033805: one tight topic; anonymous publisher stays the owner's call.
 - Decided, not built: elevated / foundation medians (cut 11-07: confounded); author byline (owner: anonymous); zone-page breadcrumb schema (no reader number).
-- Master edge-case list with each guard: `docs/EDGE-CASES.md`.
+- Master edge-case list with each guard: `docs/EDGE-CASES.md`; fix procedure for anything the gates passed, every data feed (this site's "gauges"): `docs/GATE-FIX-PROMPT.md`.
+- Feed sweep 11-09: county NRI + take-up refresh monthly again (collector deleted 10-29); undated / mixed-date feeds print no card; Connecticut take-up gap line; sitemap gate S6 now checks every page (missed /data/), with `test_google_gate.py`; accessibility and title/description sweep clean (titles kept until the 12-04 title check).
 
 ## Backlinks (owner 11-08: basics, Claude drives; owner only presses send)
 Why: 0 referring domains, position ~44; page 1 for money terms needs links. Claude builds each asset, the named target list and the draft pitch; the owner sends.
@@ -55,7 +55,6 @@ That FEMA data shows open vs closed claims; "denied"; a period or denominator le
 - A failed gate ships nothing; the live site stays. After deploy every live page must equal what passed, else the previous release redeploys. A new county failing a gate is set aside; an environment error (missing library) stops the run instead.
 - Failed job: a note on its run page only, no email or issue (owner 11-07). Claude reads failed runs at every session start.
 - Warnings in the daily run: Cloudflare token (30 days), domain (expires 2027-10-23). Over 19,000 files stops (free plan 20,000).
-- Pinned: ubuntu-26.04, wrangler 4.86.0, playwright 1.64.1, Python 3.12, Node 20.
 - Measured: daily run ~4 min; refresh 63 min; median page 19 KB gz. Live gate scales to ~17 min at 2,000 pages: re-measure at 500.
 
 ## What can break

@@ -46,6 +46,7 @@ else:
     step("phone check (dist)", os.path.join(T, "phone_check.py"))
     # Google gate; S12 (hater review) is skipped only by --hotfix "<reason>", for a fix that removes wrong text from live pages
     hot = sys.argv[sys.argv.index("--hotfix") + 1] if "--hotfix" in sys.argv else ""
+    step("google gate mutations (S6 sitemap)", os.path.join(T, "test_google_gate.py"))
     step("google gate", os.path.join(T, "google_gate.py"), *(["--skip-review"] if hot else []))
     if hot:   # a hotfix only removes or corrects text: no page may gain a figure it did not have in the last release
         R_ = os.path.dirname(T); grew = []

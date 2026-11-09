@@ -750,7 +750,7 @@ county_urls = [(BASE + f"/flood-insurance/{p['slug']}/", county_lastmod(p["slug"
 # county pages carry lastmod = their data's effective date (a real data change); home/methodology/data
 # have no trustworthy per-content modification date, so they omit lastmod rather than inherit a false one.
 urls = [(BASE + "/", None), (BASE + "/flood-insurance/", None), (BASE + "/about/", None),
-        (BASE + "/methodology/", None)] + zone_urls + county_urls + \
+        (BASE + "/methodology/", None), (BASE + "/data/", None), (BASE + "/privacy/", None), (BASE + "/terms/", None)] + zone_urls + county_urls + \
        [(BASE + f"/flood-insurance/{s['slug']}/", county_lastmod(os.path.join("states", s["slug"]))) for s in states]
 sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + \
      "".join(f"  <url><loc>{u}</loc>" + (f"<lastmod>{lm}</lastmod>" if lm else "") + "</url>\n" for u, lm in urls) + \
