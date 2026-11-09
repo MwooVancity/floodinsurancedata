@@ -17,20 +17,19 @@ Most helpful flood-insurance page for every US place a homeowner or buyer search
 Keyword Planner volume x top bid: state insurance $190k, map $90k, towns $47k, zones $37k, cost $37k, NFIP $36k, state map $25k, renters $18k, county map $15.5k. Not targeted: head term "flood insurance" (FloodSmart), quote and companies (forbidden). Every money page is live; counties now run 20 a day, queue "kw" > 0 only (~1,200 zero-demand counties wait for the Jan 4 rule).
 
 ## Next, in order
-0. Zone map before "all" on 11-20 (fresh audit 11-08): D1 stale answer dropped, D2 non-letter FEMA values quoted not named, D5 true 15 m circle (FEMA honours distance, probe 11-08), all live 11-08 with tests that fail without them. D4: live test needs 4 of 5 real zones, nightly in watch.yml; "all" only after 7 green nights. D3 (FEMA letters near the pin): beyond the address-tool rule, owner decision.
-2. Weekly Search Console read (last 11-04: slipped). Owner decisions from the audit: BFE in the address tool; FEMA map letters (LOMA/LOMR) near the pin; share of homes insured; Esri copy as fallback (audit: no).
-3. US-runner raw reads: Elevation Certificate who/where DONE 11-08 (FloodSmart rule `ec_get` on A/V zone pages); retry the 12 NAIC-fallback regulators (AK AZ KS LA MA MI MN NH NJ RI WV WY).
-4. One claims base everywhere: code done 11-08 (agg_raw, extras_raw, recheck drop FEMA codes 98/99; claims page keeps its left-out count). Numbers change with the 12-03 refresh; check Sonoma's claim count drops by about 187.
-5. DONE 11-08: renters page states its exact base (tenant, residential, contents-only); floodplain contact: no dataset, so county map cards and A/V zone pages print FloodSmart's sourced "ask your local floodplain manager" rule (`ec_get`).
-6. 11-18 start-date tool "all", 11-20 address tool "all", if no errors on the samples (first a US-runner live test vs real FEMA).
-7. 12-12: did Congress extend the NFIP past 2026-12-11? During a lapse set `start` to [].
-7b. Gates (11-08): labels now checked against data (C10-C14) and `test_factory.py` (18 data edge cases x county/small state/big state) runs in release. `test_site_factory.py` (14 national edge cases: no crash, garbage text or dead link) covers home, zones, claims, nfip, renters, ZIP, map; found a half-refreshed state crashing the whole site (fixed). Next: base-word check (homes/policies/units).
-8. Backlog (`state/reviews/backlog.md`): table search on 16+ rows, glossary, titles over 70 / descriptions over 160 chars if CTR is low.
+1. 11-09 (running): forced refresh 42539080937 adds paid share by named flood, ZIP share below full-risk, condo-unit cost, drops FEMA codes 98/99 (Sonoma claims about -187), condo filter; then one release + one light review of the new figures.
+2. 11-15: weekly Search Console + GA4 read (bot-free GA from 11-08).
+3. 11-18 start-date tool "all"; 11-20 address tool "all" after 7 green nightly live tests (watch.yml; a FEMA outage fails safe, as on 11-08).
+4. 12-12: did Congress extend the NFIP past 2026-12-11? During a lapse set `start` to [].
+5. Gates (11-08): labels checked against data (C10-C16), A4 reads column headers, mutation no-op and control-character lints; `test_factory.py` (19 per-place cases x county/small/big state) and `test_site_factory.py` (14 national cases) run in release.
+6. Regulators: 42 states link their own (US runner 11-08); AK AZ KS LA MA NH NJ WV WY block automated reading and link NAIC's directory.
+Backlog (`state/reviews/backlog.md`): every item BUILDING or DECIDED (11-08).
 
 ## Backlinks (owner 11-08: basics, Claude drives; owner only presses send)
 Why: 0 referring domains, position ~44; page 1 for money terms needs links. Claude builds each asset, the named target list and the draft pitch; the owner sends.
 - First, owner: a corrections/contact address (reporters and .gov pages won't link a source they can't write to).
-- Assets: claims page + CSV (live); all-counties CSV; dated fact box on counties with a new flood declaration; oldest-FEMA-map tracker by county (oldest panel today: Prince William County VA, 1995); counties still paying under FEMA's full-risk price.
+- Drafts ready 11-08 (`state/outreach/pitches.md`): waves 1-3 + disaster kit; all wait only on the owner's contact address. Next asset is built when the first has 15 pitches out (cut rule below), not before.
+- Assets: claims page + CSV (live); all-counties CSV (live, /data/counties.csv); dated fact box on counties with a new flood declaration; oldest-FEMA-map tracker by county (oldest panel today: Prince William County VA, 1995); counties still paying under FEMA's full-risk price.
 - Targets: local newsrooms within 48 h of a flood declaration; data desks (Floodlight, Inside Climate News, ProPublica, E&E); ASFPM state chapters and CRS coordinators; extension (UF IFAS, LSU AgCenter, Sea Grant); realtor associations; library research guides; county/state "flood resources" pages.
 - Lead pitch (live, checked): 83.4% of 267,655 NFIP claims since 2020 had a recorded payment, 52.7% Terrebonne Parish LA to 94.4% Somerset County NJ.
 - Never: paid links, PBNs, link swaps, self-added Wikipedia links.
@@ -65,4 +64,4 @@ That FEMA data shows open vs closed claims; "denied"; a period or denominator le
 - IndexNow returns 403 on most sends: notice only, not a blocker.
 
 ## Owner only
-Bing Webmaster Tools sitemap; corrections/contact address; publisher identity; link outreach (claims page to reporters: Houston Chronicle, Houston Public Media, Texas Tribune, ProPublica, Floodlight, Inside Climate News); Keyword Planner seeds not yet in the file (condo, deductible, LOMA, elevation certificate, claim denied); GitHub failed-run email setting; ads and paid referrals stay off until their checks.
+Decisions from the 11-08 audit: BFE in the address tool; FEMA map letters (LOMA/LOMR) near the pin; share of homes insured. Bing Webmaster Tools sitemap; corrections/contact address; publisher identity; link outreach (claims page to reporters: Houston Chronicle, Houston Public Media, Texas Tribune, ProPublica, Floodlight, Inside Climate News); Keyword Planner seeds not yet in the file (condo, deductible, LOMA, elevation certificate, claim denied); GitHub failed-run email setting; ads and paid referrals stay off until their checks.
