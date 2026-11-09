@@ -1336,6 +1336,10 @@ def _share_words(p):   # the words must match the number: 64.9% is "about 6 in 1
 
 def card_takeup():   # owner 11-08 ("do it"): share of homes insured, FEMA's NFIP Residential Penetration Rates (cut 10-28, restored)
     pen = data.get("penetration") or {}
+    if not IS_STATE and agg.get("state") == "CT" and pen.get("overall_pct") is None:   # 11-09 feed sweep: a gap line, not silence (as the risk card)
+        return card(f"How many homes in this {UNIT} carry flood insurance?",
+                    "FEMA publishes Connecticut's share of homes with NFIP flood insurance by planning region, and the regions "
+                    "do not line up with its counties, so this page has no county figure.", "")
     if IS_STATE or pen.get("overall_pct") is None or not pen.get("asof"): return ""   # no date of its own = no card, never today's date on it
     o, s_ = pen["overall_pct"], pen.get("sfha_pct")
     lead = ((f"{m('pen_words', _share_words(o))} here {'has' if _share_words(o).startswith(('About 1 in', 'Almost')) else 'have'} NFIP flood insurance "

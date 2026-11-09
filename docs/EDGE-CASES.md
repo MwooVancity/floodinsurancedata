@@ -21,6 +21,9 @@ A new data shape becomes a line here and a case in the named test the same day (
 - Older records in other county codes (Connecticut 2022 regions): a year whose policy count is under half or over twice today's is left out and named; `test_raw` 2021 row.
 - A feed collected once and never again (county NRI + take-up, collector deleted 10-29): written by the monthly state job again (`collect_state_small.write_detail`, `test_raw`).
 - A feed without its own date, or rows with mixed dates: no card, never the download day on it (`test_factory` takeup_no_date; state take-up date only when all rows agree; NRI version from FEMA's `NRI_VER`, two versions = none printed).
+- A feed keyed to other areas (Connecticut's planning regions in NRI and take-up): a gap line saying so, never silence or a borrowed figure (`build_page` risk and take-up cards).
+- Aid filed under a county name no county matches (spelling): `build_counties.unmatched` stops the build; tribal and school-area aid is printed as not placed.
+- FEMA map-date text ("02/19/27(>)", "(NSFHA)", "(M)"): `mapdate.py`, tested in `test_tools`.
 - Unreachable law page: `recheck` stops the release; manual reads expire at 183 days.
 
 ## Scale
