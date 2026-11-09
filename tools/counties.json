@@ -2718,5 +2718,205 @@
   "label": "McHenry County, Illinois",
   "short": "McHenry County",
   "official": 0
+ },
+ {
+  "slug": "garland-county-ar",
+  "state": "AR",
+  "geoid": "05051",
+  "county": "GARLAND",
+  "countytitle": "Garland",
+  "label": "Garland County, Arkansas",
+  "short": "Garland County",
+  "official": 0
+ },
+ {
+  "slug": "mohave-county-az",
+  "state": "AZ",
+  "geoid": "04015",
+  "county": "MOHAVE",
+  "countytitle": "Mohave",
+  "label": "Mohave County, Arizona",
+  "short": "Mohave County",
+  "official": 0
+ },
+ {
+  "slug": "hendry-county-fl",
+  "state": "FL",
+  "geoid": "12051",
+  "county": "HENDRY",
+  "countytitle": "Hendry",
+  "label": "Hendry County, Florida",
+  "short": "Hendry County",
+  "official": 0
+ },
+ {
+  "slug": "pearl-river-county-ms",
+  "state": "MS",
+  "geoid": "28109",
+  "county": "PEARL RIVER",
+  "countytitle": "Pearl River",
+  "label": "Pearl River County, Mississippi",
+  "short": "Pearl River County",
+  "official": 0
+ },
+ {
+  "slug": "bullitt-county-ky",
+  "state": "KY",
+  "geoid": "21029",
+  "county": "BULLITT",
+  "countytitle": "Bullitt",
+  "label": "Bullitt County, Kentucky",
+  "short": "Bullitt County",
+  "official": 0
+ },
+ {
+  "slug": "vanderburgh-county-in",
+  "state": "IN",
+  "geoid": "18163",
+  "county": "VANDERBURGH",
+  "countytitle": "Vanderburgh",
+  "label": "Vanderburgh County, Indiana",
+  "short": "Vanderburgh County",
+  "official": 0
+ },
+ {
+  "slug": "madera-county-ca",
+  "state": "CA",
+  "geoid": "06039",
+  "county": "MADERA",
+  "countytitle": "Madera",
+  "label": "Madera County, California",
+  "short": "Madera County",
+  "official": 0
+ },
+ {
+  "slug": "vigo-county-in",
+  "state": "IN",
+  "geoid": "18167",
+  "county": "VIGO",
+  "countytitle": "Vigo",
+  "label": "Vigo County, Indiana",
+  "short": "Vigo County",
+  "official": 0
+ },
+ {
+  "slug": "loudoun-county-va",
+  "state": "VA",
+  "geoid": "51107",
+  "county": "LOUDOUN",
+  "countytitle": "Loudoun",
+  "label": "Loudoun County, Virginia",
+  "short": "Loudoun County",
+  "official": 0
+ },
+ {
+  "slug": "shasta-county-ca",
+  "state": "CA",
+  "geoid": "06089",
+  "county": "SHASTA",
+  "countytitle": "Shasta",
+  "label": "Shasta County, California",
+  "short": "Shasta County",
+  "official": 0
+ },
+ {
+  "slug": "johnston-county-nc",
+  "state": "NC",
+  "geoid": "37101",
+  "county": "JOHNSTON",
+  "countytitle": "Johnston",
+  "label": "Johnston County, North Carolina",
+  "short": "Johnston County",
+  "official": 0
+ },
+ {
+  "slug": "dixie-county-fl",
+  "state": "FL",
+  "geoid": "12029",
+  "county": "DIXIE",
+  "countytitle": "Dixie",
+  "label": "Dixie County, Florida",
+  "short": "Dixie County",
+  "official": 0
+ },
+ {
+  "slug": "duplin-county-nc",
+  "state": "NC",
+  "geoid": "37061",
+  "county": "DUPLIN",
+  "countytitle": "Duplin",
+  "label": "Duplin County, North Carolina",
+  "short": "Duplin County",
+  "official": 0
+ },
+ {
+  "slug": "niagara-county-ny",
+  "state": "NY",
+  "geoid": "36063",
+  "county": "NIAGARA",
+  "countytitle": "Niagara",
+  "label": "Niagara County, New York",
+  "short": "Niagara County",
+  "official": 0
+ },
+ {
+  "slug": "kerr-county-tx",
+  "state": "TX",
+  "geoid": "48265",
+  "county": "KERR",
+  "countytitle": "Kerr",
+  "label": "Kerr County, Texas",
+  "short": "Kerr County",
+  "official": 0
+ },
+ {
+  "slug": "austin-county-tx",
+  "state": "TX",
+  "geoid": "48015",
+  "county": "AUSTIN",
+  "countytitle": "Austin",
+  "label": "Austin County, Texas",
+  "short": "Austin County",
+  "official": 0
+ },
+ {
+  "slug": "chelan-county-wa",
+  "state": "WA",
+  "geoid": "53007",
+  "county": "CHELAN",
+  "countytitle": "Chelan",
+  "label": "Chelan County, Washington",
+  "short": "Chelan County",
+  "official": 0
+ },
+ {
+  "slug": "bastrop-county-tx",
+  "state": "TX",
+  "geoid": "48021",
+  "county": "BASTROP",
+  "countytitle": "Bastrop",
+  "label": "Bastrop County, Texas",
+  "short": "Bastrop County",
+  "official": 0
+ },
+ {
+  "slug": "bulloch-county-ga",
+  "state": "GA",
+  "geoid": "13031",
+  "county": "BULLOCH",
+  "countytitle": "Bulloch",
+  "label": "Bulloch County, Georgia",
+  "short": "Bulloch County",
+  "official": 0
+ },
+ {
+  "slug": "cabarrus-county-nc",
+  "state": "NC",
+  "geoid": "37025",
+  "county": "CABARRUS",
+  "countytitle": "Cabarrus",
+  "label": "Cabarrus County, North Carolina",
+  "short": "Cabarrus County",
+  "official": 0
  }
 ]

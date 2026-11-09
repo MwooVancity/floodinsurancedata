@@ -183,6 +183,36 @@
 "oldest": "2013-10-16",
 "panels": 494
 },
+"04015": {
+"cids": [
+"040058",
+"040059",
+"040060",
+"040116",
+"040125",
+"040133"
+],
+"dfirm": "04015C",
+"loma": {
+"Denied|DetermLetter": 4,
+"Multiple|DetermLetter": 1,
+"Portion of property denied|DetermLetter": 1,
+"Portion of property removed|DetermLetter": 8,
+"Property denied|DetermLetter": 3,
+"Property out as shown|DetermLetter": 18,
+"Property removed|DetermLetter": 15,
+"Structure denied and in floodway|DetermLetter": 1,
+"Structure denied|DetermLetter": 7,
+"Structure out as shown-Property partially inundated|DetermLetter": 20,
+"Structure removed-Property partially inundated|DetermLetter": 37
+},
+"lomr": 30,
+"lomr_recent": 14,
+"lomr_since": "2021-01-01",
+"newest": "2025-10-30",
+"oldest": "2009-11-18",
+"panels": 385
+},
 "04019": {
 "cids": [
 "040073",
@@ -316,6 +346,34 @@
 "newest": "2024-09-26",
 "oldest": "2024-09-26",
 "panels": 50
+},
+"05051": {
+"cids": [
+"050084",
+"050433",
+"050477",
+"050509",
+"050586"
+],
+"dfirm": "05051C",
+"loma": {
+"Denied|DetermLetter": 8,
+"Multiple|DetermLetter": 12,
+"Portion of property removed|DetermLetter": 2,
+"Property denied|DetermLetter": 2,
+"Property out as shown|DetermLetter": 3,
+"Property removed|DetermLetter": 8,
+"Structure denied|DetermLetter": 64,
+"Structure out as shown-Property partially inundated|DetermLetter": 73,
+"Structure removed-Property partially inundated|DetermLetter": 717,
+"UNKNOWN|DetermLetter": 1
+},
+"lomr": 5,
+"lomr_recent": 1,
+"lomr_since": "2021-01-01",
+"newest": "2010-01-20",
+"oldest": "2010-01-20",
+"panels": 25
 },
 "05055": {
 "cids": [
@@ -709,6 +767,33 @@
 "newest": "2021-06-02",
 "oldest": "2008-09-26",
 "panels": 399
+},
+"06039": {
+"cids": [
+"060170",
+"060171",
+"060172"
+],
+"dfirm": "06039C",
+"loma": {
+"Denied|DetermLetter": 2,
+"Multiple|DetermLetter": 3,
+"Portion of property denied|DetermLetter": 1,
+"Portion of property removed|DetermLetter": 8,
+"Property out as shown|DetermLetter": 5,
+"Property removed|DetermLetter": 15,
+"Structure denied and in floodway|DetermLetter": 1,
+"Structure denied|DetermLetter": 11,
+"Structure out as shown-Property partially inundated|DetermLetter": 21,
+"Structure removed-Property partially inundated|DetermLetter": 454,
+"UNKNOWN|DetermLetter": 3
+},
+"lomr": 1,
+"lomr_recent": 0,
+"lomr_since": "2021-01-01",
+"newest": "2008-09-26",
+"oldest": "2008-09-26",
+"panels": 92
 },
 "06041": {
 "cids": [
@@ -1253,6 +1338,33 @@
 "newest": "2017-09-29",
 "oldest": "2012-05-16",
 "panels": 128
+},
+"06089": {
+"cids": [
+"060358",
+"060359",
+"060360",
+"060758"
+],
+"dfirm": "06089C",
+"loma": {
+"Denied-In Floodway|DetermLetter": 2,
+"Denied|DetermLetter": 17,
+"Multiple|DetermLetter": 11,
+"Portion of property denied|DetermLetter": 3,
+"Portion of property removed|DetermLetter": 14,
+"Property out as shown|DetermLetter": 6,
+"Property removed|DetermLetter": 18,
+"Structure denied|DetermLetter": 34,
+"Structure out as shown-Property partially inundated|DetermLetter": 22,
+"Structure removed-Property partially inundated|DetermLetter": 298
+},
+"lomr": 5,
+"lomr_recent": 3,
+"lomr_since": "2021-01-01",
+"newest": "2024-05-22",
+"oldest": "2011-03-17",
+"panels": 140
 },
 "06095": {
 "cids": [
@@ -2070,6 +2182,27 @@
 "oldest": "2012-05-16",
 "panels": 156
 },
+"12029": {
+"cids": [
+"120074",
+"120326",
+"120336"
+],
+"dfirm": "12029C",
+"loma": {
+"None|DetermLetter": 1,
+"Property removed|DetermLetter": 1,
+"Structure denied|DetermLetter": 8,
+"Structure out as shown-Property partially inundated|DetermLetter": 3,
+"Structure removed-Property partially inundated|DetermLetter": 17
+},
+"lomr": 0,
+"lomr_recent": 0,
+"lomr_since": "2021-01-01",
+"newest": "9999-09-09",
+"oldest": "2006-09-29",
+"panels": 136
+},
 "12031": {
 "cids": [
 "120075",
@@ -2182,6 +2315,30 @@
 "newest": "2021-03-09",
 "oldest": "2021-03-09",
 "panels": 93
+},
+"12051": {
+"cids": [
+"120107",
+"120108",
+"120109"
+],
+"dfirm": "12051C",
+"loma": {
+"Multiple|DetermLetter": 5,
+"None|DetermLetter": 1,
+"Portion of property removed|DetermLetter": 1,
+"Property out as shown|DetermLetter": 2,
+"Property removed|DetermLetter": 10,
+"Structure denied|DetermLetter": 5,
+"Structure out as shown-Property partially inundated|DetermLetter": 1,
+"Structure removed-Property partially inundated|DetermLetter": 55
+},
+"lomr": 2,
+"lomr_recent": 1,
+"lomr_since": "2021-01-01",
+"newest": "2020-05-15",
+"oldest": "2015-07-06",
+"panels": 60
 },
 "12053": {
 "cids": [
@@ -3244,6 +3401,32 @@
 "oldest": "2014-05-05",
 "panels": 40
 },
+"13031": {
+"cids": [
+"130019",
+"130020",
+"130021",
+"130549"
+],
+"dfirm": "13031C",
+"loma": {
+"Multiple|DetermLetter": 2,
+"None|DetermLetter": 1,
+"Portion of property denied|DetermLetter": 6,
+"Portion of property removed|DetermLetter": 32,
+"Property out as shown|DetermLetter": 1,
+"Property removed|DetermLetter": 11,
+"Structure denied|DetermLetter": 5,
+"Structure out as shown-Property partially inundated|DetermLetter": 8,
+"Structure removed-Property partially inundated|DetermLetter": 35
+},
+"lomr": 2,
+"lomr_recent": 1,
+"lomr_since": "2021-01-01",
+"newest": "2010-08-05",
+"oldest": "2010-08-05",
+"panels": 51
+},
 "13039": {
 "cids": [
 "130027",
@@ -3891,6 +4074,67 @@
 "oldest": "2011-08-02",
 "panels": 133
 },
+"18163": {
+"cids": [
+"180256",
+"180257",
+"180629"
+],
+"dfirm": "18163C",
+"loma": {
+"Denied|DetermLetter": 1,
+"Multiple|DetermLetter": 51,
+"None|DetermLetter": 61,
+"Portion of property denied|DetermLetter": 7,
+"Portion of property out as shown|DetermLetter": 4,
+"Portion of property removed|DetermLetter": 134,
+"Property denied and in floodway|DetermLetter": 1,
+"Property denied|DetermLetter": 5,
+"Property out as shown|DetermLetter": 29,
+"Property removed|DetermLetter": 62,
+"Structure denied and in floodway|DetermLetter": 1,
+"Structure denied|DetermLetter": 26,
+"Structure out as shown-Property partially inundated|DetermLetter": 57,
+"Structure removed-Property partially inundated|DetermLetter": 1422,
+"Structure|DetermLetter": 1,
+"UNKNOWN|DetermLetter": 2
+},
+"lomr": 0,
+"lomr_recent": 0,
+"lomr_since": "2021-01-01",
+"newest": "2021-01-29",
+"oldest": "2011-03-17",
+"panels": 42
+},
+"18167": {
+"cids": [
+"180263",
+"180264",
+"180265",
+"180310",
+"180342"
+],
+"dfirm": "18167C",
+"loma": {
+"Denied|DetermLetter": 3,
+"Multiple|DetermLetter": 2,
+"None|DetermLetter": 4,
+"Portion of property denied|DetermLetter": 2,
+"Portion of property removed|DetermLetter": 10,
+"Property denied|DetermLetter": 2,
+"Property out as shown|DetermLetter": 1,
+"Property removed|DetermLetter": 8,
+"Structure denied|DetermLetter": 7,
+"Structure out as shown-Property partially inundated|DetermLetter": 3,
+"Structure removed-Property partially inundated|DetermLetter": 73
+},
+"lomr": 2,
+"lomr_recent": 1,
+"lomr_since": "2021-01-01",
+"newest": "2011-02-18",
+"oldest": "2011-02-18",
+"panels": 66
+},
 "19153": {
 "cids": [
 "190226",
@@ -3974,6 +4218,39 @@
 "newest": "2016-12-22",
 "oldest": "2016-12-22",
 "panels": 218
+},
+"21029": {
+"cids": [
+"210028",
+"210273",
+"210304",
+"210382",
+"210383",
+"210384",
+"210385",
+"210386"
+],
+"dfirm": "21029C",
+"loma": {
+"Denied|DetermLetter": 1,
+"Multiple|DetermLetter": 4,
+"None|DetermLetter": 13,
+"Portion of property denied|DetermLetter": 5,
+"Portion of property out as shown|DetermLetter": 1,
+"Portion of property removed|DetermLetter": 77,
+"Property out as shown|DetermLetter": 6,
+"Property removed|DetermLetter": 13,
+"Structure denied|DetermLetter": 38,
+"Structure out as shown-Property partially inundated|DetermLetter": 23,
+"Structure removed-Property partially inundated|DetermLetter": 260,
+"UNKNOWN|DetermLetter": 1
+},
+"lomr": 0,
+"lomr_recent": 0,
+"lomr_since": "2021-01-01",
+"newest": "2025-10-16",
+"oldest": "2016-04-05",
+"panels": 87
 },
 "21111": {
 "cids": [
@@ -5522,6 +5799,29 @@
 "oldest": "2009-03-16",
 "panels": 129
 },
+"28109": {
+"cids": [
+"280129",
+"280130",
+"280365"
+],
+"dfirm": "28109C",
+"loma": {
+"None|DetermLetter": 4,
+"Portion of property denied|DetermLetter": 1,
+"Property denied|DetermLetter": 1,
+"Property out as shown|DetermLetter": 3,
+"Structure denied|DetermLetter": 7,
+"Structure out as shown-Property partially inundated|DetermLetter": 5,
+"Structure removed-Property partially inundated|DetermLetter": 24
+},
+"lomr": 0,
+"lomr_recent": 0,
+"lomr_since": "2021-01-01",
+"newest": "2019-09-27",
+"oldest": "2008-06-03",
+"panels": 88
+},
 "28121": {
 "cids": [
 "280142",
@@ -6665,6 +6965,51 @@
 "oldest": null,
 "panels": 0
 },
+"36063": {
+"cids": [
+"360498",
+"360499",
+"360500",
+"360501",
+"360502",
+"360503",
+"360504",
+"360505",
+"360506",
+"360507",
+"360508",
+"360509",
+"360510",
+"360511",
+"360512",
+"360513",
+"360514",
+"360515",
+"360978",
+"361013"
+],
+"dfirm": "36063C",
+"loma": {
+"Denied|DetermLetter": 1,
+"Multiple|DetermLetter": 2,
+"None|DetermLetter": 14,
+"Portion of property denied|DetermLetter": 6,
+"Portion of property out as shown|DetermLetter": 1,
+"Portion of property removed|DetermLetter": 59,
+"Property denied|DetermLetter": 1,
+"Property out as shown|DetermLetter": 10,
+"Property removed|DetermLetter": 31,
+"Structure denied|DetermLetter": 74,
+"Structure out as shown-Property partially inundated|DetermLetter": 171,
+"Structure removed-Property partially inundated|DetermLetter": 700
+},
+"lomr": 2,
+"lomr_recent": 1,
+"lomr_since": "2021-01-01",
+"newest": "2021-05-04",
+"oldest": "2010-09-17",
+"panels": 151
+},
 "36067": {
 "cids": [
 "360569",
@@ -6999,6 +7344,34 @@
 "oldest": "2006-06-02",
 "panels": 215
 },
+"37025": {
+"cids": [
+"370036",
+"370037",
+"370038",
+"370182",
+"370470"
+],
+"dfirm": "37025C",
+"loma": {
+"Denied|DetermLetter": 1,
+"Multiple|DetermLetter": 20,
+"None|DetermLetter": 5,
+"Portion of property denied|DetermLetter": 6,
+"Portion of property removed|DetermLetter": 45,
+"Property out as shown|DetermLetter": 7,
+"Property removed|DetermLetter": 21,
+"Structure denied|DetermLetter": 10,
+"Structure out as shown-Property partially inundated|DetermLetter": 13,
+"Structure removed-Property partially inundated|DetermLetter": 74
+},
+"lomr": 6,
+"lomr_recent": 6,
+"lomr_since": "2021-01-01",
+"newest": "2018-11-16",
+"oldest": "2008-11-05",
+"panels": 125
+},
 "37031": {
 "cids": [
 "370043",
@@ -7120,6 +7493,34 @@
 "oldest": "2006-09-20",
 "panels": 207
 },
+"37061": {
+"cids": [
+"370083",
+"370375",
+"370399",
+"370547",
+"370623",
+"370633",
+"370655",
+"370661",
+"370669"
+],
+"dfirm": "37061C",
+"loma": {
+"None|DetermLetter": 21,
+"Portion of property removed|DetermLetter": 3,
+"Property removed|DetermLetter": 10,
+"Structure denied|DetermLetter": 1,
+"Structure out as shown-Property partially inundated|DetermLetter": 1,
+"Structure removed-Property partially inundated|DetermLetter": 11
+},
+"lomr": 1,
+"lomr_recent": 0,
+"lomr_since": "2021-01-01",
+"newest": "2025-01-17",
+"oldest": "2004-07-02",
+"panels": 101
+},
 "37081": {
 "cids": [
 "370111",
@@ -7175,6 +7576,39 @@
 "newest": "2012-04-03",
 "oldest": "2012-04-03",
 "panels": 159
+},
+"37101": {
+"cids": [
+"370138",
+"370139",
+"370140",
+"370262",
+"370462",
+"370485",
+"370499",
+"370500",
+"370502",
+"370504",
+"370505"
+],
+"dfirm": "37101C",
+"loma": {
+"Multiple|DetermLetter": 1,
+"None|DetermLetter": 3,
+"Portion of property denied and in floodway|DetermLetter": 1,
+"Portion of property out as shown|DetermLetter": 1,
+"Portion of property removed|DetermLetter": 35,
+"Property removed|DetermLetter": 15,
+"Structure denied|DetermLetter": 7,
+"Structure out as shown-Property partially inundated|DetermLetter": 8,
+"Structure removed-Property partially inundated|DetermLetter": 33
+},
+"lomr": 2,
+"lomr_recent": 2,
+"lomr_since": "2021-01-01",
+"newest": "2022-07-19",
+"oldest": "2004-11-03",
+"panels": 163
 },
 "37119": {
 "cids": [
@@ -8591,6 +9025,57 @@
 "oldest": "2016-02-17",
 "panels": 20
 },
+"48015": {
+"cids": [
+"480017",
+"480018",
+"480288",
+"480704",
+"480705",
+"481095",
+"481693"
+],
+"dfirm": "48015C",
+"loma": {
+"Denied|DetermLetter": 1,
+"Portion of property denied|DetermLetter": 3,
+"Portion of property removed|DetermLetter": 4,
+"Property out as shown|DetermLetter": 1,
+"Structure denied|DetermLetter": 2,
+"Structure out as shown-Property partially inundated|DetermLetter": 1,
+"Structure removed-Property partially inundated|DetermLetter": 9
+},
+"lomr": 0,
+"lomr_recent": 0,
+"lomr_since": "2021-01-01",
+"newest": "2019-10-18",
+"oldest": "2010-09-03",
+"panels": 22
+},
+"48021": {
+"cids": [
+"480022",
+"480023",
+"480024",
+"481193"
+],
+"dfirm": "48021C",
+"loma": {
+"Multiple|DetermLetter": 1,
+"Portion of property removed|DetermLetter": 6,
+"Property out as shown|DetermLetter": 3,
+"Property removed|DetermLetter": 6,
+"Structure denied|DetermLetter": 9,
+"Structure out as shown-Property partially inundated|DetermLetter": 5,
+"Structure removed-Property partially inundated|DetermLetter": 44
+},
+"lomr": 4,
+"lomr_recent": 2,
+"lomr_since": "2021-01-01",
+"newest": "2023-05-09",
+"oldest": "2006-01-19",
+"panels": 36
+},
 "48029": {
 "cids": [
 "480035",
@@ -9117,6 +9602,34 @@
 "oldest": null,
 "panels": 0
 },
+"48265": {
+"cids": [
+"480419",
+"480420",
+"481592",
+"481680"
+],
+"dfirm": "48265C",
+"loma": {
+"Denied|DetermLetter": 1,
+"Multiple|DetermLetter": 2,
+"Portion of property denied and in floodway|DetermLetter": 1,
+"Portion of property denied|DetermLetter": 3,
+"Portion of property removed|DetermLetter": 24,
+"Property out as shown|DetermLetter": 1,
+"Property removed|DetermLetter": 12,
+"Structure denied|DetermLetter": 11,
+"Structure out as shown-Property partially inundated|DetermLetter": 8,
+"Structure removed-Property partially inundated|DetermLetter": 104,
+"UNKNOWN|DetermLetter": 1
+},
+"lomr": 7,
+"lomr_recent": 3,
+"lomr_since": "2021-01-01",
+"newest": "2020-05-15",
+"oldest": "2011-03-03",
+"panels": 39
+},
 "48303": {
 "cids": [
 "480452",
@@ -9627,6 +10140,36 @@
 "oldest": "2015-12-16",
 "panels": 78
 },
+"51107": {
+"cids": [
+"510090",
+"510091",
+"510231",
+"510259",
+"510279",
+"510316",
+"510352",
+"510360"
+],
+"dfirm": "51107C",
+"loma": {
+"Multiple|DetermLetter": 10,
+"None|DetermLetter": 15,
+"Portion of property denied|DetermLetter": 1,
+"Portion of property removed|DetermLetter": 7,
+"Property out as shown|DetermLetter": 13,
+"Property removed|DetermLetter": 16,
+"Structure denied|DetermLetter": 10,
+"Structure out as shown-Property partially inundated|DetermLetter": 13,
+"Structure removed-Property partially inundated|DetermLetter": 58
+},
+"lomr": 41,
+"lomr_recent": 23,
+"lomr_since": "2021-01-01",
+"newest": "2017-02-17",
+"oldest": "2017-02-17",
+"panels": 68
+},
 "51153": {
 "cids": [
 "510119",
@@ -9769,6 +10312,31 @@
 "Structure denied|DetermLetter": 88,
 "Structure out as shown-Property partially inundated|DetermLetter": 26,
 "Structure removed-Property partially inundated|DetermLetter": 343
+},
+"newest": null,
+"oldest": null,
+"panels": 0
+},
+"53007": {
+"cids": [
+"530015",
+"530016",
+"530017",
+"530018",
+"530019",
+"530020"
+],
+"dfirm": "53007C",
+"loma": {
+"Denied|DetermLetter": 2,
+"Multiple|DetermLetter": 3,
+"Portion of property removed|DetermLetter": 4,
+"Property out as shown|DetermLetter": 6,
+"Property removed|DetermLetter": 4,
+"Structure denied and in floodway|DetermLetter": 1,
+"Structure denied|DetermLetter": 3,
+"Structure out as shown-Property partially inundated|DetermLetter": 7,
+"Structure removed-Property partially inundated|DetermLetter": 61
 },
 "newest": null,
 "oldest": null,
@@ -10119,5 +10687,5 @@
 "oldest": "2006-09-29",
 "panels": 119
 },
-"_retrieved": "2026-11-08"
+"_retrieved": "2026-11-09"
 }

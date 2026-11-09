@@ -331,10 +331,30 @@ Every "median" below is the median yearly cost (premium plus fees) of existing N
 - [Stanislaus County, CA](https://floodinsurancedata.com/flood-insurance/stanislaus-county-ca/): median $833 a year
 - [Cochise County, AZ](https://floodinsurancedata.com/flood-insurance/cochise-county-az/): median $1,094 a year
 - [McHenry County, IL](https://floodinsurancedata.com/flood-insurance/mchenry-county-il/): median $1,156 a year
+- [Garland County, AR](https://floodinsurancedata.com/flood-insurance/garland-county-ar/): median $1,388 a year
+- [Mohave County, AZ](https://floodinsurancedata.com/flood-insurance/mohave-county-az/): median $810 a year
 - [Thurston County, WA](https://floodinsurancedata.com/flood-insurance/thurston-county-wa/): median $884 a year
 - [Utah County, UT](https://floodinsurancedata.com/flood-insurance/utah-county-ut/): median $756 a year
+- [Hendry County, FL](https://floodinsurancedata.com/flood-insurance/hendry-county-fl/): median $1,011 a year
+- [Pearl River County, MS](https://floodinsurancedata.com/flood-insurance/pearl-river-county-ms/): median $932 a year
 - [Haywood County, NC](https://floodinsurancedata.com/flood-insurance/haywood-county-nc/): median $1,221 a year
 - [Burleigh County, ND](https://floodinsurancedata.com/flood-insurance/burleigh-county-nd/): median $1,349 a year
+- [Bullitt County, KY](https://floodinsurancedata.com/flood-insurance/bullitt-county-ky/): median $1,122 a year
+- [Vanderburgh County, IN](https://floodinsurancedata.com/flood-insurance/vanderburgh-county-in/): median $893 a year
+- [Madera County, CA](https://floodinsurancedata.com/flood-insurance/madera-county-ca/): median $1,082 a year
+- [Vigo County, IN](https://floodinsurancedata.com/flood-insurance/vigo-county-in/): median $950 a year
+- [Loudoun County, VA](https://floodinsurancedata.com/flood-insurance/loudoun-county-va/): median $681 a year
+- [Shasta County, CA](https://floodinsurancedata.com/flood-insurance/shasta-county-ca/): median $1,232 a year
+- [Dixie County, FL](https://floodinsurancedata.com/flood-insurance/dixie-county-fl/): median $987 a year
+- [Johnston County, NC](https://floodinsurancedata.com/flood-insurance/johnston-county-nc/): median $829 a year
+- [Duplin County, NC](https://floodinsurancedata.com/flood-insurance/duplin-county-nc/): median $885 a year
+- [Niagara County, NY](https://floodinsurancedata.com/flood-insurance/niagara-county-ny/): median $839 a year
+- [Kerr County, TX](https://floodinsurancedata.com/flood-insurance/kerr-county-tx/): median $1,147 a year
+- [Bastrop County, TX](https://floodinsurancedata.com/flood-insurance/bastrop-county-tx/): median $1,143 a year
+- [Chelan County, WA](https://floodinsurancedata.com/flood-insurance/chelan-county-wa/): median $1,234 a year
+- [Austin County, TX](https://floodinsurancedata.com/flood-insurance/austin-county-tx/): median $1,010 a year
+- [Bulloch County, GA](https://floodinsurancedata.com/flood-insurance/bulloch-county-ga/): median $899 a year
+- [Cabarrus County, NC](https://floodinsurancedata.com/flood-insurance/cabarrus-county-nc/): median $1,170 a year
 - [Ramsey County, MN](https://floodinsurancedata.com/flood-insurance/ramsey-county-mn/): median $768 a year
 - [Elkhart County, IN](https://floodinsurancedata.com/flood-insurance/elkhart-county-in/): median $925 a year
 - [Grand Forks County, ND](https://floodinsurancedata.com/flood-insurance/grand-forks-county-nd/): median $917 a year
