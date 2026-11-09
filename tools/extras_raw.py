@@ -211,6 +211,7 @@ def claims(st):
             out[k]["zone_split"] = {"from": LOSS_FROM, "to": LOSS_TO, "known_n": sum(v[0] for _, v in kz), "known_paid_n": sum(v[1] for _, v in kz),
                                     "known_paid": round(sum(v[2] for _, v in kz)), "out_n": sum(v[0] for v in oz), "out_paid_n": sum(v[1] for v in oz),
                                     "out_paid": round(sum(v[2] for v in oz)), "blank_n": (a["zone"].get("blank") or [0])[0]}
+            zs = out[k]["zone_split"]; zs["out_pct"] = pct(zs["out_n"], zs["known_n"]); zs["out_paid_pct"] = pct(zs["out_paid"], zs["known_paid"])
     return out
 
 NAT_PB = {}

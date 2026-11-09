@@ -52,6 +52,7 @@ try:
     assert (z["19901"]["below_n"], z["19901"]["share_below"]) == (40, 75.0), z["19901"]   # 30 of 40 single-family; the 31 condo units are outside the base
     zs = C["10001"]["zone_split"]   # 6 AE paid $30,000; 2 X (1 paid $3,000); 3 with no zone; the 2005 claim outside the window
     assert (zs["known_n"], zs["known_paid_n"], zs["known_paid"], zs["out_n"], zs["out_paid_n"], zs["out_paid"], zs["blank_n"]) == (8, 7, 33000, 2, 1, 3000, 3), zs
+    assert (zs["out_pct"], zs["out_paid_pct"]) == (25.0, 9.1), zs   # 2 of 8 claims; $3,000 of $33,000
     assert "zone_split" not in C["ST"] and "_pb" in C["ST"]
     X.ROOT = tmp; os.makedirs(os.path.join(tmp, "data", "us")); cs = os.path.join(tmp, "data", "us", "claim_size.json")
     X.NAT_PB.clear(); X.NAT_PB["DE"] = [1000] * 40; X.write_claim_size()
