@@ -46,6 +46,9 @@ def check(page, csvtext):
     if gy != want: bad.append(f"C6 costliest years differ: page {gy[:2]} vs data {want[:2]}")
     sz = sorted(c["paid_building_median"] for p in glob.glob(os.path.join(D, "states", "*", "extras.json"))   # C7: claim-size range
                 for c in [json.load(open(p))["claims"]] if c.get("paid_building_median") and (c.get("damage_n") or 0) >= 500)
+    csf = os.path.join(D, "us", "claim_size.json"); cs = json.load(open(csf)) if os.path.exists(csf) else {}   # C7b: the U.S. median, same as-of only
+    if cs.get("p50") and cs.get("asof") == json.load(open(os.path.join(D, "us", "asof.json")))["asof"] and \
+            f"the median paid building claim is ${cs['p50']:,}, on {cs['n']:,} claims" not in text: bad.append("C7b U.S. median paid building claim missing or differs")
     ms = re.search(r"median paid building claim runs from \$([\d,]+) in .*? to \$([\d,]+) in .*?, among the (\d+) states with", text)
     if len(sz) >= 2 and (not ms or (int(ms[1].replace(",", "")), int(ms[2].replace(",", "")), int(ms[3])) != (sz[0], sz[-1], len(sz))):
         bad.append(f"C7 claim-size range: page {ms and ms.groups()} vs ${sz[0]:,}-${sz[-1]:,} in {len(sz)}")
@@ -116,6 +119,7 @@ if __name__ == "__main__":
                 "denied": pg + "<p>Claims denied.</p>",
                 "size": re.sub(r"(claim runs from \$)[\d,]+", r"\g<1>1", pg, count=1),
                 "year": re.sub(r'(id="years".*?<tr><td>\d{4}</td><td>[\d,]+</td><td>\$)([\d,]+)', r"\g<1>1", pg, count=1, flags=re.S)}
+        if "the median paid building claim is $" in pg: muts["us median"] = re.sub(r"(the median paid building claim is \$)[\d,]+", r"\g<1>1", pg, count=1)
         for k, m in muts.items(): assert check(m, cv), f"mutation not caught: {k}"
         cv2 = cv.splitlines(); cv2.pop(1)
         assert check(pg, "\n".join(cv2)), "mutation not caught: csv row dropped"

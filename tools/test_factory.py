@@ -68,10 +68,13 @@ def cost_trend_off(a, d, x):   # the same with the as-of-year median off the hea
     cost_trend(a, d, x); x["policies"]["cost_trend"][0]["median"] += 50
 def takeup_no_date(a, d, x):   # 11-09 feed sweep: a feed without its own as-of date shows no card (never the download day)
     if d.get("penetration"): d["penetration"] = {k: v for k, v in d["penetration"].items() if k != "asof"}
+def zone_split(a, d, x):   # 11-09 county claims outside zones A/V (extras zone_split): shows on county pages, numbers via tp()
+    x.setdefault("claims", {})["zone_split"] = {"from": "2016", "to": "2025", "known_n": 4210, "known_paid_n": 3300, "known_paid": 98000000, "out_n": 1263,
+                                               "out_paid_n": 990, "out_paid": 21000000, "blank_n": 77, "out_pct": 30.0, "out_paid_pct": 21.4}
 def zero_units(a, d, x): a["policies"].update(units=0, rows=0, zone_units={}, sfha_units=0, sfha_share_units=None, cost_by_zone={}, cost_n=0)
 
 CASES = [no_claims, one_claim, one_zone, big_unpriced_zone, no_priced_zone, under_floor, all_decades_small, only_catch_all,
-         billion_flood, asof_jan1, asof_dec31, claims_old, no_nri, no_disasters, no_crs, no_multiloss, shuffled_order, new_fields_11_08, zero_units, cost_trend, cost_trend_off, cost_trend_reasons, takeup_no_date]
+         billion_flood, asof_jan1, asof_dec31, claims_old, no_nri, no_disasters, no_crs, no_multiloss, shuffled_order, new_fields_11_08, zero_units, cost_trend, cost_trend_off, cost_trend_reasons, takeup_no_date, zone_split]
 
 tmp = tempfile.mkdtemp(); rows, crashed = [], []
 for SLUG, SRC, LABEL, GEOID, LEVEL in TARGETS:
@@ -108,7 +111,15 @@ for SLUG, SRC, LABEL, GEOID, LEVEL in TARGETS:
             if "[C17]" not in g2.stdout: ids.append("C17-MISSED-WRONG-REASON")
             open(out, "w", encoding="utf-8").write(_h)
     if fn.__name__ == "cost_trend" and ' id="trend"' not in open(out, encoding="utf-8").read(): ids.append("NO-TREND-CARD")
-    rows.append((name, "BLOCKED" if g.returncode or "NO-TREND-CARD" in ids or "TAKEUP-UNDATED" in ids or "C17-MISSED-WRONG-REASON" in ids or "NO-LEFT-OUT-LINE" in ids else "PASS", ",".join(ids) or "-"))
+    if fn.__name__ == "zone_split" and "county" in name and not g.returncode:   # shows, and a changed share must fail the gate
+        _h = open(out, encoding="utf-8").read()
+        if "Outside the high-risk zones:" not in _h: ids.append("NO-ZONE-SPLIT")
+        else:
+            open(out, "w", encoding="utf-8").write(_h.replace(">30.0%<", ">31.0%<", 1))
+            g2 = subprocess.run([sys.executable, "-I", os.path.join(T, "gate.py"), os.path.join(d, "agg.json"), out, "0"], capture_output=True, text=True)
+            if not g2.returncode: ids.append("ZONE-SPLIT-MUTATION-MISSED")
+            open(out, "w", encoding="utf-8").write(_h)
+    rows.append((name, "BLOCKED" if g.returncode or "NO-TREND-CARD" in ids or "TAKEUP-UNDATED" in ids or "C17-MISSED-WRONG-REASON" in ids or "NO-LEFT-OUT-LINE" in ids or "NO-ZONE-SPLIT" in ids or "ZONE-SPLIT-MUTATION-MISSED" in ids else "PASS", ",".join(ids) or "-"))
 shutil.rmtree(tmp, ignore_errors=True)
 w = max(len(r[0]) for r in rows)
 for n, res, info in rows: print(f"{n:<{w}} {res:<11} {info}")
@@ -116,6 +127,8 @@ must_pass = [r for r in rows if r[0].endswith(":new_fields_11_08") and r[1] != "
 assert not must_pass, f"new 11-08 figures do not pass the gate: {must_pass}"
 must_pass = [r for r in rows if r[0].endswith((":cost_trend", ":cost_trend_reasons")) and r[1] != "PASS"]   # 11-09: the card shows and passes
 assert not must_pass, f"cost-by-year card missing or blocked: {must_pass}"
+must_pass = [r for r in rows if r[0].endswith(":zone_split") and r[1] != "PASS"]   # 11-09: outside-A/V note shows, passes, and a wrong share is caught
+assert not must_pass, f"zone split note missing, blocked or mutation missed: {must_pass}"
 assert not [r for r in rows if "TAKEUP-UNDATED" in r[2]], "take-up card printed without its own date"
 must_block = [r for r in rows if r[0].endswith(":cost_trend_off") and "C17" not in r[2]]   # and a second rule is caught
 assert not must_block, f"gate C17 missed a cost trend off the headline median: {must_block}"

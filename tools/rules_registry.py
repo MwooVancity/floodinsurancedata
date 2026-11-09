@@ -338,6 +338,14 @@ RULES = {
         "text": "If you think a lender's high-risk-zone finding is wrong, you and the lender together can ask FEMA to review it within 45 days of "
                 "the lender's notice; a fee applies (44 CFR §65.17).",
         "sources": [("https://www.law.cornell.edu/cfr/text/44/65.17", "must be submitted within 45 days of the lender's notification to the borrower", "curl")]},
+    "floodway": {   # top-3 compare 11-09 (AE results explain the floodway); 44 CFR 59.1 and 60.3(d)(3)-(4) read raw 11-09 (eCFR, curl --compressed)
+        "text": "Some AE areas also have a regulatory floodway: the river channel and the land beside it that must be kept clear to carry the base flood (44 CFR §59.1). "
+                "Where a community has adopted one, it must prohibit fill, new construction, substantial improvements and other development there unless engineering "
+                "analysis shows the work would not raise flood levels during the base flood, or the community first applies for a map and floodway revision (44 CFR §60.3(d)).",
+        "sources": [(CFR59, "Regulatory floodway means the channel of a river or other watercourse and the adjacent land areas that must be reserved in order to discharge the base flood", "curl"),
+                    (CFR60, "Prohibit encroachments, including fill, new construction, substantial improvements, and other development within the adopted regulatory floodway unless it has been demonstrated through hydrologic and hydraulic analyses", "curl"),
+                    (CFR60, "would not result in any increase in flood levels within the community during the occurrence of the base flood discharge", "curl"),
+                    (CFR60, "provided that the community first applies for a conditional FIRM and floodway revision", "curl")]},
     "odds_30": {
         "text": "A 1 percent or greater chance a year works out to a 26% or greater chance of at least one such flood over 30 years.",
         # arithmetic, tested in test_calc.py: 1 - 0.99**30 = 0.2603; the 1 percent is the regulation's

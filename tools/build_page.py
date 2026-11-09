@@ -1288,8 +1288,17 @@ def _open_note():   # hater r103 Dixie: "latest two years" sat on 2024 data in 2
     _a = int(P["asof"][:4]); _ys = [y for y in (_a - 1, _a) if str(y) in (C.get("by_year") or {})]
     return f" Totals for {' and '.join(map(str, _ys))} are not final while their claims stay open." if _ys else ""
 
+def _zone_split_note():   # top-3 compare 11-09: how much of the claim money here was outside the high-risk zones (county pages; extras zone_split)
+    z = _xc.get("zone_split") or {}
+    if (z.get("known_n") or 0) < MIN_PRICED or (z.get("known_paid_n") or 0) < MIN_PRICED or z.get("out_pct") is None or z.get("out_paid_pct") is None: return ""
+    return (f"<p class='note'><b>Outside the high-risk zones:</b> of the {tp('zone_known_n', 'extras.claims.zone_split.known_n')} claims here with a flood zone on the claim, "
+            f"losses {z['from']}–{z['to']}, {tp('zone_out_pct', 'extras.claims.zone_split.out_pct', pct)} were rated outside zones A and V (zones X, B, C and D), "
+            f"and they got {tp('zone_out_paid_pct', 'extras.claims.zone_split.out_paid_pct', pct)} of the dollars paid on those claims. "
+            f"The zone is the one on each claim, not today's map; claims with no zone on them are left out.</p>")
+
 def card_claims():
     claims_lead, claims_ratio_note = _claims_parts()
+    claims_ratio_note += _zone_split_note()
     return card(f"Flood insurance claims in {CL}: what floods pay out", claims_lead, claims_svg() +
       f"<p class='note'>Bar height is dollars paid that year. Orange bars are the three costliest years: " + ", ".join(f"{y} ({tp('claims_year_paid', f'claims.by_year.{y}.1', money, q=str(y))})" for y, p in top_paid) +
       f". Total paid {tp('claims_total', 'claims.total_paid', money, q='exact')}. {_open_note()}{how('claims')}</p>" + claims_ratio_note,

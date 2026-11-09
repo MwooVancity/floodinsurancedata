@@ -162,6 +162,11 @@ METRICS.update({   # every other figure a page prints; q (data-q) names the row 
     "crs_count": _m(_CSB, ["communityName", "sfhaDiscount"], "count"),
     "sea_trend": _m("NoaaSeaLevelTrends", ["trend", "startDate", "endDate"], "in_per_decade"),   # PLAN 3e: NOAA's published trend per station
     "paid_bldg_median": _m(CLM, ["netBuildingPaymentAmount"], "usd_claim_paid"),   # round 31: the typical paid building claim
+    # top-3 compare 11-09 (Harris: most Harvey damage was outside the 100-year floodplain): zone on the claim, ten whole loss years
+    "zone_known_n": _m(CLM, ["ratedFloodZone", "yearOfLoss"], "count", counts="claim_record"),
+    "zone_out_pct": _m(CLM, ["ratedFloodZone", "yearOfLoss"], "pct", of="claims with a zone on the claim, codes 98/99 left out"),
+    "zone_out_paid_pct": _m(CLM, ["ratedFloodZone", "yearOfLoss", "netBuildingPaymentAmount", "netContentsPaymentAmount", "netIccPaymentAmount"], "pct",
+                            of="dollars paid on claims with a zone on the claim"),
     "map_date": _m(_CSB, ["currentlyEffectiveMapDate"], "rating"),   # PLAN 3e: the community's current FEMA map date (a label)
     "map_panels": _m("NFHL", ["FIRM_PAN"], "count"),   # map debate 11-06: panels of the countywide FEMA map
     "map_panel_date": _m("NFHL", ["EFF_DATE"], "rating"),   # oldest / newest panel effective date (a label)

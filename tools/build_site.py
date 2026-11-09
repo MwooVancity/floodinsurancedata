@@ -169,7 +169,7 @@ if len(states) == 51:   # U.S. figures only once every state is built and gated:
     home_cards = (f'<div class="card" id="check"><h2>Is my quote normal?</h2><p class="stand">Type your yearly cost (premium plus fees) to see where it '
         f'sits among U.S. single-family policies; your state page compares it with your area.</p>'
         f'<input id="qv" inputmode="numeric" placeholder="e.g. {int(round(_med, -1))}" aria-label="Your yearly flood insurance cost"><p id="qo" class="mut"></p></div>'
-        f'<div class="card"><h2>What sets the price, and how do I pay less?</h2><p class="stand">{rule("price_drivers")}</p>'
+        f'<div class="card"><h2>What sets the price, and how do I pay less?</h2><p class="stand">{rule("price_drivers")}</p><p class="stand">{rule("cap")}</p>'
         f'<p class="stand">{rule("save_ways")} The usual building deductible on U.S. single-family policies is {money(int(float(_dtop)))} '
         f'({_dshare}% of them); your state page lists the mix there and any community discount.</p></div>'
         f'<div class="card" id="prices"><h2>Why do sites quote different prices?</h2><p class="stand">Because they measure different things: '
@@ -454,7 +454,7 @@ if len(states) == 51 and len(_zh) == 51:
         fewline = f" {few} more {'states have' if few > 1 else 'state has'} zone {code} policies but under {ZONE_MIN} priced ones, too few for a median." if few else ""
         xfoot = " Last column: every NFIP claim since 1978 on every building type, by the zone on the claim." if xcol else ""   # known units only: an uncounted state is never claimed to have policies
         keys = [rk, "lender_any_zone", "price_drivers", "cap", "save_ways", "howto_answer", "how_to_buy", "seller_assign", "private_accept",
-                "nfip_not_sold"] + (["odds_30", "loma", "zone_review", "ec_get"] if hr else []) + (["bfe"] if code in ("AE", "AH", "VE") else []) + (["bfe_floor"] if code in ("AE", "AH") else []) + (["substantial_damage"] if hr else []) + ["glide", "loma_fee", "loma_online"] + (["tx_twia"] if zk == "ve" else [])
+                "nfip_not_sold"] + (["odds_30", "loma", "zone_review", "ec_get"] if hr else []) + (["bfe"] if code in ("AE", "AH", "VE") else []) + (["bfe_floor"] if code in ("AE", "AH") else []) + (["floodway"] if code == "AE" else []) + (["substantial_damage"] if hr else []) + ["glide", "loma_fee", "loma_online"] + (["tx_twia"] if zk == "ve" else [])
         vnote = (f'<p class="mut">Most insured units in this zone are not in the median: {"at least " if units is None else ""}{known:,} units are rated VE '
                  f'(condo buildings, second homes and businesses among them), while the median rests on {n:,} single-family primary-home policies.</p>') if zk == "ve" and n else ""
         # claims by the zone on each claim, ten whole loss years, dollars as paid; national only with all 51 states
@@ -536,7 +536,7 @@ if len(states) == 51 and len(_zh) == 51:
 <p class="mut">Median and policy count: single-family primary homes rated exactly {code}, premium plus fees, in force on {_ASOF_TXT}.{xfoot}{fewline}</p></div>
 {ctab}
 <div class="card"><h2>Buying, refinancing or questioning the zone</h2><p class="stand">{rule("seller_assign")} {rule("private_accept")}</p>
-{f'<p class="stand">{rule("loma")} {rule("loma_fee")} {rule("loma_online")} {rule("zone_review")}</p>' if hr else ""}{f'<p class="stand">{rule("bfe")}</p>' if code in ("AE", "AH", "VE") else ""}{f'<p class="stand">{rule("bfe_floor")}</p>' if code in ("AE", "AH") else ""}{f'<p class="stand"><b>After a flood:</b> {rule("substantial_damage")}</p>' if hr else ""}{f'<p class="stand">{rule("ec_get")}</p>' if hr else ""}{f'<p class="stand">{rule("tx_twia")}</p>' if zk == "ve" else ""}
+{f'<p class="stand">{rule("loma")} {rule("loma_fee")} {rule("loma_online")} {rule("zone_review")}</p>' if hr else ""}{f'<p class="stand">{rule("bfe")}</p>' if code in ("AE", "AH", "VE") else ""}{f'<p class="stand">{rule("bfe_floor")}</p>' if code in ("AE", "AH") else ""}{f'<p class="stand">{rule("floodway")}</p>' if code == "AE" else ""}{f'<p class="stand"><b>After a flood:</b> {rule("substantial_damage")}</p>' if hr else ""}{f'<p class="stand">{rule("ec_get")}</p>' if hr else ""}{f'<p class="stand">{rule("tx_twia")}</p>' if zk == "ve" else ""}
 <p class="stand">{rule("nfip_not_sold")}</p></div>
 <div class="card"><h2>Will it rise, and can I pay less?</h2><p class="stand">{rule("price_drivers")}</p><p class="stand">{rule("cap")}</p><p class="stand">{rule("save_ways")}</p></div>
 <div class="card"><h2>How do I get covered?</h2><p class="stand">{rule("howto_answer")} {rule("how_to_buy")}</p></div>
@@ -604,7 +604,10 @@ if len(states) == 51:
         _szout = sorted(s["name"] for s in states if s["slug"] not in {x[2] for x in _sz})   # r124: name who is left out
         if len(_sz) >= 2:
             _slink = lambda x: f'<a href="/flood-insurance/{x[2]}/">{html.escape(x[1])}</a>'
-            _ycard += ('<div class="card" id="size"><h2>How big is a typical paid claim?</h2><p class="stand">The median paid building claim runs from '
+            _csf = os.path.join(DATADIR, "us", "claim_size.json"); _cs = json.load(open(_csf)) if os.path.exists(_csf) else {}   # extras_raw, all 51 states in one run
+            _ycard += ('<div class="card" id="size"><h2>How big is a typical paid claim?</h2><p class="stand">'
+                       + (f'Across the 50 states and DC, the median paid building claim is {money(_cs["p50"])}, on {_cs["n"]:,} claims. ' if _cs.get("p50") and _cs.get("asof") == _asof() else '')
+                       + 'By state, the median paid building claim runs from '
                        f'{money(_sz[0][0])} in {_slink(_sz[0])} to {money(_sz[-1][0])} in {_slink(_sz[-1])}, among the {len(_sz)} states with {CLAIMS_MIN} or more such claims'
                        + (f' (left out, with fewer: {", ".join(html.escape(n) for n in _szout)})' if _szout else '') + '.</p>'
                        '<p class="mut">Median of the building payment on claims with recorded building damage and a building payment, every loss year since 1978, in dollars as paid, '
@@ -668,7 +671,7 @@ if RENT_ON:
     _rs = sorted(((st, sum(h.values()), _hq({st: h}, 0.5)) for st, h in _rh.items() if sum(h.values()) >= 30), key=lambda r: -r[1])
     _snm = {s["abbr"]: s for s in states} if states and "abbr" in states[0] else {}
     _rtr = "".join(f'<tr><td>{(f'<a href="/flood-insurance/{_snm[st]["slug"]}/">' + html.escape(_snm[st]["name"]) + "</a>") if st in _snm else st}</td><td>{money(md)}</td><td>{n:,}</td></tr>' for st, n, md in _rs)
-    _rk = ["renters_cover", "wait_30", "how_to_buy", "not_covered", "flood_def"]
+    _rk = ["renters_cover", "wait_30", "how_to_buy", "not_covered", "flood_def", "nfip_not_sold"]
     pg = HEAD.format(title=f"Flood insurance for renters: {money(_rq[0.5])}/yr NFIP median, by state",
                      desc=f"What renters pay for NFIP flood insurance on their belongings: a median of {money(_rq[0.5])} a year on {_rn:,} priced renter policies, by state, from FEMA's own records.",
                      canon=BASE + "/flood-insurance/renters/") + f"""
@@ -678,7 +681,7 @@ if RENT_ON:
 <div class="stat"><div class="n">{money(_rq[0.25])}–{money(_rq[0.75])}</div><div class="l">Middle half / yr</div></div>
 <div class="stat"><div class="n">{_rn:,}</div><div class="l">Priced renter policies</div></div></div>
 <p class="mut">FEMA OpenFEMA NFIP Policies v3, as of {_ASOF_TXT}. Renter policy: FEMA marks the policyholder a tenant, the building residential, no building coverage and some contents coverage. Priced: a policy cost above $0. <a href="/methodology/">How we check them</a>.</p>
-<div class="card"><h2>What does renters flood insurance cover?</h2><p class="stand">{rule("renters_cover")}</p><p class="stand">{rule("wait_30")}</p><p class="stand">{rule("how_to_buy")}</p><p class="stand"><b>What it won't pay:</b> {rule("not_covered")} {rule("flood_def")}</p></div>
+<div class="card"><h2>What does renters flood insurance cover?</h2><p class="stand">{rule("renters_cover")}</p><p class="stand">{rule("wait_30")}</p><p class="stand">{rule("how_to_buy")} {rule("nfip_not_sold")}</p><p class="stand"><b>What it won't pay:</b> {rule("not_covered")} {rule("flood_def")}</p></div>
 <div class="card"><h2>What do renters pay in each state?</h2><p class="stand">States with at least 30 priced NFIP renter policies, most policies first.</p>
 <table><thead><tr><th>State</th><th>Median / yr</th><th>Priced renter policies</th></tr></thead><tbody>{_rtr}</tbody></table>
 <p class="mut">What homeowners pay: <a href="/nfip/">the NFIP in numbers</a>. <a href="/flood-insurance/zip/">Cost by ZIP code</a> (single-family homes).</p></div>
