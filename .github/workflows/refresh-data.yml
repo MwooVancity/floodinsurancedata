@@ -36,6 +36,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Run the aggregation code on a tiny synthetic download first (11-08: a code slip died 1 h in, after the download)
+        run: python -I tools/test_raw.py
       - id: plan   # skip the download when nothing is new (owner 2026-11-03)
         env: { FORCE: "${{ inputs.force }}" }
         run: python -I tools/refresh_plan.py

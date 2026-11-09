@@ -1295,8 +1295,30 @@ def card_counts():
       f"Download check: {mani_line}.</p>")
 
 # page order (reader first: required, cost, how to get covered, payouts, then the detail cards). card_spec.py says what each covers.
+def _share_words(p):   # the words must match the number: 64.9% is "about 6 in 10", never "1 in 2"
+    return "Almost every home" if p >= 95 else f"About {round(p / 10)} in 10 homes" if p >= 15 else f"About 1 in {round(100 / p)} homes"
+
+def card_takeup():   # owner 11-08 ("do it"): share of homes insured, FEMA's NFIP Residential Penetration Rates (cut 10-28, restored)
+    pen = data.get("penetration") or {}
+    if IS_STATE or pen.get("overall_pct") is None: return ""
+    o, s_ = pen["overall_pct"], pen.get("sfha_pct")
+    lead = ((f"{m('pen_words', _share_words(o))} here {'has' if _share_words(o).startswith(('About 1 in', 'Almost')) else 'have'} NFIP flood insurance "
+             f"({tp('pen_overall', 'data.penetration.overall_pct', pct)}). ") if o else
+            f"Almost no homes here have NFIP flood insurance ({tp('pen_overall', 'data.penetration.overall_pct', pct)}). ")
+    if s_ is not None:
+        lead += (f"Inside the high-risk zone it is {tp('pen_sfha', 'data.penetration.sfha_pct', pct)}." if s_ <= 100 else
+                 f"Inside the high-risk zone FEMA's rate is {tp('pen_sfha', 'data.penetration.sfha_pct', pct)}: it counts more policies there "
+                 "than its own estimate of high-risk buildings, so the exact share is unknown.")
+    body = (f"<ul class='kv'><li><b>Homes with NFIP flood insurance</b><span>{tp('pen_overall', 'data.penetration.overall_pct', pct)}</span>{vs_state('pen_overall', 'data.penetration.overall_pct', pct)}</li>"
+            + (f"<li><b>High-risk-zone homes insured</b><span>{tp('pen_sfha', 'data.penetration.sfha_pct', pct)}</span></li>" if s_ is not None and s_ <= 100 else "")
+            + f"<li><b>Residential policies in FEMA's count (each condo building counts once)</b><span>{tp('pen_contracts', 'data.penetration.contracts')}</span></li></ul>"
+            "<p class='note'>FEMA's share of residential buildings here with an NFIP policy. NFIP only: private flood insurance is not "
+            "counted, so the real share of insured homes can be higher.</p>")
+    return card(f"How many homes in this {UNIT} carry flood insurance?", lead, body,
+                src(["pen_overall", "pen_sfha"], pretty_date(pen.get("asof") or RETR), RETR))
+
 CARD_ORDER = [card_required, card_cost, card_howto, card_claims, card_payout, card_unpaid, card_events, card_rebuild,
-              card_zone_cost, card_zip, card_averages, card_gap, card_save, card_crs, card_risk, card_multiloss,
+              card_zone_cost, card_zip, card_averages, card_gap, card_save, card_crs, card_risk, card_takeup, card_multiloss,
               card_disasters, card_aid, card_counts]
 CARDS = "\n\n".join(h for h in (f() for f in CARD_ORDER) if h)
 # "On this page": pages run 20+ phone screens; one link per card, in page order (owner 2026-10-28)

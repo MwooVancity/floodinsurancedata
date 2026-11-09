@@ -4,7 +4,7 @@ cannot back). gate.py H13: when `shown_when(agg, data, extras)` is true the card
 while its data exists is a silent drop). Built by reading each card's inputs (tools/card_map.py -> state/card-map.json).
 Cut from the page 2026-10-28 (answer none of cost / required / quote fair / pay less / payouts / risk): NOAA storm
 history (county-coded only: misses coastal flooding and surge), premium trend, state "dropping insurance" trend, state
-risk tile map, outside-the-zone note, take-up cards."""
+risk tile map, outside-the-zone note, take-up cards (FEMA take-up restored 11-08 by the owner)."""
 
 import metrics as MX
 def _ev(x):   # named floods the events table lists: losses within two calendar years, 20+ paid claims (MX.CONST event_min)

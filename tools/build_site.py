@@ -762,12 +762,24 @@ wr(os.path.join(DIST, "robots.txt"), f"User-agent: *\nAllow: /\nSitemap: {BASE}/
 wr(os.path.join(DIST, "_headers"), "/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n"
    "  X-Frame-Options: DENY\n  Strict-Transport-Security: max-age=31536000\n"   # audit 11-04; no CSP: inline scripts + GA tag
    "/flood-insurance/*/data.csv\n  X-Robots-Tag: noindex\n")   # a download, not a search result
+# 11-08: AI assistants (ChatGPT sends visitors) read this file and quote it: every figure carries its base and date, every
+# county its state, and the reader tools are listed (a bare "median $1,169" or "Jefferson County" would be quoted wrong)
+_llm_tools = [(u, t) for u, t in (("/flood-zone-map/", "Flood zone map lookup by address (FEMA's own map service, not an official determination)"),
+                                   ("/flood-insurance/zip/", "Flood insurance cost by ZIP code"), ("/flood-insurance/claims/", "How often NFIP flood claims got paid, by county, since 2020 (+ CSV)"),
+                                   ("/nfip/", "The NFIP in numbers"), ("/flood-insurance/renters/", "What renters pay for NFIP flood insurance"))
+              if os.path.exists(os.path.join(DIST, u.strip("/"), "index.html"))]
+_llm_zones = [k for k in ZONES if os.path.exists(os.path.join(DIST, "flood-zones", k, "index.html"))]
 wr(os.path.join(DIST, "llms.txt"),
-   "# Flood insurance data\n\n> Per-county NFIP flood-insurance statistics from public FEMA data: what "
-   "policyholders pay, the gap to FEMA's full-risk price, claims history, flood risk, and CRS discounts.\n\n"
-   "## States\n" + "".join(f"- [{s['name']}]({BASE}/flood-insurance/{s['slug']}/): median {money(s['median'])}\n" for s in states) +
-   "\n## Counties\n" + "".join(f"- [{p['short']}]({BASE}/flood-insurance/{p['slug']}/): median {money(p.get('median'))}\n" for p in indexable) +
-   f"- [Methodology]({BASE}/methodology/)\n- [Data CSV]({BASE}/data/counties.csv)\n\n"
-   "Source: FEMA OpenFEMA. Not endorsed by FEMA. Aggregates only.\n")
+   "# Flood insurance data\n\n> What U.S. homeowners actually pay for NFIP flood insurance, by state, county, ZIP and flood zone, "
+   "with claims history, flood risk and community discounts, all computed from FEMA's public records (OpenFEMA). Not quotes, "
+   "not advice, not endorsed by FEMA.\n\n"
+   f"Every \"median\" below is the median yearly cost (premium plus fees) of existing NFIP policies on single-family primary homes, "
+   f"in force on {_ASOF_TXT}. Private flood insurance is not in FEMA's data. How each figure is counted: {BASE}/methodology/\n\n"
+   "## Tools\n" + "".join(f"- [{t}]({BASE}{u})\n" for u, t in _llm_tools)
+   + "".join(f"- [What flood zone {ZONES[k][0]} means" + (" and what it costs" if ZONES[k][1] else "") + f"]({BASE}/flood-zones/{k}/)\n" for k in _llm_zones) +   # D: no cost group
+   "\n## States\n" + "".join(f"- [{s['name']}]({BASE}/flood-insurance/{s['slug']}/): median {money(s['median'])} a year\n" for s in states) +
+   "\n## Counties\n" + "".join(f"- [{p['short']}, {p.get('state') or ''}]({BASE}/flood-insurance/{p['slug']}/): median {money(p.get('median'))} a year\n" for p in indexable) +
+   f"\n## Data\n- [Methodology]({BASE}/methodology/)\n- [All counties (CSV)]({BASE}/data/counties.csv)\n\n"
+   "Source: FEMA OpenFEMA (NFIP policies and claims, National Risk Index, disaster declarations, map service). Aggregates only.\n")
 
 print(f"built site: {len(places)} places, home+methodology+data+sitemap+robots+llms into {DIST}")

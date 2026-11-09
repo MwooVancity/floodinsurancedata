@@ -124,7 +124,8 @@ def net(r): return sum(f(r[c]) or 0 for c in ("netBuildingPaymentAmount", "netCo
 
 def claims(st):
     acc = collections.defaultdict(lambda: {"n": 0, "unpaid": 0, "reason": collections.Counter(), "cause": collections.Counter(),
-                                           "depth": [], "event": collections.defaultdict(lambda: [0, 0.0, collections.Counter(), 0]),   # [paid claims, paid $, loss years, unpaid claims] "icc_n": 0, "icc": [],
+                                           # event: [paid claims, paid $, loss years, unpaid claims]
+                                           "depth": [], "event": collections.defaultdict(lambda: [0, 0.0, collections.Counter(), 0]), "icc_n": 0, "icc": [],
                                            "dmg": [], "paid_b": [], "over_cov": 0, "dmg_n": 0, "elev_paid": [], "low_paid": [],
                                            "dec": collections.defaultdict(lambda: [0, 0]),   # decade of loss: [claims, paid something]
                                            "zone": collections.defaultdict(lambda: [0, 0, 0.0]),

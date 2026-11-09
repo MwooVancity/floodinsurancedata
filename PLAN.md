@@ -5,6 +5,7 @@ State, dated numbers, next moves, owner-only items. Rules: CLAUDE.md. History: g
 Most helpful flood-insurance page for every US place a homeowner or buyer searches, on a phone. Scoreboard: pages indexed, impressions, clicks, page-1 queries, AI citations. Polish only where a number says a page fails.
 - Search Console 28 days to 11-06: 5 clicks, 872 impressions, 225 pages and 235 queries seen, avg position 39.5. Best: Brevard pos 8.2 (41 impr, 1 click), New London CT pos 2 (2 clicks), Florida state pos 25.9, zone X 83, zone AE 75; /flood-zone-map/ not yet in the top 10 pages by impressions.
 - GA4 11-01..11-08 (read 11-08): 20 sessions, but 13 "Direct" at 0 s were our own nightly live zone-map test (10 of 22 views on /flood-zone-map/). Fixed 11-08: GA skips automated browsers (navigator.webdriver). Real visitors: 4 from AI assistants (23 s), 3 organic (57 s), all engaged; best page Santa Clara 2m14s. Next GA read 11-15, with the bot gone.
+- AI assistants (GA4 11-01..08): chatgpt.com only, 4 sessions / 3 users; ChatGPT passes no query, so no keywords exist to read. ChatGPT search draws on Bing's index; IndexNow returns 403 "UserForbiddedToAccessSite" (key file correct, Bingbot/OAI-SearchBot/GPTBot all get 200) until the site is verified in Bing Webmaster Tools (owner). llms.txt fixed 11-08: base + date on every median, state on every county, tools listed; test_site_factory checks it.
 - Index 11-06: home, 51/51 states, 204/232 counties, 6/7 zones indexed; our canonical kept everywhere. Low rank = age and no links, not a technical block.
 
 ## Live now (11-08)
@@ -22,7 +23,8 @@ Keyword Planner volume x top bid: state insurance $190k, map $90k, towns $47k, z
 3. 11-18 start-date tool "all"; 11-20 address tool "all" after 7 green nightly live tests (watch.yml; a FEMA outage fails safe, as on 11-08).
 4. 12-12: did Congress extend the NFIP past 2026-12-11? During a lapse set `start` to [].
 5. Gates (11-08): labels checked against data (C10-C16), A4 reads column headers, mutation no-op and control-character lints; `test_factory.py` (19 per-place cases x county/small/big state) and `test_site_factory.py` (14 national cases) run in release.
-6. Regulators: 42 states link their own (US runner 11-08); AK AZ KS LA MA NH NJ WV WY block automated reading and link NAIC's directory.
+6. Owner said do it (11-08): FEMA take-up card on county pages; address tool adds FEMA's base flood elevation / AO depth and map letters near the pin (oracle + 3,000 fuzz + click path pass; live with the next release).
+7. Regulators: 42 states link their own (US runner 11-08); AK AZ KS LA MA NH NJ WV WY block automated reading and link NAIC's directory.
 Backlog (`state/reviews/backlog.md`): every item BUILDING or DECIDED (11-08).
 
 ## Backlinks (owner 11-08: basics, Claude drives; owner only presses send)
@@ -64,4 +66,4 @@ That FEMA data shows open vs closed claims; "denied"; a period or denominator le
 - IndexNow returns 403 on most sends: notice only, not a blocker.
 
 ## Owner only
-Decisions from the 11-08 audit: BFE in the address tool; FEMA map letters (LOMA/LOMR) near the pin; share of homes insured. Bing Webmaster Tools sitemap; corrections/contact address; publisher identity; link outreach (claims page to reporters: Houston Chronicle, Houston Public Media, Texas Tribune, ProPublica, Floodlight, Inside Climate News); Keyword Planner seeds not yet in the file (condo, deductible, LOMA, elevation certificate, claim denied); GitHub failed-run email setting; ads and paid referrals stay off until their checks.
+FIRST: Bing Webmaster Tools, import the site from Google Search Console (2 minutes; unblocks IndexNow and ChatGPT's source). corrections/contact address; publisher identity; link outreach (claims page to reporters: Houston Chronicle, Houston Public Media, Texas Tribune, ProPublica, Floodlight, Inside Climate News); Keyword Planner seeds not yet in the file (condo, deductible, LOMA, elevation certificate, claim denied); GitHub failed-run email setting; ads and paid referrals stay off until their checks.

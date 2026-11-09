@@ -43,6 +43,23 @@ CASES = {
 }
 GARBAGE = re.compile(r"\bNone\b|\bnan\b|\bNaN\b|Infinity|undefined|\$-\d|\$—\d|\{[a-z_]+\}")
 
+def llms_problems(path):   # 11-08: AI assistants quote llms.txt; a figure without its base or a county without its state misleads
+    if not os.path.exists(path): return ["llms.txt missing"]
+    t = open(path, encoding="utf-8").read(); out = []
+    if "single-family primary homes" not in t or "premium plus fees" not in t: out.append("llms.txt: medians lack their base")
+    for l in t.splitlines():
+        if "median $" in l and not l.rstrip().endswith("a year"): out.append(f"llms.txt: figure without 'a year': {l[:80]}")
+        if "/flood-insurance/" in l and re.search(r"-(county|parish|borough|city|census-area|municipality)-[a-z]{2}/\)", l) and not re.search(r", [A-Z]{2}\]", l):
+            out.append(f"llms.txt: county without its state: {l[:80]}")
+        if "/flood-zones/d/" in l and "costs" in l: out.append("llms.txt: zone D has no cost figure")
+    if GARBAGE.search(t): out.append("llms.txt: garbage text")
+    return out
+# the llms check must be able to fail: a bare county line and a bare figure are caught, a good line is not
+_lt = os.path.join(tmp, "llms_selftest.txt")
+open(_lt, "w", encoding="utf-8").write("single-family primary homes, premium plus fees\n- [Jefferson County](https://x/flood-insurance/jefferson-county-tx/): median $1,147\n")
+assert len(llms_problems(_lt)) == 2, llms_problems(_lt)
+open(_lt, "w", encoding="utf-8").write("single-family primary homes, premium plus fees\n- [Jefferson County, TX](https://x/flood-insurance/jefferson-county-tx/): median $1,147 a year\n")
+assert not llms_problems(_lt), llms_problems(_lt)
 def visible(page):
     page = re.sub(r"<(script|style)\b.*?</\1>", " ", page, flags=re.S)
     return re.sub(r"\s+", " ", H.unescape(re.sub(r"<[^>]+>", " ", page)))
@@ -69,10 +86,11 @@ def _run(name, dist):
             pg = open(os.path.join(dp, f), encoding="utf-8").read(); pages.append(rel)
             g = GARBAGE.search(visible(pg))
             if g: bad.append(f"{rel}: '{visible(pg)[max(0, g.start() - 50):g.end() + 30]}'")
-            for href in set(re.findall(r'href="(/[^"#?]*)"', pg)):
+            for href in set(re.findall(r'href="(/[^"#?]*)"', pg)):   # (llms.txt is checked once per case below)
                 tgt = os.path.join(dist, href.lstrip("/"))
                 if not (os.path.exists(tgt) or os.path.exists(os.path.join(tgt, "index.html"))):
                     bad.append(f"{rel}: link to {href} that this build did not write")
+    bad += llms_problems(os.path.join(dist, "llms.txt"))
     return ("FAIL" if bad else "PASS"), (bad[0][:160] + (f" (+{len(bad) - 1} more)" if len(bad) > 1 else "")) if bad else f"{len(pages)} pages"
 
 # the scan must be able to fail: each of these reader-visible slips is caught, and a normal sentence is not

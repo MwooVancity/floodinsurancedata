@@ -38,6 +38,7 @@ else:
     step("county towns: Census place and ZIP in this county", os.path.join(T, "town_check.py"))
     step("town check mutations", os.path.join(T, "town_check.py"), "--test")
     step("unit tests", os.path.join(T, "test_calc.py"))
+    step("cloud aggregation on a synthetic FEMA download", os.path.join(T, "test_raw.py"))
     step("mutation suite", os.path.join(T, "test_gate.py"))
     step("factory stress (edge-case data, no crash)", os.path.join(T, "test_factory.py"))
     step("site factory stress (national edge cases: no crash, garbage, dead link)", os.path.join(T, "test_site_factory.py"))

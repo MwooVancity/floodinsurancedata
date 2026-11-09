@@ -11,7 +11,7 @@ ask is either BUILDING or DECIDED with its reason. Reviewers: a DECIDED item is 
 ## Decided (11-08)
 - Competitors' figures (NerdWallet, Policygenius, Insurify, MoneyGeek, Kin, Clovered, 1-800 Insurance; ~20 items): never printed. Their base, date and method cannot be verified (Truth: never print a figure we cannot recompute); "Why published prices differ" explains measures, years and private policies with our own figures.
 - Cost by city / municipality / Tulsa / The Woodlands (~12 items): site rule, no city pages; the county ZIP table names each ZIP's town and the ZIP lookup answers it.
-- Take-up / share of homes insured (3 items): cut on purpose (CLAUDE.md, Census take-up); owner decision listed in PLAN.
+- Take-up / share of homes insured: BUILT 11-08 on the owner's go (FEMA NFIP Residential Penetration Rates card).
 - Neighbor-county comparison (Broward): each page links its bordering counties, which show their own figures; no cross-county table.
 - Dam-release context for Harvey (Montgomery): no public dataset ties claims to a dam release; not stated.
 - State floodplain office contact (Maine, Louisiana): no national dataset; pages print FloodSmart's sourced "ask your local floodplain manager" rule (`ec_get`).

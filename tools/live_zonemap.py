@@ -24,10 +24,12 @@ def fema(addr):
     if not mt: return None
     lon, lat = mt[0]["coordinates"]["x"], mt[0]["coordinates"]["y"]
     base = {"geometry": f"{lon},{lat}", "geometryType": "esriGeometryPoint", "inSR": 4326, "returnGeometry": "false", "f": "json"}
-    pt = get(NFHL + "/28/query", dict(base, outFields="FLD_ZONE,ZONE_SUBTY,SFHA_TF"))
+    pt = get(NFHL + "/28/query", dict(base, outFields="FLD_ZONE,ZONE_SUBTY,SFHA_TF,STATIC_BFE,V_DATUM,DEPTH,LEN_UNIT"))
     bx = get(NFHL + "/28/query", dict(base, distance=15, units="esriSRUnit_Meter", outFields="FLD_ZONE,ZONE_SUBTY"))   # D5: true 15 m circle
     pn = get(NFHL + "/3/query", dict(base, outFields="FIRM_PAN,EFF_DATE"))
-    return mt[0]["matchedAddress"], pt, bx, pn
+    lr = get(NFHL + "/1/query", dict(base, outFields="EFF_DATE"))   # owner 11-08: map letters near the pin, as the page asks
+    la = get(NFHL + "/34/query", dict(base, distance=150, units="esriSRUnit_Meter", outFields="OUTCOME"))
+    return mt[0]["matchedAddress"], pt, bx, pn, lr, la
 
 bad, zones = [], []
 with sync_playwright() as p:
@@ -35,8 +37,8 @@ with sync_playwright() as p:
     for a in ADDRS:
         r = fema(a)
         if not r: bad.append(f"{a}: Census did not match (test address needs fixing)"); continue
-        matched, pt, bx, pn = r
-        want = oracle(pt, bx, pn); zones.append((a, (pt or {}).get("features", [{}])[0].get("attributes", {}).get("FLD_ZONE") if (pt or {}).get("features") else None))
+        matched, pt, bx, pn, lr, la = r
+        want = oracle(pt, bx, pn, lr, la); zones.append((a, (pt or {}).get("features", [{}])[0].get("attributes", {}).get("FLD_ZONE") if (pt or {}).get("features") else None))
         pg = b.new_context(viewport={"width": 390, "height": 844}).new_page(); pg.goto(PAGE)
         pg.click("#zm .zm-open"); pg.fill("#zm .zm-addr", a)
         pg.wait_for_function("window.__zmStart !== undefined", timeout=20000)
