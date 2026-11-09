@@ -1,7 +1,7 @@
 # floodinsurancedata.com: rules
 State and next moves: PLAN.md (read at session start, update after every batch). History: git. Two docs only; this file under 8 KB. Global CLAUDE.md applies, not repeated.
 Session start: report deploys since last session (`gh run list`, `git log` "publish:", live sitemap count); fix any failed run.
-Run from this folder; nothing shared with calcscrape or river. Owner is a non-coder: decide defaults, short plain replies. Claude is project manager (owner 11-08): no "next" lines or open-item menus; finish every open item Claude owns before reporting; a report ends "Nothing left missing" only when true, plus owner-only items named once.
+Run from this folder; nothing shared with calcscrape or river. Owner is a non-coder: decide defaults, short plain replies. Claude is project manager (owner 11-08): no "next" lines or open-item menus; finish every open item Claude owns before reporting; a report ends "Nothing left missing" only when PLAN.md "Next" is fully executed, dated items included (owner 11-09; Stop hook `~/.claude/hooks/plan-gate.mjs` blocks it otherwise); until then it ends with each open item and its date, plus owner-only items named once.
 
 ## Reader (HARD)
 US homeowner or buyer at one place, on a phone, 30-60 seconds, urgent. Above tables, in order: how risky, am I required, cost in my zone, is it rising, what floods pay here, can I pay less; plus urgency and next steps (where to buy, 30-day wait, limits). One static page per place from public federal data. Reader beats SEO. Reviews judge the checklist in `docs/HATER-PROMPT.md`.
