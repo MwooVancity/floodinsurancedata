@@ -536,7 +536,7 @@ def card_howto():
 def _tool_on(name):   # kill switch + staged launch: tools/tools_flags.json (CLAUDE.md reader tools ship standard)
     try: on = json.load(open(os.path.join(HERE, "tools_flags.json"), encoding="utf-8")).get(name) or []
     except Exception: return False
-    return on == "all" or SLUG in on
+    return on == "all" or SLUG in on or name in os.environ.get("FF_TOOLS_ON", "").split(",")   # tests switch a block on
 
 def _deadline_tool():
     # Deadline planner: only the proof-of-loss date is computed (flood date + 60 calendar days, local dates);
@@ -1249,7 +1249,7 @@ def card_trend():   # 11-09 HCU "is it rising?": the typical cost on the same da
     L = _xpp.get("cost_trend") or []; _a = int(P["asof"][:4])
     past = sorted((i for i, t in enumerate(L) if t.get("year") != _a), key=lambda i: L[i]["year"])   # by year, never file order
     shown = [i for i in past if L[i].get("median") is not None]
-    if not shown or P.get("p50") is None or (P.get("cost_n") or 0) < MIN_PRICED: return ""
+    if not _tool_on("trend") or not shown or P.get("p50") is None or (P.get("cost_n") or 0) < MIN_PRICED: return ""
     out = [str(L[i]["year"]) for i in past if L[i].get("median") is None]
     t = lambda i, k, f, nm: tp(nm, f"extras.policies.cost_trend.{i}.{k}", f, q=str(L[i]["year"]))
     rows = "".join(f"<tr><td>{_trend_day(L[i]['year'])}</td><td>{t(i, 'median', money, 'trend_cost')}</td><td>{t(i, 'n', num, 'trend_n')}</td></tr>" for i in shown)

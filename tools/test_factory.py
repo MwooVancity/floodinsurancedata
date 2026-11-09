@@ -78,7 +78,7 @@ for SLUG, SRC, LABEL, GEOID, LEVEL in TARGETS:
     for k, v in b.items(): json.dump(v, open(os.path.join(d, k + ".json"), "w"))
     out = os.path.join(tmp, SLUG, fn.__name__, "site", "flood-insurance", SLUG, "index.html"); os.makedirs(os.path.dirname(out))
     env = dict(os.environ, FF_DIR=d, OUT_HTML=out, FF_COUNTYLABEL=LABEL, FF_COUNTYSHORT=LABEL if LEVEL == "state" else LABEL.split(",")[0],
-               FF_OFFICIAL="0", FF_SLUG=SLUG, FF_GEOID=GEOID, FF_BASEURL="https://floodinsurancedata.com",
+               FF_OFFICIAL="0", FF_SLUG=SLUG, FF_TOOLS_ON="trend", FF_GEOID=GEOID, FF_BASEURL="https://floodinsurancedata.com",
                FF_PLACES=os.path.join(ROOT, "places.json") if LEVEL == "state" else os.path.join(tmp, "places.json"),
                **({"FF_LEVEL": "state"} if LEVEL == "state" else {}))
     r = subprocess.run([sys.executable, "-I", os.path.join(T, "build_page.py")], env=env, cwd=T, capture_output=True, text=True)
