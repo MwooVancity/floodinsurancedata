@@ -58,6 +58,10 @@ jobs:
       - name: Refresh the small sources
         id: side
         if: steps.plan.outputs.pull == 'true' || steps.plan.outputs.side == 'true'   # 73 min: not on every 3rd-10th retry (review 11-03)
+        # 11-09: a slow FEMA API ran this step past the job's limit and the month's main data was lost with it. Bounded and
+        # allowed to fail: the policies/claims commit still happens; each side figure keeps last month's value and its own date
+        timeout-minutes: 75
+        continue-on-error: true
         run: |
           set -e
           python -I tools/collect_state_small.py   # community discounts, disasters, aid, repeat floods, risk ratings (were collected once and never refreshed)

@@ -3,6 +3,9 @@
 geocoder (its point). PLAN 3e: only NOAA's published trend and period are used, never our own fit.
 Usage: python -I tools/fetch_sealevel.py"""
 import json, os, time, urllib.parse, urllib.request
+def _dump(obj, path, **kw):   # 11-09: a killed step must never leave half a file to commit; write aside, then swap in one step
+    with open(path + ".tmp", "w", encoding="utf-8") as fh: json.dump(obj, fh, **kw)
+    os.replace(path + ".tmp", path)
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 NOAA = "https://api.tidesandcurrents.noaa.gov/dpapi/prod/webapi/product/sealvltrends.json"
 GEO = os.environ.get("FF_GEO", "https://geocoding.geo.census.gov/geocoder/geographies/coordinates")
@@ -31,5 +34,5 @@ for s in get(NOAA)["SeaLvlTrends"]:
 n = sum(len(v) for v in out.values())
 # a short answer never replaces good data (2026-10-30: NOAA returned 1 station and the file was emptied in a test)
 if n < 0.9 * len(known): raise SystemExit(f"only {n} stations against {len(known)} last time: file kept")
-json.dump(out, open(OUT, "w", encoding="utf-8"), indent=0)
+_dump(out, OUT, indent=0)
 print(f"{sum(len(v) for v in out.values())} stations in {len(out)} counties; skipped {len(skipped)}: {skipped[:10]}")

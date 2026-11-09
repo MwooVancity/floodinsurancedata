@@ -24,6 +24,8 @@ A new data shape becomes a line here and a case in the named test the same day (
 - A feed keyed to other areas (Connecticut's planning regions in NRI and take-up): a gap line saying so, never silence or a borrowed figure (`build_page` risk and take-up cards).
 - Aid filed under a county name no county matches (spelling): `build_counties.unmatched` stops the build; tribal and school-area aid is printed as not placed.
 - FEMA map-date text ("02/19/27(>)", "(NSFHA)", "(M)"): `mapdate.py`, tested in `test_tools`.
+- A slow side source (FEMA API) runs the refresh past its limit and the month's main data is lost: side step bounded (75 min) and allowed to fail; policies and claims still commit (11-09).
+- A step killed mid-write leaves half a JSON file to commit: side sources write a temp file and swap it in (`_dump`), `*.tmp` ignored.
 - Unreachable law page: `recheck` stops the release; manual reads expire at 183 days.
 
 ## Scale

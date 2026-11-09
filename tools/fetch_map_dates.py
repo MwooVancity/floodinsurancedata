@@ -2,6 +2,9 @@
 into the crs list of every built state and county data.json (PLAN 3e). Small: one call per state, a few thousand rows.
 The monthly refresh collects it too (collect_state_small); this fills the pages now. Usage: python -I tools/fetch_map_dates.py"""
 import glob, json, os, time, urllib.parse, urllib.request
+def _dump(obj, path, **kw):   # 11-09: a killed step must never leave half a file to commit; write aside, then swap in one step
+    with open(path + ".tmp", "w", encoding="utf-8") as fh: json.dump(obj, fh, **kw)
+    os.replace(path + ".tmp", path)
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 API = "https://www.fema.gov/api/open/v1/NfipCommunityStatusBook"
 def pull(st):
@@ -26,5 +29,5 @@ for f in files:
     for c in d["crs"]:
         k = (c.get("communityName"), c.get("county"))
         if k in m: c["currentlyEffectiveMapDate"] = m[k]; n_set += 1
-    json.dump(d, open(f, "w", encoding="utf-8")); n_files += 1
+    _dump(d, f); n_files += 1
 print(f"map dates set on {n_set} communities in {n_files} pages ({len(by_state)} states pulled)")

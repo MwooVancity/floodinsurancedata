@@ -7,6 +7,9 @@ import json, os, sys, time, urllib.parse, urllib.request
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from agg_raw import NAMES, slug, FIPS, assemble
 import ffcalc
+def _dump(obj, path, **kw):   # 11-09: a killed step must never leave half a file to commit; write aside, then swap in one step
+    with open(path + ".tmp", "w", encoding="utf-8") as fh: json.dump(obj, fh, **kw)
+    os.replace(path + ".tmp", path)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 NRI = "https://services.arcgis.com/XG15cJAlne2vxtgt/arcgis/rest/services/National_Risk_Index_Counties/FeatureServer/0/query"
@@ -55,7 +58,7 @@ def write_detail(st, d, feats, pen):
             "source": "OpenFEMA NfipResidentialPenetrationRates v1"}
     vers = {f["attributes"].get("NRI_VER") for f in feats}
     det["_nri"] = {"version": vers.pop() if len(vers) == 1 else None, "retrieved": time.strftime("%Y-%m-%d")}
-    json.dump(det, open(os.path.join(d, "county_detail.json"), "w"))
+    _dump(det, os.path.join(d, "county_detail.json"))
 
 def run(st):
     d = os.path.join(ROOT, "data", "states", slug(st)); os.makedirs(d, exist_ok=True)
@@ -108,7 +111,7 @@ def run(st):
     old = json.load(open(os.path.join(d, "data.json"))) if os.path.exists(os.path.join(d, "data.json")) else {}
     for k in ("crs", "declarations", "housing", "nri_counties"):
         if len(out[k]) < 0.8 * len(old.get(k) or []): raise RuntimeError(f"{k} shrank {len(old[k])} -> {len(out[k])}")   # keep last month's file
-    json.dump(out, open(os.path.join(d, "data.json"), "w"))
+    _dump(out, os.path.join(d, "data.json"))
     assemble(d)
     print(f"{st}: crs {len(out['crs'])}, decl {len(out['declarations'])}, housing {len(out['housing'])}, multiloss {len(ml)}, "
           f"pen {out['penetration']['overall_pct']}%, nri counties {len(out['nri_counties'])}, in-force {hist}", flush=True)
