@@ -1,69 +1,69 @@
 county_fips,county,state,claims_loss_year_2020_on,claims_with_recorded_payment,share_with_payment_pct,records_coded_deleted_or_assigned_in_error_left_out,most_recorded_reason_for_no_payment,claims_with_that_reason
 22109,Terrebonne Parish,LA,603,318,52.7,103,Not an actual flood,128
-22071,Orleans Parish,LA,2460,1347,54.8,293,Not an actual flood,525
-48201,Harris County,TX,2812,1627,57.9,372,Not an actual flood,706
-48039,Brazoria County,TX,599,376,62.8,59,Not an actual flood,74
+22071,Orleans Parish,LA,2459,1346,54.7,294,Not an actual flood,525
+48201,Harris County,TX,2810,1625,57.8,374,Not an actual flood,706
+48039,Brazoria County,TX,598,375,62.7,60,Not an actual flood,74
 17031,Cook County,IL,629,423,67.2,50,Not an actual flood,63
 48167,Galveston County,TX,1142,775,67.9,93,Damage less than the deductible,142
-22051,Jefferson Parish,LA,4846,3338,68.9,433,Not an actual flood,708
+22051,Jefferson Parish,LA,4844,3336,68.9,435,Not an actual flood,708
 36047,Kings County,NY,604,421,69.7,59,Not an actual flood,59
-12086,Miami-Dade County,FL,2991,2272,76.0,276,Not an actual flood,278
+12086,Miami-Dade County,FL,2985,2266,75.9,282,Not an actual flood,278
 34017,Hudson County,NJ,717,547,76.3,35,Damage less than the deductible,87
 22057,Lafourche Parish,LA,840,645,76.8,113,Not an actual flood,82
 22023,Cameron Parish,LA,606,467,77.1,15,Not an actual flood,53
-12015,Charlotte County,FL,8097,6262,77.3,551,Not an actual flood,491
-12105,Polk County,FL,542,421,77.7,37,Not an actual flood,48
+12015,Charlotte County,FL,8087,6252,77.3,561,Not an actual flood,491
+12105,Polk County,FL,541,420,77.6,38,Not an actual flood,48
 37019,Brunswick County,NC,1249,984,78.8,70,Damage less than the deductible,155
-22089,St. Charles Parish,LA,1408,1117,79.3,115,Not an actual flood,152
-12033,Escambia County,FL,2592,2069,79.8,74,Damage less than the deductible,153
+22089,St. Charles Parish,LA,1405,1114,79.3,118,Not an actual flood,152
+12033,Escambia County,FL,2589,2066,79.8,77,Damage less than the deductible,153
 22103,St. Tammany Parish,LA,3121,2499,80.1,152,Damage less than the deductible,200
-36103,Suffolk County,NY,894,721,80.6,94,Not an actual flood,60
-12087,Monroe County,FL,700,565,80.7,25,Damage less than the deductible,68
-12113,Santa Rosa County,FL,1323,1067,80.7,52,Damage less than the deductible,127
+36103,Suffolk County,NY,888,715,80.5,100,Not an actual flood,60
+12113,Santa Rosa County,FL,1319,1063,80.6,56,Damage less than the deductible,127
+12087,Monroe County,FL,699,564,80.7,26,Damage less than the deductible,68
 12005,Bay County,FL,533,431,80.9,48,Not an actual flood,29
-01003,Baldwin County,AL,3161,2561,81.0,104,Damage less than the deductible,207
+01003,Baldwin County,AL,3160,2560,81.0,105,Damage less than the deductible,207
 28047,Harrison County,MS,746,604,81.0,30,Damage less than the deductible,60
-45019,Charleston County,SC,652,530,81.3,83,Not an actual flood,39
-09001,Fairfield County,CT,862,706,81.9,64,Damage less than the deductible,47
+45019,Charleston County,SC,650,528,81.2,85,Not an actual flood,39
+09001,Fairfield County,CT,861,705,81.9,65,Damage less than the deductible,47
 28059,Jackson County,MS,551,451,81.9,26,Damage less than the deductible,29
-12095,Orange County,FL,981,805,82.1,78,Not an actual flood,63
-12115,Sarasota County,FL,8924,7331,82.1,515,Other,354
+12095,Orange County,FL,980,804,82.0,79,Not an actual flood,63
+12115,Sarasota County,FL,8920,7327,82.1,519,Other,354
 12109,St. Johns County,FL,1059,874,82.5,97,Damage less than the deductible,56
-36059,Nassau County,NY,1736,1433,82.5,153,Not an actual flood,102
-12011,Broward County,FL,5750,4748,82.6,317,Not an actual flood,352
+36059,Nassau County,NY,1730,1427,82.5,159,Not an actual flood,102
+12011,Broward County,FL,5749,4747,82.6,318,Not an actual flood,352
 12117,Seminole County,FL,672,560,83.3,51,Not an actual flood,40
-36081,Queens County,NY,1119,946,84.5,81,Damage less than the deductible,54
-48215,Hidalgo County,TX,1426,1207,84.6,54,Not an actual flood,73
-22019,Calcasieu Parish,LA,3316,2808,84.7,105,Not an actual flood,252
-48339,Montgomery County,TX,620,527,85.0,44,Not an actual flood,39
-22033,East Baton Rouge Parish,LA,1637,1396,85.3,113,Not an actual flood,119
-12021,Collier County,FL,9339,7981,85.5,539,Damage less than the deductible,391
+36081,Queens County,NY,1115,942,84.5,85,Damage less than the deductible,54
+48215,Hidalgo County,TX,1424,1205,84.6,56,Not an actual flood,73
+22019,Calcasieu Parish,LA,3313,2805,84.7,108,Not an actual flood,252
+48339,Montgomery County,TX,619,526,85.0,45,Not an actual flood,39
+22033,East Baton Rouge Parish,LA,1636,1395,85.3,114,Not an actual flood,119
+12021,Collier County,FL,9324,7966,85.4,554,Damage less than the deductible,391
 28045,Hancock County,MS,503,431,85.7,16,Damage less than the deductible,37
-34031,Passaic County,NJ,845,725,85.8,29,Damage less than the deductible,50
+34031,Passaic County,NJ,842,722,85.7,32,Damage less than the deductible,50
 37129,New Hanover County,NC,522,448,85.8,30,Damage less than the deductible,33
 47037,Davidson County,TN,640,552,86.2,24,Damage less than the deductible,31
 22105,Tangipahoa Parish,LA,1077,929,86.3,35,Not an actual flood,52
-12071,Lee County,FL,34711,30006,86.4,1892,No demonstrable damage,1177
-34013,Essex County,NJ,1045,907,86.8,44,Damage less than the deductible,51
-12081,Manatee County,FL,6503,5715,87.9,272,Damage less than the deductible,216
-23031,York County,ME,594,522,87.9,33,Damage less than the deductible,27
-29189,St. Louis County,MO,852,749,87.9,52,Damage less than the deductible,34
+12071,Lee County,FL,34668,29963,86.4,1935,No demonstrable damage,1177
+34013,Essex County,NJ,1043,905,86.8,46,Damage less than the deductible,51
+29189,St. Louis County,MO,822,719,87.5,82,Damage less than the deductible,34
+23031,York County,ME,592,520,87.8,35,Damage less than the deductible,27
+12081,Manatee County,FL,6498,5710,87.9,277,Damage less than the deductible,216
 37021,Buncombe County,NC,578,509,88.1,28,Damage less than the deductible,33
 37055,Dare County,NC,665,589,88.6,34,Damage less than the deductible,21
-42091,Montgomery County,PA,929,824,88.7,31,Damage less than the deductible,29
+42091,Montgomery County,PA,928,823,88.7,32,Damage less than the deductible,29
 34003,Bergen County,NJ,2160,1922,89.0,74,Damage less than the deductible,100
-45051,Horry County,SC,1103,982,89.0,55,Damage less than the deductible,55
-48061,Cameron County,TX,1455,1300,89.3,53,Damage less than the deductible,40
-12127,Volusia County,FL,6786,6064,89.4,294,Not an actual flood,216
-12057,Hillsborough County,FL,10639,9519,89.5,375,Not an actual flood,325
-45043,Georgetown County,SC,638,574,90.0,25,Damage less than the deductible,28
-36119,Westchester County,NY,2508,2261,90.2,83,Damage less than the deductible,63
-34039,Union County,NJ,1772,1601,90.3,43,Damage less than the deductible,68
-12053,Hernando County,FL,1322,1197,90.5,39,Damage less than the deductible,57
-12103,Pinellas County,FL,29073,26334,90.6,800,Damage less than the deductible,747
+45051,Horry County,SC,1102,981,89.0,56,Damage less than the deductible,55
+12127,Volusia County,FL,6779,6057,89.3,301,Not an actual flood,216
+48061,Cameron County,TX,1454,1299,89.3,54,Damage less than the deductible,40
+12057,Hillsborough County,FL,10635,9515,89.5,379,Not an actual flood,325
+45043,Georgetown County,SC,636,572,89.9,27,Damage less than the deductible,28
+36119,Westchester County,NY,2507,2260,90.1,84,Damage less than the deductible,63
+34039,Union County,NJ,1771,1600,90.3,44,Damage less than the deductible,68
+12053,Hernando County,FL,1320,1195,90.5,41,Damage less than the deductible,57
+12103,Pinellas County,FL,29055,26316,90.6,818,Damage less than the deductible,747
 34023,Middlesex County,NJ,933,846,90.7,17,Damage less than the deductible,26
-12101,Pasco County,FL,5694,5220,91.7,148,Damage less than the deductible,138
+12101,Pasco County,FL,5693,5219,91.7,149,Damage less than the deductible,138
 22095,St. John the Baptist Parish,LA,3849,3532,91.8,104,Not an actual flood,160
 53073,Whatcom County,WA,664,620,93.4,24,Damage less than the deductible,18
-12017,Citrus County,FL,2759,2600,94.2,54,Damage less than the deductible,55
+12017,Citrus County,FL,2756,2597,94.2,57,Damage less than the deductible,55
 34035,Somerset County,NJ,1061,1002,94.4,25,Damage less than the deductible,20

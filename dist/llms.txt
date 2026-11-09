@@ -1,334 +1,352 @@
 # Flood insurance data
 
-> Per-county NFIP flood-insurance statistics from public FEMA data: what policyholders pay, the gap to FEMA's full-risk price, claims history, flood risk, and CRS discounts.
+> What U.S. homeowners actually pay for NFIP flood insurance, by state, county, ZIP and flood zone, with claims history, flood risk and community discounts, all computed from FEMA's public records (OpenFEMA). Not quotes, not advice, not endorsed by FEMA.
+
+Every "median" below is the median yearly cost (premium plus fees) of existing NFIP policies on single-family primary homes, in force on August 31, 2026. Private flood insurance is not in FEMA's data. How each figure is counted: https://floodinsurancedata.com/methodology/
+
+## Tools
+- [Flood zone map lookup by address (FEMA's own map service, not an official determination)](https://floodinsurancedata.com/flood-zone-map/)
+- [Flood insurance cost by ZIP code](https://floodinsurancedata.com/flood-insurance/zip/)
+- [How often NFIP flood claims got paid, by county, since 2020 (+ CSV)](https://floodinsurancedata.com/flood-insurance/claims/)
+- [The NFIP in numbers](https://floodinsurancedata.com/nfip/)
+- [What renters pay for NFIP flood insurance](https://floodinsurancedata.com/flood-insurance/renters/)
+- [What flood zone AE means and what it costs](https://floodinsurancedata.com/flood-zones/ae/)
+- [What flood zone X means and what it costs](https://floodinsurancedata.com/flood-zones/x/)
+- [What flood zone VE means and what it costs](https://floodinsurancedata.com/flood-zones/ve/)
+- [What flood zone A means and what it costs](https://floodinsurancedata.com/flood-zones/a/)
+- [What flood zone AO means and what it costs](https://floodinsurancedata.com/flood-zones/ao/)
+- [What flood zone AH means and what it costs](https://floodinsurancedata.com/flood-zones/ah/)
+- [What flood zone D means](https://floodinsurancedata.com/flood-zones/d/)
 
 ## States
-- [Alabama](https://floodinsurancedata.com/flood-insurance/alabama/): median $1,169
-- [Alaska](https://floodinsurancedata.com/flood-insurance/alaska/): median $368
-- [Arizona](https://floodinsurancedata.com/flood-insurance/arizona/): median $964
-- [Arkansas](https://floodinsurancedata.com/flood-insurance/arkansas/): median $976
-- [California](https://floodinsurancedata.com/flood-insurance/california/): median $1,055
-- [Colorado](https://floodinsurancedata.com/flood-insurance/colorado/): median $845
-- [Connecticut](https://floodinsurancedata.com/flood-insurance/connecticut/): median $1,510
-- [Delaware](https://floodinsurancedata.com/flood-insurance/delaware/): median $924
-- [District of Columbia](https://floodinsurancedata.com/flood-insurance/district-of-columbia/): median $384
-- [Florida](https://floodinsurancedata.com/flood-insurance/florida/): median $985
-- [Georgia](https://floodinsurancedata.com/flood-insurance/georgia/): median $982
-- [Hawaii](https://floodinsurancedata.com/flood-insurance/hawaii/): median $1,407
-- [Idaho](https://floodinsurancedata.com/flood-insurance/idaho/): median $1,029
-- [Illinois](https://floodinsurancedata.com/flood-insurance/illinois/): median $1,136
-- [Indiana](https://floodinsurancedata.com/flood-insurance/indiana/): median $938
-- [Iowa](https://floodinsurancedata.com/flood-insurance/iowa/): median $1,054
-- [Kansas](https://floodinsurancedata.com/flood-insurance/kansas/): median $1,036
-- [Kentucky](https://floodinsurancedata.com/flood-insurance/kentucky/): median $1,195
-- [Louisiana](https://floodinsurancedata.com/flood-insurance/louisiana/): median $1,114
-- [Maine](https://floodinsurancedata.com/flood-insurance/maine/): median $981
-- [Maryland](https://floodinsurancedata.com/flood-insurance/maryland/): median $569
-- [Massachusetts](https://floodinsurancedata.com/flood-insurance/massachusetts/): median $1,323
-- [Michigan](https://floodinsurancedata.com/flood-insurance/michigan/): median $793
-- [Minnesota](https://floodinsurancedata.com/flood-insurance/minnesota/): median $1,106
-- [Mississippi](https://floodinsurancedata.com/flood-insurance/mississippi/): median $1,232
-- [Missouri](https://floodinsurancedata.com/flood-insurance/missouri/): median $1,087
-- [Montana](https://floodinsurancedata.com/flood-insurance/montana/): median $918
-- [Nebraska](https://floodinsurancedata.com/flood-insurance/nebraska/): median $903
-- [Nevada](https://floodinsurancedata.com/flood-insurance/nevada/): median $860
-- [New Hampshire](https://floodinsurancedata.com/flood-insurance/new-hampshire/): median $1,313
-- [New Jersey](https://floodinsurancedata.com/flood-insurance/new-jersey/): median $1,231
-- [New Mexico](https://floodinsurancedata.com/flood-insurance/new-mexico/): median $1,031
-- [New York](https://floodinsurancedata.com/flood-insurance/new-york/): median $1,261
-- [North Carolina](https://floodinsurancedata.com/flood-insurance/north-carolina/): median $925
-- [North Dakota](https://floodinsurancedata.com/flood-insurance/north-dakota/): median $854
-- [Ohio](https://floodinsurancedata.com/flood-insurance/ohio/): median $884
-- [Oklahoma](https://floodinsurancedata.com/flood-insurance/oklahoma/): median $1,057
-- [Oregon](https://floodinsurancedata.com/flood-insurance/oregon/): median $1,079
-- [Pennsylvania](https://floodinsurancedata.com/flood-insurance/pennsylvania/): median $1,204
-- [Rhode Island](https://floodinsurancedata.com/flood-insurance/rhode-island/): median $1,158
-- [South Carolina](https://floodinsurancedata.com/flood-insurance/south-carolina/): median $890
-- [South Dakota](https://floodinsurancedata.com/flood-insurance/south-dakota/): median $1,176
-- [Tennessee](https://floodinsurancedata.com/flood-insurance/tennessee/): median $1,077
-- [Texas](https://floodinsurancedata.com/flood-insurance/texas/): median $1,083
-- [Utah](https://floodinsurancedata.com/flood-insurance/utah/): median $614
-- [Vermont](https://floodinsurancedata.com/flood-insurance/vermont/): median $1,323
-- [Virginia](https://floodinsurancedata.com/flood-insurance/virginia/): median $758
-- [Washington](https://floodinsurancedata.com/flood-insurance/washington/): median $1,022
-- [West Virginia](https://floodinsurancedata.com/flood-insurance/west-virginia/): median $1,339
-- [Wisconsin](https://floodinsurancedata.com/flood-insurance/wisconsin/): median $919
-- [Wyoming](https://floodinsurancedata.com/flood-insurance/wyoming/): median $1,008
+- [Alabama](https://floodinsurancedata.com/flood-insurance/alabama/): median $1,169 a year
+- [Alaska](https://floodinsurancedata.com/flood-insurance/alaska/): median $368 a year
+- [Arizona](https://floodinsurancedata.com/flood-insurance/arizona/): median $964 a year
+- [Arkansas](https://floodinsurancedata.com/flood-insurance/arkansas/): median $976 a year
+- [California](https://floodinsurancedata.com/flood-insurance/california/): median $1,055 a year
+- [Colorado](https://floodinsurancedata.com/flood-insurance/colorado/): median $845 a year
+- [Connecticut](https://floodinsurancedata.com/flood-insurance/connecticut/): median $1,510 a year
+- [Delaware](https://floodinsurancedata.com/flood-insurance/delaware/): median $924 a year
+- [District of Columbia](https://floodinsurancedata.com/flood-insurance/district-of-columbia/): median $384 a year
+- [Florida](https://floodinsurancedata.com/flood-insurance/florida/): median $985 a year
+- [Georgia](https://floodinsurancedata.com/flood-insurance/georgia/): median $982 a year
+- [Hawaii](https://floodinsurancedata.com/flood-insurance/hawaii/): median $1,407 a year
+- [Idaho](https://floodinsurancedata.com/flood-insurance/idaho/): median $1,029 a year
+- [Illinois](https://floodinsurancedata.com/flood-insurance/illinois/): median $1,136 a year
+- [Indiana](https://floodinsurancedata.com/flood-insurance/indiana/): median $938 a year
+- [Iowa](https://floodinsurancedata.com/flood-insurance/iowa/): median $1,054 a year
+- [Kansas](https://floodinsurancedata.com/flood-insurance/kansas/): median $1,036 a year
+- [Kentucky](https://floodinsurancedata.com/flood-insurance/kentucky/): median $1,195 a year
+- [Louisiana](https://floodinsurancedata.com/flood-insurance/louisiana/): median $1,114 a year
+- [Maine](https://floodinsurancedata.com/flood-insurance/maine/): median $981 a year
+- [Maryland](https://floodinsurancedata.com/flood-insurance/maryland/): median $569 a year
+- [Massachusetts](https://floodinsurancedata.com/flood-insurance/massachusetts/): median $1,323 a year
+- [Michigan](https://floodinsurancedata.com/flood-insurance/michigan/): median $793 a year
+- [Minnesota](https://floodinsurancedata.com/flood-insurance/minnesota/): median $1,106 a year
+- [Mississippi](https://floodinsurancedata.com/flood-insurance/mississippi/): median $1,232 a year
+- [Missouri](https://floodinsurancedata.com/flood-insurance/missouri/): median $1,087 a year
+- [Montana](https://floodinsurancedata.com/flood-insurance/montana/): median $918 a year
+- [Nebraska](https://floodinsurancedata.com/flood-insurance/nebraska/): median $903 a year
+- [Nevada](https://floodinsurancedata.com/flood-insurance/nevada/): median $860 a year
+- [New Hampshire](https://floodinsurancedata.com/flood-insurance/new-hampshire/): median $1,313 a year
+- [New Jersey](https://floodinsurancedata.com/flood-insurance/new-jersey/): median $1,231 a year
+- [New Mexico](https://floodinsurancedata.com/flood-insurance/new-mexico/): median $1,031 a year
+- [New York](https://floodinsurancedata.com/flood-insurance/new-york/): median $1,261 a year
+- [North Carolina](https://floodinsurancedata.com/flood-insurance/north-carolina/): median $925 a year
+- [North Dakota](https://floodinsurancedata.com/flood-insurance/north-dakota/): median $854 a year
+- [Ohio](https://floodinsurancedata.com/flood-insurance/ohio/): median $884 a year
+- [Oklahoma](https://floodinsurancedata.com/flood-insurance/oklahoma/): median $1,057 a year
+- [Oregon](https://floodinsurancedata.com/flood-insurance/oregon/): median $1,079 a year
+- [Pennsylvania](https://floodinsurancedata.com/flood-insurance/pennsylvania/): median $1,204 a year
+- [Rhode Island](https://floodinsurancedata.com/flood-insurance/rhode-island/): median $1,158 a year
+- [South Carolina](https://floodinsurancedata.com/flood-insurance/south-carolina/): median $890 a year
+- [South Dakota](https://floodinsurancedata.com/flood-insurance/south-dakota/): median $1,176 a year
+- [Tennessee](https://floodinsurancedata.com/flood-insurance/tennessee/): median $1,077 a year
+- [Texas](https://floodinsurancedata.com/flood-insurance/texas/): median $1,083 a year
+- [Utah](https://floodinsurancedata.com/flood-insurance/utah/): median $614 a year
+- [Vermont](https://floodinsurancedata.com/flood-insurance/vermont/): median $1,323 a year
+- [Virginia](https://floodinsurancedata.com/flood-insurance/virginia/): median $758 a year
+- [Washington](https://floodinsurancedata.com/flood-insurance/washington/): median $1,022 a year
+- [West Virginia](https://floodinsurancedata.com/flood-insurance/west-virginia/): median $1,339 a year
+- [Wisconsin](https://floodinsurancedata.com/flood-insurance/wisconsin/): median $919 a year
+- [Wyoming](https://floodinsurancedata.com/flood-insurance/wyoming/): median $1,008 a year
 
 ## Counties
-- [Miami-Dade County](https://floodinsurancedata.com/flood-insurance/miami-dade-county-fl/): median $898
-- [Broward County](https://floodinsurancedata.com/flood-insurance/broward-county-fl/): median $832
-- [Harris County](https://floodinsurancedata.com/flood-insurance/harris-county-tx/): median $1,087
-- [Lee County](https://floodinsurancedata.com/flood-insurance/lee-county-fl/): median $1,689
-- [Pinellas County](https://floodinsurancedata.com/flood-insurance/pinellas-county-fl/): median $1,459
-- [Palm Beach County](https://floodinsurancedata.com/flood-insurance/palm-beach-county-fl/): median $673
-- [Collier County](https://floodinsurancedata.com/flood-insurance/collier-county-fl/): median $1,266
-- [Jefferson Parish](https://floodinsurancedata.com/flood-insurance/jefferson-parish-la/): median $1,218
-- [Orleans Parish](https://floodinsurancedata.com/flood-insurance/orleans-parish-la/): median $1,141
-- [Hillsborough County](https://floodinsurancedata.com/flood-insurance/hillsborough-county-fl/): median $1,154
-- [Sarasota County](https://floodinsurancedata.com/flood-insurance/sarasota-county-fl/): median $1,087
-- [Charleston County](https://floodinsurancedata.com/flood-insurance/charleston-county-sc/): median $979
-- [Galveston County](https://floodinsurancedata.com/flood-insurance/galveston-county-tx/): median $1,153
-- [Horry County](https://floodinsurancedata.com/flood-insurance/horry-county-sc/): median $585
-- [Sacramento County](https://floodinsurancedata.com/flood-insurance/sacramento-county-ca/): median $833
-- [Cape May County](https://floodinsurancedata.com/flood-insurance/cape-may-county-nj/): median $1,212
-- [Volusia County](https://floodinsurancedata.com/flood-insurance/volusia-county-fl/): median $865
-- [Beaufort County](https://floodinsurancedata.com/flood-insurance/beaufort-county-sc/): median $872
-- [Honolulu County](https://floodinsurancedata.com/flood-insurance/honolulu-county-hi/): median $1,526
-- [Brevard County](https://floodinsurancedata.com/flood-insurance/brevard-county-fl/): median $866
-- [Nassau County](https://floodinsurancedata.com/flood-insurance/nassau-county-ny/): median $1,475
-- [St. Tammany Parish](https://floodinsurancedata.com/flood-insurance/st-tammany-parish-la/): median $1,233
-- [Fort Bend County](https://floodinsurancedata.com/flood-insurance/fort-bend-county-tx/): median $965
-- [Ocean County](https://floodinsurancedata.com/flood-insurance/ocean-county-nj/): median $1,160
-- [Charlotte County](https://floodinsurancedata.com/flood-insurance/charlotte-county-fl/): median $1,988
-- [East Baton Rouge Parish](https://floodinsurancedata.com/flood-insurance/east-baton-rouge-parish-la/): median $612
-- [Manatee County](https://floodinsurancedata.com/flood-insurance/manatee-county-fl/): median $831
-- [St. Johns County](https://floodinsurancedata.com/flood-insurance/st-johns-county-fl/): median $1,087
-- [Bay County](https://floodinsurancedata.com/flood-insurance/bay-county-fl/): median $880
-- [Monroe County](https://floodinsurancedata.com/flood-insurance/monroe-county-fl/): median $1,931
-- [Worcester County](https://floodinsurancedata.com/flood-insurance/worcester-county-md/): median $997
-- [Suffolk County](https://floodinsurancedata.com/flood-insurance/suffolk-county-ny/): median $1,263
-- [Brazoria County](https://floodinsurancedata.com/flood-insurance/brazoria-county-tx/): median $1,084
-- [Duval County](https://floodinsurancedata.com/flood-insurance/duval-county-fl/): median $1,044
-- [Nueces County](https://floodinsurancedata.com/flood-insurance/nueces-county-tx/): median $913
-- [Baldwin County](https://floodinsurancedata.com/flood-insurance/baldwin-county-al/): median $1,167
-- [Pasco County](https://floodinsurancedata.com/flood-insurance/pasco-county-fl/): median $837
-- [Hudson County](https://floodinsurancedata.com/flood-insurance/hudson-county-nj/): median $1,713
-- [Chatham County](https://floodinsurancedata.com/flood-insurance/chatham-county-ga/): median $1,030
-- [Atlantic County](https://floodinsurancedata.com/flood-insurance/atlantic-county-nj/): median $1,264
-- [Montgomery County](https://floodinsurancedata.com/flood-insurance/montgomery-county-tx/): median $1,005
-- [Sussex County](https://floodinsurancedata.com/flood-insurance/sussex-county-de/): median $881
-- [Brunswick County](https://floodinsurancedata.com/flood-insurance/brunswick-county-nc/): median $760
-- [Jefferson County](https://floodinsurancedata.com/flood-insurance/jefferson-county-tx/): median $1,147
-- [Virginia Beach city](https://floodinsurancedata.com/flood-insurance/virginia-beach-city-va/): median $713
-- [Monmouth County](https://floodinsurancedata.com/flood-insurance/monmouth-county-nj/): median $1,202
-- [Queens County](https://floodinsurancedata.com/flood-insurance/queens-county-ny/): median $1,263
-- [Cameron County](https://floodinsurancedata.com/flood-insurance/cameron-county-tx/): median $628
-- [Indian River County](https://floodinsurancedata.com/flood-insurance/indian-river-county-fl/): median $904
-- [St. Lucie County](https://floodinsurancedata.com/flood-insurance/st-lucie-county-fl/): median $633
-- [Okaloosa County](https://floodinsurancedata.com/flood-insurance/okaloosa-county-fl/): median $1,075
-- [Kings County](https://floodinsurancedata.com/flood-insurance/kings-county-ny/): median $1,106
-- [New Hanover County](https://floodinsurancedata.com/flood-insurance/new-hanover-county-nc/): median $969
-- [Lafayette Parish](https://floodinsurancedata.com/flood-insurance/lafayette-parish-la/): median $1,041
-- [Escambia County](https://floodinsurancedata.com/flood-insurance/escambia-county-fl/): median $841
-- [Walton County](https://floodinsurancedata.com/flood-insurance/walton-county-fl/): median $983
-- [Orange County](https://floodinsurancedata.com/flood-insurance/orange-county-fl/): median $624
-- [Dare County](https://floodinsurancedata.com/flood-insurance/dare-county-nc/): median $762
-- [Livingston Parish](https://floodinsurancedata.com/flood-insurance/livingston-parish-la/): median $1,237
-- [New York County](https://floodinsurancedata.com/flood-insurance/new-york-county-ny/): median $1,021
-- [Fairfield County](https://floodinsurancedata.com/flood-insurance/fairfield-county-ct/): median $1,512
-- [Carteret County](https://floodinsurancedata.com/flood-insurance/carteret-county-nc/): median $1,103
-- [Ascension Parish](https://floodinsurancedata.com/flood-insurance/ascension-parish-la/): median $890
-- [Martin County](https://floodinsurancedata.com/flood-insurance/martin-county-fl/): median $995
-- [Glynn County](https://floodinsurancedata.com/flood-insurance/glynn-county-ga/): median $979
-- [Harrison County](https://floodinsurancedata.com/flood-insurance/harrison-county-ms/): median $1,233
-- [Calcasieu Parish](https://floodinsurancedata.com/flood-insurance/calcasieu-parish-la/): median $1,266
-- [Los Angeles County](https://floodinsurancedata.com/flood-insurance/los-angeles-county-ca/): median $1,121
-- [Maricopa County](https://floodinsurancedata.com/flood-insurance/maricopa-county-az/): median $897
-- [Orange County](https://floodinsurancedata.com/flood-insurance/orange-county-tx/): median $1,232
-- [Terrebonne Parish](https://floodinsurancedata.com/flood-insurance/terrebonne-parish-la/): median $1,396
-- [Cook County](https://floodinsurancedata.com/flood-insurance/cook-county-il/): median $1,168
-- [Jackson County](https://floodinsurancedata.com/flood-insurance/jackson-county-ms/): median $1,372
-- [Maui County](https://floodinsurancedata.com/flood-insurance/maui-county-hi/): median $1,264
-- [Santa Clara County](https://floodinsurancedata.com/flood-insurance/santa-clara-county-ca/): median $1,278
-- [Santa Rosa County](https://floodinsurancedata.com/flood-insurance/santa-rosa-county-fl/): median $877
-- [Norfolk city](https://floodinsurancedata.com/flood-insurance/norfolk-city-va/): median $728
-- [Flagler County](https://floodinsurancedata.com/flood-insurance/flagler-county-fl/): median $1,082
-- [St. Charles Parish](https://floodinsurancedata.com/flood-insurance/st-charles-parish-la/): median $1,231
-- [Bergen County](https://floodinsurancedata.com/flood-insurance/bergen-county-nj/): median $1,303
-- [Barnstable County](https://floodinsurancedata.com/flood-insurance/barnstable-county-ma/): median $1,451
-- [Suffolk County](https://floodinsurancedata.com/flood-insurance/suffolk-county-ma/): median $1,680
-- [Hidalgo County](https://floodinsurancedata.com/flood-insurance/hidalgo-county-tx/): median $633
-- [Orange County](https://floodinsurancedata.com/flood-insurance/orange-county-ca/): median $1,084
-- [Hampton city](https://floodinsurancedata.com/flood-insurance/hampton-city-va/): median $741
-- [Osceola County](https://floodinsurancedata.com/flood-insurance/osceola-county-fl/): median $648
-- [St. Bernard Parish](https://floodinsurancedata.com/flood-insurance/st-bernard-parish-la/): median $1,133
-- [Essex County](https://floodinsurancedata.com/flood-insurance/essex-county-ma/): median $1,349
-- [Nassau County](https://floodinsurancedata.com/flood-insurance/nassau-county-fl/): median $1,083
-- [Travis County](https://floodinsurancedata.com/flood-insurance/travis-county-tx/): median $1,012
-- [San Diego County](https://floodinsurancedata.com/flood-insurance/san-diego-county-ca/): median $1,084
-- [Lafourche Parish](https://floodinsurancedata.com/flood-insurance/lafourche-parish-la/): median $1,234
-- [Georgetown County](https://floodinsurancedata.com/flood-insurance/georgetown-county-sc/): median $1,034
-- [Westchester County](https://floodinsurancedata.com/flood-insurance/westchester-county-ny/): median $872
-- [Plymouth County](https://floodinsurancedata.com/flood-insurance/plymouth-county-ma/): median $1,514
-- [New Haven County](https://floodinsurancedata.com/flood-insurance/new-haven-county-ct/): median $1,546
-- [Polk County](https://floodinsurancedata.com/flood-insurance/polk-county-fl/): median $628
-- [Hancock County](https://floodinsurancedata.com/flood-insurance/hancock-county-ms/): median $1,267
-- [Tangipahoa Parish](https://floodinsurancedata.com/flood-insurance/tangipahoa-parish-la/): median $1,117
-- [Chesapeake city](https://floodinsurancedata.com/flood-insurance/chesapeake-city-va/): median $706
-- [Seminole County](https://floodinsurancedata.com/flood-insurance/seminole-county-fl/): median $737
-- [Berkeley County](https://floodinsurancedata.com/flood-insurance/berkeley-county-sc/): median $844
-- [Middlesex County](https://floodinsurancedata.com/flood-insurance/middlesex-county-ma/): median $943
-- [King County](https://floodinsurancedata.com/flood-insurance/king-county-wa/): median $962
-- [Dallas County](https://floodinsurancedata.com/flood-insurance/dallas-county-tx/): median $938
-- [Mobile County](https://floodinsurancedata.com/flood-insurance/mobile-county-al/): median $1,256
-- [Marin County](https://floodinsurancedata.com/flood-insurance/marin-county-ca/): median $1,639
-- [Richmond County](https://floodinsurancedata.com/flood-insurance/richmond-county-ny/): median $965
-- [Citrus County](https://floodinsurancedata.com/flood-insurance/citrus-county-fl/): median $1,240
-- [Craven County](https://floodinsurancedata.com/flood-insurance/craven-county-nc/): median $1,023
-- [St. John the Baptist Parish](https://floodinsurancedata.com/flood-insurance/st-john-the-baptist-parish-la/): median $1,357
-- [Tarrant County](https://floodinsurancedata.com/flood-insurance/tarrant-county-tx/): median $821
-- [Norfolk County](https://floodinsurancedata.com/flood-insurance/norfolk-county-ma/): median $1,278
-- [Pender County](https://floodinsurancedata.com/flood-insurance/pender-county-nc/): median $1,037
-- [Anne Arundel County](https://floodinsurancedata.com/flood-insurance/anne-arundel-county-md/): median $542
-- [Bexar County](https://floodinsurancedata.com/flood-insurance/bexar-county-tx/): median $915
-- [Fairfax County](https://floodinsurancedata.com/flood-insurance/fairfax-county-va/): median $612
-- [Onslow County](https://floodinsurancedata.com/flood-insurance/onslow-county-nc/): median $884
-- [Aransas County](https://floodinsurancedata.com/flood-insurance/aransas-county-tx/): median $1,236
-- [Davidson County](https://floodinsurancedata.com/flood-insurance/davidson-county-tn/): median $1,188
-- [Ouachita Parish](https://floodinsurancedata.com/flood-insurance/ouachita-parish-la/): median $558
-- [Alameda County](https://floodinsurancedata.com/flood-insurance/alameda-county-ca/): median $1,149
-- [Bossier Parish](https://floodinsurancedata.com/flood-insurance/bossier-parish-la/): median $460
-- [San Joaquin County](https://floodinsurancedata.com/flood-insurance/san-joaquin-county-ca/): median $1,083
-- [Ventura County](https://floodinsurancedata.com/flood-insurance/ventura-county-ca/): median $1,227
-- [Caddo Parish](https://floodinsurancedata.com/flood-insurance/caddo-parish-la/): median $717
-- [Merced County](https://floodinsurancedata.com/flood-insurance/merced-county-ca/): median $779
-- [Vermilion Parish](https://floodinsurancedata.com/flood-insurance/vermilion-parish-la/): median $1,267
-- [Luzerne County](https://floodinsurancedata.com/flood-insurance/luzerne-county-pa/): median $1,182
-- [Multnomah County](https://floodinsurancedata.com/flood-insurance/multnomah-county-or/): median $734
-- [Union County](https://floodinsurancedata.com/flood-insurance/union-county-nj/): median $1,352
-- [Plaquemines Parish](https://floodinsurancedata.com/flood-insurance/plaquemines-parish-la/): median $1,234
-- [Boulder County](https://floodinsurancedata.com/flood-insurance/boulder-county-co/): median $1,060
-- [Tulare County](https://floodinsurancedata.com/flood-insurance/tulare-county-ca/): median $938
-- [Clay County](https://floodinsurancedata.com/flood-insurance/clay-county-fl/): median $1,058
-- [San Mateo County](https://floodinsurancedata.com/flood-insurance/san-mateo-county-ca/): median $1,225
-- [Essex County](https://floodinsurancedata.com/flood-insurance/essex-county-nj/): median $1,088
-- [Hawaii County](https://floodinsurancedata.com/flood-insurance/hawaii-county-hi/): median $1,234
-- [Washington County](https://floodinsurancedata.com/flood-insurance/washington-county-ri/): median $1,189
-- [Jefferson County](https://floodinsurancedata.com/flood-insurance/jefferson-county-ky/): median $1,135
-- [Lake County](https://floodinsurancedata.com/flood-insurance/lake-county-fl/): median $677
-- [Riverside County](https://floodinsurancedata.com/flood-insurance/riverside-county-ca/): median $1,084
-- [Kauai County](https://floodinsurancedata.com/flood-insurance/kauai-county-hi/): median $1,400
-- [York County](https://floodinsurancedata.com/flood-insurance/york-county-me/): median $1,186
-- [Santa Barbara County](https://floodinsurancedata.com/flood-insurance/santa-barbara-county-ca/): median $1,233
-- [Rockingham County](https://floodinsurancedata.com/flood-insurance/rockingham-county-nh/): median $1,300
-- [Hernando County](https://floodinsurancedata.com/flood-insurance/hernando-county-fl/): median $777
-- [Wayne County](https://floodinsurancedata.com/flood-insurance/wayne-county-mi/): median $683
-- [Marion County](https://floodinsurancedata.com/flood-insurance/marion-county-fl/): median $586
-- [Portsmouth city](https://floodinsurancedata.com/flood-insurance/portsmouth-city-va/): median $597
-- [Chambers County](https://floodinsurancedata.com/flood-insurance/chambers-county-tx/): median $1,017
-- [Sutter County](https://floodinsurancedata.com/flood-insurance/sutter-county-ca/): median $658
-- [New London County](https://floodinsurancedata.com/flood-insurance/new-london-county-ct/): median $1,659
-- [Nye County](https://floodinsurancedata.com/flood-insurance/nye-county-nv/): median $857
-- [Madison County](https://floodinsurancedata.com/flood-insurance/madison-county-al/): median $1,088
-- [Baltimore County](https://floodinsurancedata.com/flood-insurance/baltimore-county-md/): median $581
-- [DuPage County](https://floodinsurancedata.com/flood-insurance/dupage-county-il/): median $1,035
-- [Montgomery County](https://floodinsurancedata.com/flood-insurance/montgomery-county-pa/): median $1,152
-- [Bryan County](https://floodinsurancedata.com/flood-insurance/bryan-county-ga/): median $1,084
-- [Wake County](https://floodinsurancedata.com/flood-insurance/wake-county-nc/): median $878
-- [Baltimore city](https://floodinsurancedata.com/flood-insurance/baltimore-city-md/): median $527
-- [Bristol County](https://floodinsurancedata.com/flood-insurance/bristol-county-ma/): median $1,310
-- [Santa Cruz County](https://floodinsurancedata.com/flood-insurance/santa-cruz-county-ca/): median $1,400
-- [Fulton County](https://floodinsurancedata.com/flood-insurance/fulton-county-ga/): median $872
-- [Currituck County](https://floodinsurancedata.com/flood-insurance/currituck-county-nc/): median $930
-- [Beaufort County](https://floodinsurancedata.com/flood-insurance/beaufort-county-nc/): median $1,006
-- [Kern County](https://floodinsurancedata.com/flood-insurance/kern-county-ca/): median $874
-- [Contra Costa County](https://floodinsurancedata.com/flood-insurance/contra-costa-county-ca/): median $1,325
-- [Burlington County](https://floodinsurancedata.com/flood-insurance/burlington-county-nj/): median $1,409
-- [Bronx County](https://floodinsurancedata.com/flood-insurance/bronx-county-ny/): median $1,198
-- [Bucks County](https://floodinsurancedata.com/flood-insurance/bucks-county-pa/): median $1,260
-- [Yolo County](https://floodinsurancedata.com/flood-insurance/yolo-county-ca/): median $1,087
-- [Prince George's County](https://floodinsurancedata.com/flood-insurance/prince-george-s-county-md/): median $500
-- [Philadelphia County](https://floodinsurancedata.com/flood-insurance/philadelphia-county-pa/): median $924
-- [Middlesex County](https://floodinsurancedata.com/flood-insurance/middlesex-county-nj/): median $1,233
-- [Iberia Parish](https://floodinsurancedata.com/flood-insurance/iberia-parish-la/): median $1,266
-- [St. Louis County](https://floodinsurancedata.com/flood-insurance/st-louis-county-mo/): median $1,272
-- [Dorchester County](https://floodinsurancedata.com/flood-insurance/dorchester-county-sc/): median $804
-- [Skagit County](https://floodinsurancedata.com/flood-insurance/skagit-county-wa/): median $1,012
-- [Rapides Parish](https://floodinsurancedata.com/flood-insurance/rapides-parish-la/): median $516
-- [Sumter County](https://floodinsurancedata.com/flood-insurance/sumter-county-fl/): median $622
-- [Poquoson city](https://floodinsurancedata.com/flood-insurance/poquoson-city-va/): median $1,102
-- [Mecklenburg County](https://floodinsurancedata.com/flood-insurance/mecklenburg-county-nc/): median $918
-- [Camden County](https://floodinsurancedata.com/flood-insurance/camden-county-ga/): median $924
-- [Accomack County](https://floodinsurancedata.com/flood-insurance/accomack-county-va/): median $1,015
-- [Alachua County](https://floodinsurancedata.com/flood-insurance/alachua-county-fl/): median $682
-- [Pima County](https://floodinsurancedata.com/flood-insurance/pima-county-az/): median $1,086
-- [Passaic County](https://floodinsurancedata.com/flood-insurance/passaic-county-nj/): median $2,011
-- [Morris County](https://floodinsurancedata.com/flood-insurance/morris-county-nj/): median $1,404
-- [Leon County](https://floodinsurancedata.com/flood-insurance/leon-county-fl/): median $898
-- [Lane County](https://floodinsurancedata.com/flood-insurance/lane-county-or/): median $1,079
-- [Pierce County](https://floodinsurancedata.com/flood-insurance/pierce-county-wa/): median $886
-- [Cobb County](https://floodinsurancedata.com/flood-insurance/cobb-county-ga/): median $880
-- [San Patricio County](https://floodinsurancedata.com/flood-insurance/san-patricio-county-tx/): median $781
-- [Sonoma County](https://floodinsurancedata.com/flood-insurance/sonoma-county-ca/): median $1,266
-- [Acadia Parish](https://floodinsurancedata.com/flood-insurance/acadia-parish-la/): median $1,151
-- [Solano County](https://floodinsurancedata.com/flood-insurance/solano-county-ca/): median $1,354
-- [Valencia County](https://floodinsurancedata.com/flood-insurance/valencia-county-nm/): median $1,070
-- [Whatcom County](https://floodinsurancedata.com/flood-insurance/whatcom-county-wa/): median $1,031
-- [Denton County](https://floodinsurancedata.com/flood-insurance/denton-county-tx/): median $739
-- [Richland County](https://floodinsurancedata.com/flood-insurance/richland-county-sc/): median $892
-- [Snohomish County](https://floodinsurancedata.com/flood-insurance/snohomish-county-wa/): median $1,092
-- [Montgomery County](https://floodinsurancedata.com/flood-insurance/montgomery-county-md/): median $445
-- [Waller County](https://floodinsurancedata.com/flood-insurance/waller-county-tx/): median $873
-- [Washoe County](https://floodinsurancedata.com/flood-insurance/washoe-county-nv/): median $882
-- [Pasquotank County](https://floodinsurancedata.com/flood-insurance/pasquotank-county-nc/): median $853
-- [Pulaski County](https://floodinsurancedata.com/flood-insurance/pulaski-county-ar/): median $1,083
-- [Ada County](https://floodinsurancedata.com/flood-insurance/ada-county-id/): median $1,081
-- [Tulsa County](https://floodinsurancedata.com/flood-insurance/tulsa-county-ok/): median $1,066
-- [Gulf County](https://floodinsurancedata.com/flood-insurance/gulf-county-fl/): median $1,260
-- [Pitt County](https://floodinsurancedata.com/flood-insurance/pitt-county-nc/): median $791
-- [Rankin County](https://floodinsurancedata.com/flood-insurance/rankin-county-ms/): median $872
-- [Collin County](https://floodinsurancedata.com/flood-insurance/collin-county-tx/): median $826
-- [Monterey County](https://floodinsurancedata.com/flood-insurance/monterey-county-ca/): median $1,382
-- [Yavapai County](https://floodinsurancedata.com/flood-insurance/yavapai-county-az/): median $1,162
-- [Broome County](https://floodinsurancedata.com/flood-insurance/broome-county-ny/): median $1,198
-- [Butte County](https://floodinsurancedata.com/flood-insurance/butte-county-ca/): median $889
-- [Oklahoma County](https://floodinsurancedata.com/flood-insurance/oklahoma-county-ok/): median $959
-- [Washington County](https://floodinsurancedata.com/flood-insurance/washington-county-or/): median $866
-- [Yuba County](https://floodinsurancedata.com/flood-insurance/yuba-county-ca/): median $1,233
-- [Clark County](https://floodinsurancedata.com/flood-insurance/clark-county-nv/): median $836
-- [Tillamook County](https://floodinsurancedata.com/flood-insurance/tillamook-county-or/): median $1,234
-- [Lexington County](https://floodinsurancedata.com/flood-insurance/lexington-county-sc/): median $958
-- [Rockland County](https://floodinsurancedata.com/flood-insurance/rockland-county-ny/): median $976
-- [Okeechobee County](https://floodinsurancedata.com/flood-insurance/okeechobee-county-fl/): median $907
-- [Napa County](https://floodinsurancedata.com/flood-insurance/napa-county-ca/): median $1,840
-- [Chester County](https://floodinsurancedata.com/flood-insurance/chester-county-pa/): median $1,082
-- [Onondaga County](https://floodinsurancedata.com/flood-insurance/onondaga-county-ny/): median $1,197
-- [Placer County](https://floodinsurancedata.com/flood-insurance/placer-county-ca/): median $1,005
-- [Kanawha County](https://floodinsurancedata.com/flood-insurance/kanawha-county-wv/): median $1,464
-- [Iberville Parish](https://floodinsurancedata.com/flood-insurance/iberville-parish-la/): median $802
-- [Wakulla County](https://floodinsurancedata.com/flood-insurance/wakulla-county-fl/): median $1,471
-- [Salt Lake County](https://floodinsurancedata.com/flood-insurance/salt-lake-county-ut/): median $548
-- [Will County](https://floodinsurancedata.com/flood-insurance/will-county-il/): median $1,220
-- [Polk County](https://floodinsurancedata.com/flood-insurance/polk-county-ia/): median $841
-- [Fresno County](https://floodinsurancedata.com/flood-insurance/fresno-county-ca/): median $936
-- [Saginaw County](https://floodinsurancedata.com/flood-insurance/saginaw-county-mi/): median $910
-- [Gwinnett County](https://floodinsurancedata.com/flood-insurance/gwinnett-county-ga/): median $841
-- [Greenville County](https://floodinsurancedata.com/flood-insurance/greenville-county-sc/): median $954
-- [Prince William County](https://floodinsurancedata.com/flood-insurance/prince-william-county-va/): median $666
-- [Larimer County](https://floodinsurancedata.com/flood-insurance/larimer-county-co/): median $633
-- [Ector County](https://floodinsurancedata.com/flood-insurance/ector-county-tx/): median $700
-- [Denver County](https://floodinsurancedata.com/flood-insurance/denver-county-co/): median $660
-- [Highlands County](https://floodinsurancedata.com/flood-insurance/highlands-county-fl/): median $556
-- [Lucas County](https://floodinsurancedata.com/flood-insurance/lucas-county-oh/): median $780
-- [Sedgwick County](https://floodinsurancedata.com/flood-insurance/sedgwick-county-ks/): median $1,189
-- [Hennepin County](https://floodinsurancedata.com/flood-insurance/hennepin-county-mn/): median $831
-- [Lubbock County](https://floodinsurancedata.com/flood-insurance/lubbock-county-tx/): median $834
-- [Craighead County](https://floodinsurancedata.com/flood-insurance/craighead-county-ar/): median $712
-- [Guilford County](https://floodinsurancedata.com/flood-insurance/guilford-county-nc/): median $999
-- [Pinal County](https://floodinsurancedata.com/flood-insurance/pinal-county-az/): median $864
-- [Levy County](https://floodinsurancedata.com/flood-insurance/levy-county-fl/): median $1,628
-- [Kitsap County](https://floodinsurancedata.com/flood-insurance/kitsap-county-wa/): median $693
-- [Berks County](https://floodinsurancedata.com/flood-insurance/berks-county-pa/): median $1,194
-- [James City County](https://floodinsurancedata.com/flood-insurance/james-city-county-va/): median $720
-- [Washington County](https://floodinsurancedata.com/flood-insurance/washington-county-vt/): median $1,532
-- [Stanislaus County](https://floodinsurancedata.com/flood-insurance/stanislaus-county-ca/): median $833
-- [Cochise County](https://floodinsurancedata.com/flood-insurance/cochise-county-az/): median $1,094
-- [McHenry County](https://floodinsurancedata.com/flood-insurance/mchenry-county-il/): median $1,156
-- [Thurston County](https://floodinsurancedata.com/flood-insurance/thurston-county-wa/): median $884
-- [Utah County](https://floodinsurancedata.com/flood-insurance/utah-county-ut/): median $756
-- [Haywood County](https://floodinsurancedata.com/flood-insurance/haywood-county-nc/): median $1,221
-- [Burleigh County](https://floodinsurancedata.com/flood-insurance/burleigh-county-nd/): median $1,349
-- [Ramsey County](https://floodinsurancedata.com/flood-insurance/ramsey-county-mn/): median $768
-- [Elkhart County](https://floodinsurancedata.com/flood-insurance/elkhart-county-in/): median $925
-- [Grand Forks County](https://floodinsurancedata.com/flood-insurance/grand-forks-county-nd/): median $917
-- [Greene County](https://floodinsurancedata.com/flood-insurance/greene-county-ar/): median $732
-- [Pennington County](https://floodinsurancedata.com/flood-insurance/pennington-county-sd/): median $1,038
-- [Jefferson County](https://floodinsurancedata.com/flood-insurance/jefferson-county-ar/): median $873
-- [Champaign County](https://floodinsurancedata.com/flood-insurance/champaign-county-il/): median $1,154
-- [Lincoln County](https://floodinsurancedata.com/flood-insurance/lincoln-county-ne/): median $589
-- [Raleigh County](https://floodinsurancedata.com/flood-insurance/raleigh-county-wv/): median $1,244
-- [Methodology](https://floodinsurancedata.com/methodology/)
-- [Data CSV](https://floodinsurancedata.com/data/counties.csv)
+- [Miami-Dade County, FL](https://floodinsurancedata.com/flood-insurance/miami-dade-county-fl/): median $898 a year
+- [Broward County, FL](https://floodinsurancedata.com/flood-insurance/broward-county-fl/): median $832 a year
+- [Harris County, TX](https://floodinsurancedata.com/flood-insurance/harris-county-tx/): median $1,087 a year
+- [Lee County, FL](https://floodinsurancedata.com/flood-insurance/lee-county-fl/): median $1,689 a year
+- [Pinellas County, FL](https://floodinsurancedata.com/flood-insurance/pinellas-county-fl/): median $1,459 a year
+- [Palm Beach County, FL](https://floodinsurancedata.com/flood-insurance/palm-beach-county-fl/): median $673 a year
+- [Collier County, FL](https://floodinsurancedata.com/flood-insurance/collier-county-fl/): median $1,266 a year
+- [Jefferson Parish, LA](https://floodinsurancedata.com/flood-insurance/jefferson-parish-la/): median $1,218 a year
+- [Orleans Parish, LA](https://floodinsurancedata.com/flood-insurance/orleans-parish-la/): median $1,141 a year
+- [Hillsborough County, FL](https://floodinsurancedata.com/flood-insurance/hillsborough-county-fl/): median $1,154 a year
+- [Sarasota County, FL](https://floodinsurancedata.com/flood-insurance/sarasota-county-fl/): median $1,087 a year
+- [Charleston County, SC](https://floodinsurancedata.com/flood-insurance/charleston-county-sc/): median $979 a year
+- [Galveston County, TX](https://floodinsurancedata.com/flood-insurance/galveston-county-tx/): median $1,153 a year
+- [Horry County, SC](https://floodinsurancedata.com/flood-insurance/horry-county-sc/): median $585 a year
+- [Sacramento County, CA](https://floodinsurancedata.com/flood-insurance/sacramento-county-ca/): median $833 a year
+- [Cape May County, NJ](https://floodinsurancedata.com/flood-insurance/cape-may-county-nj/): median $1,212 a year
+- [Volusia County, FL](https://floodinsurancedata.com/flood-insurance/volusia-county-fl/): median $865 a year
+- [Beaufort County, SC](https://floodinsurancedata.com/flood-insurance/beaufort-county-sc/): median $872 a year
+- [Honolulu County, HI](https://floodinsurancedata.com/flood-insurance/honolulu-county-hi/): median $1,526 a year
+- [Brevard County, FL](https://floodinsurancedata.com/flood-insurance/brevard-county-fl/): median $866 a year
+- [Nassau County, NY](https://floodinsurancedata.com/flood-insurance/nassau-county-ny/): median $1,475 a year
+- [St. Tammany Parish, LA](https://floodinsurancedata.com/flood-insurance/st-tammany-parish-la/): median $1,233 a year
+- [Fort Bend County, TX](https://floodinsurancedata.com/flood-insurance/fort-bend-county-tx/): median $965 a year
+- [Ocean County, NJ](https://floodinsurancedata.com/flood-insurance/ocean-county-nj/): median $1,160 a year
+- [Charlotte County, FL](https://floodinsurancedata.com/flood-insurance/charlotte-county-fl/): median $1,988 a year
+- [East Baton Rouge Parish, LA](https://floodinsurancedata.com/flood-insurance/east-baton-rouge-parish-la/): median $612 a year
+- [Manatee County, FL](https://floodinsurancedata.com/flood-insurance/manatee-county-fl/): median $831 a year
+- [St. Johns County, FL](https://floodinsurancedata.com/flood-insurance/st-johns-county-fl/): median $1,087 a year
+- [Bay County, FL](https://floodinsurancedata.com/flood-insurance/bay-county-fl/): median $880 a year
+- [Monroe County, FL](https://floodinsurancedata.com/flood-insurance/monroe-county-fl/): median $1,931 a year
+- [Worcester County, MD](https://floodinsurancedata.com/flood-insurance/worcester-county-md/): median $997 a year
+- [Suffolk County, NY](https://floodinsurancedata.com/flood-insurance/suffolk-county-ny/): median $1,263 a year
+- [Brazoria County, TX](https://floodinsurancedata.com/flood-insurance/brazoria-county-tx/): median $1,084 a year
+- [Duval County, FL](https://floodinsurancedata.com/flood-insurance/duval-county-fl/): median $1,044 a year
+- [Nueces County, TX](https://floodinsurancedata.com/flood-insurance/nueces-county-tx/): median $913 a year
+- [Baldwin County, AL](https://floodinsurancedata.com/flood-insurance/baldwin-county-al/): median $1,167 a year
+- [Pasco County, FL](https://floodinsurancedata.com/flood-insurance/pasco-county-fl/): median $837 a year
+- [Hudson County, NJ](https://floodinsurancedata.com/flood-insurance/hudson-county-nj/): median $1,713 a year
+- [Chatham County, GA](https://floodinsurancedata.com/flood-insurance/chatham-county-ga/): median $1,030 a year
+- [Atlantic County, NJ](https://floodinsurancedata.com/flood-insurance/atlantic-county-nj/): median $1,264 a year
+- [Montgomery County, TX](https://floodinsurancedata.com/flood-insurance/montgomery-county-tx/): median $1,005 a year
+- [Sussex County, DE](https://floodinsurancedata.com/flood-insurance/sussex-county-de/): median $881 a year
+- [Brunswick County, NC](https://floodinsurancedata.com/flood-insurance/brunswick-county-nc/): median $760 a year
+- [Jefferson County, TX](https://floodinsurancedata.com/flood-insurance/jefferson-county-tx/): median $1,147 a year
+- [Virginia Beach city, VA](https://floodinsurancedata.com/flood-insurance/virginia-beach-city-va/): median $713 a year
+- [Monmouth County, NJ](https://floodinsurancedata.com/flood-insurance/monmouth-county-nj/): median $1,202 a year
+- [Queens County, NY](https://floodinsurancedata.com/flood-insurance/queens-county-ny/): median $1,263 a year
+- [Cameron County, TX](https://floodinsurancedata.com/flood-insurance/cameron-county-tx/): median $628 a year
+- [Indian River County, FL](https://floodinsurancedata.com/flood-insurance/indian-river-county-fl/): median $904 a year
+- [St. Lucie County, FL](https://floodinsurancedata.com/flood-insurance/st-lucie-county-fl/): median $633 a year
+- [Okaloosa County, FL](https://floodinsurancedata.com/flood-insurance/okaloosa-county-fl/): median $1,075 a year
+- [Kings County, NY](https://floodinsurancedata.com/flood-insurance/kings-county-ny/): median $1,106 a year
+- [New Hanover County, NC](https://floodinsurancedata.com/flood-insurance/new-hanover-county-nc/): median $969 a year
+- [Lafayette Parish, LA](https://floodinsurancedata.com/flood-insurance/lafayette-parish-la/): median $1,041 a year
+- [Escambia County, FL](https://floodinsurancedata.com/flood-insurance/escambia-county-fl/): median $841 a year
+- [Walton County, FL](https://floodinsurancedata.com/flood-insurance/walton-county-fl/): median $983 a year
+- [Orange County, FL](https://floodinsurancedata.com/flood-insurance/orange-county-fl/): median $624 a year
+- [Dare County, NC](https://floodinsurancedata.com/flood-insurance/dare-county-nc/): median $762 a year
+- [Livingston Parish, LA](https://floodinsurancedata.com/flood-insurance/livingston-parish-la/): median $1,237 a year
+- [New York County, NY](https://floodinsurancedata.com/flood-insurance/new-york-county-ny/): median $1,021 a year
+- [Fairfield County, CT](https://floodinsurancedata.com/flood-insurance/fairfield-county-ct/): median $1,512 a year
+- [Carteret County, NC](https://floodinsurancedata.com/flood-insurance/carteret-county-nc/): median $1,103 a year
+- [Ascension Parish, LA](https://floodinsurancedata.com/flood-insurance/ascension-parish-la/): median $890 a year
+- [Martin County, FL](https://floodinsurancedata.com/flood-insurance/martin-county-fl/): median $995 a year
+- [Glynn County, GA](https://floodinsurancedata.com/flood-insurance/glynn-county-ga/): median $979 a year
+- [Harrison County, MS](https://floodinsurancedata.com/flood-insurance/harrison-county-ms/): median $1,233 a year
+- [Calcasieu Parish, LA](https://floodinsurancedata.com/flood-insurance/calcasieu-parish-la/): median $1,266 a year
+- [Los Angeles County, CA](https://floodinsurancedata.com/flood-insurance/los-angeles-county-ca/): median $1,121 a year
+- [Maricopa County, AZ](https://floodinsurancedata.com/flood-insurance/maricopa-county-az/): median $897 a year
+- [Orange County, TX](https://floodinsurancedata.com/flood-insurance/orange-county-tx/): median $1,232 a year
+- [Terrebonne Parish, LA](https://floodinsurancedata.com/flood-insurance/terrebonne-parish-la/): median $1,396 a year
+- [Cook County, IL](https://floodinsurancedata.com/flood-insurance/cook-county-il/): median $1,168 a year
+- [Jackson County, MS](https://floodinsurancedata.com/flood-insurance/jackson-county-ms/): median $1,372 a year
+- [Maui County, HI](https://floodinsurancedata.com/flood-insurance/maui-county-hi/): median $1,264 a year
+- [Santa Clara County, CA](https://floodinsurancedata.com/flood-insurance/santa-clara-county-ca/): median $1,278 a year
+- [Santa Rosa County, FL](https://floodinsurancedata.com/flood-insurance/santa-rosa-county-fl/): median $877 a year
+- [Norfolk city, VA](https://floodinsurancedata.com/flood-insurance/norfolk-city-va/): median $728 a year
+- [Flagler County, FL](https://floodinsurancedata.com/flood-insurance/flagler-county-fl/): median $1,082 a year
+- [St. Charles Parish, LA](https://floodinsurancedata.com/flood-insurance/st-charles-parish-la/): median $1,231 a year
+- [Bergen County, NJ](https://floodinsurancedata.com/flood-insurance/bergen-county-nj/): median $1,303 a year
+- [Barnstable County, MA](https://floodinsurancedata.com/flood-insurance/barnstable-county-ma/): median $1,451 a year
+- [Suffolk County, MA](https://floodinsurancedata.com/flood-insurance/suffolk-county-ma/): median $1,680 a year
+- [Hidalgo County, TX](https://floodinsurancedata.com/flood-insurance/hidalgo-county-tx/): median $633 a year
+- [Orange County, CA](https://floodinsurancedata.com/flood-insurance/orange-county-ca/): median $1,084 a year
+- [Hampton city, VA](https://floodinsurancedata.com/flood-insurance/hampton-city-va/): median $741 a year
+- [Osceola County, FL](https://floodinsurancedata.com/flood-insurance/osceola-county-fl/): median $648 a year
+- [St. Bernard Parish, LA](https://floodinsurancedata.com/flood-insurance/st-bernard-parish-la/): median $1,133 a year
+- [Essex County, MA](https://floodinsurancedata.com/flood-insurance/essex-county-ma/): median $1,349 a year
+- [Nassau County, FL](https://floodinsurancedata.com/flood-insurance/nassau-county-fl/): median $1,083 a year
+- [Travis County, TX](https://floodinsurancedata.com/flood-insurance/travis-county-tx/): median $1,012 a year
+- [San Diego County, CA](https://floodinsurancedata.com/flood-insurance/san-diego-county-ca/): median $1,084 a year
+- [Lafourche Parish, LA](https://floodinsurancedata.com/flood-insurance/lafourche-parish-la/): median $1,234 a year
+- [Georgetown County, SC](https://floodinsurancedata.com/flood-insurance/georgetown-county-sc/): median $1,034 a year
+- [Westchester County, NY](https://floodinsurancedata.com/flood-insurance/westchester-county-ny/): median $872 a year
+- [Plymouth County, MA](https://floodinsurancedata.com/flood-insurance/plymouth-county-ma/): median $1,514 a year
+- [New Haven County, CT](https://floodinsurancedata.com/flood-insurance/new-haven-county-ct/): median $1,546 a year
+- [Polk County, FL](https://floodinsurancedata.com/flood-insurance/polk-county-fl/): median $628 a year
+- [Hancock County, MS](https://floodinsurancedata.com/flood-insurance/hancock-county-ms/): median $1,267 a year
+- [Tangipahoa Parish, LA](https://floodinsurancedata.com/flood-insurance/tangipahoa-parish-la/): median $1,117 a year
+- [Chesapeake city, VA](https://floodinsurancedata.com/flood-insurance/chesapeake-city-va/): median $706 a year
+- [Seminole County, FL](https://floodinsurancedata.com/flood-insurance/seminole-county-fl/): median $737 a year
+- [Berkeley County, SC](https://floodinsurancedata.com/flood-insurance/berkeley-county-sc/): median $844 a year
+- [Middlesex County, MA](https://floodinsurancedata.com/flood-insurance/middlesex-county-ma/): median $943 a year
+- [King County, WA](https://floodinsurancedata.com/flood-insurance/king-county-wa/): median $962 a year
+- [Dallas County, TX](https://floodinsurancedata.com/flood-insurance/dallas-county-tx/): median $938 a year
+- [Mobile County, AL](https://floodinsurancedata.com/flood-insurance/mobile-county-al/): median $1,256 a year
+- [Marin County, CA](https://floodinsurancedata.com/flood-insurance/marin-county-ca/): median $1,639 a year
+- [Richmond County, NY](https://floodinsurancedata.com/flood-insurance/richmond-county-ny/): median $965 a year
+- [Citrus County, FL](https://floodinsurancedata.com/flood-insurance/citrus-county-fl/): median $1,240 a year
+- [Craven County, NC](https://floodinsurancedata.com/flood-insurance/craven-county-nc/): median $1,023 a year
+- [St. John the Baptist Parish, LA](https://floodinsurancedata.com/flood-insurance/st-john-the-baptist-parish-la/): median $1,357 a year
+- [Tarrant County, TX](https://floodinsurancedata.com/flood-insurance/tarrant-county-tx/): median $821 a year
+- [Norfolk County, MA](https://floodinsurancedata.com/flood-insurance/norfolk-county-ma/): median $1,278 a year
+- [Pender County, NC](https://floodinsurancedata.com/flood-insurance/pender-county-nc/): median $1,037 a year
+- [Anne Arundel County, MD](https://floodinsurancedata.com/flood-insurance/anne-arundel-county-md/): median $542 a year
+- [Bexar County, TX](https://floodinsurancedata.com/flood-insurance/bexar-county-tx/): median $915 a year
+- [Fairfax County, VA](https://floodinsurancedata.com/flood-insurance/fairfax-county-va/): median $612 a year
+- [Onslow County, NC](https://floodinsurancedata.com/flood-insurance/onslow-county-nc/): median $884 a year
+- [Aransas County, TX](https://floodinsurancedata.com/flood-insurance/aransas-county-tx/): median $1,236 a year
+- [Davidson County, TN](https://floodinsurancedata.com/flood-insurance/davidson-county-tn/): median $1,188 a year
+- [Ouachita Parish, LA](https://floodinsurancedata.com/flood-insurance/ouachita-parish-la/): median $558 a year
+- [Alameda County, CA](https://floodinsurancedata.com/flood-insurance/alameda-county-ca/): median $1,149 a year
+- [Bossier Parish, LA](https://floodinsurancedata.com/flood-insurance/bossier-parish-la/): median $460 a year
+- [San Joaquin County, CA](https://floodinsurancedata.com/flood-insurance/san-joaquin-county-ca/): median $1,083 a year
+- [Ventura County, CA](https://floodinsurancedata.com/flood-insurance/ventura-county-ca/): median $1,227 a year
+- [Caddo Parish, LA](https://floodinsurancedata.com/flood-insurance/caddo-parish-la/): median $717 a year
+- [Merced County, CA](https://floodinsurancedata.com/flood-insurance/merced-county-ca/): median $779 a year
+- [Vermilion Parish, LA](https://floodinsurancedata.com/flood-insurance/vermilion-parish-la/): median $1,267 a year
+- [Luzerne County, PA](https://floodinsurancedata.com/flood-insurance/luzerne-county-pa/): median $1,182 a year
+- [Multnomah County, OR](https://floodinsurancedata.com/flood-insurance/multnomah-county-or/): median $734 a year
+- [Union County, NJ](https://floodinsurancedata.com/flood-insurance/union-county-nj/): median $1,352 a year
+- [Plaquemines Parish, LA](https://floodinsurancedata.com/flood-insurance/plaquemines-parish-la/): median $1,234 a year
+- [Boulder County, CO](https://floodinsurancedata.com/flood-insurance/boulder-county-co/): median $1,060 a year
+- [Tulare County, CA](https://floodinsurancedata.com/flood-insurance/tulare-county-ca/): median $938 a year
+- [Clay County, FL](https://floodinsurancedata.com/flood-insurance/clay-county-fl/): median $1,058 a year
+- [San Mateo County, CA](https://floodinsurancedata.com/flood-insurance/san-mateo-county-ca/): median $1,225 a year
+- [Essex County, NJ](https://floodinsurancedata.com/flood-insurance/essex-county-nj/): median $1,088 a year
+- [Hawaii County, HI](https://floodinsurancedata.com/flood-insurance/hawaii-county-hi/): median $1,234 a year
+- [Washington County, RI](https://floodinsurancedata.com/flood-insurance/washington-county-ri/): median $1,189 a year
+- [Jefferson County, KY](https://floodinsurancedata.com/flood-insurance/jefferson-county-ky/): median $1,135 a year
+- [Lake County, FL](https://floodinsurancedata.com/flood-insurance/lake-county-fl/): median $677 a year
+- [Riverside County, CA](https://floodinsurancedata.com/flood-insurance/riverside-county-ca/): median $1,084 a year
+- [Kauai County, HI](https://floodinsurancedata.com/flood-insurance/kauai-county-hi/): median $1,400 a year
+- [York County, ME](https://floodinsurancedata.com/flood-insurance/york-county-me/): median $1,186 a year
+- [Santa Barbara County, CA](https://floodinsurancedata.com/flood-insurance/santa-barbara-county-ca/): median $1,233 a year
+- [Rockingham County, NH](https://floodinsurancedata.com/flood-insurance/rockingham-county-nh/): median $1,300 a year
+- [Hernando County, FL](https://floodinsurancedata.com/flood-insurance/hernando-county-fl/): median $777 a year
+- [Wayne County, MI](https://floodinsurancedata.com/flood-insurance/wayne-county-mi/): median $683 a year
+- [Marion County, FL](https://floodinsurancedata.com/flood-insurance/marion-county-fl/): median $586 a year
+- [Portsmouth city, VA](https://floodinsurancedata.com/flood-insurance/portsmouth-city-va/): median $597 a year
+- [Chambers County, TX](https://floodinsurancedata.com/flood-insurance/chambers-county-tx/): median $1,017 a year
+- [Sutter County, CA](https://floodinsurancedata.com/flood-insurance/sutter-county-ca/): median $658 a year
+- [New London County, CT](https://floodinsurancedata.com/flood-insurance/new-london-county-ct/): median $1,659 a year
+- [Nye County, NV](https://floodinsurancedata.com/flood-insurance/nye-county-nv/): median $857 a year
+- [Madison County, AL](https://floodinsurancedata.com/flood-insurance/madison-county-al/): median $1,088 a year
+- [Baltimore County, MD](https://floodinsurancedata.com/flood-insurance/baltimore-county-md/): median $581 a year
+- [DuPage County, IL](https://floodinsurancedata.com/flood-insurance/dupage-county-il/): median $1,035 a year
+- [Montgomery County, PA](https://floodinsurancedata.com/flood-insurance/montgomery-county-pa/): median $1,152 a year
+- [Bryan County, GA](https://floodinsurancedata.com/flood-insurance/bryan-county-ga/): median $1,084 a year
+- [Wake County, NC](https://floodinsurancedata.com/flood-insurance/wake-county-nc/): median $878 a year
+- [Baltimore city, MD](https://floodinsurancedata.com/flood-insurance/baltimore-city-md/): median $527 a year
+- [Bristol County, MA](https://floodinsurancedata.com/flood-insurance/bristol-county-ma/): median $1,310 a year
+- [Santa Cruz County, CA](https://floodinsurancedata.com/flood-insurance/santa-cruz-county-ca/): median $1,400 a year
+- [Fulton County, GA](https://floodinsurancedata.com/flood-insurance/fulton-county-ga/): median $872 a year
+- [Currituck County, NC](https://floodinsurancedata.com/flood-insurance/currituck-county-nc/): median $930 a year
+- [Beaufort County, NC](https://floodinsurancedata.com/flood-insurance/beaufort-county-nc/): median $1,006 a year
+- [Kern County, CA](https://floodinsurancedata.com/flood-insurance/kern-county-ca/): median $874 a year
+- [Contra Costa County, CA](https://floodinsurancedata.com/flood-insurance/contra-costa-county-ca/): median $1,325 a year
+- [Burlington County, NJ](https://floodinsurancedata.com/flood-insurance/burlington-county-nj/): median $1,409 a year
+- [Bronx County, NY](https://floodinsurancedata.com/flood-insurance/bronx-county-ny/): median $1,198 a year
+- [Bucks County, PA](https://floodinsurancedata.com/flood-insurance/bucks-county-pa/): median $1,260 a year
+- [Yolo County, CA](https://floodinsurancedata.com/flood-insurance/yolo-county-ca/): median $1,087 a year
+- [Prince George's County, MD](https://floodinsurancedata.com/flood-insurance/prince-george-s-county-md/): median $500 a year
+- [Philadelphia County, PA](https://floodinsurancedata.com/flood-insurance/philadelphia-county-pa/): median $924 a year
+- [Middlesex County, NJ](https://floodinsurancedata.com/flood-insurance/middlesex-county-nj/): median $1,233 a year
+- [Iberia Parish, LA](https://floodinsurancedata.com/flood-insurance/iberia-parish-la/): median $1,266 a year
+- [St. Louis County, MO](https://floodinsurancedata.com/flood-insurance/st-louis-county-mo/): median $1,272 a year
+- [Dorchester County, SC](https://floodinsurancedata.com/flood-insurance/dorchester-county-sc/): median $804 a year
+- [Skagit County, WA](https://floodinsurancedata.com/flood-insurance/skagit-county-wa/): median $1,012 a year
+- [Rapides Parish, LA](https://floodinsurancedata.com/flood-insurance/rapides-parish-la/): median $516 a year
+- [Sumter County, FL](https://floodinsurancedata.com/flood-insurance/sumter-county-fl/): median $622 a year
+- [Poquoson city, VA](https://floodinsurancedata.com/flood-insurance/poquoson-city-va/): median $1,102 a year
+- [Mecklenburg County, NC](https://floodinsurancedata.com/flood-insurance/mecklenburg-county-nc/): median $918 a year
+- [Camden County, GA](https://floodinsurancedata.com/flood-insurance/camden-county-ga/): median $924 a year
+- [Accomack County, VA](https://floodinsurancedata.com/flood-insurance/accomack-county-va/): median $1,015 a year
+- [Alachua County, FL](https://floodinsurancedata.com/flood-insurance/alachua-county-fl/): median $682 a year
+- [Pima County, AZ](https://floodinsurancedata.com/flood-insurance/pima-county-az/): median $1,086 a year
+- [Passaic County, NJ](https://floodinsurancedata.com/flood-insurance/passaic-county-nj/): median $2,011 a year
+- [Morris County, NJ](https://floodinsurancedata.com/flood-insurance/morris-county-nj/): median $1,404 a year
+- [Leon County, FL](https://floodinsurancedata.com/flood-insurance/leon-county-fl/): median $898 a year
+- [Lane County, OR](https://floodinsurancedata.com/flood-insurance/lane-county-or/): median $1,079 a year
+- [Pierce County, WA](https://floodinsurancedata.com/flood-insurance/pierce-county-wa/): median $886 a year
+- [Cobb County, GA](https://floodinsurancedata.com/flood-insurance/cobb-county-ga/): median $880 a year
+- [San Patricio County, TX](https://floodinsurancedata.com/flood-insurance/san-patricio-county-tx/): median $781 a year
+- [Sonoma County, CA](https://floodinsurancedata.com/flood-insurance/sonoma-county-ca/): median $1,266 a year
+- [Acadia Parish, LA](https://floodinsurancedata.com/flood-insurance/acadia-parish-la/): median $1,151 a year
+- [Solano County, CA](https://floodinsurancedata.com/flood-insurance/solano-county-ca/): median $1,354 a year
+- [Valencia County, NM](https://floodinsurancedata.com/flood-insurance/valencia-county-nm/): median $1,070 a year
+- [Whatcom County, WA](https://floodinsurancedata.com/flood-insurance/whatcom-county-wa/): median $1,031 a year
+- [Denton County, TX](https://floodinsurancedata.com/flood-insurance/denton-county-tx/): median $739 a year
+- [Richland County, SC](https://floodinsurancedata.com/flood-insurance/richland-county-sc/): median $892 a year
+- [Snohomish County, WA](https://floodinsurancedata.com/flood-insurance/snohomish-county-wa/): median $1,092 a year
+- [Montgomery County, MD](https://floodinsurancedata.com/flood-insurance/montgomery-county-md/): median $445 a year
+- [Waller County, TX](https://floodinsurancedata.com/flood-insurance/waller-county-tx/): median $873 a year
+- [Washoe County, NV](https://floodinsurancedata.com/flood-insurance/washoe-county-nv/): median $882 a year
+- [Pasquotank County, NC](https://floodinsurancedata.com/flood-insurance/pasquotank-county-nc/): median $853 a year
+- [Pulaski County, AR](https://floodinsurancedata.com/flood-insurance/pulaski-county-ar/): median $1,083 a year
+- [Ada County, ID](https://floodinsurancedata.com/flood-insurance/ada-county-id/): median $1,081 a year
+- [Tulsa County, OK](https://floodinsurancedata.com/flood-insurance/tulsa-county-ok/): median $1,066 a year
+- [Gulf County, FL](https://floodinsurancedata.com/flood-insurance/gulf-county-fl/): median $1,260 a year
+- [Pitt County, NC](https://floodinsurancedata.com/flood-insurance/pitt-county-nc/): median $791 a year
+- [Rankin County, MS](https://floodinsurancedata.com/flood-insurance/rankin-county-ms/): median $872 a year
+- [Collin County, TX](https://floodinsurancedata.com/flood-insurance/collin-county-tx/): median $826 a year
+- [Monterey County, CA](https://floodinsurancedata.com/flood-insurance/monterey-county-ca/): median $1,382 a year
+- [Yavapai County, AZ](https://floodinsurancedata.com/flood-insurance/yavapai-county-az/): median $1,162 a year
+- [Broome County, NY](https://floodinsurancedata.com/flood-insurance/broome-county-ny/): median $1,198 a year
+- [Butte County, CA](https://floodinsurancedata.com/flood-insurance/butte-county-ca/): median $889 a year
+- [Oklahoma County, OK](https://floodinsurancedata.com/flood-insurance/oklahoma-county-ok/): median $959 a year
+- [Washington County, OR](https://floodinsurancedata.com/flood-insurance/washington-county-or/): median $866 a year
+- [Yuba County, CA](https://floodinsurancedata.com/flood-insurance/yuba-county-ca/): median $1,233 a year
+- [Clark County, NV](https://floodinsurancedata.com/flood-insurance/clark-county-nv/): median $836 a year
+- [Tillamook County, OR](https://floodinsurancedata.com/flood-insurance/tillamook-county-or/): median $1,234 a year
+- [Lexington County, SC](https://floodinsurancedata.com/flood-insurance/lexington-county-sc/): median $958 a year
+- [Rockland County, NY](https://floodinsurancedata.com/flood-insurance/rockland-county-ny/): median $976 a year
+- [Okeechobee County, FL](https://floodinsurancedata.com/flood-insurance/okeechobee-county-fl/): median $907 a year
+- [Napa County, CA](https://floodinsurancedata.com/flood-insurance/napa-county-ca/): median $1,840 a year
+- [Chester County, PA](https://floodinsurancedata.com/flood-insurance/chester-county-pa/): median $1,082 a year
+- [Onondaga County, NY](https://floodinsurancedata.com/flood-insurance/onondaga-county-ny/): median $1,197 a year
+- [Placer County, CA](https://floodinsurancedata.com/flood-insurance/placer-county-ca/): median $1,005 a year
+- [Kanawha County, WV](https://floodinsurancedata.com/flood-insurance/kanawha-county-wv/): median $1,464 a year
+- [Iberville Parish, LA](https://floodinsurancedata.com/flood-insurance/iberville-parish-la/): median $802 a year
+- [Wakulla County, FL](https://floodinsurancedata.com/flood-insurance/wakulla-county-fl/): median $1,471 a year
+- [Salt Lake County, UT](https://floodinsurancedata.com/flood-insurance/salt-lake-county-ut/): median $548 a year
+- [Will County, IL](https://floodinsurancedata.com/flood-insurance/will-county-il/): median $1,220 a year
+- [Polk County, IA](https://floodinsurancedata.com/flood-insurance/polk-county-ia/): median $841 a year
+- [Fresno County, CA](https://floodinsurancedata.com/flood-insurance/fresno-county-ca/): median $936 a year
+- [Saginaw County, MI](https://floodinsurancedata.com/flood-insurance/saginaw-county-mi/): median $910 a year
+- [Gwinnett County, GA](https://floodinsurancedata.com/flood-insurance/gwinnett-county-ga/): median $841 a year
+- [Greenville County, SC](https://floodinsurancedata.com/flood-insurance/greenville-county-sc/): median $954 a year
+- [Prince William County, VA](https://floodinsurancedata.com/flood-insurance/prince-william-county-va/): median $666 a year
+- [Larimer County, CO](https://floodinsurancedata.com/flood-insurance/larimer-county-co/): median $633 a year
+- [Ector County, TX](https://floodinsurancedata.com/flood-insurance/ector-county-tx/): median $700 a year
+- [Denver County, CO](https://floodinsurancedata.com/flood-insurance/denver-county-co/): median $660 a year
+- [Highlands County, FL](https://floodinsurancedata.com/flood-insurance/highlands-county-fl/): median $556 a year
+- [Lucas County, OH](https://floodinsurancedata.com/flood-insurance/lucas-county-oh/): median $780 a year
+- [Sedgwick County, KS](https://floodinsurancedata.com/flood-insurance/sedgwick-county-ks/): median $1,189 a year
+- [Hennepin County, MN](https://floodinsurancedata.com/flood-insurance/hennepin-county-mn/): median $831 a year
+- [Lubbock County, TX](https://floodinsurancedata.com/flood-insurance/lubbock-county-tx/): median $834 a year
+- [Craighead County, AR](https://floodinsurancedata.com/flood-insurance/craighead-county-ar/): median $712 a year
+- [Guilford County, NC](https://floodinsurancedata.com/flood-insurance/guilford-county-nc/): median $999 a year
+- [Pinal County, AZ](https://floodinsurancedata.com/flood-insurance/pinal-county-az/): median $864 a year
+- [Levy County, FL](https://floodinsurancedata.com/flood-insurance/levy-county-fl/): median $1,628 a year
+- [Kitsap County, WA](https://floodinsurancedata.com/flood-insurance/kitsap-county-wa/): median $693 a year
+- [Berks County, PA](https://floodinsurancedata.com/flood-insurance/berks-county-pa/): median $1,194 a year
+- [James City County, VA](https://floodinsurancedata.com/flood-insurance/james-city-county-va/): median $720 a year
+- [Washington County, VT](https://floodinsurancedata.com/flood-insurance/washington-county-vt/): median $1,532 a year
+- [Stanislaus County, CA](https://floodinsurancedata.com/flood-insurance/stanislaus-county-ca/): median $833 a year
+- [Cochise County, AZ](https://floodinsurancedata.com/flood-insurance/cochise-county-az/): median $1,094 a year
+- [McHenry County, IL](https://floodinsurancedata.com/flood-insurance/mchenry-county-il/): median $1,156 a year
+- [Thurston County, WA](https://floodinsurancedata.com/flood-insurance/thurston-county-wa/): median $884 a year
+- [Utah County, UT](https://floodinsurancedata.com/flood-insurance/utah-county-ut/): median $756 a year
+- [Haywood County, NC](https://floodinsurancedata.com/flood-insurance/haywood-county-nc/): median $1,221 a year
+- [Burleigh County, ND](https://floodinsurancedata.com/flood-insurance/burleigh-county-nd/): median $1,349 a year
+- [Ramsey County, MN](https://floodinsurancedata.com/flood-insurance/ramsey-county-mn/): median $768 a year
+- [Elkhart County, IN](https://floodinsurancedata.com/flood-insurance/elkhart-county-in/): median $925 a year
+- [Grand Forks County, ND](https://floodinsurancedata.com/flood-insurance/grand-forks-county-nd/): median $917 a year
+- [Greene County, AR](https://floodinsurancedata.com/flood-insurance/greene-county-ar/): median $732 a year
+- [Pennington County, SD](https://floodinsurancedata.com/flood-insurance/pennington-county-sd/): median $1,038 a year
+- [Jefferson County, AR](https://floodinsurancedata.com/flood-insurance/jefferson-county-ar/): median $873 a year
+- [Champaign County, IL](https://floodinsurancedata.com/flood-insurance/champaign-county-il/): median $1,154 a year
+- [Lincoln County, NE](https://floodinsurancedata.com/flood-insurance/lincoln-county-ne/): median $589 a year
+- [Raleigh County, WV](https://floodinsurancedata.com/flood-insurance/raleigh-county-wv/): median $1,244 a year
 
-Source: FEMA OpenFEMA. Not endorsed by FEMA. Aggregates only.
+## Data
+- [Methodology](https://floodinsurancedata.com/methodology/)
+- [All counties (CSV)](https://floodinsurancedata.com/data/counties.csv)
+
+Source: FEMA OpenFEMA (NFIP policies and claims, National Risk Index, disaster declarations, map service). Aggregates only.

@@ -7,7 +7,7 @@
   var NFHL = "https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer";
   var GEO = "https://geocoding.geo.census.gov/geocoder/locations/onelineaddress";
   var MSC = "https://msc.fema.gov/portal/home";
-  var NEAR_M = 15, WAIT_MS = 8000;
+  var NEAR_M = 15, LOMA_M = 150, WAIT_MS = 8000;
   var MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   // fresh audit 11-08 D2: only FEMA flood zone letters are named as zones; any other FLD_ZONE value (open water, area not
   // included) is quoted as FEMA wrote it, never printed as "Zone ..."
@@ -27,7 +27,7 @@
   }
 
   /* point, box, panel: FEMA query JSON, or null when that request failed or timed out. Returns lines of text. */
-  function describe(point, box, panel) {
+  function describe(point, box, panel, lomr, loma) {
     if (!point || !box || point.error || box.error) return { kind: "down", lines: ["FEMA's map service did not answer. Check this spot on FEMA's map."] };
     var here = (point.features || []).map(function (f) { return f.attributes || {}; }).filter(function (a) { return zoneName(a); });
     var raw = ((point.features || []).map(function (f) { return String((f.attributes || {}).FLD_ZONE || "").trim(); }).filter(function (z) { return z && !ZONE_RE.test(z); })[0]) || "";
@@ -44,8 +44,34 @@
     var sfha = String(here[0].SFHA_TF || "").toUpperCase();
     if (sfha === "T") lines.push("FEMA marks this spot as a Special Flood Hazard Area (high-risk).");
     else if (sfha === "F" && near.length === 1 && String(here[0].FLD_ZONE).trim() === "X") lines.push("FEMA does not mark this spot as a Special Flood Hazard Area.");
+    // owner 11-08: FEMA's base flood elevation / AO depth exactly as returned, only in feet, only when the pin is in one zone
+    var h = here[0], feet = String(h.LEN_UNIT || "").trim().toLowerCase() === "feet";
+    if (near.length === 1 && feet && typeof h.STATIC_BFE === "number" && isFinite(h.STATIC_BFE) && h.STATIC_BFE > -9000 && h.STATIC_BFE < 30000) {
+      var dat = String(h.V_DATUM || "").trim();
+      lines.push("FEMA's map lists a base flood elevation of " + h.STATIC_BFE + " feet" + (/^[A-Za-z0-9 ]{2,20}$/.test(dat) ? " (" + dat + ")" : "") + " for this zone at this pin.");
+    }
+    if (near.length === 1 && feet && typeof h.DEPTH === "number" && isFinite(h.DEPTH) && h.DEPTH > 0 && h.DEPTH < 100)
+      lines.push("FEMA's map lists a flood depth of " + h.DEPTH + " feet for this zone at this pin.");
     var p = panel && !panel.error && (panel.features || [])[0] ? panel.features[0].attributes || {} : null;
     if (p && p.FIRM_PAN) lines.push("FEMA map panel " + String(p.FIRM_PAN).trim() + (day(p.EFF_DATE) ? ", in effect since " + day(p.EFF_DATE) : "") + ".");
+    // owner 11-08: map changes near the pin. A failed lookup prints nothing (never an implied "none"); letters are counted,
+    // never named (aggregates only: a Letter of Map Amendment names one owner's property)
+    if (lomr && !lomr.error && Array.isArray(lomr.features)) {
+      var ld = lomr.features.map(function (f) { return (f.attributes || {}).EFF_DATE; }).filter(function (v) { return typeof v === "number" && v > 0 && day(v); })   /* 0 = no date (fuzz 11-08) */.sort(function (a, b) { return b - a; })[0];
+      if (ld) lines.push("FEMA revised the map at this spot by a Letter of Map Revision in effect since " + day(ld) + ".");
+    }
+    if (loma && !loma.error && Array.isArray(loma.features)) {
+      var g = { out: 0, as: 0, den: 0, oth: 0 };
+      loma.features.forEach(function (f) {
+        var o = String((f.attributes || {}).OUTCOME || "").toLowerCase();
+        g[o.indexOf("denied") > -1 ? "den" : o.indexOf("out as shown") > -1 ? "as" : /^(structure|property|portion of property) removed/.test(o) ? "out" : "oth"] += 1;
+      });
+      var n = loma.features.length;
+      if (!n) lines.push("FEMA's map service lists no Letters of Map Amendment within " + LOMA_M + " meters (about 500 feet) of this pin.");
+      else lines.push("FEMA's map service lists " + n + " Letter" + (n === 1 ? "" : "s") + " of Map Amendment for properties within " + LOMA_M +
+        " meters (about 500 feet) of this pin: " + [g.out + " took a building or lot out of the high-risk zone", g.as + " found it already outside the zone as mapped",
+        g.den + " denied"].concat(g.oth ? [g.oth + " other"] : []).join(", ") + ". Each letter covers only the property it names; it does not change this spot's zone.");
+    }
     return { kind: near.length > 1 ? "near" : "one", zone: String(here[0].FLD_ZONE).trim(), lines: lines };
   }
   window.__zmDescribe = describe;   // tests call the same function the page uses
@@ -106,13 +132,15 @@
       say("<p>Asking FEMA's map…</p>");
       var base = { geometryType: "esriGeometryPoint", inSR: 4326, returnGeometry: "false", f: "json" };
       Promise.all([
-        get(NFHL + "/28/query", Object.assign({ geometry: g, outFields: "FLD_ZONE,ZONE_SUBTY,SFHA_TF" }, base)),
+        get(NFHL + "/28/query", Object.assign({ geometry: g, outFields: "FLD_ZONE,ZONE_SUBTY,SFHA_TF,STATIC_BFE,V_DATUM,DEPTH,LEN_UNIT" }, base)),
         // fresh audit 11-08 D5: a true circle of NEAR_M meters (FEMA honours distance + units, US-runner probe 11-08), not a box
         get(NFHL + "/28/query", Object.assign({ geometry: g, distance: NEAR_M, units: "esriSRUnit_Meter", outFields: "FLD_ZONE,ZONE_SUBTY" }, base)),
-        get(NFHL + "/3/query", Object.assign({ geometry: g, outFields: "FIRM_PAN,EFF_DATE" }, base))
+        get(NFHL + "/3/query", Object.assign({ geometry: g, outFields: "FIRM_PAN,EFF_DATE" }, base)),
+        get(NFHL + "/1/query", Object.assign({ geometry: g, outFields: "EFF_DATE" }, base)),   // LOMR polygons at the pin
+        get(NFHL + "/34/query", Object.assign({ geometry: g, distance: LOMA_M, units: "esriSRUnit_Meter", outFields: "OUTCOME" }, base))   // LOMA points nearby, outcome only
       ]).then(function (r) {
         if (my !== seq) return;   // the reader moved the pin while FEMA answered: that answer is for another spot
-        var d = describe(r[0], r[1], r[2]);
+        var d = describe(r[0], r[1], r[2], r[3], r[4]);
         var zl = d.zone && ZPAGES[d.zone] ? ' <a href="/flood-zones/' + ZPAGES[d.zone] + '/">What zone ' + esc(d.zone) + " means and costs</a>." : "";
         say("<p>" + d.lines.map(esc).join("</p><p>") + "</p>" + (zl ? "<p>" + zl + "</p>" : "") + box.querySelector(".zm-label").innerHTML +
             '<p><a href="' + MSC + '" rel="noopener" target="_blank">Check it on FEMA\'s map →</a></p>');
