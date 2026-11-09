@@ -41,7 +41,7 @@ Name the scoreboard number it moves; none = delete it. Each defect becomes a che
 - Data runs in the cloud (`refresh-data.yml`, `publish-counties.yml`); locally only build and gates. No emails; jobs fail closed. One background job, one writer, pull first. Backlog `state/reviews/backlog.md` (S14).
 
 ## Every fix
-- Wrong live text first (`--hotfix`). Work the latest `hater-round<N>.md`; each BLOCKER/MAJOR gets a `fixlog-round<N>.md` line (defect, root cause, fix, proof); fix the class at its source.
+- Wrong live text first (`--hotfix`). Work the latest `hater-round<N>.md`; each BLOCKER/MAJOR gets a `fixlog-round<N>.md` line (defect, root cause, fix, proof); fix the class at its source. Anything the gates passed: `docs/GATE-FIX-PROMPT.md`.
 - Screen-1 figures live in `metrics.py`, recomputed independently. Beat #1: give what the top 3 give, or a gap line.
 
 ## One-shot a batch
