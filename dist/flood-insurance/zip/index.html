@@ -87,7 +87,7 @@ function e(s){return String(s).replace(/[&<>"]/g,function(x){return{'&':'&amp;',
 function say(z,d){var r=d&&d.z&&d.z[z];if(!r)return['No NFIP policy in FEMA\'s records lists ZIP '+z+'.'];var L=[];
 if(r.length>1)L.push('ZIP '+z+' appears on NFIP policies in '+r.length+' counties:');
 r.forEach(function(x){var k=d.c[x[0]]||[x[0],'',null,null],nm=k[0]+(k[1]?', '+k[1]:'');
-L.push(nm+': '+c(x[1])+' policy units. '+(x[3]!=null?'Median '+m(x[3])+' a year ('+c(x[2])+' priced single-family policies).':
+L.push(nm+': '+c(x[1])+' policy units. '+(x[3]!=null?'Median '+m(x[3])+' a year ('+c(x[2])+' priced single-family policies).'+(k[2]!=null?' The '+k[0]+' median for the same kind of policy is '+m(k[2])+' a year.':''):
 'Too few priced single-family policies ('+c(x[2])+') for a ZIP median'+(k[2]!=null?'; the '+k[0]+' median is '+m(k[2])+' a year.':'.')))});return L}
 window.__zipSay=say;
 f.addEventListener('submit',function(ev){ev.preventDefault();var z=(i.value||'').replace(/\s+/g,'').slice(0,5);

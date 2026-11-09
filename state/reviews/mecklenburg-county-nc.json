@@ -1,8 +1,8 @@
 {
  "slug": "mecklenburg-county-nc",
  "verdict": "PASS",
- "template": "01f8aa96ef30e21f",
+ "template": "63f77b4626326a26",
  "defects": [],
- "reviewer": "hater round 80 (fresh agent, docs/HATER-PROMPT.md)",
+ "reviewer": "hater round 125 (fresh agent, docs/HATER-PROMPT.md)",
  "notes": ""
 }

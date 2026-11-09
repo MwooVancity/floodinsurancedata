@@ -18,6 +18,7 @@ LOMC = "https://hazards.fema.gov/femaportal/onlinelomc/signin"
 PRELIM = "https://hazards.fema.gov/femaportal/prelimdownload/"
 CFR72 = "https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=72"
 CFR61 ="https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=61"
+CFR60 = "https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=60&section=60.3"
 USC4012A = "https://www.law.cornell.edu/uscode/text/42/4012a"
 
 RULES = {
@@ -392,14 +393,21 @@ RULES = {
                 "An appeal does not extend that year.",
         "sources": [(FS + "/recover/appeal-a-claim", "within 60 days of the date written on your denial letter", "curl"),
                     (FS + "/recover/appeal-a-claim", "does not extend the one-year period", "curl")]},
+    "bfe_floor": {   # top-3 compare 11-09: every AE result states the build rule; 44 CFR 60.3(c)(2) read raw 11-09 (eCFR, curl --compressed)
+        "text": "Where FEMA has published final flood elevations, a community in the NFIP must require new homes, and homes being substantially improved, in zones AE and AH "
+                "to have the lowest floor, including the basement, at or above the base flood level, unless FEMA has granted the community a basement exception (44 CFR §60.3(c)(2)).",
+        "sources": [(CFR60, "When the Federal Insurance Administrator has provided a notice of final flood elevations", "curl"),
+                    (CFR60, "Require that all new construction and substantial improvements of residential structures within Zones A1-30, AE and AH zones on the community's FIRM have the lowest floor (including basement) elevated to or above the base flood level", "curl")]},
     "substantial_damage": {
-        "text": "If repairs would cost 50 percent or more of the building's market value before the flood, it counts as substantially damaged under federal rules, and "
-                "local floodplain rules can require elevating or other work. On an NFIP policy with building coverage, Increased Cost of Compliance pays up to $30,000 toward "
-                "that; the local official's letter has to come before the work starts.",
-        "sources": [(CFR59, "would equal or exceed 50 percent of the market value of the structure before the damage occurred", "curl"),
+        # hater r124 (11-09): "local rules can require elevating" had no quote and "repairs would cost" dropped 59.1's cost basis; rewritten from 59.1 and
+        # SFIP Coverage D read raw 11-09 (eCFR, curl --compressed); the unclear "local official's letter" clause and its manual PDF source cut
+        "text": "Under the NFIP's rules, a building is substantially damaged when restoring it to its condition before the damage would cost 50 percent or more of its "
+                "market value before the damage (44 CFR §59.1). An NFIP policy with building coverage pays up to $30,000 under Increased Cost of Compliance to comply "
+                "with a state or local floodplain law when repairing a flood-damaged building.",
+        "sources": [(CFR59, "the cost of restoring the structure to its before damaged condition would equal or exceed 50 percent of the market value of the structure before the damage occurred", "curl"),
                     (CFR61, "We will pay you up to $30,000 under this Coverage D", "curl"),
-                    ("https://www.floodsmart.gov/sites/default/files/media/document/2022-12/B17_Increased%20Cost%20of%20Compliance%20Benefits_Decision%20Upheld.pdf",
-                     "before the initiation of mitigation activities", "manual")]},
+                    (CFR61, "which only applies to policies with building coverage (Coverage A)", "curl"),
+                    (CFR61, "This policy pays you to comply with a State or local floodplain management law or ordinance affecting repair or reconstruction of a building suffering flood damage", "curl")]},
     "lapse_discount": {
         "text": "Paying a renewal 30 days or more after the policy expires causes a lapse in coverage. You then need a new application, and the lapse may cost you "
                 "statutory discounts (what keeps a bill below full risk), including the yearly cap.",

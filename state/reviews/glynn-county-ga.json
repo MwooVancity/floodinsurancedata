@@ -1,8 +1,8 @@
 {
  "slug": "glynn-county-ga",
  "verdict": "PASS",
- "template": "18547c3b7b14425d",
+ "template": "63f77b4626326a26",
  "defects": [],
- "reviewer": "hater round 67 (fresh agent, docs/HATER-PROMPT.md)",
+ "reviewer": "hater round 125 (fresh agent, docs/HATER-PROMPT.md)",
  "notes": ""
 }

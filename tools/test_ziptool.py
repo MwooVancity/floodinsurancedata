@@ -15,7 +15,8 @@ def oracle(z, d):
     out = [f"ZIP {z} appears on NFIP policies in {len(rows)} counties:"] if len(rows) > 1 else []
     for g, units, n, med in rows:
         name, st, p50, _ = d["c"].get(g, [g, "", None, None]); nm = name + (f", {st}" if st else "")
-        if med is not None: out.append(f"{nm}: {units:,} policy units. Median {money(med)} a year ({n:,} priced single-family policies).")
+        if med is not None: out.append(f"{nm}: {units:,} policy units. Median {money(med)} a year ({n:,} priced single-family policies)."
+                                   + (f" The {name} median for the same kind of policy is {money(p50)} a year." if p50 is not None else ""))
         else: out.append(f"{nm}: {units:,} policy units. Too few priced single-family policies ({n:,}) for a ZIP median"
                          + (f"; the {name} median is {money(p50)} a year." if p50 is not None else "."))
     return out

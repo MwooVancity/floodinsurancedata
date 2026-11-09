@@ -1,8 +1,8 @@
 {
  "slug": "fairfield-county-ct",
  "verdict": "PASS",
- "template": "e1a1ad56a8686b33",
+ "template": "63f77b4626326a26",
  "defects": [],
- "reviewer": "hater round 82 (fresh agent, docs/HATER-PROMPT.md)",
+ "reviewer": "hater round 125 (fresh agent, docs/HATER-PROMPT.md)",
  "notes": ""
 }

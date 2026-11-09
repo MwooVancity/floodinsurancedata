@@ -36,6 +36,22 @@ def check(page, csvtext):
     if sorted((int(a.replace(",", "")), float(b)) for a, b in tbl) != sorted(rows.values()): bad.append("C2 page table differs from data")
     ma = re.search(r"the U\.S\. share would be ([\d.]+)%", text)
     if not ma or float(ma[1]) != alt: bad.append(f"C5 share counting error-coded records: page {ma and ma[1]} vs {alt}")
+    yb = {}   # C6 (11-09): the ten costliest loss years, summed from every state's agg.json
+    for p in glob.glob(os.path.join(D, "states", "*", "agg.json")):
+        for y, (cn, cp) in json.load(open(p))["claims"]["by_year"].items():
+            yb.setdefault(int(y), [0, 0]); yb[int(y)][0] += cn; yb[int(y)][1] += cp
+    want = [(y, v[0], v[1]) for y, v in sorted(yb.items(), key=lambda kv: -kv[1][1])[:10]]
+    ys = page[page.find('id="years"'):page.find('id="counties"')]
+    gy = [(int(a), int(b.replace(",", "")), int(c.replace(",", ""))) for a, b, c in re.findall(r"<tr><td>(\d{4})</td><td>([\d,]+)</td><td>\$([\d,]+)</td></tr>", ys)]
+    if gy != want: bad.append(f"C6 costliest years differ: page {gy[:2]} vs data {want[:2]}")
+    sz = sorted(c["paid_building_median"] for p in glob.glob(os.path.join(D, "states", "*", "extras.json"))   # C7: claim-size range
+                for c in [json.load(open(p))["claims"]] if c.get("paid_building_median") and (c.get("damage_n") or 0) >= 500)
+    ms = re.search(r"median paid building claim runs from \$([\d,]+) in .*? to \$([\d,]+) in .*?, among the (\d+) states with", text)
+    if len(sz) >= 2 and (not ms or (int(ms[1].replace(",", "")), int(ms[2].replace(",", "")), int(ms[3])) != (sz[0], sz[-1], len(sz))):
+        bad.append(f"C7 claim-size range: page {ms and ms.groups()} vs ${sz[0]:,}-${sz[-1]:,} in {len(sz)}")
+    for f in glob.glob(os.path.join(ROOT, "dist", "**", "*.html"), recursive=True):   # C8 (hater r124): codes 98/99 are out of every count, so
+        for m in re.finditer(r"every claim record, paid or not(?!, except records FEMA coded)", open(f, encoding="utf-8").read()):   # "every record" must say so
+            bad.append(f"C8 {os.path.relpath(f, ROOT)}: 'every claim record' without the error-code exclusion"); break
     if re.search(r"\bdenied\b", text.replace("does not mean a claim was denied", ""), re.I): bad.append("C4 'denied' printed")
     return bad
 
@@ -97,11 +113,19 @@ if __name__ == "__main__":
         assert not check(pg, cv), check(pg, cv)
         muts = {"lede": re.sub(r"(had a recorded payment)", r"\1", re.sub(r"([\d.]+)% had a recorded", "12.3% had a recorded", pg, count=1)),
                 "row": re.sub(r"(</a></td><td>[\d,]+</td><td>)([\d.]+)%", r"\g<1>1.0%", pg, count=1) if "</a></td><td>" in pg else pg.replace("%</td>", "1%</td>", 1),
-                "denied": pg + "<p>Claims denied.</p>"}
+                "denied": pg + "<p>Claims denied.</p>",
+                "size": re.sub(r"(claim runs from \$)[\d,]+", r"\g<1>1", pg, count=1),
+                "year": re.sub(r'(id="years".*?<tr><td>\d{4}</td><td>[\d,]+</td><td>\$)([\d,]+)', r"\g<1>1", pg, count=1, flags=re.S)}
         for k, m in muts.items(): assert check(m, cv), f"mutation not caught: {k}"
         cv2 = cv.splitlines(); cv2.pop(1)
         assert check(pg, "\n".join(cv2)), "mutation not caught: csv row dropped"
-        print("claims_check mutations: 4 caught"); sys.exit()
+        tf = os.path.join(ROOT, "dist", "_c8_mutation.html")   # C8 reads every built page: plant one with the old label
+        try:
+            open(tf, "w", encoding="utf-8").write("<p>NFIP claims on record: every claim record, paid or not, for losses from 1978.</p>")
+            assert any(b.startswith("C8") for b in check(pg, cv)), "mutation not caught: claim-record label"
+        finally:
+            os.remove(tf)
+        print("claims_check mutations: 7 caught"); sys.exit()
     bad = check(pg, cv)
     for b in bad: print("  -", b)
     print("CLAIMS CHECK", "FAIL" if bad else "PASS"); sys.exit(1 if bad else 0)

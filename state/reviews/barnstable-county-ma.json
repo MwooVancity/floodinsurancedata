@@ -1,8 +1,8 @@
 {
  "slug": "barnstable-county-ma",
  "verdict": "PASS",
- "template": "743f34875d7f64fd",
+ "template": "63f77b4626326a26",
  "defects": [],
- "reviewer": "hater round 86 (fresh agent, docs/HATER-PROMPT.md)",
+ "reviewer": "hater round 125 (fresh agent, docs/HATER-PROMPT.md)",
  "notes": ""
 }

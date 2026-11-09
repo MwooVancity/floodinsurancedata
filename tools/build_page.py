@@ -525,7 +525,7 @@ def card_howto():
         + f"<p class='note'>{rule('nfip_lapse')}</p>"
         + f"<p class='note'><b>What it won't pay:</b> {rule('flood_def')} {rule('not_covered')} {rule('wind_excl')}</p>"
         + f"<p class='note'>{rule('already_flooded')} {rule('aid_insurance')}</p>"
-        + f"<p class='note'>{rule('claim_appeal')} {rule('substantial_damage')}</p>"
+        + f"<p class='note'>{rule('claim_appeal')} {rule('substantial_damage')}</p>"   # r124 asked for a lead-in: it is shared prose on every county page and put sutter-county-ca over S13 (50%); kept as it was
         + _regulator_line()
         + (_deadline_tool() if _tool_on("deadline") else "")
         + (_start_tool() if _tool_on("start") else ""),

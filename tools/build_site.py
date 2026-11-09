@@ -90,7 +90,7 @@ hrows = "".join(f'<tr data-k="{html.escape((p["short"]+" "+(p.get("state") or ""
 srows = "".join(f'<tr data-k="{html.escape((s["name"] + " " + s["abbr"]).lower())}"><td><a href="/flood-insurance/{s["slug"]}/">{html.escape(s["name"])}</a></td>'
                 f'<td>{money(s["median"])}</td><td>{format(s["units"], ",")}</td><td>{format(s["claims"], ",")}</td><td>{money(s["paid"])}</td></tr>' for s in sorted(states, key=lambda s: -s["median"]))
 _cy = [json.load(open(os.path.join(DATADIR, "states", s["slug"], "agg.json")))["claims"] for s in states]
-_cnote = (f'<p class="mut">NFIP claims on record: every claim record, paid or not, for losses from {min(c["year_min"] for c in _cy)} to {max(c["year_max"] for c in _cy)}. '
+_cnote = (f'<p class="mut">NFIP claims on record: every claim record, paid or not, except records FEMA coded "deleted in error" or "assigned in error", for losses from {min(c["year_min"] for c in _cy)} to {max(c["year_max"] for c in _cy)}. '
           'Paid on them: building plus contents payments, in dollars as paid, not adjusted for inflation. <a href="/flood-insurance/claims/">How often claims get paid, county by county</a>.</p>') if states else ""
 _bycost = sorted(states, key=lambda s: -s["median"])
 extremes = (f'<p class="stand">Highest typical cost: {", ".join(html.escape(s["name"]) + " " + money(s["median"]) for s in _bycost[:3])}. '
@@ -197,12 +197,13 @@ home = HEAD.format(title="Flood insurance cost by state and county (FEMA data)",
 {national}
 {prov}
 <input id="s" placeholder="Type your state or county…" aria-label="Find your state or county" autocomplete="off"><p id="nomatch" class="mut" aria-live="polite"></p>{'<p>Or <a href="/flood-insurance/zip/">look up a ZIP code</a>.</p>' if (_zm_zip == "all" or "zip" in _zm_zip) else ""}</section>
-<div class="card"><h2>Three things to know first</h2>
+<div class="card"><h2>What to know first</h2>
 <p class="stand"><b>How fast does it start?</b> {rule("howto_answer")}</p>
 <p class="stand"><b>Am I required to buy it?</b> {rule("purchase_answer")} {rule("lender_any_zone")} {rule("fl_citizens_short")} Check your zone on <a href="https://msc.fema.gov/portal/home" rel="noopener" target="_blank">FEMA's flood map</a>{' or with the <a href="/flood-zone-map/">flood zone lookup</a>' if (_zm_on_home == "all" or "flood-zone-map" in _zm_on_home) else ""}.</p>
 <p class="stand"><b>Does my homeowners policy cover floods?</b> {rule("homeowners_excl")}</p>
 <p class="stand"><b>Where do I buy it?</b> {rule("how_to_buy")} {rule("private_accept")}</p>
-<p class="mut">Rules from {_rule_hosts(["howto_answer", "purchase_answer", "lender_any_zone", "fl_citizens_short", "homeowners_excl", "how_to_buy", "private_accept"])}. <a href="/methodology/">How we check them</a>.</p></div>
+<p class="stand"><b>How much can it pay?</b> {rule("limits")}</p>
+<p class="mut">Rules from {_rule_hosts(["howto_answer", "purchase_answer", "lender_any_zone", "fl_citizens_short", "homeowners_excl", "how_to_buy", "private_accept", "limits"])}. <a href="/methodology/">How we check them</a>.</p></div>
 {home_cards}
 <div class="card"><h2>Flood insurance policies and claims by state</h2>{extremes}
 <table id="st"><thead><tr><th>State</th><th>Median / yr</th><th>Insured units</th><th>NFIP claims on record</th><th>Paid on them</th></tr></thead>
@@ -453,7 +454,7 @@ if len(states) == 51 and len(_zh) == 51:
         fewline = f" {few} more {'states have' if few > 1 else 'state has'} zone {code} policies but under {ZONE_MIN} priced ones, too few for a median." if few else ""
         xfoot = " Last column: every NFIP claim since 1978 on every building type, by the zone on the claim." if xcol else ""   # known units only: an uncounted state is never claimed to have policies
         keys = [rk, "lender_any_zone", "price_drivers", "cap", "save_ways", "howto_answer", "how_to_buy", "seller_assign", "private_accept",
-                "nfip_not_sold"] + (["odds_30", "loma", "zone_review", "ec_get"] if hr else []) + (["bfe"] if code in ("AE", "AH", "VE") else []) + ["glide", "loma_fee", "loma_online"] + (["tx_twia"] if zk == "ve" else [])
+                "nfip_not_sold"] + (["odds_30", "loma", "zone_review", "ec_get"] if hr else []) + (["bfe"] if code in ("AE", "AH", "VE") else []) + (["bfe_floor"] if code in ("AE", "AH") else []) + (["substantial_damage"] if hr else []) + ["glide", "loma_fee", "loma_online"] + (["tx_twia"] if zk == "ve" else [])
         vnote = (f'<p class="mut">Most insured units in this zone are not in the median: {"at least " if units is None else ""}{known:,} units are rated VE '
                  f'(condo buildings, second homes and businesses among them), while the median rests on {n:,} single-family primary-home policies.</p>') if zk == "ve" and n else ""
         # claims by the zone on each claim, ten whole loss years, dollars as paid; national only with all 51 states
@@ -535,7 +536,7 @@ if len(states) == 51 and len(_zh) == 51:
 <p class="mut">Median and policy count: single-family primary homes rated exactly {code}, premium plus fees, in force on {_ASOF_TXT}.{xfoot}{fewline}</p></div>
 {ctab}
 <div class="card"><h2>Buying, refinancing or questioning the zone</h2><p class="stand">{rule("seller_assign")} {rule("private_accept")}</p>
-{f'<p class="stand">{rule("loma")} {rule("loma_fee")} {rule("loma_online")} {rule("zone_review")}</p>' if hr else ""}{f'<p class="stand">{rule("bfe")}</p>' if code in ("AE", "AH", "VE") else ""}{f'<p class="stand">{rule("ec_get")}</p>' if hr else ""}{f'<p class="stand">{rule("tx_twia")}</p>' if zk == "ve" else ""}
+{f'<p class="stand">{rule("loma")} {rule("loma_fee")} {rule("loma_online")} {rule("zone_review")}</p>' if hr else ""}{f'<p class="stand">{rule("bfe")}</p>' if code in ("AE", "AH", "VE") else ""}{f'<p class="stand">{rule("bfe_floor")}</p>' if code in ("AE", "AH") else ""}{f'<p class="stand"><b>After a flood:</b> {rule("substantial_damage")}</p>' if hr else ""}{f'<p class="stand">{rule("ec_get")}</p>' if hr else ""}{f'<p class="stand">{rule("tx_twia")}</p>' if zk == "ve" else ""}
 <p class="stand">{rule("nfip_not_sold")}</p></div>
 <div class="card"><h2>Will it rise, and can I pay less?</h2><p class="stand">{rule("price_drivers")}</p><p class="stand">{rule("cap")}</p><p class="stand">{rule("save_ways")}</p></div>
 <div class="card"><h2>How do I get covered?</h2><p class="stand">{rule("howto_answer")} {rule("how_to_buy")}</p></div>
@@ -584,6 +585,30 @@ if len(states) == 51:
         lo, hi = _cr[0], _cr[-1]
         cname = lambda r: f'{html.escape(r["county"])}, {r["state"]}'
         clink = lambda r: f'<a href="/flood-insurance/{r["slug"]}/">{cname(r)}</a>' if r["slug"] else cname(r)
+        # top-3 compare 11-09: claims-data results name the spike years; ten costliest loss years, all 51 states summed (claims_check C6)
+        _yb = {}
+        for c in _cy:
+            for y, (cn, cp) in c["by_year"].items(): _yb.setdefault(int(y), [0, 0]); _yb[int(y)][0] += cn; _yb[int(y)][1] += cp
+        _ytop = sorted(_yb.items(), key=lambda kv: -kv[1][1])[:10]; _ya = int(_asof()[:4])
+        _yopen = [y for y, _ in _ytop if y >= _ya - 1]
+        _ycard = ('<div class="card" id="years"><h2>Which years paid the most?</h2><p class="stand">The ten loss years with the most paid on NFIP claims, '
+                  f'all 50 states and DC, losses from {min(_yb)} to {max(_yb)}.</p><table><thead><tr><th>Year of loss</th><th>Claims on record</th><th>Paid on them</th></tr></thead><tbody>'
+                  + "".join(f'<tr><td>{y}</td><td>{v[0]:,}</td><td>{money(v[1])}</td></tr>' for y, v in _ytop)
+                  + '</tbody></table><p class="mut">Claims on record: every claim record, paid or not, except records FEMA coded "deleted in error" or "assigned in error", by the year of the loss. Paid on them: building plus contents payments, '
+                  'in dollars as paid, not adjusted for inflation. Puerto Rico and the other territories are not in these totals.'
+                  + (f' Totals for {" and ".join(map(str, sorted(_yopen)))} are not final while their claims stay open.' if _yopen else '') + '</p></div>')
+        # top-3 compare 11-09: claim size; per-state median paid building claim already on each state page, here as a range (claims_check C7)
+        _sz = sorted((c["paid_building_median"], s["name"], s["slug"]) for s in states
+                     for c in [json.load(open(os.path.join(DATADIR, "states", s["slug"], "extras.json")))["claims"]]
+                     if c.get("paid_building_median") and (c.get("damage_n") or 0) >= CLAIMS_MIN)
+        _szout = sorted(s["name"] for s in states if s["slug"] not in {x[2] for x in _sz})   # r124: name who is left out
+        if len(_sz) >= 2:
+            _slink = lambda x: f'<a href="/flood-insurance/{x[2]}/">{html.escape(x[1])}</a>'
+            _ycard += ('<div class="card" id="size"><h2>How big is a typical paid claim?</h2><p class="stand">The median paid building claim runs from '
+                       f'{money(_sz[0][0])} in {_slink(_sz[0])} to {money(_sz[-1][0])} in {_slink(_sz[-1])}, among the {len(_sz)} states with {CLAIMS_MIN} or more such claims'
+                       + (f' (left out, with fewer: {", ".join(html.escape(n) for n in _szout)})' if _szout else '') + '.</p>'
+                       '<p class="mut">Median of the building payment on claims with recorded building damage and a building payment, every loss year since 1978, in dollars as paid, '
+                       'not adjusted for inflation. Contents payments are not in it. Each state page shows its own figure.</p></div>')
         _rows = "".join(f'<tr><td>{clink(r)}</td><td>{r["n"]:,}</td><td>{r["pct"]}%</td><td>{html.escape(_NR.get(r["top"], "—")) if r["top"] else "—"}</td></tr>' for r in _cr)
         with open(os.path.join(DIST, "data", "claims-2020-counties.csv"), "w", newline="", encoding="utf-8") as f:
             w = csv.writer(f); w.writerow(["county_fips", "county", "state", "claims_loss_year_2020_on", "claims_with_recorded_payment", "share_with_payment_pct",
@@ -600,6 +625,7 @@ if len(states) == 51:
 <div class="card"><h2>Why claims had no recorded payment</h2><p class="stand">FEMA's recorded reason on the building part of each of the {_un:,} U.S. claims with no recorded payment, losses from 2020 on.</p>
 <table><thead><tr><th>FEMA's recorded reason</th><th>Claims</th><th>Share of claims with no payment</th></tr></thead><tbody>{_why}</tbody></table>
 <p class="mut">The ten most common reasons, as FEMA labels its codes. A reason is FEMA's record, not a finding about what happened to the building.</p></div>
+{_ycard}
 <div class="card" id="counties"><h2>County by county</h2><p class="stand">Every county with {CLAIMS_MIN} or more NFIP claims for losses from 2020 on, lowest share with a payment first. Recent claims with no payment may still be paid: FEMA's data has no open or closed field.</p>
 <table><thead><tr><th>County</th><th>Claims</th><th>With a recorded payment</th><th>Most recorded reason when nothing was paid</th></tr></thead><tbody>{_rows}</tbody></table>
 <p class="mut">County as coded on each claim record, which can differ from where the building stands. <a href="/data/claims-2020-counties.csv">Download this table (CSV)</a>.</p></div>
@@ -689,7 +715,7 @@ function e(s){return String(s).replace(/[&<>"]/g,function(x){return{'&':'&amp;',
 function say(z,d){var r=d&&d.z&&d.z[z];if(!r)return['No NFIP policy in FEMA\\'s records lists ZIP '+z+'.'];var L=[];
 if(r.length>1)L.push('ZIP '+z+' appears on NFIP policies in '+r.length+' counties:');
 r.forEach(function(x){var k=d.c[x[0]]||[x[0],'',null,null],nm=k[0]+(k[1]?', '+k[1]:'');
-L.push(nm+': '+c(x[1])+' policy units. '+(x[3]!=null?'Median '+m(x[3])+' a year ('+c(x[2])+' priced single-family policies).':
+L.push(nm+': '+c(x[1])+' policy units. '+(x[3]!=null?'Median '+m(x[3])+' a year ('+c(x[2])+' priced single-family policies).'+(k[2]!=null?' The '+k[0]+' median for the same kind of policy is '+m(k[2])+' a year.':''):
 'Too few priced single-family policies ('+c(x[2])+') for a ZIP median'+(k[2]!=null?'; the '+k[0]+' median is '+m(k[2])+' a year.':'.')))});return L}
 window.__zipSay=say;
 f.addEventListener('submit',function(ev){ev.preventDefault();var z=(i.value||'').replace(/\\s+/g,'').slice(0,5);

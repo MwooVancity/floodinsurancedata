@@ -1,8 +1,8 @@
 {
  "slug": "nebraska",
  "verdict": "PASS",
- "template": "03b5a061b4a6ee11",
+ "template": "63f77b4626326a26",
  "defects": [],
- "reviewer": "hater round 18 (fresh agent, docs/HATER-PROMPT.md)",
+ "reviewer": "hater round 125 (fresh agent, docs/HATER-PROMPT.md)",
  "notes": ""
 }
