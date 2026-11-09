@@ -18,12 +18,12 @@ Most helpful flood-insurance page for every US place a homeowner or buyer search
 Keyword Planner volume x top bid: state insurance $190k, map $90k, towns $47k, zones $37k, cost $37k, NFIP $36k, state map $25k, renters $18k, county map $15.5k. Not targeted: head term "flood insurance" (FloodSmart), quote and companies (forbidden). Every money page is live; counties now run 20 a day, queue "kw" > 0 only (~1,200 zero-demand counties wait for the Jan 4 rule).
 
 ## Next, in order
-1. 11-09 (running): forced refresh 42539080937 adds paid share by named flood, ZIP share below full-risk, condo-unit cost, drops FEMA codes 98/99 (Sonoma claims about -187), condo filter; then one release + one light review of the new figures.
+1. Live 11-09 (verified on the live site): paid share by named flood, ZIP share below full-risk, condo-unit cost, FEMA codes 98/99 out (Sonoma 7,403 -> 7,237 claims), take-up card, state risk card, borough titles, county table filter, Citizens/wildfire/EC rules, labelled llms.txt. Tonight's daily job runs the address tool in WebKit and watch.yml runs it against real FEMA (first test of the new elevation and map-letter lines).
 2. 11-15: weekly Search Console + GA4 read (bot-free GA from 11-08).
 3. 11-18 start-date tool "all"; 11-20 address tool "all" after 7 green nightly live tests (watch.yml; a FEMA outage fails safe, as on 11-08).
 4. 12-12: did Congress extend the NFIP past 2026-12-11? During a lapse set `start` to [].
 5. Gates (11-08): labels checked against data (C10-C16), A4 reads column headers, mutation no-op and control-character lints; `test_factory.py` (19 per-place cases x county/small/big state) and `test_site_factory.py` (14 national cases) run in release.
-6. Owner said do it (11-08): FEMA take-up card on county pages; address tool adds FEMA's base flood elevation / AO depth and map letters near the pin (oracle + 3,000 fuzz + click path pass; live with the next release).
+6. Owner decisions built 11-08: take-up card; address tool shows FEMA base flood elevation / AO depth and map letters near the pin (counts only).
 7. Regulators: 42 states link their own (US runner 11-08); AK AZ KS LA MA NH NJ WV WY block automated reading and link NAIC's directory.
 Backlog (`state/reviews/backlog.md`): every item BUILDING or DECIDED (11-08).
 
