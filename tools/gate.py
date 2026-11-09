@@ -302,8 +302,15 @@ if _trd:
     _ys = [int(y) for y in re.findall(r'data-m="trend_cost" data-q="(\d{4})"', _trd.group(0).split("<tbody>")[-1])]   # table rows, not the lead
     if _ys != sorted(set(_ys)): fail("C17", f"cost trend rows out of year order: {_ys}")
     _gone = sorted(str(t["year"]) for t in _tl if t.get("year") != _ay and t.get("median") is None)
-    _named = re.search(r"Left out: ([\d, ]+) \(", _trd.group(0))
-    if (_named.group(1).split(", ") if _named else []) != _gone: fail("C17", f"cost trend leaves out {_gone} but names {_named and _named.group(1)}")
+    _lo = re.search(r"Left out: (.*?)\.(?:\s|<)", _trd.group(0), re.S)
+    _named = re.findall(r"(?:^|; )(\d{4}) \(([^()]*)\)", _lo.group(1)) if _lo else []
+    if sorted(y for y, _ in _named) != _gone: fail("C17", f"cost trend leaves out {_gone} but names {[y for y, _ in _named]}")
+    _byy = {str(t["year"]): t for t in _tl}; _nowt = _now[0] if _now else {}
+    for _y, _why in _named:   # r121: the reason printed is the rule that applied (labels are claims)
+        _t = _byy.get(_y) or {}; _w = norm(re.sub(r"<[^>]+>", "", _why))
+        _want = ("only" if _t.get("n", 0) < MX.CONST["min_priced"] else f"under {MX.CONST['trend_fill_pct']}%" if 100 * _t.get("n", 0) < MX.CONST["trend_fill_pct"] * _t.get("sf_n", 0)
+                 else "more than twice" if _t.get("sf_n", 0) > _nowt.get("sf_n", 0) else "under half")
+        if _want not in _w: fail("C17", f"cost trend {_y} left out for a reason the data does not give: '{_w[:80]}' (data says: {_want})")
 # C6 CRS discounts under Risk Rating 2.0 are one rate for every zone: no separate "other areas" rate
 if re.search(r"<th>Other areas</th>", page): fail("C6", "CRS table shows a separate non-high-risk discount (pre-2021 rule; Risk Rating 2.0 is one rate in every zone)")
 _foot = re.search(r"<footer>(.*?)</footer>", page, re.S)

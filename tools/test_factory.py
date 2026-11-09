@@ -60,6 +60,10 @@ def cost_trend(a, d, x):   # 11-09: the next refresh's cost-by-year rows, file o
     y = int(a["policies"]["asof"][:4]); p = a["policies"]["p50"]
     x.setdefault("policies", {})["cost_trend"] = [{"year": y, "median": p, "n": 900, "sf_n": 950}] + [
         {"year": y - k, "median": None if k > 3 else round(p * (1 - 0.06 * k)), "n": 10 if k > 3 else 800, "sf_n": 850} for k in (3, 1, 5, 2, 4)]
+def cost_trend_reasons(a, d, x):   # r121: each rule that leaves a year out (too few priced, under 90% priced, count off today's) names itself
+    cost_trend(a, d, x); T = x["policies"]["cost_trend"]; now = T[0]["sf_n"]
+    T[1].update(median=None, n=500, sf_n=900)                 # 500 of 900 priced: under 90%
+    T[2].update(median=None, n=3 * now, sf_n=3 * now)         # three times today's count
 def cost_trend_off(a, d, x):   # the same with the as-of-year median off the headline (two rules): gate C17 must block it
     cost_trend(a, d, x); x["policies"]["cost_trend"][0]["median"] += 50
 def takeup_no_date(a, d, x):   # 11-09 feed sweep: a feed without its own as-of date shows no card (never the download day)
@@ -67,7 +71,7 @@ def takeup_no_date(a, d, x):   # 11-09 feed sweep: a feed without its own as-of 
 def zero_units(a, d, x): a["policies"].update(units=0, rows=0, zone_units={}, sfha_units=0, sfha_share_units=None, cost_by_zone={}, cost_n=0)
 
 CASES = [no_claims, one_claim, one_zone, big_unpriced_zone, no_priced_zone, under_floor, all_decades_small, only_catch_all,
-         billion_flood, asof_jan1, asof_dec31, claims_old, no_nri, no_disasters, no_crs, no_multiloss, shuffled_order, new_fields_11_08, zero_units, cost_trend, cost_trend_off, takeup_no_date]
+         billion_flood, asof_jan1, asof_dec31, claims_old, no_nri, no_disasters, no_crs, no_multiloss, shuffled_order, new_fields_11_08, zero_units, cost_trend, cost_trend_off, cost_trend_reasons, takeup_no_date]
 
 tmp = tempfile.mkdtemp(); rows, crashed = [], []
 for SLUG, SRC, LABEL, GEOID, LEVEL in TARGETS:
@@ -95,14 +99,22 @@ for SLUG, SRC, LABEL, GEOID, LEVEL in TARGETS:
         rows.append((name, "GATE-CRASH", g.stderr.strip().splitlines()[-1][:90])); crashed.append(name); continue
     ids = sorted(set(re.findall(r"\[(\w+)\]", g.stdout)))
     if fn.__name__ == "takeup_no_date" and "carry flood insurance?</h2>" in open(out, encoding="utf-8").read(): ids.append("TAKEUP-UNDATED")
+    if fn.__name__ in ("cost_trend", "cost_trend_reasons") and not g.returncode:   # the printed reason must match the data: swap one, the gate must fail
+        _h = open(out, encoding="utf-8").read(); _m = re.sub(r"(Left out: \d{4} \()[^()]*\)", r"\1it counts 1 single-family policies, under half today's 2, so it is not compared)", _h, count=1)
+        if _m == _h: ids.append("NO-LEFT-OUT-LINE")
+        else:
+            open(out, "w", encoding="utf-8").write(_m)
+            g2 = subprocess.run([sys.executable, "-I", os.path.join(T, "gate.py"), os.path.join(d, "agg.json"), out, "0"], capture_output=True, text=True)
+            if "[C17]" not in g2.stdout: ids.append("C17-MISSED-WRONG-REASON")
+            open(out, "w", encoding="utf-8").write(_h)
     if fn.__name__ == "cost_trend" and ' id="trend"' not in open(out, encoding="utf-8").read(): ids.append("NO-TREND-CARD")
-    rows.append((name, "BLOCKED" if g.returncode or "NO-TREND-CARD" in ids or "TAKEUP-UNDATED" in ids else "PASS", ",".join(ids) or "-"))
+    rows.append((name, "BLOCKED" if g.returncode or "NO-TREND-CARD" in ids or "TAKEUP-UNDATED" in ids or "C17-MISSED-WRONG-REASON" in ids or "NO-LEFT-OUT-LINE" in ids else "PASS", ",".join(ids) or "-"))
 shutil.rmtree(tmp, ignore_errors=True)
 w = max(len(r[0]) for r in rows)
 for n, res, info in rows: print(f"{n:<{w}} {res:<11} {info}")
 must_pass = [r for r in rows if r[0].endswith(":new_fields_11_08") and r[1] != "PASS"]   # new figures must ship clean, not be held
 assert not must_pass, f"new 11-08 figures do not pass the gate: {must_pass}"
-must_pass = [r for r in rows if r[0].endswith(":cost_trend") and r[1] != "PASS"]   # 11-09: the card shows and passes
+must_pass = [r for r in rows if r[0].endswith((":cost_trend", ":cost_trend_reasons")) and r[1] != "PASS"]   # 11-09: the card shows and passes
 assert not must_pass, f"cost-by-year card missing or blocked: {must_pass}"
 assert not [r for r in rows if "TAKEUP-UNDATED" in r[2]], "take-up card printed without its own date"
 must_block = [r for r in rows if r[0].endswith(":cost_trend_off") and "C17" not in r[2]]   # and a second rule is caught

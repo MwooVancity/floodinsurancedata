@@ -1,8 +1,8 @@
 {
  "slug": "utah",
  "verdict": "PASS",
- "template": "6c25f3f5e53af190",
+ "template": "7b9988c28fb59563",
  "defects": [],
- "reviewer": "hater round 84 (fresh agent, docs/HATER-PROMPT.md)",
+ "reviewer": "hater round 121 (fresh agent, docs/HATER-PROMPT.md)",
  "notes": ""
 }

@@ -102,6 +102,7 @@ METRICS = {
     "condo_unit_cost_n": _m(POL, ["policyCost", "condominiumCoverageTypeCode"], "count", counts="policy_record"),
     "trend_cost": _m(POL, ["policyCost", "policyEffectiveDate"], "usd_cost_with_fees"),   # 11-09 "is it rising?": median on each past as-of day
     "trend_fill": _m(POL, ["policyCost"], "pct", of="single-family policy records"),
+    "trend_sf_n": _m(POL, ["policyCount", "occupancyType", "policyEffectiveDate"], "count", counts="policy_record"),   # every single-family record that day, priced or not
     "trend_n": _m(POL, ["policyCost", "policyEffectiveDate"], "count", counts="policy_record"),
     "zip_share_below": _m(POL, ["totalInsurancePremiumOfThePolicy", "fullRiskPremium", "reportedZipCode"], "pct", basis="full-risk",
                           of="single-family primary-residence policies in the ZIP with both premiums"),   # 11-08 backlog r8-r11   # plan item 4: unit-owner condo policies (code U)

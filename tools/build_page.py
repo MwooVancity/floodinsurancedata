@@ -1260,9 +1260,19 @@ def card_trend():   # 11-09 HCU "is it rising?": the typical cost on the same da
     note = ("<p class='note'>Median yearly cost of single-family primary-home NFIP policies in force on each date, in dollars of the day "
             "(not adjusted for inflation). The homes insured change from year to year, so this is not one home's bill over time, "
             "and FEMA's records do not say why a bill changed.")
-    if out: note += (f" Left out: {', '.join(out)} (FEMA's records here give a cost for fewer than {tp('threshold', 'const.min_priced', q='min_priced')} "
-                     f"of that year's single-family policies or for under {tp('trend_fill', 'const.trend_fill_pct', pct)} of them, "
-                     "or count under half or over twice today's number of them, which can mean the records place homes differently).")
+    inow = next((i for i, x in enumerate(L) if x.get("year") == _a), None)
+    def why(i):   # r121: each left-out year states its own reason, in the order extras_raw applies the rules (labels are claims)
+        x = L[i]
+        if x["n"] < MIN_PRICED: return f"FEMA's records give a cost for only {t(i, 'n', num, 'trend_n')} of its single-family policies"
+        if 100 * x["n"] < MX.CONST["trend_fill_pct"] * x["sf_n"]:
+            return (f"FEMA's records give a cost for {t(i, 'n', num, 'trend_n')} of its {t(i, 'sf_n', num, 'trend_sf_n')} single-family policies, "
+                    f"under {tp('trend_fill', 'const.trend_fill_pct', pct)}")
+        if inow is None: return "today's count is missing to compare it with"
+        return (f"it counts {t(i, 'sf_n', num, 'trend_sf_n')} single-family policies, "
+                f"{'more than twice' if x['sf_n'] > L[inow]['sf_n'] else 'under half'} today's "
+                f"{tp('trend_sf_n', f'extras.policies.cost_trend.{inow}.sf_n', num, q='now')}, so it is not compared")
+    _out_i = [i for i in past if L[i].get("median") is None]
+    if out: note += " Left out: " + "; ".join(f"{L[i]['year']} ({why(i)})" for i in _out_i) + "."
     return card(f"Is flood insurance getting more expensive in {CS}?", lead,
                 "<table><thead><tr><th>Policies in force on</th><th>Median / yr, single-family primary home</th><th>Priced policies</th></tr></thead>"
                 f"<tbody>{rows}</tbody></table>" + note + "</p>",

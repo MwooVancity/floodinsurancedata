@@ -38,7 +38,7 @@
     "harris-county-tx",
     "louisiana"
   ],
-  "trend": [],
+  "trend": "all",
   "zip": [
     "zip"
   ]
