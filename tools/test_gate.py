@@ -233,6 +233,15 @@ _ctrl = [f for f in os.listdir(T) if f.endswith((".py", ".mjs", ".js", ".sh")) a
 assert re.search(r"[\x00-\x08\x0b\x0c\x0e-\x1f]", "re.sub(r'(x)', r'" + chr(1) + "')") and re.search(r"[\x00-\x08\x0b\x0c\x0e-\x1f]", chr(8) + "(COUNTY)")   # the lint fires on both real slips
 table.append(("11-08 lint", "control character in a tool file", "lint", "PASS" if not _ctrl else "MISSED", ",".join(_ctrl) or "-"))
 ok &= not _ctrl
+# 11-08: an unquoted ": " in a step name made refresh-data.yml unreadable to GitHub (no trigger at all); parse every workflow
+try:
+    import yaml
+    _wd = os.path.join(ROOT, ".github", "workflows"); _yb = []
+    for _f in sorted(os.listdir(_wd)) if os.path.isdir(_wd) else []:
+        try: yaml.safe_load(open(os.path.join(_wd, _f), encoding="utf-8"))
+        except yaml.YAMLError: _yb.append(_f)
+    table.append(("11-08 lint", "workflow file GitHub cannot read", "yaml", "PASS" if not _yb else "MISSED", ",".join(_yb) or "-")); ok &= not _yb
+except ImportError: table.append(("11-08 lint", "workflow file GitHub cannot read", "yaml", "SKIPPED", "pyyaml not installed"))
 
 # gate 3 (reader on a phone) needs Playwright; CI without it skips these and says so
 try:
