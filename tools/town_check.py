@@ -25,7 +25,9 @@ def check(page, geoid):
     dw = ", ".join(want[:3]) if want else None
     if not d or (html.unescape(d[1]) if d[1] else None) != dw: bad.append(f"T3 description towns {d and d[1]} vs {dw}")
     t = re.search(r"<title>[^<(]*?(?: \(([^)]*)\))? flood zones", page)   # T4 title names the top town, or none
-    if not t or (html.unescape(t[1]) if t[1] else None) != (want[0] if want and want[0].lower() not in page[t.start():t.end()].split(" (")[0].lower() else None):
+    # a New York City county is one borough (Census county subdivision, not a place): the title names the borough instead
+    boro = {"36061": "Manhattan", "36047": "Brooklyn", "36081": "Queens", "36005": "the Bronx", "36085": "Staten Island"}.get(geoid)
+    if not t or (html.unescape(t[1]) if t[1] else None) != (boro or (want[0] if want and want[0].lower() not in page[t.start():t.end()].split(" (")[0].lower() else None)):
         bad.append(f"T4 title town {t and t[1]} vs {want[:1]}")
     return bad
 

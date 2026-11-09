@@ -10,6 +10,7 @@ THEME = """:root{--bg:#fff;--surface:#fff;--ink:#111;--mut:#222;--faint:#3d3d3d;
  --head:Georgia,"Iowan Old Style","Palatino Linotype","Times New Roman",serif;
  --serif:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
 body{background:#fff;color:var(--ink);font:17px/1.62 var(--serif)}
+@media print{input,button,script,.topbar,#cf,#nomatch{display:none!important}h1,.hero .kicker{background:none!important;color:#000!important;box-shadow:none!important}a{color:#000}.card{break-inside:avoid-page}}
 a{color:var(--brand);text-decoration-thickness:1px;text-underline-offset:2px}
 .topbar{background:#000;border:0;box-shadow:none}
 .topbar .wrap{padding:13px var(--gut);flex-wrap:wrap;justify-content:center;text-align:center}

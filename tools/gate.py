@@ -130,7 +130,11 @@ for mm in re.finditer(r'<span data-m="(\w+)"[^>]*>', page):   # A4 a figure with
     basis = MX.METRICS.get(mm.group(1), {}).get("basis")
     if not basis or basis == "rating": continue
     if basis not in norm(re.sub(r"<[^>]+>", " ", page[max(0, mm.start() - 260): mm.end() + 260])).lower():
-        fail("A4", f"{mm.group(1)} shown without naming its basis '{basis}'")
+        # 11-08: a table cell is labelled by its own column header (read from that table's <thead>, not anything nearby)
+        _tb = page.rfind("<table", 0, mm.start()); _te = page.find("</table>", _tb)
+        _th = re.search(r"<thead>(.*?)</thead>", page[_tb:_te], re.S) if _tb >= 0 and _te > mm.start() else None
+        if not (_th and basis in norm(re.sub(r"<[^>]+>", " ", _th.group(1))).lower()):
+            fail("A4", f"{mm.group(1)} shown without naming its basis '{basis}'")
 for mm in re.finditer(r'<span data-m="(\w+)"', page):   # A6 words naming new policies sit only on a new-policy figure (hater r5:
     seg = re.split(r"[.!?]\s", norm(re.sub(r"<[^>]+>", " ", page[max(0, mm.start() - 200):mm.start()])))[-1]   # "a new one ... $1,466" was existing stock)
     if re.search(r"\bnew (?:single-family )?(?:policy|policies|one|buyers?)\b|\bbrand-new\b|\bfirst bought\b", seg, re.I) \
@@ -233,8 +237,9 @@ if _dt:
 _zc = re.search(r'<a href="#zone-cost">(.*?)</a>', page, re.S)
 if _zc and units:
     _zt_ = norm(re.sub(r"<[^>]+>", "", _zc.group(1)))
+    _priced_q = set(re.findall(r'data-m="zone_cost" data-q="([^"]+)"', _zc.group(1)))   # "Zones X $913, A $627": named by its tagged price
     for _z, _v in (P.get("zone_units") or {}).items():
-        if _v >= 0.10 * units and _z not in ("Unknown", "other", "other_hr") and not re.search(rf"\bZone {re.escape(_z)}\b", _zt_):
+        if _v >= 0.10 * units and _z not in ("Unknown", "other", "other_hr") and _z not in _priced_q and not re.search(rf"\bZone {re.escape(_z)}\b", _zt_):
             fail("C11", f"Zone {_z} holds {100 * _v / units:.1f}% of policy units but the cost answer leaves it out: {_zt_[:90]}")
     for _z in re.findall(r"Zone (\w+), [\d.]+% of policy units, has too few to price", _zt_):
         if _z in (P.get("cost_by_zone") or {}): fail("C11", f"Zone {_z} called too few to price, but it has a median")
@@ -279,6 +284,13 @@ if _un and _et:
     _single = set(re.findall(r"\((\d{4})\)</td>", _et.group(1)))
     _bad15 = sorted(set(re.findall(r"\b\d{4}\b", _un)) & _single)
     if _bad15: fail("C15", f"note says {_bad15} have no flood in the table, but the table has a row for them")
+# C16 state risk card: each rating column counts every county once (11-08: coastal column first counted 29 of 64 parishes)
+_rt = re.search(r"<th>FEMA flood risk rating</th>(.*?)</tbody>", page, re.S)
+_all = re.search(r'data-m="county_count" data-q="all">(\d+)<', page)
+if _rt and _all:
+    for _side in ("coastal", "inland"):
+        _ns = [int(x) for x in re.findall(rf'data-m="county_count" data-q="{_side}:[^"]+">(\d+)<', _rt.group(1))]
+        if _ns and sum(_ns) != int(_all.group(1)): fail("C16", f"{_side} risk column adds to {sum(_ns)}, not the {_all.group(1)} counties stated")
 # C6 CRS discounts under Risk Rating 2.0 are one rate for every zone: no separate "other areas" rate
 if re.search(r"<th>Other areas</th>", page): fail("C6", "CRS table shows a separate non-high-risk discount (pre-2021 rule; Risk Rating 2.0 is one rate in every zone)")
 _foot = re.search(r"<footer>(.*?)</footer>", page, re.S)

@@ -191,7 +191,7 @@ else: home_cards = ""
 home = HEAD.format(title="Flood insurance cost by state and county (FEMA data)",
     desc="What flood insurance actually costs where you live, from FEMA's own policy and claim records: typical cost, whether you're required to buy it, how fast it starts, and what floods have paid out.",
     canon=BASE + "/") + f"""
-<section class="hero"><p class="kicker">NFIP records · {"50 states and DC" if len(states) == 51 else str(len(states)) + " states"} · {len(places)} counties</p>
+<section class="hero"><p class="kicker">NFIP records · {"50 states and DC" if len(states) == 51 else str(len(states)) + " states"} (not Puerto Rico or other U.S. territories) · {len(places)} counties</p>
 <h1>What flood insurance costs in your state</h1>
 <p class="lede">From FEMA's own records of existing policies and claims, not quotes: what policyholders pay, whether you're required to buy it, and how fast it starts.</p>
 {national}
@@ -200,7 +200,9 @@ home = HEAD.format(title="Flood insurance cost by state and county (FEMA data)",
 <div class="card"><h2>Three things to know first</h2>
 <p class="stand"><b>How fast does it start?</b> {rule("howto_answer")}</p>
 <p class="stand"><b>Am I required to buy it?</b> {rule("purchase_answer")} {rule("lender_any_zone")} {rule("fl_citizens_short")} Check your zone on <a href="https://msc.fema.gov/portal/home" rel="noopener" target="_blank">FEMA's flood map</a>{' or with the <a href="/flood-zone-map/">flood zone lookup</a>' if (_zm_on_home == "all" or "flood-zone-map" in _zm_on_home) else ""}.</p>
-<p class="stand"><b>Does my homeowners policy cover floods?</b> {rule("homeowners_excl")}</p></div>
+<p class="stand"><b>Does my homeowners policy cover floods?</b> {rule("homeowners_excl")}</p>
+<p class="stand"><b>Where do I buy it?</b> {rule("how_to_buy")} {rule("private_accept")}</p>
+<p class="mut">Rules from {_rule_hosts(["howto_answer", "purchase_answer", "lender_any_zone", "fl_citizens_short", "homeowners_excl", "how_to_buy", "private_accept"])}. <a href="/methodology/">How we check them</a>.</p></div>
 {home_cards}
 <div class="card"><h2>Flood insurance policies and claims by state</h2>{extremes}
 <table id="st"><thead><tr><th>State</th><th>Median / yr</th><th>Insured units</th><th>NFIP claims on record</th><th>Paid on them</th></tr></thead>
@@ -451,7 +453,7 @@ if len(states) == 51 and len(_zh) == 51:
         fewline = f" {few} more {'states have' if few > 1 else 'state has'} zone {code} policies but under {ZONE_MIN} priced ones, too few for a median." if few else ""
         xfoot = " Last column: every NFIP claim since 1978 on every building type, by the zone on the claim." if xcol else ""   # known units only: an uncounted state is never claimed to have policies
         keys = [rk, "lender_any_zone", "price_drivers", "cap", "save_ways", "howto_answer", "how_to_buy", "seller_assign", "private_accept",
-                "nfip_not_sold"] + (["odds_30", "loma", "zone_review"] if hr else []) + (["bfe"] if code in ("AE", "AH", "VE") else []) + ["glide", "loma_fee", "loma_online"] + (["tx_twia"] if zk == "ve" else [])
+                "nfip_not_sold"] + (["odds_30", "loma", "zone_review", "ec_get"] if hr else []) + (["bfe"] if code in ("AE", "AH", "VE") else []) + ["glide", "loma_fee", "loma_online"] + (["tx_twia"] if zk == "ve" else [])
         vnote = (f'<p class="mut">Most insured units in this zone are not in the median: {"at least " if units is None else ""}{known:,} units are rated VE '
                  f'(condo buildings, second homes and businesses among them), while the median rests on {n:,} single-family primary-home policies.</p>') if zk == "ve" and n else ""
         # claims by the zone on each claim, ten whole loss years, dollars as paid; national only with all 51 states
@@ -533,7 +535,7 @@ if len(states) == 51 and len(_zh) == 51:
 <p class="mut">Median and policy count: single-family primary homes rated exactly {code}, premium plus fees, in force on {_ASOF_TXT}.{xfoot}{fewline}</p></div>
 {ctab}
 <div class="card"><h2>Buying, refinancing or questioning the zone</h2><p class="stand">{rule("seller_assign")} {rule("private_accept")}</p>
-{f'<p class="stand">{rule("loma")} {rule("loma_fee")} {rule("loma_online")} {rule("zone_review")}</p>' if hr else ""}{f'<p class="stand">{rule("bfe")}</p>' if code in ("AE", "AH", "VE") else ""}{f'<p class="stand">{rule("tx_twia")}</p>' if zk == "ve" else ""}
+{f'<p class="stand">{rule("loma")} {rule("loma_fee")} {rule("loma_online")} {rule("zone_review")}</p>' if hr else ""}{f'<p class="stand">{rule("bfe")}</p>' if code in ("AE", "AH", "VE") else ""}{f'<p class="stand">{rule("ec_get")}</p>' if hr else ""}{f'<p class="stand">{rule("tx_twia")}</p>' if zk == "ve" else ""}
 <p class="stand">{rule("nfip_not_sold")}</p></div>
 <div class="card"><h2>Will it rise, and can I pay less?</h2><p class="stand">{rule("price_drivers")}</p><p class="stand">{rule("cap")}</p><p class="stand">{rule("save_ways")}</p></div>
 <div class="card"><h2>How do I get covered?</h2><p class="stand">{rule("howto_answer")} {rule("how_to_buy")}</p></div>
@@ -613,7 +615,7 @@ if len(states) == 51:
     _paid_all = sum(s["paid"] for s in states); _cl_all = sum(s["claims"] for s in states)
     _top = sorted(states, key=lambda s: -s["units"])[:10]
     _trs = "".join(f'<tr><td><a href="/flood-insurance/{s["slug"]}/">{html.escape(s["name"])}</a></td><td>{s["units"]:,}</td><td>{round(100 * s["units"] / _units, 1)}%</td></tr>' for s in _top)
-    _nk = ["nfip_not_sold", "how_to_buy", "limits", "wait_30", "nfip_lapse", "private_accept"]
+    _nk = ["purchase_answer", "lender_any_zone", "nfip_not_sold", "how_to_buy", "limits", "wait_30", "nfip_lapse", "private_accept"]
     pg = HEAD.format(title=f"The NFIP in numbers: {_units / 1e6:.1f} million policy units, {money(_med)}/yr median, claims since 1978",
                      desc="The National Flood Insurance Program from FEMA's own records: policy units in force, what single-family homes pay, claims and dollars paid since 1978, and where the policies are.",
                      canon=BASE + "/nfip/") + f"""
@@ -623,6 +625,7 @@ if len(states) == 51:
 <div class="stat"><div class="n">{money(_med)}</div><div class="l">Median / yr, single-family primary home</div></div>
 <div class="stat"><div class="n">${_paid_all / 1e9:.1f}B</div><div class="l">Paid on NFIP claims since 1978, dollars as paid</div></div></div>
 <p class="mut">FEMA OpenFEMA NFIP Policies v3 and Claims v3, as of {_ASOF_TXT}. Policy units: every NFIP policy unit, including condos, rentals and businesses. Claims paid: building plus contents payments, not adjusted for inflation. <a href="/flood-insurance/claims/">How often claims get paid, county by county</a>.</p>
+<div class="card"><h2>Am I required to buy it?</h2><p class="stand">{rule("purchase_answer")} {rule("lender_any_zone")}</p></div>
 <div class="card"><h2>How does the NFIP work?</h2><p class="stand">{rule("nfip_not_sold")} {rule("limits")} {rule("wait_30")}</p><p class="stand">{rule("how_to_buy")}</p><p class="stand">{rule("nfip_lapse")}</p><p class="stand">{rule("private_accept")}</p></div>
 <div class="card"><h2>Where are the NFIP policies?</h2><p class="stand">The ten states with the most NFIP policy units, and their share of all units in force.</p>
 <table><thead><tr><th>State</th><th>Policy units</th><th>Share of U.S.</th></tr></thead><tbody>{_trs}</tbody></table>
@@ -653,7 +656,7 @@ if RENT_ON:
 <div class="card"><h2>What do renters pay in each state?</h2><p class="stand">States with at least 30 priced NFIP renter policies, most policies first.</p>
 <table><thead><tr><th>State</th><th>Median / yr</th><th>Priced renter policies</th></tr></thead><tbody>{_rtr}</tbody></table>
 <p class="mut">What homeowners pay: <a href="/nfip/">the NFIP in numbers</a>. <a href="/flood-insurance/zip/">Cost by ZIP code</a> (single-family homes).</p></div>
-<div class="card"><h2>What these numbers cannot tell you</h2><p class="stand">Your premium, private insurers' prices, or why a price changed. The median is what existing NFIP renter policies pay, not a quote.</p>
+<div class="card"><h2>What these numbers cannot tell you</h2><p class="stand">Your premium, private insurers' prices, or why a price changed. The median is what existing NFIP renter policies pay, not a quote. Whether you must buy it is not in FEMA's data: only your lease or landlord can say.</p>
 <p class="mut">Sources: FEMA OpenFEMA NFIP Policies v3; rules from {_rule_hosts(_rk)}.</p></div>{FOOT}"""
     wr(os.path.join(DIST, "flood-insurance", "renters", "index.html"), pg)
     zone_urls.append((BASE + "/flood-insurance/renters/", None))

@@ -1,7 +1,7 @@
 """Build one county's flood page from data.json (small datasets) + agg.json (bulk); parameterized by env.
 River-style: white cards, every number has a unit, one line of context, source + as-of once.
 No verdict, no advice prose. Writes directly to the repo dist path. -> OUT_HTML."""
-import datetime, json, html, os, re, sys
+import collections, datetime, json, html, os, re, sys
 from collections import defaultdict, Counter
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))  # -I drops script dir; restore for ffcalc
 import ffcalc
@@ -232,9 +232,34 @@ def card_risk():
                     f"FEMA's National Risk Index has no usable flood rating for this {UNIT}."
                     + (" It rates Connecticut's planning regions, which do not line up with its counties." if agg.get("state") == "CT" else ""),
                     f"<p class='gap'>Gap: NRI flood expected-annual-loss and national percentile for {CS}.</p>")
-    if IS_STATE: risk = ""   # FEMA's NRI rates counties; the state page shows every county's rating in the tile map instead
+    if IS_STATE: risk = _state_risk()   # hater r12: FEMA's NRI rates counties; the state page counts them per rating (tile maps were cut)
     elif _sea_line(): risk = risk.replace("</section>", _sea_line() + src(["sea_trend"], "NOAA's published trends", RETR) + "</section>", 1)
     return risk
+
+_NRI_ORDER = ["Very High", "Relatively High", "Relatively Moderate", "Relatively Low", "Very Low"]
+def _state_risk():   # every county's FEMA flood rating, counted per rating word, coastal and inland side by side
+    nc = data.get("nri_counties") or []
+    if not nc: return ""
+    cnt = {s: collections.Counter(str(c.get(s)) for c in nc if _present(c.get(s))) for s in ("coastal", "inland")}
+    words = _NRI_ORDER + sorted({w for s in cnt for w in cnt[s]} - set(_NRI_ORDER))
+    words = [w for w in words if cnt["coastal"][w] or cnt["inland"][w]]
+    if not words: return ""
+    cell = lambda s, w: m("county_count", str(cnt[s][w]), q=f"{s}:{w}")
+    hi = lambda s: cnt[s]["Very High"] + cnt[s]["Relatively High"]
+    sides = [s for s in ("coastal", "inland") if sum(cnt[s].values())]   # an inland state has no coastal ratings: no column of zeros
+    label = {"coastal": "coastal flooding", "inland": "inland (river) flooding"}
+    lead = (f"Of the {m('county_count', str(len(nc)), q='all')} {UNITS} here, FEMA rates "
+            + " and ".join(f"{m('county_count', str(hi(s)), q=s + ':high')} Very High or Relatively High for {label[s]}" for s in sides)
+            + f". It compares {UNITS} nationally, not your address.")
+    body = ("<table><thead><tr><th>FEMA flood risk rating</th>" + "".join(f"<th>{s.title()}</th>" for s in sides) + "</tr></thead><tbody>"
+            + "".join(f"<tr><td>{html.escape(w)}</td>" + "".join(f"<td>{cell(s, w)}</td>" for s in sides) + "</tr>" for w in words)
+            # every county counted once per column: the rest have no rating on that side (an inland county has no coastal rating)
+            + ("<tr><td>No rating for this kind of flooding</td>" + "".join(f"<td>{m('county_count', str(len(nc) - sum(cnt[s].values())), q=s + ':none')}</td>" for s in sides) + "</tr>"
+               if any(len(nc) - sum(cnt[s].values()) for s in sides) else "")
+            + f"</tbody></table><p class='note'>Each {UNIT} page shows its own rating. FEMA's rating weighs modeled loss with social "
+            f"vulnerability and community resilience.{how('nri')}</p>")
+    return card("How much flood risk is here?", lead, body,
+                src(["nri_rating"], f"NRI {data['nri_meta']['version']} release" if data.get("nri_meta") else f"every {UNIT}'s rating", pretty_date(data["nri_meta"]["retrieved"]) if data.get("nri_meta") else RETR))
 
 def _sea_line():   # PLAN 3e: NOAA's published sea-level trend at a tide gauge in this county, else in a bordering one
     try:
@@ -331,7 +356,7 @@ def card_zone_cost():
 
 def _gap_parts():
     MX.compare("prem_median", "frp_median")   # like-for-like or it raises
-    gap_lead = ((m('share_below', str(P['share_below']) + '%') + " of policies in " + CS + " pay less than FEMA's full-risk price, so "
+    gap_lead = ((m('share_below', str(P['share_below']) + '%') + " of single-family primary-home policies in " + CS + " have a premium below FEMA's full-risk premium, so "
                  + claim("those policies' bills are rising", "rising", ("share_below", ">", 0)) + " toward it." if P.get("share_below") else
                  "No policy here pays less than FEMA's full-risk price.")
                 + f" Median premium {m('prem_median', money(PREM_MED))}, full-risk {m('frp_median', money(P['frp_median']))} (premiums only, before fees).")
@@ -407,7 +432,7 @@ def _map_line():   # PLAN 3e: when this place's FEMA map took effect, and which 
                        + (" or later" if len({r[2] for r in new}) > 1 else "") + " for "
                        + and_list(names[:8] + ([f"{m('map_new_n', str(len(names) - 8), q='more')} more"] if len(names) > 8 else [])) + ".")
         elif rows:   # hcu 11-07: say so when FEMA's book lists no new map, so "is my map changing?" is answered either way
-            out.append(f"FEMA's latest Community Status Book lists no new flood map taking effect for the NFIP communities filed under this {UNIT}; that does not cover maps still preliminary (below).")
+            out.append(f"FEMA's latest Community Status Book lists no new flood map taking effect for the towns and areas FEMA lists in this {UNIT}; that does not cover maps still preliminary (below).")
     elif new:
         out.append(f"{m('map_new_n', str(len(new)))} {pl(len(new), 'community', 'communities')} in {CS} {pl(len(new), 'gets', 'get')} a new FEMA flood map after FEMA's latest report, "
                    f"the first on {m('map_date', _mdate(new[0][2]), q='first_new')}.")
@@ -445,8 +470,8 @@ def _nfhl_lines():   # map debate 11-06: map age, revisions, exemption rulings, 
         out.append(f"FEMA's map service lists {m('loma_n', format(t, ','), q='all')} rulings for owners here who asked FEMA to take a building or lot out of the "
                    f"high-risk zone (Letters of Map Amendment): {qs(('bldg', 'whole', 'part'), 'removed')} took the building or some or all of the lot out, "
                    f"{qs(('bldg_out', 'out'), 'as_mapped')} found it already outside the zone as mapped, {q('denied')} were denied"
-                   + (f", {q('other')} other or mixed" if g['other'] else "") + f". {rule('loma_fee')} {rule('loma_online')} These are rulings for owners who applied, not a share of all homes. They are counted by "
-                   f"the NFIP communities FEMA's Community Status Book files under this {UNIT}, so a city that reaches into a neighboring {UNIT} counts in full here." if t else
+                   + (f", {q('other')} other or mixed" if g['other'] else "") + f". {rule('loma_fee')} {rule('loma_online')} {rule('ec_get')} These are rulings for owners who chose to apply, so they are not the odds for your home, and FEMA's map service gives no dates for them. They are counted by "
+                   f"the towns and areas FEMA lists in this {UNIT}, so a city that reaches into a neighboring {UNIT} counts in full here." if t else
                    "FEMA's map service lists no rulings for owners here who asked to take a building or lot out of the high-risk zone (Letters of Map Amendment).")
     return out
 
@@ -459,7 +484,9 @@ def _crs_parts():
         return m(key, shown, q=html.unescape(q).replace('"', "")) if re.search(r"\d", shown) else shown
     def _dnum(c): return int((_pct(c.get("sfhaDiscount")) or "0%").rstrip("%"))
     _shown_disc = sorted(_has_disc, key=lambda c: -_dnum(c))[:15] if IS_STATE else _has_disc   # a state can have hundreds
-    crs_rows = "".join(f"<tr><td>{_cname(c)}" + (f" ({html.escape(_tc(str(c.get('county') or '')))})" if IS_STATE and c.get('county') and _tc(str(c['county'])).lower() not in _cname_plain(c).lower() else "") + "</td>"
+    # hater r12 Orange: a county-named NFIP community is that county's unincorporated area, not every town in it
+    _uninc = lambda c: " (unincorporated areas)" if re.search(r"\b(COUNTY|PARISH|BOROUGH)\b", (c.get("communityName") or "").upper()) else ""
+    crs_rows = "".join(f"<tr><td>{_cname(c)}{_uninc(c)}" + (f" ({html.escape(_tc(str(c.get('county') or '')))})" if IS_STATE and c.get('county') and _tc(str(c['county'])).lower() not in _cname_plain(c).lower() else "") + "</td>"
                        f"<td>{_tagd('crs_discount', _disc(c.get('sfhaDiscount')), _cname_plain(c) + ':sfha')}</td>"   # Risk Rating 2.0: one rate for every zone; FEMA's separate non-SFHA column is pre-2021
                        f"<td>{_tagd('crs_class', _cls(c.get('classRating')), _cname_plain(c))}</td></tr>" for c in _shown_disc)
     crs_none_note = ((f"<p class='note'>The {m('crs_count', str(len(_shown_disc)), q='shown')} largest discounts of {m('crs_count', str(len(_has_disc)), q='discounted')} discounted communities are shown; "
@@ -490,11 +517,11 @@ def _regulator_line():
 
 # ---- how to get covered (factual public NFIP rules — the reader's "what do I do next" + the 30-day catch) ----
 def card_howto():
-    _HOWTO = ["howto_answer", "homeowners_excl", "howto_tiles", "wait_exceptions", "how_to_buy", "nfip_lapse", "flood_def", "not_covered", "wind_excl", "already_flooded", "aid_insurance", "claim_appeal", "substantial_damage"]
+    _HOWTO = ["howto_answer", "homeowners_excl", "howto_tiles", "wait_exceptions", "wait_wildfire", "how_to_buy", "nfip_lapse", "flood_def", "not_covered", "wind_excl", "already_flooded", "aid_insurance", "claim_appeal", "substantial_damage"]
     howto_card = card("How do I actually get covered — and how fast?",   # limits live in the tiles once (no second copy)
         rule("howto_answer"),
         rule("howto_tiles")
-        + f"<p class='note'>{rule('homeowners_excl')} {rule('wait_exceptions')} {rule('how_to_buy')} The program nationwide: <a href='/nfip/'>the NFIP in numbers</a>.</p>"
+        + f"<p class='note'>{rule('homeowners_excl')} {rule('wait_exceptions')} {rule('wait_wildfire')} {rule('how_to_buy')} The program nationwide: <a href='/nfip/'>the NFIP in numbers</a>.</p>"
         + f"<p class='note'>{rule('nfip_lapse')}</p>"
         + f"<p class='note'><b>What it won't pay:</b> {rule('flood_def')} {rule('not_covered')} {rule('wind_excl')}</p>"
         + f"<p class='note'>{rule('already_flooded')} {rule('aid_insurance')}</p>"
@@ -617,9 +644,11 @@ def _zip_county():
         _zi = {z["zip"]: i for i, z in enumerate(agg["policies"].get("by_zip") or [])}
         _zp = lambda z, k: f"policies.by_zip.{_zi[z['zip']]}.{k}"
         _ranked = sorted([z for z in bz if z.get("median")], key=lambda z: -z["cost_n"])[:8]   # most priced policies: the medians a reader can trust most
+        _zb_ok = bool(_ranked) and all(z.get("share_below") is not None for z in _ranked)   # 11-08 backlog r8-r11: shows once the refresh carries it
         toprows = "".join(
             f"<tr><td>{m('zip', _zl(z['zip']), q=z['zip'])}</td><td>{tp('zip_cost', _zp(z, 'median'), money, q=z['zip'])}</td>"
-            f"<td>{tp('zip_cost_n', _zp(z, 'cost_n'), num, q=z['zip'])}</td><td>{tp('zip_units', _zp(z, 'units'), num, q=z['zip'])}</td></tr>" for z in _ranked)
+            f"<td>{tp('zip_cost_n', _zp(z, 'cost_n'), num, q=z['zip'])}</td><td>{tp('zip_units', _zp(z, 'units'), num, q=z['zip'])}</td>"
+            + (f"<td>{tp('zip_share_below', _zp(z, 'share_below'), pct, q=z['zip'])}</td>" if _zb_ok else "") + "</tr>" for z in _ranked)
         _zs = [z for z in bz if z.get("median")]
         _lo, _hi = (min(_zs, key=lambda z: z["median"]), max(_zs, key=lambda z: z["median"])) if len(_zs) > 1 else (None, None)
         zip_card = card(f"Find your ZIP in this {UNIT}",
@@ -631,9 +660,11 @@ def _zip_county():
             f'<p id="zout" class="note" style="margin-top:10px">Enter a five-digit ZIP above.</p>'
             '<p class="note">ZIPs exactly as FEMA recorded them on policies here; a ZIP with only a policy or two may be a ZIP from elsewhere, as entered on the policy.'
             + (" A ZIP outside this county: <a href='/flood-insurance/zip/'>look up any U.S. ZIP</a>." if _ZIP_ON else "") + '</p>'
-            f'<table style="margin-top:12px"><thead><tr><th>ZIP</th><th>Median / yr</th><th>Priced policies</th><th>Policy units</th></tr></thead>'
+            f'<table style="margin-top:12px"><thead><tr><th>ZIP</th><th>Median / yr</th><th>Priced policies</th><th>Policy units</th>' + ('<th>Premium below full-risk</th>' if _zb_ok else '') + '</tr></thead>'
             f'<tbody>{toprows}</tbody></table>'
-            f'<p class="note">The ZIPs with the largest number of priced single-family policies.{how("zip")}</p>'
+            f'<p class="note">The ZIPs with the largest number of priced single-family policies.'
+            + (" Premium below full-risk: the share of single-family primary-home policies in the ZIP whose premium is under FEMA's full-risk premium, both before fees." if _zb_ok else "")
+            + f'{how("zip")}</p>'
             f'<script>var ZD={data_js};var zi=document.getElementById("zq"),zo=document.getElementById("zout");'
             'zi.addEventListener("input",function(){var z=zi.value.trim();var d=ZD[z];'
             'if(!d){zo.textContent=z.length>=5?"No NFIP policy in this ' + UNIT + ' lists ZIP "+z+"; it may belong to a neighboring ' + UNIT + '.":"Enter a five-digit ZIP above.";return;}'
@@ -681,7 +712,9 @@ def card_averages():
         + "".join(f"<tr><td>{a_}</td><td>{b_}</td><td>{c_}</td></tr>" for a_, b_, c_ in _avrows) + "</tbody></table>"
         + (f"<p class='note'><b>Condo owners:</b> condo-unit policies are {tp('condo_unit_pct', 'extras.policies.condo_unit_pct', pct)} of NFIP policy units here"
            + (f" and whole condo buildings {tp('condo_building_pct', 'extras.policies.condo_building_pct', pct)}" if _xpp.get('condo_building_pct') else "")
-           + f". The every-policy-type average includes them. " + ("The single-family figures leave out condo-unit and condo-building policies (FEMA's condominium coverage code)." if P.get("sf_no_condo") else "The single-family figures use FEMA's occupancy code with no separate condo filter, so condo units could be in them.") + "</p>" if (_xpp.get("condo_unit_pct") or 0) + (_xpp.get("condo_building_pct") or 0) >= 1 else "")
+           + f". The every-policy-type average includes them. "
+           + (f"Condo-unit policies here have a median cost of {tp('condo_unit_cost', 'extras.policies.condo_unit_cost_median', money)} a year (premium plus fees, {tp('condo_unit_cost_n', 'extras.policies.condo_unit_cost_n', num)} priced policies). " if _xpp.get("condo_unit_cost_median") else "")   # 11-08 backlog r12 Horry
+           + ("The single-family figures leave out every policy FEMA marks as a condo unit or a whole condo building." if P.get("sf_no_condo") else "The single-family figures come from the home type FEMA records on each policy, without a separate condo check, so some condo units could be in them.") + "</p>" if (_xpp.get("condo_unit_pct") or 0) + (_xpp.get("condo_building_pct") or 0) >= 1 else "")
         + f"<p class='note'>All from the NFIP policies in force on {POL_ASOF}.{how('averages')}</p>",
         src(["cost_p50", "prem_median", "frp_median", "cost_year"] + (["cost_new"] if _new_ok else []) + (["cost_mean", "cost_all_mean"] if _av.get("sf_cost_mean") else []), POL_ASOF, RETR), id="prices")
     return averages_card
@@ -729,7 +762,12 @@ def _counties_table():
             (f"From about {tp('county_cost', f'counties.{_cheap[0][0]}.p50', money, q=_cheap[0][0])} a year in {_cn(_cheap[0][0])} to "
              f"{tp('county_cost', f'counties.{_dear[0][0]}.p50', money, q=_dear[0][0])} in {_cn(_dear[0][0])}, "
              f"among {UNITS} with {tp('threshold', 'const.min_priced', q='min_priced')} or more priced policies. Find yours below." if len(_priced) > 1 else f"Find your {UNIT} below."),
-            f"<table><thead><tr><th>{UNIT.title()}</th><th>Policy units</th><th>Median / yr</th><th>Below full-risk</th><th>Claims since 1978</th></tr></thead>"
+            # hater r16 (Louisiana 64, Nebraska 78 rows): a long table gets a filter box; with JS off the full table still shows
+            ((f'<input id="cf" placeholder="Type your {UNIT}…" aria-label="Find your {UNIT} in the table" autocomplete="off">'
+                '<script>document.getElementById("cf").addEventListener("input",function(){var q=this.value.toLowerCase();'
+                '[].forEach.call(document.getElementById("ct").tBodies[0].rows,function(r){r.style.display=(!q||r.cells[0].textContent.toLowerCase().indexOf(q)>-1)?"":"none";});});</script>')
+               if len(_cty) >= 16 else "")
+            + f"<table id='ct'><thead><tr><th>{UNIT.title()}</th><th>Policy units</th><th>Median / yr</th><th>Below full-risk</th><th>Claims since 1978</th></tr></thead>"
             f"<tbody>{_rows}</tbody></table>"
             + (f"<p class='note'><b>Lowest typical cost:</b> {and_list(_cn(g) + ' (' + tp('county_cost', f'counties.{g}.p50', money, q=g) + ')' for g, r in _cheap)}. "
                f"<b>Highest:</b> {and_list(_cn(g) + ' (' + tp('county_cost', f'counties.{g}.p50', money, q=g) + ')' for g, r in _dear)}. "
@@ -792,6 +830,7 @@ def card_events():
                      + ", ".join(str(y) for y, _ in _unnamed) + " (their totals are in the yearly chart above).</p>") if _unnamed else ""
     # test_factory 11-08: "costliest" is the largest by dollars, never the first row in FEMA's file order
     _ev1 = max((e for e in _ev if not re.match(r"not a named", e["name"], re.I)), key=lambda e: e.get("paid") or 0, default=None)
+    _pp = bool(_ev + _ev_all) and all(e.get("paid_pct") is not None for e in _ev + _ev_all)   # 11-08: the column shows once the refresh carries it
     if len(_ev) >= 2 and _ev1:
         events_card = card("Which floods paid out the biggest totals here?",
             f"The costliest flood FEMA named here was {_evname(_ev1)}: {tp('event_paid', f'extras.claims.events.{_ev1[chr(105)]}.paid', big, q=_ev1['name'])} over "
@@ -802,12 +841,13 @@ def card_events():
             # hater r103/r106 Sonoma: a catch-all label that paid more than the named flood is said in the lead (gate C12)
             + "".join(f" Catch-all {_evname(e)}, many floods: {tp('event_paid', f'extras.claims.events.{e[chr(105)]}.paid', big, q=e['name'])}."
                       for e in sorted(_ev_all, key=lambda e: -(e.get("paid") or 0))[:1] if (e.get("paid") or 0) > (_ev1.get("paid") or 0)),
-            "<table><thead><tr><th>Flood (FEMA's name)</th><th>Claims</th><th>Total paid</th><th>Average</th></tr></thead><tbody>"
+            "<table><thead><tr><th>Flood (FEMA's name)</th><th>Claims</th><th>Total paid</th><th>Average</th>" + ("<th>Share of claims filed that paid</th>" if _pp else "") + "</tr></thead><tbody>"
             + "".join(f"<tr><td>{_evname(e)}{": many floods; FEMA's records use this name for claims in several years" if e in _ev_all else ''}</td><td>{tp('event_claims', f'extras.claims.events.{e[chr(105)]}.claims', q=e['name'])}</td>"
                       f"<td>{tp('event_paid', f'extras.claims.events.{e[chr(105)]}.paid', big, q=e['name'])}</td>"
-                      f"<td>{tp('event_avg', f'extras.claims.events.{e[chr(105)]}.avg', money, q=e['name'])}</td></tr>"
+                      f"<td>{tp('event_avg', f'extras.claims.events.{e[chr(105)]}.avg', money, q=e['name'])}</td>"
+                      + (f"<td>{tp('event_paid_pct', f'extras.claims.events.{e[chr(105)]}.paid_pct', pct, q=e['name'])}</td>" if _pp else "") + "</tr>"
                       for e in sorted(_ev + _ev_all, key=lambda e: -(e.get("paid") or 0)))   # one list, biggest first (r106: catch-all sat last)
-            + f"</tbody></table><p class='note'>Grouped by the flood event FEMA named; only claims that paid something, and only floods with {tp('threshold', 'const.event_min', q='event_min')} or more paid claims here. Totals include code-upgrade (ICC) payments, which the yearly chart leaves out.{how('events')}</p>" + _unnamed_note,
+            + f"</tbody></table><p class='note'>Grouped by the flood event FEMA named; claims, totals and averages count only claims that paid something{"; the share is of every claim filed under that name" if _pp else ""}, and only floods with {tp('threshold', 'const.event_min', q='event_min')} or more paid claims here. Totals include code-upgrade (ICC) payments, which the yearly chart leaves out.{how('events')}</p>" + _unnamed_note,
             src(["event_paid", "event_claims"], f"{C['year_min']}–{C['year_max']}", RETR))
     return events_card
 
@@ -885,7 +925,9 @@ BASE_URL = os.environ.get("FF_BASEURL", "https://floodinsurancedata.com").rstrip
 CANON = f"{BASE_URL}/flood-insurance/{SLUG}/"
 GEOID = os.environ.get("FF_GEOID", "12071")
 _TW = _towns([z for z in (agg["policies"].get("by_zip") or []) if re.fullmatch(r"\d{5}", str(z.get("zip")))])
-_T1 = f" ({_TW[0]})" if len(_TW) > 1 and _TW[0].lower() not in CS.lower() else ""   # money audit 11-07: "flood insurance chicago" > all county-map money
+# hater r82/r83: a New York City county is one borough (Census county subdivision "<name> borough"); searchers use the borough
+_BORO = {"36061": "Manhattan", "36047": "Brooklyn", "36081": "Queens", "36005": "the Bronx", "36085": "Staten Island"}.get(os.environ.get("FF_GEOID", ""))
+_T1 = f" ({_BORO})" if _BORO else f" ({_TW[0]})" if len(_TW) > 1 and _TW[0].lower() not in CS.lower() else ""   # money audit 11-07: "flood insurance chicago" > all county-map money
 _CSX = CS + (" (" + ", ".join(_TW[:3]) + ")" if len(_TW) > 1 else "")   # towns early: Google cuts descriptions near 155 characters (r87)
 META_DESC = (f"Median NFIP flood insurance cost for a single-family primary home in {_CSX} is {money(P['p50'])} a year "
              f"(middle half {money(P['p25'])}–{money(P['p75'])}); {P['share_below']}% pay below FEMA's "
@@ -1039,11 +1081,11 @@ _zbig = [z for z, v in (P.get("zone_units") or {}).items() if P.get("units") and
 _zq += [(z, (P.get("cost_by_zone") or {})[z]) for z in _zbig if z in (P.get("cost_by_zone") or {})]   # priced, just not top 2: show its price
 _zbig = [z for z in _zbig if z not in (P.get("cost_by_zone") or {})]   # only a truly unpriced zone "has too few to price"
 if _zq:
-    _qa.insert(2 if _rk else 1, '<a href="#zone-cost"><b>Cost in my zone?</b> ' + ("Largest zones" if len(_zq) > 1 else "Largest zone") + ' by priced policies here: '
-               + ", ".join(f"Zone {html.escape(z)} {tp('zone_cost', f'policies.cost_by_zone.{z}.median', money, q=z)}" for z, d in _zq)
-               + ' a year (single-family primary-home median'
+    _qa.insert(2 if _rk else 1, '<a href="#zone-cost"><b>Cost in my zone?</b> '   # P4: short, the quote checker must stay inside screen 2
+               + ("Zones " if len(_zq) > 1 else "Zone ") + ", ".join(f"{html.escape(z)} {tp('zone_cost', f'policies.cost_by_zone.{z}.median', money, q=z)}" for z, d in _zq)
+               + ' a year (median, single-family homes)'
                + "".join(f"; Zone {html.escape(z)}, {m('zone_share', str(round(100 * P['zone_units'][z] / P['units'], 1)) + '%', q=z)} of policy units, has too few to price" for z in _zbig)
-               + ').</a>')
+               + '.</a>')
 _cxq = data.get("claims_extra") or {}
 if _cxq.get("claims") and _cxq.get("avg_paid") and P.get("p50"):
     _sroot = ROOT_DATA.get("state") if isinstance(ROOT_DATA.get("state"), dict) else {}   # on a state page "state" is just its code
@@ -1175,7 +1217,7 @@ def card_required():
     return card("Am I required to buy it?",
       rule("purchase_answer") + " " + rule("lender_any_zone"),
       (f"<p class='note'><b>{rule('fl_citizens')}</b></p>" if agg.get("state") == "FL" else "") +
-      f"<p class='note'>{rule('private_accept')}</p>" +
+      f"<p class='note'>{rule('private_accept')}" + (f" {rule('fl_citizens_private')}" if agg.get("state") == "FL" else "") + "</p>" +
       f"<p class='note'><b>At a closing:</b> {rule('lender_amount')} {rule('lender_force')} {rule('zone_review')} {rule('seller_assign')}" + (f" {rule('fl_disclosure')}" if agg.get("state") == "FL" else "") + "</p>" +
       (f"<p class='note'>{rule('tx_twia')}</p>" if agg.get("state") == "TX" else "") +
       f"<p class='note'>{m('sfha_share', str(P['sfha_share_units']) + '%')} of {CS}'s NFIP policy units are in high-risk zones (not {tp('sfha_share', 'policies.sfha_share_units', pct)} of all buildings, and not an answer about your own home).</p>" + _outside_line() +
@@ -1183,7 +1225,7 @@ def card_required():
       + (f"<p class='note'><b>Not in the NFIP ({m('crs_count', str(len(crs_out)), q='not_nfip')} {pl(len(crs_out), 'community', 'communities')} here)"
          + (": " + "; ".join(sorted((_cname(c) + (" (unincorporated area only)" if re.search(r"\b(COUNTY|PARISH|BOROUGH)\b", (c.get("communityName") or "").upper()) else "") for c in crs_out), key=lambda h: html.unescape(re.sub("<[^>]+>", "", h)).casefold())))
          + f".</b> {rule('nfip_not_sold')}</p>" if crs_out else ""),
-      src(["units", "sfha_share"], POL_ASOF, RETR) + (src(["outside_sfha_dollars"], f"{C['year_min']}–{C['year_max']}", RETR) if _outside_line() else "") + (src(["map_date"], "FEMA's current Community Status Book", RETR) if _map_line() else "") + (src(["map_panels", "lomr_n", "loma_n"], f"FEMA's map service, retrieved {_MS.get('_retrieved')}", RETR) if _nfhl_lines() else "") + src_rules(["purchase_answer", "lender_any_zone", "private_accept", "lender_amount", "lender_force", "zone_review", "seller_assign", "prelim", "loma_fee", "loma_online"] + (["fl_citizens", "fl_disclosure"] if agg.get("state") == "FL" else []) + (["tx_twia"] if agg.get("state") == "TX" else []) + (["nfip_not_sold"] if crs_out else [])), id="required")
+      src(["units", "sfha_share"], POL_ASOF, RETR) + (src(["outside_sfha_dollars"], f"{C['year_min']}–{C['year_max']}", RETR) if _outside_line() else "") + (src(["map_date"], "FEMA's current Community Status Book", RETR) if _map_line() else "") + (src(["map_panels", "lomr_n", "loma_n"], f"FEMA's map service, retrieved {_MS.get('_retrieved')}", RETR) if _nfhl_lines() else "") + src_rules(["purchase_answer", "lender_any_zone", "private_accept", "lender_amount", "lender_force", "zone_review", "seller_assign", "prelim", "loma_fee", "loma_online", "ec_get"] + (["fl_citizens", "fl_disclosure", "fl_citizens_private"] if agg.get("state") == "FL" else []) + (["tx_twia"] if agg.get("state") == "TX" else []) + (["nfip_not_sold"] if crs_out else [])), id="required")
 
 def card_cost():
     cost_lead, cost_body = _cost_parts()
@@ -1348,13 +1390,13 @@ table{{width:100%}}}}
 <header class="topbar"><div class="wrap"><a class="brand" href="../../">Flood Insurance Data</a><span class="crumb">Flood insurance › {(f'<a href="../{state_slug(_state)}/" style="color:inherit">{html.escape(STATE_NAMES[_state])}</a> › ' if (not IS_STATE and _state in _built_states) else '')}{CS}</span></div></header>
 <main class="wrap">
 <section class="hero">
-<h1>{CL + (' flood insurance and flood zones' if IS_STATE else ' flood zones and flood insurance')}</h1>
+<h1>{CL + (f' ({_BORO})' if _BORO else '') + (' flood insurance and flood zones' if IS_STATE else ' flood zones and flood insurance')}</h1>
 <p class="lede">In {CL}, the median NFIP flood insurance policy on a single-family primary home costs {m('cost_p50', money(P['p50']))} a year (premium plus fees, policies in force as of {POL_ASOF}).</p>
 <div class="stats">
 <div class="stat"><div class="n">{m('cost_p50', money(P['p50']))}</div><div class="l">Median / yr, single-family primary home</div></div>
 <div class="stat"><div class="n">{m('cost_mo', median_mo)}</div><div class="l">A month, spread over the year</div></div>
 {_spread_tile()}
-<div class="stat"><div class="n">{m('share_below', str(P['share_below']) + '%')}</div><div class="l">Single-family primary homes paying under FEMA's full-risk price{' (<a href="#gap">' + claim('bills rise toward it', 'rise', ('share_below', '>', 0)) + '</a>)' if P.get('share_below') else ''}</div></div>
+<div class="stat"><div class="n">{m('share_below', str(P['share_below']) + '%')}</div><div class="l">Single-family primary-home policies with a premium under FEMA's full-risk premium{' (<a href="#gap">' + claim('bills rise toward it', 'rise', ('share_below', '>', 0)) + '</a>)' if P.get('share_below') else ''}</div></div>
 </div>
 {cmp_line}{_jump}
 {ZONEMAP if _tool_on("zonemap") else '<a class="btn" href="https://msc.fema.gov/portal/home" rel="noopener" target="_blank">Check your address on FEMA' + "'" + 's flood map →</a>'}

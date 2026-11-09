@@ -135,8 +135,19 @@ RULES = {
                      "January 1, 2026, for a structure that has a dwelling replacement cost of $400,000 or more", "curl"),
                     ("https://www.flsenate.gov/Laws/Statutes/2025/627.351",
                      "January 1, 2027, for all other personal lines residential property insured by the corporation", "curl")]},
+    "wait_wildfire": {   # 44 CFR 61.11(c), read raw 11-08 (eCFR, curl --compressed); hater r10/r11 Orange County
+        "text": "One more exception (44 CFR 61.11(c)): coverage starts the day after you apply and pay when FEMA determines the "
+                "property is affected by flooding on federal land caused or made worse by post-wildfire conditions, and you buy "
+                "it within 60 days after the fire's containment date.",
+        "sources": [(CFR61, "flooding on Federal land that is a result of, or is exacerbated by, post-wildfire conditions", "curl"),
+                    (CFR61, "not later than 60 calendar days after the fire containment date", "curl")]},
+    "fl_citizens_private": {   # s. 627.351(6), F.S., read raw 11-08 (flsenate.gov, curl): who supplies Citizens' required flood cover
+        "text": "Citizens does not sell flood insurance: the required flood policy comes from another insurer, the NFIP or a private "
+                "one, and must at least match the NFIP's dwelling coverage or meet Florida's private flood insurance rules (s. 627.715).",
+        "sources": [("https://www.flsenate.gov/Laws/Statutes/2025/627.351", "flood insurance is not provided by the corporation", "curl"),
+                    ("https://www.flsenate.gov/Laws/Statutes/2025/627.351", "must meet, at a minimum, the dwelling coverage available from the National Flood Insurance Program or the requirements of s. 627.715", "curl")]},
     "fl_citizens_short": {   # must not contradict fl_citizens: same two tracks, no "now" that goes stale
-        "text": "In Florida, Citizens homes with wind cover need it in a high-risk zone since 2023; outside one, since January 2026 "
+        "text": "In Florida, homes insured by Citizens (the state-backed insurer) with wind cover need it in a high-risk zone since 2023; outside one, since January 2026 "
                 "if they cost $400,000 or more to rebuild, and from January 2027 for all others.",
         "sources": [("https://www.flsenate.gov/Laws/Statutes/2025/627.351",
                      "located within the special flood hazard area defined by the Federal Emergency Management Agency must have flood coverage in place", "curl"),
@@ -350,6 +361,13 @@ RULES = {
         "text": "FEMA charges no review or processing fee for a Letter of Map Amendment request (44 CFR §72.5).",
         "sources": [(CFR72, "Requesters are exempt from submitting review and processing fees for", "curl"),
                     (CFR72, "Requests for a Letter of Map Amendment (LOMA)", "curl")]},
+    "ec_get": {   # FloodSmart (FEMA's NFIP site), read raw 11-08 (curl --compressed): who completes one, where one may be on file
+        "text": "Your home may already have an Elevation Certificate on file with your community: ask your local floodplain manager, "
+                "often in the city or county building, permitting or engineering department. If none is on file, a land surveyor, "
+                "engineer or architect completes one.",
+        "sources": [("https://www.floodsmart.gov/get-insured/elevation-certificates", "on file with your community", "curl"),
+                    ("https://www.floodsmart.gov/get-insured/elevation-certificates", "contact your local floodplain manager", "curl"),
+                    ("https://www.floodsmart.gov/get-insured/elevation-certificates", "land surveyor, engineer or architect to complete one", "curl")]},
     "loma_online": {   # read raw from a US runner 11-07 (fema-probe links job; FEMA refuses the laptop): manual-rule-read
         "text": "FEMA's <a href='https://hazards.fema.gov/femaportal/onlinelomc/signin' rel='noopener'>Online LOMC site</a> lets home owners or their representatives ask FEMA for a Letter of Map Change.",
         "sources": [(LOMC, "The Online LOMC web application allows home owners or their designated representatives to easily request a Letter of Map Change (LOMC)", "manual")]},
@@ -362,9 +380,10 @@ RULES = {
                 "one of them yours.",
         "sources": [(CFR61, "two or more acres of normally dry land area or of two or more properties", "curl")]},
     "not_covered": {
-        "text": "The standard NFIP Dwelling Policy does not pay for a hotel or other living costs while you are out of the home, or for belongings outside the "
+        "text": "The NFIP's standard policy for homes (the Dwelling Form) does not pay for a hotel or other living costs while you are out of the home, or for belongings outside the "
                 "building, and it limits what it pays for in a basement. Belongings are paid at actual cash value (their used value), not the cost of new ones.",
-        "sources": [(CFR61, "Any additional living expenses incurred while the insured building is being repaired", "curl"),
+        "sources": [(CFR61, "Dwelling Form of the Standard Flood Insurance Policy", "curl"),   # hater r97: the form's own name, read 11-08
+                    (CFR61, "Any additional living expenses incurred while the insured building is being repaired", "curl"),
                     (CFR61, "Personal property not inside", "curl"),
                     ("https://www.law.cornell.edu/cfr/text/44/appendix-A(1)_to_part_61", "in a basement regardless of the zone", "curl"),
                     ("https://www.law.cornell.edu/cfr/text/44/appendix-A(1)_to_part_61", "subject to actual cash value", "curl")]},

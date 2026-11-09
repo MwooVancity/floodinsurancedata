@@ -7,6 +7,7 @@ Usage: python -I tools/extras_raw.py [ST ...]"""
 import collections, csv, glob, gzip, json, os, statistics, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import ffcalc
+import metrics as MX
 from codes import NONPAY_REASON, CAUSE, DEDUCTIBLE, truthy
 from agg_raw import NAMES, slug, RAW, ROOT, FIPS
 
@@ -35,7 +36,7 @@ def rows(ds, st):
 RENTER_OCC = {"1", "2", "3", "11", "12", "13", "14", "16"}
 
 def new_acc():
-    return {"units": 0, "mand_units": 0, "tenant_units": 0, "condo_unit_units": 0, "rcbap_units": 0, "elev_units": 0,
+    return {"condo_cost": [], "units": 0, "mand_units": 0, "tenant_units": 0, "condo_unit_units": 0, "rcbap_units": 0, "elev_units": 0,
             "gf_units": 0, "prem_new": [], "prem_old": [], "prem_elev": [], "prem_low": [], "sf_n": 0, "sf_max_cov": 0,
             "rc_n": 0, "rc_over": 0, "fee": [], "hfiaa": [], "reserve": [], "icc": [], "ded": collections.Counter(),
             "cost_hist": collections.Counter(), "cost_hist_new": collections.Counter(), "zone_hist": {}, "zone_hist_exact": {}, "renter_hist": collections.Counter(), "renter_units": 0, "frp_hist_exact": {}, "all_cost": [], "sf_cost": [], "sf_prem": [], "sf_new_cost": []}
@@ -55,7 +56,9 @@ def policies(st):
             if k == "ST" and r["occupancyType"].strip() in RENTER_OCC and truthy(r["tenantIndicator"]) and not (f(r["totalBuildingInsuranceCoverage"]) or 0) and (f(r["totalContentsInsuranceCoverage"]) or 0) > 0:
                 a["renter_units"] += u   # renters page (owner 11-06): tenant, contents-only policies; cost histogram below
                 if cost and cost > 0: a["renter_hist"][round(cost)] += 1
-            if r["condominiumCoverageTypeCode"] == "U": a["condo_unit_units"] += u
+            if r["condominiumCoverageTypeCode"] == "U":
+                a["condo_unit_units"] += u
+                if cost and cost > 0: a["condo_cost"].append(cost)   # backlog r12 Horry: what condo-unit owners pay (premium plus fees)
             if r["condominiumCoverageTypeCode"] in ("H", "L"): a["rcbap_units"] += u
             if truthy(r["elevatedBuildingIndicator"]): a["elev_units"] += u
             if r["grandfatheringTypeCode"] in ("2", "3"): a["gf_units"] += u
@@ -91,6 +94,7 @@ def policies(st):
         n_ded = sum(a["ded"].values())
         out[k] = {"lender_required_pct": pct(a["mand_units"], a["units"]), "tenant_pct": pct(a["tenant_units"], a["units"]),
                   "condo_unit_pct": pct(a["condo_unit_units"], a["units"]), "condo_building_pct": pct(a["rcbap_units"], a["units"]),
+                  "condo_unit_cost_median": med(a["condo_cost"]) if len(a["condo_cost"]) >= MX.CONST["min_priced"] else None, "condo_unit_cost_n": len(a["condo_cost"]),
                   "elevated_pct": pct(a["elev_units"], a["units"]), "grandfathered_pct": pct(a["gf_units"], a["units"]),
                   "prem_new_median": med(a["prem_new"]), "prem_new_n": len(a["prem_new"]),
                   "prem_old_median": med(a["prem_old"]), "prem_old_n": len(a["prem_old"]),
@@ -120,7 +124,7 @@ def net(r): return sum(f(r[c]) or 0 for c in ("netBuildingPaymentAmount", "netCo
 
 def claims(st):
     acc = collections.defaultdict(lambda: {"n": 0, "unpaid": 0, "reason": collections.Counter(), "cause": collections.Counter(),
-                                           "depth": [], "event": collections.defaultdict(lambda: [0, 0.0, collections.Counter()]), "icc_n": 0, "icc": [],
+                                           "depth": [], "event": collections.defaultdict(lambda: [0, 0.0, collections.Counter(), 0]),   # [paid claims, paid $, loss years, unpaid claims] "icc_n": 0, "icc": [],
                                            "dmg": [], "paid_b": [], "over_cov": 0, "dmg_n": 0, "elev_paid": [], "low_paid": [],
                                            "dec": collections.defaultdict(lambda: [0, 0]),   # decade of loss: [claims, paid something]
                                            "zone": collections.defaultdict(lambda: [0, 0, 0.0]),
@@ -147,6 +151,8 @@ def claims(st):
             if paid <= 0:
                 a["unpaid"] += 1
                 if r["nonPaymentReasonBuilding"] in NONPAY_REASON: a["reason"][r["nonPaymentReasonBuilding"]] += 1
+                ev = (r["floodEvent"] or "").strip()
+                if ev: a["event"][ev][3] += 1   # backlog r8-r10: paid share by named flood needs the unpaid claims too
                 continue
             for ch in set(r["causeOfDamage"] or ""):
                 if ch in CAUSE: a["cause"][ch] += 1
@@ -169,8 +175,9 @@ def claims(st):
                   "causes": [{"code": c, "label": CAUSE[c], "pct": pct(v, n_cause)} for c, v in a["cause"].most_common(4)],
                   "depth_median_in": med(a["depth"]), "depth_n": len(a["depth"]),
                   "events": [{"name": e, "claims": v[0], "paid": round(v[1]), "avg": round(v[1] / v[0]),
+                              "filed": v[0] + v[3], "paid_pct": round(100 * v[0] / (v[0] + v[3]), 1),   # every claim filed under this name, and the share that paid
                               "years": sorted(y for y in v[2] if y)}   # years of loss on its paid claims
-                             for e, v in sorted(a["event"].items(), key=lambda kv: -kv[1][1])[:8]],
+                             for e, v in sorted(((e, v) for e, v in a["event"].items() if v[0] > 0), key=lambda kv: -kv[1][1])[:8]],
                   "icc_claims": a["icc_n"], "icc_avg": round(statistics.mean(a["icc"])) if a["icc"] else None,
                   "damage_median": med(a["dmg"]), "paid_building_median": med(a["paid_b"]),
                   "damage_over_coverage_pct": pct(a["over_cov"], a["dmg_n"]), "damage_n": a["dmg_n"],

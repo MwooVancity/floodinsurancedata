@@ -232,5 +232,23 @@
   "title": "OCI Office of the Commissioner of Insurance",
   "name": "Wisconsin Office of the Commissioner of Insurance",
   "read": "2026-11-07"
+ },
+ "MI": {
+  "url": "https://www.michigan.gov/difs",
+  "title": "Department of Insurance and Financial Services",
+  "name": "Michigan Department of Insurance and Financial Services",
+  "read": "2026-11-08"
+ },
+ "MN": {
+  "url": "https://mn.gov/commerce/insurance/",
+  "title": "Insurance / Minnesota Department of Commerce - Insurance",
+  "name": "Minnesota Department of Commerce, Insurance",
+  "read": "2026-11-08"
+ },
+ "RI": {
+  "url": "https://dbr.ri.gov/insurance",
+  "title": "Insurance Division | Dept. of Business Regulation",
+  "name": "Rhode Island Department of Business Regulation, Insurance",
+  "read": "2026-11-08"
  }
 }

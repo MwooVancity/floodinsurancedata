@@ -51,10 +51,15 @@ def shuffled_order(a, d, x):   # a source changing its row order must not change
     for k in ("zone_units", "cost_by_zone"): P[k] = dict(reversed(list((P.get(k) or {}).items())))
     x["claims"]["events"] = list(reversed(x["claims"].get("events") or []))
     a["claims"]["by_year"] = dict(reversed(list(a["claims"]["by_year"].items())))
+def new_fields_11_08(a, d, x):   # the three figures the next refresh adds: must render and pass the gate before data exists
+    for e in x["claims"].get("events") or []: e.update(filed=e["claims"] + 7, paid_pct=round(100 * e["claims"] / (e["claims"] + 7), 1))
+    for z in a["policies"].get("by_zip") or []:
+        if (z.get("cost_n") or 0) >= 25: z.update(below_n=z["cost_n"], share_below=61.5)
+    x.setdefault("policies", {}).update(condo_unit_cost_median=1234, condo_unit_cost_n=88, condo_unit_pct=x.get("policies", {}).get("condo_unit_pct") or 5.0)
 def zero_units(a, d, x): a["policies"].update(units=0, rows=0, zone_units={}, sfha_units=0, sfha_share_units=None, cost_by_zone={}, cost_n=0)
 
 CASES = [no_claims, one_claim, one_zone, big_unpriced_zone, no_priced_zone, under_floor, all_decades_small, only_catch_all,
-         billion_flood, asof_jan1, asof_dec31, claims_old, no_nri, no_disasters, no_crs, no_multiloss, shuffled_order, zero_units]
+         billion_flood, asof_jan1, asof_dec31, claims_old, no_nri, no_disasters, no_crs, no_multiloss, shuffled_order, new_fields_11_08, zero_units]
 
 tmp = tempfile.mkdtemp(); rows, crashed = [], []
 for SLUG, SRC, LABEL, GEOID, LEVEL in TARGETS:
@@ -85,5 +90,7 @@ for SLUG, SRC, LABEL, GEOID, LEVEL in TARGETS:
 shutil.rmtree(tmp, ignore_errors=True)
 w = max(len(r[0]) for r in rows)
 for n, res, info in rows: print(f"{n:<{w}} {res:<11} {info}")
+must_pass = [r for r in rows if r[0].endswith(":new_fields_11_08") and r[1] != "PASS"]   # new figures must ship clean, not be held
+assert not must_pass, f"new 11-08 figures do not pass the gate: {must_pass}"
 assert not crashed, f"factory crashed on: {crashed}"
 print("test_factory: no crash on", len(CASES), "edge cases x", len(TARGETS), "page types/sizes")

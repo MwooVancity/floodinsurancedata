@@ -18,11 +18,10 @@ Keyword Planner volume x top bid: state insurance $190k, map $90k, towns $47k, z
 
 ## Next, in order
 0. Zone map before "all" on 11-20 (fresh audit 11-08): D1 stale answer dropped, D2 non-letter FEMA values quoted not named, D5 true 15 m circle (FEMA honours distance, probe 11-08), all live 11-08 with tests that fail without them. D4: live test needs 4 of 5 real zones, nightly in watch.yml; "all" only after 7 green nights. D3 (FEMA letters near the pin): beyond the address-tool rule, owner decision.
-1. Round-97 MINORs left (backlog): tile premium vs homes/policies base (automate as a check), Dwelling Form rule, condo-note jargon.
 2. Weekly Search Console read (last 11-04: slipped). Owner decisions from the audit: BFE in the address tool; FEMA map letters (LOMA/LOMR) near the pin; share of homes insured; Esri copy as fallback (audit: no).
-3. US-runner raw reads (fema-probe links job): Elevation Certificate who/where (AE page); retry the 12 NAIC-fallback regulators (AK AZ KS LA MA MI MN NH NJ RI WV WY).
+3. US-runner raw reads: Elevation Certificate who/where DONE 11-08 (FloodSmart rule `ec_get` on A/V zone pages); retry the 12 NAIC-fallback regulators (AK AZ KS LA MA MI MN NH NJ RI WV WY).
 4. One claims base everywhere: code done 11-08 (agg_raw, extras_raw, recheck drop FEMA codes 98/99; claims page keeps its left-out count). Numbers change with the 12-03 refresh; check Sonoma's claim count drops by about 187.
-5. Renter tenant-flag check (does FEMA's data catch every renter policy?). County floodplain contacts: no dataset, so a printed gap line.
+5. DONE 11-08: renters page states its exact base (tenant, residential, contents-only); floodplain contact: no dataset, so county map cards and A/V zone pages print FloodSmart's sourced "ask your local floodplain manager" rule (`ec_get`).
 6. 11-18 start-date tool "all", 11-20 address tool "all", if no errors on the samples (first a US-runner live test vs real FEMA).
 7. 12-12: did Congress extend the NFIP past 2026-12-11? During a lapse set `start` to [].
 7b. Gates (11-08): labels now checked against data (C10-C14) and `test_factory.py` (18 data edge cases x county/small state/big state) runs in release. `test_site_factory.py` (14 national edge cases: no crash, garbage text or dead link) covers home, zones, claims, nfip, renters, ZIP, map; found a half-refreshed state crashing the whole site (fixed). Next: base-word check (homes/policies/units).

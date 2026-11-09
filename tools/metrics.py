@@ -97,7 +97,11 @@ METRICS = {
     "frp_plus_fees": _m(POL, ["fullRiskPremium", "federalPolicyFee", "hfiaaSurcharge", "reserveFundAssessment"], "usd_cost_with_fees"),
     "cost_all_median": _m(POL, ["policyCost", "occupancyType"], "usd_cost_with_fees"),
     "cost_all_mean": _m(POL, ["policyCost", "occupancyType"], "usd_cost_with_fees"),
-    "condo_unit_pct": _m(POL, ["policyCount", "condominiumCoverageTypeCode"], "pct", of="policy units"),   # plan item 4: unit-owner condo policies (code U)
+    "condo_unit_pct": _m(POL, ["policyCount", "condominiumCoverageTypeCode"], "pct", of="policy units"),
+    "condo_unit_cost": _m(POL, ["policyCost", "condominiumCoverageTypeCode"], "usd_cost_with_fees"),   # 11-08 backlog r12 Horry
+    "condo_unit_cost_n": _m(POL, ["policyCost", "condominiumCoverageTypeCode"], "count", counts="policy_record"),
+    "zip_share_below": _m(POL, ["totalInsurancePremiumOfThePolicy", "fullRiskPremium", "reportedZipCode"], "pct", basis="full-risk",
+                          of="single-family primary-residence policies in the ZIP with both premiums"),   # 11-08 backlog r8-r11   # plan item 4: unit-owner condo policies (code U)
     "condo_building_pct": _m(POL, ["policyCount", "condominiumCoverageTypeCode"], "pct", of="policy units"),   # whole condo buildings (RCBAP, codes H/L)
     "prem_mean": _m(POL, ["totalInsurancePremiumOfThePolicy"], "usd_premium_only"),
     "inforce": _m(POL, ["policyEffectiveDate", "policyTerminationDate"], "count", counts="policy_record"),
@@ -113,6 +117,8 @@ METRICS = {
     "unpaid_reason_n": _m(CLM, ["nonPaymentReasonBuilding"], "count", counts="claim_record"),
     "event_paid": _m(CLM, ["floodEvent", "netBuildingPaymentAmount", "netContentsPaymentAmount", "netIccPaymentAmount"], "usd_claim_paid"),
     "event_claims": _m(CLM, ["floodEvent"], "count", counts="claim_record"),
+    "event_paid_pct": _m(CLM, ["floodEvent", "netBuildingPaymentAmount", "netContentsPaymentAmount", "netIccPaymentAmount"], "pct",
+                         of="claims filed under that FEMA flood name, codes 98/99 left out"),   # 11-08 backlog r8-r10
     "state_p50": _m(POL, ["policyCost"], "usd_cost_with_fees"),
     "us_p50": _m(POL, ["policyCost"], "usd_cost_with_fees"),
     "cost_rank": _m(POL, ["policyCost", "censusGeoid"], "count"),

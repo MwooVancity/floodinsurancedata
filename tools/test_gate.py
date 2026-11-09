@@ -81,6 +81,10 @@ assert not ids, "clean page must pass gate 2:\n" + out
 def sub(old, new, count=1):
     assert old in PAGE, f"mutation anchor missing: {old[:60]}"
     return PAGE.replace(old, new, count)
+def rsub(pat, rep):   # 11-08: a regex mutation that matches nothing silently tests nothing; it must change the page
+    out = re.sub(pat, rep, PAGE, count=1, flags=re.S)
+    assert out != PAGE, f"mutation pattern matched nothing: {pat[:60]}"
+    return out
 def agg_with(**kw):
     a = json.loads(json.dumps(AGG)); a["policies"].update(kw); return a
 _EV = json.load(open(os.path.join(d, "extras.json")))["claims"]["events"]   # C12 mutation points the lead at the smallest row
@@ -155,15 +159,17 @@ MUTATIONS = [   # (defect class from THE EVIDENCE table, what we reintroduce, ex
     ("round 103", "decade dropped from the table without a word", "C10",
      re.sub(r'<tr><td><span data-m="decade"[^>]*>.*?</tr>', "", PAGE, count=1, flags=re.S), None),
     ("round 97/103", "big zone missing from the cost answer", "C11",
-     re.sub(r'(<a href="#zone-cost">.*?</span>)(?:, Zone [^<]+<span data-m="zone_cost"[^>]*>[^<]*</span>)+', r"\1", PAGE, count=1, flags=re.S), None),
+     rsub(r'(<a href="#zone-cost">.*?</span>)(?:, [^<]+<span data-m="zone_cost"[^>]*>[^<]*</span>)+', r"\1"), None),
     ("11-08 own slip", "priced zone called too few to price", "C11",
-     re.sub(r'(<a href="#zone-cost">.*?) a year \(single-family primary-home median', r"\1 a year (single-family primary-home median; Zone X, 1.0% of policy units, has too few to price", PAGE, count=1, flags=re.S), None),
+     rsub(r'(<a href="#zone-cost">.*?) a year \(median, single-family homes\)', r"\1 a year (median, single-family homes); Zone X, 1.0% of policy units, has too few to price"), None),
     ("round 103", "'costliest flood' beaten by its own table", "C12",
      (lambda i, js: re.sub(rf"(costliest flood FEMA named here was.*?)extras\.claims\.events\.{i}\.paid", rf"\g<1>extras.claims.events.{min(js, key=lambda j: _EV[int(j)].get('paid') or 0)}.paid", PAGE, count=1, flags=re.S))(
          re.search(r'costliest flood FEMA named here was.*?events\.(\d+)\.paid', PAGE, re.S).group(1),
          re.findall(r'<td><span data-m="event_paid"[^>]*data-p="extras\.claims\.events\.(\d+)\.paid"', PAGE)), None),
     ("factory 11-08", "'Largest zones' not the largest (file order)", "C11", None,
      agg_with(cost_by_zone={z: dict(d, n=(1 if i < 2 else 10 ** 6)) for i, (z, d) in enumerate(AGG["policies"]["cost_by_zone"].items())})),
+    ("11-08 A4 header", "table figure whose column header lacks its basis", "A4",
+     sub("</main>", "<p>x</p>" * 60 + '<table><thead><tr><th>ZIP</th><th>Share</th></tr></thead><tbody><tr><td>z</td><td><span data-m="zip_share_below">5%</span></td></tr></tbody></table></main>'), None),
     ("round 109", "'no flood in the table' for a year the table lists", "C15",
      sub("</main>", "<p class='note'>Among the five costliest years, these have no flood of their own in the table above: "
          + re.search(r"\((\d{4})\)</td>", PAGE[PAGE.index("<th>Flood (FEMA"):]).group(1) + " (their totals are in the yearly chart above).</p></main>"), None),
@@ -180,10 +186,34 @@ MUTATIONS = [   # (defect class from THE EVIDENCE table, what we reintroduce, ex
 ]
 table, ok = [], True
 for cls, what, want, html, agg in MUTATIONS:
+    assert html is None or html != PAGE, f"mutation '{what}' left the page unchanged: its pattern no longer matches the template"
     got, out = gate(html, agg)
     hit = want in got; ok &= hit
     table.append((cls, what, want, "PASS" if hit else "MISSED", ",".join(sorted(got)) or "-"))
     if not hit: print(f"MISSED {want} for '{what}':\n{out}")
+
+# A4 positive control (11-08): the same cell under a header that names its basis must NOT fire A4
+_a4ok, _ = gate(sub("</main>", "<p>x</p>" * 60 + '<table><thead><tr><th>ZIP</th><th>Premium below full-risk</th></tr></thead><tbody><tr><td>z</td><td><span data-m="zip_share_below">5%</span></td></tr></tbody></table></main>'))
+table.append(("11-08 A4 header", "basis named in the column header", "no A4", "PASS" if "A4" not in _a4ok else "MISSED", ",".join(sorted(_a4ok)) or "-"))
+ok &= "A4" not in _a4ok
+
+# state-page mutations (11-08 C16): build Louisiana with the shipping template, prove the clean page passes, then break it
+_LA = os.path.join(ROOT, "data", "states", "louisiana")
+if os.path.exists(os.path.join(_LA, "agg.json")):
+    _lo = os.path.join(tmp, "site", "flood-insurance", "louisiana", "index.html"); os.makedirs(os.path.dirname(_lo), exist_ok=True)
+    _r = subprocess.run([sys.executable, "-I", os.path.join(T, "build_page.py")], cwd=T, capture_output=True, text=True,
+                        env=dict(os.environ, FF_LEVEL="state", FF_DIR=_LA, OUT_HTML=_lo, FF_COUNTYLABEL="Louisiana", FF_COUNTYSHORT="Louisiana",
+                                 FF_SLUG="louisiana", FF_GEOID="22", FF_OFFICIAL="0", FF_BASEURL="https://floodinsurancedata.com", FF_PLACES=os.path.join(ROOT, "places.json")))
+    assert _r.returncode == 0, "state build failed: " + _r.stderr[-400:]
+    _LP = open(_lo, encoding="utf-8").read()
+    def _sgate(h):
+        hp = os.path.join(tmp, "s.html"); open(hp, "w", encoding="utf-8").write(h)
+        o = subprocess.run([sys.executable, "-I", os.path.join(T, "gate.py"), os.path.join(_LA, "agg.json"), hp, "0"], capture_output=True, text=True).stdout
+        return set(re.findall(r"\[(\w+)\]", o))
+    assert not _sgate(_LP), "clean Louisiana page must pass the gate"
+    _got = _sgate(re.sub(r"<tr><td>No rating for this kind of flooding</td>.*?</tr>", "", _LP, count=1, flags=re.S))
+    table.append(("11-08 state card", "unrated counties dropped from the risk table", "C16", "PASS" if "C16" in _got else "MISSED", ",".join(sorted(_got)) or "-"))
+    ok &= "C16" in _got
 
 # 7 chart overlay / any comparison across units raises at build time
 try: MX.compare("cost_p50", "frp_median"); table.append(("7 chart overlay", "cost vs full-risk compare", "compare()", "MISSED", "-")); ok = False
@@ -196,6 +226,13 @@ lits = [t.string for t in tokenize.generate_tokens(io.StringIO(open(os.path.join
 leaked = [f for f in RULE_FACTS if any(f in s for s in lits)]
 table.append(("8 law wording", "rule fact typed in build_page", "lint", "PASS" if not leaked else "MISSED", ",".join(leaked) or "-"))
 ok &= not leaked
+
+# 11-08, found twice: a heredoc turned "\1" and "\b" into invisible control characters inside source regexes (C11 mutation
+# and the CRS label silently stopped matching). No tool file may hold a control character other than tab/newline.
+_ctrl = [f for f in os.listdir(T) if f.endswith((".py", ".mjs", ".js", ".sh")) and re.search(r"[\x00-\x08\x0b\x0c\x0e-\x1f]", open(os.path.join(T, f), encoding="utf-8", errors="replace").read())]
+assert re.search(r"[\x00-\x08\x0b\x0c\x0e-\x1f]", "re.sub(r'(x)', r'" + chr(1) + "')") and re.search(r"[\x00-\x08\x0b\x0c\x0e-\x1f]", chr(8) + "(COUNTY)")   # the lint fires on both real slips
+table.append(("11-08 lint", "control character in a tool file", "lint", "PASS" if not _ctrl else "MISSED", ",".join(_ctrl) or "-"))
+ok &= not _ctrl
 
 # gate 3 (reader on a phone) needs Playwright; CI without it skips these and says so
 try:

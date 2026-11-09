@@ -96,6 +96,18 @@ assert bzp["33333"]["cost_n"] == 60 and bzp["33333"]["median"] is not None
 assert bzp["44444"]["cost_n"] == 40 and bzp["44444"]["median"] is not None
 assert bzp["55555"]["cost_n"] == 10 and bzp["55555"]["median"] is None and bzp["55555"]["units"] == 10  # < ZIP_MIN
 
+# 11-08 per-ZIP share below full-risk: premium vs full-risk premium (same basis as premium_gap), 25+ such policies;
+# a policy missing either field, or a zero/negative (refund) value, is out of the base, never counted as "below"
+_zb = ([{"policyCost": 900, "totalInsurancePremiumOfThePolicy": 700, "fullRiskPremium": 1000 if i < 30 else 500, "occupancyType": 1,
+         "primaryResidenceIndicator": True, "policyCount": 1, "reportedZipCode": "77777", "ratedFloodZone": "AE"} for i in range(40)]
+       + [{"policyCost": 900, "totalInsurancePremiumOfThePolicy": -50, "fullRiskPremium": 1000, "occupancyType": 1,
+           "primaryResidenceIndicator": True, "policyCount": 1, "reportedZipCode": "77777", "ratedFloodZone": "AE"} for i in range(5)]
+       + [{"policyCost": 900, "totalInsurancePremiumOfThePolicy": 700, "fullRiskPremium": 1000, "occupancyType": 1,
+           "primaryResidenceIndicator": True, "policyCount": 1, "reportedZipCode": "8888", "ratedFloodZone": "X"} for i in range(24)])
+_ZB = {d["zip"]: d for d in ffcalc.aggregate_policies(_zb)["by_zip"]}
+assert _ZB["77777"]["below_n"] == 40 and _ZB["77777"]["share_below"] == 75.0, _ZB["77777"]   # 30 of 40 below; refunds left out
+assert _ZB["08888"]["below_n"] == 24 and _ZB["08888"]["share_below"] is None, _ZB["08888"]   # under 25 -> no share; lost leading zero restored
+
 # ---- integration: build a real county page, smoke-check the render, and prove the gate catches a bad page.
 # Exercises the shipping build_page.py + gate.py, not a re-implementation. Skips if the county data is absent.
 import subprocess, tempfile, json as _json

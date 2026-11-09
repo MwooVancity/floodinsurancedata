@@ -84,9 +84,17 @@ def aggregate_policies(rows):
         if _valid_cost(r):
             z = (str(r.get("reportedZipCode") or "")).strip()[:5]; z = "0" + z if len(z) == 4 and z.isdigit() else z   # ZIP+4 counts toward its ZIP; "8037" is 08037 (lost leading zero)
             if z: zc_zip[z].append(r["policyCost"])
+    # backlog r8-r11 (PBC, Broward, Atlantic): share of a ZIP's priced policies below FEMA's full-risk premium, premium vs
+    # premium (premium_gap's basis), 25+ such policies; the reader's "will my ZIP's bills rise" without a forecast
+    zb_zip = defaultdict(lambda: [0, 0])
+    for r in coh:
+        if isinstance(r.get(PREM), (int, float)) and r[PREM] > 0 and isinstance(r.get("fullRiskPremium"), (int, float)) and r["fullRiskPremium"] > 0:
+            z = (str(r.get("reportedZipCode") or "")).strip()[:5]; z = "0" + z if len(z) == 4 and z.isdigit() else z
+            if z: zb_zip[z][0] += 1; zb_zip[z][1] += r[PREM] < r["fullRiskPremium"]
     by_zip = sorted(
         ({"zip": z, "units": zu_zip[z], "cost_n": len(zc_zip[z]),
-          "median": pctl(zc_zip[z], 50) if len(zc_zip[z]) >= ZIP_MIN else None} for z in zu_zip),
+          "median": pctl(zc_zip[z], 50) if len(zc_zip[z]) >= ZIP_MIN else None,
+          "below_n": zb_zip[z][0], "share_below": round(100 * zb_zip[z][1] / zb_zip[z][0], 1) if zb_zip[z][0] >= ZIP_MIN else None} for z in zu_zip),
         key=lambda d: -d["units"])   # every ZIP: a reader's ZIP must never read "no data" because it ranked 26th
     gap = premium_gap(coh)
     zu = defaultdict(int)
