@@ -100,6 +100,9 @@ METRICS = {
     "condo_unit_pct": _m(POL, ["policyCount", "condominiumCoverageTypeCode"], "pct", of="policy units"),
     "condo_unit_cost": _m(POL, ["policyCost", "condominiumCoverageTypeCode"], "usd_cost_with_fees"),   # 11-08 backlog r12 Horry
     "condo_unit_cost_n": _m(POL, ["policyCost", "condominiumCoverageTypeCode"], "count", counts="policy_record"),
+    "trend_cost": _m(POL, ["policyCost", "policyEffectiveDate"], "usd_cost_with_fees"),   # 11-09 "is it rising?": median on each past as-of day
+    "trend_fill": _m(POL, ["policyCost"], "pct", of="single-family policy records"),
+    "trend_n": _m(POL, ["policyCost", "policyEffectiveDate"], "count", counts="policy_record"),
     "zip_share_below": _m(POL, ["totalInsurancePremiumOfThePolicy", "fullRiskPremium", "reportedZipCode"], "pct", basis="full-risk",
                           of="single-family primary-residence policies in the ZIP with both premiums"),   # 11-08 backlog r8-r11   # plan item 4: unit-owner condo policies (code U)
     "condo_building_pct": _m(POL, ["policyCount", "condominiumCoverageTypeCode"], "pct", of="policy units"),   # whole condo buildings (RCBAP, codes H/L)
@@ -128,7 +131,7 @@ METRICS = {
 }
 
 # method constants a page states ("zones with fewer than 50 priced policies are omitted"): printed as tagged figures
-CONST = {"min_priced": 30, "zone_min": 50, "zip_min": 25, "spread_min": 100, "rank_min": 100, "year_min": 30, "event_min": 20}
+CONST = {"min_priced": 30, "zone_min": 50, "zip_min": 25, "spread_min": 100, "rank_min": 100, "year_min": 30, "event_min": 20, "trend_fill_pct": 90}
 _NRI, _CSB, _PEN, _ML = "NRI", "NfipCommunityStatusBook", "NfipResidentialPenetrationRates", "IndividualAssistanceMultipleLossFloodProperties"
 METRICS.update({   # every other figure a page prints; q (data-q) names the row when one metric fills a table
     "threshold": _m(POL, ["policyCost"], "count"),

@@ -27,6 +27,15 @@ clm = ([{"countyCode": "10001", "yearOfLoss": "2023", "floodEvent": "Storm A", "
        + [{"countyCode": "10001", "yearOfLoss": "2023", "floodEvent": "Storm A", "netBuildingPaymentAmount": 0, "nonPaymentReasonBuilding": "98"}]   # deleted in error: not a claim
        + [{"countyCode": "10001", "yearOfLoss": "2024", "floodEvent": "Storm B", "netBuildingPaymentAmount": 0, "nonPaymentReasonBuilding": "01"}])   # unpaid only: no events row
 write("NfipPolicies", pol); write("NfipClaims", clm)
+# 11-09 cost trend (pull_bulk.trend's columns): 2022 all priced; 2023 under 30 priced; 2024 95 of 100 priced; 2025 35 of 40 (< 90%)
+_t = lambda y, n, cost, **k: [dict({"year": y, "propertyState": "DE", "censusGeoid": "10001040100", "occupancyType": "1",
+                                    "primaryResidenceIndicator": "True", "condominiumCoverageTypeCode": "N", "policyCost": cost}, **k) for _ in range(n)]
+trd = (_t(2022, 35, 900) + _t(2022, 2, 50, condominiumCoverageTypeCode="U") + _t(2022, 1, 50, primaryResidenceIndicator="False")
+       + _t(2023, 20, 700) + _t(2023, 10, "") + _t(2024, 57, 800) + _t(2024, 3, 0) + _t(2025, 35, 850) + _t(2025, 5, "")
+       + _t(2021, 81, 600))   # 81 records vs 40 today: over twice, so the records may place homes differently; left out
+os.makedirs(os.path.join(tmp, "NfipPoliciesTrend", "DE"))
+with gzip.open(os.path.join(tmp, "NfipPoliciesTrend", "DE", "bulk.csv.gz"), "wt", encoding="utf-8", newline="") as fh:
+    w = csv.DictWriter(fh, list(trd[0])); w.writeheader(); w.writerows(trd)
 X.RAW = tmp
 try:
     P, C = X.policies("DE"), X.claims("DE")
@@ -38,6 +47,8 @@ try:
     assert (a["claims"], a["filed"], a["paid_pct"]) == (6, 8, 75.0), a    # 6 paid of 8 filed; the code-98 record is out
     z = {d["zip"]: d for d in ffcalc.aggregate_policies([dict(r, **{k: (float(v) if isinstance(v, (int, float)) else v) for k, v in r.items()}) for r in pol])["by_zip"]}
     assert (z["19901"]["below_n"], z["19901"]["share_below"]) == (40, 75.0), z["19901"]   # 30 of 40 single-family; the 31 condo units are outside the base
-    print("test_raw: extras_raw policies()+claims() run on a synthetic download; condo cost, event paid share OK")
+    tr = [(t["year"], t["median"], t["n"], t["sf_n"]) for t in p["cost_trend"]]
+    assert tr == [(2021, None, 81, 81), (2022, 900, 35, 35), (2023, None, 20, 30), (2024, 800, 57, 60), (2025, None, 35, 40), (X._A.year, 1000, 40, 40)], tr
+    print("test_raw: extras_raw policies()+claims() run on a synthetic download; condo cost, event paid share, cost trend OK")
 finally:
     shutil.rmtree(tmp, ignore_errors=True)

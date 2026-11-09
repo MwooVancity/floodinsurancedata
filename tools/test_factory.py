@@ -56,10 +56,16 @@ def new_fields_11_08(a, d, x):   # the three figures the next refresh adds: must
     for z in a["policies"].get("by_zip") or []:
         if (z.get("cost_n") or 0) >= 25: z.update(below_n=z["cost_n"], share_below=61.5)
     x.setdefault("policies", {}).update(condo_unit_cost_median=1234, condo_unit_cost_n=88, condo_unit_pct=x.get("policies", {}).get("condo_unit_pct") or 5.0)
+def cost_trend(a, d, x):   # 11-09: the next refresh's cost-by-year rows, file order shuffled, two past years too thin to price
+    y = int(a["policies"]["asof"][:4]); p = a["policies"]["p50"]
+    x.setdefault("policies", {})["cost_trend"] = [{"year": y, "median": p, "n": 900, "sf_n": 950}] + [
+        {"year": y - k, "median": None if k > 3 else round(p * (1 - 0.06 * k)), "n": 10 if k > 3 else 800, "sf_n": 850} for k in (3, 1, 5, 2, 4)]
+def cost_trend_off(a, d, x):   # the same with the as-of-year median off the headline (two rules): gate C17 must block it
+    cost_trend(a, d, x); x["policies"]["cost_trend"][0]["median"] += 50
 def zero_units(a, d, x): a["policies"].update(units=0, rows=0, zone_units={}, sfha_units=0, sfha_share_units=None, cost_by_zone={}, cost_n=0)
 
 CASES = [no_claims, one_claim, one_zone, big_unpriced_zone, no_priced_zone, under_floor, all_decades_small, only_catch_all,
-         billion_flood, asof_jan1, asof_dec31, claims_old, no_nri, no_disasters, no_crs, no_multiloss, shuffled_order, new_fields_11_08, zero_units]
+         billion_flood, asof_jan1, asof_dec31, claims_old, no_nri, no_disasters, no_crs, no_multiloss, shuffled_order, new_fields_11_08, zero_units, cost_trend, cost_trend_off]
 
 tmp = tempfile.mkdtemp(); rows, crashed = [], []
 for SLUG, SRC, LABEL, GEOID, LEVEL in TARGETS:
@@ -86,11 +92,16 @@ for SLUG, SRC, LABEL, GEOID, LEVEL in TARGETS:
     if "Traceback" in g.stderr:
         rows.append((name, "GATE-CRASH", g.stderr.strip().splitlines()[-1][:90])); crashed.append(name); continue
     ids = sorted(set(re.findall(r"\[(\w+)\]", g.stdout)))
-    rows.append((name, "BLOCKED" if g.returncode else "PASS", ",".join(ids) or "-"))
+    if fn.__name__ == "cost_trend" and ' id="trend"' not in open(out, encoding="utf-8").read(): ids.append("NO-TREND-CARD")
+    rows.append((name, "BLOCKED" if g.returncode or "NO-TREND-CARD" in ids else "PASS", ",".join(ids) or "-"))
 shutil.rmtree(tmp, ignore_errors=True)
 w = max(len(r[0]) for r in rows)
 for n, res, info in rows: print(f"{n:<{w}} {res:<11} {info}")
 must_pass = [r for r in rows if r[0].endswith(":new_fields_11_08") and r[1] != "PASS"]   # new figures must ship clean, not be held
 assert not must_pass, f"new 11-08 figures do not pass the gate: {must_pass}"
+must_pass = [r for r in rows if r[0].endswith(":cost_trend") and r[1] != "PASS"]   # 11-09: the card shows and passes
+assert not must_pass, f"cost-by-year card missing or blocked: {must_pass}"
+must_block = [r for r in rows if r[0].endswith(":cost_trend_off") and "C17" not in r[2]]   # and a second rule is caught
+assert not must_block, f"gate C17 missed a cost trend off the headline median: {must_block}"
 assert not crashed, f"factory crashed on: {crashed}"
 print("test_factory: no crash on", len(CASES), "edge cases x", len(TARGETS), "page types/sizes")

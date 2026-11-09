@@ -1239,6 +1239,35 @@ def card_cost():
     cost_body += f"<p class='note'>{rule('other_buyers')} The median here is for single-family primary-home policies, not businesses or second homes. Renting? See <a href='/flood-insurance/renters/'>what renters pay</a>. {rule('surcharge')}</p>"
     return card(f"Flood insurance cost in {CL}", cost_lead, cost_body, src(["cost_p50", "prem_median", "frp_median", "coverage"], POL_ASOF, RETR) + src_rules(["other_buyers", "surcharge"]))
 
+def _trend_day(y):   # the as-of month and day in year y (Feb 29 -> Feb 28 in a non-leap year, as pull_bulk.snap)
+    import datetime
+    d = datetime.date.fromisoformat(P["asof"][:10])
+    try: return pretty_date(str(d.replace(year=y)))
+    except ValueError: return pretty_date(str(d.replace(year=y, day=28)))
+
+def card_trend():   # 11-09 HCU "is it rising?": the typical cost on the same day in each of the 5 years before (extras_raw cost_trend)
+    L = _xpp.get("cost_trend") or []; _a = int(P["asof"][:4])
+    past = sorted((i for i, t in enumerate(L) if t.get("year") != _a), key=lambda i: L[i]["year"])   # by year, never file order
+    shown = [i for i in past if L[i].get("median") is not None]
+    if not shown or P.get("p50") is None or (P.get("cost_n") or 0) < MIN_PRICED: return ""
+    out = [str(L[i]["year"]) for i in past if L[i].get("median") is None]
+    t = lambda i, k, f, nm: tp(nm, f"extras.policies.cost_trend.{i}.{k}", f, q=str(L[i]["year"]))
+    rows = "".join(f"<tr><td>{_trend_day(L[i]['year'])}</td><td>{t(i, 'median', money, 'trend_cost')}</td><td>{t(i, 'n', num, 'trend_n')}</td></tr>" for i in shown)
+    rows += f"<tr><td>{POL_ASOF}</td><td>{m('cost_p50', money(P['p50']))}</td><td>{tp('cost_n', 'policies.cost_n', num)}</td></tr>"
+    i0 = shown[0]
+    lead = (f"On {_trend_day(L[i0]['year'])}, the typical single-family primary-home policy here cost {t(i0, 'median', money, 'trend_cost')} "
+            f"a year (median, premium plus fees); on {POL_ASOF}, {m('cost_p50', money(P['p50']))}.")
+    note = ("<p class='note'>Median yearly cost of single-family primary-home NFIP policies in force on each date, in dollars of the day "
+            "(not adjusted for inflation). The homes insured change from year to year, so this is not one home's bill over time, "
+            "and FEMA's records do not say why a bill changed.")
+    if out: note += (f" Left out: {', '.join(out)} (FEMA's records here give a cost for fewer than {tp('threshold', 'const.min_priced', q='min_priced')} "
+                     f"of that year's single-family policies or for under {tp('trend_fill', 'const.trend_fill_pct', pct)} of them, "
+                     "or count under half or over twice today's number of them, which can mean the records place homes differently).")
+    return card(f"Is flood insurance getting more expensive in {CS}?", lead,
+                "<table><thead><tr><th>Policies in force on</th><th>Median / yr, single-family primary home</th><th>Priced policies</th></tr></thead>"
+                f"<tbody>{rows}</tbody></table>" + note + "</p>",
+                src(["trend_cost", "trend_n"], f"{_trend_day(L[i0]['year'])} to {POL_ASOF}", RETR), id="trend")
+
 def _open_note():   # hater r103 Dixie: "latest two years" sat on 2024 data in 2026; name the years, only when they are charted (gate C13)
     _a = int(P["asof"][:4]); _ys = [y for y in (_a - 1, _a) if str(y) in (C.get("by_year") or {})]
     return f" Totals for {' and '.join(map(str, _ys))} are not final while their claims stay open." if _ys else ""
@@ -1324,7 +1353,7 @@ def card_takeup():   # owner 11-08 ("do it"): share of homes insured, FEMA's NFI
     return card(f"How many homes in this {UNIT} carry flood insurance?", lead, body,
                 src(["pen_overall", "pen_sfha"], pretty_date(pen.get("asof") or RETR), RETR))
 
-CARD_ORDER = [card_required, card_cost, card_howto, card_claims, card_payout, card_unpaid, card_events, card_rebuild,
+CARD_ORDER = [card_required, card_cost, card_trend, card_howto, card_claims, card_payout, card_unpaid, card_events, card_rebuild,
               card_zone_cost, card_zip, card_averages, card_gap, card_save, card_crs, card_risk, card_takeup, card_multiloss,
               card_disasters, card_aid, card_counts]
 CARDS = "\n\n".join(h for h in (f() for f in CARD_ORDER) if h)

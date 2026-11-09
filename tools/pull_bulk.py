@@ -13,7 +13,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import pull_raw as PR   # field lists, as-of, API count/get, log
 import pyarrow.dataset as pds, pyarrow.compute as pc, pyarrow as pa
 
-BULK = os.path.join(PR.ROOT, ".cache", "bulk"); os.makedirs(BULK, exist_ok=True)
+BULK = os.path.join(PR.ROOT, ".cache", "bulk")
 SRC = {"NfipPolicies": ("NfipPoliciesV3.parquet", "propertyState", PR.POL_FIELDS),
        "NfipClaims": ("NfipClaimsV3.parquet", "state", PR.CLM_FIELDS)}
 TEXT = ("censusGeoid", "reportedZipCode", "countyCode", "nfipCommunityNumberCurrent")
@@ -41,7 +41,7 @@ def fema_refresh(name):
     return datetime.date.fromisoformat(r["DataSets"][0]["lastDataSetRefresh"][:10])
 
 def download(ds):
-    fn = SRC[ds][0]; url = URL + fn; path = os.path.join(BULK, fn); tag = path + ".etag"
+    os.makedirs(BULK, exist_ok=True); fn = SRC[ds][0]; url = URL + fn; path = os.path.join(BULK, fn); tag = path + ".etag"
     size, etag, lm = head(url)
     if lm != fema_refresh(ds): sys.exit(f"STOP {ds}: file dated {lm}, API dataset refreshed {fema_refresh(ds)}: not the same snapshot")
     if os.path.exists(path) and (not os.path.exists(tag) or open(tag).read() != etag): os.remove(path)   # never splice two versions
@@ -82,6 +82,31 @@ def convert(ds, path):
     for st, (fh, _) in out.items(): fh.close()
     return n
 
+TREND_YEARS = 5   # 11-09 "is it rising?": the same in-force filter on the as-of day of each of the 5 years before
+TREND_COLS = ("propertyState", "censusGeoid", "occupancyType", "primaryResidenceIndicator", "condominiumCoverageTypeCode", "policyCost")
+
+def snap(y):   # the as-of month and day in an earlier year; an as-of of Feb 29 uses Feb 28 in a non-leap year
+    try: return PR.ASOF_DATE.replace(year=y)
+    except ValueError: return PR.ASOF_DATE.replace(year=y, day=28)
+
+def trend(path):
+    """Writes .cache/raw/NfipPoliciesTrend/<ST>/bulk.csv.gz: one row per policy in force on each past snapshot day, with the
+    columns the single-family rule (ffcalc.is_sf_home) and the cost need; extras_raw applies the rule, so it lives in one place."""
+    d = pds.dataset(path, format="parquet"); ds = "NfipPoliciesTrend"; out, n = {}, 0
+    for st in PR.STATES:
+        sd = os.path.join(PR.RAW, ds, st); os.makedirs(sd, exist_ok=True)
+        for f in os.listdir(sd): os.remove(os.path.join(sd, f))
+        fh = gzip.open(os.path.join(sd, "bulk.csv.gz"), "wt", encoding="utf-8", newline="")
+        out[st] = (fh, csv.writer(fh)); out[st][1].writerow(("year",) + TREND_COLS)
+    for y in range(PR.ASOF_DATE.year - TREND_YEARS, PR.ASOF_DATE.year):
+        a = pa.scalar(snap(y), pa.date32())
+        filt = (pc.field("policyEffectiveDate") <= a) & (pc.field("policyTerminationDate") > a)
+        for b in d.to_batches(columns=list(TREND_COLS), filter=filt, batch_size=200_000):
+            for r in b.to_pylist():
+                if r["propertyState"] in out: out[r["propertyState"]][1].writerow([y] + [fmt(r[c]) for c in TREND_COLS]); n += 1
+    for fh, _ in out.values(): fh.close()
+    PR.log(f"trend: {n:,} policy rows on {TREND_YEARS} past snapshot days")
+
 def api_filter(ds, st): return PR.slices(ds, st)[0]
 
 def oracle(ds, st="DC"):   # the API's own rows for one small state must equal the bulk rows, field by field
@@ -118,5 +143,10 @@ if __name__ == "__main__":
             json.dump({"n": n[st], "asof": str(PR.ASOF_DATE), "at": str(datetime.datetime.now()), "secs": round(time.time() - t0), "source": "bulk"},
                       open(os.path.join(PR.RAW, ds, st + ".done"), "w"))
         PR.log(f"DONE {ds} bulk: {sum(n.values()):,} rows, 51 states match FEMA's counts")
+        if ds == "NfipPolicies":   # a failed trend pass costs only the trend card (pages print none), never the month's data
+            try: trend(path)
+            except Exception as e:   # half-written files would make wrong medians: none at all, so no page shows a trend
+                __import__("shutil").rmtree(os.path.join(PR.RAW, "NfipPoliciesTrend"), ignore_errors=True)
+                print(f"::warning::cost trend not built: {e!r}")
         if "--keep" not in sys.argv: os.remove(path)
     PR.log(f"ALL DONE (bulk) in {round(time.time() - t0)}s")

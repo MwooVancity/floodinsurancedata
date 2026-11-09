@@ -291,6 +291,19 @@ if _rt and _all:
     for _side in ("coastal", "inland"):
         _ns = [int(x) for x in re.findall(rf'data-m="county_count" data-q="{_side}:[^"]+">(\d+)<', _rt.group(1))]
         if _ns and sum(_ns) != int(_all.group(1)): fail("C16", f"{_side} risk column adds to {sum(_ns)}, not the {_all.group(1)} counties stated")
+# C17 (11-09) cost-by-year card: its last row is the headline median, so the past years must come from the same rule (the
+# trend's own as-of-year median within $1 of the headline), the table is in year order, and every year left out is named
+_trd = re.search(r"<section[^>]*id=[\"']trend[\"'].*?</section>", page, re.S)
+if _trd:
+    _tl = (EXTRAS.get("policies") or {}).get("cost_trend") or []
+    _ay = int(str(agg["policies"]["asof"])[:4]); _now = [t for t in _tl if t.get("year") == _ay]
+    if not _now or _now[0].get("median") is None or abs(_now[0]["median"] - agg["policies"]["p50"]) > 1:
+        fail("C17", f"cost trend's {_ay} median {_now and _now[0].get('median')} is not the headline {agg['policies']['p50']}: the years are not on one rule")
+    _ys = [int(y) for y in re.findall(r'data-m="trend_cost" data-q="(\d{4})"', _trd.group(0).split("<tbody>")[-1])]   # table rows, not the lead
+    if _ys != sorted(set(_ys)): fail("C17", f"cost trend rows out of year order: {_ys}")
+    _gone = sorted(str(t["year"]) for t in _tl if t.get("year") != _ay and t.get("median") is None)
+    _named = re.search(r"Left out: ([\d, ]+) \(", _trd.group(0))
+    if (_named.group(1).split(", ") if _named else []) != _gone: fail("C17", f"cost trend leaves out {_gone} but names {_named and _named.group(1)}")
 # C6 CRS discounts under Risk Rating 2.0 are one rate for every zone: no separate "other areas" rate
 if re.search(r"<th>Other areas</th>", page): fail("C6", "CRS table shows a separate non-high-risk discount (pre-2021 rule; Risk Rating 2.0 is one rate in every zone)")
 _foot = re.search(r"<footer>(.*?)</footer>", page, re.S)

@@ -4,28 +4,28 @@ State, dated numbers, next moves, owner-only items. Rules: CLAUDE.md. History: g
 ## Goal and scoreboard
 Most helpful flood-insurance page for every US place a homeowner or buyer searches, on a phone. Scoreboard: pages indexed, impressions, clicks, page-1 queries, AI citations. Polish only where a number says a page fails.
 - Search Console 28 days to 11-06: 5 clicks, 872 impressions, 225 pages and 235 queries seen, avg position 39.5. Best: Brevard pos 8.2 (41 impr, 1 click), New London CT pos 2 (2 clicks), Florida state pos 25.9, zone X 83, zone AE 75; /flood-zone-map/ not yet in the top 10 pages by impressions.
-- GA4 11-01..11-08 (read 11-08): 20 sessions, but 13 "Direct" at 0 s were our own nightly live zone-map test (10 of 22 views on /flood-zone-map/). Fixed 11-08: GA skips automated browsers (navigator.webdriver). Real visitors: 4 from AI assistants (23 s), 3 organic (57 s), all engaged; best page Santa Clara 2m14s. Next GA read 11-15, with the bot gone.
-- AI assistants (GA4 11-01..08): chatgpt.com only, 4 sessions / 3 users; ChatGPT passes no query, so no keywords exist to read. ChatGPT search draws on Bing's index; IndexNow returns 403 "UserForbiddedToAccessSite" (key file correct, Bingbot/OAI-SearchBot/GPTBot all get 200) until the site is verified in Bing Webmaster Tools (owner). llms.txt fixed 11-08: base + date on every median, state on every county, tools listed; test_site_factory checks it.
+- GA4 11-01..08: 7 real visitors (13 more were our nightly test, filtered since 11-08): 4 from ChatGPT (no query passed, so no keywords), 3 organic, all engaged. ChatGPT search reads Bing's index; IndexNow gets 403 until the owner verifies the site in Bing Webmaster Tools. llms.txt labelled 11-08 (test_site_factory checks it).
 - Index 11-06: home, 51/51 states, 204/232 counties, 6/7 zones indexed; our canonical kept everywhere. Low rank = age and no links, not a technical block.
 
-## Live now (11-08)
-- 323 live pages: home, 51 states, ~250 counties, 7 zone pages, /flood-zone-map/ (address tool), /nfip/, renters, claims (+CSV), ZIP lookup, methodology.
-- Address tool and policy start-date tool on 3 samples (palm-beach, harris, louisiana) via `tools/tools_flags.json`.
-- Screen 1 (HCU batch 11-07, r91-96): risk rating, cost in the 2 largest priced zones, CRS pay-less, regulator link, state county picker.
-- Data as of 08-31 (FEMA bulk files, 63 min refresh). Forced refresh 42436345515 running: brings the condo filter (single-family figures without condo units).
+## Live now (11-09)
+- ~343 live pages: home, 51 states, ~280 counties, 7 zone pages, /flood-zone-map/ (address tool), /nfip/, renters, claims (+CSV), ZIP lookup, methodology. Address and start-date tools on 3 samples (`tools/tools_flags.json`). Data as of 08-31 (FEMA bulk files).
 
 ## Money order (owner 11-07: money groups first, counties last)
 Keyword Planner volume x top bid: state insurance $190k, map $90k, towns $47k, zones $37k, cost $37k, NFIP $36k, state map $25k, renters $18k, county map $15.5k. Not targeted: head term "flood insurance" (FloodSmart), quote and companies (forbidden). Every money page is live; counties now run 20 a day, queue "kw" > 0 only (~1,200 zero-demand counties wait for the Jan 4 rule).
 
 ## Next, in order
-1. Live 11-09 (verified on the live site): paid share by named flood, ZIP share below full-risk, condo-unit cost, FEMA codes 98/99 out (Sonoma 7,403 -> 7,237 claims), take-up card, state risk card, borough titles, county table filter, Citizens/wildfire/EC rules, labelled llms.txt. Tonight's daily job runs the address tool in WebKit and watch.yml runs it against real FEMA (first test of the new elevation and map-letter lines).
+1. 11-09 cost by year ("is it rising?"): typical cost on the same day in each of the 5 years before, from FEMA's bulk file, the headline's own rule (gate C17, `test_raw`, `test_bulk`, factory). Forced refresh 11-09 brings the data; at the next session read the per-year fill, run one light review of the card on the 4 samples, ship. A year with too few priced policies, or a policy count under half / over twice today's, is left out and named.
 2. 11-15: weekly Search Console + GA4 read (bot-free GA from 11-08).
 3. 11-18 start-date tool "all"; 11-20 address tool "all" after 7 green nightly live tests (watch.yml; a FEMA outage fails safe, as on 11-08).
 4. 12-12: did Congress extend the NFIP past 2026-12-11? During a lapse set `start` to [].
-5. Gates (11-08): labels checked against data (C10-C16), A4 reads column headers, mutation no-op and control-character lints; `test_factory.py` (19 per-place cases x county/small/big state) and `test_site_factory.py` (14 national cases) run in release.
-6. Owner decisions built 11-08: take-up card; address tool shows FEMA base flood elevation / AO depth and map letters near the pin (counts only).
-7. Regulators: 42 states link their own (US runner 11-08); AK AZ KS LA MA NH NJ WV WY block automated reading and link NAIC's directory.
+5. Regulators: 42 states link their own (US runner 11-08); AK AZ KS LA MA NH NJ WV WY block automated reading and link NAIC's directory.
 Backlog (`state/reviews/backlog.md`): every item BUILDING or DECIDED (11-08).
+
+## HCU + Google patent review (11-09)
+- As a rater: local, sourced, labelled answers; real information gain (zone cost beside claims, unpaid reasons, full-risk gap, claims outside high-risk zones). Missing was past prices (built, Next 1).
+- Patents read: info gain US11354342 (pages must add what top results lack: ours do); site quality US9031929 (branded queries / clicks) and Panda US8682892 (independent links / reference queries): 0 links and 0 branded searches cap every page; only links and mentions move them (Backlinks, owner's contact address). Long clicks US10229166 / dwell US9195944: titles carry place + median; GA4 engagement read 11-15. Site vectors WO2020033805: one tight topic; anonymous publisher stays the owner's call.
+- Decided, not built: elevated / foundation medians (cut 11-07: confounded); author byline (owner: anonymous); zone-page breadcrumb schema (no reader number).
+- Master edge-case list with each guard: `docs/EDGE-CASES.md`.
 
 ## Backlinks (owner 11-08: basics, Claude drives; owner only presses send)
 Why: 0 referring domains, position ~44; page 1 for money terms needs links. Claude builds each asset, the named target list and the draft pitch; the owner sends.

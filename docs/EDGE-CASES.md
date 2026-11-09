@@ -1,0 +1,51 @@
+# Master edge-case list (11-09)
+One line per case: how it breaks, the guard that fails without it. Every guard runs in `release.py` or the cloud job named.
+A new data shape becomes a line here and a case in the named test the same day (CLAUDE.md "Labels are claims").
+
+## Input
+- Empty, one row, zero units, no claims, one claim, one zone: per-place pages: `test_factory` (no_claims, one_claim, one_zone, zero_units).
+- Refund (negative premium), $1 billion value, one-policy state: `test_site_factory` (refund_bucket, billion_bucket, one_policy_state); `test_factory` billion_flood.
+- Source reorders rows: "largest/costliest" by file order: `test_factory` shuffled_order + gate C11/C12 rank by value.
+- Date edges (Jan 1, Dec 31 as-of; Feb 29 snapshot): `test_factory`/`test_site_factory` asof_jan1/asof_dec31; `test_bulk` Feb 29.
+- Leading zeros lost (states 01-09, ZIPs): `pull_bulk` STOP when geoid/ZIP columns are not text.
+- FEMA codes 98/99 (claim opened or deleted in error) counted as claims: `test_raw` (code-98 record out).
+- Under the 30-priced floor shown as a median: gate C14 on every page; `test_factory` under_floor.
+- New FEMA code with no label: `recheck` data dictionary sha; codes.py labels only known codes.
+- Address tool: odd FEMA fields, metres, no unit, -9999 sentinel, zone line, open water, FEMA error/silent: `test_zonemap` (22 cases + 3,000 fuzz, Chromium and WebKit), `live_zonemap` nightly vs real FEMA.
+
+## Missing
+- Feed down / FEMA 503: refresh stops, last month stays live (`refresh-data.yml`, before the 10th no note).
+- First run, file never written (new figure before its data): page prints nothing; `test_factory` new_fields_11_08, cost_trend; `test_site_factory` missing_state, state_not_built, renters_empty, sealevel_empty, map_status_empty.
+- Cost trend: old years with no cost on most policies: left out and named (fill 90%, 30 priced); `test_raw`, gate C17.
+- Cost trend pass fails mid-way: its files are deleted, no page shows a trend (`pull_bulk` main).
+- Older records in other county codes (Connecticut 2022 regions): a year whose policy count is under half or over twice today's is left out and named; `test_raw` 2021 row.
+- Unreachable law page: `recheck` stops the release; manual reads expire at 183 days.
+
+## Scale
+- 2,000 pages: live gate ~17 min (re-measure at 500, PLAN); 20,000-file Cloudflare cap stops at 19,000 (daily run).
+- Cost trend: 5 extra filtered scans of the 3.7 GB file, ~23 M rows; timeout 150 min on the job.
+- Same download twice: `refresh_plan` skips when FEMA's as-of month is unchanged.
+
+## Two writers, two copies
+- One single-family rule (`ffcalc.is_sf_home`) for headline, zone, ZIP and trend medians; gate C17 proves trend = headline within $1.
+- One writer on master: `site-deploy` concurrency group (refresh + publish).
+- One rule text: `rules_registry.py`; pages call `rule()`, never retype.
+
+## Who can't see it
+- New page type with no hub links: S16 `linkcheck` (orphan, missing hub, broken link).
+- National pages: `test_site_factory` scans garbage text, dead links, llms.txt.
+
+## The check itself is wrong
+- Mutation no-op (rule stopped matching after a wording change): `test_gate` refuses a mutation that does not change the page.
+- Loose match: every gate has a mutation that must fail (`test_gate`, `town_check --test`, factory must-block cost_trend_off).
+- Too strict: gates block only the page that shows something wrong; a new county failing is set aside, the rest ship.
+
+## Readers and Google
+- Label vs data ("left out", "only", "costliest", "not final", "since"): gates C10-C17.
+- Basis missing (median/mean, premium/cost): A4 (also column headers).
+- Near-duplicate / thin: S2 sameness (53% median, 60% max, cap 80%); 11-26 checkpoint.
+- Screen 1 too long: phone_check P4 (quote checker inside screen 2 at 390x844).
+
+## Unattended
+- A week with nobody: failed runs leave a note on the run page, read at every session start; the live site stays on the last good release; a live page differing from what passed redeploys the previous release.
+- Cloudflare token (30 days) and domain (2027-10-23) warnings in the daily run.

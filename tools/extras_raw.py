@@ -39,7 +39,8 @@ def new_acc():
     return {"condo_cost": [], "units": 0, "mand_units": 0, "tenant_units": 0, "condo_unit_units": 0, "rcbap_units": 0, "elev_units": 0,
             "gf_units": 0, "prem_new": [], "prem_old": [], "prem_elev": [], "prem_low": [], "sf_n": 0, "sf_max_cov": 0,
             "rc_n": 0, "rc_over": 0, "fee": [], "hfiaa": [], "reserve": [], "icc": [], "ded": collections.Counter(),
-            "cost_hist": collections.Counter(), "cost_hist_new": collections.Counter(), "zone_hist": {}, "zone_hist_exact": {}, "renter_hist": collections.Counter(), "renter_units": 0, "frp_hist_exact": {}, "all_cost": [], "sf_cost": [], "sf_prem": [], "sf_new_cost": []}
+            "cost_hist": collections.Counter(), "cost_hist_new": collections.Counter(), "zone_hist": {}, "zone_hist_exact": {}, "renter_hist": collections.Counter(), "renter_units": 0, "frp_hist_exact": {}, "all_cost": [], "sf_cost": [], "sf_prem": [], "sf_new_cost": [],
+            "trend": collections.defaultdict(lambda: [0, []])}   # year -> [single-family records, their costs > 0]
 
 def policies(st):
     acc = collections.defaultdict(new_acc)
@@ -89,6 +90,14 @@ def policies(st):
                 v = f(r[col])
                 if v is not None and v >= 0: a[key].append(v)
             if r["buildingDeductibleCode"] in DEDUCTIBLE: a["ded"][DEDUCTIBLE[r["buildingDeductibleCode"]]] += 1
+    # 11-09 "is it rising?": the same cohort and cost on the as-of day of each of the 5 years before (pull_bulk.trend writes
+    # the rows); none on disk (first run, failed pass) = no trend, so no page shows one
+    for r in rows("NfipPoliciesTrend", st):
+        if not ffcalc.is_sf_home(r): continue
+        c = f(r["policyCost"])
+        for k in ["ST"] + [g for g in [(r["censusGeoid"] or "")[:5]] if g[:2] == FIPS[st] and len(g) == 5]:
+            t = acc[k]["trend"][int(r["year"])]; t[0] += 1
+            if c and c > 0: t[1].append(c)
     out = {}
     for k, a in acc.items():
         n_ded = sum(a["ded"].values())
@@ -118,6 +127,14 @@ def policies(st):
                               "sf_prem_median": med(a["sf_prem"]), "sf_prem_mean": round(statistics.mean(a["sf_prem"])) if a["sf_prem"] else None,
                               "all_cost_median": med(a["all_cost"]), "all_cost_mean": round(statistics.mean(a["all_cost"])) if a["all_cost"] else None,
                               "sf_n": len(a["sf_cost"]), "sf_prem_n": len(a["sf_prem"]), "all_n": len(a["all_cost"])}
+        # a year's median only when 30+ are priced, FEMA gives a cost for 90%+ of that year's single-family records here, and
+        # that year's record count is within half to twice today's (older records may place homes in other county codes:
+        # Connecticut's 2022 planning regions); the as-of year is this run's own rows, the headline's rule (gate C17 checks)
+        _tr = sorted(a["trend"].items()) + [(_A.year, [a["sf_n"], a["sf_cost"]])]
+        out[k]["cost_trend"] = [{"year": y, "n": len(cs), "sf_n": n,
+                                 "median": med(cs) if len(cs) >= MX.CONST["min_priced"] and 100 * len(cs) >= MX.CONST["trend_fill_pct"] * n
+                                 and a["sf_n"] <= 2 * n <= 4 * a["sf_n"] else None}
+                                for y, (n, cs) in _tr] if a["trend"] else []
     return out
 
 def net(r): return sum(f(r[c]) or 0 for c in ("netBuildingPaymentAmount", "netContentsPaymentAmount", "netIccPaymentAmount"))

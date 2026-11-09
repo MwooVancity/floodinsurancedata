@@ -41,6 +41,9 @@ jobs:
       - id: plan   # skip the download when nothing is new (owner 2026-11-03)
         env: { FORCE: "${{ inputs.force }}" }
         run: python -I tools/refresh_plan.py
+      - name: "Run the bulk-file code (cost trend pass) on a tiny synthetic parquet first (11-09)"
+        if: steps.plan.outputs.pull == 'true'
+        run: pip install -q pyarrow==21.0.0 && python -I tools/test_bulk.py
       - name: Download FEMA's bulk policy and claim files, with every check (pull_bulk.py docstring)
         id: dl
         if: steps.plan.outputs.pull == 'true'
