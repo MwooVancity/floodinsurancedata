@@ -18,6 +18,8 @@ A new data shape becomes a line here and a case in the named test the same day (
 - First run, file never written (new figure before its data): page prints nothing; `test_factory` new_fields_11_08, cost_trend; `test_site_factory` missing_state, state_not_built, renters_empty, sealevel_empty, map_status_empty.
 - Cost trend: old years with no cost on most policies: left out and named (fill 90%, 30 priced); `test_raw`, gate C17.
 - Cost trend pass fails mid-way: its files are deleted, no page shows a trend (`pull_bulk` main).
+- A left-out year whose printed reason is not the rule that applied: gate C17 recomputes the reason from the data; factory `cost_trend_reasons` swaps one and must be blocked.
+- A new screen-1 line on the biggest pages: phone_check P3/P4 (11-09: the cost-by-year sentence failed on Jefferson, Miami-Dade, Brevard and was cut).
 - Older records in other county codes (Connecticut 2022 regions): a year whose policy count is under half or over twice today's is left out and named; `test_raw` 2021 row.
 - A feed collected once and never again (county NRI + take-up, collector deleted 10-29): written by the monthly state job again (`collect_state_small.write_detail`, `test_raw`).
 - A feed without its own date, or rows with mixed dates: no card, never the download day on it (`test_factory` takeup_no_date; state take-up date only when all rows agree; NRI version from FEMA's `NRI_VER`, two versions = none printed).

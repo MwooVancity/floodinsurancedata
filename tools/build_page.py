@@ -681,6 +681,18 @@ def _zip_county():
 
 # ---- why published prices differ (every page): one set of FEMA records, many honest "averages" ----
 _xpp = EXTRAS.get("policies") or {}
+def _trend_day(y):   # the as-of month and day in year y (Feb 29 -> Feb 28 in a non-leap year, as pull_bulk.snap)
+    import datetime
+    d = datetime.date.fromisoformat(P["asof"][:10])
+    try: return pretty_date(str(d.replace(year=y)))
+    except ValueError: return pretty_date(str(d.replace(year=y, day=28)))
+
+def _trend_rows():   # one rule for the card and its screen-1 line: past years by year (never file order); shown = priced ones, else none
+    L = _xpp.get("cost_trend") or []; _a = int(P["asof"][:4])
+    past = sorted((i for i, t in enumerate(L) if t.get("year") != _a), key=lambda i: L[i]["year"])
+    on = _tool_on("trend") and P.get("p50") is not None and (P.get("cost_n") or 0) >= MIN_PRICED
+    return L, past, [i for i in past if on and L[i].get("median") is not None], _a
+
 _new_ok = (_xpp.get("cost_new_n") or 0) >= MX.CONST["year_min"]   # hater r5: what policies first bought this past year really cost
 _xp, _xc = EXTRAS.get("policies") or {}, EXTRAS.get("claims") or {}
 _whyall = [dict(r, i=i) for i, r in enumerate(_xc.get("unpaid_reasons") or [])]
@@ -1045,6 +1057,8 @@ elif _sagg and not IS_STATE:
         cmp_line += (f'<p class="cmp">By ZIP it ranges from {tp("zip_cost", f"policies.by_zip.{_zix[_zlo['zip']]}.median", money, q=_zlo["zip"])} '
                      f'({m("zip", _zl(_zlo["zip"]), q=_zlo["zip"])}) to {tp("zip_cost", f"policies.by_zip.{_zix[_zhi['zip']]}.median", money, q=_zhi["zip"])} '
                      f'({m("zip", _zl(_zhi["zip"]), q=_zhi["zip"])}); <a href="#zip">find your ZIP</a>.</p>')
+# 11-09: a screen-1 cost-by-year sentence was tried and cut: screen 1 is full on big counties (P4 quote checker, P3 jump);
+# "is it rising?" is the full-risk tile on screen 1 and the cost-by-year card right after the cost card
 if IS_STATE:
     _nb = [(a, STATE_NAMES[a]) for a in NEIGHBORS.get(_ab, []) if a in STATE_NAMES]   # the states that border this one
     sib_html = ("<nav class='sib'><b>Neighboring states:</b> " + " · ".join(f'<a href="../{state_slug(a)}/">{html.escape(n)}</a>' for a, n in _nb)
@@ -1239,17 +1253,9 @@ def card_cost():
     cost_body += f"<p class='note'>{rule('other_buyers')} The median here is for single-family primary-home policies, not businesses or second homes. Renting? See <a href='/flood-insurance/renters/'>what renters pay</a>. {rule('surcharge')}</p>"
     return card(f"Flood insurance cost in {CL}", cost_lead, cost_body, src(["cost_p50", "prem_median", "frp_median", "coverage"], POL_ASOF, RETR) + src_rules(["other_buyers", "surcharge"]))
 
-def _trend_day(y):   # the as-of month and day in year y (Feb 29 -> Feb 28 in a non-leap year, as pull_bulk.snap)
-    import datetime
-    d = datetime.date.fromisoformat(P["asof"][:10])
-    try: return pretty_date(str(d.replace(year=y)))
-    except ValueError: return pretty_date(str(d.replace(year=y, day=28)))
-
 def card_trend():   # 11-09 HCU "is it rising?": the typical cost on the same day in each of the 5 years before (extras_raw cost_trend)
-    L = _xpp.get("cost_trend") or []; _a = int(P["asof"][:4])
-    past = sorted((i for i, t in enumerate(L) if t.get("year") != _a), key=lambda i: L[i]["year"])   # by year, never file order
-    shown = [i for i in past if L[i].get("median") is not None]
-    if not _tool_on("trend") or not shown or P.get("p50") is None or (P.get("cost_n") or 0) < MIN_PRICED: return ""
+    L, past, shown, _a = _trend_rows()
+    if not shown: return ""
     out = [str(L[i]["year"]) for i in past if L[i].get("median") is None]
     t = lambda i, k, f, nm: tp(nm, f"extras.policies.cost_trend.{i}.{k}", f, q=str(L[i]["year"]))
     rows = "".join(f"<tr><td>{_trend_day(L[i]['year'])}</td><td>{t(i, 'median', money, 'trend_cost')}</td><td>{t(i, 'n', num, 'trend_n')}</td></tr>" for i in shown)
