@@ -4,7 +4,7 @@ State, dated numbers, next moves, owner-only items. Rules: CLAUDE.md. History: g
 ## Goal and scoreboard
 Most helpful flood-insurance page for every US place a homeowner or buyer searches, on a phone. Scoreboard: pages indexed, impressions, clicks, page-1 queries, AI citations. Polish only where a number says a page fails.
 - Search Console 28 days to 11-06: 5 clicks, 872 impressions, 225 pages and 235 queries seen, avg position 39.5. Best: Brevard pos 8.2 (41 impr, 1 click), New London CT pos 2 (2 clicks), Florida state pos 25.9, zone X 83, zone AE 75; /flood-zone-map/ not yet in the top 10 pages by impressions.
-- GA4 11-01..08: 7 real visitors (13 more were our nightly test, filtered since 11-08): 4 from ChatGPT (no query passed, so no keywords), 3 organic, all engaged. ChatGPT search reads Bing's index; IndexNow gets 403 until the owner verifies the site in Bing Webmaster Tools. llms.txt labelled 11-08 (test_site_factory checks it).
+- GA4 11-01..08: 7 real visitors (13 more were our nightly test, filtered since 11-08): 4 from ChatGPT (no query passed, so no keywords), 3 organic, all engaged. GA4 28 days to 11-08: 4 organic + 4 ChatGPT sessions, all engaged (Santa Clara 2m14s, Elkhart, Brevard, Dallas ~50s). Bing Webmaster Tools verified by the owner 11-09: 0 impressions, 0 AI citations, no sitemap known; IndexNow still 403 "UserForbiddedToAccessSite" right after verification (key file serves 200 to bingbot), recheck 11-15. llms.txt labelled 11-08 (test_site_factory checks it).
 - Index 11-06: home, 51/51 states, 204/232 counties, 6/7 zones indexed; our canonical kept everywhere. Low rank = age and no links, not a technical block.
 
 ## Live now (11-09)
@@ -64,4 +64,4 @@ That FEMA data shows open vs closed claims; "denied"; a period or denominator le
 - IndexNow returns 403 on most sends: notice only, not a blocker.
 
 ## Owner only
-FIRST: Bing Webmaster Tools, import the site from Google Search Console (2 minutes; unblocks IndexNow and ChatGPT's source). corrections/contact address; publisher identity; link outreach (claims page to reporters: Houston Chronicle, Houston Public Media, Texas Tribune, ProPublica, Floodlight, Inside Climate News); Keyword Planner seeds not yet in the file (condo, deductible, LOMA, elevation certificate, claim denied); GitHub failed-run email setting; ads and paid referrals stay off until their checks.
+corrections/contact address; publisher identity; link outreach (claims page to reporters: Houston Chronicle, Houston Public Media, Texas Tribune, ProPublica, Floodlight, Inside Climate News); Keyword Planner seeds not yet in the file (condo, deductible, LOMA, elevation certificate, claim denied); GitHub failed-run email setting; ads and paid referrals stay off until their checks.
