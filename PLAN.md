@@ -14,9 +14,9 @@ Most helpful flood-insurance page for every US place a homeowner or buyer search
 Keyword Planner volume x top bid: state insurance $190k, map $90k, towns $47k, zones $37k, cost $37k, NFIP $36k, state map $25k, renters $18k, county map $15.5k. Not targeted: head term "flood insurance" (FloodSmart), quote and companies (forbidden). Every money page is live; counties now run 20 a day, queue "kw" > 0 only (~1,200 zero-demand counties wait for the Jan 4 rule).
 
 ## Next, in order
-2. 11-15: weekly Search Console + GA4 read (bot-free GA from 11-08).
-3. 11-18 start-date tool "all"; 11-20 address tool "all" after 7 green nightly live tests (watch.yml; a FEMA outage fails safe, as on 11-08).
-4. 12-12: did Congress extend the NFIP past 2026-12-11? During a lapse set `start` to [].
+2. WAITING 11-15: weekly Search Console + GA4 read (bot-free GA from 11-08).
+3. WAITING 11-17 (2 weeks on samples since 11-03; address tool samples since 11-06): 11-18 start-date tool "all"; 11-20 address tool "all" after 7 green nightly live tests (watch.yml; a FEMA outage fails safe, as on 11-08).
+4. WAITING 12-12: did Congress extend the NFIP past 2026-12-11? During a lapse set `start` to [].
 5. Top-3 compare (owner 11-09, ONLY GOAL): every keyword group's Google top 3 vs our page; each real gap built or decided. Monthly: next 12-09. Run 11-09 built: claim limits on home; lowest-floor law (60.3(c)(2)) on AE/AH; 50% rule on high-risk zone pages (rewritten from raw 59.1 + SFIP D, live on every county); claims page: ten costliest loss years + claim-size range by state (claims_check C6-C8); ZIP result shows the county median beside the ZIP's; second batch LIVE 11-09: U.S. median paid building claim ($12,384, 1,968,497 claims; claims_check C7b), county note on claims rated outside zones A/V (236 counties, loss years 2016-2025), rate-rise cap on home, "NFIP sold only in participating communities" on renters, floodway rule on AE (review 126 PASS; zone X 30-year odds deleted: shaded X also holds some 1% areas, FEMA gives no odds). Decided, not printed: evacuation vs flood zone (Florida's official page calls evacuation zones flood zones: sources disagree); renters "landlord policy does not cover your things" (not in FloodSmart's raw text); ZIP-level preliminary-map compare (FEMA's tool, address-level).
 Backlog (`state/reviews/backlog.md`): every item BUILDING or DECIDED (11-08).
 
