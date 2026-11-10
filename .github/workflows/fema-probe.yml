@@ -57,16 +57,20 @@ jobs:
           echo "== legend"; curl -s "$B/legend?f=json" | python3 -c "import json,sys;d=json.load(sys.stdin);l=[x for x in d['layers'] if x['layerId']==28][0];[print(x['label'],len(x.get('imageData',''))) for x in l['legend']]"
           echo "== census geocoder CORS"; curl -s -D - -o /dev/null -H "Origin: https://floodinsurancedata.com" "https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address=315%20Court%20St%2C%20Clearwater%2C%20FL&benchmark=Public_AR_Current&format=json" | grep -i -E "access-control|HTTP/"
           echo "== msc address link"; curl -s "https://msc.fema.gov/portal/search?AddressQuery=315%20Court%20St%2C%20Clearwater%2C%20FL%2033756" | grep -o -i "addressquery[^\"']\{0,80\}" | head -3
-  prelim:   # 11-09 top-3 compare: is FEMA's preliminary/pending map status readable per county (Harris draft maps lead the SERP)?
+  prelim:   # 11-09 top-3 compare: FEMA preliminary (draft) and pending map status per county DFIRM
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 8
     steps:
       - run: |
-          for u in "https://hazards.fema.gov/arcgis/rest/services/PrelimPending?f=json" "https://hazards.fema.gov/gis/nfhl/rest/services/PrelimPending?f=json" "https://hazards.fema.gov/arcgis/rest/services?f=json"; do
-            echo "== $u"; curl -s -m 30 "$u" | head -c 1500; echo; done
-          for S in Prelim_NFHL Pending_NFHL; do
-            B="https://hazards.fema.gov/arcgis/rest/services/PrelimPending/$S/MapServer"
-            echo "== $S layers"; curl -s -m 30 "$B?f=json" | python3 -c "import json,sys;d=json.load(sys.stdin);[print(l['id'],l['name']) for l in d.get('layers',[])]" || true
-            for L in 0 1 2 3; do echo "== $S layer $L fields+sample"; curl -s -m 30 -G "$B/$L/query" --data-urlencode "where=1=1" --data-urlencode "outFields=*" --data-urlencode "returnGeometry=false" --data-urlencode "resultRecordCount=2" --data-urlencode "f=json" | head -c 1200; echo; done
-            echo "== $S Harris 48201C"; curl -s -m 30 -G "$B/3/query" --data-urlencode "where=DFIRM_ID='48201C'" --data-urlencode "returnCountOnly=true" --data-urlencode "f=json"; echo
+          P="https://hazards.fema.gov/arcgis/rest/services/PrelimPending/Prelim_NFHL/MapServer"
+          Q="https://hazards.fema.gov/arcgis/rest/services/PrelimPending/Pending_NFHL/MapServer"
+          ST='[{"statisticType":"count","onStatisticField":"OBJECTID","outStatisticFieldName":"n"},{"statisticType":"min","onStatisticField":"PRELM_ISSUE_DATE","outStatisticFieldName":"first"},{"statisticType":"max","onStatisticField":"PRELM_ISSUE_DATE","outStatisticFieldName":"last"}]'
+          SE='[{"statisticType":"count","onStatisticField":"OBJECTID","outStatisticFieldName":"n"},{"statisticType":"min","onStatisticField":"EFF_DATE","outStatisticFieldName":"first"},{"statisticType":"max","onStatisticField":"EFF_DATE","outStatisticFieldName":"last"}]'
+          for D in 48201C 12099C 17031C 12103C; do
+            for L in 0 1; do echo "== prelim L$L $D"; curl -s -m 60 -G "$P/$L/query" --data-urlencode "where=DFIRM_ID LIKE '${D}%'" --data-urlencode "outStatistics=$ST" --data-urlencode "f=json" | head -c 400; echo; done
+            echo "== prelim L1 $D sample"; curl -s -m 60 -G "$P/1/query" --data-urlencode "where=DFIRM_ID LIKE '${D}%'" --data-urlencode "outFields=DFIRM_ID,FIRM_PAN,PANEL_TYP,PRELM_ISSUE_DATE,PRELM_CODE,PNP_REASON" --data-urlencode "returnGeometry=false" --data-urlencode "resultRecordCount=3" --data-urlencode "f=json" | head -c 900; echo
+            echo "== pending L1 $D"; curl -s -m 60 -G "$Q/1/query" --data-urlencode "where=DFIRM_ID LIKE '${D}%'" --data-urlencode "outStatistics=$SE" --data-urlencode "f=json" | head -c 400; echo
           done
+          echo "== prelim L1 by DFIRM (all US)"; curl -s -m 120 -G "$P/1/query" --data-urlencode "where=1=1" --data-urlencode "groupByFieldsForStatistics=DFIRM_ID" --data-urlencode "outStatistics=$ST" --data-urlencode "f=json" | python3 -c "import json,sys;d=json.load(sys.stdin);f=[x['attributes'] for x in d.get('features',[])];print(len(f),'dfirms', sum(1 for a in f if str(a['DFIRM_ID']).endswith('C')),'end in C');[print(a) for a in f[:25]];print(d.get('error'),d.get('exceededTransferLimit'))"
+          echo "== pending L1 by DFIRM (all US)"; curl -s -m 120 -G "$Q/1/query" --data-urlencode "where=1=1" --data-urlencode "groupByFieldsForStatistics=DFIRM_ID" --data-urlencode "outStatistics=$SE" --data-urlencode "f=json" | python3 -c "import json,sys;d=json.load(sys.stdin);f=[x['attributes'] for x in d.get('features',[])];print(len(f),'dfirms');[print(a) for a in f[:25]];print(d.get('error'))"
+          echo "== prelim L0 sample"; curl -s -m 60 -G "$P/0/query" --data-urlencode "where=1=1" --data-urlencode "outFields=DFIRM_ID,PRELM_CODE,PRELM_ISSUE_DATE,PRELM_UID" --data-urlencode "returnGeometry=false" --data-urlencode "resultRecordCount=5" --data-urlencode "f=json" | head -c 1200; echo
