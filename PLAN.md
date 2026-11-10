@@ -13,6 +13,12 @@ Most helpful flood-insurance page for every US place a homeowner or buyer search
 ## Money order (owner 11-07: money groups first, counties last)
 Keyword Planner volume x top bid: state insurance $190k, map $90k, towns $47k, zones $37k, cost $37k, NFIP $36k, state map $25k, renters $18k, county map $15.5k. Not targeted: head term "flood insurance" (FloodSmart), quote and companies (forbidden). Every money page is live; counties now run 20 a day, queue "kw" > 0 only (~1,200 zero-demand counties wait for the Jan 4 rule).
 
+## Revenue target (owner 11-09): $1,500 a month by 2027-11
+- Math (third-party estimates, searched 11-09, not our data): US finance/insurance page RPM $15-40 (weforads, organicarbitrage). At $30, $1,500 = ~50,000 pageviews a month. Today: 5 Search Console clicks in 28 days. Gap ~1,000x; links are the lever (patent note below), and links wait on the owner's contact address.
+- Ad networks (secondary sources, recheck the official page before applying): Mediavine Journey from 1,000 sessions a month; Raptive from 25,000 pageviews. Ezoic now wants 250,000+.
+- Traffic milestones (GA4 pageviews a month): 2027-02 2,000; 2027-05 8,000; 2027-08 20,000; 2027-11 50,000. Two misses in a row: re-plan (new keyword group or page type), not more of the same.
+- Money switches, owner only: ads after the 11-26 review, when sessions pass 1,000 a month (one slot below screen 1, phone bytes measured); paid referrals only after the licensing + FTC check, done when sessions pass 5,000 a month (at today's traffic a referral earns ~0).
+
 ## Next, in order
 2. WAITING 11-15: weekly Search Console + GA4 read (bot-free GA from 11-08).
 3. WAITING 11-17 (2 weeks on samples since 11-03; address tool samples since 11-06): 11-18 start-date tool "all"; 11-20 address tool "all" after 7 green nightly live tests (watch.yml; a FEMA outage fails safe, as on 11-08).
