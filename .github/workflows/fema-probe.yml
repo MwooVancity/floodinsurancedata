@@ -57,3 +57,16 @@ jobs:
           echo "== legend"; curl -s "$B/legend?f=json" | python3 -c "import json,sys;d=json.load(sys.stdin);l=[x for x in d['layers'] if x['layerId']==28][0];[print(x['label'],len(x.get('imageData',''))) for x in l['legend']]"
           echo "== census geocoder CORS"; curl -s -D - -o /dev/null -H "Origin: https://floodinsurancedata.com" "https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address=315%20Court%20St%2C%20Clearwater%2C%20FL&benchmark=Public_AR_Current&format=json" | grep -i -E "access-control|HTTP/"
           echo "== msc address link"; curl -s "https://msc.fema.gov/portal/search?AddressQuery=315%20Court%20St%2C%20Clearwater%2C%20FL%2033756" | grep -o -i "addressquery[^\"']\{0,80\}" | head -3
+  prelim:   # 11-09 top-3 compare: is FEMA's preliminary/pending map status readable per county (Harris draft maps lead the SERP)?
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - run: |
+          for u in "https://hazards.fema.gov/arcgis/rest/services/PrelimPending?f=json" "https://hazards.fema.gov/gis/nfhl/rest/services/PrelimPending?f=json" "https://hazards.fema.gov/arcgis/rest/services?f=json"; do
+            echo "== $u"; curl -s -m 30 "$u" | head -c 1500; echo; done
+          for S in Prelim_NFHL Pending_NFHL; do
+            B="https://hazards.fema.gov/arcgis/rest/services/PrelimPending/$S/MapServer"
+            echo "== $S layers"; curl -s -m 30 "$B?f=json" | python3 -c "import json,sys;d=json.load(sys.stdin);[print(l['id'],l['name']) for l in d.get('layers',[])]" || true
+            for L in 0 1 2 3; do echo "== $S layer $L fields+sample"; curl -s -m 30 -G "$B/$L/query" --data-urlencode "where=1=1" --data-urlencode "outFields=*" --data-urlencode "returnGeometry=false" --data-urlencode "resultRecordCount=2" --data-urlencode "f=json" | head -c 1200; echo; done
+            echo "== $S Harris 48201C"; curl -s -m 30 -G "$B/3/query" --data-urlencode "where=DFIRM_ID='48201C'" --data-urlencode "returnCountOnly=true" --data-urlencode "f=json"; echo
+          done
