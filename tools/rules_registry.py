@@ -425,6 +425,20 @@ RULES = {
         "text": "Property that is not your primary residence, such as a second home, a rental you own or a non-residential building, pays a higher federal surcharge: $250 a year, against $25 for a primary home.",
         "sources": [("https://www.law.cornell.edu/uscode/text/42/4015a", "(1) $25, except as provided in paragraph (2); and (2) $250, in the case of a policy for any property that is", "curl"),
                     ("https://www.law.cornell.edu/uscode/text/42/4015a", "a residential property that is not the primar", "curl")]},
+    "tx_tenant_notice": {   # audit 11-10 (renters top 3: TDI); Texas Property Code 92.0135 read raw 11-10 from tcss.legis.texas.gov (curl)
+        "text": "In Texas, a landlord must give a tenant a written notice saying whether the landlord is aware the home is in a 100-year floodplain, and, if the landlord knows "
+                "flooding damaged it at least once in the five years before the lease, a notice saying whether the landlord is aware it flooded in that time. Leases shorter than 30 days are exempt "
+                "(Texas Property Code §92.0135).",
+        "sources": [("https://tcss.legis.texas.gov/resources/PR/htm/PR.92.htm", "A landlord shall provide to a tenant a written notice substantially equivalent to the following", "curl"),
+                    ("https://tcss.legis.texas.gov/resources/PR/htm/PR.92.htm", "is located in a 100-year floodplain", "curl"),
+                    ("https://tcss.legis.texas.gov/resources/PR/htm/PR.92.htm", "If a landlord knows that flooding has damaged any portion of a dwelling at least once during the five-year period immediately preceding the effective date of the lease", "curl"),
+                    ("https://tcss.legis.texas.gov/resources/PR/htm/PR.92.htm", "a lease with a term of less than 30 days", "curl")]},
+    "harris_maapnext": {   # audit 11-10 (Harris top 3 carry the 2026 draft maps); Harris County Flood Control District MAAPnext site read raw 11-10 (curl)
+        "text": "Harris County's flood control district shares draft flood maps on its <a href='https://www.maapnext.org/' rel='noopener'>MAAPnext site</a>. It says they are not final "
+                "and cannot be used for insurance or regulatory decisions, and that FEMA is expected to release preliminary flood maps after its federal review.",
+        "sources": [("https://www.maapnext.org/", "MAAPnext flood maps are currently in draft form", "curl"),
+                    ("https://www.maapnext.org/", "These draft maps are not final, cannot be used for insurance or regulatory decisions", "curl"),
+                    ("https://www.maapnext.org/", "FEMA is anticipated to release Preliminary Flood Insurance Rate Maps (FIRMs) after completion of its federal review", "curl")]},
     "tx_twia": {   # Texas only
         "text": "In Texas, a TWIA windstorm policy requires flood insurance when any part of the property is in a V, VE or V1-V30 zone, NFIP cover "
                 "is available for it, and the structure was built, altered, remodeled or enlarged after September 1, 2009.",

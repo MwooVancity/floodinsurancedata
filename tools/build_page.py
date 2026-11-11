@@ -928,7 +928,7 @@ def card_payout():
                     + ".</p>") if _decs_out else "")) if len(_decs) > 1 else "")
             + f"<p class='note'>{rule('cwop')} The average is over claims that paid something and includes Increased Cost of "
             "Compliance payments (help to elevate or rebuild to code), which the yearly totals above leave out. Dollars are "
-            "as paid at the time, not adjusted for inflation; a single home can file across several floods over the years. These shares count every FEMA claim record from every year, including ones FEMA coded as entered in error; <a href='/flood-insurance/claims/'>the claims page</a> counts only losses from 2020 on and leaves those records out, so its shares differ. FEMA's data has no open or closed field, so a recent claim with no payment may still be paid.</p>",
+            "as paid at the time, not adjusted for inflation; a single home can file across several floods over the years. These shares count every FEMA claim record from every year except records FEMA coded &quot;deleted in error&quot; or &quot;assigned in error&quot;; <a href='/flood-insurance/claims/'>the claims page</a> counts only losses from 2020 on, so its shares differ. FEMA's data has no open or closed field, so a recent claim with no payment may still be paid.</p>",
             src(["claims_filed", "avg_paid", "cwop_share"], f"{C['year_min']}–{C['year_max']}", cx.get("retrieved", RETR)), id="payout")
     return payout_card
 
@@ -1019,7 +1019,8 @@ NEIGHBORS = {   # land borders (AK and HI: none, so the West Coast states)
 NEIGHBORS = {k: v.split() for k, v in NEIGHBORS.items()}
 def _pct_vs(a, b, q):
     d = round(100 * (a - b) / b)
-    return "the same as" if d == 0 else f"{m('pct_vs', str(abs(d)) + '%', q=f"{q} {'above' if d > 0 else 'below'}")} {'above' if d > 0 else 'below'}"
+    if d == 0: return "the same as" if a == b else "within one percent of"   # audit 11-10: Nye $857 was "the same as" Nevada's $860
+    return f"{m('pct_vs', str(abs(d)) + '%', q=f"{q} {'above' if d > 0 else 'below'}")} {'above' if d > 0 else 'below'}"
 cmp_line = ""
 _cby1 = P.get("cost_by_year") or {}
 _ly = max((y for y, d in _cby1.items() if (d.get("n") or 0) >= MX.CONST["year_min"]), default=None)
@@ -1106,6 +1107,8 @@ if _zq:
                + ("Zones " if len(_zq) > 1 else "Zone ") + ", ".join(f"{html.escape(z)} {tp('zone_cost', f'policies.cost_by_zone.{z}.median', money, q=z)}" for z, d in _zq)
                + ' a year (median, single-family homes)'
                + "".join(f"; Zone {html.escape(z)}, {m('zone_share', str(round(100 * P['zone_units'][z] / P['units'], 1)) + '%', q=z)} of policy units, has too few to price" for z in _zbig)
+               # audit 11-10 (Travis A, AO): a priced zone past the first ones is never dropped silently
+               + ("; more zones below" if set(z for z in (P.get("cost_by_zone") or {}) if z != "Unknown") - set(dict(_zq)) else "")
                + '.</a>')
 _cxq = data.get("claims_extra") or {}
 if _cxq.get("claims") and _cxq.get("avg_paid") and P.get("p50"):
@@ -1114,8 +1117,12 @@ if _cxq.get("claims") and _cxq.get("avg_paid") and P.get("p50"):
     _qa.append(f'<a href="#payout"><b>Does it pay out here?</b> {m("paid_share", str(round(100 - _cxq["cwop_share"], 1)) + "%")} of NFIP claims in {CS} (all years on record) paid '
                + (f'something ({html.escape(STATE_NAMES[agg["state"]])}: {m("paid_share", str(round(100 - _scx["cwop_share"], 1)) + "%", q="state")}).'
                   if _scx.get("cwop_share") is not None else 'something.')
-               + (f' Claims filed for losses in the {m("decade", html.escape(_decs[-1]), q=_decs[-1])}: '
-                  f'{tp("decade_paid_share", f"extras.claims.by_decade.{_decs[-1]}.paid_pct", pct, q=_decs[-1])} paid something.' if len(_decs) > 1 else '')
+               + (f' Claims filed for losses in the {m("decade", html.escape(_decs[-1]), q=_decs[-1])}'
+                  + (", the latest decade with thirty or more claims" if any(d > _decs[-1] for d in _decs_out) else "") + ': '
+                  f'{tp("decade_paid_share", f"extras.claims.by_decade.{_decs[-1]}.paid_pct", pct, q=_decs[-1])} paid something'
+                  # audit 11-10 (Greene AR 2010s, 2020s): a newer decade with too few claims is named, never skipped silently
+                  + "".join(f"; {m('decade', html.escape(d), q=d)}: {tp('decade_claims', f'extras.claims.by_decade.{d}.n', q=d)} {pl(_xc['by_decade'][d]['n'], 'claim')}, too few for a share"
+                            for d in sorted(_decs_out) if d > _decs[-1]) + '.' if len(_decs) > 1 else '')
                + ' No recorded payment can mean paperwork or damage the policy did not count as flood.</a>')
 _qa.append('<a href="#covered"><b>Already flooded?</b> What to do now, and what FEMA aid covers.</a>')
 _qd = [c for c in crs if _pct(c.get("sfhaDiscount"))]   # hcu 11-07: the local savings fact sat in section 13
@@ -1241,12 +1248,13 @@ def card_required():
       f"<p class='note'>{rule('private_accept')}" + (f" {rule('fl_citizens_private')}" if agg.get("state") == "FL" else "") + "</p>" +
       f"<p class='note'><b>At a closing:</b> {rule('lender_amount')} {rule('lender_force')} {rule('zone_review')} {rule('seller_assign')}" + (f" {rule('fl_disclosure')}" if agg.get("state") == "FL" else "") + "</p>" +
       (f"<p class='note'>{rule('tx_twia')}</p>" if agg.get("state") == "TX" else "") +
+      (f"<p class='note'>{rule('harris_maapnext')}</p>" if agg.get("geoid") == "48201" else "") +
       f"<p class='note'>{m('sfha_share', str(P['sfha_share_units']) + '%')} of {CS}'s NFIP policy units are in high-risk zones (not {tp('sfha_share', 'policies.sfha_share_units', pct)} of all buildings, and not an answer about your own home).</p>" + _outside_line() +
       f"{_zone_body()}<p class='note'>Insured units by the zone each policy is rated in.{how('zones')} What each means: <a href='/flood-zones/ae/'>zone AE</a>, <a href='/flood-zones/x/'>zone X</a>, <a href='/flood-zones/ve/'>zone VE</a>." + (" Find yours with the <a href='/flood-zone-map/'>flood zone map lookup by address</a>." if _HUB_ON and IS_STATE else "") + "</p>" + ("" if P.get("cost_by_zone") else f"<p class='note'>{rule('zone_codes')}</p>") + _map_line()
       + (f"<p class='note'><b>Not in the NFIP ({m('crs_count', str(len(crs_out)), q='not_nfip')} {pl(len(crs_out), 'community', 'communities')} here)"
          + (": " + "; ".join(sorted((_cname(c) + (" (unincorporated area only)" if re.search(r"\b(COUNTY|PARISH|BOROUGH)\b", (c.get("communityName") or "").upper()) else "") for c in crs_out), key=lambda h: html.unescape(re.sub("<[^>]+>", "", h)).casefold())))
          + f".</b> {rule('nfip_not_sold')}</p>" if crs_out else ""),
-      src(["units", "sfha_share"], POL_ASOF, RETR) + (src(["outside_sfha_dollars"], f"{C['year_min']}–{C['year_max']}", RETR) if _outside_line() else "") + (src(["map_date"], "FEMA's current Community Status Book", RETR) if _map_line() else "") + (src(["map_panels", "lomr_n", "loma_n"], f"FEMA's map service, retrieved {_MS.get('_retrieved')}", RETR) if _nfhl_lines() else "") + src_rules(["purchase_answer", "lender_any_zone", "private_accept", "lender_amount", "lender_force", "zone_review", "seller_assign", "prelim", "loma_fee", "loma_online", "ec_get"] + (["fl_citizens", "fl_disclosure", "fl_citizens_private"] if agg.get("state") == "FL" else []) + (["tx_twia"] if agg.get("state") == "TX" else []) + (["nfip_not_sold"] if crs_out else [])), id="required")
+      src(["units", "sfha_share"], POL_ASOF, RETR) + (src(["outside_sfha_dollars"], f"{C['year_min']}–{C['year_max']}", RETR) if _outside_line() else "") + (src(["map_date"], "FEMA's current Community Status Book", RETR) if _map_line() else "") + (src(["map_panels", "lomr_n", "loma_n"], "FEMA's map service", _MS.get('_retrieved') or RETR) if _nfhl_lines() else "") + src_rules(["purchase_answer", "lender_any_zone", "private_accept", "lender_amount", "lender_force", "zone_review", "seller_assign", "prelim", "loma_fee", "loma_online", "ec_get"] + (["fl_citizens", "fl_disclosure", "fl_citizens_private"] if agg.get("state") == "FL" else []) + (["tx_twia"] if agg.get("state") == "TX" else []) + (["harris_maapnext"] if agg.get("geoid") == "48201" else []) + (["nfip_not_sold"] if crs_out else [])), id="required")
 
 def card_cost():
     cost_lead, cost_body = _cost_parts()
@@ -1292,7 +1300,10 @@ def _zone_split_note():   # top-3 compare 11-09: how much of the claim money her
     z = _xc.get("zone_split") or {}
     if (z.get("known_n") or 0) < MIN_PRICED or (z.get("known_paid_n") or 0) < MIN_PRICED or z.get("out_pct") is None or z.get("out_paid_pct") is None: return ""
     return (f"<p class='note'><b>Outside the high-risk zones:</b> of the {tp('zone_known_n', 'extras.claims.zone_split.known_n')} claims here with a flood zone on the claim, "
-            f"losses {z['from']}–{z['to']}, {tp('zone_out_pct', 'extras.claims.zone_split.out_pct', pct)} were rated outside zones A and V (zones X, B, C and D), "
+            f"losses {z['from']}–{z['to']}, {tp('zone_out_pct', 'extras.claims.zone_split.out_pct', pct)}"
+            # audit 11-10 (Nye NV: 1 claim of 59 read as 1.7% and 0.0%): under thirty such claims, the count is printed beside the share
+            + (f" ({tp('zone_out_n', 'extras.claims.zone_split.out_n')} {pl(z['out_n'], 'claim')})" if (z.get("out_n") or 0) < MIN_PRICED else "")
+            + f" were rated outside zones A and V (zones X, B, C and D), "
             f"and they got {tp('zone_out_paid_pct', 'extras.claims.zone_split.out_paid_pct', pct)} of the dollars paid on those claims. "
             f"The zone is the one on each claim, not today's map; claims with no zone on them are left out.</p>")
 
@@ -1403,7 +1414,7 @@ HTML = f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">{'<meta name="robots" content="noindex,follow">' if os.environ.get("FF_NOINDEX") == "1" else ""}
 {GA_TAG}<title>{CL + ' flood insurance and flood zones' if IS_STATE else CS + ', ' + agg.get('state', '') + _T1 + ' flood zones and flood insurance'}: {money(P['p50'])}/yr median, single-family</title>
 <meta name="description" content="{html.escape(META_DESC)}">
-<link rel="canonical" href="{CANON}">
+<link rel="canonical" href="{CANON}"><link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website"><meta property="og:title" content="Flood insurance in {html.escape(CL)}">
 <meta property="og:description" content="{html.escape(META_DESC)}"><meta property="og:url" content="{CANON}">
 {_og_meta}
@@ -1478,9 +1489,9 @@ table{{width:100%}}}}
 <main class="wrap">
 <section class="hero">
 <h1>{CL + (f' ({_BORO})' if _BORO else '') + (' flood insurance and flood zones' if IS_STATE else ' flood zones and flood insurance')}</h1>
-<p class="lede">In {CL}, the median NFIP flood insurance policy on a single-family primary home costs {m('cost_p50', money(P['p50']))} a year (premium plus fees, policies in force as of {POL_ASOF}).</p>
+
 <div class="stats">
-<div class="stat"><div class="n">{m('cost_p50', money(P['p50']))}</div><div class="l">Median / yr, single-family primary home</div></div>
+<div class="stat"><div class="n">{m('cost_p50', money(P['p50']))}</div><div class="l">Median NFIP policy / yr, single-family primary home, premium plus fees, in force {POL_ASOF}</div></div>
 <div class="stat"><div class="n">{m('cost_mo', median_mo)}</div><div class="l">A month, spread over the year</div></div>
 {_spread_tile()}
 <div class="stat"><div class="n">{m('share_below', str(P['share_below']) + '%')}</div><div class="l">Single-family primary-home policies with a premium under FEMA's full-risk premium{' (<a href="#gap">' + claim('bills rise toward it', 'rise', ('share_below', '>', 0)) + '</a>)' if P.get('share_below') else ''}</div></div>

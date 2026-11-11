@@ -43,6 +43,9 @@ else:
     step("factory stress (edge-case data, no crash)", os.path.join(T, "test_factory.py"))
     step("site factory stress (national edge cases: no crash, garbage, dead link)", os.path.join(T, "test_site_factory.py"))
     step("hater verdict parser", os.path.join(T, "test_hater.py"))
+    step("sitemap lastmod rule", os.path.join(T, "lastmod.py"), "--test")
+    step("hub page word rules mutations", os.path.join(T, "hub_words.py"), "--test")
+    step("hub page word rules (pages gate.py never sees)", os.path.join(T, "hub_words.py"))
     step("phone check (dist)", os.path.join(T, "phone_check.py"))
     # Google gate; S12 (hater review) is skipped only by --hotfix "<reason>", for a fix that removes wrong text from live pages
     hot = sys.argv[sys.argv.index("--hotfix") + 1] if "--hotfix" in sys.argv else ""
@@ -66,8 +69,20 @@ else:
         g("commit", "-q", "-m", "release: built site" + (f" (hotfix, hater review skipped: {hot})" if hot else "")
           + "\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>")
     g("push", "-q")
-    if subprocess.run("npx --yes wrangler@4.86.0 deploy", cwd=R, shell=True).returncode: sys.exit("RELEASE STOPPED at: deploy")
-    import time; time.sleep(45)
+    # audit 11-10: deploy.yml (site-deploy concurrency group) is the ONE deployer; a local wrangler deploy beside it was a
+    # second writer that could land out of order. Wait for the deploy run of the pushed commit, then gate live.
+    import time
+    head = subprocess.run(["git", "rev-parse", "HEAD"], cwd=R, capture_output=True, text=True).stdout.strip()
+    if subprocess.run(["git", "diff", "--quiet", base, "HEAD", "--", "dist"], cwd=R).returncode:   # no dist change = deploy.yml does not run, nothing new to deploy
+        rid = ""
+        for _ in range(40):   # the run appears a few seconds after the push
+            rid = subprocess.run(["gh", "run", "list", "--workflow", "deploy.yml", "--commit", head, "--json", "databaseId", "-q", ".[0].databaseId"],
+                                 cwd=R, capture_output=True, text=True).stdout.strip()
+            if rid: break
+            time.sleep(6)
+        if not rid or subprocess.run(["gh", "run", "watch", rid, "--exit-status", "--interval", "10"], cwd=R, capture_output=True).returncode:
+            sys.exit(f"RELEASE STOPPED at: deploy (deploy.yml run {rid or 'not found'} for {head[:9]})")
+    time.sleep(20)   # Cloudflare edge caches
     step("live", os.path.join(T, "release.py"), "--live")
     subprocess.run([sys.executable, "-I", os.path.join(T, "indexnow.py"), base], cwd=R)   # notice only; never stops a release
     print("SHIPPED")

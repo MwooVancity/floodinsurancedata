@@ -1,0 +1,15 @@
+# Fixlog round 131 (master audit 11-10: truth, rank, machinery, outside tools)
+- BLOCKER payout note said error-coded records were included (343 pages). Root cause: text not updated when agg_raw dropped codes 98/99 (11-08). Fix: build_page payout note says they are left out. Proof: claims_check C8b (any "including ... coded ... in error"), mutation planted and caught.
+- BLOCKER S13 (51% shared prose, calaveras) stopped the 11-10 daily publish of 19 counties. Root cause: sameness gates were stops, against owner 11-08 "no duplicate or thin-content gate". Fix: S2/S13 print notices only. Proof: google_gate run.
+- BLOCKER claims_check skipped county names, headers, year spans and labels. Fix: rows compared as (county name, numbers); h2/th compared to their definitions (HEADS); one "Losses Y0–Y1" per card; left-out label exact; C2 names; CSV names. Proof: claims_check --test 34 mutations caught (names swapped, headers swapped, years shifted, heading word, floor 1 to 99, lede county, dollars label, CSV name, C2 names).
+- MAJOR C2 row mutation hit #outside. Fix: sliced from id="counties". Proof: --test.
+- MAJOR story $0 paid fell into "1 to 499". Fix: stays in table with "—" (build and checker).
+- MAJOR /nfip/ claim count had no error-code note. Fix: note on the page; claims_check N5.
+- MAJOR screen-1 decade line skipped newer decades (Greene AR). Fix: "the latest decade with thirty or more claims" + newer decades named with counts.
+- MAJOR screen-1 zone list dropped priced zones (Travis A, AO). Fix: "other priced zones are in the table below".
+- MAJOR double "retrieved" date on the map-service source line. Fix: src() given the map-service retrieved date once.
+- MAJOR "nfip claims by county" had no answering page. Fix: #bycounty table (top 25 by dollars paid, 2,905 counties, CSV of all) + title/h1; claims_check C12 with 3 mutations.
+- MINOR favicon 404 on every page (Lighthouse best practices 96). Fix: /favicon.ico + /favicon.svg linked in both heads.
+- MINOR W3C: autocomplete="street-address" invalid on input. Fix: address-line1.
+- MINOR sitemap lastmod never moved on text changes. Fix: tools/lastmod.py (vs last release; 7-case self-check in release).
+- MINOR cause card omitted erosion in "other causes". Fix: label (codes.py 7, 8).

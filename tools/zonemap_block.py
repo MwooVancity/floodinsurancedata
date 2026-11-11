@@ -12,7 +12,7 @@ js('/vendor/leaflet.js').then(function(){return js('/zonemap.js')}).then(functio
 def block(rule):
     return (f'<div class="zm" id="zm"><a class="btn zm-open" href="{MSC}" rel="noopener" target="_blank">Find your flood zone on FEMA\'s map →</a>'
             f'<div class="zm-ui" hidden><label for="zm-a"><b>Street address, city and state</b></label>'
-            '<input id="zm-a" class="zm-addr" autocomplete="street-address" enterkeyhint="search" style="width:100%;min-height:44px">'
+            '<input id="zm-a" class="zm-addr" autocomplete="address-line1" enterkeyhint="search" style="width:100%;min-height:44px">'
             '<p><button type="button" class="btn zm-go">Find it on FEMA\'s map</button> <button type="button" class="zm-loc" style="min-height:44px">Use my location</button></p>'
             '<p class="mut">Your address goes to the Census Bureau\'s address finder and the map point to FEMA\'s map service, not to this site.</p>'
             '<div class="zm-map" style="height:320px;display:none"></div><div class="zm-out" aria-live="polite"></div>'

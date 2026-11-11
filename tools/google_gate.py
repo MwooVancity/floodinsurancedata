@@ -2,7 +2,7 @@
 gate.py asks "is each page true and readable?"; this asks "could Google read the site as spam?". Exit 1 blocks ship.
 Usage: python -I tools/google_gate.py [--root dist] [--skip-review]
   S1 structured data   markup claims only what the page shows (no FAQ/Review/Rating markup; dateModified = the data's date)
-  S2 scaled content    no indexable page is a near-copy of another in its state (numbers and place names masked)
+  S2 scaled content    NOTICE only (owner 11-08: no duplicate gate): near-copies within a state, names masked
   S3 thin pages        every indexable county page carries its own data (enough figures read from its own records)
   S4 doorway signals   titles and descriptions unique across the site, no repeated keywords in a title
   S5 hidden text       no text hidden with inline CSS (display:none, visibility:hidden, font-size:0, off-screen)
@@ -19,6 +19,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DIST = os.path.join(ROOT, sys.argv[sys.argv.index("--root") + 1]) if "--root" in sys.argv else os.path.join(ROOT, "dist")
 MAX_NEW_INDEXABLE, DUP_MAX, MIN_OWN_FIGURES = 25, 0.80, 40
 fails = []
+notes = []   # owner 11-08: sameness never stops a release (no duplicate or thin-content gate); printed for the 11-26 review
 def fail(cid, msg): fails.append(f"[{cid}] {msg}")
 def text(h): return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", re.sub(r"<(script|style|head)\b.*?</\1>", " ", h, flags=re.S))).strip()
 
@@ -71,7 +72,7 @@ for st, items in by_state.items():
             a, b = sh[keys[i]], sh[keys[j]]
             if not a or not b: continue
             s = len(a & b) / len(a | b); sims.append(s)
-            if s > DUP_MAX: fail("S2", f"{keys[i]} and {keys[j]} are {s:.0%} the same text with place names masked (max {DUP_MAX:.0%})")
+            if s > DUP_MAX: notes.append(f"[S2 notice] {keys[i]} and {keys[j]} are {s:.0%} the same text with place names masked")
 
 # S3 thin: an indexable county page carries enough figures read from its own records (not constants, not the state's)
 for st, items in by_state.items():
@@ -130,6 +131,9 @@ except Exception as e: fail("S7", f"could not read the last released sitemap: {e
 for p, h in pages.items():
     for href in re.findall(r'href="([^"#?]+)"', h):
         if href.startswith(("http", "mailto:", "//")) or href.endswith((".csv", ".png", ".xml", ".txt", ".json")): continue
+        if href.endswith((".ico", ".svg")):   # favicon (11-10): a static file, must exist in the build
+            if not os.path.isfile(os.path.join(DIST, href.lstrip("/"))): fail("S8", f"{p} links to {href}, which is not built")
+            continue
         tgt = os.path.normpath(os.path.join(p if p.endswith("/") else os.path.dirname(p) + "/", href)).replace("\\", "/")
         tgt = tgt if tgt.endswith((".html", "/")) else tgt + "/"
         if tgt not in pages and tgt.rstrip("/") + "/" not in pages: fail("S8", f"{p} links to {href}, which is not built")
@@ -224,7 +228,7 @@ if len(_cp) >= 5:
     for p, ss in _sents.items():
         tot = sum(len(s.split()) for s in ss) or 1
         _share[p] = sum(len(s.split()) for s in ss if _cnt[s] > len(_cp) / 2) / tot
-        if _share[p] > 0.5: fail("S13", f"{p}: {_share[p]:.0%} of its prose is shared with most county pages (max 50%)")
+        if _share[p] > 0.5: notes.append(f"[S13 notice] {p}: {_share[p]:.0%} of its prose is shared with most county pages")
 
 # S10 cloaking: gate_live.py fetches every page as Googlebot and requires it byte-identical to the built page
 
@@ -232,6 +236,7 @@ sims.sort()
 print(f"google gate: {len(pages)} pages, {len(indexable)} indexable; same-state similarity (names masked) "
       + (f"median {sims[len(sims) // 2]:.0%}, max {sims[-1]:.0%} over {len(sims)} pairs" if sims else "n/a (fewer than 2 pages in any state)")
       + (f"; shared prose per county page median {sorted(_share.values())[len(_share) // 2]:.0%}, max {max(_share.values()):.0%}" if _share else ""))
+for n_ in notes[:20]: print("  notice:", n_)
 for f in fails: print("  -", f)
 print("GOOGLE GATE " + ("FAIL" if fails else "PASS"))
 sys.exit(1 if fails else 0)

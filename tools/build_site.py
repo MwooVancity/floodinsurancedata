@@ -30,7 +30,7 @@ def wr(path, s):
 
 HEAD = """<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="google-site-verification" content="geYcfFcAsSIVIT2iHnH60suuJ4t3fx7unryWmcbos6A"><title>{title}</title>
-<meta name="description" content="{desc}"><link rel="canonical" href="{canon}">
+<meta name="description" content="{desc}"><link rel="canonical" href="{canon}"><link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <style>.btn{{display:inline-block;color:#fff;text-decoration:none;padding:12px 20px;min-height:44px}}:root{{--bg:#f4f7f8;--surface:#fff;--ink:#132029;--mut:#55656f;--faint:#7d8c96;--line:#dbe3e7;--brand:#15617f;--brand-d:#0e4a61;--accent:#c2591f;--r:12px;--gut:20px;
  --serif:"Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;--mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;--shadow:none}}
 *{{box-sizing:border-box}}body{{margin:0;background:var(--bg);color:var(--ink);font:17px/1.62 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}}
@@ -300,7 +300,7 @@ risk, and the community discounts that lower the bill — every figure drawn fro
 with its exact source and the date it was pulled.</p></div>
 <div class="card"><h2>How the numbers are made and checked</h2><ul>
 <li>Compiled directly from FEMA's OpenFEMA records and FEMA's National Risk Index; no private data. One figure is a FEMA model and is labeled as such: the National Risk Index.</li>
-<li>Every page is built by code and must pass an automated correctness gate before it ships: percentiles and
+<li>Every page is built by code and ships only after an automated correctness gate passes it: percentiles and
 sums are recomputed, record counts are checked against the download's own totals (FEMA's separate official policy count is not yet compared), every ratio's denominator is
 disclosed, and nothing publishes if a check fails. The <a href="/methodology/">methodology</a> defines every term.</li>
 <li>We show aggregates only — never an individual property, policy, or quote.</li>
@@ -500,7 +500,7 @@ if len(states) == 51 and len(_zh) == 51:
             return f'<tr><td>{nm}</td><td>{"Yes" if v[0][0] in "AV" else "No"}</td><td>{me}</td><td>{f"{nn:,}" if nn else "—"}</td></tr>'
         ztab = (f'<div class="card"><h2>How zone {code} compares</h2><p class="stand">{rule("zone_codes")}</p><table><thead><tr><th>Zone</th>'
                 f'<th>High-risk (A or V)</th><th>Median / yr</th><th>Policies in the median</th></tr></thead><tbody>'
-                + "".join(_zrow(k, v) for k, v in ZONES.items()) + f'</tbody></table><p class="stand">{rule("purchase_answer")}</p><p class="mut">Median: existing single-family primary-home policies rated exactly that zone, premium plus fees, '
+                + "".join(_zrow(k, v) for k, v in ZONES.items()) + f'</tbody></table><p class="mut">High-risk "Yes": the purchase rule in "Must I buy?" above can apply there. Median: existing single-family primary-home policies rated exactly that zone, premium plus fees, '
                 f'in force on {_ASOF_TXT}; — = not yet in this data or under {ZONE_MIN} priced policies.</p></div>')
         keys += ["zone_codes", "purchase_answer"]
         if not _zx: ztab = ""   # until the refresh lands every median cell would read "—"
@@ -579,8 +579,8 @@ def story_rows():   # 11-10 news stories, every county with CLAIMS_MIN+ claims i
         base = {"geoid": g, "county": names.get(g, g), "state": st_of.get(g[:2], ""), "slug": live.get(g)}
         z, k, m = c.get("zone_split") or {}, c.get("cause10") or {}, c.get("moved") or {}
         if z.get("known_n"):
-            if z["known_n"] >= CLAIMS_MIN and z.get("known_paid"):
-                out["out"].append(dict(base, n=z["known_n"], pct=pc(z["out_n"], z["known_n"]), dpct=pc(z["out_paid"], z["known_paid"]), yrs=(z["from"], z["to"])))
+            if z["known_n"] >= CLAIMS_MIN:   # audit 11-10: $0 paid stays in the table ("—"), never in the "1 to 499" count
+                out["out"].append(dict(base, n=z["known_n"], pct=pc(z["out_n"], z["known_n"]), dpct=pc(z.get("out_paid", 0), z["known_paid"]) if z.get("known_paid") else "—", yrs=(z["from"], z["to"])))
             else: left["out"] += 1
         if k.get("with_cause"):
             if k["with_cause"] >= CLAIMS_MIN:
@@ -598,13 +598,13 @@ def story_rows():   # 11-10 news stories, every county with CLAIMS_MIN+ claims i
 def story_cards(clink):
     out, left = story_rows(); h = ""
     lo_hi = lambda rs, f: f'{rs[0][f]}% in {clink(rs[0])} to {rs[-1][f]}% in {clink(rs[-1])}'
-    caveat = f'County as coded on each claim record, which can differ from where the building stands. Left out: counties with 1 to {CLAIMS_MIN - 1:,} such claims'
+    caveat = f'County as coded on each claim; see the by-county note. Left out: counties with 1 to {CLAIMS_MIN - 1:,} such claims'
     if len(out["out"]) >= 2:
         rs = out["out"]; y = rs[0]["yrs"]
         h += (f'<div class="card" id="outside"><h2>Flood claims rated outside the high-risk zones, county by county</h2><p class="stand">Losses {y[0]}–{y[1]}: the share of NFIP claims '
               f'rated outside zones A and V (FEMA\'s high-risk zones) runs from {lo_hi(rs[::-1], "pct")}, among the {len(rs)} counties with {CLAIMS_MIN} or more claims with a zone on the claim.</p>'
               '<table><thead><tr><th>County</th><th>Claims with a zone</th><th>Rated outside A and V</th><th>Claims rated outside A and V: share of dollars paid on claims with a zone</th></tr></thead><tbody>'
-              + "".join(f'<tr><td>{clink(r)}</td><td>{r["n"]:,}</td><td>{r["pct"]}%</td><td>{r["dpct"]}%</td></tr>' for r in rs)
+              + "".join(f'<tr><td>{clink(r)}</td><td>{r["n"]:,}</td><td>{r["pct"]}%</td><td>{r["dpct"]}{"%" if r["dpct"] != "—" else ""}</td></tr>' for r in rs)
               + f'</tbody></table><p class="mut">Highest share first. The zone is the one used to rate each policy, not today\'s map; claims with no zone are not counted. '
               'Dollars as paid, not adjusted for inflation. Claims from recent years may still be open: FEMA\'s data has no open or closed field. '
               f'{caveat} ({left["out"]:,} counties). A share of claims is not a chance of flooding for any one home.</p></div>')
@@ -615,7 +615,7 @@ def story_cards(clink):
               '<table><thead><tr><th>County</th><th>Paid claims with a cause</th><th>Rain or snowmelt</th><th>River, stream or lake overflow</th><th>Tidal water overflow</th></tr></thead><tbody>'
               + "".join(f'<tr><td>{clink(r)}</td><td>{r["n"]:,}</td><td>{r["rain"]}%</td><td>{r["river"]}%</td><td>{r["tide"]}%</td></tr>' for r in rs)
               + '</tbody></table><p class="mut">Highest rain share first. FEMA lets a claim carry more than one cause, so a row can add up to more than 100%; other causes '
-              '(alluvial fan, closed basin lake, earth movement, other) are not shown. Codes for how a claim was handled (expedited or remote adjustment) are not causes and are not counted. '
+              '(alluvial fan, closed basin lake, erosion, earth movement, other) are not shown. Codes for how a claim was handled (expedited or remote adjustment) are not causes and are not counted. '
               f'{caveat} ({left["cause"]:,} counties).</p></div>')
     if len(out["moved"]) >= 2:
         rs = out["moved"]; y = rs[0]["yrs"]
@@ -683,15 +683,39 @@ if len(states) == 51:
                        '<p class="mut">Median of the building payment on claims with recorded building damage and a building payment, every loss year since 1978, in dollars as paid, '
                        'not adjusted for inflation. Contents payments are not in it. Each state page shows its own figure.</p></div>')
         _ycard += story_cards(clink)
+        # audit 11-10: "nfip claims by county" had no current table in Google's top 3; every county's claims since 1978 (claims_check C12)
+        _stof = {v: k for k, v in _FIPS.items()}; _live = {p.get("geoid"): p["slug"] for p in places}
+        _cnames = json.load(open(os.path.join(DATADIR, "us", "county_names.json"), encoding="utf-8"))
+        _bc = []
+        for p in sorted(glob.glob(os.path.join(DATADIR, "all-counties", "*.json"))):
+            c = json.load(open(p)).get("claims") or {}; g = os.path.basename(p)[:-5]
+            if c.get("rows"): _bc.append({"geoid": g, "county": _cnames.get(g, g), "state": _stof.get(g[:2], ""), "slug": _live.get(g),
+                                          "n": c["rows"], "paid": c["total_paid"], "y0": c["year_min"], "y1": c["year_max"]})
+        _bc.sort(key=lambda r: (-r["paid"], r["county"]))
+        with open(os.path.join(DIST, "data", "claims-by-county.csv"), "w", newline="", encoding="utf-8") as f:
+            w = csv.writer(f); w.writerow(["county_fips", "county", "state", "claims_on_record", "paid_usd", "first_loss_year", "last_loss_year", "meaning", "source"])
+            for r in _bc: w.writerow([r["geoid"], r["county"], r["state"], r["n"], r["paid"], r["y0"], r["y1"],
+                                      "claims on record: every NFIP claim record, paid or not, except records FEMA coded deleted or assigned in error; paid: building plus contents payments, as paid, not adjusted for inflation; county as coded on the claim",
+                                      f"FEMA OpenFEMA NFIP Claims v3, as of {_ASOF_TXT}"])
+        _bcy0, _bcy1 = min(r["y0"] for r in _bc), max(r["y1"] for r in _bc)
+        _bycard = ('<div class="card" id="bycounty"><h2>NFIP claims by county, ' f'{_bcy0}–{_bcy1}</h2><p class="stand">The 25 counties with the most paid on NFIP flood claims, '
+                   f'of the {len(_bc):,} counties with at least one NFIP claim on record, losses from {_bcy0} to {_bcy1}, most paid first. Every county is in the download.</p>'
+                   '<table><thead><tr><th>County</th><th>Claims on record</th><th>Paid on them</th></tr></thead><tbody>'
+                   + "".join(f'<tr><td>{clink(r)}</td><td>{r["n"]:,}</td><td>{money(r["paid"])}</td></tr>' for r in _bc[:25])
+                   + '</tbody></table><p class="mut">Claims on record: every claim record, paid or not, except records FEMA coded "deleted in error" or "assigned in error". '
+                   'Paid on them: building plus contents payments, in dollars as paid, not adjusted for inflation; Increased Cost of Compliance payments are not in it. '
+                   'County as coded on each claim record, which can differ from where the building stands. '
+                   f'Claims from {_ya - 1} and {_ya} may still be open, so totals that include them are not final. '
+                   f'<a href="/data/claims-by-county.csv">Download every county ({len(_bc):,} rows, CSV)</a>.</p></div>')
         _rows = "".join(f'<tr><td>{clink(r)}</td><td>{r["n"]:,}</td><td>{r["pct"]}%</td><td>{html.escape(_NR.get(r["top"], "—")) if r["top"] else "—"}</td></tr>' for r in _cr)
         with open(os.path.join(DIST, "data", "claims-2020-counties.csv"), "w", newline="", encoding="utf-8") as f:
             w = csv.writer(f); w.writerow(["county_fips", "county", "state", "claims_loss_year_2020_on", "claims_with_recorded_payment", "share_with_payment_pct",
                                            "records_coded_deleted_or_assigned_in_error_left_out", "most_recorded_reason_for_no_payment", "claims_with_that_reason"])
             for r in _cr: w.writerow([r["geoid"], r["county"], r["state"], r["n"], r["paid"], r["pct"], r["err"], _NR.get(r["top"], "") if r["top"] else "", r["top_n"]])
-        pg = HEAD.format(title=f"How often do NFIP flood claims get paid? {len(_cr)} counties compared (FEMA data)",
-                         desc=f"Share of NFIP flood claims with a recorded payment, losses from 2020 on, for the {len(_cr)} counties with {CLAIMS_MIN} or more claims, and FEMA's recorded reasons when nothing was paid.",
+        pg = HEAD.format(title=f"NFIP claims by county: payouts since {_bcy0} and how often claims get paid (FEMA data)",
+                         desc=f"NFIP flood claims and dollars paid in every U.S. county since {_bcy0}; share of claims with a recorded payment, losses from 2020 on, for the {len(_cr)} counties with {CLAIMS_MIN} or more claims, and FEMA's recorded reasons when nothing was paid.",
                          canon=BASE + "/flood-insurance/claims/") + f"""
-<h1>How often do NFIP flood claims get paid?</h1>
+<h1>NFIP flood claims by county: how often they get paid</h1>
 <p class="lede">Of {_n:,} NFIP flood claims for losses from 2020 on, {_pct}% had a recorded payment. In the {len(_cr)} counties with {CLAIMS_MIN} or more such claims, the share runs from {lo["pct"]}% in {cname(lo)} to {hi["pct"]}% in {cname(hi)}.</p>
 <div class="stats"><div class="stat"><div class="n">{_pct}%</div><div class="l">Claims with a recorded payment, U.S., losses 2020 on</div></div>
 <div class="stat"><div class="n">{_n:,}</div><div class="l">NFIP claims counted</div></div></div>
@@ -699,10 +723,11 @@ if len(states) == 51:
 <div class="card"><h2>Why claims had no recorded payment</h2><p class="stand">FEMA's recorded reason on the building part of each of the {_un:,} U.S. claims with no recorded payment, losses from 2020 on.</p>
 <table><thead><tr><th>FEMA's recorded reason</th><th>Claims</th><th>Share of claims with no payment</th></tr></thead><tbody>{_why}</tbody></table>
 <p class="mut">The ten most common reasons, as FEMA labels its codes. A reason is FEMA's record, not a finding about what happened to the building.</p></div>
+{_bycard}
 {_ycard}
 <div class="card" id="counties"><h2>County by county</h2><p class="stand">Every county with {CLAIMS_MIN} or more NFIP claims for losses from 2020 on, lowest share with a payment first. Recent claims with no payment may still be paid: FEMA's data has no open or closed field.</p>
 <table><thead><tr><th>County</th><th>Claims</th><th>With a recorded payment</th><th>Most recorded reason when nothing was paid</th></tr></thead><tbody>{_rows}</tbody></table>
-<p class="mut">County as coded on each claim record, which can differ from where the building stands. <a href="/data/claims-2020-counties.csv">Download this table (CSV)</a>.</p></div>
+<p class="mut">County as coded on each claim; see the by-county note. <a href="/data/claims-2020-counties.csv">Download this table (CSV)</a>.</p></div>
 <div class="card"><h2>What these numbers cannot tell you</h2><p class="stand">No recorded payment does not mean a claim was denied: it includes damage under the deductible, claims not pursued and reasons FEMA does not record. These are shares of claims filed, not a chance that any one claim gets paid.</p>
 <p><a href="/flood-insurance/">Your state and county</a>: what policies there cost and every claim paid since 1978.</p>
 <p class="mut">Source: FEMA OpenFEMA NFIP Claims v3 (fema.gov/openfema-data-page/nfip-redacted-claims-v3). Reason labels from FEMA's data dictionary. <a href="/methodology/">How we check them</a>.</p></div>{FOOT}"""
@@ -724,7 +749,7 @@ if len(states) == 51:
 <div class="stats"><div class="stat"><div class="n">{_units / 1e6:.1f}M</div><div class="l">Policy units in force</div></div>
 <div class="stat"><div class="n">{money(_med)}</div><div class="l">Median / yr, single-family primary home</div></div>
 <div class="stat"><div class="n">${_paid_all / 1e9:.1f}B</div><div class="l">Paid on NFIP claims since 1978, dollars as paid</div></div></div>
-<p class="mut">FEMA OpenFEMA NFIP Policies v3 and Claims v3, as of {_ASOF_TXT}. Policy units: every NFIP policy unit, including condos, rentals and businesses. Claims paid: building plus contents payments, not adjusted for inflation. <a href="/flood-insurance/claims/">How often claims get paid, county by county</a>.</p>
+<p class="mut">FEMA OpenFEMA NFIP Policies v3 and Claims v3, as of {_ASOF_TXT}. Policy units: every NFIP policy unit, including condos, rentals and businesses. Claims: every claim record, paid or not, except records FEMA coded "deleted in error" or "assigned in error". Claims paid: building plus contents payments, not adjusted for inflation. <a href="/flood-insurance/claims/">How often claims get paid, county by county</a>.</p>
 <div class="card"><h2>Am I required to buy it?</h2><p class="stand">{rule("purchase_answer")} {rule("lender_any_zone")}</p></div>
 <div class="card"><h2>How does the NFIP work?</h2><p class="stand">{rule("nfip_not_sold")} {rule("limits")} {rule("wait_30")}</p><p class="stand">{rule("how_to_buy")}</p><p class="stand">{rule("nfip_lapse")}</p><p class="stand">{rule("private_accept")}</p></div>
 <div class="card"><h2>Where are the NFIP policies?</h2><p class="stand">The ten states with the most NFIP policy units, and their share of all units in force.</p>
@@ -742,7 +767,7 @@ if RENT_ON:
     _rs = sorted(((st, sum(h.values()), _hq({st: h}, 0.5)) for st, h in _rh.items() if sum(h.values()) >= 30), key=lambda r: -r[1])
     _snm = {s["abbr"]: s for s in states} if states and "abbr" in states[0] else {}
     _rtr = "".join(f'<tr><td>{(f'<a href="/flood-insurance/{_snm[st]["slug"]}/">' + html.escape(_snm[st]["name"]) + "</a>") if st in _snm else st}</td><td>{money(md)}</td><td>{n:,}</td></tr>' for st, n, md in _rs)
-    _rk = ["renters_cover", "wait_30", "how_to_buy", "not_covered", "flood_def", "nfip_not_sold"]
+    _rk = ["renters_cover", "wait_30", "how_to_buy", "not_covered", "flood_def", "nfip_not_sold", "tx_tenant_notice"]
     pg = HEAD.format(title=f"Flood insurance for renters: {money(_rq[0.5])}/yr NFIP median, by state",
                      desc=f"What renters pay for NFIP flood insurance on their belongings: a median of {money(_rq[0.5])} a year on {_rn:,} priced renter policies, by state, from FEMA's own records.",
                      canon=BASE + "/flood-insurance/renters/") + f"""
@@ -752,11 +777,11 @@ if RENT_ON:
 <div class="stat"><div class="n">{money(_rq[0.25])}–{money(_rq[0.75])}</div><div class="l">Middle half / yr</div></div>
 <div class="stat"><div class="n">{_rn:,}</div><div class="l">Priced renter policies</div></div></div>
 <p class="mut">FEMA OpenFEMA NFIP Policies v3, as of {_ASOF_TXT}. Renter policy: FEMA marks the policyholder a tenant, the building residential, no building coverage and some contents coverage. Priced: a policy cost above $0. <a href="/methodology/">How we check them</a>.</p>
-<div class="card"><h2>What does renters flood insurance cover?</h2><p class="stand">{rule("renters_cover")}</p><p class="stand">{rule("wait_30")}</p><p class="stand">{rule("how_to_buy")} {rule("nfip_not_sold")}</p><p class="stand"><b>What it won't pay:</b> {rule("not_covered")} {rule("flood_def")}</p></div>
+<div class="card"><h2>What does renters flood insurance cover?</h2><p class="stand">{rule("renters_cover")}</p><p class="stand">{rule("wait_30")}</p><p class="stand">{rule("how_to_buy")} {rule("nfip_not_sold")}</p><p class="stand"><b>What it won't pay:</b> {rule("not_covered")} {rule("flood_def")}</p><p class="stand">{rule("tx_tenant_notice")}</p></div>
 <div class="card"><h2>What do renters pay in each state?</h2><p class="stand">States with at least 30 priced NFIP renter policies, most policies first.</p>
 <table><thead><tr><th>State</th><th>Median / yr</th><th>Priced renter policies</th></tr></thead><tbody>{_rtr}</tbody></table>
 <p class="mut">What homeowners pay: <a href="/nfip/">the NFIP in numbers</a>. <a href="/flood-insurance/zip/">Cost by ZIP code</a> (single-family homes).</p></div>
-<div class="card"><h2>What these numbers cannot tell you</h2><p class="stand">Your premium, private insurers' prices, or why a price changed. The median is what existing NFIP renter policies pay, not a quote. Whether you must buy it is not in FEMA's data: only your lease or landlord can say.</p>
+<div class="card"><h2>What these numbers cannot tell you</h2><p class="stand">Your premium, private insurers' prices, or why a price changed. The median is what existing NFIP renter policies pay, not a quote. Whether you are required to buy it is not in FEMA's data: only your lease or landlord can say.</p>
 <p class="mut">Sources: FEMA OpenFEMA NFIP Policies v3; rules from {_rule_hosts(_rk)}.</p></div>{FOOT}"""
     wr(os.path.join(DIST, "flood-insurance", "renters", "index.html"), pg)
     zone_urls.append((BASE + "/flood-insurance/renters/", None))
@@ -815,6 +840,7 @@ o.innerHTML=say(z,d).map(function(s){return '<p>'+e(s)+'</p>'}).join('')}).catch
 import shutil
 from zonemap_block import block as _zm_block
 _ST = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
+for _f in ("favicon.ico", "favicon.svg"): shutil.copy(os.path.join(_ST, _f), os.path.join(DIST, _f))   # audit 11-10: /favicon.ico was a 404 on every page
 _zm_on = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "tools_flags.json"), encoding="utf-8")).get("zonemap") or []
 if _zm_on:
     shutil.copytree(os.path.join(_ST, "vendor"), os.path.join(DIST, "vendor"), dirs_exist_ok=True)
@@ -852,6 +878,10 @@ county_urls = [(BASE + f"/flood-insurance/{p['slug']}/", county_lastmod(p["slug"
 urls = [(BASE + "/", None), (BASE + "/flood-insurance/", None), (BASE + "/about/", None),
         (BASE + "/methodology/", None), (BASE + "/data/", None), (BASE + "/privacy/", None), (BASE + "/terms/", None)] + zone_urls + county_urls + \
        [(BASE + f"/flood-insurance/{s['slug']}/", county_lastmod(os.path.join("states", s["slug"]))) for s in states]
+import lastmod as _LM   # audit 11-10: lastmod also moves on the day a page's visible text changed (tools/lastmod.py, vs the last release)
+_lmroot = os.path.dirname(os.path.abspath(DIST)); _rels = {u: os.path.relpath(os.path.abspath(DIST), _lmroot).replace("\\", "/") + u[len(BASE):] + "index.html" for u, _ in urls}
+_old, _olm, _today = _LM.head_files(_lmroot, list(_rels.values())), _LM.head_lastmods(_lmroot), _LM.today()
+urls = [(u, _LM.pick(_old[_rels[u]], open(os.path.join(_lmroot, _rels[u]), encoding="utf-8").read(), _olm.get(u), lm, _today)) for u, lm in urls]
 sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + \
      "".join(f"  <url><loc>{u}</loc>" + (f"<lastmod>{lm}</lastmod>" if lm else "") + "</url>\n" for u, lm in urls) + \
      "</urlset>\n"

@@ -164,6 +164,7 @@ METRICS.update({   # every other figure a page prints; q (data-q) names the row 
     "paid_bldg_median": _m(CLM, ["netBuildingPaymentAmount"], "usd_claim_paid"),   # round 31: the typical paid building claim
     # top-3 compare 11-09 (Harris: most Harvey damage was outside the 100-year floodplain): zone on the claim, ten whole loss years
     "zone_known_n": _m(CLM, ["ratedFloodZone", "yearOfLoss"], "count", counts="claim_record"),
+    "zone_out_n": _m(CLM, ["ratedFloodZone", "yearOfLoss"], "count", counts="claim_record"),   # audit 11-10: a small base prints its count
     "zone_out_pct": _m(CLM, ["ratedFloodZone", "yearOfLoss"], "pct", of="claims with a zone on the claim, codes 98/99 left out"),
     "zone_out_paid_pct": _m(CLM, ["ratedFloodZone", "yearOfLoss", "netBuildingPaymentAmount", "netContentsPaymentAmount", "netIccPaymentAmount"], "pct",
                             of="dollars paid on claims with a zone on the claim"),
