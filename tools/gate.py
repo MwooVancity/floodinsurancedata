@@ -278,6 +278,11 @@ if _nf and not re.findall(r"\b(?:19|20)\d\d\b", _nf.group(1)): fail("C13", f"'no
 if _asy and not _nf and any(str(y) in (C.get("by_year") or {}) for y in (_asy - 1, _asy)): fail("C13", "recent claim years charted without the not-final note")
 # C14 no county median under the 30 priced-policy floor (CLAUDE.md Site; test_factory 11-08: a 29-policy county printed one)
 if (P.get("cost_n") or 0) < MX.CONST["min_priced"] and 'data-m="cost_p50"' in page: fail("C14", f"median shown on {P.get('cost_n')} priced policies (floor {MX.CONST['min_priced']})")
+# C18 (hater r147): the screen-1 ZIP range names how many ZIPs it covers, and that count is every ZIP with a median
+_zr = re.search(r'By ZIP \(the <span data-m="zip_count"[^>]*>(\d+)</span>', page)
+_zn = len([z for z in (P.get("by_zip") or []) if z.get("median")])
+if "By ZIP" in page and 'class="cmp">By ZIP' in page and (not _zr or int(_zr.group(1)) != _zn):
+    fail("C18", f"ZIP range covers {_zn} ZIPs with a median but says {_zr.group(1) if _zr else 'nothing'}")
 # C15 "no flood of their own in the table" lists no year that has its own one-year row in that table (r109 NY 2023)
 _un = " ".join(re.findall(r"no flood of their own in the table above: ([^(<]*)", page))   # every such note, not the first
 if _un and _et:

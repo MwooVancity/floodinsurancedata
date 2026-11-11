@@ -1,13 +1,13 @@
 {
- "median": 50.1,
+ "median": 50.0,
  "per_page": {
-  "raleigh-county-wv": 58.5,
-  "harris-county-tx": 45.9,
-  "dixie-county-fl": 50.3,
-  "berks-county-pa": 49.9,
-  "calcasieu-parish-la": 51.2,
-  "monroe-county-fl": 46.6,
-  "boulder-county-co": 52.3,
-  "travis-county-tx": 49.3
+  "raleigh-county-wv": 58.4,
+  "harris-county-tx": 45.7,
+  "dixie-county-fl": 50.2,
+  "berks-county-pa": 49.7,
+  "calcasieu-parish-la": 51.0,
+  "monroe-county-fl": 46.5,
+  "boulder-county-co": 52.1,
+  "travis-county-tx": 49.2
  }
 }

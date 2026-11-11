@@ -105,6 +105,7 @@ MUTATIONS = [   # (defect class from THE EVIDENCE table, what we reintroduce, ex
     ("reader first", "card opens with a data dump", "F1",
      PAGE.replace('<p class="stand">', '<p class="stand">' + "This block lists every figure in the dataset before any answer is given to the reader at all. " * 2, 1), None),
     ("one figure", "same metric shows two values", "A3", sub(f'<span data-m="cost_p50">{_P50}</span>', '<span data-m="cost_p50">$1</span>'), None),
+    ("meaning", "ZIP range count wrong (hater r147)", "C18", re.sub(r'(By ZIP \(the <span data-m="zip_count"[^>]*>)\d+', r"\g<1>999", PAGE, count=1), None),
     ("provenance", "record count inflated", "V2", re.sub(r'(<span data-m="records_policies"[^>]*>)[\d,]+', r"\g<1>99,999", PAGE, count=1), None),
     ("provenance", "complete download not stated", "G1", re.sub(r'<p class="prov">.*?</p>', "", PAGE, count=1, flags=re.S), None),
     ("reader text", "county shown as its code", "H1", sub("</main>", '<div id="counties"><table><tbody><tr><td>12009</td></tr></tbody></table></div></main>'), None),

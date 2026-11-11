@@ -1042,7 +1042,7 @@ if IS_STATE and US_P50:
             if (_pp.get("cost_n") or 0) >= 100: _ranked.append((_pp["p50"], _a))
     _ranked.sort(reverse=True)
     _r = next((i + 1 for i, (_, a) in enumerate(_ranked) if a == _ab), None)
-    cmp_line = (f'<p class="cmp">That is {_pct_vs(P["p50"], US_P50, "us")} the U.S. median of {m("us_p50", money(US_P50))}'
+    cmp_line = (f'<p class="cmp">The median, {m('cost_p50', money(P['p50']))}, is {_pct_vs(P["p50"], US_P50, "us")} the U.S. median of {m("us_p50", money(US_P50))}'
                 + ((f'; {m("cost_rank", _rank(_r, len(_ranked)))} of the {m("rank_n", str(len(_ranked) - 1), q="states")} states and DC'
                     if "DC" in [a for _, a in _ranked] else
                     f'; {m("cost_rank", _rank(_r, len(_ranked)))} of {m("rank_n", str(len(_ranked)))} states') if _r else "") + ".</p>")
@@ -1051,14 +1051,14 @@ elif _sagg and not IS_STATE:
     _sc.sort(reverse=True)
     _r = next((i + 1 for i, (_, g) in enumerate(_sc) if g == GEOID_SELF), None)
     _sn = html.escape(STATE_NAMES[_ab])
-    cmp_line = (f'<p class="cmp">That is {_pct_vs(P["p50"], _sagg["policies"]["p50"], "state")} the {_sn} median of {m("state_p50", money(_sagg["policies"]["p50"]))}'
+    cmp_line = (f'<p class="cmp">The median, {m('cost_p50', money(P['p50']))}, is {_pct_vs(P["p50"], _sagg["policies"]["p50"], "state")} the {_sn} median of {m("state_p50", money(_sagg["policies"]["p50"]))}'
                 + (f' and {_pct_vs(P["p50"], US_P50, "us")} the U.S. median of {m("us_p50", money(US_P50))}' if US_P50 else "")
                 + (f'; {m("cost_rank", _rank(_r, len(_sc)))} of {m("rank_n", str(len(_sc)))} {_sn} {UNITS} with {tp("threshold", "const.rank_min", q="rank_min")}+ priced policies' if _r else "") + ".</p>")
     _zs = [z for z in (P.get("by_zip") or []) if z.get("median")]
     if len(_zs) >= 2:   # a county median can hide coastal ZIPs paying two or three times as much: say so on screen 1
         _zlo, _zhi = min(_zs, key=lambda z: z["median"]), max(_zs, key=lambda z: z["median"])
         _zix = {z["zip"]: i for i, z in enumerate(P["by_zip"])}
-        cmp_line += (f'<p class="cmp">By ZIP it ranges from {tp("zip_cost", f"policies.by_zip.{_zix[_zlo['zip']]}.median", money, q=_zlo["zip"])} '
+        cmp_line += (f'<p class="cmp">By ZIP (the {m("zip_count", str(len(_zs)), q="priced")} with {tp("threshold", "const.zip_min", q="zip_min")}+ priced policies), the median ranges from {tp("zip_cost", f"policies.by_zip.{_zix[_zlo['zip']]}.median", money, q=_zlo["zip"])} '
                      f'({m("zip", _zl(_zlo["zip"]), q=_zlo["zip"])}) to {tp("zip_cost", f"policies.by_zip.{_zix[_zhi['zip']]}.median", money, q=_zhi["zip"])} '
                      f'({m("zip", _zl(_zhi["zip"]), q=_zhi["zip"])}); <a href="#zip">find your ZIP</a>.</p>')
 # 11-09: a screen-1 cost-by-year sentence was tried and cut: screen 1 is full on big counties (P4 quote checker, P3 jump);
@@ -1498,9 +1498,10 @@ table{{width:100%}}}}
 {_spread_tile()}
 <div class="stat"><div class="n">{m('share_below', str(P['share_below']) + '%')}</div><div class="l">Single-family primary-home policies with a premium under FEMA's full-risk premium{' (<a href="#gap">' + claim('bills rise toward it', 'rise', ('share_below', '>', 0)) + '</a>)' if P.get('share_below') else ''}</div></div>
 </div>
-{cmp_line}{_jump}
+{_jump}
 {ZONEMAP if _tool_on("zonemap") else '<a class="btn" href="https://msc.fema.gov/portal/home" rel="noopener" target="_blank">Check your address on FEMA' + "'" + 's flood map →</a>'}
 {quick_answers}
+{cmp_line}
 </section>
 
 {quote_widget}
