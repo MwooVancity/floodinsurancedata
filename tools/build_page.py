@@ -474,7 +474,7 @@ def _nfhl_lines():   # map debate 11-06: map age, revisions, exemption rulings, 
         out.append(f"FEMA's map service lists {m('loma_n', format(t, ','), q='all')} rulings for owners here who asked FEMA to take a building or lot out of the "
                    f"high-risk zone (Letters of Map Amendment): {qs(('bldg', 'whole', 'part'), 'removed')} took the building or some or all of the lot out, "
                    f"{qs(('bldg_out', 'out'), 'as_mapped')} found it already outside the zone as mapped, {q('denied')} were denied"
-                   + (f", {q('other')} other or mixed" if g['other'] else "") + f". {rule('loma_fee')} {rule('loma_online')} {rule('ec_get')} These are rulings for owners who chose to apply, so they are not the odds for your home, and FEMA's map service gives no dates for them. They are counted by "
+                   + (f", {q('other')} other or mixed" if g['other'] else "") + f". {rule('loma_fee')} {rule('loma_online')} {rule('ec_get')} Rulings for owners who applied (not your home's odds; FEMA's map service gives no dates for them), counted by "
                    f"the towns and areas FEMA lists in this {UNIT}, so a city that reaches into a neighboring {UNIT} counts in full here." if t else
                    "FEMA's map service lists no rulings for owners here who asked to take a building or lot out of the high-risk zone (Letters of Map Amendment).")
     return out
@@ -529,9 +529,8 @@ def card_howto():
         + f"<p class='note'>{rule('already_flooded')}</p>"   # hater r136: screen 1 "Already flooded?" lands here; the urgent answer stays on the page
         # owner 11-11 ("Yes, move it"): the national rules (wait exceptions, lapse, what it won't pay, wind, already flooded, appeals,
         # the 50% rule, closing rules, private policies) live once on /nfip/#rules; this is the page's one link to them (tools/rules_home.py)
-        + "<p class='note'>Exceptions to the thirty-day wait, what a policy won't pay (wind, outside belongings, living costs), "
-          "premium increases, FEMA aid vs insurance, appeals, the substantial-damage rebuilding rule and the rules at a closing: "
-          "<a href='/nfip/#rules'>the NFIP rules in full</a>, each with its official source.</p>"
+        + "<p class='note'>Wait exceptions, exclusions, premium increases and surcharges, aid, appeals, rebuilding and closing rules: "
+          "<a href='/nfip/#rules'>the NFIP rules in full</a>.</p>"
         + _regulator_line()
         + (_deadline_tool() if _tool_on("deadline") else "")
         + (_start_tool() if _tool_on("start") else ""),
@@ -670,7 +669,7 @@ def _zip_county():
             _town_line(bz) + f'<input id="zq" inputmode="numeric" maxlength="5" placeholder="e.g. {bz[0]["zip"]}" aria-label="Your ZIP code" '
             f'style="font-size:18px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;width:160px">'
             f'<p id="zout" class="note" style="margin-top:10px">Enter a five-digit ZIP above.</p>'
-            '<p class="note">ZIPs exactly as FEMA recorded them on policies here; a ZIP with only a policy or two may be a ZIP from elsewhere, as entered on the policy.'
+            '<p class="note">ZIPs as entered on policies here (a ZIP with only a policy or two may be from elsewhere).'
             + (" A ZIP outside this county: <a href='/flood-insurance/zip/'>look up any U.S. ZIP</a>." if _ZIP_ON else "") + '</p>'
             f'<table style="margin-top:12px"><thead><tr><th>ZIP</th><th>Median / yr</th><th>Priced policies</th><th>Policy units</th>' + ('<th>Premium below full-risk</th>' if _zb_ok else '') + '</tr></thead>'
             f'<tbody>{toprows}</tbody></table>'
@@ -934,7 +933,7 @@ def card_payout():
                     + ".</p>") if _decs_out else "")) if len(_decs) > 1 else "")
             + f"<p class='note'>{rule('cwop')} The average is over claims that paid something and includes Increased Cost of "
             "Compliance payments (help to elevate or rebuild to code), which the yearly totals above leave out. Dollars are "
-            "as paid at the time, not adjusted for inflation; a single home can file across several floods over the years. These shares count every FEMA claim record from every year except records FEMA coded &quot;deleted in error&quot; or &quot;assigned in error&quot;; <a href='/flood-insurance/claims/'>the claims page</a> counts only losses from 2020 on, so its shares differ. FEMA's data has no open or closed field, so a recent claim with no payment may still be paid.</p>",
+            "as paid at the time, not adjusted for inflation; a single home can file across several floods over the years. All years, records FEMA coded as entered in error left out (<a href='/flood-insurance/claims/'>the claims page</a> uses losses from 2020 on, so its shares differ). FEMA's data has no open or closed field, so a recent claim with no payment may still be paid.</p>",
             src(["claims_filed", "avg_paid", "cwop_share"], f"{C['year_min']}–{C['year_max']}", cx.get("retrieved", RETR)), id="payout")
     return payout_card
 
@@ -1276,8 +1275,7 @@ def card_trend():   # 11-09 HCU "is it rising?": the typical cost on the same da
     lead = (f"On {_trend_day(L[i0]['year'])}, the typical single-family primary-home policy here cost {t(i0, 'median', money, 'trend_cost')} "
             f"a year (median, premium plus fees); on {POL_ASOF}, {m('cost_p50', money(P['p50']))}.")
     note = ("<p class='note'>Median yearly cost of single-family primary-home NFIP policies in force on each date, in dollars of the day "
-            "(not adjusted for inflation). The homes insured change from year to year, so this is not one home's bill over time, "
-            "and FEMA's records do not say why a bill changed.")
+            "(not adjusted for inflation). Different homes each year, so not one home's bill; FEMA's records give no reason for a change.")
     inow = next((i for i, x in enumerate(L) if x.get("year") == _a), None)
     def why(i):   # r121: each left-out year states its own reason, in the order extras_raw applies the rules (labels are claims)
         x = L[i]

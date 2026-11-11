@@ -1,8 +1,8 @@
 {
  "slug": "wakulla-county-fl",
  "verdict": "PASS",
- "template": "fa514aa40aa1c77b",
+ "template": "a430e07be1a3a9b7",
  "defects": [],
- "reviewer": "hater round 142 (fresh agent, docs/HATER-PROMPT.md)",
+ "reviewer": "hater round 144 (fresh agent, docs/HATER-PROMPT.md)",
  "notes": ""
 }
