@@ -1,8 +1,8 @@
 {
  "slug": "dixie-county-fl",
  "verdict": "PASS",
- "template": "ecf661ae4813e604",
+ "template": "fa514aa40aa1c77b",
  "defects": [],
- "reviewer": "hater round 140 (fresh agent, docs/HATER-PROMPT.md)",
+ "reviewer": "hater round 142 (fresh agent, docs/HATER-PROMPT.md)",
  "notes": ""
 }

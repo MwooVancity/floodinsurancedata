@@ -755,6 +755,7 @@ if len(states) == 51:
 <div class="card"><h2>How does the NFIP work?</h2><p class="stand">{rule("nfip_not_sold")} {rule("limits")} {rule("wait_30")}</p><p class="stand">{rule("how_to_buy")}</p></div>
 <div class="card" id="rules"><h2>NFIP rules in full: waits, what it won't pay, claims, rebuilding, closings</h2><p class="stand">These rules are the same in every state and county; each county and state page links here instead of repeating them.</p>
 <h3>The 30-day wait and its exceptions</h3><p class="stand">{rule("wait_exceptions")} {rule("wait_wildfire")}</p>
+<h3>Premium increases</h3><p class="stand">{rule("glide")} {rule("cap")} {rule("surcharge")}</p>
 <h3>Lapses</h3><p class="stand">{rule("nfip_lapse")} {rule("lapse_discount")}</p>
 <h3>What a policy won't pay</h3><p class="stand">{rule("flood_def")} {rule("not_covered")} {rule("wind_excl")}</p>
 <h3>FEMA disaster aid and insurance</h3><p class="stand">{rule("aid_insurance")}</p>

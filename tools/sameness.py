@@ -10,8 +10,12 @@ STATE = os.path.join(ROOT, "state", "sameness.json")
 
 def sents(h):
     h = re.sub(r"<(script|style|svg|head)\b.*?</\1>", " ", h, flags=re.S)
-    t = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", h)).strip()
-    return [s for s in (x.strip() for x in re.split(r"(?<=[.!?])\s+", t)) if len(s.split()) >= 6]
+    h = re.sub(r"</?(p|li|td|th|h[1-6]|div|tr|section|br)\b[^>]*>", "\n", h)   # 11-11: block tags end a sentence (a table is not one long sentence)
+    out = []
+    for blk in re.sub(r"<[^>]+>", " ", h).split("\n"):
+        blk = re.sub(r"\s+", " ", blk).strip()
+        out += [x for x in re.split(r"(?<=[.!?])\s+", blk) if len(x.split()) >= 6]
+    return out
 
 def shares(pages):
     ss = {k: sents(h) for k, h in pages.items()}
@@ -28,7 +32,7 @@ def load():
 if __name__ == "__main__":
     pages = load()
     if len(pages) < 4: print("SAMENESS: fewer than 4 sample pages built; skipped"); sys.exit()
-    sh, common = shares(pages); med = statistics.median(sh.values())
+    sh, common = shares(pages); med = round(statistics.median(sh.values()), 1)
     if "--test" in sys.argv:
         k = next(iter(pages)); extra = "<p>" + " ".join(f"This added national sentence number {i} has more than six words." for i in range(400)) + "</p>"
         sh2, _ = shares({p: h.replace("</main>", extra + "</main>") for p, h in pages.items()})

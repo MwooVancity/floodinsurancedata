@@ -5,7 +5,7 @@ import glob, json, os, re, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MOVED = ["wait_exceptions", "wait_wildfire", "nfip_lapse", "flood_def", "not_covered", "wind_excl", "aid_insurance",
          "claim_appeal", "substantial_damage", "private_accept", "lender_amount", "lender_force", "zone_review", "seller_assign",
-         "lapse_discount"]
+         "lapse_discount", "glide", "cap", "surcharge"]
 
 def place_pages():
     slugs = {p["slug"] for p in json.load(open(os.path.join(ROOT, "places.json")))} | \

@@ -462,6 +462,9 @@ RULES = {
         "text": "FEMA disaster aid helps with uninsured and underinsured losses, and is separate from NFIP insurance.",
         "sources": [(IA_META, "uninsured and underinsured personal property losses", "curl")]},
 }
+# owner 11-11 move: the place page keeps the cap's first clause; the full cap rule lives on /nfip/#rules (same sources, no new wording)
+RULES["cap_short"] = {"text": RULES["cap"]["text"].split(";")[0] + " (42 U.S.C. §4015(e)).",
+                      "sources": [s for s in RULES["cap"]["sources"] if "18 percent" in s[1]]}
 
 
 def rule(key):

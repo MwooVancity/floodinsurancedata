@@ -365,12 +365,12 @@ def _gap_parts():
     glide_note = ""
     _yrs = ffcalc.years_to_full_risk(PREM_MED, P.get("frp_median"))
     if _yrs is None:
-        glide_note = (f"<p class='note'><b>Yearly cap:</b> {rule('cap')} "
+        glide_note = (f"<p class='note'><b>Yearly cap:</b> {rule('cap_short')} "
                       + claim("Here the median premium is already at or above the median full-risk premium, so the median "
                               "policy has no gap left to close; any one policy can still sit below its own full-risk price.",
                               "at or above", ("prem_median", ">=", "frp_median")) + "</p>")
     else:   # no "years to full risk": the two medians come from different policies, so their ratio describes no real bill
-        glide_note = (f"<p class='note'><b>Yearly cap:</b> {rule('glide')} {rule('cap')}</p>")
+        glide_note = (f"<p class='note'><b>Yearly cap:</b> {rule('cap_short')}</p>")   # owner 11-11: glide + full cap on /nfip/#rules
     return gap_lead, glide_note
 
 def _claims_parts():
@@ -530,7 +530,7 @@ def card_howto():
         # owner 11-11 ("Yes, move it"): the national rules (wait exceptions, lapse, what it won't pay, wind, already flooded, appeals,
         # the 50% rule, closing rules, private policies) live once on /nfip/#rules; this is the page's one link to them (tools/rules_home.py)
         + "<p class='note'>Exceptions to the thirty-day wait, what a policy won't pay (wind, outside belongings, living costs), "
-          "FEMA aid vs insurance, appeals, the substantial-damage rebuilding rule and the rules at a closing: "
+          "premium increases, FEMA aid vs insurance, appeals, the substantial-damage rebuilding rule and the rules at a closing: "
           "<a href='/nfip/#rules'>the NFIP rules in full</a>, each with its official source.</p>"
         + _regulator_line()
         + (_deadline_tool() if _tool_on("deadline") else "")
@@ -1262,8 +1262,8 @@ def card_required():
 
 def card_cost():
     cost_lead, cost_body = _cost_parts()
-    cost_body += f"<p class='note'>{rule('other_buyers')} The median here is for single-family primary-home policies, not businesses or second homes. Renting? See <a href='/flood-insurance/renters/'>what renters pay</a>. {rule('surcharge')}</p>"
-    return card(f"Flood insurance cost in {CL}", cost_lead, cost_body, src(["cost_p50", "prem_median", "frp_median", "coverage"], POL_ASOF, RETR) + src_rules(["other_buyers", "surcharge"]))
+    cost_body += f"<p class='note'>{rule('other_buyers')} The median here is for single-family primary-home policies, not businesses or second homes. Renting? See <a href='/flood-insurance/renters/'>what renters pay</a>.</p>"
+    return card(f"Flood insurance cost in {CL}", cost_lead, cost_body, src(["cost_p50", "prem_median", "frp_median", "coverage"], POL_ASOF, RETR) + src_rules(["other_buyers"]))
 
 def card_trend():   # 11-09 HCU "is it rising?": the typical cost on the same day in each of the 5 years before (extras_raw cost_trend)
     L, past, shown, _a = _trend_rows()
@@ -1330,7 +1330,7 @@ def card_gap():
       f"<ul class='kv'><li><b>Median premium charged (before fees)</b><span>{m('prem_median', money(PREM_MED))}</span></li>"
       f"<li><b>Median full-risk premium</b><span>{m('frp_median', money(P['frp_median']))}</span></li>"
       f"<li><b>Pay below full-risk</b><span>{m('share_below', str(P['share_below']) + '%')} of {tp('units_listed', 'policies.below_n', q='below_n')}</span>{vs_state('share_below', 'agg.policies.share_below', pct)}</li></ul>" + glide_note,
-      src(["prem_median", "frp_median", "share_below"], POL_ASOF, RETR) + src_rules(["cap"]), id="gap")
+      src(["prem_median", "frp_median", "share_below"], POL_ASOF, RETR) + src_rules(["cap_short"]), id="gap")
 
 def card_crs():
     crs_rows, crs_none_note, crs_lead = _crs_parts()

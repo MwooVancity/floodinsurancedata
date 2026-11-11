@@ -1,0 +1,52 @@
+## home
+- Text diff vs HEAD: zero changed lines. Unchanged, no defects.
+Verdict: PASS
+
+## louisiana
+- MINOR Gap card ('Yearly cap:') prints "By law, most premium rates may not rise more than 18% a year (42 U.S.C. §4015(e))." True and hedged ("most"), scoped by the card to single-family primary homes, and "premiums only, before fees" sits just above it, so no BLOCKER/MAJOR. But the exceptions a reader needs beside the figure (new policies not capped, coverage changes, fees on top, 25% for non-primary) are now only on /nfip/#rules, and the card itself has no link; the only pointer is the #covered sentence far down the page (checklist C: caveat beside its figure). Fix: add 'Exceptions: /nfip/#rules' inside the note.
+- MINOR The card's lead says "those policies' bills are rising toward it" but the reason (discounts phase out at each renewal) is no longer on the page; it lives only on /nfip/. Reader sees a rise with no mechanism beside it.
+- MINOR Cost card lost the $250 vs $25 surcharge sentence; the card still says "HFIAA surcharge" without amount or link. Scope is primary homes so the figure stays true; a second-home reader loses the answer from the place page. The #covered sentence now lists "premium increases" but not the surcharge, so it is not findable from there.
+- Diff vs HEAD (text only): only the cap note, the surcharge sentence, the source line (law.cornell.edu and floodsmart.gov dropped, matching the shorter text) and the #covered sentence changed. All numbers and labels in the gap card are identical (checked by line diff). Card reads coherently.
+Verdict: PASS
+
+## palm-beach-county-fl
+- MINOR Gap card ('Yearly cap:') prints "By law, most premium rates may not rise more than 18% a year (42 U.S.C. §4015(e))." True and hedged ("most"), scoped by the card to single-family primary homes, and "premiums only, before fees" sits just above it, so no BLOCKER/MAJOR. But the exceptions a reader needs beside the figure (new policies not capped, coverage changes, fees on top, 25% for non-primary) are now only on /nfip/#rules, and the card itself has no link; the only pointer is the #covered sentence far down the page (checklist C: caveat beside its figure). Fix: add 'Exceptions: /nfip/#rules' inside the note.
+- MINOR Cost card lost the $250 vs $25 surcharge sentence; the card still says "HFIAA surcharge" without amount or link. Scope is primary homes so the figure stays true; a second-home reader loses the answer from the place page. The #covered sentence now lists "premium increases" but not the surcharge, so it is not findable from there.
+- Diff vs HEAD (text only): only the cap note, the surcharge sentence, the source line (law.cornell.edu and floodsmart.gov dropped, matching the shorter text) and the #covered sentence changed. All numbers and labels in the gap card are identical (checked by line diff). Card reads coherently.
+Verdict: PASS
+
+## new-york-county-ny
+- MINOR Gap card ('Yearly cap:') prints "By law, most premium rates may not rise more than 18% a year (42 U.S.C. §4015(e))." True and hedged ("most"), scoped by the card to single-family primary homes, and "premiums only, before fees" sits just above it, so no BLOCKER/MAJOR. But the exceptions a reader needs beside the figure (new policies not capped, coverage changes, fees on top, 25% for non-primary) are now only on /nfip/#rules, and the card itself has no link; the only pointer is the #covered sentence far down the page (checklist C: caveat beside its figure). Fix: add 'Exceptions: /nfip/#rules' inside the note.
+- MINOR Cost card lost the $250 vs $25 surcharge sentence; the card still says "HFIAA surcharge" without amount or link. Scope is primary homes so the figure stays true; a second-home reader loses the answer from the place page. The #covered sentence now lists "premium increases" but not the surcharge, so it is not findable from there.
+- Diff vs HEAD (text only): only the cap note, the surcharge sentence, the source line (law.cornell.edu and floodsmart.gov dropped, matching the shorter text) and the #covered sentence changed. All numbers and labels in the gap card are identical (checked by line diff). Card reads coherently.
+Verdict: PASS
+
+## dixie-county-fl
+- MINOR Gap card ('Yearly cap:') prints "By law, most premium rates may not rise more than 18% a year (42 U.S.C. §4015(e))." True and hedged ("most"), scoped by the card to single-family primary homes, and "premiums only, before fees" sits just above it, so no BLOCKER/MAJOR. But the exceptions a reader needs beside the figure (new policies not capped, coverage changes, fees on top, 25% for non-primary) are now only on /nfip/#rules, and the card itself has no link; the only pointer is the #covered sentence far down the page (checklist C: caveat beside its figure). Fix: add 'Exceptions: /nfip/#rules' inside the note.
+- MINOR Cost card lost the $250 vs $25 surcharge sentence; the card still says "HFIAA surcharge" without amount or link. Scope is primary homes so the figure stays true; a second-home reader loses the answer from the place page. The #covered sentence now lists "premium increases" but not the surcharge, so it is not findable from there.
+- Diff vs HEAD (text only): only the cap note, the surcharge sentence, the source line (law.cornell.edu and floodsmart.gov dropped, matching the shorter text) and the #covered sentence changed. All numbers and labels in the gap card are identical (checked by line diff). Card reads coherently.
+Verdict: PASS
+
+## levy-county-fl
+- MINOR Gap card ('Yearly cap:') prints "By law, most premium rates may not rise more than 18% a year (42 U.S.C. §4015(e))." True and hedged ("most"), scoped by the card to single-family primary homes, and "premiums only, before fees" sits just above it, so no BLOCKER/MAJOR. But the exceptions a reader needs beside the figure (new policies not capped, coverage changes, fees on top, 25% for non-primary) are now only on /nfip/#rules, and the card itself has no link; the only pointer is the #covered sentence far down the page (checklist C: caveat beside its figure). Fix: add 'Exceptions: /nfip/#rules' inside the note.
+- MINOR Cost card lost the $250 vs $25 surcharge sentence; the card still says "HFIAA surcharge" without amount or link. Scope is primary homes so the figure stays true; a second-home reader loses the answer from the place page. The #covered sentence now lists "premium increases" but not the surcharge, so it is not findable from there.
+- Diff vs HEAD (text only): only the cap note, the surcharge sentence, the source line (law.cornell.edu and floodsmart.gov dropped, matching the shorter text) and the #covered sentence changed. All numbers and labels in the gap card are identical (checked by line diff). Card reads coherently.
+Verdict: PASS
+
+## sonoma-county-ca
+- MINOR Gap card ('Yearly cap:') prints "By law, most premium rates may not rise more than 18% a year (42 U.S.C. §4015(e))." True and hedged ("most"), scoped by the card to single-family primary homes, and "premiums only, before fees" sits just above it, so no BLOCKER/MAJOR. But the exceptions a reader needs beside the figure (new policies not capped, coverage changes, fees on top, 25% for non-primary) are now only on /nfip/#rules, and the card itself has no link; the only pointer is the #covered sentence far down the page (checklist C: caveat beside its figure). Fix: add 'Exceptions: /nfip/#rules' inside the note.
+- MINOR Cost card lost the $250 vs $25 surcharge sentence; the card still says "HFIAA surcharge" without amount or link. Scope is primary homes so the figure stays true; a second-home reader loses the answer from the place page. The #covered sentence now lists "premium increases" but not the surcharge, so it is not findable from there.
+- Diff vs HEAD (text only): only the cap note, the surcharge sentence, the source line (law.cornell.edu and floodsmart.gov dropped, matching the shorter text) and the #covered sentence changed. All numbers and labels in the gap card are identical (checked by line diff). Card reads coherently.
+Verdict: PASS
+
+## wakulla-county-fl
+- MINOR Gap card ('Yearly cap:') prints "By law, most premium rates may not rise more than 18% a year (42 U.S.C. §4015(e))." True and hedged ("most"), scoped by the card to single-family primary homes, and "premiums only, before fees" sits just above it, so no BLOCKER/MAJOR. But the exceptions a reader needs beside the figure (new policies not capped, coverage changes, fees on top, 25% for non-primary) are now only on /nfip/#rules, and the card itself has no link; the only pointer is the #covered sentence far down the page (checklist C: caveat beside its figure). Fix: add 'Exceptions: /nfip/#rules' inside the note.
+- MINOR Cost card lost the $250 vs $25 surcharge sentence; the card still says "HFIAA surcharge" without amount or link. Scope is primary homes so the figure stays true; a second-home reader loses the answer from the place page. The #covered sentence now lists "premium increases" but not the surcharge, so it is not findable from there.
+- Diff vs HEAD (text only): only the cap note, the surcharge sentence, the source line (law.cornell.edu and floodsmart.gov dropped, matching the shorter text) and the #covered sentence changed. All numbers and labels in the gap card are identical (checked by line diff). Card reads coherently.
+Verdict: PASS
+
+## nfip
+- MINOR New h3 "Premium increases" also holds the surcharge paragraph ("$250 a year, against $25 for a primary home"), a fee, not a rate increase. Heading does not fit that paragraph; the place pages' #covered sentence lists "premium increases" only, so a reader hunting the surcharge is not told it is here. Fix: add "surcharge" to the heading or the link sentence.
+- MINOR Glide sentence ("through an annual increase cap discount at each renewal date") is jargon-heavy for an 8th-grade reader; text is verbatim from the old place pages, so not new.
+- Checked: glide, cap (18% plus 25%, FloodSmart 18 to 25%, new policies, coverage changes, fees on top) and surcharge texts are word-for-word the old place-page texts (line diff). Sources for the section sit in the #rules source list (agents.floodsmart.gov, ecfr.gov, federalreserve.gov, floodsmart.gov, govinfo.gov, law.cornell.edu); every source dropped from place pages is listed here. Full cap rule now stated once on the national page, with all exceptions. The Lapses paragraph that follows refers to "the yearly cap", which is now defined directly above it, an improvement.
+Verdict: PASS
