@@ -252,8 +252,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Nueces County, Texas",ia_per_reg,,$612,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Nueces County, Texas",units,,"26,589",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Nueces County, Texas",records_total,rows,"21,408",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Nueces County, Texas",records_total,policies:fetched,"21,408",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Nueces County, Texas",records_total,policies:reported,"21,408",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Nueces County, Texas",records_total,claims:fetched,"8,375",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Nueces County, Texas",records_total,claims:reported,"8,375",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Nueces County, Texas",n_sources,,10,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

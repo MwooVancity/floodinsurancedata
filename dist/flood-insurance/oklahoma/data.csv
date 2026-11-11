@@ -378,8 +378,4 @@ Oklahoma,ia_paid,,$57.5 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistanc
 Oklahoma,ia_per_reg,,"$2,461",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 Oklahoma,units,,"8,384",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Oklahoma,records_total,rows,"8,358",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Oklahoma,records_total,policies:fetched,"8,358",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Oklahoma,records_total,policies:reported,"8,358",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Oklahoma,records_total,claims:fetched,"12,998",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Oklahoma,records_total,claims:reported,"12,998",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 Oklahoma,n_sources,,7,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

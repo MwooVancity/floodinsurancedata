@@ -230,8 +230,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Accomack County, Virginia",ia_per_reg,,"$1,623",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Accomack County, Virginia",units,,"2,903",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Accomack County, Virginia",records_total,rows,"2,784",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Accomack County, Virginia",records_total,policies:fetched,"2,784",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Accomack County, Virginia",records_total,policies:reported,"2,784",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Accomack County, Virginia",records_total,claims:fetched,"1,065",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Accomack County, Virginia",records_total,claims:reported,"1,065",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Accomack County, Virginia",n_sources,,10,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

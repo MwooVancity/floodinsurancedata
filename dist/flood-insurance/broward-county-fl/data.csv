@@ -278,8 +278,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Broward County, Florida",ia_per_reg,,$535,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Broward County, Florida",units,,"232,960",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Broward County, Florida",records_total,rows,"135,798",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Broward County, Florida",records_total,policies:fetched,"135,798",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Broward County, Florida",records_total,policies:reported,"135,798",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Broward County, Florida",records_total,claims:fetched,"33,026",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Broward County, Florida",records_total,claims:reported,"33,026",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Broward County, Florida",n_sources,,9,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

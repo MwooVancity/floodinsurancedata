@@ -199,8 +199,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Hampton city, Virginia",ia_per_reg,,$640,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Hampton city, Virginia",units,,"9,195",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Hampton city, Virginia",records_total,rows,"8,540",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Hampton city, Virginia",records_total,policies:fetched,"8,540",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Hampton city, Virginia",records_total,policies:reported,"8,540",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Hampton city, Virginia",records_total,claims:fetched,"5,632",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Hampton city, Virginia",records_total,claims:reported,"5,632",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Hampton city, Virginia",n_sources,,8,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

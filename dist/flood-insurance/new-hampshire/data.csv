@@ -209,8 +209,4 @@ New Hampshire,ia_paid,,$14.0 million,usd_aid_paid,FEMA OpenFEMA — Housing Assi
 New Hampshire,ia_per_reg,,"$1,799",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 New Hampshire,units,,"7,310",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 New Hampshire,records_total,rows,"5,253",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-New Hampshire,records_total,policies:fetched,"5,253",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-New Hampshire,records_total,policies:reported,"5,253",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-New Hampshire,records_total,claims:fetched,"4,423",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-New Hampshire,records_total,claims:reported,"4,423",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 New Hampshire,n_sources,,7,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

@@ -181,8 +181,4 @@ Hawaii,ia_paid,,$22.0 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance 
 Hawaii,ia_per_reg,,"$6,038",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 Hawaii,units,,"65,818",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Hawaii,records_total,rows,"13,667",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Hawaii,records_total,policies:fetched,"13,667",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Hawaii,records_total,policies:reported,"13,667",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Hawaii,records_total,claims:fetched,"6,285",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Hawaii,records_total,claims:reported,"6,285",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 Hawaii,n_sources,,7,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

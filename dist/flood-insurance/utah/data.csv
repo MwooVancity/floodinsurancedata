@@ -231,8 +231,4 @@ Utah,ml_total,,0,count,FEMA OpenFEMA — Individual Assistance Multiple-Loss Flo
 Utah,declarations,,12,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"August 31, 2026"
 Utah,units,,"4,226",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Utah,records_total,rows,"3,696",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Utah,records_total,policies:fetched,"3,696",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Utah,records_total,policies:reported,"3,696",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Utah,records_total,claims:fetched,"1,216",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Utah,records_total,claims:reported,"1,216",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 Utah,n_sources,,7,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

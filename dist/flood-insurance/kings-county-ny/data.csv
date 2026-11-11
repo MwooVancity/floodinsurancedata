@@ -204,8 +204,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Kings County, New York",ia_per_reg,,"$5,596",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Kings County, New York",units,,"18,645",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Kings County, New York",records_total,rows,"9,192",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Kings County, New York",records_total,policies:fetched,"9,192",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Kings County, New York",records_total,policies:reported,"9,192",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Kings County, New York",records_total,claims:fetched,"6,152",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Kings County, New York",records_total,claims:reported,"6,152",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Kings County, New York",n_sources,,8,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

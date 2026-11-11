@@ -168,8 +168,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Camden County, Georgia",ia_per_reg,,$743,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Camden County, Georgia",units,,"2,998",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Camden County, Georgia",records_total,rows,"2,998",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Camden County, Georgia",records_total,policies:fetched,"2,998",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Camden County, Georgia",records_total,policies:reported,"2,998",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Camden County, Georgia",records_total,claims:fetched,331,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Camden County, Georgia",records_total,claims:reported,331,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Camden County, Georgia",n_sources,,9,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

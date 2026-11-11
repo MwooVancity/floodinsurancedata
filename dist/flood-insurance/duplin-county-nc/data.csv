@@ -148,8 +148,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Duplin County, North Carolina",ia_per_reg,,"$2,665",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Duplin County, North Carolina",units,,559,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Duplin County, North Carolina",records_total,rows,559,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Duplin County, North Carolina",records_total,policies:fetched,559,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Duplin County, North Carolina",records_total,policies:reported,559,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Duplin County, North Carolina",records_total,claims:fetched,532,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Duplin County, North Carolina",records_total,claims:reported,532,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Duplin County, North Carolina",n_sources,,9,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

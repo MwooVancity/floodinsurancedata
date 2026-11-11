@@ -174,8 +174,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Johnston County, North Carolina",ia_per_reg,,"$1,414",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Johnston County, North Carolina",units,,560,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Johnston County, North Carolina",records_total,rows,560,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Johnston County, North Carolina",records_total,policies:fetched,560,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Johnston County, North Carolina",records_total,policies:reported,560,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Johnston County, North Carolina",records_total,claims:fetched,303,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Johnston County, North Carolina",records_total,claims:reported,303,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Johnston County, North Carolina",n_sources,,9,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

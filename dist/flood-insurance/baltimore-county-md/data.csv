@@ -192,8 +192,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Baltimore County, Maryland",ia_per_reg,,"$3,099",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Baltimore County, Maryland",units,,"3,411",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Baltimore County, Maryland",records_total,rows,"3,297",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Baltimore County, Maryland",records_total,policies:fetched,"3,297",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Baltimore County, Maryland",records_total,policies:reported,"3,297",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Baltimore County, Maryland",records_total,claims:fetched,"3,241",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Baltimore County, Maryland",records_total,claims:reported,"3,241",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Baltimore County, Maryland",n_sources,,8,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

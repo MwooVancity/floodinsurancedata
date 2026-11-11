@@ -223,8 +223,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Alameda County, California",ia_per_reg,,"$3,045",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Alameda County, California",units,,"4,747",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Alameda County, California",records_total,rows,"3,869",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Alameda County, California",records_total,policies:fetched,"3,869",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Alameda County, California",records_total,policies:reported,"3,869",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Alameda County, California",records_total,claims:fetched,540,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Alameda County, California",records_total,claims:reported,540,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Alameda County, California",n_sources,,10,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

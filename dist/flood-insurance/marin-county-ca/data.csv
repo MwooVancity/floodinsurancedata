@@ -230,8 +230,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Marin County, California",ia_per_reg,,"$1,977",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Marin County, California",units,,"6,346",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Marin County, California",records_total,rows,"5,140",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Marin County, California",records_total,policies:fetched,"5,140",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Marin County, California",records_total,policies:reported,"5,140",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Marin County, California",records_total,claims:fetched,"3,202",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Marin County, California",records_total,claims:reported,"3,202",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Marin County, California",n_sources,,10,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

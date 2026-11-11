@@ -485,8 +485,4 @@ Florida,ia_paid,,$4.1 billion,usd_aid_paid,FEMA OpenFEMA — Housing Assistance 
 Florida,ia_per_reg,,"$1,039",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 Florida,units,,"1,777,001",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Florida,records_total,rows,"1,116,601",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Florida,records_total,policies:fetched,"1,116,601",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Florida,records_total,policies:reported,"1,116,601",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Florida,records_total,claims:fetched,"448,618",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Florida,records_total,claims:reported,"448,618",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 Florida,n_sources,,7,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

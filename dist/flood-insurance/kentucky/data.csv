@@ -538,8 +538,4 @@ Kentucky,ia_paid,,$338.3 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistan
 Kentucky,ia_per_reg,,"$4,543",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 Kentucky,units,,"17,448",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Kentucky,records_total,rows,"16,678",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Kentucky,records_total,policies:fetched,"16,678",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Kentucky,records_total,policies:reported,"16,678",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Kentucky,records_total,claims:fetched,"27,947",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Kentucky,records_total,claims:reported,"27,947",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 Kentucky,n_sources,,7,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

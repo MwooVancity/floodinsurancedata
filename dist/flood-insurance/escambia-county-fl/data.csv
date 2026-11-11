@@ -237,8 +237,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Escambia County, Florida",ia_per_reg,,"$1,246",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Escambia County, Florida",units,,"17,310",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Escambia County, Florida",records_total,rows,"11,001",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Escambia County, Florida",records_total,policies:fetched,"11,001",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Escambia County, Florida",records_total,policies:reported,"11,001",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Escambia County, Florida",records_total,claims:fetched,"16,160",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Escambia County, Florida",records_total,claims:reported,"16,160",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Escambia County, Florida",n_sources,,10,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

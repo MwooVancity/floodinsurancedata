@@ -481,8 +481,4 @@ Tennessee,ia_paid,,$220.9 million,usd_aid_paid,FEMA OpenFEMA — Housing Assista
 Tennessee,ia_per_reg,,"$3,023",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 Tennessee,units,,"23,085",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Tennessee,records_total,rows,"21,487",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Tennessee,records_total,policies:fetched,"21,487",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Tennessee,records_total,policies:reported,"21,487",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Tennessee,records_total,claims:fetched,"17,706",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Tennessee,records_total,claims:reported,"17,706",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 Tennessee,n_sources,,7,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

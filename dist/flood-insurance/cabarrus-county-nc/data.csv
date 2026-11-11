@@ -149,8 +149,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Cabarrus County, North Carolina",ia_per_reg,,"$1,216",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Cabarrus County, North Carolina",units,,463,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Cabarrus County, North Carolina",records_total,rows,463,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Cabarrus County, North Carolina",records_total,policies:fetched,463,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Cabarrus County, North Carolina",records_total,policies:reported,463,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Cabarrus County, North Carolina",records_total,claims:fetched,232,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Cabarrus County, North Carolina",records_total,claims:reported,232,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Cabarrus County, North Carolina",n_sources,,9,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

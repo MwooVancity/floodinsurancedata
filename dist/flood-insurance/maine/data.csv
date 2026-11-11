@@ -252,8 +252,4 @@ Maine,ia_paid,,$15.7 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (
 Maine,ia_per_reg,,"$1,954",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 Maine,units,,"8,558",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Maine,records_total,rows,"7,454",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Maine,records_total,policies:fetched,"7,454",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Maine,records_total,policies:reported,"7,454",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Maine,records_total,claims:fetched,"5,672",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Maine,records_total,claims:reported,"5,672",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 Maine,n_sources,,7,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

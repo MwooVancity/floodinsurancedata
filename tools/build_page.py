@@ -940,8 +940,6 @@ def card_payout():
 
 mani = agg.get("manifest", {})
 mani_ok = all(v.get("complete") for v in mani.values()) if mani else False
-mani_line = "; ".join(f"{k}: {tp('records_total', f'manifest.{k}.unique_fetched', q=k + ':fetched')} of {tp('records_total', f'manifest.{k}.reported_total', q=k + ':reported')} fetched"
-                      + ("" if v["complete"] else f" (MISSING {v['missing']})") for k, v in mani.items()) or "n/a"
 
 # ---- SEO / GEO + place registry ----
 SLUG = os.environ.get("FF_SLUG", "lee-county-fl")
@@ -1369,8 +1367,8 @@ def card_counts():
     return card("Are these counts complete?", ("Our counts are checked against FEMA's official figure and the download's own record total." if OFFICIAL
       else "Every record FEMA's download lists was received and counted."),
       f"<p class='note'>In-force count: {tp('units', 'policies.units')} policy units (from {tp('records_total', 'policies.rows', q='rows')} API records; condo-association records carry more than one unit). " +
-      (f"FEMA's official count for {POL_ASOF} was {m('official_count', num(OFFICIAL))}: a {m('official_diff', str(round(abs(P['units']-OFFICIAL)/OFFICIAL*100,1)) + '%')} difference. " if OFFICIAL else "") +
-      f"Download check: {mani_line}.</p>")
+      (f"FEMA's official count for {POL_ASOF} was {m('official_count', num(OFFICIAL))}: a {m('official_diff', str(round(abs(P['units']-OFFICIAL)/OFFICIAL*100,1)) + '%')} difference." if OFFICIAL else "") +
+      "</p>")   # black-hat 11-11: the per-dataset "Download check" receipt is gone; the provenance line states the complete download once (gate G1)
 
 # page order (reader first: required, cost, how to get covered, payouts, then the detail cards). card_spec.py says what each covers.
 def _share_words(p):   # the words must match the number: 64.9% is "about 6 in 10", never "1 in 2"
@@ -1535,6 +1533,14 @@ HTML = (HTML.replace("@@SOURCES_LI@@", "".join(f'<li><a href="{u}">{html.escape(
             # Search Console 2026-10-29: nested Dataset objects were checked as Datasets (no description/license/creator);
             # Google's Dataset citation takes text, so each source is one reference string
             .replace('"@@CITATION@@"', json.dumps([f"{n}. {u}" for n, u in SOURCES])))
+def _src_once(h):   # black-hat 11-11 (Raleigh: 26 source lines, 9 exact repeats): an identical source line prints at its first card only;
+    seen = set()    # every dataset stays named with its date there and in "The federal datasets behind this page" (gate A5)
+    def keep(mm):
+        t = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", mm.group(2))).strip()
+        if t in seen: return ""
+        seen.add(t); return mm.group(0)
+    return re.sub(r'<p class="src" data-src="([^"]*)">(.*?)</p>', keep, h, flags=re.S)
+HTML = _src_once(HTML)
 open(OUT_HTML, "w", encoding="utf-8").write(HTML)
 # data.csv next to the page: exactly the tagged figures the page shows, each with its dataset and FEMA fields
 import csv

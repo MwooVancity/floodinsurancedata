@@ -287,8 +287,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Palm Beach County, Florida",ia_per_reg,,$591,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Palm Beach County, Florida",units,,"131,028",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Palm Beach County, Florida",records_total,rows,"74,041",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Palm Beach County, Florida",records_total,policies:fetched,"74,041",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Palm Beach County, Florida",records_total,policies:reported,"74,041",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Palm Beach County, Florida",records_total,claims:fetched,"10,000",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Palm Beach County, Florida",records_total,claims:reported,"10,000",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Palm Beach County, Florida",n_sources,,10,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

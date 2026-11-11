@@ -200,8 +200,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Levy County, Florida",ia_per_reg,,"$1,572",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Levy County, Florida",units,,932,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Levy County, Florida",records_total,rows,750,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Levy County, Florida",records_total,policies:fetched,750,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Levy County, Florida",records_total,policies:reported,750,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Levy County, Florida",records_total,claims:fetched,"1,288",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Levy County, Florida",records_total,claims:reported,"1,288",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Levy County, Florida",n_sources,,10,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

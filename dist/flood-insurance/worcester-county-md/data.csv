@@ -190,8 +190,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Worcester County, Maryland",ia_per_reg,,$936,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Worcester County, Maryland",units,,"29,203",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Worcester County, Maryland",records_total,rows,"8,388",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Worcester County, Maryland",records_total,policies:fetched,"8,388",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Worcester County, Maryland",records_total,policies:reported,"8,388",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Worcester County, Maryland",records_total,claims:fetched,"2,430",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Worcester County, Maryland",records_total,claims:reported,"2,430",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Worcester County, Maryland",n_sources,,10,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

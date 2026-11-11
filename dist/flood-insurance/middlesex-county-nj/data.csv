@@ -222,8 +222,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Middlesex County, New Jersey",ia_per_reg,,"$2,154",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Middlesex County, New Jersey",units,,"3,087",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Middlesex County, New Jersey",records_total,rows,"2,851",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Middlesex County, New Jersey",records_total,policies:fetched,"2,851",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Middlesex County, New Jersey",records_total,policies:reported,"2,851",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Middlesex County, New Jersey",records_total,claims:fetched,"5,156",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Middlesex County, New Jersey",records_total,claims:reported,"5,156",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Middlesex County, New Jersey",n_sources,,9,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

@@ -518,8 +518,4 @@ Ohio,ia_paid,,$82.7 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (O
 Ohio,ia_per_reg,,"$1,553",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 Ohio,units,,"22,192",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Ohio,records_total,rows,"21,262",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Ohio,records_total,policies:fetched,"21,262",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Ohio,records_total,policies:reported,"21,262",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Ohio,records_total,claims:fetched,"28,417",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Ohio,records_total,claims:reported,"28,417",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 Ohio,n_sources,,7,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

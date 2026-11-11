@@ -247,8 +247,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Manatee County, Florida",ia_per_reg,,"$1,463",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Manatee County, Florida",units,,"37,694",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Manatee County, Florida",records_total,rows,"28,829",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Manatee County, Florida",records_total,policies:fetched,"28,829",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Manatee County, Florida",records_total,policies:reported,"28,829",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Manatee County, Florida",records_total,claims:fetched,"10,985",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Manatee County, Florida",records_total,claims:reported,"10,985",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Manatee County, Florida",n_sources,,10,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

@@ -414,8 +414,4 @@ Arkansas,ia_paid,,$82.8 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistanc
 Arkansas,ia_per_reg,,"$2,413",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 Arkansas,units,,"11,137",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Arkansas,records_total,rows,"10,926",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Arkansas,records_total,policies:fetched,"10,926",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Arkansas,records_total,policies:reported,"10,926",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Arkansas,records_total,claims:fetched,"10,260",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Arkansas,records_total,claims:reported,"10,260",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 Arkansas,n_sources,,7,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

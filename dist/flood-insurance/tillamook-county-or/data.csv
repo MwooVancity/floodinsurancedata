@@ -170,8 +170,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Tillamook County, Oregon",ia_per_reg,,"$1,028",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Tillamook County, Oregon",units,,"1,376",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Tillamook County, Oregon",records_total,rows,"1,182",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Tillamook County, Oregon",records_total,policies:fetched,"1,182",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Tillamook County, Oregon",records_total,policies:reported,"1,182",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Tillamook County, Oregon",records_total,claims:fetched,720,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Tillamook County, Oregon",records_total,claims:reported,720,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Tillamook County, Oregon",n_sources,,10,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

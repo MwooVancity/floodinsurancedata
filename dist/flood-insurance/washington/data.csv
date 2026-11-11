@@ -353,8 +353,4 @@ Washington,ia_paid,,$52.8 million,usd_aid_paid,FEMA OpenFEMA — Housing Assista
 Washington,ia_per_reg,,"$3,232",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 Washington,units,,"29,652",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Washington,records_total,rows,"26,722",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Washington,records_total,policies:fetched,"26,722",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Washington,records_total,policies:reported,"26,722",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Washington,records_total,claims:fetched,"16,074",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Washington,records_total,claims:reported,"16,074",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 Washington,n_sources,,7,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

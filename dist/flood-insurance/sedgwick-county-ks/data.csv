@@ -186,8 +186,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Sedgwick County, Kansas",declarations,,9,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"August 31, 2026"
 "Sedgwick County, Kansas",units,,991,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Sedgwick County, Kansas",records_total,rows,985,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Sedgwick County, Kansas",records_total,policies:fetched,985,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Sedgwick County, Kansas",records_total,policies:reported,985,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Sedgwick County, Kansas",records_total,claims:fetched,960,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Sedgwick County, Kansas",records_total,claims:reported,960,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Sedgwick County, Kansas",n_sources,,9,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

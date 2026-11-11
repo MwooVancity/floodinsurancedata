@@ -200,8 +200,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Pitt County, North Carolina",ia_per_reg,,$746,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Pitt County, North Carolina",units,,"1,706",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Pitt County, North Carolina",records_total,rows,"1,631",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Pitt County, North Carolina",records_total,policies:fetched,"1,631",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Pitt County, North Carolina",records_total,policies:reported,"1,631",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Pitt County, North Carolina",records_total,claims:fetched,"1,165",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Pitt County, North Carolina",records_total,claims:reported,"1,165",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Pitt County, North Carolina",n_sources,,9,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

@@ -240,8 +240,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Mobile County, Alabama",ia_per_reg,,"$1,191",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Mobile County, Alabama",units,,"6,689",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Mobile County, Alabama",records_total,rows,"6,169",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Mobile County, Alabama",records_total,policies:fetched,"6,169",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Mobile County, Alabama",records_total,policies:reported,"6,169",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Mobile County, Alabama",records_total,claims:fetched,"14,834",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Mobile County, Alabama",records_total,claims:reported,"14,834",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Mobile County, Alabama",n_sources,,10,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

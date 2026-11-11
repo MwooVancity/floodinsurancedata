@@ -226,8 +226,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "San Mateo County, California",ia_per_reg,,"$4,175",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "San Mateo County, California",units,,"4,202",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "San Mateo County, California",records_total,rows,"3,945",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"San Mateo County, California",records_total,policies:fetched,"3,945",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"San Mateo County, California",records_total,policies:reported,"3,945",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"San Mateo County, California",records_total,claims:fetched,"1,057",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"San Mateo County, California",records_total,claims:reported,"1,057",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "San Mateo County, California",n_sources,,10,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

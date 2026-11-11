@@ -455,8 +455,4 @@ Mississippi,ia_paid,,$966.8 million,usd_aid_paid,FEMA OpenFEMA — Housing Assis
 Mississippi,ia_per_reg,,"$2,283",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 Mississippi,units,,"48,599",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Mississippi,records_total,rows,"46,544",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Mississippi,records_total,policies:fetched,"46,544",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Mississippi,records_total,policies:reported,"46,544",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Mississippi,records_total,claims:fetched,"64,589",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Mississippi,records_total,claims:reported,"64,589",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 Mississippi,n_sources,,7,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

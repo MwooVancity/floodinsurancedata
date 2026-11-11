@@ -160,8 +160,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Sutter County, California",declarations,,14,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"August 31, 2026"
 "Sutter County, California",units,,"3,605",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Sutter County, California",records_total,rows,"3,605",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Sutter County, California",records_total,policies:fetched,"3,605",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Sutter County, California",records_total,policies:reported,"3,605",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Sutter County, California",records_total,claims:fetched,182,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Sutter County, California",records_total,claims:reported,182,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Sutter County, California",n_sources,,8,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

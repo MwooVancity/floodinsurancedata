@@ -439,8 +439,4 @@ California,ia_paid,,$124.8 million,usd_aid_paid,FEMA OpenFEMA — Housing Assist
 California,ia_per_reg,,"$2,733",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 California,units,,"172,348",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 California,records_total,rows,"157,171",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-California,records_total,policies:fetched,"157,171",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-California,records_total,policies:reported,"157,171",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-California,records_total,claims:fetched,"53,563",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-California,records_total,claims:reported,"53,563",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 California,n_sources,,7,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

@@ -261,8 +261,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Galveston County, Texas",ia_per_reg,,"$2,287",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Galveston County, Texas",units,,"60,045",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Galveston County, Texas",records_total,rows,"55,949",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Galveston County, Texas",records_total,policies:fetched,"55,949",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Galveston County, Texas",records_total,policies:reported,"55,949",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Galveston County, Texas",records_total,claims:fetched,"59,357",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Galveston County, Texas",records_total,claims:reported,"59,357",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Galveston County, Texas",n_sources,,10,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

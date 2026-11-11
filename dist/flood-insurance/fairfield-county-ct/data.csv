@@ -228,8 +228,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Fairfield County, Connecticut",ia_per_reg,,"$2,199",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Fairfield County, Connecticut",units,,"14,358",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Fairfield County, Connecticut",records_total,rows,"10,518",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Fairfield County, Connecticut",records_total,policies:fetched,"10,518",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Fairfield County, Connecticut",records_total,policies:reported,"10,518",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Fairfield County, Connecticut",records_total,claims:fetched,"12,348",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Fairfield County, Connecticut",records_total,claims:reported,"12,348",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Fairfield County, Connecticut",n_sources,,7,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

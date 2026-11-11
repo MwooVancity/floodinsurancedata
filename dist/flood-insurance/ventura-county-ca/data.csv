@@ -219,8 +219,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Ventura County, California",ia_per_reg,,"$2,412",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Ventura County, California",units,,"4,559",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Ventura County, California",records_total,rows,"4,142",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Ventura County, California",records_total,policies:fetched,"4,142",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Ventura County, California",records_total,policies:reported,"4,142",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Ventura County, California",records_total,claims:fetched,"1,261",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Ventura County, California",records_total,claims:reported,"1,261",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Ventura County, California",n_sources,,9,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

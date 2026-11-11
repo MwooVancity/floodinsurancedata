@@ -236,8 +236,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Brazoria County, Texas",ia_per_reg,,"$1,450",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Brazoria County, Texas",units,,"28,843",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Brazoria County, Texas",records_total,rows,"28,825",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Brazoria County, Texas",records_total,policies:fetched,"28,825",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Brazoria County, Texas",records_total,policies:reported,"28,825",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Brazoria County, Texas",records_total,claims:fetched,"20,769",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Brazoria County, Texas",records_total,claims:reported,"20,769",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Brazoria County, Texas",n_sources,,10,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

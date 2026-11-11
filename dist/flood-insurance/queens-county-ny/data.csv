@@ -200,8 +200,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Queens County, New York",ia_per_reg,,"$5,505",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Queens County, New York",units,,"19,599",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Queens County, New York",records_total,rows,"12,861",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Queens County, New York",records_total,policies:fetched,"12,861",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Queens County, New York",records_total,policies:reported,"12,861",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Queens County, New York",records_total,claims:fetched,"14,575",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Queens County, New York",records_total,claims:reported,"14,575",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Queens County, New York",n_sources,,8,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

@@ -233,8 +233,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Barnstable County, Massachusetts",declarations,,13,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"August 31, 2026"
 "Barnstable County, Massachusetts",units,,"9,828",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Barnstable County, Massachusetts",records_total,rows,"8,125",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Barnstable County, Massachusetts",records_total,policies:fetched,"8,125",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Barnstable County, Massachusetts",records_total,policies:reported,"8,125",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Barnstable County, Massachusetts",records_total,claims:fetched,"3,099",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Barnstable County, Massachusetts",records_total,claims:reported,"3,099",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Barnstable County, Massachusetts",n_sources,,10,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

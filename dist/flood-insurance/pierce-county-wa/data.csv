@@ -216,8 +216,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Pierce County, Washington",ia_per_reg,,"$3,249",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Pierce County, Washington",units,,"2,566",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Pierce County, Washington",records_total,rows,"2,342",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Pierce County, Washington",records_total,policies:fetched,"2,342",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Pierce County, Washington",records_total,policies:reported,"2,342",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Pierce County, Washington",records_total,claims:fetched,"1,058",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Pierce County, Washington",records_total,claims:reported,"1,058",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Pierce County, Washington",n_sources,,9,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

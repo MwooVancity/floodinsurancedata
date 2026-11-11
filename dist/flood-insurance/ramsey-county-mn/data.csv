@@ -124,8 +124,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Ramsey County, Minnesota",declarations,,14,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"August 31, 2026"
 "Ramsey County, Minnesota",units,,454,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Ramsey County, Minnesota",records_total,rows,221,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Ramsey County, Minnesota",records_total,policies:fetched,221,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Ramsey County, Minnesota",records_total,policies:reported,221,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Ramsey County, Minnesota",records_total,claims:fetched,134,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Ramsey County, Minnesota",records_total,claims:reported,134,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Ramsey County, Minnesota",n_sources,,9,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

@@ -220,8 +220,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "New London County, Connecticut",ia_per_reg,,"$1,232",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "New London County, Connecticut",units,,"3,512",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "New London County, Connecticut",records_total,rows,"2,812",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"New London County, Connecticut",records_total,policies:fetched,"2,812",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"New London County, Connecticut",records_total,policies:reported,"2,812",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"New London County, Connecticut",records_total,claims:fetched,"2,094",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"New London County, Connecticut",records_total,claims:reported,"2,094",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "New London County, Connecticut",n_sources,,7,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

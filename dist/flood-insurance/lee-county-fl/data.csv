@@ -256,8 +256,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Lee County, Florida",records_total,rows,"89,119",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Lee County, Florida",official_count,,"132,012",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Lee County, Florida",official_diff,,1.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
-"Lee County, Florida",records_total,policies:fetched,"89,119",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Lee County, Florida",records_total,policies:reported,"89,119",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Lee County, Florida",records_total,claims:fetched,"45,873",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Lee County, Florida",records_total,claims:reported,"45,873",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Lee County, Florida",n_sources,,10,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

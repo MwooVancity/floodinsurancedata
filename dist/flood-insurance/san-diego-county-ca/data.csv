@@ -239,8 +239,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "San Diego County, California",ia_per_reg,,"$4,927",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "San Diego County, California",units,,"8,660",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "San Diego County, California",records_total,rows,"6,978",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"San Diego County, California",records_total,policies:fetched,"6,978",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"San Diego County, California",records_total,policies:reported,"6,978",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"San Diego County, California",records_total,claims:fetched,"2,287",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"San Diego County, California",records_total,claims:reported,"2,287",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "San Diego County, California",n_sources,,10,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

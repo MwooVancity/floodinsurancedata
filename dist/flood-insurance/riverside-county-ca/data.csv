@@ -212,8 +212,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Riverside County, California",ia_per_reg,,$983,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Riverside County, California",units,,"3,831",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Riverside County, California",records_total,rows,"3,831",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Riverside County, California",records_total,policies:fetched,"3,831",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Riverside County, California",records_total,policies:reported,"3,831",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Riverside County, California",records_total,claims:fetched,"1,570",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Riverside County, California",records_total,claims:reported,"1,570",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Riverside County, California",n_sources,,9,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

@@ -250,8 +250,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Cape May County, New Jersey",ia_per_reg,,"$1,174",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Cape May County, New Jersey",units,,"47,966",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Cape May County, New Jersey",records_total,rows,"27,216",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Cape May County, New Jersey",records_total,policies:fetched,"27,216",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Cape May County, New Jersey",records_total,policies:reported,"27,216",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Cape May County, New Jersey",records_total,claims:fetched,"27,321",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Cape May County, New Jersey",records_total,claims:reported,"27,321",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Cape May County, New Jersey",n_sources,,10,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

@@ -222,8 +222,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Travis County, Texas",ia_per_reg,,"$5,644",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Travis County, Texas",units,,"8,827",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Travis County, Texas",records_total,rows,"6,785",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Travis County, Texas",records_total,policies:fetched,"6,785",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Travis County, Texas",records_total,policies:reported,"6,785",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Travis County, Texas",records_total,claims:fetched,"4,267",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Travis County, Texas",records_total,claims:reported,"4,267",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Travis County, Texas",n_sources,,9,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

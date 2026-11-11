@@ -219,8 +219,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Calcasieu Parish, Louisiana",ia_per_reg,,"$1,757",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Calcasieu Parish, Louisiana",units,,"12,718",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Calcasieu Parish, Louisiana",records_total,rows,"12,698",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Calcasieu Parish, Louisiana",records_total,policies:fetched,"12,698",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Calcasieu Parish, Louisiana",records_total,policies:reported,"12,698",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Calcasieu Parish, Louisiana",records_total,claims:fetched,"9,975",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Calcasieu Parish, Louisiana",records_total,claims:reported,"9,975",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Calcasieu Parish, Louisiana",n_sources,,9,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

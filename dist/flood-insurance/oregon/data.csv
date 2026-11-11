@@ -302,8 +302,4 @@ Oregon,ia_paid,,$7.6 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (
 Oregon,ia_per_reg,,"$2,898",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 Oregon,units,,"22,781",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Oregon,records_total,rows,"18,400",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Oregon,records_total,policies:fetched,"18,400",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Oregon,records_total,policies:reported,"18,400",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Oregon,records_total,claims:fetched,"6,095",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Oregon,records_total,claims:reported,"6,095",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 Oregon,n_sources,,7,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

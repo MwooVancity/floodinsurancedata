@@ -973,8 +973,4 @@ Texas,ia_paid,,$3.4 billion,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (O
 Texas,ia_per_reg,,"$1,689",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 Texas,units,,"569,743",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Texas,records_total,rows,"540,859",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Texas,records_total,policies:fetched,"540,859",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Texas,records_total,policies:reported,"540,859",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Texas,records_total,claims:fetched,"394,204",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Texas,records_total,claims:reported,"394,204",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 Texas,n_sources,,7,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

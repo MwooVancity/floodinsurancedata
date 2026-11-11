@@ -217,8 +217,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Hancock County, Mississippi",ia_per_reg,,"$6,624",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Hancock County, Mississippi",units,,"7,384",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Hancock County, Mississippi",records_total,rows,"7,303",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Hancock County, Mississippi",records_total,policies:fetched,"7,303",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Hancock County, Mississippi",records_total,policies:reported,"7,303",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Hancock County, Mississippi",records_total,claims:fetched,"9,770",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Hancock County, Mississippi",records_total,claims:reported,"9,770",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Hancock County, Mississippi",n_sources,,10,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

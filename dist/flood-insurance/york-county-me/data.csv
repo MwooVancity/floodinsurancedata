@@ -213,8 +213,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "York County, Maine",ia_per_reg,,"$1,402",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "York County, Maine",units,,"3,824",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "York County, Maine",records_total,rows,"2,999",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"York County, Maine",records_total,policies:fetched,"2,999",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"York County, Maine",records_total,policies:reported,"2,999",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"York County, Maine",records_total,claims:fetched,"2,589",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"York County, Maine",records_total,claims:reported,"2,589",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "York County, Maine",n_sources,,10,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

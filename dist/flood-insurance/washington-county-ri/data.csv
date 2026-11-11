@@ -207,8 +207,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Washington County, Rhode Island",ia_per_reg,,"$1,631",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Washington County, Rhode Island",units,,"4,005",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Washington County, Rhode Island",records_total,rows,"3,683",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Washington County, Rhode Island",records_total,policies:fetched,"3,683",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Washington County, Rhode Island",records_total,policies:reported,"3,683",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Washington County, Rhode Island",records_total,claims:fetched,"2,331",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Washington County, Rhode Island",records_total,claims:reported,"2,331",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Washington County, Rhode Island",n_sources,,9,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

@@ -229,8 +229,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Honolulu County, Hawaii",ia_per_reg,,"$6,133",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Honolulu County, Hawaii",units,,"46,105",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Honolulu County, Hawaii",records_total,rows,"7,974",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Honolulu County, Hawaii",records_total,policies:fetched,"7,974",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Honolulu County, Hawaii",records_total,policies:reported,"7,974",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Honolulu County, Hawaii",records_total,claims:fetched,"2,942",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Honolulu County, Hawaii",records_total,claims:reported,"2,942",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Honolulu County, Hawaii",n_sources,,10,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

@@ -177,8 +177,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Bastrop County, Texas",ia_per_reg,,"$2,224",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Bastrop County, Texas",units,,511,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Bastrop County, Texas",records_total,rows,511,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Bastrop County, Texas",records_total,policies:fetched,511,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Bastrop County, Texas",records_total,policies:reported,511,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Bastrop County, Texas",records_total,claims:fetched,318,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Bastrop County, Texas",records_total,claims:reported,318,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Bastrop County, Texas",n_sources,,9,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

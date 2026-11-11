@@ -121,8 +121,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Raleigh County, West Virginia",ia_per_reg,,"$2,446",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Raleigh County, West Virginia",units,,108,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Raleigh County, West Virginia",records_total,rows,108,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Raleigh County, West Virginia",records_total,policies:fetched,108,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Raleigh County, West Virginia",records_total,policies:reported,108,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Raleigh County, West Virginia",records_total,claims:fetched,469,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Raleigh County, West Virginia",records_total,claims:reported,469,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Raleigh County, West Virginia",n_sources,,9,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

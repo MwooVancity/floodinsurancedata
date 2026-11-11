@@ -211,8 +211,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "St. Charles Parish, Louisiana",ia_per_reg,,"$1,552",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "St. Charles Parish, Louisiana",units,,"10,521",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "St. Charles Parish, Louisiana",records_total,rows,"10,503",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"St. Charles Parish, Louisiana",records_total,policies:fetched,"10,503",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"St. Charles Parish, Louisiana",records_total,policies:reported,"10,503",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"St. Charles Parish, Louisiana",records_total,claims:fetched,"7,127",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"St. Charles Parish, Louisiana",records_total,claims:reported,"7,127",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "St. Charles Parish, Louisiana",n_sources,,8,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

@@ -217,8 +217,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Norfolk County, Massachusetts",ia_per_reg,,"$1,547",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Norfolk County, Massachusetts",units,,"5,714",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Norfolk County, Massachusetts",records_total,rows,"3,349",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Norfolk County, Massachusetts",records_total,policies:fetched,"3,349",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Norfolk County, Massachusetts",records_total,policies:reported,"3,349",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Norfolk County, Massachusetts",records_total,claims:fetched,"3,190",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Norfolk County, Massachusetts",records_total,claims:reported,"3,190",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Norfolk County, Massachusetts",n_sources,,9,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

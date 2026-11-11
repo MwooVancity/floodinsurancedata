@@ -431,8 +431,4 @@ Iowa,ia_paid,,$244.1 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (
 Iowa,ia_per_reg,,"$4,461",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 Iowa,units,,"9,342",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Iowa,records_total,rows,"8,934",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Iowa,records_total,policies:fetched,"8,934",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Iowa,records_total,policies:reported,"8,934",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Iowa,records_total,claims:fetched,"14,788",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Iowa,records_total,claims:reported,"14,788",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 Iowa,n_sources,,7,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

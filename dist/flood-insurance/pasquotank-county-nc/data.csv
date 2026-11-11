@@ -154,8 +154,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Pasquotank County, North Carolina",ia_per_reg,,$416,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Pasquotank County, North Carolina",units,,"1,916",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Pasquotank County, North Carolina",records_total,rows,"1,886",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Pasquotank County, North Carolina",records_total,policies:fetched,"1,886",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Pasquotank County, North Carolina",records_total,policies:reported,"1,886",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Pasquotank County, North Carolina",records_total,claims:fetched,513,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Pasquotank County, North Carolina",records_total,claims:reported,513,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Pasquotank County, North Carolina",n_sources,,9,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

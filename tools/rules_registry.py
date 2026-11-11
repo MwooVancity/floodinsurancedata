@@ -427,7 +427,7 @@ RULES = {
                     ("https://www.law.cornell.edu/uscode/text/42/4015a", "a residential property that is not the primar", "curl")]},
     "tx_tenant_notice": {   # audit 11-10 (renters top 3: TDI); Texas Property Code 92.0135 read raw 11-10 from tcss.legis.texas.gov (curl)
         "text": "In Texas, a landlord must give a tenant a written notice saying whether the landlord is aware the home is in a 100-year floodplain, and, if the landlord knows "
-                "flooding damaged it at least once in the five years before the lease, a notice saying whether the landlord is aware it flooded in that time. Leases shorter than 30 days are exempt "
+                "flooding damaged it at least once in the five years before the lease, a notice saying whether the landlord is aware it flooded in that time. Some leases are exempt, including leases shorter than 30 days "
                 "(Texas Property Code §92.0135).",
         "sources": [("https://tcss.legis.texas.gov/resources/PR/htm/PR.92.htm", "A landlord shall provide to a tenant a written notice substantially equivalent to the following", "curl"),
                     ("https://tcss.legis.texas.gov/resources/PR/htm/PR.92.htm", "is located in a 100-year floodplain", "curl"),

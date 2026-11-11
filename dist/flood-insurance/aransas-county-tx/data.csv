@@ -194,8 +194,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Aransas County, Texas",ia_per_reg,,"$2,640",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Aransas County, Texas",units,,"4,830",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Aransas County, Texas",records_total,rows,"4,177",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Aransas County, Texas",records_total,policies:fetched,"4,177",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Aransas County, Texas",records_total,policies:reported,"4,177",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Aransas County, Texas",records_total,claims:fetched,"3,963",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Aransas County, Texas",records_total,claims:reported,"3,963",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Aransas County, Texas",n_sources,,10,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

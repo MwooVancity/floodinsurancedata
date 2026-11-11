@@ -112,8 +112,4 @@ the District of Columbia,ia_paid,,"$520,904",usd_aid_paid,FEMA OpenFEMA — Hous
 the District of Columbia,ia_per_reg,,$488,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 the District of Columbia,units,,"2,171",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 the District of Columbia,records_total,rows,"1,556",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-the District of Columbia,records_total,policies:fetched,"1,556",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-the District of Columbia,records_total,policies:reported,"1,556",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-the District of Columbia,records_total,claims:fetched,501,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-the District of Columbia,records_total,claims:reported,501,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 the District of Columbia,n_sources,,7,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

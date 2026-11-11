@@ -254,8 +254,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Brevard County, Florida",ia_per_reg,,$615,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Brevard County, Florida",units,,"42,930",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Brevard County, Florida",records_total,rows,"30,721",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Brevard County, Florida",records_total,policies:fetched,"30,721",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Brevard County, Florida",records_total,policies:reported,"30,721",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Brevard County, Florida",records_total,claims:fetched,"5,383",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Brevard County, Florida",records_total,claims:reported,"5,383",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Brevard County, Florida",n_sources,,10,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

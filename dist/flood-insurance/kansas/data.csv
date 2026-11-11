@@ -412,8 +412,4 @@ Kansas,ia_paid,,$26.4 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance 
 Kansas,ia_per_reg,,"$3,714",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 Kansas,units,,"6,659",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Kansas,records_total,rows,"6,540",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Kansas,records_total,policies:fetched,"6,540",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Kansas,records_total,policies:reported,"6,540",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Kansas,records_total,claims:fetched,"7,901",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Kansas,records_total,claims:reported,"7,901",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 Kansas,n_sources,,7,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

@@ -178,8 +178,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Washington County, Vermont",ia_per_reg,,"$5,768",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Washington County, Vermont",units,,859,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Washington County, Vermont",records_total,rows,807,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Washington County, Vermont",records_total,policies:fetched,807,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Washington County, Vermont",records_total,policies:reported,807,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Washington County, Vermont",records_total,claims:fetched,"1,200",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Washington County, Vermont",records_total,claims:reported,"1,200",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Washington County, Vermont",n_sources,,9,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

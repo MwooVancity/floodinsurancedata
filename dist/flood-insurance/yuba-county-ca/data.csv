@@ -149,8 +149,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Yuba County, California",declarations,,14,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"August 31, 2026"
 "Yuba County, California",units,,"1,467",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Yuba County, California",records_total,rows,"1,467",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Yuba County, California",records_total,policies:fetched,"1,467",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Yuba County, California",records_total,policies:reported,"1,467",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Yuba County, California",records_total,claims:fetched,302,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Yuba County, California",records_total,claims:reported,302,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Yuba County, California",n_sources,,9,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

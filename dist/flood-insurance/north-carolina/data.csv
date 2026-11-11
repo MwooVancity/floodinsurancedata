@@ -571,8 +571,4 @@ North Carolina,ia_paid,,$739.7 million,usd_aid_paid,FEMA OpenFEMA — Housing As
 North Carolina,ia_per_reg,,"$1,893",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 North Carolina,units,,"130,556",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 North Carolina,records_total,rows,"115,066",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-North Carolina,records_total,policies:fetched,"115,066",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-North Carolina,records_total,policies:reported,"115,066",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-North Carolina,records_total,claims:fetched,"109,593",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-North Carolina,records_total,claims:reported,"109,593",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 North Carolina,n_sources,,7,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

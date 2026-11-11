@@ -639,8 +639,4 @@ Virginia,ia_paid,,$78.4 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistanc
 Virginia,ia_per_reg,,$912,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 Virginia,units,,"89,994",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Virginia,records_total,rows,"77,036",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Virginia,records_total,policies:fetched,"77,036",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Virginia,records_total,policies:reported,"77,036",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Virginia,records_total,claims:fetched,"50,609",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Virginia,records_total,claims:reported,"50,609",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 Virginia,n_sources,,7,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

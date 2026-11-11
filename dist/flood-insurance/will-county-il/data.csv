@@ -200,8 +200,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Will County, Illinois",ia_per_reg,,"$2,210",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Will County, Illinois",units,,"1,188",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Will County, Illinois",records_total,rows,"1,164",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Will County, Illinois",records_total,policies:fetched,"1,164",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Will County, Illinois",records_total,policies:reported,"1,164",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Will County, Illinois",records_total,claims:fetched,"2,243",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Will County, Illinois",records_total,claims:reported,"2,243",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Will County, Illinois",n_sources,,9,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

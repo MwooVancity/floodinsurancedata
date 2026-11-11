@@ -246,8 +246,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Bay County, Florida",ia_per_reg,,"$1,686",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Bay County, Florida",units,,"31,656",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Bay County, Florida",records_total,rows,"14,627",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Bay County, Florida",records_total,policies:fetched,"14,627",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Bay County, Florida",records_total,policies:reported,"14,627",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Bay County, Florida",records_total,claims:fetched,"8,723",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Bay County, Florida",records_total,claims:reported,"8,723",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Bay County, Florida",n_sources,,10,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

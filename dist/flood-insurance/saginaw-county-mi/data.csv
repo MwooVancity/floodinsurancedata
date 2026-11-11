@@ -164,8 +164,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Saginaw County, Michigan",ia_per_reg,,"$5,787",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Saginaw County, Michigan",units,,"1,120",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Saginaw County, Michigan",records_total,rows,929,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Saginaw County, Michigan",records_total,policies:fetched,929,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Saginaw County, Michigan",records_total,policies:reported,929,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Saginaw County, Michigan",records_total,claims:fetched,778,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Saginaw County, Michigan",records_total,claims:reported,778,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Saginaw County, Michigan",n_sources,,9,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

@@ -246,8 +246,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Brunswick County, North Carolina",ia_per_reg,,$824,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Brunswick County, North Carolina",units,,"20,871",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Brunswick County, North Carolina",records_total,rows,"18,816",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Brunswick County, North Carolina",records_total,policies:fetched,"18,816",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Brunswick County, North Carolina",records_total,policies:reported,"18,816",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Brunswick County, North Carolina",records_total,claims:fetched,"9,338",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Brunswick County, North Carolina",records_total,claims:reported,"9,338",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Brunswick County, North Carolina",n_sources,,9,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

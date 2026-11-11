@@ -199,8 +199,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Pima County, Arizona",declarations,,9,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"August 31, 2026"
 "Pima County, Arizona",units,,"2,864",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Pima County, Arizona",records_total,rows,"2,864",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Pima County, Arizona",records_total,policies:fetched,"2,864",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Pima County, Arizona",records_total,policies:reported,"2,864",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Pima County, Arizona",records_total,claims:fetched,543,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Pima County, Arizona",records_total,claims:reported,543,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Pima County, Arizona",n_sources,,9,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

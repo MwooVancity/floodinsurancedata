@@ -659,8 +659,4 @@ Georgia,ia_paid,,$369.7 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistanc
 Georgia,ia_per_reg,,"$1,215",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 Georgia,units,,"70,395",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Georgia,records_total,rows,"63,175",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Georgia,records_total,policies:fetched,"63,175",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Georgia,records_total,policies:reported,"63,175",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Georgia,records_total,claims:fetched,"24,479",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Georgia,records_total,claims:reported,"24,479",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 Georgia,n_sources,,7,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

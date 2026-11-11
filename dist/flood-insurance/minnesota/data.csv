@@ -416,8 +416,4 @@ Minnesota,ia_paid,,$44.1 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistan
 Minnesota,ia_per_reg,,"$3,649",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 Minnesota,units,,"6,385",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Minnesota,records_total,rows,"6,022",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Minnesota,records_total,policies:fetched,"6,022",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Minnesota,records_total,policies:reported,"6,022",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Minnesota,records_total,claims:fetched,"12,474",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Minnesota,records_total,claims:reported,"12,474",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 Minnesota,n_sources,,7,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

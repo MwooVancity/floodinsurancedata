@@ -225,8 +225,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "New Haven County, Connecticut",ia_per_reg,,"$2,609",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "New Haven County, Connecticut",units,,"8,172",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "New Haven County, Connecticut",records_total,rows,"5,674",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"New Haven County, Connecticut",records_total,policies:fetched,"5,674",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"New Haven County, Connecticut",records_total,policies:reported,"5,674",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"New Haven County, Connecticut",records_total,claims:fetched,"9,377",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"New Haven County, Connecticut",records_total,claims:reported,"9,377",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "New Haven County, Connecticut",n_sources,,7,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

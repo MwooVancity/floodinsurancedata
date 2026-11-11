@@ -197,8 +197,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Fairfax County, Virginia",ia_per_reg,,"$1,350",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Fairfax County, Virginia",units,,"5,196",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Fairfax County, Virginia",records_total,rows,"3,696",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Fairfax County, Virginia",records_total,policies:fetched,"3,696",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Fairfax County, Virginia",records_total,policies:reported,"3,696",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Fairfax County, Virginia",records_total,claims:fetched,"1,392",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Fairfax County, Virginia",records_total,claims:reported,"1,392",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Fairfax County, Virginia",n_sources,,9,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

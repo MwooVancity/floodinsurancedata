@@ -166,8 +166,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Hawaii County, Hawaii",ia_per_reg,,"$7,864",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Hawaii County, Hawaii",units,,"4,096",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Hawaii County, Hawaii",records_total,rows,"1,439",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Hawaii County, Hawaii",records_total,policies:fetched,"1,439",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Hawaii County, Hawaii",records_total,policies:reported,"1,439",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Hawaii County, Hawaii",records_total,claims:fetched,771,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Hawaii County, Hawaii",records_total,claims:reported,771,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Hawaii County, Hawaii",n_sources,,9,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

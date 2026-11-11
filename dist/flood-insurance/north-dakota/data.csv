@@ -288,8 +288,4 @@ North Dakota,ia_paid,,$98.5 million,usd_aid_paid,FEMA OpenFEMA — Housing Assis
 North Dakota,ia_per_reg,,"$7,125",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 North Dakota,units,,"5,753",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 North Dakota,records_total,rows,"5,699",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-North Dakota,records_total,policies:fetched,"5,699",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-North Dakota,records_total,policies:reported,"5,699",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-North Dakota,records_total,claims:fetched,"13,307",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-North Dakota,records_total,claims:reported,"13,307",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 North Dakota,n_sources,,7,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

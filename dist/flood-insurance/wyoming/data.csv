@@ -193,8 +193,4 @@ Wyoming,ia_paid,,$1.2 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance 
 Wyoming,ia_per_reg,,"$4,378",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 Wyoming,units,,"1,606",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Wyoming,records_total,rows,"1,549",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Wyoming,records_total,policies:fetched,"1,549",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Wyoming,records_total,policies:reported,"1,549",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Wyoming,records_total,claims:fetched,562,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Wyoming,records_total,claims:reported,562,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 Wyoming,n_sources,,7,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

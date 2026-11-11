@@ -184,8 +184,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Merced County, California",ia_per_reg,,"$2,961",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Merced County, California",units,,"4,505",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Merced County, California",records_total,rows,"4,470",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Merced County, California",records_total,policies:fetched,"4,470",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Merced County, California",records_total,policies:reported,"4,470",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Merced County, California",records_total,claims:fetched,470,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Merced County, California",records_total,claims:reported,470,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Merced County, California",n_sources,,9,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

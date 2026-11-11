@@ -151,8 +151,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Cochise County, Arizona",declarations,,5,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"August 31, 2026"
 "Cochise County, Arizona",units,,816,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Cochise County, Arizona",records_total,rows,816,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Cochise County, Arizona",records_total,policies:fetched,816,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Cochise County, Arizona",records_total,policies:reported,816,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Cochise County, Arizona",records_total,claims:fetched,99,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Cochise County, Arizona",records_total,claims:reported,99,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Cochise County, Arizona",n_sources,,9,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

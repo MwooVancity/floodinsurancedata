@@ -187,8 +187,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Acadia Parish, Louisiana",ia_per_reg,,"$1,248",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Acadia Parish, Louisiana",units,,"2,354",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Acadia Parish, Louisiana",records_total,rows,"2,354",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Acadia Parish, Louisiana",records_total,policies:fetched,"2,354",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Acadia Parish, Louisiana",records_total,policies:reported,"2,354",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Acadia Parish, Louisiana",records_total,claims:fetched,"1,440",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Acadia Parish, Louisiana",records_total,claims:reported,"1,440",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Acadia Parish, Louisiana",n_sources,,9,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

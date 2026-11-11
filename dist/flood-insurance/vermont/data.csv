@@ -211,8 +211,4 @@ Vermont,ia_paid,,$65.0 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance
 Vermont,ia_per_reg,,"$4,335",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 Vermont,units,,"4,000",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Vermont,records_total,rows,"3,706",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Vermont,records_total,policies:fetched,"3,706",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Vermont,records_total,policies:reported,"3,706",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Vermont,records_total,claims:fetched,"3,725",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Vermont,records_total,claims:reported,"3,725",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 Vermont,n_sources,,7,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

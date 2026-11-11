@@ -46,6 +46,8 @@ else:
     step("sitemap lastmod rule", os.path.join(T, "lastmod.py"), "--test")
     step("national rules live once on /nfip/ (owner 11-11)", os.path.join(T, "rules_home.py"))
     step("national rules guard mutations", os.path.join(T, "rules_home.py"), "--test")
+    step("identical text across place pages: warning only (owner 11-08, 11-11)", os.path.join(T, "sameness.py"))
+    step("sameness ratchet mutation", os.path.join(T, "sameness.py"), "--test")
     step("hub page word rules mutations", os.path.join(T, "hub_words.py"), "--test")
     step("hub page word rules (pages gate.py never sees)", os.path.join(T, "hub_words.py"))
     step("phone check (dist)", os.path.join(T, "phone_check.py"))
@@ -66,6 +68,7 @@ else:
     # deploy.yml deploys the COMMITTED dist on any push that changes it, so commit the built pages before anything ships
     R = os.path.dirname(T); g = lambda *a: subprocess.run(["git", *a], cwd=R, check=True)
     base = subprocess.run(["git", "rev-parse", "HEAD"], cwd=R, capture_output=True, text=True).stdout.strip()   # IndexNow: pages changed since here
+    subprocess.run([sys.executable, "-I", os.path.join(T, "sameness.py"), "--record"], cwd=R)   # the shipped share becomes the new ceiling
     g("add", "-A", "dist", "data/c", "data/states", "places.json", "tools", "state")
     if subprocess.run(["git", "diff", "--cached", "--quiet"], cwd=R).returncode:
         g("commit", "-q", "-m", "release: built site" + (f" (hotfix, hater review skipped: {hot})" if hot else "")

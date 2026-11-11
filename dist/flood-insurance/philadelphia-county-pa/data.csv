@@ -202,8 +202,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Philadelphia County, Pennsylvania",ia_per_reg,,"$1,350",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Philadelphia County, Pennsylvania",units,,"3,169",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Philadelphia County, Pennsylvania",records_total,rows,"1,680",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Philadelphia County, Pennsylvania",records_total,policies:fetched,"1,680",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Philadelphia County, Pennsylvania",records_total,policies:reported,"1,680",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Philadelphia County, Pennsylvania",records_total,claims:fetched,"1,655",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Philadelphia County, Pennsylvania",records_total,claims:reported,"1,655",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Philadelphia County, Pennsylvania",n_sources,,9,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

@@ -212,8 +212,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Anne Arundel County, Maryland",ia_per_reg,,"$2,069",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Anne Arundel County, Maryland",units,,"5,274",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Anne Arundel County, Maryland",records_total,rows,"4,674",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Anne Arundel County, Maryland",records_total,policies:fetched,"4,674",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Anne Arundel County, Maryland",records_total,policies:reported,"4,674",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Anne Arundel County, Maryland",records_total,claims:fetched,"2,690",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Anne Arundel County, Maryland",records_total,claims:reported,"2,690",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Anne Arundel County, Maryland",n_sources,,10,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

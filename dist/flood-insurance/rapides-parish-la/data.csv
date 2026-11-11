@@ -211,8 +211,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Rapides Parish, Louisiana",ia_per_reg,,"$1,116",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Rapides Parish, Louisiana",units,,"3,037",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Rapides Parish, Louisiana",records_total,rows,"3,021",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Rapides Parish, Louisiana",records_total,policies:fetched,"3,021",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Rapides Parish, Louisiana",records_total,policies:reported,"3,021",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Rapides Parish, Louisiana",records_total,claims:fetched,"4,154",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Rapides Parish, Louisiana",records_total,claims:reported,"4,154",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Rapides Parish, Louisiana",n_sources,,8,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

@@ -467,8 +467,4 @@ Pennsylvania,ia_paid,,$316.3 million,usd_aid_paid,FEMA OpenFEMA — Housing Assi
 Pennsylvania,ia_per_reg,,"$2,055",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 Pennsylvania,units,,"42,308",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Pennsylvania,records_total,rows,"38,967",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Pennsylvania,records_total,policies:fetched,"38,967",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Pennsylvania,records_total,policies:reported,"38,967",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Pennsylvania,records_total,claims:fetched,"77,060",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Pennsylvania,records_total,claims:reported,"77,060",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 Pennsylvania,n_sources,,7,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

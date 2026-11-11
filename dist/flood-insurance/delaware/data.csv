@@ -199,8 +199,4 @@ Delaware,ia_paid,,$1.2 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance
 Delaware,ia_per_reg,,"$2,325",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 Delaware,units,,"25,316",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Delaware,records_total,rows,"18,465",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Delaware,records_total,policies:fetched,"18,465",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Delaware,records_total,policies:reported,"18,465",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Delaware,records_total,claims:fetched,"6,339",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Delaware,records_total,claims:reported,"6,339",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 Delaware,n_sources,,7,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

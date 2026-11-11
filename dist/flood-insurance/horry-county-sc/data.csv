@@ -234,8 +234,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Horry County, South Carolina",ia_per_reg,,"$1,569",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Horry County, South Carolina",units,,"52,602",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Horry County, South Carolina",records_total,rows,"21,274",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Horry County, South Carolina",records_total,policies:fetched,"21,274",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Horry County, South Carolina",records_total,policies:reported,"21,274",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Horry County, South Carolina",records_total,claims:fetched,"12,196",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Horry County, South Carolina",records_total,claims:reported,"12,196",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Horry County, South Carolina",n_sources,,10,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

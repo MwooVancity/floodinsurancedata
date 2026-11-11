@@ -230,8 +230,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Okaloosa County, Florida",ia_per_reg,,$871,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Okaloosa County, Florida",units,,"18,955",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Okaloosa County, Florida",records_total,rows,"8,734",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Okaloosa County, Florida",records_total,policies:fetched,"8,734",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Okaloosa County, Florida",records_total,policies:reported,"8,734",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Okaloosa County, Florida",records_total,claims:fetched,"8,041",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Okaloosa County, Florida",records_total,claims:reported,"8,041",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Okaloosa County, Florida",n_sources,,9,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

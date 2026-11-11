@@ -336,8 +336,4 @@ Colorado,ia_paid,,$53.2 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistanc
 Colorado,ia_per_reg,,"$2,527",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 Colorado,units,,"16,094",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Colorado,records_total,rows,"13,230",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Colorado,records_total,policies:fetched,"13,230",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Colorado,records_total,policies:reported,"13,230",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Colorado,records_total,claims:fetched,"5,802",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Colorado,records_total,claims:reported,"5,802",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 Colorado,n_sources,,7,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

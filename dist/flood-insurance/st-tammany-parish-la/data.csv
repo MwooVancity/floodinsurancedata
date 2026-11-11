@@ -261,8 +261,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "St. Tammany Parish, Louisiana",ia_per_reg,,"$2,171",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "St. Tammany Parish, Louisiana",units,,"40,849",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "St. Tammany Parish, Louisiana",records_total,rows,"39,739",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"St. Tammany Parish, Louisiana",records_total,policies:fetched,"39,739",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"St. Tammany Parish, Louisiana",records_total,policies:reported,"39,739",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"St. Tammany Parish, Louisiana",records_total,claims:fetched,"36,768",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"St. Tammany Parish, Louisiana",records_total,claims:reported,"36,768",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "St. Tammany Parish, Louisiana",n_sources,,8,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

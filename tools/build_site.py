@@ -705,6 +705,7 @@ if len(states) == 51:
                    + '</tbody></table><p class="mut">Claims on record: every claim record, paid or not, except records FEMA coded "deleted in error" or "assigned in error". '
                    'Paid on them: building plus contents payments, in dollars as paid, not adjusted for inflation; Increased Cost of Compliance payments are not in it. '
                    'County as coded on each claim record, which can differ from where the building stands. '
+                   "Claims FEMA records with no county are in no county's row, so the county rows add to less than the U.S. total. "
                    f'Claims from {_ya - 1} and {_ya} may still be open, so totals that include them are not final. '
                    f'<a href="/data/claims-by-county.csv">Download every county ({len(_bc):,} rows, CSV)</a>.</p></div>')
         _rows = "".join(f'<tr><td>{clink(r)}</td><td>{r["n"]:,}</td><td>{r["pct"]}%</td><td>{html.escape(_NR.get(r["top"], "—")) if r["top"] else "—"}</td></tr>' for r in _cr)

@@ -249,8 +249,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Dare County, North Carolina",ia_per_reg,,"$1,464",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Dare County, North Carolina",units,,"15,767",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Dare County, North Carolina",records_total,rows,"13,694",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Dare County, North Carolina",records_total,policies:fetched,"13,694",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Dare County, North Carolina",records_total,policies:reported,"13,694",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Dare County, North Carolina",records_total,claims:fetched,"18,409",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Dare County, North Carolina",records_total,claims:reported,"18,409",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Dare County, North Carolina",n_sources,,10,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

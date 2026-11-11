@@ -224,8 +224,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Chatham County, Georgia",ia_per_reg,,$557,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Chatham County, Georgia",units,,"23,429",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Chatham County, Georgia",records_total,rows,"21,071",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Chatham County, Georgia",records_total,policies:fetched,"21,071",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Chatham County, Georgia",records_total,policies:reported,"21,071",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Chatham County, Georgia",records_total,claims:fetched,"5,224",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Chatham County, Georgia",records_total,claims:reported,"5,224",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Chatham County, Georgia",n_sources,,10,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

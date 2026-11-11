@@ -206,8 +206,4 @@ Rhode Island,ia_paid,,$55.8 million,usd_aid_paid,FEMA OpenFEMA — Housing Assis
 Rhode Island,ia_per_reg,,"$1,924",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 Rhode Island,units,,"11,712",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Rhode Island,records_total,rows,"9,412",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Rhode Island,records_total,policies:fetched,"9,412",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Rhode Island,records_total,policies:reported,"9,412",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Rhode Island,records_total,claims:fetched,"7,026",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Rhode Island,records_total,claims:reported,"7,026",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 Rhode Island,n_sources,,7,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

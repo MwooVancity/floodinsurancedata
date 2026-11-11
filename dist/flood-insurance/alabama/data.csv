@@ -404,8 +404,4 @@ Alabama,ia_paid,,$404.3 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistanc
 Alabama,ia_per_reg,,"$1,207",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 Alabama,units,,"45,214",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Alabama,records_total,rows,"28,973",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Alabama,records_total,policies:fetched,"28,973",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Alabama,records_total,policies:reported,"28,973",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Alabama,records_total,claims:fetched,"44,896",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Alabama,records_total,claims:reported,"44,896",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 Alabama,n_sources,,7,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

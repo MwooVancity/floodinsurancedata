@@ -199,8 +199,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Yavapai County, Arizona",declarations,,9,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"August 31, 2026"
 "Yavapai County, Arizona",units,,"1,585",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Yavapai County, Arizona",records_total,rows,"1,561",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Yavapai County, Arizona",records_total,policies:fetched,"1,561",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Yavapai County, Arizona",records_total,policies:reported,"1,561",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Yavapai County, Arizona",records_total,claims:fetched,442,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Yavapai County, Arizona",records_total,claims:reported,442,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Yavapai County, Arizona",n_sources,,9,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

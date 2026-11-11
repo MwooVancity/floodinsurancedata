@@ -490,8 +490,4 @@ Missouri,ia_paid,,$176.4 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistan
 Missouri,ia_per_reg,,"$2,777",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 Missouri,units,,"14,588",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Missouri,records_total,rows,"14,068",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Missouri,records_total,policies:fetched,"14,068",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Missouri,records_total,policies:reported,"14,068",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Missouri,records_total,claims:fetched,"51,304",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Missouri,records_total,claims:reported,"51,304",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 Missouri,n_sources,,7,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

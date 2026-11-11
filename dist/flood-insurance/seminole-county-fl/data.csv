@@ -234,8 +234,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Seminole County, Florida",ia_per_reg,,$592,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Seminole County, Florida",units,,"7,280",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Seminole County, Florida",records_total,rows,"6,642",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Seminole County, Florida",records_total,policies:fetched,"6,642",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Seminole County, Florida",records_total,policies:reported,"6,642",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Seminole County, Florida",records_total,claims:fetched,"1,456",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Seminole County, Florida",records_total,claims:reported,"1,456",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Seminole County, Florida",n_sources,,9,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

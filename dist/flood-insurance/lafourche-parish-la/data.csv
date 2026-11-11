@@ -233,8 +233,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Lafourche Parish, Louisiana",ia_per_reg,,"$2,496",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Lafourche Parish, Louisiana",units,,"8,519",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Lafourche Parish, Louisiana",records_total,rows,"8,515",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Lafourche Parish, Louisiana",records_total,policies:fetched,"8,515",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Lafourche Parish, Louisiana",records_total,policies:reported,"8,515",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Lafourche Parish, Louisiana",records_total,claims:fetched,"5,582",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Lafourche Parish, Louisiana",records_total,claims:reported,"5,582",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Lafourche Parish, Louisiana",n_sources,,8,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

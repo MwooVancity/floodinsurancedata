@@ -201,8 +201,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Whatcom County, Washington",ia_per_reg,,"$5,584",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Whatcom County, Washington",units,,"2,247",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Whatcom County, Washington",records_total,rows,"1,741",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Whatcom County, Washington",records_total,policies:fetched,"1,741",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Whatcom County, Washington",records_total,policies:reported,"1,741",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Whatcom County, Washington",records_total,claims:fetched,"1,170",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Whatcom County, Washington",records_total,claims:reported,"1,170",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Whatcom County, Washington",n_sources,,10,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

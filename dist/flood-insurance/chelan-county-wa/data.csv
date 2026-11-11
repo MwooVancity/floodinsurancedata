@@ -146,8 +146,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Chelan County, Washington",ia_per_reg,,"$9,489",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Chelan County, Washington",units,,511,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Chelan County, Washington",records_total,rows,487,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Chelan County, Washington",records_total,policies:fetched,487,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Chelan County, Washington",records_total,policies:reported,487,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Chelan County, Washington",records_total,claims:fetched,175,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Chelan County, Washington",records_total,claims:reported,175,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Chelan County, Washington",n_sources,,8,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

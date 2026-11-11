@@ -238,8 +238,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Sarasota County, Florida",ia_per_reg,,"$1,648",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Sarasota County, Florida",units,,"60,758",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Sarasota County, Florida",records_total,rows,"38,940",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Sarasota County, Florida",records_total,policies:fetched,"38,940",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Sarasota County, Florida",records_total,policies:reported,"38,940",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Sarasota County, Florida",records_total,claims:fetched,"13,688",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Sarasota County, Florida",records_total,claims:reported,"13,688",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Sarasota County, Florida",n_sources,,9,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

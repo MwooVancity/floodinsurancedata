@@ -133,8 +133,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Champaign County, Illinois",declarations,,2,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"August 31, 2026"
 "Champaign County, Illinois",units,,223,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Champaign County, Illinois",records_total,rows,179,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Champaign County, Illinois",records_total,policies:fetched,179,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Champaign County, Illinois",records_total,policies:reported,179,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Champaign County, Illinois",records_total,claims:fetched,229,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Champaign County, Illinois",records_total,claims:reported,229,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Champaign County, Illinois",n_sources,,9,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

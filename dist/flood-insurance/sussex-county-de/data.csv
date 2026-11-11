@@ -233,8 +233,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Sussex County, Delaware",ia_per_reg,,$877,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Sussex County, Delaware",units,,"21,861",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Sussex County, Delaware",records_total,rows,"15,716",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Sussex County, Delaware",records_total,policies:fetched,"15,716",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Sussex County, Delaware",records_total,policies:reported,"15,716",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Sussex County, Delaware",records_total,claims:fetched,"4,163",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Sussex County, Delaware",records_total,claims:reported,"4,163",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Sussex County, Delaware",n_sources,,10,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

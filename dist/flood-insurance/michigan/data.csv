@@ -423,8 +423,4 @@ Michigan,ia_paid,,$738.1 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistan
 Michigan,ia_per_reg,,"$2,533",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 Michigan,units,,"19,525",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Michigan,records_total,rows,"17,744",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Michigan,records_total,policies:fetched,"17,744",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Michigan,records_total,policies:reported,"17,744",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Michigan,records_total,claims:fetched,"14,954",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Michigan,records_total,claims:reported,"14,954",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 Michigan,n_sources,,7,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

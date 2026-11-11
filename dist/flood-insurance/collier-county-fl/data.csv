@@ -241,8 +241,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Collier County, Florida",ia_per_reg,,"$1,037",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Collier County, Florida",units,,"99,483",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Collier County, Florida",records_total,rows,"55,468",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Collier County, Florida",records_total,policies:fetched,"55,468",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Collier County, Florida",records_total,policies:reported,"55,468",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Collier County, Florida",records_total,claims:fetched,"13,832",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Collier County, Florida",records_total,claims:reported,"13,832",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Collier County, Florida",n_sources,,10,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

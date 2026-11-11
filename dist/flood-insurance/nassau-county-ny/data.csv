@@ -239,8 +239,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Nassau County, New York",ia_per_reg,,"$4,609",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Nassau County, New York",units,,"40,981",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Nassau County, New York",records_total,rows,"37,607",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Nassau County, New York",records_total,policies:fetched,"37,607",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Nassau County, New York",records_total,policies:reported,"37,607",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Nassau County, New York",records_total,claims:fetched,"50,471",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Nassau County, New York",records_total,claims:reported,"50,471",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Nassau County, New York",n_sources,,10,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

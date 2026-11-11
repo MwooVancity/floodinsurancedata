@@ -153,8 +153,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Denver County, Colorado",declarations,,4,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"August 31, 2026"
 "Denver County, Colorado",units,,"1,036",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Denver County, Colorado",records_total,rows,963,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Denver County, Colorado",records_total,policies:fetched,963,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Denver County, Colorado",records_total,policies:reported,963,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Denver County, Colorado",records_total,claims:fetched,228,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Denver County, Colorado",records_total,claims:reported,228,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Denver County, Colorado",n_sources,,8,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

@@ -203,8 +203,4 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Wakulla County, Florida",ia_per_reg,,"$1,198",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Wakulla County, Florida",units,,"1,244",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Wakulla County, Florida",records_total,rows,"1,197",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Wakulla County, Florida",records_total,policies:fetched,"1,197",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Wakulla County, Florida",records_total,policies:reported,"1,197",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Wakulla County, Florida",records_total,claims:fetched,"1,534",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-"Wakulla County, Florida",records_total,claims:reported,"1,534",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Wakulla County, Florida",n_sources,,9,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

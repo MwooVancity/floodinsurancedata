@@ -254,8 +254,4 @@ Idaho,ml_total,,0,count,FEMA OpenFEMA — Individual Assistance Multiple-Loss Fl
 Idaho,declarations,,25,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"August 31, 2026"
 Idaho,units,,"4,781",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Idaho,records_total,rows,"4,340",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Idaho,records_total,policies:fetched,"4,340",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Idaho,records_total,policies:reported,"4,340",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Idaho,records_total,claims:fetched,"1,116",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
-Idaho,records_total,claims:reported,"1,116",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 Idaho,n_sources,,7,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
