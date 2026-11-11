@@ -7,6 +7,8 @@ def page(slug): return open(os.path.join(ROOT, "dist", *(["index.html"] if slug 
 def text(h): return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", re.sub(r"<script.*?</script>", " ", h, flags=re.S)))
 
 GONE = {   # wrong or misleading text (hater round): must be on no page
+    ", 9999<": "r133 FEMA placeholder panel date printed as a real date (Dixie FL)",
+    "including ones FEMA coded as entered in error": "audit 11-10: error-coded records are left out of every count",
     "now shown as AE": "r6 zone note contradicted the zone table",
     "count different policies": "r6 rebuild note gave the wrong reason",
     "paperwork closures": "r6 tile wrong where the top reason is a denial",

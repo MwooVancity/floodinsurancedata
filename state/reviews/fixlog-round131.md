@@ -13,3 +13,4 @@
 - MINOR W3C: autocomplete="street-address" invalid on input. Fix: address-line1.
 - MINOR sitemap lastmod never moved on text changes. Fix: tools/lastmod.py (vs last release; 7-case self-check in release).
 - MINOR cause card omitted erosion in "other causes". Fix: label (codes.py 7, 8).
+- MAJOR (hater r133, Dixie FL) map card printed FEMA's placeholder panel date "September 9, 9999" as real. Root cause: pull_mapstatus took max(EFF_DATE) including placeholders; builder printed any date. Fix: builder prints a panel date only between 1968-01-01 and today, else says FEMA lists a placeholder; puller stores placeholders as None. Proof: test_truth GONE ", 9999<" red on the old build, PASS after.

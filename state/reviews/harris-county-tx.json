@@ -1,8 +1,8 @@
 {
  "slug": "harris-county-tx",
  "verdict": "PASS",
- "template": "e35e97863501e7e4",
+ "template": "86e82afae265875b",
  "defects": [],
- "reviewer": "hater round 132 (fresh agent, docs/HATER-PROMPT.md)",
+ "reviewer": "hater round 135 (fresh agent, docs/HATER-PROMPT.md)",
  "notes": ""
 }

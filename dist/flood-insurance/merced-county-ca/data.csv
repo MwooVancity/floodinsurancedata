@@ -76,6 +76,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Merced County, California",claims_total,exact,"$14,657,187",usd_claim_paid,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount,"August 31, 2026"
 "Merced County, California",zone_known_n,,221,count,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + yearOfLoss,"August 31, 2026"
 "Merced County, California",zone_out_pct,,2.3%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + yearOfLoss,"August 31, 2026"
+"Merced County, California",zone_out_n,,5,count,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + yearOfLoss,"August 31, 2026"
 "Merced County, California",zone_out_paid_pct,,1.4%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + yearOfLoss + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Merced County, California",avg_paid,,"$41,758",usd_claim_paid,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Merced County, California",paid_bldg_median,,"$17,823",usd_claim_paid,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount,"August 31, 2026"

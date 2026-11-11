@@ -66,6 +66,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Cabarrus County, North Carolina",claims_total,exact,"$5,302,950",usd_claim_paid,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount,"August 31, 2026"
 "Cabarrus County, North Carolina",zone_known_n,,62,count,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + yearOfLoss,"August 31, 2026"
 "Cabarrus County, North Carolina",zone_out_pct,,19.4%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + yearOfLoss,"August 31, 2026"
+"Cabarrus County, North Carolina",zone_out_n,,12,count,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + yearOfLoss,"August 31, 2026"
 "Cabarrus County, North Carolina",zone_out_paid_pct,,9.7%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + yearOfLoss + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Cabarrus County, North Carolina",avg_paid,,"$28,151",usd_claim_paid,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Cabarrus County, North Carolina",paid_bldg_median,,"$11,703",usd_claim_paid,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount,"August 31, 2026"

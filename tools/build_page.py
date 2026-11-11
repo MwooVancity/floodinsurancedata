@@ -451,8 +451,13 @@ def _nfhl_lines():   # map debate 11-06: map age, revisions, exemption rulings, 
     s = _MS.get(GEOID) if not IS_STATE else None
     if not s or not s.get("panels"): return []   # no countywide digital FEMA map: say nothing rather than guess
     d = lambda v: _mdate(datetime.date.fromisoformat(v))
+    # hater r133 (Dixie FL "since September 9, 9999"): FEMA stores placeholder dates; a date before the NFIP (1968) or after today is not printed
+    ok = lambda v: bool(v) and "1968-01-01" <= v <= datetime.date.today().isoformat()
+    if not ok(s.get("oldest")): return []
     out = [f"FEMA's digital flood map for {CS} has {m('map_panels', format(s['panels'], ','))} map panels, the oldest in effect since "
-           f"{m('map_panel_date', d(s['oldest']), q='oldest')} and the newest since {m('map_panel_date', d(s['newest']), q='newest')}."]
+           f"{m('map_panel_date', d(s['oldest']), q='oldest')}"
+           + (f" and the newest since {m('map_panel_date', d(s['newest']), q='newest')}." if ok(s.get("newest")) else
+              "; FEMA lists a placeholder rather than a date for its newest panel.")]
     if "lomr" in s:
         out.append(f"FEMA has revised that map by {m('lomr_n', format(s['lomr'], ','), q='all')} Letters of Map Revision, "
                    f"{m('lomr_n', format(s['lomr_recent'], ','), q='recent')} of them in effect since {d(s['lomr_since'])}." if s["lomr"] else

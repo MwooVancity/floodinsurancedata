@@ -79,6 +79,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Santa Clara County, California",claims_total,exact,"$24,494,523",usd_claim_paid,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount,"August 31, 2026"
 "Santa Clara County, California",zone_known_n,,242,count,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + yearOfLoss,"August 31, 2026"
 "Santa Clara County, California",zone_out_pct,,8.7%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + yearOfLoss,"August 31, 2026"
+"Santa Clara County, California",zone_out_n,,21,count,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + yearOfLoss,"August 31, 2026"
 "Santa Clara County, California",zone_out_paid_pct,,5.6%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + yearOfLoss + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Santa Clara County, California",avg_paid,,"$23,909",usd_claim_paid,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Santa Clara County, California",paid_bldg_median,,"$9,443",usd_claim_paid,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount,"August 31, 2026"

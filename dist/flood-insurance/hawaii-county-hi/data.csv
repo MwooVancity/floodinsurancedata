@@ -66,6 +66,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Hawaii County, Hawaii",claims_total,exact,"$23,369,163",usd_claim_paid,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount,"August 31, 2026"
 "Hawaii County, Hawaii",zone_known_n,,59,count,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + yearOfLoss,"August 31, 2026"
 "Hawaii County, Hawaii",zone_out_pct,,35.6%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + yearOfLoss,"August 31, 2026"
+"Hawaii County, Hawaii",zone_out_n,,21,count,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + yearOfLoss,"August 31, 2026"
 "Hawaii County, Hawaii",zone_out_paid_pct,,18.0%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + yearOfLoss + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Hawaii County, Hawaii",avg_paid,,"$42,183",usd_claim_paid,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Hawaii County, Hawaii",paid_bldg_median,,"$11,551",usd_claim_paid,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount,"August 31, 2026"

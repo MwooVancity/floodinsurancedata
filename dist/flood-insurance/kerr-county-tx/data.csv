@@ -65,6 +65,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Kerr County, Texas",claims_total,exact,"$21,724,229",usd_claim_paid,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount,"August 31, 2026"
 "Kerr County, Texas",zone_known_n,,143,count,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + yearOfLoss,"August 31, 2026"
 "Kerr County, Texas",zone_out_pct,,18.9%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + yearOfLoss,"August 31, 2026"
+"Kerr County, Texas",zone_out_n,,27,count,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + yearOfLoss,"August 31, 2026"
 "Kerr County, Texas",zone_out_paid_pct,,16.0%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + yearOfLoss + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Kerr County, Texas",avg_paid,,"$77,108",usd_claim_paid,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Kerr County, Texas",paid_bldg_median,,"$23,251",usd_claim_paid,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount,"August 31, 2026"

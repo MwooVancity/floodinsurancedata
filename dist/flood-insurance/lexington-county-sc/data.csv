@@ -68,6 +68,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Lexington County, South Carolina",claims_total,exact,"$14,108,375",usd_claim_paid,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount,"August 31, 2026"
 "Lexington County, South Carolina",zone_known_n,,67,count,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + yearOfLoss,"August 31, 2026"
 "Lexington County, South Carolina",zone_out_pct,,38.8%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + yearOfLoss,"August 31, 2026"
+"Lexington County, South Carolina",zone_out_n,,26,count,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + yearOfLoss,"August 31, 2026"
 "Lexington County, South Carolina",zone_out_paid_pct,,46.6%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + yearOfLoss + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Lexington County, South Carolina",avg_paid,,"$30,539",usd_claim_paid,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Lexington County, South Carolina",paid_bldg_median,,"$12,359",usd_claim_paid,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount,"August 31, 2026"

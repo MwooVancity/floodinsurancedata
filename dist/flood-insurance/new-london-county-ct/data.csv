@@ -73,6 +73,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "New London County, Connecticut",claims_total,exact,"$30,859,886",usd_claim_paid,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount,"August 31, 2026"
 "New London County, Connecticut",zone_known_n,,89,count,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + yearOfLoss,"August 31, 2026"
 "New London County, Connecticut",zone_out_pct,,32.6%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + yearOfLoss,"August 31, 2026"
+"New London County, Connecticut",zone_out_n,,29,count,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + yearOfLoss,"August 31, 2026"
 "New London County, Connecticut",zone_out_paid_pct,,18.7%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + yearOfLoss + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "New London County, Connecticut",avg_paid,,"$19,043",usd_claim_paid,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "New London County, Connecticut",paid_bldg_median,,"$6,626",usd_claim_paid,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount,"August 31, 2026"

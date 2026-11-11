@@ -64,6 +64,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Bullitt County, Kentucky",claims_total,exact,"$6,654,432",usd_claim_paid,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount,"August 31, 2026"
 "Bullitt County, Kentucky",zone_known_n,,52,count,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + yearOfLoss,"August 31, 2026"
 "Bullitt County, Kentucky",zone_out_pct,,11.5%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + yearOfLoss,"August 31, 2026"
+"Bullitt County, Kentucky",zone_out_n,,6,count,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + yearOfLoss,"August 31, 2026"
 "Bullitt County, Kentucky",zone_out_paid_pct,,9.7%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + yearOfLoss + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Bullitt County, Kentucky",avg_paid,,"$20,288",usd_claim_paid,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Bullitt County, Kentucky",paid_bldg_median,,"$11,749",usd_claim_paid,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount,"August 31, 2026"

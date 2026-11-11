@@ -57,6 +57,8 @@ def county(c, cids):
           {"statisticType": "min", "onStatisticField": "EFF_DATE", "outStatisticFieldName": "oldest"},
           {"statisticType": "max", "onStatisticField": "EFF_DATE", "outStatisticFieldName": "newest"}])[0]
     o = {"dfirm": dfirm, "panels": pan["n"] or 0, "oldest": day(pan["oldest"]), "newest": day(pan["newest"])}
+    for k in ("oldest", "newest"):   # FEMA placeholder dates (9999-09-09, 1899) are not dates: stored as None (hater r133)
+        if o[k] and not ("1968-01-01" <= o[k] <= datetime.date.today().isoformat()): o[k] = None
     if o["panels"]:
         o["lomr"] = stats(1, f"DFIRM_ID='{dfirm}'", [cnt("OBJECTID", "n")])[0]["n"] or 0
         o["lomr_recent"] = stats(1, f"DFIRM_ID='{dfirm}' AND EFF_DATE >= DATE '{SINCE}'", [cnt("OBJECTID", "n")])[0]["n"] or 0

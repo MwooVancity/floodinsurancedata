@@ -64,6 +64,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Bulloch County, Georgia",claims_total,exact,"$4,875,493",usd_claim_paid,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount,"August 31, 2026"
 "Bulloch County, Georgia",zone_known_n,,93,count,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + yearOfLoss,"August 31, 2026"
 "Bulloch County, Georgia",zone_out_pct,,11.8%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + yearOfLoss,"August 31, 2026"
+"Bulloch County, Georgia",zone_out_n,,11,count,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + yearOfLoss,"August 31, 2026"
 "Bulloch County, Georgia",zone_out_paid_pct,,16.9%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + yearOfLoss + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Bulloch County, Georgia",avg_paid,,"$34,825",usd_claim_paid,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Bulloch County, Georgia",paid_bldg_median,,"$12,000",usd_claim_paid,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount,"August 31, 2026"

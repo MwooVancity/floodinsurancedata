@@ -25,3 +25,9 @@ ask is either BUILDING or DECIDED with its reason. Reviewers: a DECIDED item is 
 - Years to full risk at 18% a year / premium-rise calculator: dropped by the owner (2026-10-28: "no calc. way too risky").
 - Page length, shared rule paragraphs, per-parish take-up, NOAA panel on state pages: closed 10-28 (card review, `tools/card_spec.py`).
 
+
+## dixie-county-fl (round 133)
+- Priced base is small (182 single-family, 134 in Zone AE); page prints the counts everywhere it matters, so no defect. Top results show the same thin base.
+
+## sonoma-county-ca (round 133)
+- Event table leads with the catch-all "Flooding (1978–1997)" row ($67.3 million) above the named floods; labelled as many floods, so not wrong. 1995 and 2019 (two costliest years) have no named flood row.

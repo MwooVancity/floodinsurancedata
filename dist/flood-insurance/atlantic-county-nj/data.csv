@@ -72,6 +72,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Atlantic County, New Jersey",claims_total,exact,"$473,255,462",usd_claim_paid,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount,"August 31, 2026"
 "Atlantic County, New Jersey",zone_known_n,,485,count,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + yearOfLoss,"August 31, 2026"
 "Atlantic County, New Jersey",zone_out_pct,,4.3%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + yearOfLoss,"August 31, 2026"
+"Atlantic County, New Jersey",zone_out_n,,21,count,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + yearOfLoss,"August 31, 2026"
 "Atlantic County, New Jersey",zone_out_paid_pct,,3.4%,pct,FEMA OpenFEMA — NFIP Claims,ratedFloodZone + yearOfLoss + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Atlantic County, New Jersey",avg_paid,,"$27,846",usd_claim_paid,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Atlantic County, New Jersey",paid_bldg_median,,"$11,201",usd_claim_paid,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount,"August 31, 2026"
