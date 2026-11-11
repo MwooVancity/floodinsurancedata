@@ -740,7 +740,7 @@ if len(states) == 51:
     _paid_all = sum(s["paid"] for s in states); _cl_all = sum(s["claims"] for s in states)
     _top = sorted(states, key=lambda s: -s["units"])[:10]
     _trs = "".join(f'<tr><td><a href="/flood-insurance/{s["slug"]}/">{html.escape(s["name"])}</a></td><td>{s["units"]:,}</td><td>{round(100 * s["units"] / _units, 1)}%</td></tr>' for s in _top)
-    _nk = ["purchase_answer", "lender_any_zone", "nfip_not_sold", "how_to_buy", "limits", "wait_30", "nfip_lapse", "private_accept"]
+    _nk = ["purchase_answer", "lender_any_zone", "nfip_not_sold", "how_to_buy", "limits", "wait_30"] + __import__("rules_home").MOVED   # owner 11-11: the national rules live here once
     pg = HEAD.format(title=f"The NFIP in numbers: {_units / 1e6:.1f} million policy units, {money(_med)}/yr median, claims since 1978",
                      desc="The National Flood Insurance Program from FEMA's own records: policy units in force, what single-family homes pay, claims and dollars paid since 1978, and where the policies are.",
                      canon=BASE + "/nfip/") + f"""
@@ -751,7 +751,14 @@ if len(states) == 51:
 <div class="stat"><div class="n">${_paid_all / 1e9:.1f}B</div><div class="l">Paid on NFIP claims since 1978, dollars as paid</div></div></div>
 <p class="mut">FEMA OpenFEMA NFIP Policies v3 and Claims v3, as of {_ASOF_TXT}. Policy units: every NFIP policy unit, including condos, rentals and businesses. Claims: every claim record, paid or not, except records FEMA coded "deleted in error" or "assigned in error". Claims paid: building plus contents payments, not adjusted for inflation. <a href="/flood-insurance/claims/">How often claims get paid, county by county</a>.</p>
 <div class="card"><h2>Am I required to buy it?</h2><p class="stand">{rule("purchase_answer")} {rule("lender_any_zone")}</p></div>
-<div class="card"><h2>How does the NFIP work?</h2><p class="stand">{rule("nfip_not_sold")} {rule("limits")} {rule("wait_30")}</p><p class="stand">{rule("how_to_buy")}</p><p class="stand">{rule("nfip_lapse")}</p><p class="stand">{rule("private_accept")}</p></div>
+<div class="card"><h2>How does the NFIP work?</h2><p class="stand">{rule("nfip_not_sold")} {rule("limits")} {rule("wait_30")}</p><p class="stand">{rule("how_to_buy")}</p></div>
+<div class="card" id="rules"><h2>NFIP rules in full: waits, what it won't pay, claims, rebuilding, closings</h2><p class="stand">These rules are the same in every state and county; each county and state page links here instead of repeating them.</p>
+<h3>The 30-day wait and its exceptions</h3><p class="stand">{rule("wait_exceptions")} {rule("wait_wildfire")}</p>
+<h3>Lapses</h3><p class="stand">{rule("nfip_lapse")} {rule("lapse_discount")}</p>
+<h3>What a policy won't pay</h3><p class="stand">{rule("flood_def")} {rule("not_covered")} {rule("wind_excl")}</p>
+<h3>FEMA disaster aid and insurance</h3><p class="stand">{rule("aid_insurance")}</p>
+<h3>Appeals and rebuilding</h3><p class="stand">{rule("claim_appeal")} {rule("substantial_damage")}</p>
+<h3>At a closing, and private policies</h3><p class="stand">{rule("lender_amount")} {rule("lender_force")} {rule("zone_review")} {rule("seller_assign")} {rule("private_accept")}</p></div>
 <div class="card"><h2>Where are the NFIP policies?</h2><p class="stand">The ten states with the most NFIP policy units, and their share of all units in force.</p>
 <table><thead><tr><th>State</th><th>Policy units</th><th>Share of U.S.</th></tr></thead><tbody>{_trs}</tbody></table>
 <p class="mut">Every state, with costs and claims: <a href="/flood-insurance/">states and counties</a>. Cost in each flood zone: <a href="/flood-zones/ae/">zone AE</a>, <a href="/flood-zones/x/">zone X</a>. <a href="/flood-insurance/zip/">Cost by ZIP code</a>.</p></div>

@@ -1,0 +1,48 @@
+## louisiana
+- Previous MAJOR (screen-1 "Already flooded?" link to #covered) FIXED: #covered now holds the full already-flooded text (report to agent, how-to-start-a-claim link, 60-day proof of loss with 44 CFR 61 App. A(1) Art. VII, not-insured answer, FEMA aid eligibility), then one link sentence to /nfip/#rules. Single id="covered", single "within 60 days", no duplicate of the text on /nfip/ (it keeps FEMA aid vs insurance under its own heading; no stray "Already flooded" there).
+- MINOR "what FEMA aid covers" is met only by "FEMA disaster aid is open to people in counties designated in a federally declared disaster" (who qualifies) plus the topic "FEMA aid vs insurance" in the link sentence; what aid pays for sits in the lower "Did FEMA aid homeowners" card, not in #covered, and /nfip/#rules "FEMA disaster aid and insurance" is the buy-insurance condition, not coverage. Promise is held loosely; reword screen-1 to "and whether FEMA aid is open" or link the aid card.
+- MINOR Link sentence still one long run of topics (last round's MINOR, still true); #required still has no pointer to /nfip/#rules for lender-letter readers (still true).
+- Checked, no new defect: #covered 30-day, closing-start, limits, phone, how-to-buy, regulator line and source line intact; screen-1 jump still resolves to #covered; no dangling reference to removed text.
+Verdict: PASS
+
+## palm-beach-county-fl
+- Previous MAJOR (screen-1 "Already flooded?" link to #covered) FIXED: #covered now holds the full already-flooded text (report to agent, how-to-start-a-claim link, 60-day proof of loss with 44 CFR 61 App. A(1) Art. VII, not-insured answer, FEMA aid eligibility), then one link sentence to /nfip/#rules. Single id="covered", single "within 60 days", no duplicate of the text on /nfip/ (it keeps FEMA aid vs insurance under its own heading; no stray "Already flooded" there).
+- MINOR "what FEMA aid covers" is met only by "FEMA disaster aid is open to people in counties designated in a federally declared disaster" (who qualifies) plus the topic "FEMA aid vs insurance" in the link sentence; what aid pays for sits in the lower "Did FEMA aid homeowners" card, not in #covered, and /nfip/#rules "FEMA disaster aid and insurance" is the buy-insurance condition, not coverage. Promise is held loosely; reword screen-1 to "and whether FEMA aid is open" or link the aid card.
+- MINOR Link sentence still one long run of topics (last round's MINOR, still true); #required still has no pointer to /nfip/#rules for lender-letter readers (still true).
+- Checked, no new defect: #covered 30-day, closing-start, limits, phone, how-to-buy, regulator line and source line intact; screen-1 jump still resolves to #covered; no dangling reference to removed text.
+Verdict: PASS
+
+## new-york-county-ny
+- Previous MAJOR (screen-1 "Already flooded?" link to #covered) FIXED: #covered now holds the full already-flooded text (report to agent, how-to-start-a-claim link, 60-day proof of loss with 44 CFR 61 App. A(1) Art. VII, not-insured answer, FEMA aid eligibility), then one link sentence to /nfip/#rules. Single id="covered", single "within 60 days", no duplicate of the text on /nfip/ (it keeps FEMA aid vs insurance under its own heading; no stray "Already flooded" there).
+- MINOR "what FEMA aid covers" is met only by "FEMA disaster aid is open to people in counties designated in a federally declared disaster" (who qualifies) plus the topic "FEMA aid vs insurance" in the link sentence; what aid pays for sits in the lower "Did FEMA aid homeowners" card, not in #covered, and /nfip/#rules "FEMA disaster aid and insurance" is the buy-insurance condition, not coverage. Promise is held loosely; reword screen-1 to "and whether FEMA aid is open" or link the aid card.
+- MINOR Link sentence still one long run of topics (last round's MINOR, still true); #required still has no pointer to /nfip/#rules for lender-letter readers (still true).
+- Checked, no new defect: #covered 30-day, closing-start, limits, phone, how-to-buy, regulator line and source line intact; screen-1 jump still resolves to #covered; no dangling reference to removed text.
+Verdict: PASS
+
+## dixie-county-fl
+- Previous MAJOR (screen-1 "Already flooded?" link to #covered) FIXED: #covered now holds the full already-flooded text (report to agent, how-to-start-a-claim link, 60-day proof of loss with 44 CFR 61 App. A(1) Art. VII, not-insured answer, FEMA aid eligibility), then one link sentence to /nfip/#rules. Single id="covered", single "within 60 days", no duplicate of the text on /nfip/ (it keeps FEMA aid vs insurance under its own heading; no stray "Already flooded" there).
+- MINOR "what FEMA aid covers" is met only by "FEMA disaster aid is open to people in counties designated in a federally declared disaster" (who qualifies) plus the topic "FEMA aid vs insurance" in the link sentence; what aid pays for sits in the lower "Did FEMA aid homeowners" card, not in #covered, and /nfip/#rules "FEMA disaster aid and insurance" is the buy-insurance condition, not coverage. Promise is held loosely; reword screen-1 to "and whether FEMA aid is open" or link the aid card.
+- MINOR Link sentence still one long run of topics (last round's MINOR, still true); #required still has no pointer to /nfip/#rules for lender-letter readers (still true).
+- Checked, no new defect: #covered 30-day, closing-start, limits, phone, how-to-buy, regulator line and source line intact; screen-1 jump still resolves to #covered; no dangling reference to removed text.
+Verdict: PASS
+
+## levy-county-fl
+- Previous MAJOR (screen-1 "Already flooded?" link to #covered) FIXED: #covered now holds the full already-flooded text (report to agent, how-to-start-a-claim link, 60-day proof of loss with 44 CFR 61 App. A(1) Art. VII, not-insured answer, FEMA aid eligibility), then one link sentence to /nfip/#rules. Single id="covered", single "within 60 days", no duplicate of the text on /nfip/ (it keeps FEMA aid vs insurance under its own heading; no stray "Already flooded" there).
+- MINOR "what FEMA aid covers" is met only by "FEMA disaster aid is open to people in counties designated in a federally declared disaster" (who qualifies) plus the topic "FEMA aid vs insurance" in the link sentence; what aid pays for sits in the lower "Did FEMA aid homeowners" card, not in #covered, and /nfip/#rules "FEMA disaster aid and insurance" is the buy-insurance condition, not coverage. Promise is held loosely; reword screen-1 to "and whether FEMA aid is open" or link the aid card.
+- MINOR Link sentence still one long run of topics (last round's MINOR, still true); #required still has no pointer to /nfip/#rules for lender-letter readers (still true).
+- Checked, no new defect: #covered 30-day, closing-start, limits, phone, how-to-buy, regulator line and source line intact; screen-1 jump still resolves to #covered; no dangling reference to removed text.
+Verdict: PASS
+
+## sonoma-county-ca
+- Previous MAJOR (screen-1 "Already flooded?" link to #covered) FIXED: #covered now holds the full already-flooded text (report to agent, how-to-start-a-claim link, 60-day proof of loss with 44 CFR 61 App. A(1) Art. VII, not-insured answer, FEMA aid eligibility), then one link sentence to /nfip/#rules. Single id="covered", single "within 60 days", no duplicate of the text on /nfip/ (it keeps FEMA aid vs insurance under its own heading; no stray "Already flooded" there).
+- MINOR "what FEMA aid covers" is met only by "FEMA disaster aid is open to people in counties designated in a federally declared disaster" (who qualifies) plus the topic "FEMA aid vs insurance" in the link sentence; what aid pays for sits in the lower "Did FEMA aid homeowners" card, not in #covered, and /nfip/#rules "FEMA disaster aid and insurance" is the buy-insurance condition, not coverage. Promise is held loosely; reword screen-1 to "and whether FEMA aid is open" or link the aid card.
+- MINOR Link sentence still one long run of topics (last round's MINOR, still true); #required still has no pointer to /nfip/#rules for lender-letter readers (still true).
+- Checked, no new defect: #covered 30-day, closing-start, limits, phone, how-to-buy, regulator line and source line intact; screen-1 jump still resolves to #covered; no dangling reference to removed text.
+Verdict: PASS
+
+## wakulla-county-fl
+- Previous MAJOR (screen-1 "Already flooded?" link to #covered) FIXED: #covered now holds the full already-flooded text (report to agent, how-to-start-a-claim link, 60-day proof of loss with 44 CFR 61 App. A(1) Art. VII, not-insured answer, FEMA aid eligibility), then one link sentence to /nfip/#rules. Single id="covered", single "within 60 days", no duplicate of the text on /nfip/ (it keeps FEMA aid vs insurance under its own heading; no stray "Already flooded" there).
+- MINOR "what FEMA aid covers" is met only by "FEMA disaster aid is open to people in counties designated in a federally declared disaster" (who qualifies) plus the topic "FEMA aid vs insurance" in the link sentence; what aid pays for sits in the lower "Did FEMA aid homeowners" card, not in #covered, and /nfip/#rules "FEMA disaster aid and insurance" is the buy-insurance condition, not coverage. Promise is held loosely; reword screen-1 to "and whether FEMA aid is open" or link the aid card.
+- MINOR Link sentence still one long run of topics (last round's MINOR, still true); #required still has no pointer to /nfip/#rules for lender-letter readers (still true).
+- Checked, no new defect: #covered 30-day, closing-start, limits, phone, how-to-buy, regulator line and source line intact; screen-1 jump still resolves to #covered; no dangling reference to removed text.
+Verdict: PASS

@@ -44,6 +44,8 @@ else:
     step("site factory stress (national edge cases: no crash, garbage, dead link)", os.path.join(T, "test_site_factory.py"))
     step("hater verdict parser", os.path.join(T, "test_hater.py"))
     step("sitemap lastmod rule", os.path.join(T, "lastmod.py"), "--test")
+    step("national rules live once on /nfip/ (owner 11-11)", os.path.join(T, "rules_home.py"))
+    step("national rules guard mutations", os.path.join(T, "rules_home.py"), "--test")
     step("hub page word rules mutations", os.path.join(T, "hub_words.py"), "--test")
     step("hub page word rules (pages gate.py never sees)", os.path.join(T, "hub_words.py"))
     step("phone check (dist)", os.path.join(T, "phone_check.py"))

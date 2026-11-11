@@ -10,7 +10,7 @@ def fails(pages, indexable):
     out = []
     for p in sorted(indexable):
         if not re.fullmatch(r"/flood-insurance/[a-z0-9-]+/", p) or p in hubs: continue
-        hr = set(re.findall(r"""href=["']([^"'#?]+)["']""", pages[p]))
+        hr = set(re.findall(r"""href=["']([^"'#?]+)[#?"']""", pages[p]))
         for h in hubs:
             if h == "/flood-insurance/zip/" and not re.search(r"""id=[\"'](zip|counties)[\"']""", pages[p]): continue   # no ZIP or county card (DC): nowhere to link from
             tail = h.rstrip("/").rsplit("/", 1)[1] + "/"
@@ -23,7 +23,7 @@ def graph_fails(pages, indexable):
     """Every internal link lands on a built page; every indexable page has an inbound link from another page."""
     out, inbound = [], {p: 0 for p in indexable}
     for p in sorted(pages):
-        for h in set(re.findall(r"""href=["']([^"'#?]+)["']""", pages[p])):
+        for h in set(re.findall(r"""href=["']([^"'#?]+)[#?"']""", pages[p])):
             if h.startswith(("http", "mailto:", "tel:")) and "floodinsurancedata.com" not in h: continue
             t = urlparse(urljoin("https://floodinsurancedata.com" + p, h)).path
             if not t.endswith("/") or t == p: continue   # files (csv, json, xml) are checked elsewhere

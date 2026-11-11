@@ -371,7 +371,6 @@ def _gap_parts():
                               "at or above", ("prem_median", ">=", "frp_median")) + "</p>")
     else:   # no "years to full risk": the two medians come from different policies, so their ratio describes no real bill
         glide_note = (f"<p class='note'><b>Yearly cap:</b> {rule('glide')} {rule('cap')}</p>")
-    glide_note += f"<p class='note'>{rule('lapse_discount')}</p>"
     return gap_lead, glide_note
 
 def _claims_parts():
@@ -522,15 +521,17 @@ def _regulator_line():
 
 # ---- how to get covered (factual public NFIP rules — the reader's "what do I do next" + the 30-day catch) ----
 def card_howto():
-    _HOWTO = ["howto_answer", "homeowners_excl", "howto_tiles", "wait_exceptions", "wait_wildfire", "how_to_buy", "nfip_lapse", "flood_def", "not_covered", "wind_excl", "already_flooded", "aid_insurance", "claim_appeal", "substantial_damage"]
+    _HOWTO = ["howto_answer", "homeowners_excl", "howto_tiles", "how_to_buy", "already_flooded"]
     howto_card = card("How do I actually get covered — and how fast?",   # limits live in the tiles once (no second copy)
         rule("howto_answer"),
         rule("howto_tiles")
-        + f"<p class='note'>{rule('homeowners_excl')} {rule('wait_exceptions')} {rule('wait_wildfire')} {rule('how_to_buy')} The program nationwide: <a href='/nfip/'>the NFIP in numbers</a>.</p>"
-        + f"<p class='note'>{rule('nfip_lapse')}</p>"
-        + f"<p class='note'><b>What it won't pay:</b> {rule('flood_def')} {rule('not_covered')} {rule('wind_excl')}</p>"
-        + f"<p class='note'>{rule('already_flooded')} {rule('aid_insurance')}</p>"
-        + f"<p class='note'>{rule('claim_appeal')} {rule('substantial_damage')}</p>"   # r124 asked for a lead-in: it is shared prose on every county page and put sutter-county-ca over S13 (50%); kept as it was
+        + f"<p class='note'>{rule('homeowners_excl')} {rule('how_to_buy')}</p>"
+        + f"<p class='note'>{rule('already_flooded')}</p>"   # hater r136: screen 1 "Already flooded?" lands here; the urgent answer stays on the page
+        # owner 11-11 ("Yes, move it"): the national rules (wait exceptions, lapse, what it won't pay, wind, already flooded, appeals,
+        # the 50% rule, closing rules, private policies) live once on /nfip/#rules; this is the page's one link to them (tools/rules_home.py)
+        + "<p class='note'>Exceptions to the thirty-day wait, what a policy won't pay (wind, outside belongings, living costs), "
+          "FEMA aid vs insurance, appeals, the substantial-damage rebuilding rule and the rules at a closing: "
+          "<a href='/nfip/#rules'>the NFIP rules in full</a>, each with its official source.</p>"
         + _regulator_line()
         + (_deadline_tool() if _tool_on("deadline") else "")
         + (_start_tool() if _tool_on("start") else ""),
@@ -812,7 +813,7 @@ def card_rebuild():
                if _xc.get("damage_over_coverage_pct") is not None and (_xc.get("damage_n") or 0) >= 30 else "")
             + f"</ul><p class='note'>The two shares have different bases: insured-to-the-maximum counts every single-family policy "
               f"with the full building limit; the rebuilding-cost share counts only the policies that report a rebuilding cost. "
-              f"Homes insured for less than their own rebuilding cost can also fall short.{how('rebuild')}</p><p class='note'><b>{rule('rcv_80')}</b></p>",
+              f"Homes insured for less than their own rebuilding cost can also fall short.{how('rebuild')}</p><p class='note'><b>{rule('rcv_80')}</b></p>",   # card_spec H12: the 80% limit stays with its figures
             src(["rebuild_over_cap_pct", "at_cap_pct", "damage_over_cov_pct"], POL_ASOF, RETR) + src_rules(["building_cap", "rcv_80"]))
     return rebuild_card
 
@@ -1250,8 +1251,8 @@ def card_required():
     return card("Am I required to buy it?",
       rule("purchase_answer") + " " + rule("lender_any_zone"),
       (f"<p class='note'><b>{rule('fl_citizens')}</b></p>" if agg.get("state") == "FL" else "") +
-      f"<p class='note'>{rule('private_accept')}" + (f" {rule('fl_citizens_private')}" if agg.get("state") == "FL" else "") + "</p>" +
-      f"<p class='note'><b>At a closing:</b> {rule('lender_amount')} {rule('lender_force')} {rule('zone_review')} {rule('seller_assign')}" + (f" {rule('fl_disclosure')}" if agg.get("state") == "FL" else "") + "</p>" +
+      (f"<p class='note'>{rule('fl_citizens_private')}</p>" if agg.get("state") == "FL" else "") +
+      (f"<p class='note'><b>At a closing:</b> {rule('fl_disclosure')}</p>" if agg.get("state") == "FL" else "") +
       (f"<p class='note'>{rule('tx_twia')}</p>" if agg.get("state") == "TX" else "") +
       (f"<p class='note'>{rule('harris_maapnext')}</p>" if agg.get("geoid") == "48201" else "") +
       f"<p class='note'>{m('sfha_share', str(P['sfha_share_units']) + '%')} of {CS}'s NFIP policy units are in high-risk zones (not {tp('sfha_share', 'policies.sfha_share_units', pct)} of all buildings, and not an answer about your own home).</p>" + _outside_line() +
@@ -1259,7 +1260,7 @@ def card_required():
       + (f"<p class='note'><b>Not in the NFIP ({m('crs_count', str(len(crs_out)), q='not_nfip')} {pl(len(crs_out), 'community', 'communities')} here)"
          + (": " + "; ".join(sorted((_cname(c) + (" (unincorporated area only)" if re.search(r"\b(COUNTY|PARISH|BOROUGH)\b", (c.get("communityName") or "").upper()) else "") for c in crs_out), key=lambda h: html.unescape(re.sub("<[^>]+>", "", h)).casefold())))
          + f".</b> {rule('nfip_not_sold')}</p>" if crs_out else ""),
-      src(["units", "sfha_share"], POL_ASOF, RETR) + (src(["outside_sfha_dollars"], f"{C['year_min']}–{C['year_max']}", RETR) if _outside_line() else "") + (src(["map_date"], "FEMA's current Community Status Book", RETR) if _map_line() else "") + (src(["map_panels", "lomr_n", "loma_n"], "FEMA's map service", _MS.get('_retrieved') or RETR) if _nfhl_lines() else "") + src_rules(["purchase_answer", "lender_any_zone", "private_accept", "lender_amount", "lender_force", "zone_review", "seller_assign", "prelim", "loma_fee", "loma_online", "ec_get"] + (["fl_citizens", "fl_disclosure", "fl_citizens_private"] if agg.get("state") == "FL" else []) + (["tx_twia"] if agg.get("state") == "TX" else []) + (["harris_maapnext"] if agg.get("geoid") == "48201" else []) + (["nfip_not_sold"] if crs_out else [])), id="required")
+      src(["units", "sfha_share"], POL_ASOF, RETR) + (src(["outside_sfha_dollars"], f"{C['year_min']}–{C['year_max']}", RETR) if _outside_line() else "") + (src(["map_date"], "FEMA's current Community Status Book", RETR) if _map_line() else "") + (src(["map_panels", "lomr_n", "loma_n"], "FEMA's map service", _MS.get('_retrieved') or RETR) if _nfhl_lines() else "") + src_rules(["purchase_answer", "lender_any_zone", "prelim", "loma_fee", "loma_online", "ec_get"] + (["fl_citizens", "fl_disclosure", "fl_citizens_private"] if agg.get("state") == "FL" else []) + (["tx_twia"] if agg.get("state") == "TX" else []) + (["harris_maapnext"] if agg.get("geoid") == "48201" else []) + (["nfip_not_sold"] if crs_out else [])), id="required")
 
 def card_cost():
     cost_lead, cost_body = _cost_parts()
@@ -1331,7 +1332,7 @@ def card_gap():
       f"<ul class='kv'><li><b>Median premium charged (before fees)</b><span>{m('prem_median', money(PREM_MED))}</span></li>"
       f"<li><b>Median full-risk premium</b><span>{m('frp_median', money(P['frp_median']))}</span></li>"
       f"<li><b>Pay below full-risk</b><span>{m('share_below', str(P['share_below']) + '%')} of {tp('units_listed', 'policies.below_n', q='below_n')}</span>{vs_state('share_below', 'agg.policies.share_below', pct)}</li></ul>" + glide_note,
-      src(["prem_median", "frp_median", "share_below"], POL_ASOF, RETR) + src_rules(["cap", "lapse_discount"]), id="gap")
+      src(["prem_median", "frp_median", "share_below"], POL_ASOF, RETR) + src_rules(["cap"]), id="gap")
 
 def card_crs():
     crs_rows, crs_none_note, crs_lead = _crs_parts()
