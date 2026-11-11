@@ -289,7 +289,7 @@ South Dakota,county_count,inland:Very Low,48,count,FEMA — National Risk Index 
 South Dakota,ml_total,,404,count,FEMA OpenFEMA — Individual Assistance Multiple-Loss Flood Properties,highRiskPropertyType,"August 31, 2026"
 South Dakota,declarations,,45,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"August 31, 2026"
 South Dakota,ia_paid,,$32.8 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"August 31, 2026"
-South Dakota,ia_per_reg,,"$2,407",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
+South Dakota,ia_per_reg,,"$2,405",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 South Dakota,units,,"2,508",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 South Dakota,records_total,rows,"2,504",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 South Dakota,records_total,policies:fetched,"2,504",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

@@ -237,7 +237,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Harrison County, Mississippi",ml_srl,,33,count,FEMA OpenFEMA — Individual Assistance Multiple-Loss Flood Properties,highRiskPropertyType,"August 31, 2026"
 "Harrison County, Mississippi",declarations,,24,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"August 31, 2026"
 "Harrison County, Mississippi",ia_paid,,$238.8 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"August 31, 2026"
-"Harrison County, Mississippi",ia_per_reg,,"$3,680",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
+"Harrison County, Mississippi",ia_per_reg,,"$3,681",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Harrison County, Mississippi",units,,"13,267",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Harrison County, Mississippi",records_total,rows,"11,931",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Harrison County, Mississippi",records_total,policies:fetched,"11,931",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

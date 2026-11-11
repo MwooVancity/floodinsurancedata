@@ -229,7 +229,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Lafourche Parish, Louisiana",ml_total,,934,count,FEMA OpenFEMA — Individual Assistance Multiple-Loss Flood Properties,highRiskPropertyType,"August 31, 2026"
 "Lafourche Parish, Louisiana",ml_srl,,89,count,FEMA OpenFEMA — Individual Assistance Multiple-Loss Flood Properties,highRiskPropertyType,"August 31, 2026"
 "Lafourche Parish, Louisiana",declarations,,37,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"August 31, 2026"
-"Lafourche Parish, Louisiana",ia_paid,,$156.0 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"August 31, 2026"
+"Lafourche Parish, Louisiana",ia_paid,,$156.1 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"August 31, 2026"
 "Lafourche Parish, Louisiana",ia_per_reg,,"$2,496",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Lafourche Parish, Louisiana",units,,"8,519",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Lafourche Parish, Louisiana",records_total,rows,"8,515",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

@@ -155,7 +155,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Kerr County, Texas",ml_total,,5,count,FEMA OpenFEMA — Individual Assistance Multiple-Loss Flood Properties,highRiskPropertyType,"August 31, 2026"
 "Kerr County, Texas",declarations,,8,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"August 31, 2026"
 "Kerr County, Texas",ia_paid,,$8.6 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"August 31, 2026"
-"Kerr County, Texas",ia_per_reg,,"$4,365",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
+"Kerr County, Texas",ia_per_reg,,"$4,332",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 "Kerr County, Texas",units,,531,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Kerr County, Texas",records_total,rows,531,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 "Kerr County, Texas",records_total,policies:fetched,531,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
