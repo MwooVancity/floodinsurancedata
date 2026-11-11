@@ -23,6 +23,13 @@ def bend(path, fn):   # returns (apply, restore) for one file
     def restore(): shutil.move(bak, full)
     return apply, restore
 
+def multi(*bs): return (lambda: [a() for a, _ in bs], lambda: [r() for _, r in bs])
+def story(cause, moved):   # 11-10 claims-page story fields on one county file (cloud refresh writes them)
+    def f(v):
+        c = v.setdefault("extras", {}).setdefault("claims", {})
+        c["cause10"] = dict({"from": "2016", "to": "2025", "paid_n": cause[0]}, with_cause=cause[0], by_code=cause[1])
+        c["moved"] = dict({"from": "2016", "to": "2025"}, rated_out_known=moved[0], now_av=moved[1], current_blank=moved[2]); return v
+    return f
 def each_state(f): return lambda d: {s: f(v) for s, v in d.items()}
 def add_bucket(st, k, n): return lambda d: dict(d, **{st: dict(d[st], **{k: n})})
 CASES = {
@@ -39,7 +46,13 @@ CASES = {
     "refund_bucket": bend(("us", "cost_hist.json"), add_bucket("TX", "-250", 40)),
     "billion_bucket": bend(("us", "cost_hist.json"), add_bucket("CA", "1000000000", 1)),
     "one_policy_state": bend(("us", "cost_hist.json"), lambda d: dict(d, WY={"500": 1})),
-    "sealevel_empty": bend(("us", "sealevel.json"), lambda v: {} if isinstance(v, dict) else []),
+    # 11-10 story tables: exactly the 500 floor with no cause codes (0%), every claim two causes (rows over 100%), 499 left out,
+    # all now in A/V, none known (blank only); one county alone prints no card
+    "story_edges": multi(bend(("all-counties", "48061.json"), story((500, {}), (500, 0, 0))),
+                         bend(("all-counties", "48071.json"), story((600, {"4": 600, "2": 600, "1": 1}), (900, 900, 0))),
+                         bend(("all-counties", "06037.json"), story((499, {"4": 499}), (0, 0, 40)))),
+    "story_one_county": bend(("all-counties", "48061.json"), story((800, {"4": 8}), (800, 8, 0))),
+    "sealevel_empty":bend(("us", "sealevel.json"), lambda v: {} if isinstance(v, dict) else []),
 }
 GARBAGE = re.compile(r"\bNone\b|\bnan\b|\bNaN\b|Infinity|undefined|\$-\d|\$—\d|\{[a-z_]+\}")
 

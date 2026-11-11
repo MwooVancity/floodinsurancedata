@@ -27,8 +27,12 @@ clm = ([{"countyCode": "10001", "yearOfLoss": "2023", "floodEvent": "Storm A", "
        + [{"countyCode": "10001", "yearOfLoss": "2023", "floodEvent": "Storm A", "netBuildingPaymentAmount": 0, "nonPaymentReasonBuilding": "98"}]   # deleted in error: not a claim
        + [{"countyCode": "10001", "yearOfLoss": "2024", "floodEvent": "Storm B", "netBuildingPaymentAmount": 0, "nonPaymentReasonBuilding": "01"}]   # unpaid only: no events row
        + [{"countyCode": "10001", "yearOfLoss": "2024", "netBuildingPaymentAmount": 3000, "ratedFloodZone": " x "},   # 11-09 zone_split: outside A/V, lower case
-          {"countyCode": "10001", "yearOfLoss": "2024", "netBuildingPaymentAmount": 0, "ratedFloodZone": "X", "nonPaymentReasonBuilding": "01"},
-          {"countyCode": "10001", "yearOfLoss": "2005", "netBuildingPaymentAmount": 9000, "ratedFloodZone": "X"}])   # before the ten-year window: out of zone_split
+          {"countyCode": "10001", "yearOfLoss": "2024", "netBuildingPaymentAmount": 0, "ratedFloodZone": "X", "nonPaymentReasonBuilding": "01", "floodZoneCurrent": "X"},
+          {"countyCode": "10001", "yearOfLoss": "2005", "netBuildingPaymentAmount": 9000, "ratedFloodZone": "X"}]   # before the ten-year window: out of zone_split
+       # 11-10 moved/cause10, county 10003: rated X now in " ae " (lower case, spaces) with rain + a handling code; river; handling codes only
+       + [{"countyCode": "10003", "yearOfLoss": "2024", "netBuildingPaymentAmount": 2000, "ratedFloodZone": "X", "floodZoneCurrent": " ae ", "causeOfDamage": "4B"},
+          {"countyCode": "10003", "yearOfLoss": "2024", "netBuildingPaymentAmount": 1000, "ratedFloodZone": "AE", "causeOfDamage": "2"},
+          {"countyCode": "10003", "yearOfLoss": "2024", "netBuildingPaymentAmount": 1000, "ratedFloodZone": "AE", "causeOfDamage": "BD"}])
 write("NfipPolicies", pol); write("NfipClaims", clm)
 # 11-09 cost trend (pull_bulk.trend's columns): 2022 all priced; 2023 under 30 priced; 2024 95 of 100 priced; 2025 35 of 40 (< 90%)
 _t = lambda y, n, cost, **k: [dict({"year": y, "propertyState": "DE", "censusGeoid": "10001040100", "occupancyType": "1",
@@ -54,6 +58,11 @@ try:
     assert (zs["known_n"], zs["known_paid_n"], zs["known_paid"], zs["out_n"], zs["out_paid_n"], zs["out_paid"], zs["blank_n"]) == (8, 7, 33000, 2, 1, 3000, 3), zs
     assert (zs["out_pct"], zs["out_paid_pct"]) == (25.0, 9.1), zs   # 2 of 8 claims; $3,000 of $33,000
     assert "zone_split" not in C["ST"] and "_pb" in C["ST"]
+    mv, mv3, c1, c3 = C["10001"]["moved"], C["10003"]["moved"], C["10001"]["cause10"], C["10003"]["cause10"]
+    assert (mv["rated_out_known"], mv["now_av"], mv["current_blank"]) == (1, 0, 1), mv     # unpaid X now X; paid " x " has no current zone
+    assert (mv3["rated_out_known"], mv3["now_av"], mv3["current_blank"]) == (1, 1, 0), mv3  # X now " ae "
+    assert (c1["paid_n"], c1["with_cause"], c1["by_code"]) == (7, 0, {}), c1             # 6 AE + 1 X paid in the window, no cause codes
+    assert (c3["paid_n"], c3["with_cause"], c3["by_code"]) == (3, 2, {"4": 1, "2": 1}), c3  # "BD" is handling only: no cause
     X.ROOT = tmp; os.makedirs(os.path.join(tmp, "data", "us")); cs = os.path.join(tmp, "data", "us", "claim_size.json")
     X.NAT_PB.clear(); X.NAT_PB["DE"] = [1000] * 40; X.write_claim_size()
     assert not os.path.exists(cs)   # one state ran: no national figure

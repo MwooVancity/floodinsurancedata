@@ -1,0 +1,8 @@
+# Fixlog round 128 (claims page news-story cards)
+- MAJOR "outside" heading read as where the flood happened. Root cause: heading dropped the base word "rated". Fix: h2 "Flood claims rated outside the high-risk zones, county by county". Proof: built page h2; claims_check PASS.
+- MAJOR "It wasn't the river" heading asserted a conclusion the table can contradict. Root cause: editorial headline over a ranked table. Fix: h2 "Rain, river or tide: what FEMA records as the cause of paid flood claims, county by county". Proof: story_oracle build with planted cause data, check_stories PASS.
+- MAJOR "moved" column "Claims rated outside A and V" counted only claims with a current zone (same label, different base than the outside card). Fix: column "Claims rated outside A and V, current zone listed"; stand line says "that also have a current zone listed". Proof: story_oracle PASS.
+- MAJOR "moved" heading "inside them today" / "Now" implied a redrawn map. Fix: h2 "Zone on the claim vs the zone FEMA lists now: claims rated outside zones A and V"; column "Current zone A or V"; note quotes FEMA's field text and says FEMA's data does not say why the zones differ.
+- MINOR dollar column ambiguous: "Their share of all paid dollars". MINOR open claims: note "Claims from recent years may still be open: FEMA's data has no open or closed field."
+- GAP CSV column meaning changed by story: added "meaning" and "source" columns per row.
+- MAJOR (re-review) dollar column "Their share of all paid dollars" overstated the base. Root cause: "all" added in the first fix. Fix: "Claims rated outside A and V: share of dollars paid on claims with a zone"; note adds "Dollars as paid, not adjusted for inflation." Proof: rebuilt page, claims_check PASS.

@@ -34,3 +34,7 @@ _s = _H.stamped_slugs()
 assert {"home", "louisiana", "palm-beach-county-fl", "new-york-county-ny"} <= set(_s), _s   # the samples + one flagged page; Broward left 11-04 (not re-reviewed, not required by S12)
 assert "horry-county-sc" not in _s and "atlantic-county-nj" not in _s, _s   # a FAIL and an older template stay out
 print("carry slug list OK:", len(_s))
+# 11-10: carry into a round that already holds a review must refuse (it overwrote reviewer round 128)
+try: _H.carry("128", "HEAD", ["home"]); raise AssertionError("carry overwrote an existing round file")
+except SystemExit as e: assert "exists" in str(e), e
+print("carry refuses an existing round file OK")

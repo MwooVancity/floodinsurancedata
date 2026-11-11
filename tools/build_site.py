@@ -568,6 +568,76 @@ def claims_rows():   # shared with tools/claims_check.py's independent recompute
         out.append({"geoid": g, "county": names.get(g, g), "state": st_of.get(g[:2], ""), "n": n, "paid": rc["paid_n"], "err": err,
                     "pct": round(100 * rc["paid_n"] / n, 1), "top": top, "top_n": un.get(top, 0), "unpaid": n - rc["paid_n"], "slug": live.get(g)})
     return sorted(out, key=lambda r: r["pct"])
+def story_rows():   # 11-10 news stories, every county with CLAIMS_MIN+ claims in each base (claims_check C9-C11 recompute from the data files)
+    st_of = {v: k for k, v in _FIPS.items()}
+    names = json.load(open(os.path.join(DATADIR, "us", "county_names.json"), encoding="utf-8"))
+    live = {p.get("geoid"): p["slug"] for p in places}
+    out, left = {"out": [], "cause": [], "moved": []}, {"out": 0, "cause": 0, "moved": 0}
+    pc = lambda a, b: round(100 * a / b, 1)
+    for p in sorted(glob.glob(os.path.join(DATADIR, "all-counties", "*.json"))):
+        g = os.path.basename(p)[:-5]; c = (json.load(open(p)).get("extras") or {}).get("claims") or {}
+        base = {"geoid": g, "county": names.get(g, g), "state": st_of.get(g[:2], ""), "slug": live.get(g)}
+        z, k, m = c.get("zone_split") or {}, c.get("cause10") or {}, c.get("moved") or {}
+        if z.get("known_n"):
+            if z["known_n"] >= CLAIMS_MIN and z.get("known_paid"):
+                out["out"].append(dict(base, n=z["known_n"], pct=pc(z["out_n"], z["known_n"]), dpct=pc(z["out_paid"], z["known_paid"]), yrs=(z["from"], z["to"])))
+            else: left["out"] += 1
+        if k.get("with_cause"):
+            if k["with_cause"] >= CLAIMS_MIN:
+                b = k["by_code"]; out["cause"].append(dict(base, n=k["with_cause"], rain=pc(b.get("4", 0), k["with_cause"]), river=pc(b.get("2", 0), k["with_cause"]),
+                                                          tide=pc(b.get("1", 0), k["with_cause"]), yrs=(k["from"], k["to"])))
+            else: left["cause"] += 1
+        if m.get("rated_out_known"):
+            if m["rated_out_known"] >= CLAIMS_MIN:
+                out["moved"].append(dict(base, n=m["rated_out_known"], pct=pc(m["now_av"], m["rated_out_known"]), blank=m["current_blank"], yrs=(m["from"], m["to"])))
+            else: left["moved"] += 1
+    key = {"out": "pct", "cause": "rain", "moved": "pct"}   # rank by value, highest first; ties by county name
+    for s, rs in out.items(): rs.sort(key=lambda r: (-r[key[s]], r["county"], r["state"]))
+    return out, left
+
+def story_cards(clink):
+    out, left = story_rows(); h = ""
+    lo_hi = lambda rs, f: f'{rs[0][f]}% in {clink(rs[0])} to {rs[-1][f]}% in {clink(rs[-1])}'
+    caveat = f'County as coded on each claim record, which can differ from where the building stands. Left out: counties with 1 to {CLAIMS_MIN - 1:,} such claims'
+    if len(out["out"]) >= 2:
+        rs = out["out"]; y = rs[0]["yrs"]
+        h += (f'<div class="card" id="outside"><h2>Flood claims rated outside the high-risk zones, county by county</h2><p class="stand">Losses {y[0]}–{y[1]}: the share of NFIP claims '
+              f'rated outside zones A and V (FEMA\'s high-risk zones) runs from {lo_hi(rs[::-1], "pct")}, among the {len(rs)} counties with {CLAIMS_MIN} or more claims with a zone on the claim.</p>'
+              '<table><thead><tr><th>County</th><th>Claims with a zone</th><th>Rated outside A and V</th><th>Claims rated outside A and V: share of dollars paid on claims with a zone</th></tr></thead><tbody>'
+              + "".join(f'<tr><td>{clink(r)}</td><td>{r["n"]:,}</td><td>{r["pct"]}%</td><td>{r["dpct"]}%</td></tr>' for r in rs)
+              + f'</tbody></table><p class="mut">Highest share first. The zone is the one used to rate each policy, not today\'s map; claims with no zone are not counted. '
+              'Dollars as paid, not adjusted for inflation. Claims from recent years may still be open: FEMA\'s data has no open or closed field. '
+              f'{caveat} ({left["out"]:,} counties). A share of claims is not a chance of flooding for any one home.</p></div>')
+    if len(out["cause"]) >= 2:
+        rs = out["cause"]; y = rs[0]["yrs"]
+        h += (f'<div class="card" id="cause"><h2>Rain, river or tide: what FEMA records as the cause of paid flood claims, county by county</h2><p class="stand">Losses {y[0]}–{y[1]}: among paid NFIP claims '
+              f'with a cause recorded, the share FEMA codes as "accumulation of rainfall or snowmelt" runs from {lo_hi(rs[::-1], "rain")}, in the {len(rs)} counties with {CLAIMS_MIN} or more such claims.</p>'
+              '<table><thead><tr><th>County</th><th>Paid claims with a cause</th><th>Rain or snowmelt</th><th>River, stream or lake overflow</th><th>Tidal water overflow</th></tr></thead><tbody>'
+              + "".join(f'<tr><td>{clink(r)}</td><td>{r["n"]:,}</td><td>{r["rain"]}%</td><td>{r["river"]}%</td><td>{r["tide"]}%</td></tr>' for r in rs)
+              + '</tbody></table><p class="mut">Highest rain share first. FEMA lets a claim carry more than one cause, so a row can add up to more than 100%; other causes '
+              '(alluvial fan, closed basin lake, earth movement, other) are not shown. Codes for how a claim was handled (expedited or remote adjustment) are not causes and are not counted. '
+              f'{caveat} ({left["cause"]:,} counties).</p></div>')
+    if len(out["moved"]) >= 2:
+        rs = out["moved"]; y = rs[0]["yrs"]
+        h += (f'<div class="card" id="moved"><h2>Zone on the claim vs the zone FEMA lists now: claims rated outside zones A and V</h2><p class="stand">Losses {y[0]}–{y[1]}: of NFIP claims rated outside '
+              f'zones A and V that also have a current zone listed, the share whose property FEMA\'s data now lists in zone A or V runs from {lo_hi(rs[::-1], "pct")}, in the {len(rs)} counties with {CLAIMS_MIN} or more such claims.</p>'
+              '<table><thead><tr><th>County</th><th>Claims rated outside A and V, current zone listed</th><th>Current zone A or V</th></tr></thead><tbody>'
+              + "".join(f'<tr><td>{clink(r)}</td><td>{r["n"]:,}</td><td>{r["pct"]}%</td></tr>' for r in rs)
+              + '</tbody></table><p class="mut">Highest share first. "Current zone" is FEMA\'s field for the zone "where the insured property is currently located"; FEMA\'s data does not say why '
+              f'the two zones differ. Claims with no current zone are not counted. {caveat} ({left["moved"]:,} counties).</p></div>')
+    if any(out.values()):
+        with open(os.path.join(DIST, "data", "claims-stories-counties.csv"), "w", newline="", encoding="utf-8") as f:
+            mean = {"outside_zones_a_v": "base: NFIP claims with a rated zone; share: rated outside zones A and V; second: their share of paid dollars on claims with a zone",
+                    "cause_rain_river_tide": "base: paid NFIP claims with a FEMA cause code; share: rain or snowmelt (code 4); second: river, stream or lake (code 2); third: tidal (code 1); a claim can carry several codes",
+                    "rated_outside_now_a_v": "base: NFIP claims rated outside zones A and V with a current zone listed; share: current zone A or V (floodZoneCurrent)"}
+            src = f"FEMA OpenFEMA NFIP Claims v3, as of {_ASOF_TXT}; county as coded on the claim; codes 98/99 left out"
+            w = csv.writer(f); w.writerow(["story", "county_fips", "county", "state", "loss_years", "claims_in_base", "share_pct", "second_share_pct", "third_share_pct", "meaning", "source"])
+            for r in out["out"]: w.writerow(["outside_zones_a_v", r["geoid"], r["county"], r["state"], "%s-%s" % r["yrs"], r["n"], r["pct"], r["dpct"], "", mean["outside_zones_a_v"], src])
+            for r in out["cause"]: w.writerow(["cause_rain_river_tide", r["geoid"], r["county"], r["state"], "%s-%s" % r["yrs"], r["n"], r["rain"], r["river"], r["tide"], mean["cause_rain_river_tide"], src])
+            for r in out["moved"]: w.writerow(["rated_outside_now_a_v", r["geoid"], r["county"], r["state"], "%s-%s" % r["yrs"], r["n"], r["pct"], "", "", mean["rated_outside_now_a_v"], src])
+        h += '<p class="mut"><a href="/data/claims-stories-counties.csv">Download these three tables (CSV)</a>.</p>'
+    return h
+
 import glob
 if len(states) == 51:
     _cr = claims_rows()
@@ -612,6 +682,7 @@ if len(states) == 51:
                        + (f' (left out, with fewer: {", ".join(html.escape(n) for n in _szout)})' if _szout else '') + '.</p>'
                        '<p class="mut">Median of the building payment on claims with recorded building damage and a building payment, every loss year since 1978, in dollars as paid, '
                        'not adjusted for inflation. Contents payments are not in it. Each state page shows its own figure.</p></div>')
+        _ycard += story_cards(clink)
         _rows = "".join(f'<tr><td>{clink(r)}</td><td>{r["n"]:,}</td><td>{r["pct"]}%</td><td>{html.escape(_NR.get(r["top"], "—")) if r["top"] else "—"}</td></tr>' for r in _cr)
         with open(os.path.join(DIST, "data", "claims-2020-counties.csv"), "w", newline="", encoding="utf-8") as f:
             w = csv.writer(f); w.writerow(["county_fips", "county", "state", "claims_loss_year_2020_on", "claims_with_recorded_payment", "share_with_payment_pct",

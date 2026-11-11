@@ -118,6 +118,8 @@ def carry(rnd, prev, slugs):
     """CLAUDE.md budget "None": a template change no reader can see (markup, scripts) keeps its PASS only if every
     slug's visible text equals the release `prev`, which passed review. Any difference stops it: a real review is due."""
     import subprocess
+    if os.path.exists(os.path.join(DIR, f"hater-round{rnd}.md")):   # 11-10: carry overwrote a reviewer's round file; a carry takes its own round
+        sys.exit(f"carry refused: hater-round{rnd}.md exists (a review's record); carry into a new round number")
     def vis(h):
         h = re.sub(r"<(script|style)\b.*?</\1>", "", h, flags=re.S)   # CSS is not text a reader sees
         return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", h)).strip()

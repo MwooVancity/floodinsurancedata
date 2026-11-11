@@ -56,6 +56,54 @@ def check(page, csvtext):
         for m in re.finditer(r"every claim record, paid or not(?!, except records FEMA coded)", open(f, encoding="utf-8").read()):   # "every record" must say so
             bad.append(f"C8 {os.path.relpath(f, ROOT)}: 'every claim record' without the error-code exclusion"); break
     if re.search(r"\bdenied\b", text.replace("does not mean a claim was denied", ""), re.I): bad.append("C4 'denied' printed")
+    return bad + check_stories(page)
+
+def expect_stories():   # 11-10 story tables, from the county files alone: {story: {fips: (n, shares...)}}, left-out counts
+    want, left = {"outside": {}, "cause": {}, "moved": {}}, {"outside": 0, "cause": 0, "moved": 0}
+    r1 = lambda a, b: round(100 * a / b, 1)
+    for p in glob.glob(os.path.join(D, "all-counties", "*.json")):
+        g = os.path.basename(p)[:-5]; c = (json.load(open(p)).get("extras") or {}).get("claims") or {}
+        z, k, m = c.get("zone_split") or {}, c.get("cause10") or {}, c.get("moved") or {}
+        if z.get("known_n"):
+            if z["known_n"] >= 500 and z.get("known_paid"): want["outside"][g] = (z["known_n"], r1(z["out_n"], z["known_n"]), r1(z["out_paid"], z["known_paid"]))
+            else: left["outside"] += 1
+        if k.get("with_cause"):
+            n = k["with_cause"]; b = k["by_code"]
+            if n >= 500: want["cause"][g] = (n, r1(b.get("4", 0), n), r1(b.get("2", 0), n), r1(b.get("1", 0), n))
+            else: left["cause"] += 1
+        if m.get("rated_out_known"):
+            if m["rated_out_known"] >= 500: want["moved"][g] = (m["rated_out_known"], r1(m["now_av"], m["rated_out_known"]))
+            else: left["moved"] += 1
+    return want, left
+
+def check_stories(page, scv=None):   # C9 outside zones, C10 cause, C11 moved: rows, rank order, lede range, left-out count, CSV
+    bad = []; want, left = expect_stories()
+    sp = os.path.join(ROOT, "dist", "data", "claims-stories-counties.csv")
+    if scv is None: scv = open(sp, encoding="utf-8").read() if os.path.exists(sp) else ""
+    story = {"outside_zones_a_v": "outside", "cause_rain_river_tide": "cause", "rated_outside_now_a_v": "moved"}
+    got = {"outside": {}, "cause": {}, "moved": {}}
+    for r in csv.DictReader(scv.splitlines()):
+        v = [float(r[c]) for c in ("share_pct", "second_share_pct", "third_share_pct") if r[c] != ""]
+        got[story[r["story"]]][r["county_fips"]] = (int(r["claims_in_base"]), *v)
+    for code, s in (("C9", "outside"), ("C10", "cause"), ("C11", "moved")):
+        w = want[s]
+        i = page.find(f'id="{s}"')
+        if len(w) < 2:
+            if i >= 0: bad.append(f"{code} card printed with fewer than 2 counties"); continue
+            continue
+        if i < 0: bad.append(f"{code} card missing ({len(w)} counties in the data)"); continue
+        sec = page[i:page.find("</div>", i)]
+        ncol = len(next(iter(w.values()))) - 1
+        rows = re.findall(r"<tr><td>(?:<a [^>]*>)?[^<]*(?:</a>)?</td><td>([\d,]+)</td>" + "<td>([\\d.]+)%</td>" * ncol, sec)
+        tup = [(int(r[0].replace(",", "")), *map(float, r[1:])) for r in rows]
+        if sorted(tup) != sorted(w.values()): bad.append(f"{code} table differs from data: {len(tup)} rows vs {len(w)}")
+        if [t[1] for t in tup] != sorted((t[1] for t in tup), reverse=True): bad.append(f"{code} not ranked by value")
+        if got[s] != w: bad.append(f"{code} CSV differs from data")
+        lo, hi = min(t[1] for t in w.values()), max(t[1] for t in w.values())
+        txt = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", sec))
+        mr = re.search(r"runs from ([\d.]+)% in .*? to ([\d.]+)% in .*?, (?:among|in) the (\d+) counties", txt)
+        if not mr or (float(mr[1]), float(mr[2]), int(mr[3])) != (lo, hi, len(w)): bad.append(f"{code} lede range {mr and mr.groups()} vs {lo}-{hi} in {len(w)}")
+        if f"such claims ({left[s]:,} counties)" not in txt: bad.append(f"{code} left-out count missing or not {left[s]:,}")
     return bad
 
 def check_nfip(page):   # /nfip/: lede and tiles recomputed from built.json + cost_hist.json, sharing no code with build_site
@@ -129,7 +177,16 @@ if __name__ == "__main__":
             assert any(b.startswith("C8") for b in check(pg, cv)), "mutation not caught: claim-record label"
         finally:
             os.remove(tf)
-        print("claims_check mutations: 7 caught"); sys.exit()
+        o = pg.find('id="outside"')   # C9-C11 (11-10): a changed share, a swapped rank, a dropped CSV row
+        if o >= 0:
+            m1 = pg[:o] + re.sub(r"(</td><td>[\d,]+</td><td>)([\d.]+)%", r"\g<1>0.1%", pg[o:], count=1)
+            assert any(b.startswith("C9") for b in check_stories(m1)), "mutation not caught: story share"
+            rs = re.findall(r"<tr><td>.*?</tr>", pg[o:pg.find("</div>", o)])
+            m2 = pg.replace(rs[0], "@@").replace(rs[1], rs[0]).replace("@@", rs[1])
+            assert any("ranked" in b for b in check_stories(m2)), "mutation not caught: rank order"
+            sv = open(os.path.join(ROOT, "dist", "data", "claims-stories-counties.csv"), encoding="utf-8").read().splitlines(); sv.pop(1)
+            assert any("CSV" in b for b in check_stories(pg, "\n".join(sv))), "mutation not caught: story CSV row"
+        print("claims_check mutations: 10 caught"); sys.exit()
     bad = check(pg, cv)
     for b in bad: print("  -", b)
     print("CLAIMS CHECK", "FAIL" if bad else "PASS"); sys.exit(1 if bad else 0)

@@ -146,6 +146,8 @@ def claims(st):
                                            "dmg": [], "paid_b": [], "over_cov": 0, "dmg_n": 0, "elev_paid": [], "low_paid": [],
                                            "dec": collections.defaultdict(lambda: [0, 0]),   # decade of loss: [claims, paid something]
                                            "zone": collections.defaultdict(lambda: [0, 0, 0.0]),
+                                           "moved": [0, 0, 0],   # loss years LOSS_FROM..LOSS_TO, rated outside A/V: [current zone known, current A/V, current blank]
+                                           "cause10": [0, 0, collections.Counter()],   # same years, paid claims: [paid, with a labelled cause, claims per cause code]
                                            "recent": [0, 0, collections.Counter()]})   # loss year RECENT_FROM+: [claims, paid, reason codes of the unpaid] (claims research page)   # zone on the claim, loss years LOSS_FROM..LOSS_TO: [claims, paid, dollars]
     for r in rows("NfipClaims", st):
         paid = net(r)
@@ -160,8 +162,16 @@ def claims(st):
             if r["yearOfLoss"]:   # hater r6/r7: is a low paid share one era or every era?
                 dc = a["dec"][str(r["yearOfLoss"])[:3] + "0s"]; dc[0] += 1; dc[1] += paid > 0
             if LOSS_FROM <= str(r["yearOfLoss"] or "")[:4] <= LOSS_TO:   # 11-09: counties too (zone_split: claims outside zones A and V)
-                zc = a["zone"][(r["ratedFloodZone"] or "").strip().upper() or "blank"]; zc[0] += 1
+                rz = (r["ratedFloodZone"] or "").strip().upper()
+                zc = a["zone"][rz or "blank"]; zc[0] += 1
                 if paid > 0: zc[1] += 1; zc[2] += paid
+                if rz and rz[0] not in "AV":   # 11-10 story "rated outside A/V, in A/V on FEMA's record of where it is now" (floodZoneCurrent)
+                    cz = (r.get("floodZoneCurrent") or "").strip().upper(); mv = a["moved"]
+                    if not cz: mv[2] += 1
+                    else: mv[0] += 1; mv[1] += cz[0] in "AV"
+                if paid > 0:   # 11-10 story "it wasn't the river": paid claims counted once per cause code (B/C/D are handling, not causes)
+                    cs = {ch for ch in (r["causeOfDamage"] or "") if ch in CAUSE}; cc = a["cause10"]; cc[0] += 1
+                    if cs: cc[1] += 1; cc[2].update(cs)
             if str(r["yearOfLoss"] or "")[:4] >= RECENT_FROM:
                 rc = a["recent"]; rc[0] += 1
                 if paid > 0: rc[1] += 1
@@ -205,6 +215,9 @@ def claims(st):
                   "by_decade": {d: {"n": v[0], "paid_pct": pct(v[1], v[0])} for d, v in sorted(a["dec"].items())}}
         rc = a["recent"]   # FEMA's data has no open/closed field: a zero-payment claim is "no recorded payment", never "denied"
         out[k]["recent"] = {"from": RECENT_FROM, "n": rc[0], "paid_n": rc[1], "unpaid_reasons": dict(rc[2])}
+        mv, cc = a["moved"], a["cause10"]
+        out[k]["moved"] = {"from": LOSS_FROM, "to": LOSS_TO, "rated_out_known": mv[0], "now_av": mv[1], "current_blank": mv[2]}
+        out[k]["cause10"] = {"from": LOSS_FROM, "to": LOSS_TO, "paid_n": cc[0], "with_cause": cc[1], "by_code": dict(cc[2])}
         if k == "ST": out[k]["by_zone"] = {z: {"n": v[0], "paid_n": v[1], "paid": round(v[2])} for z, v in a["zone"].items()}; out[k]["_pb"] = a["paid_b"]
         else:   # same split as the zone pages: a zone on the claim, first letter not A or V = outside the high-risk zones
             kz = [(z, v) for z, v in a["zone"].items() if z != "blank"]; oz = [v for z, v in kz if z[0] not in "AV"]
