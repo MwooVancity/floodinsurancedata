@@ -7,6 +7,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Weber County, Utah",zone_cost,X,$444,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + ratedFloodZone,"August 31, 2026"
 "Weber County, Utah",zone_share,AE,24.8%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"August 31, 2026"
 "Weber County, Utah",zone_share,A,10.3%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"August 31, 2026"
+"Weber County, Utah",share_below,qa,10.8%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 "Weber County, Utah",paid_share,,55.0%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Weber County, Utah",paid_share,state,63.2%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Weber County, Utah",pct_vs,state below,24%,pct,FEMA OpenFEMA — NFIP Policies,policyCost,"August 31, 2026"

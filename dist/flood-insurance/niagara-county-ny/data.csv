@@ -6,6 +6,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Niagara County, New York",share_below,,28.0%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 "Niagara County, New York",zone_cost,AE,$846,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + ratedFloodZone,"August 31, 2026"
 "Niagara County, New York",zone_cost,X,$749,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + ratedFloodZone,"August 31, 2026"
+"Niagara County, New York",share_below,qa,28.0%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 "Niagara County, New York",paid_share,,66.3%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Niagara County, New York",paid_share,state,84.3%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Niagara County, New York",decade,2020s,2020s,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"

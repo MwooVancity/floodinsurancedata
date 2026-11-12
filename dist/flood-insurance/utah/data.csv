@@ -7,6 +7,7 @@ Utah,share_below,,17.7%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiu
 Utah,zone_cost,X,$527,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + ratedFloodZone,"August 31, 2026"
 Utah,zone_cost,AE,$741,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + ratedFloodZone,"August 31, 2026"
 Utah,zone_cost,A,$644,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + ratedFloodZone,"August 31, 2026"
+Utah,share_below,qa,17.7%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 Utah,paid_share,,63.2%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 Utah,decade,2020s,2020s,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
 Utah,decade_paid_share,2020s,56.2%,pct,FEMA OpenFEMA — NFIP Claims,yearOfLoss + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"

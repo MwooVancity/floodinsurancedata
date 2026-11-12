@@ -6,6 +6,7 @@ Maryland,cost_p75,,$817,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,polic
 Maryland,share_below,,15.1%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 Maryland,zone_cost,X,$464,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + ratedFloodZone,"August 31, 2026"
 Maryland,zone_cost,AE,$701,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + ratedFloodZone,"August 31, 2026"
+Maryland,share_below,qa,15.1%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 Maryland,paid_share,,61.7%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 Maryland,decade,2020s,2020s,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
 Maryland,decade_paid_share,2020s,79.2%,pct,FEMA OpenFEMA — NFIP Claims,yearOfLoss + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"

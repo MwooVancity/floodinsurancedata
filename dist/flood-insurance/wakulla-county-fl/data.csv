@@ -8,6 +8,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Wakulla County, Florida",zone_cost,VE,"$4,496",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + ratedFloodZone,"August 31, 2026"
 "Wakulla County, Florida",zone_cost,A,"$1,161",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + ratedFloodZone,"August 31, 2026"
 "Wakulla County, Florida",zone_cost,X,"$1,092",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + ratedFloodZone,"August 31, 2026"
+"Wakulla County, Florida",share_below,qa,56.9%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 "Wakulla County, Florida",paid_share,,82.6%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Wakulla County, Florida",paid_share,state,72.8%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Wakulla County, Florida",decade,2010s,2010s,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"

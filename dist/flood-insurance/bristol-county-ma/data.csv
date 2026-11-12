@@ -7,6 +7,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Bristol County, Massachusetts",zone_cost,AE,"$1,315",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + ratedFloodZone,"August 31, 2026"
 "Bristol County, Massachusetts",zone_cost,VE,"$2,384",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + ratedFloodZone,"August 31, 2026"
 "Bristol County, Massachusetts",zone_cost,X,$812,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + ratedFloodZone,"August 31, 2026"
+"Bristol County, Massachusetts",share_below,qa,34.6%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 "Bristol County, Massachusetts",paid_share,,71.3%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Bristol County, Massachusetts",paid_share,state,80.0%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Bristol County, Massachusetts",decade,2020s,2020s,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"

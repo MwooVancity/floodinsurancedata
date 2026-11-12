@@ -7,6 +7,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Lonoke County, Arkansas",zone_cost,AE,$951,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + ratedFloodZone,"August 31, 2026"
 "Lonoke County, Arkansas",zone_share,A,36.1%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"August 31, 2026"
 "Lonoke County, Arkansas",zone_share,X,26.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"August 31, 2026"
+"Lonoke County, Arkansas",share_below,qa,40.6%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 "Lonoke County, Arkansas",paid_share,,80.0%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Lonoke County, Arkansas",paid_share,state,82.8%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Lonoke County, Arkansas",pct_vs,state below,3%,pct,FEMA OpenFEMA — NFIP Policies,policyCost,"August 31, 2026"

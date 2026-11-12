@@ -6,6 +6,7 @@ Idaho,cost_p75,,"$1,318",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,poli
 Idaho,share_below,,37.6%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 Idaho,zone_cost,AE,"$1,040",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + ratedFloodZone,"August 31, 2026"
 Idaho,zone_cost,X,"$1,083",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + ratedFloodZone,"August 31, 2026"
+Idaho,share_below,qa,37.6%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 Idaho,paid_share,,74.3%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 Idaho,decade,2020s,2020s,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
 Idaho,decade_paid_share,2020s,69.5%,pct,FEMA OpenFEMA — NFIP Claims,yearOfLoss + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"

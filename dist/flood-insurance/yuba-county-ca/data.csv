@@ -6,6 +6,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Yuba County, California",share_below,,78.0%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 "Yuba County, California",zone_cost,X,"$1,186",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + ratedFloodZone,"August 31, 2026"
 "Yuba County, California",zone_cost,A,"$1,712",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + ratedFloodZone,"August 31, 2026"
+"Yuba County, California",share_below,qa,78.0%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 "Yuba County, California",paid_share,,75.2%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Yuba County, California",paid_share,state,69.2%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Yuba County, California",decade,1990s,1990s,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"

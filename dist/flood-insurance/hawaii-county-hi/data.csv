@@ -7,6 +7,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Hawaii County, Hawaii",zone_cost,X,"$1,226",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + ratedFloodZone,"August 31, 2026"
 "Hawaii County, Hawaii",zone_cost,AE,"$1,290",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + ratedFloodZone,"August 31, 2026"
 "Hawaii County, Hawaii",zone_share,VE,28.8%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"August 31, 2026"
+"Hawaii County, Hawaii",share_below,qa,85.3%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 "Hawaii County, Hawaii",paid_share,,71.9%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Hawaii County, Hawaii",paid_share,state,68.3%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Hawaii County, Hawaii",decade,2020s,2020s,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"

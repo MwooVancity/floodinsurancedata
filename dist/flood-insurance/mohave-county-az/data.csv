@@ -8,6 +8,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Mohave County, Arizona",zone_cost,AO,$688,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + ratedFloodZone,"August 31, 2026"
 "Mohave County, Arizona",zone_cost,X,$838,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + ratedFloodZone,"August 31, 2026"
 "Mohave County, Arizona",zone_share,A,11.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"August 31, 2026"
+"Mohave County, Arizona",share_below,qa,38.5%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 "Mohave County, Arizona",paid_share,,66.9%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Mohave County, Arizona",paid_share,state,70.6%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Mohave County, Arizona",decade,1990s,1990s,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"

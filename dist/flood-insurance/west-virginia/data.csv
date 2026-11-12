@@ -7,6 +7,7 @@ West Virginia,share_below,,73.4%,pct,FEMA OpenFEMA — NFIP Policies,totalInsura
 West Virginia,zone_cost,AE,"$1,492",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + ratedFloodZone,"August 31, 2026"
 West Virginia,zone_cost,X,"$1,087",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + ratedFloodZone,"August 31, 2026"
 West Virginia,zone_cost,A,"$1,466",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + ratedFloodZone,"August 31, 2026"
+West Virginia,share_below,qa,73.4%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 West Virginia,paid_share,,85.1%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 West Virginia,decade,2020s,2020s,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
 West Virginia,decade_paid_share,2020s,84.8%,pct,FEMA OpenFEMA — NFIP Claims,yearOfLoss + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"

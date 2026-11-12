@@ -15,7 +15,9 @@ def _h(*parts):
 def global_fp():   # once per process: code + all national files + the built-states list
     global _G
     if _G is None:
-        files = [os.path.join(T, f) for f in CODE] + sorted(glob.glob(os.path.join(ROOT, "data", "us", "*"))) \
+        # 11-12: map_status.json changes daily (new counties' map pulls) and is read per county only, so it is in each county's
+        # print (build_counties.py), not the global one; in the global print it rebuilt every page every day (~340 s at 312)
+        files = [os.path.join(T, f) for f in CODE] + sorted(f for f in glob.glob(os.path.join(ROOT, "data", "us", "*")) if not f.endswith("map_status.json")) \
                 + [os.path.join(ROOT, "data", "states", "built.json")]
         _G = _h(*[(os.path.basename(f), open(f, "rb").read()) for f in files if os.path.isfile(f)])
     return _G

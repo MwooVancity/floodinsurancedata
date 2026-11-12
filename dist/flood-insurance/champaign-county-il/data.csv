@@ -7,6 +7,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Champaign County, Illinois",zone_cost,X,"$1,040",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + ratedFloodZone,"August 31, 2026"
 "Champaign County, Illinois",zone_share,AE,43.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"August 31, 2026"
 "Champaign County, Illinois",zone_share,A,17.9%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"August 31, 2026"
+"Champaign County, Illinois",share_below,qa,48.1%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 "Champaign County, Illinois",paid_share,,83.8%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Champaign County, Illinois",paid_share,state,80.4%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Champaign County, Illinois",decade,2000s,2000s,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"

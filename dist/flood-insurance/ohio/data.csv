@@ -7,6 +7,7 @@ Ohio,share_below,,28.8%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiu
 Ohio,zone_cost,AE,"$1,024",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + ratedFloodZone,"August 31, 2026"
 Ohio,zone_cost,X,$696,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + ratedFloodZone,"August 31, 2026"
 Ohio,zone_cost,A,$900,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + ratedFloodZone,"August 31, 2026"
+Ohio,share_below,qa,28.8%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 Ohio,paid_share,,80.0%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 Ohio,decade,2020s,2020s,count,FEMA OpenFEMA — NFIP Claims,yearOfLoss,"August 31, 2026"
 Ohio,decade_paid_share,2020s,77.0%,pct,FEMA OpenFEMA — NFIP Claims,yearOfLoss + netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"

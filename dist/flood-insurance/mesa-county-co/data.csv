@@ -7,6 +7,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Mesa County, Colorado",zone_cost,AE,"$1,197",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + ratedFloodZone,"August 31, 2026"
 "Mesa County, Colorado",zone_cost,X,$614,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + ratedFloodZone,"August 31, 2026"
 "Mesa County, Colorado",zone_share,A,20.1%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"August 31, 2026"
+"Mesa County, Colorado",share_below,qa,21.9%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 "Mesa County, Colorado",paid_share,,43.9%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Mesa County, Colorado",paid_share,state,66.2%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Mesa County, Colorado",crs_count,sfha_discounted,1,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),communityName + sfhaDiscount,"August 31, 2026"

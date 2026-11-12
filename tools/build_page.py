@@ -1042,7 +1042,7 @@ if IS_STATE and US_P50:
             if (_pp.get("cost_n") or 0) >= 100: _ranked.append((_pp["p50"], _a))
     _ranked.sort(reverse=True)
     _r = next((i + 1 for i, (_, a) in enumerate(_ranked) if a == _ab), None)
-    cmp_line = (f'<p class="cmp">The median, {m('cost_p50', money(P['p50']))}, is {_pct_vs(P["p50"], US_P50, "us")} the U.S. median of {m("us_p50", money(US_P50))}'
+    cmp_line = (f'<p class="cmp">The median here, {m('cost_p50', money(P['p50']))} a year (single-family primary home, premium plus fees, in force {POL_ASOF}), is {_pct_vs(P["p50"], US_P50, "us")} the U.S. median of {m("us_p50", money(US_P50))}'
                 + ((f'; {m("cost_rank", _rank(_r, len(_ranked)))} of the {m("rank_n", str(len(_ranked) - 1), q="states")} states and DC'
                     if "DC" in [a for _, a in _ranked] else
                     f'; {m("cost_rank", _rank(_r, len(_ranked)))} of {m("rank_n", str(len(_ranked)))} states') if _r else "") + ".</p>")
@@ -1051,7 +1051,7 @@ elif _sagg and not IS_STATE:
     _sc.sort(reverse=True)
     _r = next((i + 1 for i, (_, g) in enumerate(_sc) if g == GEOID_SELF), None)
     _sn = html.escape(STATE_NAMES[_ab])
-    cmp_line = (f'<p class="cmp">The median, {m('cost_p50', money(P['p50']))}, is {_pct_vs(P["p50"], _sagg["policies"]["p50"], "state")} the {_sn} median of {m("state_p50", money(_sagg["policies"]["p50"]))}'
+    cmp_line = (f'<p class="cmp">The median here, {m('cost_p50', money(P['p50']))} a year (single-family primary home, premium plus fees, in force {POL_ASOF}), is {_pct_vs(P["p50"], _sagg["policies"]["p50"], "state")} the {_sn} median of {m("state_p50", money(_sagg["policies"]["p50"]))}'
                 + (f' and {_pct_vs(P["p50"], US_P50, "us")} the U.S. median of {m("us_p50", money(US_P50))}' if US_P50 else "")
                 + (f'; {m("cost_rank", _rank(_r, len(_sc)))} of {m("rank_n", str(len(_sc)))} {_sn} {UNITS} with {tp("threshold", "const.rank_min", q="rank_min")}+ priced policies' if _r else "") + ".</p>")
     _zs = [z for z in (P.get("by_zip") or []) if z.get("median")]
@@ -1060,7 +1060,7 @@ elif _sagg and not IS_STATE:
         _zix = {z["zip"]: i for i, z in enumerate(P["by_zip"])}
         cmp_line += (f'<p class="cmp">By ZIP (the {m("zip_count", str(len(_zs)), q="priced")} with {tp("threshold", "const.zip_min", q="zip_min")}+ priced policies), the median ranges from {tp("zip_cost", f"policies.by_zip.{_zix[_zlo['zip']]}.median", money, q=_zlo["zip"])} '
                      f'({m("zip", _zl(_zlo["zip"]), q=_zlo["zip"])}) to {tp("zip_cost", f"policies.by_zip.{_zix[_zhi['zip']]}.median", money, q=_zhi["zip"])} '
-                     f'({m("zip", _zl(_zhi["zip"]), q=_zhi["zip"])}); <a href="#zip">find your ZIP</a>.</p>')
+                     f'(<a href="#zip">{m("zip", _zl(_zhi["zip"]), q=_zhi["zip"])}</a>).</p>')   # 11-12 P4: the ZIP itself links to the ZIP table
 # 11-09: a screen-1 cost-by-year sentence was tried and cut: screen 1 is full on big counties (P4 quote checker, P3 jump);
 # "is it rising?" is the full-risk tile on screen 1 and the cost-by-year card right after the cost card
 if IS_STATE:
@@ -1113,6 +1113,9 @@ if _zq:
                # audit 11-10 (Travis A, AO): a priced zone past the first ones is never dropped silently
                + ("; more zones below" if set(z for z in (P.get("cost_by_zone") or {}) if z != "Unknown") - set(dict(_zq)) else "")
                + '.</a>')
+if P.get("share_below"):   # audit 11-10 MAJOR 2: "is it rising?" is one of the six screen-1 answers (owner reader order)
+    _qa.append(f'<a href="#gap"><b>{claim("Is it rising?", "rising", ("share_below", ">", 0))}</b> {m("share_below", str(P["share_below"]) + "%", q="qa")} of single-family primary-home policies have a premium under '
+               f'FEMA\'s full-risk premium (not a quote), so their {claim("bills rise toward it", "rise", ("share_below", ">", 0))}.</a>')
 _cxq = data.get("claims_extra") or {}
 if _cxq.get("claims") and _cxq.get("avg_paid") and P.get("p50"):
     _sroot = ROOT_DATA.get("state") if isinstance(ROOT_DATA.get("state"), dict) else {}   # on a state page "state" is just its code
@@ -1127,14 +1130,14 @@ if _cxq.get("claims") and _cxq.get("avg_paid") and P.get("p50"):
                   + "".join(f"; {m('decade', html.escape(d), q=d)}: {tp('decade_claims', f'extras.claims.by_decade.{d}.n', q=d)} {pl(_xc['by_decade'][d]['n'], 'claim')}, too few for a share"
                             for d in sorted(_decs_out) if d > _decs[-1]) + '.' if len(_decs) > 1 else '')
                + ' No recorded payment can mean paperwork or damage the policy did not count as flood.</a>')
-_qa.append('<a href="#covered"><b>Already flooded?</b> What to do now, and what FEMA aid covers.</a>')
+_qa.append('<a href="#covered"><b>Already flooded?</b> What to do now, and FEMA aid.</a>')
 _qd = [c for c in crs if _pct(c.get("sfhaDiscount"))]   # hcu 11-07: the local savings fact sat in section 13
 if crs and not IS_STATE:
     _qt = max(_qd, key=lambda c: int(_pct(c["sfhaDiscount"]).rstrip("%"))) if _qd else None
     _qa.append('<a href="#crs"><b>Can I pay less?</b> ' + (f"Community discount in {m('crs_count', str(len(_qd)), q='sfha_discounted')} of {m('crs_count', str(len(crs)), q='all')} NFIP "
                f"{pl(len(crs), 'community', 'communities')} here, up to {m('crs_discount', _pct(_qt['sfhaDiscount']), q=html.unescape(_cname_plain(_qt)) + ':sfha')} ({_cname(_qt)}). Other ways below.</a>"
                if _qt else "No community discount here; other ways below.</a>"))
-_qa.append('<a href="#compare"><b>Is my quote normal?</b> Type it in to compare with existing policies here (not a quote).</a>')
+# 11-12: "Is my quote normal?" dropped from the list: the quote checker itself follows the hero (P4 room for "Is it rising?")
 quick_answers = '<nav class="jump qa">' + "".join(_qa) + "</nav>"
 
 # provenance: we download every record FEMA publishes for the place and recompute; say so, with the counts
@@ -1501,10 +1504,10 @@ table{{width:100%}}}}
 {_jump}
 {ZONEMAP if _tool_on("zonemap") else '<a class="btn" href="https://msc.fema.gov/portal/home" rel="noopener" target="_blank">Check your address on FEMA' + "'" + 's flood map →</a>'}
 {quick_answers}
-{cmp_line}
 </section>
 
 {quote_widget}
+{('<section class="card cmpcard">' + cmp_line + '</section>') if cmp_line else ''}
 {('<section class="card">' + _renew_line + '</section>') if _renew_line else ''}
 
 {prov_line}

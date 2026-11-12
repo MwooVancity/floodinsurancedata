@@ -6,6 +6,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Gaston County, North Carolina",share_below,,39.9%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 "Gaston County, North Carolina",zone_cost,AE,"$1,310",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + ratedFloodZone,"August 31, 2026"
 "Gaston County, North Carolina",zone_cost,X,$732,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + ratedFloodZone,"August 31, 2026"
+"Gaston County, North Carolina",share_below,qa,39.9%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 "Gaston County, North Carolina",paid_share,,61.4%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Gaston County, North Carolina",paid_share,state,78.2%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Gaston County, North Carolina",crs_count,sfha_discounted,2,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),communityName + sfhaDiscount,"August 31, 2026"

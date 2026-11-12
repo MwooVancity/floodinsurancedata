@@ -5,6 +5,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Nye County, Nevada",cost_p75,,$977,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"August 31, 2026"
 "Nye County, Nevada",share_below,,30.3%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 "Nye County, Nevada",zone_cost,AO,$856,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost + ratedFloodZone,"August 31, 2026"
+"Nye County, Nevada",share_below,qa,30.3%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 "Nye County, Nevada",paid_share,,47.4%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Nye County, Nevada",paid_share,state,69.6%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Nye County, Nevada",state_p50,,$860,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"August 31, 2026"

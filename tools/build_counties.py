@@ -91,6 +91,7 @@ def _no_county(st, sagg):   # policies and claims FEMA gives no county: in the s
             "claims_pct": round(100 * c / sagg["claims"]["rows"], 1) if sagg["claims"]["rows"] else 0}
 
 import fingerprint as FP   # build only what changed (PLAN scale guard)
+_MSF = os.path.join(DATA, "us", "map_status.json"); _MSTAT = json.load(open(_MSF)) if os.path.exists(_MSF) else {}
 _ADJ = json.load(open(os.path.join(DATA, "us", "county_adjacency.json"))) if os.path.exists(os.path.join(DATA, "us", "county_adjacency.json")) else {}
 def build_one(item):
     g, st, name, sl = item
@@ -99,7 +100,8 @@ def build_one(item):
     sd = os.path.join(DATA, "states", state_slug(st))
     near = sorted((p["slug"], p["units"], p["median"]) for p in json.load(open(PLACES)) if p["state"] == st or p["geoid"] in _ADJ.get(g, []))
     fp = FP.page_fp([os.path.join(d, f) for f in ("agg.json", "data.json", "extras.json")] + [os.path.join(sd, f) for f in ("agg.json", "data.json", "extras.json")],
-                    {"off": off, "idx": g in INDEXED, "label": f"{name}, {NAMES[st]}", "base": BASE, "near": near, "review": REVIEW})
+                    {"off": off, "idx": g in INDEXED, "label": f"{name}, {NAMES[st]}", "base": BASE, "near": near, "review": REVIEW,
+                     "map": _MSTAT.get(g)})   # this county's FEMA map status only (fingerprint.py, 11-12)
     if FP.unchanged(out, fp): return sl, None   # same inputs, same page: it passed the gate when it was built
     env = dict(os.environ, FF_DIR=d, OUT_HTML=out, FF_GEOID=g, FF_SLUG=sl, FF_COUNTYLABEL=f"{name}, {NAMES[st]}", FF_COUNTYSHORT=name,
                FF_OFFICIAL=off, FF_BASEURL=BASE, FF_PLACES=PLACES, FF_PLACES_RO="1", FF_NOINDEX="0" if g in INDEXED else "1")
