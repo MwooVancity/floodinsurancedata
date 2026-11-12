@@ -12,15 +12,16 @@ Most helpful flood-insurance page for every US place a homeowner or buyer search
 ~50,000 pageviews a month at a $30 RPM (third-party estimate). Milestones (GA4 pageviews a month): 02-2027 2,000; 05 8,000; 08 20,000; 11 50,000; two misses in a row = re-plan. Links are the lever and wait on the owner's contact address. Ads only above 1,000 sessions a month; referrals only after the licensing + FTC check.
 
 ## Next, in order
-1. Fix the daily run (failed 11-11, run 43105520015: test_google_gate S6 regex missed a /data/ entry with lastmod). Fixed in tools; rerun publish-counties once, confirm green.
-2. Screen 1 at 390x844: all six answers (risk, required, cost, rising, pays, pay less) on screen 1. 11-11: answers moved above the compare line and map button (3 of 6 on screen 1 on 5 counties); next: keep F1 and P4 passing.
-3. Daily build: build and gate only the pages whose inputs changed (measure the daily run first; ~30 min projected at 2,050 pages, 45-min timeout).
+2. DECIDED 11-12 (live, read on Brevard): screen 1 at 390x844 shows risk, required and cost; rising, pay-out and pay-less follow by ~1,300 px (Georgetown, Travis, Harris measured). More on screen 1 only by cutting an answer (Florida's Citizens rule makes "required" ~200 px) or the quote checker leaving screen 2 (P4), so it stops here; compare and ZIP lines moved to a card after the quote checker.
+3. WAITING 11-13: read the daily run's build time (map_status out of the global fingerprint 11-12: local rebuild 67 s, unchanged rerun 16 s; CI was ~340 s at 312 pages).
 4. WAITING 11-15: weekly Search Console + GA4 read; IndexNow recheck.
 5. WAITING 11-18/11-20: start-date tool and address tool to "all" after 7 green nightly live tests.
 6. WAITING 12-09: monthly top-3 compare on every keyword group; each gap built or decided.
 7. WAITING 12-12: NFIP extension past 12-11? During a lapse set `start` to [].
 8. WAITING 2027-01-05: .git (241 MB on 11-11, ~12 MB/day). At 1 GB move built pages to a 'site' branch (deploy.yml, publish-counties commit and rollback, google_gate S7, lastmod.py, hater carry, indexnow, hotfix guard move with it).
 Sameness (tools/sameness.py, warning only, owner 11-08): 50.0% median of sentence words shared by all 8 sample counties (11-11). What is left is headings, the question list, screen-1 answers and per-figure labels; the next move is a new per-place fact, never a cut of a reader answer.
+
+Review cost 11-11/12 (rounds per shipped batch, ~50-110k each): batch 1 4 (132-135), rules move 3 (136-138), sources 2 (139-140), cap 2 (141-142), labels 3 (143-145), screen-1 reorder 4 (146-149), screen-1 answers 1+ (150). Two of every three re-reviews caught a real label defect (r133 9999 date, r136 flooded link, r143 LOMA scope, r146 'That', r147 ZIP base). Rule: no visible-text change = `hater.py carry`, no review.
 
 ## Backlinks (Claude builds, owner sends)
 - Owner first: a corrections/contact address. Drafts ready in `state/outreach/pitches.md` (waves 1-3, disaster kit).
