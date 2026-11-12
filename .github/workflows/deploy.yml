@@ -1,6 +1,7 @@
 name: deploy
 # Deploy the committed dist/ to Cloudflare when a push changes the site (99 of 144 commits changed none of it).
 on:
+  workflow_dispatch:   # 11-11: a push run stuck queued for 4 h; a manual run (or a newer push) replaces it in the group
   push:
     branches: [master]
     paths: ['dist/**', 'wrangler.jsonc', '.github/workflows/deploy.yml']

@@ -2,9 +2,31 @@
   python -I tools/release.py          build all pages + gate 2 on each, unit tests, mutation suite, phone check (dist)
   python -I tools/release.py --live   after deploy: phone check + every live page byte-equal to the built page
 recheck.py (network, minutes) runs separately as its own background job before a release is called verified."""
-import os, re, subprocess, sys
+import json, os, re, subprocess, sys
 
 T = os.path.dirname(os.path.abspath(__file__))
+
+def wait_deploy(poll, now, sleep, stuck=900, limit=1800, every=15):
+    """'' when the deploy run succeeds, else why it stopped. 11-11: run 43097109682 sat queued with no job for 4 h and the
+    release waited on it; a run queued with no job for 15 min (GitHub stuck, or Actions minutes used up) stops the release."""
+    t0 = now()
+    while True:
+        status, concl, jobs = poll()
+        if status == "completed": return "" if concl == "success" else f"finished {concl}"
+        if status == "queued" and not jobs and now() - t0 > stuck: return "queued with no job for 15 min (GitHub stuck or Actions minutes used up)"
+        if now() - t0 > limit: return f"still {status} after 30 min"
+        sleep(every)
+
+if "--test-deploy-wait" in sys.argv:   # fake GitHub and clock: every path of wait_deploy
+    def run(states):
+        t = [0]; it = iter(states)
+        def poll(): return next(it, states[-1])
+        return wait_deploy(poll, lambda: t[0], lambda s: t.__setitem__(0, t[0] + s))
+    assert run([("queued", None, 0), ("in_progress", None, 1), ("completed", "success", 1)]) == ""
+    assert "queued with no job" in run([("queued", None, 0)])
+    assert "finished failure" in run([("in_progress", None, 1), ("completed", "failure", 1)])
+    assert "after 30 min" in run([("in_progress", None, 1)])
+    print("deploy wait: 4 cases PASS"); sys.exit()
 def step(name, *cmd):   # every step is timed (PLAN: measure every recurring job; what grows with pages gets fingerprinted)
     print(f"== {name}", flush=True); t0 = __import__("time").time()
     r = subprocess.run([sys.executable, "-I", *cmd], cwd=os.path.dirname(T))
@@ -44,6 +66,7 @@ else:
     step("site factory stress (national edge cases: no crash, garbage, dead link)", os.path.join(T, "test_site_factory.py"))
     step("hater verdict parser", os.path.join(T, "test_hater.py"))
     step("sitemap lastmod rule", os.path.join(T, "lastmod.py"), "--test")
+    step("deploy wait: stuck or failed deploy run stops the release", os.path.join(T, "release.py"), "--test-deploy-wait")
     step("national rules live once on /nfip/ (owner 11-11)", os.path.join(T, "rules_home.py"))
     step("national rules guard mutations", os.path.join(T, "rules_home.py"), "--test")
     step("identical text across place pages: warning only (owner 11-08, 11-11)", os.path.join(T, "sameness.py"))
@@ -85,8 +108,12 @@ else:
                                  cwd=R, capture_output=True, text=True).stdout.strip()
             if rid: break
             time.sleep(6)
-        if not rid or subprocess.run(["gh", "run", "watch", rid, "--exit-status", "--interval", "10"], cwd=R, capture_output=True).returncode:
-            sys.exit(f"RELEASE STOPPED at: deploy (deploy.yml run {rid or 'not found'} for {head[:9]})")
+        if not rid: sys.exit(f"RELEASE STOPPED at: deploy (no deploy.yml run for {head[:9]})")
+        def poll():
+            j = json.loads(subprocess.run(["gh", "run", "view", rid, "--json", "status,conclusion,jobs"], cwd=R, capture_output=True, text=True).stdout or "{}")
+            return j.get("status"), j.get("conclusion"), len(j.get("jobs") or [])
+        why = wait_deploy(poll, time.monotonic, time.sleep)
+        if why: sys.exit(f"RELEASE STOPPED at: deploy (deploy.yml run {rid} for {head[:9]}: {why})")
     time.sleep(20)   # Cloudflare edge caches
     step("live", os.path.join(T, "release.py"), "--live")
     subprocess.run([sys.executable, "-I", os.path.join(T, "indexnow.py"), base], cwd=R)   # notice only; never stops a release

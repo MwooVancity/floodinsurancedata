@@ -13,7 +13,12 @@ try:
     d = os.path.join(tmp, "dist"); shutil.copytree(DIST, d)
     sm = os.path.join(d, "sitemap.xml"); base = open(sm, encoding="utf-8").read()
     assert not s6(d), s6(d)
-    muts = {"page dropped": re.sub(r"\s*<url><loc>[^<]*/data/</loc></url>", "", base, count=1),
+    # 11-11 (daily run 43105520015 failed): a site page carries <lastmod> once its text changes (tools/lastmod.py); drop the
+    # /data/ <url> block in either shape, and prove the lastmod shape too, whichever shape the build has today
+    drop = lambda t: re.sub(r"\s*<url><loc>[^<]*/data/</loc>(?:<lastmod>[^<]*</lastmod>)?</url>", "", t, count=1)
+    alt = re.sub(r"(<url><loc>[^<]*/data/</loc>)(?:<lastmod>[^<]*</lastmod>)?(</url>)", r"\1<lastmod>2026-11-11</lastmod>\2", base, count=1)
+    assert drop(alt) != alt and drop(base) != base, "drop pattern misses a sitemap shape"
+    muts = {"page dropped": drop(base),
             "unbuilt url": base.replace("</urlset>", "  <url><loc>https://floodinsurancedata.com/no-such-page/</loc></url>\n</urlset>")}
     for k, v in muts.items():
         assert v != base, f"mutation did not change the sitemap: {k}"
