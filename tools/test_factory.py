@@ -71,10 +71,11 @@ def takeup_no_date(a, d, x):   # 11-09 feed sweep: a feed without its own as-of 
 def zone_split(a, d, x):   # 11-09 county claims outside zones A/V (extras zone_split): shows on county pages, numbers via tp()
     x.setdefault("claims", {})["zone_split"] = {"from": "2016", "to": "2025", "known_n": 4210, "known_paid_n": 3300, "known_paid": 98000000, "out_n": 1263,
                                                "out_paid_n": 990, "out_paid": 21000000, "blank_n": 77, "out_pct": 30.0, "out_paid_pct": 21.4}
+def share_zero(a, d, x): a["policies"]["share_below"] = 0   # 11-12: the "Is it rising?" gap line
 def zero_units(a, d, x): a["policies"].update(units=0, rows=0, zone_units={}, sfha_units=0, sfha_share_units=None, cost_by_zone={}, cost_n=0)
 
 CASES = [no_claims, one_claim, one_zone, big_unpriced_zone, no_priced_zone, under_floor, all_decades_small, only_catch_all,
-         billion_flood, asof_jan1, asof_dec31, claims_old, no_nri, no_disasters, no_crs, no_multiloss, shuffled_order, new_fields_11_08, zero_units, cost_trend, cost_trend_off, cost_trend_reasons, takeup_no_date, zone_split]
+         billion_flood, asof_jan1, asof_dec31, claims_old, no_nri, no_disasters, no_crs, no_multiloss, shuffled_order, new_fields_11_08, zero_units, cost_trend, cost_trend_off, cost_trend_reasons, takeup_no_date, zone_split, share_zero]
 
 tmp = tempfile.mkdtemp(); rows, crashed = [], []
 for SLUG, SRC, LABEL, GEOID, LEVEL in TARGETS:
@@ -119,7 +120,12 @@ for SLUG, SRC, LABEL, GEOID, LEVEL in TARGETS:
             g2 = subprocess.run([sys.executable, "-I", os.path.join(T, "gate.py"), os.path.join(d, "agg.json"), out, "0"], capture_output=True, text=True)
             if not g2.returncode: ids.append("ZONE-SPLIT-MUTATION-MISSED")
             open(out, "w", encoding="utf-8").write(_h)
-    rows.append((name, "BLOCKED" if g.returncode or "NO-TREND-CARD" in ids or "TAKEUP-UNDATED" in ids or "C17-MISSED-WRONG-REASON" in ids or "NO-LEFT-OUT-LINE" in ids or "NO-ZONE-SPLIT" in ids or "ZONE-SPLIT-MUTATION-MISSED" in ids else "PASS", ",".join(ids) or "-"))
+    _hh = open(out, encoding="utf-8").read()   # 11-12 (hater r156): six screen-1 answers on every built page, each gap line true to its case
+    if _hh.count(' data-ans="') != 6: ids.append("ANSWERS-NOT-SIX")
+    _want = {"no_claims": "Too few NFIP claims here", "share_zero": "No single-family primary-home premium here is under",
+             "no_nri": ("not the state" if "state" in LEVEL else "FEMA gives no flood rating"), "no_priced_zone": "Too few priced policies per zone"}.get(fn.__name__)
+    if _want and not g.returncode and _want not in _hh: ids.append("GAP-LINE-MISSING")
+    rows.append((name, "BLOCKED" if g.returncode or "NO-TREND-CARD" in ids or "TAKEUP-UNDATED" in ids or "C17-MISSED-WRONG-REASON" in ids or "NO-LEFT-OUT-LINE" in ids or "NO-ZONE-SPLIT" in ids or "ZONE-SPLIT-MUTATION-MISSED" in ids or "ANSWERS-NOT-SIX" in ids or "GAP-LINE-MISSING" in ids else "PASS", ",".join(ids) or "-"))
 shutil.rmtree(tmp, ignore_errors=True)
 w = max(len(r[0]) for r in rows)
 for n, res, info in rows: print(f"{n:<{w}} {res:<11} {info}")
@@ -132,5 +138,6 @@ assert not must_pass, f"zone split note missing, blocked or mutation missed: {mu
 assert not [r for r in rows if "TAKEUP-UNDATED" in r[2]], "take-up card printed without its own date"
 must_block = [r for r in rows if r[0].endswith(":cost_trend_off") and "C17" not in r[2]]   # and a second rule is caught
 assert not must_block, f"gate C17 missed a cost trend off the headline median: {must_block}"
+assert not [r for r in rows if "ANSWERS-NOT-SIX" in r[2] or "GAP-LINE-MISSING" in r[2]], f"screen-1 answers or gap lines wrong: {[r for r in rows if 'ANSWERS' in r[2] or 'GAP-LINE' in r[2]]}"
 assert not crashed, f"factory crashed on: {crashed}"
 print("test_factory: no crash on", len(CASES), "edge cases x", len(TARGETS), "page types/sizes")

@@ -1,4 +1,5 @@
 place,metric,row,value,unit,dataset,fields,policies_as_of
+"Calaveras County, California",cost_p50,qa,"$1,268",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"August 31, 2026"
 "Calaveras County, California",share_below,qa,67.1%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 "Calaveras County, California",paid_share,,81.8%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Calaveras County, California",paid_share,state,69.2%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"

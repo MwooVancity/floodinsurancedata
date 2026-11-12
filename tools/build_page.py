@@ -1123,6 +1123,17 @@ if crs and not IS_STATE:
     _qt = max(_qd, key=lambda c: int(_pct(c["sfhaDiscount"]).rstrip("%"))) if _qd else None
     _q[6] = ('<a href="#crs" data-ans="6"><b>Can I pay less?</b> ' + (f"Community discount up to {m('crs_discount', _pct(_qt['sfhaDiscount']), q=html.unescape(_cname_plain(_qt)) + ':sfha')} ({_cname(_qt)}); other ways below</a>"
              if _qt else "No community discount here; other ways below</a>"))
+# Truth rule (parent live check 11-12, Raleigh WV): a reader question with no data gets a gap line, never silence
+_gap = {1: (f'<a href="#c-how-much-flood-risk-is-here" data-ans="1"><b>How risky?</b> FEMA rates each {UNIT}, not the state: the ratings are below</a>' if IS_STATE else   # hater r156
+            '<a href="https://msc.fema.gov/portal/home" rel="noopener" data-ans="1"><b>How risky?</b> FEMA gives no flood rating for this place; check your address on FEMA&#39;s map</a>'),
+        3: (f'<a href="#zone-cost" data-ans="3"><b>Cost in my zone?</b> Too few priced policies per zone for a zone median'
+            + (" (" + ", ".join(f"Zone {html.escape(z)}" for z in _zbig) + ")" if _zbig else "")   # gate C11 names each big zone
+            + f'; {UNIT} median {m("cost_p50", money(P["p50"]), q="qa")} a year</a>'),
+        4: ('<a href="#gap" data-ans="4"><b>Will it go up?</b> No single-family primary-home premium here is under FEMA&#39;s full-risk premium (not a quote)</a>'
+            if P.get("share_below") == 0 else '<a href="#gap" data-ans="4"><b>Will it go up?</b> FEMA&#39;s data here gives no full-risk comparison</a>'),
+        5: '<a href="#payout" data-ans="5"><b>Does it pay out?</b> Too few NFIP claims here for a paid share</a>',
+        6: '<a href="#save" data-ans="6"><b>Can I pay less?</b> FEMA&#39;s ways to lower a bill are below</a>'}
+for _k, _g in _gap.items(): _q.setdefault(_k, _g)
 _qa = [_q[k] for k in sorted(_q)]
 _qa_more = [f'<a href="#covered"><b>How fast does it start?</b> {rule("howto_short")}</a>',
             '<a href="#covered"><b>Already flooded?</b> What to do now, and FEMA aid.</a>']
@@ -1483,9 +1494,10 @@ table{{width:100%}}}}
 {quick_answers}
 <div class="stats">
 <div class="stat"><div class="n">{m('cost_p50', money(P['p50']))}</div><div class="l">Median / yr, single-family primary home, premium + fees, {POL_ASOF}</div></div>
+{'<a class="btn" href="https://msc.fema.gov/portal/home" rel="noopener" target="_blank">Your address on FEMA' + "'" + 's map →</a>'}
 </div>
 {_jump}
-{ZONEMAP if _tool_on("zonemap") else '<a class="btn" href="https://msc.fema.gov/portal/home" rel="noopener" target="_blank">Your address on FEMA' + "'" + 's map →</a>'}
+{ZONEMAP if _tool_on("zonemap") else ''}
 {quick_more}
 </section>
 

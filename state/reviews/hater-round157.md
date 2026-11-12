@@ -1,0 +1,5 @@
+## louisiana
+- MINOR Screen-1 "How risky? ... the ratings are below": the card (#c-how-much-flood-risk-is-here, id unique, link lands on it) shows tallies of parish ratings by level (coastal and inland), not a per-parish list; it says "Each parish page shows its own rating". True (counts match data.json nri_counties: coastal 2 VH / 8 RH / 11 RM / 4 RL / 4 VL / 35 not rated = 29 N/A + 6 No Rating; inland 0/6/13/24/21), but "ratings" could be read as a per-parish list.
+- Previous MAJOR (false "FEMA gives no flood rating for this place") FIXED: the new text is true, FEMA's National Risk Index rates every parish.
+- Other five screen-1 answers re-checked against data: Required (rule text present), zone cost X $1,082 and AE $1,259 (cost_by_zone medians, labelled median single-family), rising 52.8% below full-risk (share_below 52.8), pays out 80.2% (377,052 of 470,045 claims), can I pay less (links to #save, present). All true; anchors #required, #zone-cost, #gap, #payout, #save each exist once.
+Verdict: PASS

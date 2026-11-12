@@ -1,4 +1,5 @@
 place,metric,row,value,unit,dataset,fields,policies_as_of
+"Raleigh County, West Virginia",cost_p50,qa,"$1,244",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"August 31, 2026"
 "Raleigh County, West Virginia",share_below,qa,66.7%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 "Raleigh County, West Virginia",paid_share,,83.6%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"
 "Raleigh County, West Virginia",paid_share,state,85.1%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount + netContentsPaymentAmount + netIccPaymentAmount,"August 31, 2026"

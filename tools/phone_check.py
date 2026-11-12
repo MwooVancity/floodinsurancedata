@@ -22,7 +22,11 @@ if TEST:   # P8 mutation: answers pushed below screen 1 must fail; a real county
     _tmp = tempfile.mkdtemp(); _d = os.path.join(_tmp, "flood-insurance", _cs); os.makedirs(_d)
     _h = open(os.path.join(ROOT, "dist", "flood-insurance", _cs, "index.html"), encoding="utf-8").read()
     open(os.path.join(_d, "index.html"), "w", encoding="utf-8").write(_h.replace('<nav class="jump qa">', '<div style="height:700px"></div><nav class="jump qa">', 1))
-    base = "file:///" + _tmp.replace("\\", "/"); slugs = [_cs]
+    _cs2 = json.load(open(os.path.join(ROOT, "tools", "counties.json")))[1]["slug"]   # second mutation: one answer missing (no gap line)
+    _d2 = os.path.join(_tmp, "flood-insurance", _cs2); os.makedirs(_d2)
+    _h2 = open(os.path.join(ROOT, "dist", "flood-insurance", _cs2, "index.html"), encoding="utf-8").read()
+    open(os.path.join(_d2, "index.html"), "w", encoding="utf-8").write(_h2.replace(' data-ans="5"', "", 1))
+    base = "file:///" + _tmp.replace("\\", "/"); slugs = [_cs, _cs2]
 if not slugs:
     cs = json.load(open(os.path.join(ROOT, "tools", "counties.json")))
     u = {c["slug"]: json.load(open(os.path.join(ROOT, "data", "c", c["slug"], "agg.json")))["policies"]["units"] for c in cs}
@@ -78,6 +82,7 @@ JS = """() => {
   return out; }""".replace("%MIN%", str(MIN_PX)).replace("%W%", str(W))
 
 failed = False
+caught = []
 os.makedirs(os.path.join(ROOT, "state"), exist_ok=True)
 with sync_playwright() as p:
     br = p.chromium.launch()
@@ -96,14 +101,16 @@ with sync_playwright() as p:
             if r[k] is None or r[k] > H: bad.append(f"P3 {k} not on screen 1 (top {r[k]})")
         if not site and (r["compare"] is None or r["compare"] > 2 * H): bad.append(f"P4 quote checker not within screen 2 (top {r['compare']})")
         # P8 (audit 11-10, parent live check 11-12): the six reader answers (risk, required, cost, rising, pays, pay less) start on screen 1
+        if not site and r["qn"] != 6: bad.append(f"P8 {r['qn']} of the six reader answers printed (a missing one needs its gap line)")
         if not site and (r["qlast"] is None or r["qlast"] > H): bad.append(f"P8 last of the {r['qn']} screen-1 answers starts at {r['qlast']} (screen 1 ends {H})")
         if r["hidden"]: bad.append(f"P5 {r['hidden']} collapsed <details> hide data")
         if r["overlap"]: bad.append(f"P6 chart labels overlap: {r['overlap'][:3]}")
         print(("PHONE FAIL " if bad else "PHONE PASS ") + f"{s} (height {r['height']}px = {r['height'] / H:.1f} screens)")
         for b in bad: print("  -", b)
         failed |= bool(bad)
+        if bad and any(b.startswith("P8") for b in bad): caught.append(s)
     br.close()
 if TEST:
-    assert failed, "P8 mutation not caught: answers pushed below screen 1 passed"
-    print("phone_check P8 mutation: 1 caught"); sys.exit(0)
+    assert set(caught) >= {_cs, _cs2}, f"P8 mutation not caught: {sorted({_cs, _cs2} - set(caught))}"
+    print("phone_check P8 mutations: 2 caught (answers below screen 1, one answer missing)"); sys.exit(0)
 sys.exit(1 if failed else 0)
