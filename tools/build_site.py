@@ -55,7 +55,7 @@ td a{{font-weight:600}}
 input{{font-size:17px;padding:11px 13px;border:1px solid var(--line);border-radius:10px;width:100%;max-width:380px;box-shadow:var(--shadow)}}
 ul{{padding-left:20px}}li{{margin:.25em 0}}
 .mut{{color:var(--mut);font-size:13px}}
-@media(max-width:620px){{h1{{font-size:30px}}.stats{{grid-template-columns:1fr 1fr}}.card{{padding:18px 15px}}table{{font-size:13.5px}}th,td{{padding:7px 6px}}thead th{{font-size:11px}}}}</style><style>"""+THEME.replace("{","{{").replace("}","}}")+"""</style></head><body>
+@media(max-width:620px){{h1{{font-size:30px}}.stats{{grid-template-columns:1fr 1fr}}.card{{padding:18px 15px}}table{{font-size:13.5px}}th,td{{padding:7px 6px}}thead th{{font-size:11px}}}}.tw{{overflow-x:auto}}</style><style>"""+THEME.replace("{","{{").replace("}","}}")+"""</style></head><body>
 <header class="topbar"><div class="wrap"><a href="/">Flood Insurance Data</a></div></header><main class="wrap">"""
 FOOT = ('<footer class="mut" style="margin:28px 0;border-top:1px solid var(--line);padding-top:14px">This product uses FEMA\'s OpenFEMA API but is not '
         'endorsed by FEMA. Place names via GeoNames (CC BY 4.0). Aggregates only, never individual quotes.'
@@ -206,8 +206,8 @@ home = HEAD.format(title="Flood insurance cost by state and county (FEMA data)",
 <p class="mut">Rules from {_rule_hosts(["howto_answer", "purchase_answer", "lender_any_zone", "fl_citizens_short", "homeowners_excl", "how_to_buy", "private_accept", "limits"])}. <a href="/methodology/">How we check them</a>.</p></div>
 {home_cards}
 <div class="card"><h2>Flood insurance policies and claims by state</h2>{extremes}
-<table id="st"><thead><tr><th>State</th><th>Median / yr</th><th>Insured units</th><th>NFIP claims on record</th><th>Paid on them</th></tr></thead>
-<tbody>{srows or '<tr><td colspan=5 class=mut>State pages are being built.</td></tr>'}</tbody></table>{_cnote}</div>
+<div class="tw"><table id="st"><thead><tr><th>State</th><th>Median / yr</th><th>Insured units</th><th>NFIP claims on record</th><th>Paid on them</th></tr></thead>
+<tbody>{srows or '<tr><td colspan=5 class=mut>State pages are being built.</td></tr>'}</tbody></table></div>{_cnote}</div>
 <div class="card"><h2>County pages</h2><p class="stand">{len(places)} counties so far, listed by insured units; more are added as each passes review. Every county's figures also sit in its state page's county table.</p>
 <table id="t"><thead><tr><th>County</th><th>Median / yr</th><th>Insured units</th></tr></thead>
 <tbody>{rows or '<tr><td colspan=3 class=mut>No counties published yet.</td></tr>'}</tbody></table></div>
@@ -233,8 +233,8 @@ hub = HEAD.format(title="Flood insurance by state and county (FEMA data)",
 <p class="lede">Find your state or county for what people there pay, whether you're required to buy it, and what floods have paid out.</p>
 <input id="s" placeholder="Type your state or county…" aria-label="Find your state or county" autocomplete="off"><p id="nomatch" class="mut" aria-live="polite"></p>{'<p>Or <a href="/flood-insurance/zip/">look up a ZIP code</a>.</p>' if (_zm_zip == "all" or "zip" in _zm_zip) else ""}</section>
 <div class="card"><h2>States</h2>
-<table id="st"><thead><tr><th>State</th><th>Median / yr</th><th>Insured units</th><th>NFIP claims on record</th><th>Paid on them</th></tr></thead>
-<tbody>{srows or '<tr><td colspan=5 class=mut>State pages are being built.</td></tr>'}</tbody></table>{_cnote}</div>
+<div class="tw"><table id="st"><thead><tr><th>State</th><th>Median / yr</th><th>Insured units</th><th>NFIP claims on record</th><th>Paid on them</th></tr></thead>
+<tbody>{srows or '<tr><td colspan=5 class=mut>State pages are being built.</td></tr>'}</tbody></table></div>{_cnote}</div>
 <div class="card"><h2>Counties</h2>
 <table id="t"><thead><tr><th>County</th><th>Median / yr</th><th>Insured units</th></tr></thead>
 <tbody>{hrows or '<tr><td colspan=3 class=mut>No counties published yet.</td></tr>'}</tbody></table></div>

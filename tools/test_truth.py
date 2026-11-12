@@ -32,7 +32,7 @@ HAS = [   # (page, phrase, why): a fix that must be visible where the reviewer f
     ("louisiana", "FEMA's records use this name for claims in several years", "r6 catch-all claims were dropped"),
     ("louisiana", "insured for at least 80% of its full rebuilding cost", "r6 the 80% rebuild rule was missing"),
     ("palm-beach-county-fl", "No recorded payment can mean paperwork or damage the policy did not count as flood", "r6/r16/r31 43.5% paid had no context on screen 1"),
-    ("palm-beach-county-fl", "since January 2026", "r6 Citizens tense"),
+    ("palm-beach-county-fl", "from January 1, 2026 at $400,000 or more", "r6 Citizens tense (11-12: the full rule in #required; screen 1 points to it)"),
     ("palm-beach-county-fl", "Share that paid something", "r6/r7 43.5% paid had no era breakdown (r8: header named the wrong column)"),
     ("louisiana", "Not in full for at least", "r7 rebuild lead ignored under-insurance"),
     ("home", "Average premium alone, single-family homes", "r6 home headline not reconciled with premium-only figures"),

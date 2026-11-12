@@ -305,7 +305,6 @@ def _zone_body():
 # suppress on VALID COST observations (cost_n), not raw cohort — a cohort full of null/refund costs
 # must not get a spread. agg carries spread_ok = cost_n >= 100.
 PREM_MED = P.get("prem_median")        # premium charged, before fees: the like-for-like comparator for full-risk
-median_mo = money(P['p50'] / 12) if P.get("p50") else None
 def _cost_parts():
     SMALL_COHORT = not P.get("spread_ok", (P.get("cost_n") or 0) >= 100)
     if SMALL_COHORT:
@@ -1089,56 +1088,46 @@ def page_sources():   # from the source lines on the FINAL page: code for a card
     return [MX.DATASETS[d][:2] for d in MX.DATASETS if d in seen]
 sources_li = "@@SOURCES_LI@@"
 # JSON-LD: Dataset + Place + Breadcrumb (no FAQ markup: Google requires it to match visible Q&A)
-_qa = [f'<a href="#required"><b>Am I required to buy it?</b> {rule("purchase_short")}'
-       + (f' {rule("fl_citizens_short")}' if agg.get("state") == "FL" else "") + '</a>',
-       f'<a href="#covered"><b>How fast does it start?</b> {rule("howto_short")}</a>']
-# hcu-critique 11-07: screen 1 answered "how risky" and "what does my zone cost" only in sections 9 and 15
-_rk = [(b, w) for b, w in (("coastal", "coastal"), ("inland", "inland (river)")) if _present(((NRI or {}).get(b) or {}).get("risk_rating"))]
-if _rk:   # short: P4 keeps the quote checker inside screen 2
-    _qa.insert(0, f'<a href="#c-how-much-flood-risk-is-here"><b>How risky is it here?</b> FEMA&#39;s {UNIT} rating: '
-               + ", ".join(f'{html.escape(str(NRI[b]["risk_rating"]))} {w}' for b, w in _rk)
-               + f' flood risk vs other {dict(county="counties", parish="parishes").get(UNIT, UNIT + "s")}; not for your address.</a>')
+# owner reader order (CLAUDE.md): how risky, required, cost, rising, pays, pay less -- one short line each, the detail in its
+# section (phone_check P8: the last of these starts on screen 1 at 390x844); how fast and already flooded follow
+_q = {}
+_rk = [(b, w) for b, w in (("coastal", "coastal"), ("inland", "inland")) if _present(((NRI or {}).get(b) or {}).get("risk_rating"))]
+if _rk:
+    _q[1] = (f'<a href="#c-how-much-flood-risk-is-here" data-ans="1"><b>How risky?</b> FEMA {UNIT} rating: '
+             + ", ".join(f'{html.escape(str(NRI[b]["risk_rating"]))} {w}' for b, w in _rk) + '</a>')
+_q[2] = f'<a href="#required" data-ans="2"><b>Required?</b> {rule("purchase_short")}' + (" FL Citizens rules below." if agg.get("state") == "FL" else "") + '</a>'
 _zq = sorted(((z, d) for z, d in (P.get("cost_by_zone") or {}).items() if z != "Unknown"), key=lambda zd: -(zd[1].get("n") or 0))[:2]   # by count, not file order
-# hater r97 (NY County AE 41.8%) / r103 (Levy VE 22%): a big zone with too few priced policies is named, never silently
-# missing from the answer (gate C11)
+# hater r97 / r103: a big zone with too few priced policies is named, never silently missing (gate C11)
 _zbig = [z for z, v in (P.get("zone_units") or {}).items() if P.get("units") and v >= ZONE_NAME_SHARE * P["units"]
          and z not in dict(_zq) and z not in ("Unknown", "other", "other_hr")]
-_zq += [(z, (P.get("cost_by_zone") or {})[z]) for z in _zbig if z in (P.get("cost_by_zone") or {})]   # priced, just not top 2: show its price
-_zbig = [z for z in _zbig if z not in (P.get("cost_by_zone") or {})]   # only a truly unpriced zone "has too few to price"
+_zq += [(z, (P.get("cost_by_zone") or {})[z]) for z in _zbig if z in (P.get("cost_by_zone") or {})]
+_zbig = [z for z in _zbig if z not in (P.get("cost_by_zone") or {})]
 if _zq:
-    _qa.insert(2 if _rk else 1, '<a href="#zone-cost"><b>Cost in my zone?</b> '   # P4: short, the quote checker must stay inside screen 2
-               + ("Zones " if len(_zq) > 1 else "Zone ") + ", ".join(f"{html.escape(z)} {tp('zone_cost', f'policies.cost_by_zone.{z}.median', money, q=z)}" for z, d in _zq)
-               + ' a year (median, single-family homes)'
-               + "".join(f"; Zone {html.escape(z)}, {m('zone_share', str(round(100 * P['zone_units'][z] / P['units'], 1)) + '%', q=z)} of policy units, has too few to price" for z in _zbig)
-               # audit 11-10 (Travis A, AO): a priced zone past the first ones is never dropped silently
-               + ("; more zones below" if set(z for z in (P.get("cost_by_zone") or {}) if z != "Unknown") - set(dict(_zq)) else "")
-               + '.</a>')
-if P.get("share_below"):   # audit 11-10 MAJOR 2: "is it rising?" is one of the six screen-1 answers (owner reader order)
-    _qa.append(f'<a href="#gap"><b>{claim("Is it rising?", "rising", ("share_below", ">", 0))}</b> {m("share_below", str(P["share_below"]) + "%", q="qa")} of single-family primary-home policies have a premium under '
-               f'FEMA\'s full-risk premium (not a quote), so their {claim("bills rise toward it", "rise", ("share_below", ">", 0))}.</a>')
+    _q[3] = ('<a href="#zone-cost" data-ans="3"><b>Cost in my zone?</b> ' + ("Zones " if len(_zq) > 1 else "Zone ")
+             + ", ".join(f"{html.escape(z)} {tp('zone_cost', f'policies.cost_by_zone.{z}.median', money, q=z)}" for z, d in _zq)
+             + ' a year (median, single-family homes)'
+             + "".join(f"; Zone {html.escape(z)}, {m('zone_share', str(round(100 * P['zone_units'][z] / P['units'], 1)) + '%', q=z)} of policy units, has too few to price" for z in _zbig)
+             + ("; more zones below" if set(z for z in (P.get("cost_by_zone") or {}) if z != "Unknown") - set(dict(_zq)) else "") + '</a>')
+if P.get("share_below"):
+    _q[4] = (f'<a href="#gap" data-ans="4"><b>{claim("Is it rising?", "rising", ("share_below", ">", 0))}</b> {m("share_below", str(P["share_below"]) + "%", q="qa")} '
+             f'of single-family primary-home premiums are under FEMA\'s full-risk premium (not a quote): {claim("rising toward it", "rising", ("share_below", ">", 0))}</a>')
 _cxq = data.get("claims_extra") or {}
 if _cxq.get("claims") and _cxq.get("avg_paid") and P.get("p50"):
     _sroot = ROOT_DATA.get("state") if isinstance(ROOT_DATA.get("state"), dict) else {}   # on a state page "state" is just its code
     _scx = (_sroot.get("data") or {}).get("claims_extra") or {}
-    _qa.append(f'<a href="#payout"><b>Does it pay out here?</b> {m("paid_share", str(round(100 - _cxq["cwop_share"], 1)) + "%")} of NFIP claims in {CS} (all years on record) paid '
-               + (f'something ({html.escape(STATE_NAMES[agg["state"]])}: {m("paid_share", str(round(100 - _scx["cwop_share"], 1)) + "%", q="state")}).'
-                  if _scx.get("cwop_share") is not None else 'something.')
-               + (f' Claims filed for losses in the {m("decade", html.escape(_decs[-1]), q=_decs[-1])}'
-                  + (", the latest decade with thirty or more claims" if any(d > _decs[-1] for d in _decs_out) else "") + ': '
-                  f'{tp("decade_paid_share", f"extras.claims.by_decade.{_decs[-1]}.paid_pct", pct, q=_decs[-1])} paid something'
-                  # audit 11-10 (Greene AR 2010s, 2020s): a newer decade with too few claims is named, never skipped silently
-                  + "".join(f"; {m('decade', html.escape(d), q=d)}: {tp('decade_claims', f'extras.claims.by_decade.{d}.n', q=d)} {pl(_xc['by_decade'][d]['n'], 'claim')}, too few for a share"
-                            for d in sorted(_decs_out) if d > _decs[-1]) + '.' if len(_decs) > 1 else '')
-               + ' No recorded payment can mean paperwork or damage the policy did not count as flood.</a>')
-_qa.append('<a href="#covered"><b>Already flooded?</b> What to do now, and FEMA aid.</a>')
-_qd = [c for c in crs if _pct(c.get("sfhaDiscount"))]   # hcu 11-07: the local savings fact sat in section 13
+    _q[5] = (f'<a href="#payout" data-ans="5"><b>Does it pay out?</b> {m("paid_share", str(round(100 - _cxq["cwop_share"], 1)) + "%")} of NFIP claims here, all years, paid something'
+             + (f' ({html.escape(agg["state"])} {m("paid_share", str(round(100 - _scx["cwop_share"], 1)) + "%", q="state")})' if _scx.get("cwop_share") is not None else '')
+             + '. No recorded payment can mean paperwork or damage the policy did not count as flood</a>')   # r6/r16/r31: the share needs its context on screen 1
+_qd = [c for c in crs if _pct(c.get("sfhaDiscount"))]
 if crs and not IS_STATE:
     _qt = max(_qd, key=lambda c: int(_pct(c["sfhaDiscount"]).rstrip("%"))) if _qd else None
-    _qa.append('<a href="#crs"><b>Can I pay less?</b> ' + (f"Community discount in {m('crs_count', str(len(_qd)), q='sfha_discounted')} of {m('crs_count', str(len(crs)), q='all')} NFIP "
-               f"{pl(len(crs), 'community', 'communities')} here, up to {m('crs_discount', _pct(_qt['sfhaDiscount']), q=html.unescape(_cname_plain(_qt)) + ':sfha')} ({_cname(_qt)}). Other ways below.</a>"
-               if _qt else "No community discount here; other ways below.</a>"))
-# 11-12: "Is my quote normal?" dropped from the list: the quote checker itself follows the hero (P4 room for "Is it rising?")
+    _q[6] = ('<a href="#crs" data-ans="6"><b>Can I pay less?</b> ' + (f"Community discount up to {m('crs_discount', _pct(_qt['sfhaDiscount']), q=html.unescape(_cname_plain(_qt)) + ':sfha')} ({_cname(_qt)}); other ways below</a>"
+             if _qt else "No community discount here; other ways below</a>"))
+_qa = [_q[k] for k in sorted(_q)]
+_qa_more = [f'<a href="#covered"><b>How fast does it start?</b> {rule("howto_short")}</a>',
+            '<a href="#covered"><b>Already flooded?</b> What to do now, and FEMA aid.</a>']
 quick_answers = '<nav class="jump qa">' + "".join(_qa) + "</nav>"
+quick_more = '<nav class="jump qa">' + "".join(_qa_more) + "</nav>"
 
 # provenance: we download every record FEMA publishes for the place and recompute; say so, with the counts
 _man = agg.get("manifest") or {}
@@ -1341,10 +1330,6 @@ def card_crs():
       "<p class='note'>" + rule("crs_what") + "</p>",
       src(["crs_discount"], "FEMA's current Community Status Book", RETR), id="crs")
 
-def _spread_tile():
-    if not P.get("spread_ok", (P.get("cost_n") or 0) >= 100): return ""
-    return f'<div class="stat"><div class="n">{m("cost_p25", money(P["p25"]))}–{m("cost_p75", money(P["p75"]))}</div><div class="l">Half pay between</div></div>'
-
 def card_disasters():
     return card(f"How often is {CS} a flood disaster?" if IS_STATE else f"How often is this {UNIT} a flood disaster?",
       f"{m('declarations', str(len(fh_events)))} federal {pl(len(fh_events), 'disaster')} for floods or storms here"
@@ -1476,7 +1461,7 @@ nav.toc ul{{margin:0;padding-left:18px;columns:2;column-gap:20px;font-size:15px}
 nav.jump{{font-size:14px;margin:0 0 12px;display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center}}
 nav.jump a{{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:5px 11px;text-decoration:none;font-weight:600}}
 nav.qa{{display:block;margin:8px 0 14px}}
-nav.qa a{{display:block;border-radius:10px;padding:9px 12px;margin:0 0 6px;font-weight:400;color:var(--ink);font-size:14.5px;line-height:1.45}}
+nav.qa a{{display:block;border-radius:10px;padding:6px 12px;margin:0 0 3px;font-weight:400;color:var(--ink);font-size:14.5px;line-height:1.45}}
 nav.qa a b{{color:var(--brand);margin-right:4px}}nav.qa a:after{{content:" →";color:var(--brand)}}
 .two{{display:grid;grid-template-columns:1fr 1fr;gap:16px}}
 nav.sib{{font-size:14px;color:var(--mut);margin:16px 0;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 16px}}
@@ -1485,7 +1470,7 @@ footer{{color:var(--faint);font-size:12.5px;margin:28px 0;border-top:1px solid v
 footer a{{color:var(--mut)}}
 details.more{{margin:16px 0}}details.more>summary{{cursor:pointer;font-weight:700;color:var(--brand);padding:12px 0;list-style:none}}
 details.more>summary::-webkit-details-marker{{display:none}}details.more>summary:before{{content:"▸ "}}details.more[open]>summary:before{{content:"▾ "}}
-@media(max-width:620px){{.stats{{grid-template-columns:repeat(2,1fr)}}.two{{grid-template-columns:1fr}}.hero h1{{font-size:30px}}
+@media(max-width:620px){{.stats{{grid-template-columns:repeat(2,1fr)}}.two{{grid-template-columns:1fr}}.hero h1{{font-size:26px}}
 .card{{padding:18px 15px}}.card h2{{font-size:21px}}.stat .n{{font-size:23px}}ul.kv > li > span{{font-size:19px}}ul.kv b{{font-size:11px}}
 table{{font-size:13.5px}}th,td{{padding:7px 6px}}thead th{{font-size:11px;white-space:normal}}
 table{{width:100%}}}}
@@ -1493,17 +1478,15 @@ table{{width:100%}}}}
 <header class="topbar"><div class="wrap"><a class="brand" href="../../">Flood Insurance Data</a><span class="crumb">Flood insurance › {(f'<a href="../{state_slug(_state)}/" style="color:inherit">{html.escape(STATE_NAMES[_state])}</a> › ' if (not IS_STATE and _state in _built_states) else '')}{CS}</span></div></header>
 <main class="wrap">
 <section class="hero">
-<h1>{CL + (f' ({_BORO})' if _BORO else '') + (' flood insurance and flood zones' if IS_STATE else ' flood zones and flood insurance')}</h1>
+<h1>{(CL if IS_STATE else (_BORO[0].upper() + _BORO[1:] if _BORO else CS) + ', ' + agg.get('state', '')) + (' flood insurance and flood zones' if IS_STATE else ' flood insurance and zones')}</h1>
 
+{quick_answers}
 <div class="stats">
-<div class="stat"><div class="n">{m('cost_p50', money(P['p50']))}</div><div class="l">Median NFIP policy / yr, single-family primary home, premium plus fees, in force {POL_ASOF}</div></div>
-<div class="stat"><div class="n">{m('cost_mo', median_mo)}</div><div class="l">A month, spread over the year</div></div>
-{_spread_tile()}
-<div class="stat"><div class="n">{m('share_below', str(P['share_below']) + '%')}</div><div class="l">Single-family primary-home policies with a premium under FEMA's full-risk premium{' (<a href="#gap">' + claim('bills rise toward it', 'rise', ('share_below', '>', 0)) + '</a>)' if P.get('share_below') else ''}</div></div>
+<div class="stat"><div class="n">{m('cost_p50', money(P['p50']))}</div><div class="l">Median / yr, single-family primary home, premium + fees, {POL_ASOF}</div></div>
 </div>
 {_jump}
-{ZONEMAP if _tool_on("zonemap") else '<a class="btn" href="https://msc.fema.gov/portal/home" rel="noopener" target="_blank">Check your address on FEMA' + "'" + 's flood map →</a>'}
-{quick_answers}
+{ZONEMAP if _tool_on("zonemap") else '<a class="btn" href="https://msc.fema.gov/portal/home" rel="noopener" target="_blank">Your address on FEMA' + "'" + 's map →</a>'}
+{quick_more}
 </section>
 
 {quote_widget}

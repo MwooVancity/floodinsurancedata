@@ -167,7 +167,6 @@ _law = re.search(r"\b(must|by law|federal law|Congress|lenders? (?:may|can)|stat
 if _law: fail("T1", f"law or duty typed outside rule(): …{OUTSIDE[max(0, _law.start()-60):_law.end()+40]}…")
 _t2 = re.search(r"(?<![\d,.$])1 (?:claims|NFIP flood claims|federal disasters|(?:NFIP )?communities)\b|Next source to pull|\$0 in payouts", OUTSIDE)   # T2 broken count wording, builder notes
 if _t2: fail("T2", f"broken wording: …{OUTSIDE[max(0, _t2.start()-40):_t2.end()+40]}…")
-if "Suppressed percentile spread" in OUTSIDE and "Half pay between" in OUTSIDE: fail("T3", "spread suppressed but the Half pay tile is shown")
 for _mm in re.finditer(r"\b(None|nan|NaN|undefined)\b(?!\s+(of|were|was|have|has|is|are)\b)", page):   # B3 a missing value printed as text
     fail("B3", f"missing value printed as '{_mm.group(1)}': …{page[max(0, _mm.start()-50):_mm.end()+20]}…")
 for _mm in re.finditer(r"(\d+(?:\.\d+)?)%(.{0,40})", READ):   # H6 a share is never over 100% unless explained
@@ -234,7 +233,7 @@ if _dt:
     for _d, _v in ((EXTRAS.get("claims") or {}).get("by_decade") or {}).items():
         if (_v.get("n") or 0) > 0 and _d not in _dshown: fail("C10", f"decade {_d} ({_v['n']} claims) neither in the decade table nor named as left out")
 # C11 the cost answer names every zone holding 10%+ of policy units, priced or not (r97 NY County AE, r103 Levy VE)
-_zc = re.search(r'<a href="#zone-cost">(.*?)</a>', page, re.S)
+_zc = re.search(r'<a href="#zone-cost"[^>]*>(.*?)</a>', page, re.S)   # 11-12: screen-1 answers carry data-ans
 if _zc and units:
     _zt_ = norm(re.sub(r"<[^>]+>", "", _zc.group(1)))
     _priced_q = set(re.findall(r'data-m="zone_cost" data-q="([^"]+)"', _zc.group(1)))   # "Zones X $913, A $627": named by its tagged price

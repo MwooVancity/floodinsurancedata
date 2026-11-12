@@ -74,6 +74,7 @@ else:
     step("hub page word rules mutations", os.path.join(T, "hub_words.py"), "--test")
     step("hub page word rules (pages gate.py never sees)", os.path.join(T, "hub_words.py"))
     step("phone check (dist)", os.path.join(T, "phone_check.py"))
+    step("phone check P8 mutation (answers below screen 1 must fail)", os.path.join(T, "phone_check.py"), "--test")
     # Google gate; S12 (hater review) is skipped only by --hotfix "<reason>", for a fix that removes wrong text from live pages
     hot = sys.argv[sys.argv.index("--hotfix") + 1] if "--hotfix" in sys.argv else ""
     step("google gate mutations (S6 sitemap)", os.path.join(T, "test_google_gate.py"))

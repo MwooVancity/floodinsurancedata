@@ -2,6 +2,7 @@
 largest, a Louisiana parish, the smallest). Fails when a reader would be hurt:
   P1 anything wider than the screen (outside its own scroll box)   P2 any rendered text, SVG included, under 11px
   P3 screen 1 lacks the median, the FEMA map button or the jump menu   P4 the quote checker is below screen 2
+  P8 the last of the six reader answers (data-ans) starts below screen 1
   P5 data hidden inside a collapsed <details>   P6 chart labels overlap   P7 text contrast under WCAG AA (owner 11-04: "blurry")
 Usage: python -I tools/phone_check.py [--base file:///.../dist | https://floodinsurancedata.com] [slug ...]"""
 import json, os, sys
@@ -14,16 +15,26 @@ base = "file:///" + os.path.join(ROOT, "dist").replace("\\", "/")
 if "--base" in args:
     i = args.index("--base"); base = args[i + 1]; del args[i:i + 2]
 slugs = args
+TEST = "--test" in args
+if TEST:   # P8 mutation: answers pushed below screen 1 must fail; a real county page copied into a temp dist
+    import shutil, tempfile
+    _cs = json.load(open(os.path.join(ROOT, "tools", "counties.json")))[0]["slug"]
+    _tmp = tempfile.mkdtemp(); _d = os.path.join(_tmp, "flood-insurance", _cs); os.makedirs(_d)
+    _h = open(os.path.join(ROOT, "dist", "flood-insurance", _cs, "index.html"), encoding="utf-8").read()
+    open(os.path.join(_d, "index.html"), "w", encoding="utf-8").write(_h.replace('<nav class="jump qa">', '<div style="height:700px"></div><nav class="jump qa">', 1))
+    base = "file:///" + _tmp.replace("\\", "/"); slugs = [_cs]
 if not slugs:
     cs = json.load(open(os.path.join(ROOT, "tools", "counties.json")))
     u = {c["slug"]: json.load(open(os.path.join(ROOT, "data", "c", c["slug"], "agg.json")))["policies"]["units"] for c in cs}
     big, small = max(u, key=u.get), min(u, key=u.get)
     parish = next((s for s in sorted(u, key=u.get, reverse=True) if "parish" in s), big)
     slugs = list(dict.fromkeys([big, parish, small]))
+    import datetime, random   # P8 (11-12): 5 random counties a day as well, seeded by the date so a rerun checks the same ones
+    slugs += random.Random(datetime.date.today().isoformat()).sample(sorted(set(u) - set(slugs)), min(5, max(0, len(u) - len(slugs))))
     _bp = os.path.join(ROOT, "data", "states", "built.json")   # plus the largest and smallest state page
     st = sorted(json.load(open(_bp)), key=lambda s: s["units"]) if os.path.exists(_bp) else []
     slugs += list(dict.fromkeys(s["slug"] for s in st[-1:] + st[:1]))
-    slugs += ["/flood-zones/x/", "/flood-zone-map/"]   # 11-06: zone pages shipped a blue-on-blue button for days; P1/P2/P7 only (no county blocks)
+    slugs += ["/", "/flood-zones/x/", "/flood-zone-map/"]   # 11-12 hater r153: the home page scrolled sideways and was never phone-checked   # 11-06: zone pages shipped a blue-on-blue button for days; P1/P2/P7 only (no county blocks)
 
 # vw is the DEVICE width, not innerWidth: given wide content a phone widens the layout viewport and zooms the whole
 # page out, so measuring against innerWidth would hide exactly the overflow a reader suffers.
@@ -55,6 +66,7 @@ JS = """() => {
   }
   const top = s => { const e = document.querySelector(s); return e ? e.getBoundingClientRect().top + scrollY : null; };
   out.median = top('[data-m="cost_p50"]'); out.map = top('a.btn'); out.jump = top('nav.jump'); out.compare = top('#compare');
+  { const q = [...document.querySelectorAll('[data-ans]')]; out.qlast = q.length ? Math.max(...q.map(e => e.getBoundingClientRect().top + scrollY)) : null; out.qn = q.length; }
   out.hidden = [...document.querySelectorAll('details:not([open])')].filter(d => d.querySelector('.card, table, [data-m]')).length;
   out.overlap = [];   // P6 chart labels that print over each other ("$1,0$8,17$1,376")
   for (const svg of document.querySelectorAll('svg')) {
@@ -83,10 +95,15 @@ with sync_playwright() as p:
         for k in (() if site else ("median", "map", "jump")):
             if r[k] is None or r[k] > H: bad.append(f"P3 {k} not on screen 1 (top {r[k]})")
         if not site and (r["compare"] is None or r["compare"] > 2 * H): bad.append(f"P4 quote checker not within screen 2 (top {r['compare']})")
+        # P8 (audit 11-10, parent live check 11-12): the six reader answers (risk, required, cost, rising, pays, pay less) start on screen 1
+        if not site and (r["qlast"] is None or r["qlast"] > H): bad.append(f"P8 last of the {r['qn']} screen-1 answers starts at {r['qlast']} (screen 1 ends {H})")
         if r["hidden"]: bad.append(f"P5 {r['hidden']} collapsed <details> hide data")
         if r["overlap"]: bad.append(f"P6 chart labels overlap: {r['overlap'][:3]}")
         print(("PHONE FAIL " if bad else "PHONE PASS ") + f"{s} (height {r['height']}px = {r['height'] / H:.1f} screens)")
         for b in bad: print("  -", b)
         failed |= bool(bad)
     br.close()
+if TEST:
+    assert failed, "P8 mutation not caught: answers pushed below screen 1 passed"
+    print("phone_check P8 mutation: 1 caught"); sys.exit(0)
 sys.exit(1 if failed else 0)

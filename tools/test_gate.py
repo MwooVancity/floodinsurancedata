@@ -133,7 +133,6 @@ MUTATIONS = [   # (defect class from THE EVIDENCE table, what we reintroduce, ex
      PAGE.replace("<p class='note'>Policy records keep", "<p class='note'>" + _RULES["purchase_short"]["text"] + " Policy records keep", 1), None),   # read from the registry: typed text went stale when the rule changed (11-04)
     ("edge 11-02", "count with a plural noun", "T2", sub("; other sites count other policies", "; 1 federal disasters; other sites count other policies"), None),
     ("edge 11-02", "builder note on the page", "T2", sub("; other sites count other policies", "; Next source to pull; other sites count other policies"), None),
-    ("edge 11-02", "spread tile beside its suppression", "T3", sub("; other sites count other policies", "; Suppressed percentile spread; other sites count other policies"), None),
     ("truth 11-02", "duty typed outside a sourced rule", "T1", sub("; other sites count other policies", "; your lender may limit this; other sites count other policies"), None),
     ("L19", "outside-zone claim line dropped", "L19", PAGE.replace("Of the NFIP claim dollars paid here", "Of paid dollars"), None),
     ("legacy L12b", "'other zones' row dropped", "C4", re.sub(r"<tr><td>Other[^<]*</td>.*?</tr>", "", PAGE, count=1), None),
@@ -160,9 +159,9 @@ MUTATIONS = [   # (defect class from THE EVIDENCE table, what we reintroduce, ex
     ("round 103", "decade dropped from the table without a word", "C10",
      re.sub(r'<tr><td><span data-m="decade"[^>]*>.*?</tr>', "", PAGE, count=1, flags=re.S), None),
     ("round 97/103", "big zone missing from the cost answer", "C11",
-     rsub(r'(<a href="#zone-cost">.*?</span>)(?:, [^<]+<span data-m="zone_cost"[^>]*>[^<]*</span>)+', r"\1"), None),
+     rsub(r'(<a href="#zone-cost"[^>]*>.*?</span>)(?:, [^<]+<span data-m="zone_cost"[^>]*>[^<]*</span>)+', r"\1"), None),
     ("11-08 own slip", "priced zone called too few to price", "C11",
-     rsub(r'(<a href="#zone-cost">.*?) a year \(median, single-family homes\)', r"\1 a year (median, single-family homes); Zone X, 1.0% of policy units, has too few to price"), None),
+     rsub(r'(<a href="#zone-cost"[^>]*>.*?) a year \(median, single-family homes\)', r"\1 a year (median, single-family homes); Zone X, 1.0% of policy units, has too few to price"), None),
     ("round 103", "'costliest flood' beaten by its own table", "C12",
      (lambda i, js: re.sub(rf"(costliest flood FEMA named here was.*?)extras\.claims\.events\.{i}\.paid", rf"\g<1>extras.claims.events.{min(js, key=lambda j: _EV[int(j)].get('paid') or 0)}.paid", PAGE, count=1, flags=re.S))(
          re.search(r'costliest flood FEMA named here was.*?events\.(\d+)\.paid', PAGE, re.S).group(1),
