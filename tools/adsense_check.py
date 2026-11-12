@@ -1,14 +1,18 @@
-"""AdSense site verification (owner applied 11-12): every indexable built page carries the account meta tag, and
-/ads.txt holds exactly the Google line. Verification only: no ad script may appear (owner: no ads before the
-4-week Search Console review). Usage: python -I tools/adsense_check.py [--test]"""
+"""AdSense (owner applied 11-12; owner 11-12 "add it like riverwaterlevels did"): every built page carries the account
+meta tag and the AdSense code snippet in <head>, and /ads.txt holds exactly the Google line. No hand-placed ad unit
+(<ins class="adsbygoogle">): where ads show is decided in the AdSense account (auto ads), owner only.
+Usage: python -I tools/adsense_check.py [--test]"""
 import glob, os, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TAG = '<meta name="google-adsense-account" content="ca-pub-8997828618122077">'
+SNIPPET = ('<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8997828618122077"'
+           ' crossorigin="anonymous"></script>')
 ADS = "google.com, pub-8997828618122077, DIRECT, f08c47fec0942fa0"
 
 def check(pages, ads):
-    bad = [p for p, h in pages.items() if TAG not in h]
-    bad += [f"{p}: ad script present" for p, h in pages.items() if "adsbygoogle" in h or "pagead2.googlesyndication" in h]
+    bad = [f"{p}: tag missing" for p, h in pages.items() if TAG not in h]
+    bad += [f"{p}: snippet missing or outside <head>" for p, h in pages.items() if SNIPPET not in h.split("</head>")[0]]
+    bad += [f"{p}: hand-placed ad unit" for p, h in pages.items() if 'class="adsbygoogle"' in h]
     if (ads or "").strip() != ADS: bad.append(f"ads.txt is {ads!r}")
     return bad
 
@@ -23,10 +27,12 @@ if __name__ == "__main__":
     if "--test" in sys.argv:
         one = next(iter(pages))
         muts = {"tag removed": ({**pages, one: pages[one].replace(TAG, "")}, ads),
-                "ad script added": ({**pages, one: pages[one] + "<script src=pagead2.googlesyndication.com></script>"}, ads),
+                "snippet removed": ({**pages, one: pages[one].replace(SNIPPET, "")}, ads),
+                "ad unit added": ({**pages, one: pages[one] + '<ins class="adsbygoogle"></ins>'}, ads),
                 "ads.txt missing": (pages, None), "ads.txt wrong id": (pages, ADS.replace("8997", "8998"))}
         for k, (p, a) in muts.items(): assert check(p, a), f"missed: {k}"
+        assert not check(pages, ads), "clean build flagged"
         print(f"adsense mutations: {len(muts)} caught"); sys.exit(0)
     bad = check(pages, ads)
     for b in bad[:10]: print("ADSENSE FAIL", b)
-    print("ADSENSE FAIL" if bad else f"ADSENSE PASS ({len(pages)} pages, ads.txt)"); sys.exit(1 if bad else 0)
+    print("ADSENSE FAIL" if bad else f"ADSENSE PASS ({len(pages)} pages, snippet, ads.txt)"); sys.exit(1 if bad else 0)
