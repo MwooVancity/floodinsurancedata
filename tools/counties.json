@@ -3118,5 +3118,175 @@
   "label": "Stark County, Ohio",
   "short": "Stark County",
   "official": 0
+ },
+ {
+  "slug": "taylor-county-tx",
+  "state": "TX",
+  "geoid": "48441",
+  "county": "TAYLOR",
+  "countytitle": "Taylor",
+  "label": "Taylor County, Texas",
+  "short": "Taylor County",
+  "official": 0
+ },
+ {
+  "slug": "mason-county-wa",
+  "state": "WA",
+  "geoid": "53045",
+  "county": "MASON",
+  "countytitle": "Mason",
+  "label": "Mason County, Washington",
+  "short": "Mason County",
+  "official": 0
+ },
+ {
+  "slug": "forsyth-county-nc",
+  "state": "NC",
+  "geoid": "37067",
+  "county": "FORSYTH",
+  "countytitle": "Forsyth",
+  "label": "Forsyth County, North Carolina",
+  "short": "Forsyth County",
+  "official": 0
+ },
+ {
+  "slug": "shelby-county-tn",
+  "state": "TN",
+  "geoid": "47157",
+  "county": "SHELBY",
+  "countytitle": "Shelby",
+  "label": "Shelby County, Tennessee",
+  "short": "Shelby County",
+  "official": 0
+ },
+ {
+  "slug": "erie-county-ny",
+  "state": "NY",
+  "geoid": "36029",
+  "county": "ERIE",
+  "countytitle": "Erie",
+  "label": "Erie County, New York",
+  "short": "Erie County",
+  "official": 0
+ },
+ {
+  "slug": "summit-county-oh",
+  "state": "OH",
+  "geoid": "39153",
+  "county": "SUMMIT",
+  "countytitle": "Summit",
+  "label": "Summit County, Ohio",
+  "short": "Summit County",
+  "official": 0
+ },
+ {
+  "slug": "baker-county-fl",
+  "state": "FL",
+  "geoid": "12003",
+  "county": "BAKER",
+  "countytitle": "Baker",
+  "label": "Baker County, Florida",
+  "short": "Baker County",
+  "official": 0
+ },
+ {
+  "slug": "gloucester-county-va",
+  "state": "VA",
+  "geoid": "51073",
+  "county": "GLOUCESTER",
+  "countytitle": "Gloucester",
+  "label": "Gloucester County, Virginia",
+  "short": "Gloucester County",
+  "official": 0
+ },
+ {
+  "slug": "putnam-county-fl",
+  "state": "FL",
+  "geoid": "12107",
+  "county": "PUTNAM",
+  "countytitle": "Putnam",
+  "label": "Putnam County, Florida",
+  "short": "Putnam County",
+  "official": 0
+ },
+ {
+  "slug": "knox-county-tn",
+  "state": "TN",
+  "geoid": "47093",
+  "county": "KNOX",
+  "countytitle": "Knox",
+  "label": "Knox County, Tennessee",
+  "short": "Knox County",
+  "official": 0
+ },
+ {
+  "slug": "williamson-county-tx",
+  "state": "TX",
+  "geoid": "48491",
+  "county": "WILLIAMSON",
+  "countytitle": "Williamson",
+  "label": "Williamson County, Texas",
+  "short": "Williamson County",
+  "official": 0
+ },
+ {
+  "slug": "liberty-county-tx",
+  "state": "TX",
+  "geoid": "48291",
+  "county": "LIBERTY",
+  "countytitle": "Liberty",
+  "label": "Liberty County, Texas",
+  "short": "Liberty County",
+  "official": 0
+ },
+ {
+  "slug": "bradford-county-pa",
+  "state": "PA",
+  "geoid": "42015",
+  "county": "BRADFORD",
+  "countytitle": "Bradford",
+  "label": "Bradford County, Pennsylvania",
+  "short": "Bradford County",
+  "official": 0
+ },
+ {
+  "slug": "pottawatomie-county-ok",
+  "state": "OK",
+  "geoid": "40125",
+  "county": "POTTAWATOMIE",
+  "countytitle": "Pottawatomie",
+  "label": "Pottawatomie County, Oklahoma",
+  "short": "Pottawatomie County",
+  "official": 0
+ },
+ {
+  "slug": "desoto-county-ms",
+  "state": "MS",
+  "geoid": "28033",
+  "county": "DESOTO",
+  "countytitle": "DeSoto",
+  "label": "DeSoto County, Mississippi",
+  "short": "DeSoto County",
+  "official": 0
+ },
+ {
+  "slug": "hamilton-county-tn",
+  "state": "TN",
+  "geoid": "47065",
+  "county": "HAMILTON",
+  "countytitle": "Hamilton",
+  "label": "Hamilton County, Tennessee",
+  "short": "Hamilton County",
+  "official": 0
+ },
+ {
+  "slug": "henderson-county-nc",
+  "state": "NC",
+  "geoid": "37089",
+  "county": "HENDERSON",
+  "countytitle": "Henderson",
+  "label": "Henderson County, North Carolina",
+  "short": "Henderson County",
+  "official": 0
  }
 ]

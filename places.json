@@ -2010,6 +2010,16 @@
 "indexable": true
 },
 {
+"slug": "shelby-county-tn",
+"label": "Shelby County, Tennessee",
+"short": "Shelby County",
+"geoid": "47157",
+"state": "TN",
+"units": 2238,
+"median": 817,
+"indexable": true
+},
+{
 "slug": "denton-county-tx",
 "label": "Denton County, Texas",
 "short": "Denton County",
@@ -2040,6 +2050,16 @@
 "indexable": true
 },
 {
+"slug": "taylor-county-tx",
+"label": "Taylor County, Texas",
+"short": "Taylor County",
+"geoid": "48441",
+"state": "TX",
+"units": 2148,
+"median": 700,
+"indexable": true
+},
+{
 "slug": "montgomery-county-md",
 "label": "Montgomery County, Maryland",
 "short": "Montgomery County",
@@ -2060,6 +2080,26 @@
 "indexable": true
 },
 {
+"slug": "williamson-county-tx",
+"label": "Williamson County, Texas",
+"short": "Williamson County",
+"geoid": "48491",
+"state": "TX",
+"units": 2046,
+"median": 850,
+"indexable": true
+},
+{
+"slug": "hamilton-county-tn",
+"label": "Hamilton County, Tennessee",
+"short": "Hamilton County",
+"geoid": "47065",
+"state": "TN",
+"units": 1970,
+"median": 1084,
+"indexable": true
+},
+{
 "slug": "washoe-county-nv",
 "label": "Washoe County, Nevada",
 "short": "Washoe County",
@@ -2067,6 +2107,16 @@
 "state": "NV",
 "units": 1958,
 "median": 882,
+"indexable": true
+},
+{
+"slug": "liberty-county-tx",
+"label": "Liberty County, Texas",
+"short": "Liberty County",
+"geoid": "48291",
+"state": "TX",
+"units": 1930,
+"median": 765,
 "indexable": true
 },
 {
@@ -2200,6 +2250,16 @@
 "indexable": true
 },
 {
+"slug": "erie-county-ny",
+"label": "Erie County, New York",
+"short": "Erie County",
+"geoid": "36029",
+"state": "NY",
+"units": 1509,
+"median": 1096,
+"indexable": true
+},
+{
 "slug": "washington-county-or",
 "label": "Washington County, Oregon",
 "short": "Washington County",
@@ -2247,6 +2307,16 @@
 "state": "SC",
 "units": 1373,
 "median": 958,
+"indexable": true
+},
+{
+"slug": "gloucester-county-va",
+"label": "Gloucester County, Virginia",
+"short": "Gloucester County",
+"geoid": "51073",
+"state": "VA",
+"units": 1371,
+"median": 1079,
 "indexable": true
 },
 {
@@ -2347,6 +2417,16 @@
 "state": "FL",
 "units": 1244,
 "median": 1471,
+"indexable": true
+},
+{
+"slug": "putnam-county-fl",
+"label": "Putnam County, Florida",
+"short": "Putnam County",
+"geoid": "12107",
+"state": "FL",
+"units": 1197,
+"median": 1208,
 "indexable": true
 },
 {
@@ -2470,6 +2550,16 @@
 "indexable": true
 },
 {
+"slug": "knox-county-tn",
+"label": "Knox County, Tennessee",
+"short": "Knox County",
+"geoid": "47093",
+"state": "TN",
+"units": 1011,
+"median": 878,
+"indexable": true
+},
+{
 "slug": "lucas-county-oh",
 "label": "Lucas County, Ohio",
 "short": "Lucas County",
@@ -2497,6 +2587,16 @@
 "state": "KS",
 "units": 991,
 "median": 1189,
+"indexable": true
+},
+{
+"slug": "summit-county-oh",
+"label": "Summit County, Ohio",
+"short": "Summit County",
+"geoid": "39153",
+"state": "OH",
+"units": 987,
+"median": 662,
 "indexable": true
 },
 {
@@ -2730,6 +2830,16 @@
 "indexable": true
 },
 {
+"slug": "henderson-county-nc",
+"label": "Henderson County, North Carolina",
+"short": "Henderson County",
+"geoid": "37089",
+"state": "NC",
+"units": 611,
+"median": 694,
+"indexable": true
+},
+{
 "slug": "madera-county-ca",
 "label": "Madera County, California",
 "short": "Madera County",
@@ -2737,6 +2847,16 @@
 "state": "CA",
 "units": 603,
 "median": 1082,
+"indexable": true
+},
+{
+"slug": "forsyth-county-nc",
+"label": "Forsyth County, North Carolina",
+"short": "Forsyth County",
+"geoid": "37067",
+"state": "NC",
+"units": 596,
+"median": 992,
 "indexable": true
 },
 {
@@ -2780,6 +2900,16 @@
 "indexable": true
 },
 {
+"slug": "bradford-county-pa",
+"label": "Bradford County, Pennsylvania",
+"short": "Bradford County",
+"geoid": "42015",
+"state": "PA",
+"units": 563,
+"median": 1198,
+"indexable": true
+},
+{
 "slug": "johnston-county-nc",
 "label": "Johnston County, North Carolina",
 "short": "Johnston County",
@@ -2797,6 +2927,16 @@
 "state": "NC",
 "units": 559,
 "median": 885,
+"indexable": true
+},
+{
+"slug": "desoto-county-ms",
+"label": "DeSoto County, Mississippi",
+"short": "DeSoto County",
+"geoid": "28033",
+"state": "MS",
+"units": 543,
+"median": 862,
 "indexable": true
 },
 {
@@ -2897,6 +3037,16 @@
 "state": "MN",
 "units": 454,
 "median": 768,
+"indexable": true
+},
+{
+"slug": "mason-county-wa",
+"label": "Mason County, Washington",
+"short": "Mason County",
+"geoid": "53045",
+"state": "WA",
+"units": 439,
+"median": 1176,
 "indexable": true
 },
 {
@@ -3080,6 +3230,16 @@
 "indexable": true
 },
 {
+"slug": "baker-county-fl",
+"label": "Baker County, Florida",
+"short": "Baker County",
+"geoid": "12003",
+"state": "FL",
+"units": 162,
+"median": 909,
+"indexable": true
+},
+{
 "slug": "lincoln-county-ne",
 "label": "Lincoln County, Nebraska",
 "short": "Lincoln County",
@@ -3087,6 +3247,16 @@
 "state": "NE",
 "units": 146,
 "median": 589,
+"indexable": true
+},
+{
+"slug": "pottawatomie-county-ok",
+"label": "Pottawatomie County, Oklahoma",
+"short": "Pottawatomie County",
+"geoid": "40125",
+"state": "OK",
+"units": 131,
+"median": 935,
 "indexable": true
 },
 {
