@@ -29,7 +29,7 @@ def wr(path, s):
     open(path, "w", encoding="utf-8").write(s)
 
 HEAD = """<!doctype html><html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1"><meta name="google-site-verification" content="geYcfFcAsSIVIT2iHnH60suuJ4t3fx7unryWmcbos6A"><title>{title}</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"><meta name="google-site-verification" content="geYcfFcAsSIVIT2iHnH60suuJ4t3fx7unryWmcbos6A"><meta name="google-adsense-account" content="ca-pub-8997828618122077"><title>{title}</title>
 <meta name="description" content="{desc}"><link rel="canonical" href="{canon}"><link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <style>.btn{{display:inline-block;color:#fff;text-decoration:none;padding:12px 20px;min-height:44px}}:root{{--bg:#f4f7f8;--surface:#fff;--ink:#132029;--mut:#55656f;--faint:#7d8c96;--line:#dbe3e7;--brand:#15617f;--brand-d:#0e4a61;--accent:#c2591f;--r:12px;--gut:20px;
  --serif:"Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;--mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;--shadow:none}}
@@ -897,6 +897,7 @@ sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps
 wr(os.path.join(DIST, "sitemap.xml"), sm)
 from indexnow import KEY as _INKEY
 wr(os.path.join(DIST, _INKEY + ".txt"), _INKEY)   # IndexNow key file (tools/indexnow.py)
+wr(os.path.join(DIST, "ads.txt"), "google.com, pub-8997828618122077, DIRECT, f08c47fec0942fa0\n")   # owner applied to AdSense 11-12 (verification only; no ad units)
 wr(os.path.join(DIST, "robots.txt"), f"User-agent: *\nAllow: /\nSitemap: {BASE}/sitemap.xml\n")
 wr(os.path.join(DIST, "_headers"), "/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n"
    "  X-Frame-Options: DENY\n  Strict-Transport-Security: max-age=31536000\n"   # audit 11-04; no CSP: inline scripts + GA tag

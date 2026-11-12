@@ -1412,7 +1412,7 @@ if _own:
              + f'</p></details>' + _jump)
 
 HTML = f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">{'<meta name="robots" content="noindex,follow">' if os.environ.get("FF_NOINDEX") == "1" else ""}
+<meta name="viewport" content="width=device-width,initial-scale=1"><meta name="google-adsense-account" content="ca-pub-8997828618122077">{'<meta name="robots" content="noindex,follow">' if os.environ.get("FF_NOINDEX") == "1" else ""}
 {GA_TAG}<title>{CL + ' flood insurance and flood zones' if IS_STATE else CS + ', ' + agg.get('state', '') + _T1 + ' flood zones and flood insurance'}: {money(P['p50'])}/yr median, single-family</title>
 <meta name="description" content="{html.escape(META_DESC)}">
 <link rel="canonical" href="{CANON}"><link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" href="/favicon.svg" type="image/svg+xml">

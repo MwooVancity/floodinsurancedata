@@ -91,14 +91,14 @@ RULES = {
     "renters_cover": {   # renters page (11-07), FloodSmart's "Renters" section read raw with curl
         "text": "An NFIP renters policy protects the things you own inside your home, such as furniture, clothes, televisions, "
                 "computers, rugs and some artwork, for up to <b>$100,000</b> of damage. It is contents coverage.",
-        "sources": [(FS + "/get-insured/buy-a-policy", "Renters flood insurance policies protect the things you own inside your home", "curl"),
-                    (FS + "/get-insured/buy-a-policy", "They protect things like your furniture, clothes, television, computers, rugs and some artwork", "curl"),
-                    (FS + "/get-insured/buy-a-policy", "This type of coverage protects your belongings for up to $100,000 of damage, this is also called Contents Coverage", "curl")]},
+        "sources": [(FS + "/get-insured/buy-a-policy", "Flood insurance for renters is also called Contents coverage and it protects the things you own inside your home", "curl"),   # FloodSmart reworded 11-12; read raw this session
+                    (FS + "/get-insured/buy-a-policy", "Such as your furniture, clothes, television, computers, rugs and some artwork", "curl"),
+                    (FS + "/get-insured/buy-a-policy", "This policy covers your belongings for up to $100,000 of damage", "curl")]},
     "limits": {
         "text": "For a home, NFIP building coverage goes up to <b>$250,000</b> and contents coverage up to <b>$100,000</b>; "
                 "a renter's contents coverage goes up to <b>$100,000</b>; for a business, building and contents each go up to <b>$500,000</b>.",
         "sources": [(FS + "/get-insured/buy-a-policy", "Building policies cover up to $250,000 of flood damage and contents policies cover up to $100,000 of flood damage for belongings kept inside your home", "curl"),
-                    (FS + "/get-insured/buy-a-policy", "This type of coverage protects your belongings for up to $100,000 of damage", "curl"),
+                    (FS + "/get-insured/buy-a-policy", "This policy covers your belongings for up to $100,000 of damage", "curl"),
                     (FS + "/get-insured/buy-a-policy", "Each type of coverage (building and contents) covers up to $500,000 in flood damage", "curl")]},
     "building_cap": {
         "text": "the NFIP's <b>$250,000</b> building limit.",
