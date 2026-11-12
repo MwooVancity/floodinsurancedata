@@ -12,6 +12,7 @@ Most helpful flood-insurance page for every US place a homeowner or buyer search
 ~50,000 pageviews a month at a $30 RPM (third-party estimate). Milestones (GA4 pageviews a month): 02-2027 2,000; 05 8,000; 08 20,000; 11 50,000; two misses in a row = re-plan. Links are the lever and wait on the owner's contact address. Ads only above 1,000 sessions a month; referrals only after the licensing + FTC check.
 
 ## Next, in order
+- 11-12 owner applied to AdSense (status "Requires review"; owner clicks Request review). Verification meta tag on every page + /ads.txt live (tools/adsense_check.py, 4 mutations, in release; fails on any ad script). "No ads before a 4-week Search Console review" still governs ad units. FloodSmart reworded its renters text 11-12: renters_cover/limits excerpts re-read and updated.
 3. WAITING 11-13: read the daily run's build time (map_status out of the global fingerprint 11-12: local rebuild 67 s, unchanged rerun 16 s; CI was ~340 s at 312 pages).
 4. WAITING 11-15: weekly Search Console + GA4 read; IndexNow recheck.
 5. WAITING 11-18/11-20: start-date tool and address tool to "all" after 7 green nightly live tests.
