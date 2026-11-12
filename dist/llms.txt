@@ -256,12 +256,14 @@ Every "median" below is the median yearly cost (premium plus fees) of existing N
 - [Poquoson city, VA](https://floodinsurancedata.com/flood-insurance/poquoson-city-va/): median $1,102 a year
 - [Mecklenburg County, NC](https://floodinsurancedata.com/flood-insurance/mecklenburg-county-nc/): median $918 a year
 - [Camden County, GA](https://floodinsurancedata.com/flood-insurance/camden-county-ga/): median $924 a year
+- [DeKalb County, GA](https://floodinsurancedata.com/flood-insurance/dekalb-county-ga/): median $906 a year
 - [Accomack County, VA](https://floodinsurancedata.com/flood-insurance/accomack-county-va/): median $1,015 a year
 - [Alachua County, FL](https://floodinsurancedata.com/flood-insurance/alachua-county-fl/): median $682 a year
 - [Pima County, AZ](https://floodinsurancedata.com/flood-insurance/pima-county-az/): median $1,086 a year
 - [Passaic County, NJ](https://floodinsurancedata.com/flood-insurance/passaic-county-nj/): median $2,011 a year
 - [Morris County, NJ](https://floodinsurancedata.com/flood-insurance/morris-county-nj/): median $1,404 a year
 - [Leon County, FL](https://floodinsurancedata.com/flood-insurance/leon-county-fl/): median $898 a year
+- [Hardin County, TX](https://floodinsurancedata.com/flood-insurance/hardin-county-tx/): median $940 a year
 - [Lane County, OR](https://floodinsurancedata.com/flood-insurance/lane-county-or/): median $1,079 a year
 - [Pierce County, WA](https://floodinsurancedata.com/flood-insurance/pierce-county-wa/): median $886 a year
 - [Cobb County, GA](https://floodinsurancedata.com/flood-insurance/cobb-county-ga/): median $880 a year
@@ -303,6 +305,7 @@ Every "median" below is the median yearly cost (premium plus fees) of existing N
 - [Placer County, CA](https://floodinsurancedata.com/flood-insurance/placer-county-ca/): median $1,005 a year
 - [Kanawha County, WV](https://floodinsurancedata.com/flood-insurance/kanawha-county-wv/): median $1,464 a year
 - [Iberville Parish, LA](https://floodinsurancedata.com/flood-insurance/iberville-parish-la/): median $802 a year
+- [Lewis County, WA](https://floodinsurancedata.com/flood-insurance/lewis-county-wa/): median $1,172 a year
 - [Wakulla County, FL](https://floodinsurancedata.com/flood-insurance/wakulla-county-fl/): median $1,471 a year
 - [Salt Lake County, UT](https://floodinsurancedata.com/flood-insurance/salt-lake-county-ut/): median $548 a year
 - [Will County, IL](https://floodinsurancedata.com/flood-insurance/will-county-il/): median $1,220 a year
@@ -317,6 +320,7 @@ Every "median" below is the median yearly cost (premium plus fees) of existing N
 - [Denver County, CO](https://floodinsurancedata.com/flood-insurance/denver-county-co/): median $660 a year
 - [Highlands County, FL](https://floodinsurancedata.com/flood-insurance/highlands-county-fl/): median $556 a year
 - [Lucas County, OH](https://floodinsurancedata.com/flood-insurance/lucas-county-oh/): median $780 a year
+- [Howard County, MD](https://floodinsurancedata.com/flood-insurance/howard-county-md/): median $408 a year
 - [Sedgwick County, KS](https://floodinsurancedata.com/flood-insurance/sedgwick-county-ks/): median $1,189 a year
 - [Hennepin County, MN](https://floodinsurancedata.com/flood-insurance/hennepin-county-mn/): median $831 a year
 - [Lubbock County, TX](https://floodinsurancedata.com/flood-insurance/lubbock-county-tx/): median $834 a year
@@ -353,17 +357,33 @@ Every "median" below is the median yearly cost (premium plus fees) of existing N
 - [Bastrop County, TX](https://floodinsurancedata.com/flood-insurance/bastrop-county-tx/): median $1,143 a year
 - [Chelan County, WA](https://floodinsurancedata.com/flood-insurance/chelan-county-wa/): median $1,234 a year
 - [Austin County, TX](https://floodinsurancedata.com/flood-insurance/austin-county-tx/): median $1,010 a year
+- [Suwannee County, FL](https://floodinsurancedata.com/flood-insurance/suwannee-county-fl/): median $1,018 a year
 - [Bulloch County, GA](https://floodinsurancedata.com/flood-insurance/bulloch-county-ga/): median $899 a year
 - [Cabarrus County, NC](https://floodinsurancedata.com/flood-insurance/cabarrus-county-nc/): median $1,170 a year
+- [Humboldt County, CA](https://floodinsurancedata.com/flood-insurance/humboldt-county-ca/): median $1,239 a year
 - [Ramsey County, MN](https://floodinsurancedata.com/flood-insurance/ramsey-county-mn/): median $768 a year
+- [Stark County, OH](https://floodinsurancedata.com/flood-insurance/stark-county-oh/): median $780 a year
 - [Elkhart County, IN](https://floodinsurancedata.com/flood-insurance/elkhart-county-in/): median $925 a year
 - [Grand Forks County, ND](https://floodinsurancedata.com/flood-insurance/grand-forks-county-nd/): median $917 a year
 - [Greene County, AR](https://floodinsurancedata.com/flood-insurance/greene-county-ar/): median $732 a year
+- [Davis County, UT](https://floodinsurancedata.com/flood-insurance/davis-county-ut/): median $422 a year
+- [Gaston County, NC](https://floodinsurancedata.com/flood-insurance/gaston-county-nc/): median $1,108 a year
 - [Pennington County, SD](https://floodinsurancedata.com/flood-insurance/pennington-county-sd/): median $1,038 a year
 - [Jefferson County, AR](https://floodinsurancedata.com/flood-insurance/jefferson-county-ar/): median $873 a year
+- [Otsego County, NY](https://floodinsurancedata.com/flood-insurance/otsego-county-ny/): median $1,310 a year
+- [Roanoke County, VA](https://floodinsurancedata.com/flood-insurance/roanoke-county-va/): median $1,135 a year
+- [Rogers County, OK](https://floodinsurancedata.com/flood-insurance/rogers-county-ok/): median $1,166 a year
+- [Spokane County, WA](https://floodinsurancedata.com/flood-insurance/spokane-county-wa/): median $788 a year
+- [Anoka County, MN](https://floodinsurancedata.com/flood-insurance/anoka-county-mn/): median $1,203 a year
+- [Weber County, UT](https://floodinsurancedata.com/flood-insurance/weber-county-ut/): median $464 a year
+- [Mesa County, CO](https://floodinsurancedata.com/flood-insurance/mesa-county-co/): median $689 a year
 - [Champaign County, IL](https://floodinsurancedata.com/flood-insurance/champaign-county-il/): median $1,154 a year
+- [Lonoke County, AR](https://floodinsurancedata.com/flood-insurance/lonoke-county-ar/): median $945 a year
+- [Hendricks County, IN](https://floodinsurancedata.com/flood-insurance/hendricks-county-in/): median $1,034 a year
 - [Lincoln County, NE](https://floodinsurancedata.com/flood-insurance/lincoln-county-ne/): median $589 a year
+- [Calaveras County, CA](https://floodinsurancedata.com/flood-insurance/calaveras-county-ca/): median $1,268 a year
 - [Raleigh County, WV](https://floodinsurancedata.com/flood-insurance/raleigh-county-wv/): median $1,244 a year
+- [Tooele County, UT](https://floodinsurancedata.com/flood-insurance/tooele-county-ut/): median $466 a year
 
 ## Data
 - [Methodology](https://floodinsurancedata.com/methodology/)

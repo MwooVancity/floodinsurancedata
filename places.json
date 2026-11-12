@@ -1840,6 +1840,16 @@
 "indexable": true
 },
 {
+"slug": "dekalb-county-ga",
+"label": "DeKalb County, Georgia",
+"short": "DeKalb County",
+"geoid": "13089",
+"state": "GA",
+"units": 2982,
+"median": 906,
+"indexable": true
+},
+{
 "slug": "accomack-county-va",
 "label": "Accomack County, Virginia",
 "short": "Accomack County",
@@ -1897,6 +1907,16 @@
 "state": "FL",
 "units": 2717,
 "median": 898,
+"indexable": true
+},
+{
+"slug": "hardin-county-tx",
+"label": "Hardin County, Texas",
+"short": "Hardin County",
+"geoid": "48199",
+"state": "TX",
+"units": 2707,
+"median": 940,
 "indexable": true
 },
 {
@@ -2310,6 +2330,16 @@
 "indexable": true
 },
 {
+"slug": "lewis-county-wa",
+"label": "Lewis County, Washington",
+"short": "Lewis County",
+"geoid": "53041",
+"state": "WA",
+"units": 1245,
+"median": 1172,
+"indexable": true
+},
+{
 "slug": "wakulla-county-fl",
 "label": "Wakulla County, Florida",
 "short": "Wakulla County",
@@ -2447,6 +2477,16 @@
 "state": "OH",
 "units": 1000,
 "median": 780,
+"indexable": true
+},
+{
+"slug": "howard-county-md",
+"label": "Howard County, Maryland",
+"short": "Howard County",
+"geoid": "24027",
+"state": "MD",
+"units": 993,
+"median": 408,
 "indexable": true
 },
 {
@@ -2810,6 +2850,16 @@
 "indexable": true
 },
 {
+"slug": "suwannee-county-fl",
+"label": "Suwannee County, Florida",
+"short": "Suwannee County",
+"geoid": "12121",
+"state": "FL",
+"units": 467,
+"median": 1018,
+"indexable": true
+},
+{
 "slug": "bulloch-county-ga",
 "label": "Bulloch County, Georgia",
 "short": "Bulloch County",
@@ -2830,6 +2880,16 @@
 "indexable": true
 },
 {
+"slug": "humboldt-county-ca",
+"label": "Humboldt County, California",
+"short": "Humboldt County",
+"geoid": "06023",
+"state": "CA",
+"units": 454,
+"median": 1239,
+"indexable": true
+},
+{
 "slug": "ramsey-county-mn",
 "label": "Ramsey County, Minnesota",
 "short": "Ramsey County",
@@ -2837,6 +2897,16 @@
 "state": "MN",
 "units": 454,
 "median": 768,
+"indexable": true
+},
+{
+"slug": "stark-county-oh",
+"label": "Stark County, Ohio",
+"short": "Stark County",
+"geoid": "39151",
+"state": "OH",
+"units": 426,
+"median": 780,
 "indexable": true
 },
 {
@@ -2870,6 +2940,26 @@
 "indexable": true
 },
 {
+"slug": "davis-county-ut",
+"label": "Davis County, Utah",
+"short": "Davis County",
+"geoid": "49011",
+"state": "UT",
+"units": 352,
+"median": 422,
+"indexable": true
+},
+{
+"slug": "gaston-county-nc",
+"label": "Gaston County, North Carolina",
+"short": "Gaston County",
+"geoid": "37071",
+"state": "NC",
+"units": 342,
+"median": 1108,
+"indexable": true
+},
+{
 "slug": "pennington-county-sd",
 "label": "Pennington County, South Dakota",
 "short": "Pennington County",
@@ -2890,6 +2980,76 @@
 "indexable": true
 },
 {
+"slug": "otsego-county-ny",
+"label": "Otsego County, New York",
+"short": "Otsego County",
+"geoid": "36077",
+"state": "NY",
+"units": 317,
+"median": 1310,
+"indexable": true
+},
+{
+"slug": "roanoke-county-va",
+"label": "Roanoke County, Virginia",
+"short": "Roanoke County",
+"geoid": "51161",
+"state": "VA",
+"units": 316,
+"median": 1135,
+"indexable": true
+},
+{
+"slug": "rogers-county-ok",
+"label": "Rogers County, Oklahoma",
+"short": "Rogers County",
+"geoid": "40131",
+"state": "OK",
+"units": 282,
+"median": 1166,
+"indexable": true
+},
+{
+"slug": "spokane-county-wa",
+"label": "Spokane County, Washington",
+"short": "Spokane County",
+"geoid": "53063",
+"state": "WA",
+"units": 277,
+"median": 788,
+"indexable": true
+},
+{
+"slug": "anoka-county-mn",
+"label": "Anoka County, Minnesota",
+"short": "Anoka County",
+"geoid": "27003",
+"state": "MN",
+"units": 265,
+"median": 1203,
+"indexable": true
+},
+{
+"slug": "weber-county-ut",
+"label": "Weber County, Utah",
+"short": "Weber County",
+"geoid": "49057",
+"state": "UT",
+"units": 242,
+"median": 464,
+"indexable": true
+},
+{
+"slug": "mesa-county-co",
+"label": "Mesa County, Colorado",
+"short": "Mesa County",
+"geoid": "08077",
+"state": "CO",
+"units": 229,
+"median": 689,
+"indexable": true
+},
+{
 "slug": "champaign-county-il",
 "label": "Champaign County, Illinois",
 "short": "Champaign County",
@@ -2897,6 +3057,26 @@
 "state": "IL",
 "units": 223,
 "median": 1154,
+"indexable": true
+},
+{
+"slug": "lonoke-county-ar",
+"label": "Lonoke County, Arkansas",
+"short": "Lonoke County",
+"geoid": "05085",
+"state": "AR",
+"units": 219,
+"median": 945,
+"indexable": true
+},
+{
+"slug": "hendricks-county-in",
+"label": "Hendricks County, Indiana",
+"short": "Hendricks County",
+"geoid": "18063",
+"state": "IN",
+"units": 165,
+"median": 1034,
 "indexable": true
 },
 {
@@ -2910,6 +3090,16 @@
 "indexable": true
 },
 {
+"slug": "calaveras-county-ca",
+"label": "Calaveras County, California",
+"short": "Calaveras County",
+"geoid": "06009",
+"state": "CA",
+"units": 123,
+"median": 1268,
+"indexable": true
+},
+{
 "slug": "raleigh-county-wv",
 "label": "Raleigh County, West Virginia",
 "short": "Raleigh County",
@@ -2917,6 +3107,16 @@
 "state": "WV",
 "units": 108,
 "median": 1244,
+"indexable": true
+},
+{
+"slug": "tooele-county-ut",
+"label": "Tooele County, Utah",
+"short": "Tooele County",
+"geoid": "49045",
+"state": "UT",
+"units": 50,
+"median": 466,
 "indexable": true
 }
 ]

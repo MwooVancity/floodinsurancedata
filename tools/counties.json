@@ -2918,5 +2918,205 @@
   "label": "Cabarrus County, North Carolina",
   "short": "Cabarrus County",
   "official": 0
+ },
+ {
+  "slug": "suwannee-county-fl",
+  "state": "FL",
+  "geoid": "12121",
+  "county": "SUWANNEE",
+  "countytitle": "Suwannee",
+  "label": "Suwannee County, Florida",
+  "short": "Suwannee County",
+  "official": 0
+ },
+ {
+  "slug": "humboldt-county-ca",
+  "state": "CA",
+  "geoid": "06023",
+  "county": "HUMBOLDT",
+  "countytitle": "Humboldt",
+  "label": "Humboldt County, California",
+  "short": "Humboldt County",
+  "official": 0
+ },
+ {
+  "slug": "davis-county-ut",
+  "state": "UT",
+  "geoid": "49011",
+  "county": "DAVIS",
+  "countytitle": "Davis",
+  "label": "Davis County, Utah",
+  "short": "Davis County",
+  "official": 0
+ },
+ {
+  "slug": "gaston-county-nc",
+  "state": "NC",
+  "geoid": "37071",
+  "county": "GASTON",
+  "countytitle": "Gaston",
+  "label": "Gaston County, North Carolina",
+  "short": "Gaston County",
+  "official": 0
+ },
+ {
+  "slug": "roanoke-county-va",
+  "state": "VA",
+  "geoid": "51161",
+  "county": "ROANOKE",
+  "countytitle": "Roanoke",
+  "label": "Roanoke County, Virginia",
+  "short": "Roanoke County",
+  "official": 0
+ },
+ {
+  "slug": "otsego-county-ny",
+  "state": "NY",
+  "geoid": "36077",
+  "county": "OTSEGO",
+  "countytitle": "Otsego",
+  "label": "Otsego County, New York",
+  "short": "Otsego County",
+  "official": 0
+ },
+ {
+  "slug": "rogers-county-ok",
+  "state": "OK",
+  "geoid": "40131",
+  "county": "ROGERS",
+  "countytitle": "Rogers",
+  "label": "Rogers County, Oklahoma",
+  "short": "Rogers County",
+  "official": 0
+ },
+ {
+  "slug": "spokane-county-wa",
+  "state": "WA",
+  "geoid": "53063",
+  "county": "SPOKANE",
+  "countytitle": "Spokane",
+  "label": "Spokane County, Washington",
+  "short": "Spokane County",
+  "official": 0
+ },
+ {
+  "slug": "anoka-county-mn",
+  "state": "MN",
+  "geoid": "27003",
+  "county": "ANOKA",
+  "countytitle": "Anoka",
+  "label": "Anoka County, Minnesota",
+  "short": "Anoka County",
+  "official": 0
+ },
+ {
+  "slug": "weber-county-ut",
+  "state": "UT",
+  "geoid": "49057",
+  "county": "WEBER",
+  "countytitle": "Weber",
+  "label": "Weber County, Utah",
+  "short": "Weber County",
+  "official": 0
+ },
+ {
+  "slug": "mesa-county-co",
+  "state": "CO",
+  "geoid": "08077",
+  "county": "MESA",
+  "countytitle": "Mesa",
+  "label": "Mesa County, Colorado",
+  "short": "Mesa County",
+  "official": 0
+ },
+ {
+  "slug": "lonoke-county-ar",
+  "state": "AR",
+  "geoid": "05085",
+  "county": "LONOKE",
+  "countytitle": "Lonoke",
+  "label": "Lonoke County, Arkansas",
+  "short": "Lonoke County",
+  "official": 0
+ },
+ {
+  "slug": "hendricks-county-in",
+  "state": "IN",
+  "geoid": "18063",
+  "county": "HENDRICKS",
+  "countytitle": "Hendricks",
+  "label": "Hendricks County, Indiana",
+  "short": "Hendricks County",
+  "official": 0
+ },
+ {
+  "slug": "calaveras-county-ca",
+  "state": "CA",
+  "geoid": "06009",
+  "county": "CALAVERAS",
+  "countytitle": "Calaveras",
+  "label": "Calaveras County, California",
+  "short": "Calaveras County",
+  "official": 0
+ },
+ {
+  "slug": "tooele-county-ut",
+  "state": "UT",
+  "geoid": "49045",
+  "county": "TOOELE",
+  "countytitle": "Tooele",
+  "label": "Tooele County, Utah",
+  "short": "Tooele County",
+  "official": 0
+ },
+ {
+  "slug": "dekalb-county-ga",
+  "state": "GA",
+  "geoid": "13089",
+  "county": "DEKALB",
+  "countytitle": "DeKalb",
+  "label": "DeKalb County, Georgia",
+  "short": "DeKalb County",
+  "official": 0
+ },
+ {
+  "slug": "lewis-county-wa",
+  "state": "WA",
+  "geoid": "53041",
+  "county": "LEWIS",
+  "countytitle": "Lewis",
+  "label": "Lewis County, Washington",
+  "short": "Lewis County",
+  "official": 0
+ },
+ {
+  "slug": "hardin-county-tx",
+  "state": "TX",
+  "geoid": "48199",
+  "county": "HARDIN",
+  "countytitle": "Hardin",
+  "label": "Hardin County, Texas",
+  "short": "Hardin County",
+  "official": 0
+ },
+ {
+  "slug": "howard-county-md",
+  "state": "MD",
+  "geoid": "24027",
+  "county": "HOWARD",
+  "countytitle": "Howard",
+  "label": "Howard County, Maryland",
+  "short": "Howard County",
+  "official": 0
+ },
+ {
+  "slug": "stark-county-oh",
+  "state": "OH",
+  "geoid": "39151",
+  "county": "STARK",
+  "countytitle": "Stark",
+  "label": "Stark County, Ohio",
+  "short": "Stark County",
+  "official": 0
  }
 ]
