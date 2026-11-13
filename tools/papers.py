@@ -10,7 +10,7 @@ CACHE = os.path.join(ROOT, ".cache", "papers.json")
 Z90 = 1.6448536269514722   # two-sided 90% normal quantile
 
 SPECS = [
-    {"key": "damage-over-coverage", "ready": False, "indexable": False, "title": "Flood damage over building coverage: NFIP claims by county",
+    {"key": "damage-over-coverage", "ready": True, "indexable": True, "title": "Flood damage over building coverage: NFIP claims by county",
      "num": ("extras", "claims", "underinsured", "over"), "den": ("extras", "claims", "underinsured", "n"), "min": 100,
      "window": ("extras", "claims", "underinsured"),
      "excess": ("extras", "claims", "underinsured", "excess_median"), "by_year": ("extras", "claims", "underinsured", "over_by_year"),
@@ -25,10 +25,10 @@ SPECS = [
      "base": "claims with a loss in the window on single-family primary homes (FEMA occupancy type 1 or 11, primary residence, not a condominium coverage type) with a building payment above $0, recorded building damage above $0 and building coverage above $0; here a claim counts as paid on its building payment alone; records FEMA coded deleted or assigned in error left out",
      "limits": ["Damage over coverage compares FEMA's recorded actual cash value with the building coverage on the policy; it is not the owner's uninsured loss, which also depends on contents, deductibles, replacement cost, other insurance and aid.",
                 "Only insured, paid claims are in the base: homes without flood insurance are not.",
-                "Where one loss year holds over half of a county's claims over coverage (marked in the table), those claims come largely from one flood and are not independent, so that county's 90% range is narrower than it should be.",
+                "Where a county has at least 10 claims over coverage and one loss year holds over half of them (marked in the table), those claims cluster in one year, which may hold one flood or several; clustered claims are not independent, so that county's 90% range is narrower than it should be.",
                 "Counties are those FEMA codes on the claim, which can differ from the property's county."],
      "prior": "No published ranking of this measure by county was found in searches on 2026-11-12 (WebSearch: NFIP claims damage exceeded coverage by county).",
-     "prior_links": [], "prior_rules": [], "policy_col": False, "published": None,
+     "prior_links": [], "prior_rules": [], "policy_col": False, "published": "2026-11-13",
      "rules": []},
     {"key": "outside-the-zone", "ready": True, "indexable": True, "title": "Outside the zone: paid flood claims rated outside high-risk zones",
      "num": ("extras", "claims", "zone_split", "out_paid_n"), "den": ("extras", "claims", "zone_split", "known_paid_n"), "min": 100,
@@ -84,6 +84,8 @@ def rows(spec, recs=None):
     for i, x in enumerate(out): x["fifth"] = first.setdefault(x["value"], 1 + (5 * i) // N)
     return out
 
+ONE_YEAR_MIN = 10   # methods review underinsured-2 N1: fewer claims than this over coverage and one year holding most is noise, not a flag
+
 def context(spec, rec, w0, w1):
     """Per-row context the statistics review asked for (methods review outside-zone-2, M1): the county's policy units outside
     zones A and V today (policies.sfha_share_units is the share inside A and V); the median amount over coverage (M1.4); the loss year
@@ -93,7 +95,7 @@ def context(spec, rec, w0, w1):
     top = max(by.items(), key=lambda kv: (kv[1], kv[0])) if isinstance(by, dict) and by else None   # M1.8: a year with over half
     ex = _get(rec, spec["excess"]) if spec.get("excess") else None
     return {"pol_out": round(100 - sf, 1) if isinstance(sf, (int, float)) else None, "excess": ex if isinstance(ex, (int, float)) else None,
-            "one_year": top[0] if top and 2 * top[1] > sum(by.values()) else None}
+            "one_year": top[0] if top and 2 * top[1] > sum(by.values()) and sum(by.values()) >= ONE_YEAR_MIN else None}
 
 def pooled_boot(rows_, B=2000, seed=20261113):
     """90% range of the pooled share, resampling whole counties (review M2: claims in one county are not independent)."""
@@ -164,6 +166,7 @@ if __name__ == "__main__":   # self-check: interval, base, fifths
     assert [x["fifth"] for x in r] == [1, 2, 2, 2, 5], [x["fifth"] for x in r]
     assert str(wilson(0, 163)[0]) == "0.0" and str(wilson(163, 163)[1]) == "100.0", (wilson(0, 163), wilson(163, 163))
     T = {"by_year": ("y",), "excess": ("x",)}
-    assert context(T, {"y": {"2021": 3, "2019": 2}, "x": 9}, 0, 0) == {"pol_out": None, "excess": 9, "one_year": "2021"}
-    assert context(T, {"y": {"2021": 2, "2019": 2}}, 0, 0)["one_year"] is None   # exactly half is not over half
+    assert context(T, {"y": {"2021": 6, "2019": 4}, "x": 9}, 0, 0) == {"pol_out": None, "excess": 9, "one_year": "2021"}
+    assert context(T, {"y": {"2021": 5, "2019": 5}}, 0, 0)["one_year"] is None   # exactly half is not over half
+    assert context(T, {"y": {"2021": 6, "2019": 3}}, 0, 0)["one_year"] is None   # 9 claims: under ONE_YEAR_MIN, never flagged
     print("papers self-test OK")

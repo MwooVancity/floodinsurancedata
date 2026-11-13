@@ -36,7 +36,7 @@ def truth(recs, key):
         ex = by = None
         if key in EXTRA:
             ex, by = g(recs[c], EXTRA[key][0]), g(recs[c], EXTRA[key][1]) or {}
-            by = next((y for y, m in by.items() if 2 * m > sum(by.values())), None)   # at most one year can hold over half
+            by = next((y for y, m in by.items() if 2 * m > sum(by.values()) >= 10), None)   # at most one year holds over half; 10+ claims only (review underinsured-2 N1)
         out.append({"c": c, "k": k, "n": n, "v": v, "ci": ci(k, n), "fifth": band.setdefault(v, 1 + 5 * i // N), "pol": pol(c), "ex": ex, "yr": by})
     return out
 
@@ -65,6 +65,9 @@ def check(key, page, csv_text, cards, T):
         xcol = re.findall(r"</td><td>[\d,]+ of [\d,]+</td><td>(\$[\d,]+|—)</td><td>(\d{4}|)</td></tr>", page)
         if len(xcol) != len(want) or any((e_ == "—") != (t["ex"] is None) or (e_ != "—" and int(e_[1:].replace(",", "")) != round(t["ex"])) or (y_ or None) != t["yr"] for (e_, y_), t in zip(xcol, want)):
             bad.append(f"{key}: excess or one-year column disagrees with recompute")
+        m = re.search(r"from one loss year, (\d{4}), which may hold one flood or several \(([\d,]+) of the [\d,]+ counties", page)   # the Abstract's one-flood flag on the top county
+        want_ab = (T[0]["yr"], sum(1 for t in T if t["yr"])) if T and T[0]["yr"] else None
+        if (m and (m[1], int(m[2].replace(",", "")))) != (want_ab or None): bad.append(f"{key}: Abstract one-year flag {m and m.groups()} vs {want_ab}")
     cr = list(csv.DictReader(io.StringIO(csv_text or "")))
     if len(cr) != len(T): bad.append(f"{key}: CSV {len(cr)} rows, recompute {len(T)}")
     tc = {t["c"]: t for t in T}
@@ -112,6 +115,7 @@ if __name__ == "__main__":
                     "csv row dropped": (page, "\n".join(csv_text.splitlines()[:-1]) + "\n", cards),
                     "policy share wrong": (re.sub(r"(</td><td>[\d,]+ of [\d,]+</td><td>)([\d.]+)%", lambda m: f"{m[1]}{float(m[2]) + 1}%", page, count=1) if "Policy units outside" in page else page.replace('id="prior"', 'id="x"'), csv_text, cards),
                     "excess wrong": (re.sub(r"( of [\d,]+</td><td>\$)([\d,]+)", lambda m: m[1] + "1", page, count=1) if key in EXTRA else page.replace('id="prior"', 'id="x"'), csv_text, cards),
+                    "abstract flag wrong": (re.sub(r"(from one loss year, \d{4}, which may hold one flood or several \()([\d,]+)", lambda m: m[1] + "9999", page, count=1) if key in EXTRA else page.replace('id="prior"', 'id="x"'), csv_text, cards),
                     "card fifth wrong": (page, csv_text, {c: re.sub(rf'data-paper="{key}" data-fifth="(\d)"', lambda m: f'data-paper="{key}" data-fifth="{(int(m[1]) % 5) + 1}"', h, count=1) for c, h in cards.items()})}
             for k, (pg, cs, cd) in muts.items(): assert check(key, pg, cs, cd, T), f"{key}: missed {k}"
             assert not check(key, page, csv_text, cards, T), check(key, page, csv_text, cards, T)[:3]
