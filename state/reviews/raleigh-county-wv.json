@@ -1,8 +1,8 @@
 {
  "slug": "raleigh-county-wv",
  "verdict": "PASS",
- "template": "a036fb64422ea4d2",
+ "template": "fd06fec8eab262ad",
  "defects": [],
- "reviewer": "hater round 172 (fresh agent, docs/HATER-PROMPT.md)",
+ "reviewer": "hater round 177 (fresh agent, docs/HATER-PROMPT.md)",
  "notes": ""
 }
