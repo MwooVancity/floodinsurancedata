@@ -48,6 +48,10 @@ try:
     P, C = X.policies("DE"), X.claims("DE")
     p = P["10001"]
     assert p["condo_unit_cost_n"] == 31 and p["condo_unit_cost_median"] == 515, (p["condo_unit_cost_n"], p["condo_unit_cost_median"])
+    # 11-12 cloud field batch: the new keys exist, counts are whole numbers, every within-zone cell names its zone and n
+    assert {"prem_zone_elev", "obstruction_counts", "basement_counts", "floodproofed_n", "deductibles_by_zone"} <= set(p), sorted(p)
+    assert all(k.split("|")[0] in ("AE", "X") and k.split("|")[1] in ("elevated", "not") and v["n"] >= 1 for k, v in p["prem_zone_elev"].items()), p["prem_zone_elev"]
+    assert sum(p["basement_counts"].values()) == p["sf_n"], (p["basement_counts"], p["sf_n"])   # every single-family record lands in one bucket
     ev = {e["name"]: e for e in C["10001"]["events"]}
     assert set(ev) == {"Storm A"}, ev                                    # an event with no paid claim is not a row
     a = ev["Storm A"]

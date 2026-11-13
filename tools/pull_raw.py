@@ -27,7 +27,7 @@ POL_FIELDS = ("id propertyState censusGeoid reportedZipCode reportedCity nfipCom
               "elevationCertificateIndicator postFIRMConstructionIndicator preFIRMConstructionIndicator grandfatheringTypeCode "
               "mandatoryPurchaseFlag rateMethod originalNBDate policyEffectiveDate originalConstructionDate propertyPurchaseDate "
               "rentalPropertyIndicator tenantIndicator condominiumCoverageTypeCode numberOfFloorsInInsuredBuilding foundationType "
-              "waitingPeriodType subsidizedRateType").split()
+              "waitingPeriodType subsidizedRateType obstructionType basementEnclosureCrawlspaceType floodproofedIndicator").split()   # 11-12 cloud field batch (PLAN)
 CLM_FIELDS = ("id state countyCode censusGeoid reportedZipCode yearOfLoss dateOfLoss floodEvent eventDesignationNumber causeOfDamage "
               "ratedFloodZone floodZoneCurrent occupancyType primaryResidenceIndicator policyCount netBuildingPaymentAmount "
               "netContentsPaymentAmount netIccPaymentAmount buildingDamageAmount contentsDamageAmount buildingPropertyValue "

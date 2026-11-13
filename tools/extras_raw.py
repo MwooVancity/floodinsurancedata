@@ -40,7 +40,10 @@ def new_acc():
             "gf_units": 0, "prem_new": [], "prem_old": [], "prem_elev": [], "prem_low": [], "sf_n": 0, "sf_max_cov": 0,
             "rc_n": 0, "rc_over": 0, "fee": [], "hfiaa": [], "reserve": [], "icc": [], "ded": collections.Counter(),
             "cost_hist": collections.Counter(), "cost_hist_new": collections.Counter(), "zone_hist": {}, "zone_hist_exact": {}, "renter_hist": collections.Counter(), "renter_units": 0, "frp_hist_exact": {}, "all_cost": [], "sf_cost": [], "sf_prem": [], "sf_new_cost": [],
-            "trend": collections.defaultdict(lambda: [0, []])}   # year -> [single-family records, their costs > 0]
+            "trend": collections.defaultdict(lambda: [0, []]),
+            # 11-12 cloud field batch (PLAN): within-zone elevated vs not (never across zones: hcu 11-07), openings under elevated
+            # homes (FEMA obstructionType), basement types, floodproofed, deductible by zone group; FEMA codes kept raw, labelled at display
+            "pz": collections.defaultdict(list), "obs": collections.Counter(), "bsm": collections.Counter(), "fp": 0, "dedz": collections.defaultdict(collections.Counter)}   # year -> [single-family records, their costs > 0]
 
 def policies(st):
     acc = collections.defaultdict(new_acc)
@@ -90,6 +93,12 @@ def policies(st):
                 v = f(r[col])
                 if v is not None and v >= 0: a[key].append(v)
             if r["buildingDeductibleCode"] in DEDUCTIBLE: a["ded"][DEDUCTIBLE[r["buildingDeductibleCode"]]] += 1
+            _zx = (r["ratedFloodZone"] or "").strip().upper(); _zgx = "AE" if _zx == "AE" else "X" if _zx in ("B", "C", "X") else None
+            if _zgx and prem and prem > 0: a["pz"][(_zgx, "elevated" if truthy(r["elevatedBuildingIndicator"]) else "not")].append(prem)
+            if _zgx and r["buildingDeductibleCode"] in DEDUCTIBLE: a["dedz"][_zgx][DEDUCTIBLE[r["buildingDeductibleCode"]]] += 1
+            if truthy(r["elevatedBuildingIndicator"]): a["obs"][(r.get("obstructionType") or "").strip() or "blank"] += 1
+            a["bsm"][(r.get("basementEnclosureCrawlspaceType") or "").strip() or "blank"] += 1
+            if truthy(r.get("floodproofedIndicator")): a["fp"] += 1
     # 11-09 "is it rising?": the same cohort and cost on the as-of day of each of the 5 years before (pull_bulk.trend writes
     # the rows); none on disk (first run, failed pass) = no trend, so no page shows one
     for r in rows("NfipPoliciesTrend", st):
@@ -115,7 +124,10 @@ def policies(st):
                   "hfiaa_mean": round(statistics.mean(a["hfiaa"])) if a["hfiaa"] else None,
                   "reserve_mean": round(statistics.mean(a["reserve"])) if a["reserve"] else None,
                   "icc_premium_mean": round(statistics.mean(a["icc"])) if a["icc"] else None,
-                  "deductibles": {str(d): pct(c, n_ded) for d, c in a["ded"].most_common(4)}, "sf_n": a["sf_n"]}
+                  "deductibles": {str(d): pct(c, n_ded) for d, c in a["ded"].most_common(4)}, "sf_n": a["sf_n"],
+                  "prem_zone_elev": {f"{zg}|{el}": {"median": med(v), "n": len(v)} for (zg, el), v in a["pz"].items()},
+                  "obstruction_counts": dict(a["obs"]), "basement_counts": dict(a["bsm"]), "floodproofed_n": a["fp"],
+                  "deductibles_by_zone": {zg: {str(d): c for d, c in cn.items()} for zg, cn in a["dedz"].items()}}
         if k == "ST":   # histograms and counts the home page sums into exact U.S. figures
             out[k]["cost_hist"] = dict(a["cost_hist"]); out[k]["cost_hist_new"] = dict(a["cost_hist_new"])
             out[k]["cost_hist_zone"] = {g: dict(h) for g, h in a["zone_hist"].items()}
