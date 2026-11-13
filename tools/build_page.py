@@ -791,7 +791,7 @@ def card_save():
             (f"The usual building deductible here is {_dl(_top)} ({tp('ded_share', f'extras.policies.deductibles.{_top}', pct, q=_top)} "
              "of single-family policies). " if _top else "") + rule("save_ways"),
             (f"<table><thead><tr><th>Building deductible</th><th>Share of policies</th></tr></thead><tbody>{_rows}</tbody></table>"
-             "<p class='note'>Single-family primary homes; the commonest deductibles.</p>" if _rows else "")
+             "<p class='note'>Single-family primary homes; the commonest deductibles. <a href='/guides/flood-insurance-deductible/'>Deductibles in zone AE and zones X, B or C across the U.S.</a></p>" if _rows else "")
             + "<p class='note'>Community discount: see <a href='#crs'>Does my town get a community discount?</a></p>",
             src(["ded_share"], POL_ASOF, RETR) + src_rules(["save_ways"]), id="save")
     return save_card

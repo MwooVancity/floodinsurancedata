@@ -200,7 +200,7 @@ home = HEAD.format(title="Flood insurance cost by state and county (FEMA data)",
 <div class="card"><h2>What to know first</h2>
 <p class="stand"><b>How fast does it start?</b> {rule("howto_answer")}</p>
 <p class="stand"><b>Am I required to buy it?</b> {rule("purchase_answer")} {rule("lender_any_zone")} {rule("fl_citizens_short")} Check your zone on <a href="https://msc.fema.gov/portal/home" rel="noopener" target="_blank">FEMA's flood map</a>{' or with the <a href="/flood-zone-map/">flood zone lookup</a>' if (_zm_on_home == "all" or "flood-zone-map" in _zm_on_home) else ""}.</p>
-<p class="stand"><b>Does my homeowners policy cover floods?</b> {rule("homeowners_excl")} <a href="/guides/homeowners-insurance-flooding/">What FEMA's flood records show</a>.</p>
+<p class="stand"><b>Does my homeowners policy cover floods?</b> {rule("homeowners_excl")} <a href="/guides/homeowners-insurance-flooding/">What FEMA's flood records show</a>. <a href="/guides/">More flood insurance questions, answered with FEMA's records</a>.</p>
 <p class="stand"><b>Where do I buy it?</b> {rule("how_to_buy")} {rule("private_accept")}</p>
 <p class="stand"><b>How much can it pay?</b> {rule("limits")}</p>
 <p class="mut">Rules from {_rule_hosts(["howto_answer", "purchase_answer", "lender_any_zone", "fl_citizens_short", "homeowners_excl", "how_to_buy", "private_accept", "limits"])}. <a href="/methodology/">How we check them</a>.</p></div>
@@ -771,6 +771,9 @@ if len(states) == 51:
 # ---- /guides/: one searched question per page (PLAN "Pages to build", owner 11-12). Answer first from rule() quotes read raw;
 # figures only from the FEMA files every other national page uses; tools/claims_check.py --guides recomputes them.
 GUIDES = []
+def _nst(rows):   # review r167: "48 states" counted DC; label = states, plus "and DC" when DC is a row
+    n = sum(1 for s, _ in rows if s.get("abbr") != "DC"); dc = any(s.get("abbr") == "DC" for s, _ in rows)
+    return f"{n} states" + (" and DC" if dc else "")
 if len(states) == 51:
     _czg = json.load(open(os.path.join(DATADIR, "us", "claims_zone.json")))
     _g_from, _g_to = min(v["from"] for v in _czg.values()), max(v["to"] for v in _czg.values())
@@ -817,21 +820,86 @@ if len(states) == 51:
         _ck = ["condo_rcbap", "condo_contents", "condo_own", "wait_30", "flood_def"]
         _ctr = "".join(f'<tr><td><a href="/flood-insurance/{s["slug"]}/">{html.escape(s["name"])}</a></td><td>{money(x["condo_unit_cost_median"])}</td><td>{x["condo_unit_cost_n"]:,}</td></tr>' for s, x in _cdr)
         _cnone = [s["name"] for s, x in _cd if not x.get("condo_unit_cost_median")]
-        pg = HEAD.format(title=f"Condo flood insurance: what NFIP condo-unit policies cost in {len(_cdr)} states",
-                         desc=f"What an association's flood policy covers and what it leaves to unit owners, and the median NFIP condo-unit cost in {len(_cdr)} states from FEMA's records as of {_ASOF_TXT}.",
+        pg = HEAD.format(title=f"Condo flood insurance: what NFIP condo-unit policies cost in {_nst(_cdr)}",
+                         desc=f"What an association's flood policy covers and what it leaves to unit owners, and the median NFIP condo-unit cost in {_nst(_cdr)} from FEMA's records as of {_ASOF_TXT}.",
                          canon=BASE + "/guides/condo-flood-insurance/") + f"""
 <h1>Condo flood insurance</h1>
 <p class="lede">{rule("condo_rcbap")} {rule("condo_contents")}</p>
-<div class="card"><h2>What do condo-unit policies cost in each state?</h2><p class="stand">Median premium plus fees on NFIP policies FEMA codes as an individual condominium unit (insured by a unit owner or by an association), in force on {_ASOF_TXT}: {len(_cdr)} states with at least {MX_MIN} priced unit policies, {_cdn:,} policies in all, most policies first. Not a quote.</p>
+<div class="card"><h2>What do condo-unit policies cost in each state?</h2><p class="stand">Median premium plus fees on NFIP policies FEMA codes as an individual condominium unit (insured by a unit owner or by an association), in force on {_ASOF_TXT}: {_nst(_cdr)} with at least {MX_MIN} priced unit policies, {_cdn:,} policies in all, most policies first. Not a quote.</p>
 <table><thead><tr><th>State</th><th>Median / yr, condo-unit policy</th><th>Priced unit policies</th></tr></thead><tbody>{_ctr}</tbody></table>
 {f'<p class="mut">Too few priced unit policies for a median: {", ".join(html.escape(n) for n in _cnone)}.</p>' if _cnone else ""}
 <p class="mut">County pages show the county's condo-unit median where it rests on at least {MX_MIN} policies: <a href="/flood-insurance/">find your county</a>.</p></div>
-<div class="card"><h2>Who should insure what?</h2><p class="stand">{rule("condo_own")}</p><p class="stand">{rule("wait_30")}</p><p class="stand">{rule("flood_def")}</p></div>
+<div class="card"><h2>What each policy covers</h2><p class="stand">{rule("condo_own")}</p><p class="stand">{rule("wait_30")}</p><p class="stand">{rule("flood_def")}</p></div>
 <div class="card"><h2>What this page cannot tell you</h2><p class="stand">What your association's policy covers or its limit, whether your unit policy has building coverage, private insurers' prices, or your premium. A state median mixes units insured by owners and by associations, as FEMA's code does.</p>
 <p class="mut">Sources: FEMA OpenFEMA NFIP Policies v3 (condominiumCoverageTypeCode U, policyCost), as of {_ASOF_TXT}; rules from {_rule_hosts(_ck)}. <a href="/methodology/">How we check them</a>.</p></div>{FOOT}"""
         wr(os.path.join(DIST, "guides", "condo-flood-insurance", "index.html"), pg)
         zone_urls.append((BASE + "/guides/condo-flood-insurance/", None))
         GUIDES.append(("/guides/condo-flood-insurance/", "Condo flood insurance"))
+
+if len(states) == 51:   # buyer guide (KWP 11-12 "buying a house in a flood zone" 100-1K): what a NEW policy costs, by state
+    _bx = [(s, json.load(open(os.path.join(DATADIR, "states", s["slug"], "extras.json")))["policies"]) for s in states]
+    _bxr = sorted(((s, x) for s, x in _bx if x.get("cost_new_median") and (x.get("cost_new_n") or 0) >= __import__("metrics").CONST["min_priced"]),
+                  key=lambda t: -t[1]["cost_new_n"])
+    if len(_bxr) >= 10:
+        _bk = ["purchase_answer", "lender_any_zone", "lender_amount", "lender_force", "start_loan", "seller_assign", "zone_review", "private_accept"]
+        _btr = "".join(f'<tr><td><a href="/flood-insurance/{s["slug"]}/">{html.escape(s["name"])}</a></td><td>{money(x["cost_new_median"])}</td><td>{x["cost_new_n"]:,}</td></tr>' for s, x in _bxr)
+        pg = HEAD.format(title="Buying a house in a flood zone: what new flood policies cost, by state",
+                         desc=f"Whether your lender will require flood insurance, when it can start at closing, and what policies first bought in the past year cost in each state, from FEMA's records as of {_ASOF_TXT}.",
+                         canon=BASE + "/guides/buying-a-house-in-a-flood-zone/") + f"""
+<h1>Buying a house in a flood zone</h1>
+<p class="lede">{rule("purchase_answer")} {rule("lender_any_zone")}</p>
+<div class="stats"><div class="stat"><div class="n">{money(_new_med)}</div><div class="l">Typical cost, U.S. policies first bought in the past year</div></div>
+<div class="stat"><div class="n">{_new_n:,}</div><div class="l">Such single-family primary-home policies</div></div></div>
+<p class="mut">FEMA OpenFEMA NFIP Policies v3, as of {_ASOF_TXT}: median premium plus fees on single-family primary-home policies first written in the 12 months to that date. Not a quote: a new policy is priced for the building.</p>
+<div class="card"><h2>What the lender can require</h2><p class="stand">{rule("lender_amount")} {rule("lender_force")}</p><p class="stand">{rule("private_accept")}</p></div>
+<div class="card"><h2>When the policy starts</h2><p class="stand">{rule("start_loan")}</p><p class="stand">{rule("seller_assign")}</p></div>
+<div class="card"><h2>If you think the zone is wrong</h2><p class="stand">{rule("zone_review")} <a href="/flood-zone-map/">Check an address on FEMA's map</a>.</p></div>
+<div class="card"><h2>What new policies cost in each state</h2><p class="stand">Median premium plus fees on single-family primary-home policies first written in the 12 months to {_ASOF_TXT}, in {_nst(_bxr)} with at least {__import__("metrics").CONST["min_priced"]} such policies, most policies first.</p>
+<table><thead><tr><th>State</th><th>Typical cost, new policy</th><th>New policies</th></tr></thead><tbody>{_btr}</tbody></table>
+<p class="mut">The county page shows the costs by flood zone in that county: <a href="/flood-insurance/">find your county</a>.</p></div>
+<div class="card"><h2>What this page cannot tell you</h2><p class="stand">This house's premium, its flood zone (only FEMA's map and the lender's determination can say), whether a seller's policy can be assigned to you, or private insurers' prices.</p>
+<p class="mut">Sources: FEMA OpenFEMA NFIP Policies v3 (policyCost, originalNBDate), as of {_ASOF_TXT}; rules from {_rule_hosts(_bk)}. <a href="/methodology/">How we check them</a>.</p></div>{FOOT}"""
+        wr(os.path.join(DIST, "guides", "buying-a-house-in-a-flood-zone", "index.html"), pg)
+        zone_urls.append((BASE + "/guides/buying-a-house-in-a-flood-zone/", None))
+        GUIDES.append(("/guides/buying-a-house-in-a-flood-zone/", "Buying a house in a flood zone"))
+
+if len(states) == 51:   # deductible guide (cloud field batch 11-12): building deductible on single-family primary-home policies, by zone
+    # group (AE exact; X = B, C, X), counts summed over every state = exact U.S. shares; FEMA buildingDeductibleCode via codes.DEDUCTIBLE
+    _dz = {}
+    for s in states:
+        for zg, cn in ((json.load(open(os.path.join(DATADIR, "states", s["slug"], "extras.json")))["policies"].get("deductibles_by_zone")) or {}).items():
+            for d, c in cn.items(): _dz.setdefault(zg, collections.Counter())[d] += c
+    if set(_dz) >= {"AE", "X"} and all(sum(_dz[z].values()) >= 1000 for z in ("AE", "X")):
+        _dn = {z: sum(_dz[z].values()) for z in ("AE", "X")}
+        _dsh = lambda z, d: round(100 * _dz[z].get(d, 0) / _dn[z], 1)
+        _dall = sorted({d for z in ("AE", "X") for d in _dz[z]}, key=lambda d: float(d))
+        _dmain = [d for d in _dall if max(_dsh("AE", d), _dsh("X", d)) >= 1]   # deductibles under 1% in both groups: one "other" row
+        _dtr = "".join(f'<tr><td>{money(float(d))}</td><td>{_dsh("AE", d)}%</td><td>{_dsh("X", d)}%</td></tr>' for d in _dmain)
+        _doth = {z: round(100 - sum(_dsh(z, d) for d in _dmain), 1) for z in ("AE", "X")}
+        _dtop = {z: max(_dz[z], key=lambda d: _dz[z][d]) for z in ("AE", "X")}
+        _dhi = {z: round(sum(_dsh(z, d) for d in _dall if float(d) >= 5000), 1) for z in ("AE", "X")}
+        _dk = ["save_ways", "price_drivers"]
+        pg = HEAD.format(title="Flood insurance deductibles on NFIP policies: zone AE vs zones X, B or C",
+                         desc=f"The building deductibles on {_dn['AE'] + _dn['X']:,} NFIP single-family primary-home policies in zone AE and zones X, B or C, from FEMA's records as of {_ASOF_TXT}.",
+                         canon=BASE + "/guides/flood-insurance-deductible/") + f"""
+<h1>Flood insurance deductibles</h1>
+<p class="lede">In FEMA's records, the most common building deductible on single-family primary-home NFIP policies is {money(float(_dtop['AE']))} in zone AE and {money(float(_dtop['X']))} in zones X, B or C, and {_dhi['AE']}% of zone AE policies carry one of $5,000 or more, against {_dhi['X']}% in zones X, B or C. {rule("save_ways")}</p>
+<div class="card"><h2>Which building deductible do NFIP homeowners have?</h2><p class="stand">Share of single-family primary-home NFIP policies in force on {_ASOF_TXT} by building deductible: {_dn['AE']:,} rated zone AE, {_dn['X']:,} rated zone X, B or C (the moderate- and low-risk zones).</p>
+<table><thead><tr><th>Building deductible</th><th>Zone AE</th><th>Zone X, B or C</th></tr></thead><tbody>{_dtr}{f"<tr><td>Every other amount</td><td>{_doth['AE']}%</td><td>{_doth['X']}%</td></tr>" if max(_doth.values()) >= 0.1 else ""}</tbody></table>
+<p class="mut">Shares are of policies, not homes; a policy's contents deductible is separate and not shown. Rounded to one decimal, so a column can miss 100% by 0.1.</p></div>
+<div class="card"><h2>What FEMA prices a policy on</h2><p class="stand">{rule("price_drivers")}</p></div>
+<div class="card"><h2>What this page cannot tell you</h2><p class="stand">How much a higher deductible would lower your premium, which deductible suits you, or what private policies offer. Each county page shows that county's most common deductibles: <a href="/flood-insurance/">find your county</a>.</p>
+<p class="mut">Sources: FEMA OpenFEMA NFIP Policies v3 (buildingDeductibleCode, ratedFloodZone), as of {_ASOF_TXT}; rules from {_rule_hosts(_dk)}. <a href="/methodology/">How we check them</a>.</p></div>{FOOT}"""
+        wr(os.path.join(DIST, "guides", "flood-insurance-deductible", "index.html"), pg)
+        zone_urls.append((BASE + "/guides/flood-insurance-deductible/", None))
+        GUIDES.append(("/guides/flood-insurance-deductible/", "Flood insurance deductibles"))
+
+if GUIDES:   # /guides/: every guide that built this run, nothing typed by hand (11-13); home links it
+    pg = HEAD.format(title="Flood insurance questions answered with FEMA's records", desc="Guides to common flood-insurance questions, each answered with FEMA's own rules and records.",
+                     canon=BASE + "/guides/") + "<h1>Flood insurance questions, answered with FEMA's records</h1><div class=\"card\"><ul>" \
+         + "".join(f'<li><a href="{u}">{html.escape(t)}</a></li>' for u, t in GUIDES) + f"</ul></div>{FOOT}"
+    wr(os.path.join(DIST, "guides", "index.html"), pg)
+    zone_urls.append((BASE + "/guides/", None))
 
 # ---- /flood-insurance/renters/ (PAGE QUEUE row 6: "flood insurance for renters"). Base: NFIP policies in force marked tenant,
 # residential occupancy, no building coverage, contents above $0; priced = policyCost above $0. claims_check.py --renters recomputes.

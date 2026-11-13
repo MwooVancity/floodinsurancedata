@@ -85,7 +85,9 @@ def prep(rnd, slugs):
     print("brief:", path)
 
 def record(rnd):
-    txt = open(os.path.join(DIR, f"hater-round{rnd}.md"), encoding="utf-8").read()
+    _raw = open(os.path.join(DIR, f"hater-round{rnd}.md"), "rb").read()
+    try: txt = _raw.decode("utf-8")
+    except UnicodeDecodeError: txt = _raw.decode("cp1252")   # 11-13 r169: a reviewer saved Windows-1252 dashes; read it, never crash
     tf = os.path.join(DIR, f"round{rnd}-template.txt")
     if not os.path.exists(tf): sys.exit(f"no {tf}: run prep {rnd} first (a PASS covers only the template the reviewer saw)")
     th = open(tf).read().strip()

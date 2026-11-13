@@ -206,18 +206,56 @@ def check_condo(page):   # condo guide: every state row recomputed from data/sta
     got = sorted((int(b.replace(",", "")), int(a.replace(",", ""))) for a, b in re.findall(r'<tr><td><a href="/flood-insurance/[a-z-]+/">[^<]+</a></td><td>\$([\d,]+)</td><td>([\d,]+)</td></tr>', page))
     return [] if got == want else [f"C1 condo rows {len(got)} vs {len(want)} recomputed"]
 
+def check_deductible(page):   # deductible guide: shares recomputed from every state's deductibles_by_zone counts (11-13)
+    dz = {}
+    for p in glob.glob(os.path.join(D, "states", "*", "extras.json")):
+        for zg, cn in (json.load(open(p))["policies"].get("deductibles_by_zone") or {}).items():
+            for d, c in cn.items(): dz.setdefault(zg, {}); dz[zg][d] = dz[zg].get(d, 0) + c
+    n = {z: sum(dz.get(z, {}).values()) for z in ("AE", "X")}
+    bad = [] if f"{n['AE']:,} rated zone AE, {n['X']:,} rated zone X" in re.sub(r"<[^>]+>", "", page) else [f"D1 base counts {n}"]
+    # r169/r170: the X group is zones X, B and C; "zone X" alone in a title, lede or heading mislabels the base
+    lab = re.sub(r"<[^>]+>", " ", re.sub(r'<table.*?</table>|<p class="(?:stand|mut)">Share of.*?</p>', " ", page, flags=re.S))
+    bad += [f"D3 label '{m_[0]}' names zone X without B and C" for m_ in re.finditer(r"zones? (?:AE and )?X\b(?!, B or C)", lab)]
+    for amt, ae, x in re.findall(r"<tr><td>\$([\d,]+)</td><td>([\d.]+)%</td><td>([\d.]+)%</td></tr>", page):
+        k = str(int(amt.replace(",", "")))
+        want = (round(100 * dz["AE"].get(k, 0) / n["AE"], 1), round(100 * dz["X"].get(k, 0) / n["X"], 1))
+        if (float(ae), float(x)) != want: bad.append(f"D2 ${amt}: page {ae}%/{x}%, recomputed {want}")
+    return bad
+
+def check_state_labels(pages):   # review r167 MAJOR: "48 states" counted DC. Every "N states" / "N states and DC" label = the table's rows
+    bad = []
+    for name, h in pages.items():
+        rows = re.findall(r'<tr><td><a href="/flood-insurance/([a-z-]+)/">', h)
+        dc = "district-of-columbia" in rows; n = len(rows) - dc
+        for lab in set(re.findall(r"(\d+) states( and DC)?", re.sub(r"<[^>]+>", "", h))):
+            if (int(lab[0]), bool(lab[1])) != (n, dc): bad.append(f"L1 {name}: says '{lab[0]} states{lab[1]}', table has {n} states{' and DC' if dc else ''}")
+    return bad
+
 if __name__ == "__main__":
     if "--guides" in sys.argv:
+        gp = {os.path.basename(os.path.dirname(p)): open(p, encoding="utf-8").read() for p in glob.glob(os.path.join(ROOT, "dist", "guides", "*", "index.html"))}
+        lb = check_state_labels(gp)
+        if "--test" in sys.argv:
+            assert not lb, lb
+            k = next(k for k, h in gp.items() if " states and DC" in h)
+            assert check_state_labels({k: re.sub(r"(\d+) states and DC", lambda m_: f"{int(m_[1]) + 1} states", gp[k], count=1)}), "mutation not caught: DC counted as a state"
+        elif lb:
+            for b in lb: print("  -", b)
+            print("GUIDES CHECK FAIL"); sys.exit(1)
         pg = open(os.path.join(ROOT, "dist", "guides", "homeowners-insurance-flooding", "index.html"), encoding="utf-8").read()
         zx = open(os.path.join(ROOT, "dist", "flood-zones", "x", "index.html"), encoding="utf-8").read()
         cg = open(os.path.join(ROOT, "dist", "guides", "condo-flood-insurance", "index.html"), encoding="utf-8").read()
-        bad = check_guides(pg, zx) + check_condo(cg)
+        dg = open(os.path.join(ROOT, "dist", "guides", "flood-insurance-deductible", "index.html"), encoding="utf-8").read()
+        bad = check_guides(pg, zx) + check_condo(cg) + check_deductible(dg)
+        if "--test" in sys.argv:
+            assert check_deductible(re.sub(r"<td>([\d.]+)%</td><td>([\d.]+)%</td></tr>", lambda m_: f"<td>{float(m_[1]) + 1}%</td><td>{m_[2]}%</td></tr>", dg, count=1)), "mutation not caught: deductible share"
+            assert check_deductible(dg.replace("zone AE vs zones X, B or C", "zone AE vs zone X", 1)), "mutation not caught: zone X label"
         if "--test" in sys.argv:
             assert check_condo(re.sub(r"<td>\$([\d,]+)</td>", "<td>$1</td>", cg, count=1)), "mutation not caught: condo row"
             assert not bad, bad
             assert check_guides(re.sub(r">(\d+)%<", lambda m_: f">{int(m_[1]) + 1}%<", pg, count=1), zx), "mutation not caught: tile"
             assert check_guides(pg, re.sub(r"(zone on the claim, )(\d+)%", lambda m_: m_[1] + str(int(m_[2]) + 1) + "%", zx, count=1)), "mutation not caught: zone X disagrees"
-            print("guides check mutations: 3 caught"); sys.exit()
+            print("guides check mutations: 6 caught"); sys.exit()
         for b in bad: print("  -", b)
         print("GUIDES CHECK", "FAIL" if bad else "PASS"); sys.exit(1 if bad else 0)
     if "--renters" in sys.argv:
