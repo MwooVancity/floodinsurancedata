@@ -17,6 +17,7 @@ CFR70 = "https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part
 CFR60 = "https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=60&section=60.3"   # read raw 2026-11-13 (compressed)
 CONDO_B ="https://agents.floodsmart.gov/sites/default/files/media/document/2025-07/fema-nfip-flood-insurance-condominium-associations-brochure-01-2025.pdf"   # pdf, read raw 2026-11-12
 CONDO_P = "https://agents.floodsmart.gov/sites/default/files/media/document/2025-07/fema-nfip-condo-association-flood-policies-dont-protect-belongings-postcard-01-2023.pdf"   # pdf, read raw 2026-11-12
+RR2 = "https://www.fema.gov/sites/default/files/documents/fema_rr-2.0_2025.pdf"   # pdf, read raw 2026-11-13
 LOMC = "https://hazards.fema.gov/femaportal/onlinelomc/signin"
 PRELIM = "https://hazards.fema.gov/femaportal/prelimdownload/"
 CFR72 = "https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=72"
@@ -300,6 +301,14 @@ RULES = {
         "text": "Except for the Emergency Program discount, statutory discounts gradually phase out through an annual increase cap discount at each renewal date until the policy reaches its full-risk premium.",
         "sources": [(FS + "/premiumcosts", "Limits annual premium increases to a set percentage.", "curl"),
                     (FIM, "gradually phase out through a statutory annual increase cap discount", "manual")]},
+    "rr2_start": {   # risk-rating-2 guide 11-13: FEMA's Risk Rating 2.0 fact sheet (April 2025 PDF), read raw 2026-11-13
+        "text": "Under Risk Rating 2.0, FEMA calculates premiums from the value of the home and the property's own flood risk. "
+                "New NFIP policies beginning Oct. 1, 2021, and all policies renewing on or after April 1, 2022, are subject to it; "
+                "a policyholder whose premium goes down moves to the lower rate at the first renewal.",
+        "sources": [(RR2, "based on the value of their home and individual property", "manual"),
+                    (RR2, "New policies beginning Oct. 1, 2021 will be subject to the Risk Rating 2.0 rating methodology", "manual"),
+                    (RR2, "All policies renewing on or after April 1, 2022 will be subject to the Risk Rating 2.0 rating", "manual"),
+                    (RR2, "will transition to the lower rate immediately at the first renewal of their policy", "manual")]},
     "nfip_not_sold": {   # 2026-10-28 site review: 34 Louisiana, 137 Texas communities are not in the NFIP; the page called them "no discount"
         "text": "Federal flood insurance (NFIP) is sold only in communities that take part in the NFIP; in a community that "
                 "has not joined, or once a suspension takes effect, no one can buy an NFIP policy.",

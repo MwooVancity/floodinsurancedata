@@ -982,6 +982,36 @@ if len(states) == 51:   # vents guide (KWP 11-12 "flood vents" 1K-10K): FEMA obs
         zone_urls.append((BASE + "/guides/flood-vents/", None))
         GUIDES.append(("/guides/flood-vents/", "Flood vents and flood openings"))
 
+if len(states) == 51:   # Risk Rating 2.0 guide (KWP 11-12 "risk rating 2.0" 100-1K): the figure FEMA's page, its fact sheet and USAFacts lack
+    # (top-3 read 11-13) = today's share of policies still below FEMA's full-risk premium, by state, with the median gap. Base:
+    # ffcalc.premium_gap on single-family primary-home policies with both premiums > 0, premium-only vs premium-only (agg.json)
+    _rg = [(s, json.load(open(os.path.join(DATADIR, "states", s["slug"], "agg.json")))["policies"]) for s in states]
+    _rgr = sorted(((s, x) for s, x in _rg if x.get("gap_basis") == "premium" and x.get("share_below") is not None
+                   and (x.get("below_n") or 0) >= __import__("metrics").CONST["min_priced"]), key=lambda t: -t[1]["below_n"])
+    _rpc, _rpn = _pwhole(_rgr, "share_below", "below_n")   # whole U.S. percent only when the state roundings cannot tip it
+    if len(_rgr) >= 10 and _rpc is not None:
+        _rk = ["rr2_start", "price_drivers", "glide", "cap"]
+        _rtr = "".join(f'<tr><td><a href="/flood-insurance/{s["slug"]}/">{html.escape(s["name"])}</a></td><td>{x["share_below"]}%</td><td>{money(x.get("below_gap_median"))}</td><td>{x["below_n"]:,}</td></tr>' for s, x in _rgr)
+        _rno = [s["name"] for s, x in _rg if (s, x) not in _rgr]
+        pg = HEAD.format(title="Risk Rating 2.0: how many NFIP policies still pay below FEMA's full-risk premium, by state",
+                         desc=f"What Risk Rating 2.0 is, the yearly cap on increases, and the share of {_rpn:,} NFIP single-family primary-home policies whose premium is below FEMA's full-risk premium, by state, from FEMA's records as of {_ASOF_TXT}.",
+                         canon=BASE + "/guides/risk-rating-2/") + f"""
+<h1>Risk Rating 2.0</h1>
+<p class="lede">In FEMA's records, {_rpc}% of the {_rpn:,} U.S. single-family primary-home NFIP policies with both premiums recorded pay a premium below FEMA's full-risk premium on {_ASOF_TXT}. {rule("rr2_start")}</p>
+<div class="stats"><div class="stat"><div class="n">{_rpc}%</div><div class="l">of {_rpn:,} U.S. NFIP single-family primary-home policies: premium below FEMA's full-risk premium</div></div></div>
+<p class="mut">FEMA OpenFEMA NFIP Policies v3, as of {_ASOF_TXT}: single-family primary-home policies in force with a premium (totalInsurancePremiumOfThePolicy) and a full-risk premium (fullRiskPremium) both above $0. Both are premium only, before fees and surcharges.</p>
+<div class="card"><h2>How fast can a bill below full risk rise?</h2><p class="stand">{rule("glide")}</p><p class="stand">{rule("cap")}</p></div>
+<div class="card"><h2>What FEMA prices a policy on</h2><p class="stand">{rule("price_drivers")}</p></div>
+<div class="card"><h2>Policies below full-risk premium, by state</h2><p class="stand">Share of single-family primary-home NFIP policies in force on {_ASOF_TXT} whose premium is below FEMA's full-risk premium, and the median gap per policy among those below, in {_nst(_rgr)} with at least {__import__("metrics").CONST["min_priced"]} such policies, most policies first.</p>
+<table><thead><tr><th>State</th><th>Below full-risk premium</th><th>Median gap per policy below, premium only</th><th>Policies with both premiums</th></tr></thead><tbody>{_rtr}</tbody></table>
+{f'<p class="mut">Too few such policies: {", ".join(html.escape(n) for n in _rno)}.</p>' if _rno else ""}
+<p class="mut">The gap is FEMA's full-risk premium minus the premium charged, for each policy below full risk; a small median gap means most of those bills are close to full risk already. Each county page shows the county's share: <a href="/flood-insurance/">find your county</a>.</p></div>
+<div class="card"><h2>What this page cannot tell you</h2><p class="stand">Your premium, your full-risk premium, when your bill will reach it, or why a price changed. FEMA's 2021 forecasts of who would pay more are not repeated here; these are the policies in force today.</p>
+<p class="mut">Sources: FEMA OpenFEMA NFIP Policies v3 (totalInsurancePremiumOfThePolicy, fullRiskPremium), as of {_ASOF_TXT}; rules from {_rule_hosts(_rk)}. <a href="/methodology/">How we check them</a>.</p></div>{FOOT}"""
+        wr(os.path.join(DIST, "guides", "risk-rating-2", "index.html"), pg)
+        zone_urls.append((BASE + "/guides/risk-rating-2/", None))
+        GUIDES.append(("/guides/risk-rating-2/", "Risk Rating 2.0"))
+
 if GUIDES:   # /guides/: every guide that built this run, nothing typed by hand (11-13); home links it
     pg = HEAD.format(title="Flood insurance questions answered with FEMA's records", desc="Guides to common flood-insurance questions, each answered with FEMA's own rules and records.",
                      canon=BASE + "/guides/") + "<h1>Flood insurance questions, answered with FEMA's records</h1><div class=\"card\"><ul>" \

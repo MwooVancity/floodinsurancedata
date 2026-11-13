@@ -263,6 +263,20 @@ def check_private(page):   # private flood guide (11-13): U.S. share from state 
     if a < 0 or r < 0 or a > r: bad.append("P5 the 37%-style answer does not come before the private_accept rule")
     return bad
 
+def check_rr2(page):   # Risk Rating 2.0 guide (11-13): U.S. share below full risk with rounding bounds, base count, state rows, gap
+    rows = [json.load(open(p))["policies"] for p in glob.glob(os.path.join(D, "states", "*", "agg.json"))]
+    rows = [x for x in rows if x.get("gap_basis") == "premium" and x.get("share_below") is not None and (x.get("below_n") or 0) >= 30]
+    n = sum(x["below_n"] for x in rows)
+    lo, hi = (sum((x["share_below"] + d) * x["below_n"] for x in rows) / n for d in (-0.05, 0.05))
+    t = re.sub(r"<[^>]+>", "", page); bad = []
+    m_ = re.search(r"(\d+)% of the ([\d,]+) U\.S\. single-family primary-home NFIP policies with both premiums recorded pay a premium below", t)
+    if not m_ or int(m_[2].replace(",", "")) != n or not (lo <= int(m_[1]) + 0.5 and int(m_[1]) - 0.5 <= hi) or round(lo) != round(hi):
+        bad.append(f"R1 U.S. share: page {m_[0][:12] if m_ else 'none'}, recomputed {lo:.2f}-{hi:.2f}% of {n:,}")
+    if f'<div class="n">{m_[1] if m_ else "?"}%</div>' not in page: bad.append("R1 tile differs from the sentence")
+    got = sorted((int(c.replace(",", "")), float(a), int(b.replace(",", ""))) for a, b, c in re.findall(r'<tr><td><a href="/flood-insurance/[a-z-]+/">[^<]+</a></td><td>([\d.]+)%</td><td>\$([\d,]+)</td><td>([\d,]+)</td></tr>', page))
+    if got != sorted((x["below_n"], x["share_below"], x["below_gap_median"]) for x in rows): bad.append(f"R2 state rows {len(got)} vs {len(rows)}")
+    return bad
+
 def RULE_TEXT(k):
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     return __import__("rules_registry").RULES[k]["text"]
@@ -318,7 +332,8 @@ if __name__ == "__main__":
         vg = open(os.path.join(ROOT, "dist", "guides", "flood-vents", "index.html"), encoding="utf-8").read()
         pv = open(os.path.join(ROOT, "dist", "guides", "private-flood-insurance", "index.html"), encoding="utf-8").read()
         bh = open(os.path.join(ROOT, "dist", "guides", "buying-a-house-in-a-flood-zone", "index.html"), encoding="utf-8").read()
-        bad = check_guides(pg, zx) + check_condo(cg) + check_deductible(dg) + check_vents(vg) + check_private(pv) + check_order(bh, "wait_30", "start_loan", "O1")
+        rr = open(os.path.join(ROOT, "dist", "guides", "risk-rating-2", "index.html"), encoding="utf-8").read()
+        bad = check_guides(pg, zx) + check_condo(cg) + check_deductible(dg) + check_vents(vg) + check_private(pv) + check_rr2(rr) + check_order(bh, "wait_30", "start_loan", "O1")
         sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
         from rules_registry import RULES as _RQ
         bad += check_rule_quotes(_RQ)
@@ -333,6 +348,8 @@ if __name__ == "__main__":
             assert check_private(pv.replace('<p class="lede">', '<p class="lede">' + __import__("rules_registry").rule("private_accept") + " ", 1)), "mutation not caught: P5 rule before answer"
             assert check_order(bh.replace('data-rule="wait_30"', 'data-rule="wait_x"'), "wait_30", "start_loan", "O1"), "mutation not caught: O1 exception without rule"
             assert check_vents(re.sub(r"</a></td><td>([\d.]+)%</td>", lambda m_: f"</a></td><td>{float(m_[1]) + 1}%</td>", vg, count=1)), "mutation not caught: vents state row"
+            assert check_rr2(re.sub(r"(\d+)(% of the [\d,]+ U\.S\. single-family)", lambda m_: f"{int(m_[1]) + 1}{m_[2]}", rr, count=1)), "mutation not caught: rr2 U.S. share"
+            assert check_rr2(re.sub(r"</a></td><td>([\d.]+)%</td><td>\$([\d,]+)</td>", lambda m_: f"</a></td><td>{m_[1]}%</td><td>${int(m_[2].replace(',', '')) + 1:,}</td>", rr, count=1)), "mutation not caught: rr2 gap"
         if "--test" in sys.argv:
             assert check_deductible(re.sub(r"<td>([\d.]+)%</td><td>([\d.]+)%</td></tr>", lambda m_: f"<td>{float(m_[1]) + 1}%</td><td>{m_[2]}%</td></tr>", dg, count=1)), "mutation not caught: deductible share"
             assert check_deductible(dg.replace("zone AE vs zones X, B or C", "zone AE vs zone X", 1)), "mutation not caught: zone X label"
@@ -342,7 +359,7 @@ if __name__ == "__main__":
             assert not bad, bad
             assert check_guides(re.sub(r">(\d+)%<", lambda m_: f">{int(m_[1]) + 1}%<", pg, count=1), zx), "mutation not caught: tile"
             assert check_guides(pg, re.sub(r"(zone on the claim, )(\d+)%", lambda m_: m_[1] + str(int(m_[2]) + 1) + "%", zx, count=1)), "mutation not caught: zone X disagrees"
-            print("guides check mutations: 15 caught"); sys.exit()
+            print("guides check mutations: 17 caught"); sys.exit()
         for b in bad: print("  -", b)
         print("GUIDES CHECK", "FAIL" if bad else "PASS"); sys.exit(1 if bad else 0)
     if "--renters" in sys.argv:
