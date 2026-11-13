@@ -17,7 +17,7 @@ a hostile statistician and a Google quality rater. Any BLOCKER or MAJOR = not sh
 - M1.1 Same base: numerator, denominator and n are counted on the same records; the spec declares all three and
   index_check recomputes each from the raw files with its own code.
 - M1.2 Minimum n per county, stated with its reason; every displayed share has n beside it.
-- M1.3 Uncertainty: every share shows a 90% interval (Wilson); no bare rank. Ranks are shown as bands (fifths) or with
+- M1.3 Uncertainty: every share shows a 90% interval: Wilson for a share of counted records; for a share of dollars, a bootstrap over the county's claims (cloud job), else no interval and no rank. No bare rank. Ranks are shown as bands (fifths) or with
   a rank range; ties named.
 - M1.4 Materiality: a share of "below/over" also reports the size (median gap, median excess).
 - M1.5 Window: pooled history is restricted to a stated window or split by era; dollars labelled "not adjusted for inflation".
@@ -44,12 +44,12 @@ a hostile statistician and a Google quality rater. Any BLOCKER or MAJOR = not sh
   distribution = the CSV, license = FEMA terms); no Review, no fake author, no ratings.
 
 ## 3. Google and AdSense penalty triggers (machine + rater)
-- M3.1 Scaled content: each paper's findings text must share under 30% of its sentences with any other paper (sameness
+- M3.1 Scaled content (our own threshold, not a Google number): each paper's findings text must share under 30% of its sentences with any other paper (sameness
   check across papers); a paper whose 3 findings are generic templates fails.
 - M3.2 Doorway / cannibalization: one target query per paper, not the same as any county, state or hub title; county
   pages link the paper, never repeat its table.
 - M3.3 Freshness honesty: dates move only with new data.
-- M3.4 No ads inside or beside the table (AdSense auto ads excluded from paper pages until the 4-week review).
+- M3.4 No ads on paper pages: the AdSense snippet is left off paper pages and tools/adsense_check.py exempts exactly the READY paper URLs (the check requires the snippet everywhere else).
 - M3.5 Staged indexing: a new paper ships noindex; indexable only after both reviews PASS and 7 days live with no
   correction; at most 2 papers made indexable per week.
 - R3.6 Quality rater (Google's Search Quality Rater Guidelines, YMYL money topic): rates Needs Met and Page Quality;
