@@ -852,7 +852,7 @@ if len(states) == 51:   # buyer guide (KWP 11-12 "buying a house in a flood zone
     _bxr = sorted(((s, x) for s, x in _bx if x.get("cost_new_median") and (x.get("cost_new_n") or 0) >= __import__("metrics").CONST["min_priced"]),
                   key=lambda t: -t[1]["cost_new_n"])
     if len(_bxr) >= 10:
-        _bk = ["purchase_answer", "lender_any_zone", "lender_amount", "lender_force", "start_loan", "seller_assign", "zone_review", "private_accept"]
+        _bk = ["purchase_answer", "lender_any_zone", "lender_amount", "lender_force", "wait_30", "start_loan", "seller_assign", "zone_review", "private_accept"]
         _btr = "".join(f'<tr><td><a href="/flood-insurance/{s["slug"]}/">{html.escape(s["name"])}</a></td><td>{money(x["cost_new_median"])}</td><td>{x["cost_new_n"]:,}</td></tr>' for s, x in _bxr)
         pg = HEAD.format(title="Buying a house in a flood zone: what new flood policies cost, by state",
                          desc=f"Whether your lender will require flood insurance, when it can start at closing, and what policies first bought in the past year cost in each state, from FEMA's records as of {_ASOF_TXT}.",
@@ -863,7 +863,7 @@ if len(states) == 51:   # buyer guide (KWP 11-12 "buying a house in a flood zone
 <div class="stat"><div class="n">{_new_n:,}</div><div class="l">Such single-family primary-home policies</div></div></div>
 <p class="mut">FEMA OpenFEMA NFIP Policies v3, as of {_ASOF_TXT}: median premium plus fees on single-family primary-home policies first written in the 12 months to that date. Not a quote: a new policy is priced for the building.</p>
 <div class="card"><h2>What the lender can require</h2><p class="stand">{rule("lender_amount")} {rule("lender_force")}</p><p class="stand">{rule("private_accept")}</p></div>
-<div class="card"><h2>When the policy starts</h2><p class="stand">{rule("start_loan")}</p><p class="stand">{rule("seller_assign")}</p></div>
+<div class="card"><h2>When the policy starts</h2><p class="stand">{rule("wait_30")}</p><p class="stand">{rule("start_loan")}</p><p class="stand">{rule("seller_assign")}</p></div>
 <div class="card"><h2>If you think the zone is wrong</h2><p class="stand">{rule("zone_review")} <a href="/flood-zone-map/">Check an address on FEMA's map</a>.</p></div>
 <div class="card"><h2>What new policies cost in each state</h2><p class="stand">Median premium plus fees on single-family primary-home policies first written in the 12 months to {_ASOF_TXT}, in {_nst(_bxr)} with at least {__import__("metrics").CONST["min_priced"]} such policies, most policies first.</p>
 <table><thead><tr><th>State</th><th>Typical cost, new policy</th><th>New policies</th></tr></thead><tbody>{_btr}</tbody></table>
@@ -873,6 +873,44 @@ if len(states) == 51:   # buyer guide (KWP 11-12 "buying a house in a flood zone
         wr(os.path.join(DIST, "guides", "buying-a-house-in-a-flood-zone", "index.html"), pg)
         zone_urls.append((BASE + "/guides/buying-a-house-in-a-flood-zone/", None))
         GUIDES.append(("/guides/buying-a-house-in-a-flood-zone/", "Buying a house in a flood zone"))
+
+if len(states) == 51:   # private flood guide (KWP 11-12 "private flood insurance" 1K-10K): FEMA holds no private policy, so the page gives
+    # the lender rules (rule()) and the one FEMA figure the top 3 lack: rebuilding cost above the NFIP's $250,000 building limit.
+    # extras store one-decimal shares, never counts: the U.S. share is printed only when every rounding of the state shares gives
+    # the same whole percent (bounds +/-0.05), so a rounded-share sum can never print a wrong figure (claims_check P1 recomputes)
+    _pv = [(s, json.load(open(os.path.join(DATADIR, "states", s["slug"], "extras.json")))["policies"]) for s in states]
+    _pvr = sorted(((s, x) for s, x in _pv if x.get("replacement_over_250k_pct") is not None and (x.get("replacement_n") or 0) >= __import__("metrics").CONST["min_priced"]),
+                  key=lambda t: -t[1]["replacement_n"])
+    def _pwhole(rows, pk, nk):   # whole-percent U.S. share from one-decimal state shares, or None when the rounding could tip it
+        n = sum(x[nk] for _, x in rows)
+        lo, hi = (sum((x[pk] + d) * x[nk] for _, x in rows) / n for d in (-0.05, 0.05))
+        return (int(lo + 0.5), n) if n and int(lo + 0.5) == int(hi + 0.5) else (None, n)
+    _prc, _prn = _pwhole(_pvr, "replacement_over_250k_pct", "replacement_n")
+    _pmx, _pmn = _pwhole([(s, x) for s, x in _pv if x.get("at_building_max_pct") is not None and x.get("sf_n")], "at_building_max_pct", "sf_n")
+    if len(_pvr) >= 10 and _prc is not None:
+        _pk = ["private_accept", "private_statement", "lender_amount", "lender_force", "limits_quoted"]
+        _ptr = "".join(f'<tr><td><a href="/flood-insurance/{s["slug"]}/">{html.escape(s["name"])}</a></td><td>{x["replacement_over_250k_pct"]}%</td><td>{x["replacement_n"]:,}</td></tr>' for s, x in _pvr)
+        _pdoc = next((p for p in __import__("papers").READY if p["key"] == "damage-over-coverage"), None)
+        pg = HEAD.format(title="Private flood insurance: what lenders must accept, and how often a home's rebuilding cost tops the NFIP limit",
+                         desc=f"When a lender must accept a private flood policy, and the share of NFIP single-family primary-home policies with a rebuilding cost above the NFIP's $250,000 building limit, by state, from FEMA's records as of {_ASOF_TXT}.",
+                         canon=BASE + "/guides/private-flood-insurance/") + f"""
+<h1>Private flood insurance</h1>
+<p class="lede">In FEMA's records, {_prc}% of the {_prn:,} single-family primary-home NFIP policies that report a rebuilding cost report one above $250,000: for those buildings, NFIP building coverage cannot reach the full rebuilding cost. {rule("private_accept")}</p>
+<div class="stats"><div class="stat"><div class="n">{_prc}%</div><div class="l">of {_prn:,} U.S. NFIP single-family primary-home policies that report a rebuilding cost: rebuilding cost above $250,000</div></div>
+{f'<div class="stat"><div class="n">{_pmx}%</div><div class="l">of all {_pmn:,} U.S. NFIP single-family primary-home policies: building coverage of $250,000 or more</div></div>' if _pmx is not None else ""}</div>
+<p class="mut">FEMA OpenFEMA NFIP Policies v3, as of {_ASOF_TXT}: {_prn:,} single-family primary-home policies in force that report a rebuilding cost above $0 (buildingReplacementCost){f"; the second figure counts building coverage (totalBuildingInsuranceCoverage) of $250,000 or more over all {_pmn:,} such policies" if _pmx is not None else ""}. NFIP policies only: private policies are not in FEMA's records.</p>
+<div class="card"><h2>Does the NFIP's limit cover the whole house?</h2><p class="stand">{rule("limits_quoted")}</p>
+{f'<p class="stand">How often NFIP claims found more building damage than the coverage, county by county: <a href="/flood-insurance/damage-over-coverage/">flood damage over building coverage</a>.</p>' if _pdoc else ""}</div>
+<div class="card"><h2>When must a lender accept a private policy?</h2><p class="stand">{rule("private_statement")}</p>
+<p class="stand">{rule("lender_amount")} {rule("lender_force")}</p></div>
+<div class="card"><h2>Rebuilding cost above $250,000, by state</h2><p class="stand">Share of single-family primary-home NFIP policies reporting a rebuilding cost that report one above $250,000, in {_nst(_pvr)} with at least {__import__("metrics").CONST["min_priced"]} such policies, most policies first.</p>
+<table><thead><tr><th>State</th><th>Rebuilding cost above $250,000</th><th>Policies reporting one</th></tr></thead><tbody>{_ptr}</tbody></table>
+<p class="mut">The rebuilding cost is the figure recorded on the NFIP policy, not an appraisal. Each state and county page shows what NFIP policies cost there: <a href="/flood-insurance/">find your state or county</a>.</p></div>
+<div class="card"><h2>What this page cannot tell you</h2><p class="stand">Private insurers' prices, how many private flood policies exist or what they pay on claims, whether a given private policy meets the federal definition, or your premium. FEMA's records hold NFIP policies only. No company is named, ranked or recommended here.</p>
+<p class="mut">Sources: FEMA OpenFEMA NFIP Policies v3 (buildingReplacementCost, totalBuildingInsuranceCoverage), as of {_ASOF_TXT}; rules from {_rule_hosts(_pk)}. <a href="/methodology/">How we check them</a>.</p></div>{FOOT}"""
+        wr(os.path.join(DIST, "guides", "private-flood-insurance", "index.html"), pg)
+        zone_urls.append((BASE + "/guides/private-flood-insurance/", None))
+        GUIDES.append(("/guides/private-flood-insurance/", "Private flood insurance"))
 
 if len(states) == 51:   # deductible guide (cloud field batch 11-12): building deductible on single-family primary-home policies, by zone
     # group (AE exact; X = B, C, X), counts summed over every state = exact U.S. shares; FEMA buildingDeductibleCode via codes.DEDUCTIBLE

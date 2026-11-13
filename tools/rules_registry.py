@@ -91,11 +91,12 @@ RULES = {
         "sources": [(FIM, "within 13 months from the effective date of the map revision", "manual"),
                     (FIM, "after 13 months from the effective date of the map revision, the 30-day waiting period applies", "manual")]},
     "start_loan": {   # FIM Table 10
-        "text": "With the loan exception, coverage starts at the time of the loan closing if the insurer receives the form and full amount due within 30 calendar "
+        "text": "Exception for a policy bought while making, increasing, extending or renewing a mortgage: coverage starts at the time of the loan closing if the insurer receives the form and full amount due within 30 calendar "
                 "days of closing when the lender, title company or settlement attorney pays, or within 10 calendar days when you or anyone else pays; otherwise "
                 "the earliest start is the 30th calendar day after the insurer receives them. Contents-only coverage qualifies only if the contents are part of "
                 "the security for the loan.",
-        "sources": [(FIM, "Contents-only policies and endorsements can only be eligible for the loan exception if the contents are part of the security for a loan", "manual"),
+        "sources": [(FS + "/get-insured/buy-a-policy", "There is no wait if you buy flood insurance while making, increasing, extending or renewing a mortgage", "curl"),   # r-private2: the exception named by FEMA's own words
+                    (FIM, "Contents-only policies and endorsements can only be eligible for the loan exception if the contents are part of the security for a loan", "manual"),
                     (FIM, "If the lender, title company, or settlement attorney pays the premium", "manual"),
                     (FIM, "within 30 calendar days from the closing", "manual"),
                     (FIM, "within 10 calendar days from the loan transaction closing", "manual"),
@@ -202,12 +203,30 @@ RULES = {
                     ("https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=64", "D Area of undetermined but possible, flood hazards", "curl"),
                     ("https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=64", "and with velocity, that is inundated by tidal floods (coastal high hazard area)", "curl"),
                     ("https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=64", "A99 Area of special flood hazard where enough progress has been made on a protective system", "curl")]},
-    "private_accept": {   # backlog 2: lenders must take a qualifying private policy (FDIC rule; OCC, Fed, NCUA, FCA rules match)
-        "text": "A private flood policy can meet a lender's flood requirement: federally regulated lenders must accept a private "
-                "policy that meets the federal definition of private flood insurance and covers at least what the loan requires "
-                "(12 CFR §339.3(c)). Its price is not in FEMA's records.",
+    "private_accept": {   # r-private 11-13 MAJOR: was a paraphrase cited to the FDIC rule only; now the statute's duty, quoted
+        # (42 U.S.C. 4012a(b)(1)(B), govinfo read raw 11-13), scope = "regulated lending institutions" as the statute says
+        # r-private2 11-13 MAJOR: one plain clause, no "subparagraph (A)" cross-reference, no back-to-back quotes (claims_check Q2)
+        "text": "Federal law tells federal lending regulators to direct regulated lending institutions \"to accept private flood insurance as "
+                "satisfaction of the flood insurance coverage requirement\" when the private policy's coverage \"meets the requirements for coverage\" "
+                "under that requirement (42 U.S.C. §4012a(b)(1)(B)). A private policy's price is not in FEMA's records.",
+        "sources": [("https://www.govinfo.gov/content/pkg/USCODE-2023-title42/html/USCODE-2023-title42-chap50-subchapI-sec4012a.htm",
+                     "shall by regulation direct regulated lending institutions", "curl"),
+                    ("https://www.govinfo.gov/content/pkg/USCODE-2023-title42/html/USCODE-2023-title42-chap50-subchapI-sec4012a.htm",
+                     "to accept private flood insurance as satisfaction of the flood insurance coverage requirement under subparagraph (A) if the coverage provided by such private flood insurance meets the requirements for coverage under such subparagraph", "curl")]},
+    "limits_quoted": {   # r-private 11-13 MAJOR: limits with the source in the sentence (floodsmart buy-a-policy, read raw 11-13)
+        "text": "FEMA's <a href='https://www.floodsmart.gov/get-insured/buy-a-policy' rel='noopener'>FloodSmart buying page</a> says, for a home: "
+                "\"Building policies cover up to $250,000 of flood damage and contents policies cover up to $100,000 of flood damage for "
+                "belongings kept inside your home.\" For a business: \"Each type of coverage (building and contents) covers up to $500,000 in flood damage.\"",
+        "sources": [(FS + "/get-insured/buy-a-policy", "Building policies cover up to $250,000 of flood damage and contents policies cover up to $100,000 of flood damage for belongings kept inside your home", "curl"),
+                    (FS + "/get-insured/buy-a-policy", "Each type of coverage (building and contents) covers up to $500,000 in flood damage", "curl")]},
+    "private_statement": {   # private flood guide 11-13: 12 CFR 339.3(c)(2) read raw (eCFR, curl --compressed); FDIC scope and "may" kept
+        "text": "Under the FDIC's rule, a lender it supervises may treat a private policy as meeting the federal definition of private flood insurance, without further review, "
+                "if the policy or an endorsement says: \"This policy meets the definition of private flood insurance contained in "
+                "42 U.S.C. 4012a(b)(7) and the corresponding regulation.\" (12 CFR §339.3(c)(2)).",
         "sources": [("https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-12.xml?part=339&section=339.3",
-                     "must accept private flood insurance, as defined in § 339.2, in satisfaction of the flood insurance purchase requirement", "curl")]},
+                     "without further review of the policy, if the following statement is included within the policy or as an endorsement to the policy", "curl"),
+                    ("https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-12.xml?part=339&section=339.3",
+                     "This policy meets the definition of private flood insurance contained in 42 U.S.C. 4012a(b)(7) and the corresponding regulation.", "curl")]},
     "rcv_80": {   # hater r6: the real answer to "would it pay to rebuild" (SFIP Dwelling Form, 44 CFR 61 App. A(1), Art. VII)
         "text": "The NFIP pays the cost to rebuild (not a depreciated value) only for a single-family home that is your "
                 "principal residence and is insured for at least 80% of its full rebuilding cost, or for the $250,000 maximum.",

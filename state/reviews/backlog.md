@@ -33,3 +33,11 @@ ask is either BUILDING or DECIDED with its reason. Reviewers: a DECIDED item is 
 - Event table leads with the catch-all "Flooding (1978–1997)" row ($67.3 million) above the named floods; labelled as many floods, so not wrong. 1995 and 2019 (two costliest years) have no named flood row.
 
 - 11-13 r175 vents guide MINOR: openings rule text should say it is the A-zone rule (44 CFR 60.3(c)); V zones follow 60.3(e) (read raw first). Title 'elevated buildings' vs policies.
+
+## 11-13 private-flood review r3 MINORs (pre-existing live text, not from this change)
+- "rising toward it" on screen 1 (below full-risk): inference reads as premium-rise claim; quote the cap statute instead.
+- "so a policy bought today will not cover a flood this week" (buying guide, /nfip/) and "you will likely file claims with both" (/nfip/): unquoted inference; replace with source sentence or cut.
+- "whatever the home is worth" in Citizens paragraph: unquoted; cut.
+- Louisiana: "FEMA disaster aid is open to people in counties designated..." uses "counties" in a parish state; use UNIT.
+- Damage Over Coverage county line vs payouts card: two bases for "damage over coverage" without the window/filter in the line.
+- Buying guide headline $1,011 is all zones; add "all zones".

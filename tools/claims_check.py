@@ -237,6 +237,50 @@ def check_vents(page):   # vents guide: obstruction shares and state rows recomp
     if got != sorted(rows): bad.append(f"V2 state rows {len(got)} vs {len(rows)}")
     return bad
 
+def check_private(page):   # private flood guide (11-13): U.S. share from state shares with rounding bounds, state rows, no brand words (G4)
+    rows = [json.load(open(p))["policies"] for p in glob.glob(os.path.join(D, "states", "*", "extras.json"))]
+    rows = [x for x in rows if x.get("replacement_over_250k_pct") is not None and (x.get("replacement_n") or 0) >= 30]
+    n = sum(x["replacement_n"] for x in rows)
+    lo = sum((x["replacement_over_250k_pct"] - 0.05) * x["replacement_n"] for x in rows) / n
+    hi = sum((x["replacement_over_250k_pct"] + 0.05) * x["replacement_n"] for x in rows) / n
+    t = re.sub(r"<[^>]+>", "", page); bad = []
+    m_ = re.search(r"(\d+)% of the ([\d,]+) single-family primary-home NFIP policies that report a rebuilding cost report one above \$250,000", t)
+    if not m_ or not (lo <= int(m_[1]) + 0.5 and int(m_[1]) - 0.5 <= hi) or int(m_[2].replace(",", "")) != n or round(lo) != round(hi):
+        bad.append(f"P1 U.S. share: page {m_[0][:12] if m_ else 'none'}, recomputed {lo:.2f}-{hi:.2f}% of {n:,}")
+    if f'<div class="n">{m_[1] if m_ else "?"}%</div>' not in page: bad.append("P1 tile differs from the sentence")
+    got = sorted((int(b.replace(",", "")), float(a)) for a, b in re.findall(r'<tr><td><a href="/flood-insurance/[a-z-]+/">[^<]+</a></td><td>([\d.]+)%</td><td>([\d,]+)</td></tr>', page))
+    if got != sorted((x["replacement_n"], x["replacement_over_250k_pct"]) for x in rows): bad.append(f"P2 state rows {len(got)} vs {len(rows)}")
+    bad += [f"P3 G4 word '{w}'" for w in re.findall(r"\b(?:best|cheapest|top-rated|recommended insurers?)\b", t, re.I)]
+    # P4 (r-private MAJOR: 77% printed with no base): the coverage tile names its base (all sf_n) and its test (>= $250,000, as extras_raw counts)
+    mx = [x for x in (json.load(open(p))["policies"] for p in glob.glob(os.path.join(D, "states", "*", "extras.json"))) if x.get("at_building_max_pct") is not None and x.get("sf_n")]
+    mn = sum(x["sf_n"] for x in mx)
+    ml, mh = (sum((x["at_building_max_pct"] + d) * x["sf_n"] for x in mx) / mn for d in (-0.05, 0.05))
+    m4 = re.search(r'<div class="n">(\d+)%</div><div class="l">of all ([\d,]+) U\.S\. NFIP single-family primary-home policies: building coverage of \$250,000 or more</div>', page)
+    if not m4 and round(ml) == round(mh): bad.append("P4 coverage tile missing, or its base or test unlabelled")
+    if m4 and (int(m4[2].replace(",", "")) != mn or not (ml <= int(m4[1]) + 0.5 and int(m4[1]) - 0.5 <= mh)): bad.append(f"P4 coverage tile {m4[1]}% of {m4[2]}, recomputed {ml:.2f}-{mh:.2f}% of {mn:,}")
+    # P5 (r-private2 MAJOR: the lede opened on a legal fragment): the answer sentence comes before the lender rule
+    a, r = t.find("single-family primary-home NFIP policies that report a rebuilding cost report one above"), t.find(re.sub(r"<[^>]+>", "", RULE_TEXT("private_accept"))[:40])
+    if a < 0 or r < 0 or a > r: bad.append("P5 the 37%-style answer does not come before the private_accept rule")
+    return bad
+
+def RULE_TEXT(k):
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    return __import__("rules_registry").RULES[k]["text"]
+
+def check_order(page, first, then, code):   # r-private2 MAJOR: an exception printed before the rule it is an exception to
+    a, b = page.find(f'data-rule="{first}"'), page.find(f'data-rule="{then}"')
+    return [] if b < 0 or 0 <= a < b else [f"{code} rule {then} printed without {first} before it"]
+
+def check_rule_quotes(rules):   # r-private MAJOR: a rule shown in quotation marks must be the source's own words (its excerpts, read raw)
+    bad = []
+    for k, r in rules.items():
+        ex = " ".join(e for _, e, _ in r["sources"])
+        tx = re.sub(r"<[^>]+>", "", r["text"])
+        if re.search(r'"\s+"|\bsubparagraph\b', tx): bad.append(f"Q2 rule {k}: back-to-back quotes or an undefined statute cross-reference")
+        for q in re.findall(r'[“"]([^”"]{12,})[”"]', tx):
+            bad += [f"Q1 rule {k}: quoted '{pc[:50]}' is not in its source excerpts" for pc in re.split(r"\s*(?:\.\.\.|…)\s*", q) if pc.strip().rstrip(".") and pc.strip().rstrip(".") not in ex]
+    return bad
+
 HOMES_WORDS = re.compile(r"\b(?:NFIP homes|elevated NFIP homes|zone AE homes|zone X homes|NFIP homeowners choose)\b", re.I)
 def check_base_words(pages):   # r169 + r173 MAJOR twice: guides count POLICIES; "homes" as the base word is a mislabel
     bad = []
@@ -272,8 +316,22 @@ if __name__ == "__main__":
         cg = open(os.path.join(ROOT, "dist", "guides", "condo-flood-insurance", "index.html"), encoding="utf-8").read()
         dg = open(os.path.join(ROOT, "dist", "guides", "flood-insurance-deductible", "index.html"), encoding="utf-8").read()
         vg = open(os.path.join(ROOT, "dist", "guides", "flood-vents", "index.html"), encoding="utf-8").read()
-        bad = check_guides(pg, zx) + check_condo(cg) + check_deductible(dg) + check_vents(vg)
+        pv = open(os.path.join(ROOT, "dist", "guides", "private-flood-insurance", "index.html"), encoding="utf-8").read()
+        bh = open(os.path.join(ROOT, "dist", "guides", "buying-a-house-in-a-flood-zone", "index.html"), encoding="utf-8").read()
+        bad = check_guides(pg, zx) + check_condo(cg) + check_deductible(dg) + check_vents(vg) + check_private(pv) + check_order(bh, "wait_30", "start_loan", "O1")
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        from rules_registry import RULES as _RQ
+        bad += check_rule_quotes(_RQ)
         if "--test" in sys.argv:
+            assert check_private(re.sub(r"(\d+)(% of the [\d,]+ single-family)", lambda m_: f"{int(m_[1]) + 1}{m_[2]}", pv, count=1)), "mutation not caught: private U.S. share"
+            assert check_private(re.sub(r"</a></td><td>([\d.]+)%</td>", lambda m_: f"</a></td><td>{round(float(m_[1]) + 0.1, 1)}%</td>", pv, count=1)), "mutation not caught: private state row"
+            assert check_private(pv.replace("<h1>Private flood insurance</h1>", "<h1>Best private flood insurance</h1>", 1)), "mutation not caught: G4 best"
+            assert check_private(re.sub(r"(of all )([\d,]+)", lambda m_: m_[1] + f"{int(m_[2].replace(',', '')) + 1:,}", pv, count=1)), "mutation not caught: P4 base"
+            assert check_private(pv.replace(": building coverage of $250,000 or more</div>", ": insured to the $250,000 building limit</div>", 1)), "mutation not caught: P4 label"
+            assert check_rule_quotes({"x": {"text": 'The law says "lenders must accept any policy".', "sources": [("u", "lenders must accept a policy", "curl")]}}), "mutation not caught: Q1 paraphrase in quotes"
+            assert check_rule_quotes({"x": {"text": 'Regulators direct "lenders" "to accept a policy" under subparagraph (A).', "sources": [("u", "lenders to accept a policy", "curl")]}}), "mutation not caught: Q2 garbled quote"
+            assert check_private(pv.replace('<p class="lede">', '<p class="lede">' + __import__("rules_registry").rule("private_accept") + " ", 1)), "mutation not caught: P5 rule before answer"
+            assert check_order(bh.replace('data-rule="wait_30"', 'data-rule="wait_x"'), "wait_30", "start_loan", "O1"), "mutation not caught: O1 exception without rule"
             assert check_vents(re.sub(r"</a></td><td>([\d.]+)%</td>", lambda m_: f"</a></td><td>{float(m_[1]) + 1}%</td>", vg, count=1)), "mutation not caught: vents state row"
         if "--test" in sys.argv:
             assert check_deductible(re.sub(r"<td>([\d.]+)%</td><td>([\d.]+)%</td></tr>", lambda m_: f"<td>{float(m_[1]) + 1}%</td><td>{m_[2]}%</td></tr>", dg, count=1)), "mutation not caught: deductible share"
@@ -284,7 +342,7 @@ if __name__ == "__main__":
             assert not bad, bad
             assert check_guides(re.sub(r">(\d+)%<", lambda m_: f">{int(m_[1]) + 1}%<", pg, count=1), zx), "mutation not caught: tile"
             assert check_guides(pg, re.sub(r"(zone on the claim, )(\d+)%", lambda m_: m_[1] + str(int(m_[2]) + 1) + "%", zx, count=1)), "mutation not caught: zone X disagrees"
-            print("guides check mutations: 9 caught"); sys.exit()
+            print("guides check mutations: 15 caught"); sys.exit()
         for b in bad: print("  -", b)
         print("GUIDES CHECK", "FAIL" if bad else "PASS"); sys.exit(1 if bad else 0)
     if "--renters" in sys.argv:
