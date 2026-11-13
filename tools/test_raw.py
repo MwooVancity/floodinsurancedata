@@ -52,6 +52,8 @@ try:
     assert {"prem_zone_elev", "obstruction_counts", "basement_counts", "floodproofed_n", "deductibles_by_zone"} <= set(p), sorted(p)
     assert all(k.split("|")[0] in ("AE", "X") and k.split("|")[1] in ("elevated", "not") and v["n"] >= 1 for k, v in p["prem_zone_elev"].items()), p["prem_zone_elev"]
     assert sum(p["basement_counts"].values()) == p["sf_n"], (p["basement_counts"], p["sf_n"])   # every single-family record lands in one bucket
+    uw = C["10001"]["underinsured"]   # 11-13 Underinsured paper: one base (window, single-family primary, damage+payment+coverage > 0)
+    assert set(uw) == {"n", "over", "from", "to"} and 0 <= uw["over"] <= uw["n"] <= C["10001"]["damage_n"], uw
     ev = {e["name"]: e for e in C["10001"]["events"]}
     assert set(ev) == {"Storm A"}, ev                                    # an event with no paid claim is not a row
     a = ev["Storm A"]
