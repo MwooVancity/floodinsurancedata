@@ -10,20 +10,22 @@ CACHE = os.path.join(ROOT, ".cache", "papers.json")
 Z90 = 1.6448536269514722   # two-sided 90% normal quantile
 
 SPECS = [
-    {"key": "underinsured", "ready": False, "indexable": False, "title": "Underinsured: flood claims where damage passed the building coverage",
+    {"key": "damage-over-coverage", "ready": False, "indexable": False, "title": "Flood damage over building coverage: NFIP claims by county",
      "num": ("extras", "claims", "underinsured", "over"), "den": ("extras", "claims", "underinsured", "n"), "min": 100,
      "window": ("extras", "claims", "underinsured"),
-     "question": "In which U.S. counties did FEMA's recorded building damage on paid flood claims most often exceed the policy's building coverage?",
-     "unit": "single-family primary-home claims with a building payment",
-     "measure": "share of paid single-family primary-home NFIP claims whose recorded building damage (actual cash value) was more than the policy's building coverage",
-     "short": "damage above building coverage", "meets": "had recorded building damage above the building coverage",
-     "fields": "buildingDamageAmount, totalBuildingInsuranceCoverage, netBuildingPaymentAmount, yearOfLoss, occupancyType, primaryResidenceIndicator, nonPaymentReasonBuilding",
+     "excess": ("extras", "claims", "underinsured", "excess_median"), "by_year": ("extras", "claims", "underinsured", "over_by_year"),
+     "question": "In which U.S. counties did FEMA's recorded building damage on paid flood claims most often exceed the policy's building coverage, and by how much?",
+     "unit": "paid single-family primary-home claims with recorded damage and coverage",
+     "measure": "share of paid single-family primary-home NFIP claims whose recorded building damage (FEMA's actual cash value) was more than the policy's building coverage",
+     "short": "damage over building coverage", "meets": "had recorded building damage over the building coverage",
+     "fields": "buildingDamageAmount, totalBuildingInsuranceCoverage, netBuildingPaymentAmount, yearOfLoss, occupancyType, primaryResidenceIndicator, condominiumCoverageTypeCode, nonPaymentReasonBuilding, countyCode",
      "defs": ['FEMA defines buildingDamageAmount as "The actual cash value amount of damage to a main property in whole dollars."',
               'FEMA defines totalBuildingInsuranceCoverage as "Total Insurance Amount in whole dollars on the Building".'],
      "dataset": "FEMA OpenFEMA NFIP Claims v3", "api": "https://www.fema.gov/api/open/v3/NfipClaims",
-     "base": "claims on single-family primary homes with a loss in the window, a building payment above $0, recorded building damage above $0 and building coverage above $0; records FEMA coded deleted or assigned in error left out",
-     "limits": ["Damage above coverage is FEMA's recorded actual cash value against the building coverage on the policy; it is not the owner's uninsured loss, which also depends on contents, deductibles, other insurance and aid.",
+     "base": "claims with a loss in the window on single-family primary homes (FEMA occupancy type 1 or 11, primary residence, not a condominium coverage type) with a building payment above $0, recorded building damage above $0 and building coverage above $0; here a claim counts as paid on its building payment alone; records FEMA coded deleted or assigned in error left out",
+     "limits": ["Damage over coverage compares FEMA's recorded actual cash value with the building coverage on the policy; it is not the owner's uninsured loss, which also depends on contents, deductibles, replacement cost, other insurance and aid.",
                 "Only insured, paid claims are in the base: homes without flood insurance are not.",
+                "Where one loss year holds over half of a county's claims over coverage (marked in the table), those claims come largely from one flood and are not independent, so that county's 90% range is narrower than it should be.",
                 "Counties are those FEMA codes on the claim, which can differ from the property's county."],
      "prior": "No published ranking of this measure by county was found in searches on 2026-11-12 (WebSearch: NFIP claims damage exceeded coverage by county).",
      "prior_links": [], "prior_rules": [], "policy_col": False, "published": None,
@@ -65,7 +67,7 @@ def wilson(k, n, z=Z90):
     """90% Wilson score interval for k of n, in percent, one decimal."""
     if not n: return None, None
     p = k / n; d = 1 + z * z / n; c = p + z * z / (2 * n); h = z * math.sqrt(p * (1 - p) / n + z * z / (4 * n * n))
-    return round(100 * (c - h) / d, 1), round(100 * (c + h) / d, 1)
+    return max(0.0, round(100 * (c - h) / d, 1)) + 0.0, min(100.0, round(100 * (c + h) / d, 1)) + 0.0   # never "-0.0%" at k = 0
 
 def rows(spec, recs=None):
     """Every county whose count base meets the minimum: share = num/den on one base, 90% interval, fifth (1 = highest share)."""
@@ -84,9 +86,14 @@ def rows(spec, recs=None):
 
 def context(spec, rec, w0, w1):
     """Per-row context the statistics review asked for (methods review outside-zone-2, M1): the county's policy units outside
-    zones A and V today (policies.sfha_share_units is the share inside A and V). None where FEMA's record has no value."""
+    zones A and V today (policies.sfha_share_units is the share inside A and V); the median amount over coverage (M1.4); the loss year
+    holding over half of the county's numerator, if any (M1.8). None where FEMA's record has no value."""
     sf = _get(rec, ("policies", "sfha_share_units"))
-    return {"pol_out": round(100 - sf, 1) if isinstance(sf, (int, float)) else None}
+    by = _get(rec, spec["by_year"]) if spec.get("by_year") else None
+    top = max(by.items(), key=lambda kv: (kv[1], kv[0])) if isinstance(by, dict) and by else None   # M1.8: a year with over half
+    ex = _get(rec, spec["excess"]) if spec.get("excess") else None
+    return {"pol_out": round(100 - sf, 1) if isinstance(sf, (int, float)) else None, "excess": ex if isinstance(ex, (int, float)) else None,
+            "one_year": top[0] if top and 2 * top[1] > sum(by.values()) else None}
 
 def pooled_boot(rows_, B=2000, seed=20261113):
     """90% range of the pooled share, resampling whole counties (review M2: claims in one county are not independent)."""
@@ -155,4 +162,8 @@ if __name__ == "__main__":   # self-check: interval, base, fifths
     assert [x["fifth"] for x in r] == [1, 3]
     r = rows(S, {str(i): {"a": a, "b": 2} for i, a in enumerate([2, 1, 1, 1, 0])})   # three tied 50% rows span fifths 2-4
     assert [x["fifth"] for x in r] == [1, 2, 2, 2, 5], [x["fifth"] for x in r]
+    assert str(wilson(0, 163)[0]) == "0.0" and str(wilson(163, 163)[1]) == "100.0", (wilson(0, 163), wilson(163, 163))
+    T = {"by_year": ("y",), "excess": ("x",)}
+    assert context(T, {"y": {"2021": 3, "2019": 2}, "x": 9}, 0, 0) == {"pol_out": None, "excess": 9, "one_year": "2021"}
+    assert context(T, {"y": {"2021": 2, "2019": 2}}, 0, 0)["one_year"] is None   # exactly half is not over half
     print("papers self-test OK")

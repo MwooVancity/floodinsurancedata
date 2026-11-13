@@ -1,8 +1,8 @@
 {
  "slug": "sonoma-county-ca",
  "verdict": "PASS",
- "template": "a0066031849d8657",
+ "template": "49b914341687f7ac",
  "defects": [],
- "reviewer": "hater round 186 (fresh agent, docs/HATER-PROMPT.md)",
+ "reviewer": "hater round 187 (fresh agent, docs/HATER-PROMPT.md)",
  "notes": ""
 }

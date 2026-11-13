@@ -155,7 +155,7 @@ def claims(st):
     acc = collections.defaultdict(lambda: {"n": 0, "unpaid": 0, "reason": collections.Counter(), "cause": collections.Counter(),
                                            # event: [paid claims, paid $, loss years, unpaid claims]
                                            "depth": [], "event": collections.defaultdict(lambda: [0, 0.0, collections.Counter(), 0]), "icc_n": 0, "icc": [],
-                                           "dmg": [], "paid_b": [], "over_cov": 0, "dmg_n": 0, "elev_paid": [], "low_paid": [], "uw": [0, 0],
+                                           "dmg": [], "paid_b": [], "over_cov": 0, "dmg_n": 0, "elev_paid": [], "low_paid": [], "uw": [0, 0], "uw_x": [], "uw_y": collections.Counter(),
                                            "dec": collections.defaultdict(lambda: [0, 0]),   # decade of loss: [claims, paid something]
                                            "zone": collections.defaultdict(lambda: [0, 0, 0.0]),
                                            "moved": [0, 0, 0],   # loss years LOSS_FROM..LOSS_TO, rated outside A/V: [current zone known, current A/V, current blank]
@@ -210,6 +210,7 @@ def claims(st):
                 # LOSS_FROM..LOSS_TO, damage, building payment AND building coverage all above $0; FEMA: damage is actual cash value
                 if cov and cov > 0 and ffcalc.is_sf_home(r) and LOSS_FROM <= str(r["yearOfLoss"] or "")[:4] <= LOSS_TO:
                     a["uw"][0] += 1; a["uw"][1] += dmg > cov
+                    if dmg > cov: a["uw_x"].append(dmg - cov); a["uw_y"][str(r["yearOfLoss"])[:4]] += 1   # M1.4 excess size, M1.8 one-year flag
             (a["elev_paid"] if truthy(r["elevatedBuildingIndicator"]) else a["low_paid"]).append(paid)
     out = {}
     for k, a in acc.items():
@@ -225,7 +226,8 @@ def claims(st):
                   "icc_claims": a["icc_n"], "icc_avg": round(statistics.mean(a["icc"])) if a["icc"] else None,
                   "damage_median": med(a["dmg"]), "paid_building_median": med(a["paid_b"]),
                   "damage_over_coverage_pct": pct(a["over_cov"], a["dmg_n"]), "damage_n": a["dmg_n"],
-                  "underinsured": {"n": a["uw"][0], "over": a["uw"][1], "from": LOSS_FROM, "to": LOSS_TO},
+                  "underinsured": {"n": a["uw"][0], "over": a["uw"][1], "from": LOSS_FROM, "to": LOSS_TO, "excess_median": med(a["uw_x"]),
+                                   "over_by_year": dict(sorted(a["uw_y"].items()))},
                   "avg_paid_elevated": round(statistics.mean(a["elev_paid"])) if len(a["elev_paid"]) >= 30 else None,
                   "avg_paid_not_elevated": round(statistics.mean(a["low_paid"])) if len(a["low_paid"]) >= 30 else None,
                   "elevated_paid_n": len(a["elev_paid"]), "paid_n": paid_n,

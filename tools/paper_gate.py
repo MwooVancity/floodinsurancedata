@@ -6,8 +6,10 @@ import csv, glob, io, json, math, os, re, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 D = os.path.join(ROOT, "dist")
 # a second, independent copy of each paper's base: (numerator path, denominator path, minimum). A drift from papers.py fails.
-BASES = {"underinsured": (("extras", "claims", "underinsured", "over"), ("extras", "claims", "underinsured", "n"), 100),
+BASES = {"damage-over-coverage": (("extras", "claims", "underinsured", "over"), ("extras", "claims", "underinsured", "n"), 100),
          "outside-the-zone": (("extras", "claims", "zone_split", "out_paid_n"), ("extras", "claims", "zone_split", "known_paid_n"), 100)}
+# M1.4/M1.8 second copy: (median excess path, over-by-year path) for papers with an excess column
+EXTRA = {"damage-over-coverage": (("extras", "claims", "underinsured", "excess_median"), ("extras", "claims", "underinsured", "over_by_year"))}
 SECTIONS = ["abstract", "question", "data", "methods", "results", "prior", "table", "limitations", "reproduce", "cite", "versions", "corrections"]
 BANNED = re.compile(r"\b(best|worst|safest|most dangerous|peer[- ]reviewed|significant(ly)?|only published here|denied|forecast|will rise|because|due to|caused by|driven by)\b", re.I)
 
@@ -18,7 +20,7 @@ def g(r, p):
 def ci(k, n):   # 90% Wilson, written out on its own (not papers.wilson)
     z = 1.6448536269514722; ph = k / n; den = 1 + z * z / n
     mid = (ph + z * z / (2 * n)) / den; half = z * math.sqrt(ph * (1 - ph) / n + z * z / (4 * n * n)) / den
-    return round(100 * (mid - half), 1), round(100 * (mid + half), 1)
+    return max(0.0, round(100 * (mid - half), 1)) + 0.0, min(100.0, round(100 * (mid + half), 1)) + 0.0
 
 def truth(recs, key):
     nump, denp, mn = BASES[key]
@@ -31,7 +33,11 @@ def truth(recs, key):
     out, band = [], {}   # an equal printed share gets one fifth: the fifth where that share first appears
     for i, (c, k, n) in enumerate(rows):
         v = round(100 * k / n, 1)
-        out.append({"c": c, "k": k, "n": n, "v": v, "ci": ci(k, n), "fifth": band.setdefault(v, 1 + 5 * i // N), "pol": pol(c)})
+        ex = by = None
+        if key in EXTRA:
+            ex, by = g(recs[c], EXTRA[key][0]), g(recs[c], EXTRA[key][1]) or {}
+            by = next((y for y, m in by.items() if 2 * m > sum(by.values())), None)   # at most one year can hold over half
+        out.append({"c": c, "k": k, "n": n, "v": v, "ci": ci(k, n), "fifth": band.setdefault(v, 1 + 5 * i // N), "pol": pol(c), "ex": ex, "yr": by})
     return out
 
 def text(h): return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", re.sub(r"(?s)<(script|style|head)\b.*?</\1>", " ", h)))
@@ -55,6 +61,10 @@ def check(key, page, csv_text, cards, T):
         pcol = re.findall(r"</td><td>[\d,]+ of [\d,]+</td><td>([\d.]+%|—)</td>", page)
         if len(pcol) != len(want) or any((p_ == "—") != (t["pol"] is None) or (p_ != "—" and float(p_[:-1]) != t["pol"]) for p_, t in zip(pcol, want)):
             bad.append(f"{key}: policy share column disagrees with recompute")
+    if key in EXTRA:   # M1.4 + M1.8 columns = recompute, on the page and in the CSV
+        xcol = re.findall(r"</td><td>[\d,]+ of [\d,]+</td><td>(\$[\d,]+|—)</td><td>(\d{4}|)</td></tr>", page)
+        if len(xcol) != len(want) or any((e_ == "—") != (t["ex"] is None) or (e_ != "—" and int(e_[1:].replace(",", "")) != round(t["ex"])) or (y_ or None) != t["yr"] for (e_, y_), t in zip(xcol, want)):
+            bad.append(f"{key}: excess or one-year column disagrees with recompute")
     cr = list(csv.DictReader(io.StringIO(csv_text or "")))
     if len(cr) != len(T): bad.append(f"{key}: CSV {len(cr)} rows, recompute {len(T)}")
     tc = {t["c"]: t for t in T}
@@ -62,6 +72,8 @@ def check(key, page, csv_text, cards, T):
         t = tc.get(r["county_fips"])
         if not t or (int(r["numerator"]), int(r["denominator"]), float(r["share_pct"]), (float(r["ci90_low_pct"]), float(r["ci90_high_pct"])), int(r["fifth"])) != (t["k"], t["n"], t["v"], t["ci"], t["fifth"]):
             bad.append(f"{key}: CSV row {r.get('county_fips')} disagrees with recompute"); break
+        if key in EXTRA and ((r["median_excess_usd"] or None) != (None if t["ex"] is None else str(t["ex"])) or (r["loss_year_over_half"] or None) != t["yr"]):
+            bad.append(f"{key}: CSV row {r['county_fips']} excess/year disagrees with recompute"); break
     for c, h in cards.items():   # every county page: the card's share and fifth = recompute, or "not listed" when not in T
         m = re.search(rf'data-paper="{key}" data-fifth="(\d)"', h)
         if not m: bad.append(f"{c}: no {key} line"); continue
@@ -99,6 +111,7 @@ if __name__ == "__main__":
                     "range dropped": (re.sub(r"<td>[\d.]+–[\d.]+%</td>", "<td></td>", page, count=1), csv_text, cards),
                     "csv row dropped": (page, "\n".join(csv_text.splitlines()[:-1]) + "\n", cards),
                     "policy share wrong": (re.sub(r"(</td><td>[\d,]+ of [\d,]+</td><td>)([\d.]+)%", lambda m: f"{m[1]}{float(m[2]) + 1}%", page, count=1) if "Policy units outside" in page else page.replace('id="prior"', 'id="x"'), csv_text, cards),
+                    "excess wrong": (re.sub(r"( of [\d,]+</td><td>\$)([\d,]+)", lambda m: m[1] + "1", page, count=1) if key in EXTRA else page.replace('id="prior"', 'id="x"'), csv_text, cards),
                     "card fifth wrong": (page, csv_text, {c: re.sub(rf'data-paper="{key}" data-fifth="(\d)"', lambda m: f'data-paper="{key}" data-fifth="{(int(m[1]) % 5) + 1}"', h, count=1) for c, h in cards.items()})}
             for k, (pg, cs, cd) in muts.items(): assert check(key, pg, cs, cd, T), f"{key}: missed {k}"
             assert not check(key, page, csv_text, cards, T), check(key, page, csv_text, cards, T)[:3]

@@ -32,7 +32,17 @@ clm = ([{"countyCode": "10001", "yearOfLoss": "2023", "floodEvent": "Storm A", "
        # 11-10 moved/cause10, county 10003: rated X now in " ae " (lower case, spaces) with rain + a handling code; river; handling codes only
        + [{"countyCode": "10003", "yearOfLoss": "2024", "netBuildingPaymentAmount": 2000, "ratedFloodZone": "X", "floodZoneCurrent": " ae ", "causeOfDamage": "4B"},
           {"countyCode": "10003", "yearOfLoss": "2024", "netBuildingPaymentAmount": 1000, "ratedFloodZone": "AE", "causeOfDamage": "2"},
-          {"countyCode": "10003", "yearOfLoss": "2024", "netBuildingPaymentAmount": 1000, "ratedFloodZone": "AE", "causeOfDamage": "BD"}])
+          {"countyCode": "10003", "yearOfLoss": "2024", "netBuildingPaymentAmount": 1000, "ratedFloodZone": "AE", "causeOfDamage": "BD"}]
+       # 11-13 damage over coverage, county 10009: 3 in the base (2 over, excess 50,000 and 20,000), 5 left out (condo, rental, 2010, no coverage, no damage)
+       + [dict({"countyCode": "10009", "occupancyType": "1", "primaryResidenceIndicator": "1"}, **x) for x in (
+          {"yearOfLoss": "2023", "buildingDamageAmount": 300000, "totalBuildingInsuranceCoverage": 250000, "netBuildingPaymentAmount": 240000},
+          {"yearOfLoss": "2023", "buildingDamageAmount": 120000, "totalBuildingInsuranceCoverage": 100000, "netBuildingPaymentAmount": 99000},
+          {"yearOfLoss": "2024", "buildingDamageAmount": 50000, "totalBuildingInsuranceCoverage": 250000, "netBuildingPaymentAmount": 45000},
+          {"yearOfLoss": "2023", "buildingDamageAmount": 300000, "totalBuildingInsuranceCoverage": 100000, "netBuildingPaymentAmount": 99000, "condominiumCoverageTypeCode": "A"},
+          {"yearOfLoss": "2023", "buildingDamageAmount": 300000, "totalBuildingInsuranceCoverage": 100000, "netBuildingPaymentAmount": 99000, "primaryResidenceIndicator": "0"},
+          {"yearOfLoss": "2010", "buildingDamageAmount": 300000, "totalBuildingInsuranceCoverage": 100000, "netBuildingPaymentAmount": 99000},
+          {"yearOfLoss": "2023", "buildingDamageAmount": 300000, "totalBuildingInsuranceCoverage": 0, "netBuildingPaymentAmount": 99000},
+          {"yearOfLoss": "2023", "buildingDamageAmount": 0, "totalBuildingInsuranceCoverage": 100000, "netBuildingPaymentAmount": 99000})])
 write("NfipPolicies", pol); write("NfipClaims", clm)
 # 11-09 cost trend (pull_bulk.trend's columns): 2022 all priced; 2023 under 30 priced; 2024 95 of 100 priced; 2025 35 of 40 (< 90%)
 _t = lambda y, n, cost, **k: [dict({"year": y, "propertyState": "DE", "censusGeoid": "10001040100", "occupancyType": "1",
@@ -53,7 +63,9 @@ try:
     assert all(k.split("|")[0] in ("AE", "X") and k.split("|")[1] in ("elevated", "not") and v["n"] >= 1 for k, v in p["prem_zone_elev"].items()), p["prem_zone_elev"]
     assert sum(p["basement_counts"].values()) == p["sf_n"], (p["basement_counts"], p["sf_n"])   # every single-family record lands in one bucket
     uw = C["10001"]["underinsured"]   # 11-13 Underinsured paper: one base (window, single-family primary, damage+payment+coverage > 0)
-    assert set(uw) == {"n", "over", "from", "to"} and 0 <= uw["over"] <= uw["n"] <= C["10001"]["damage_n"], uw
+    assert set(uw) == {"n", "over", "from", "to", "excess_median", "over_by_year"} and 0 <= uw["over"] <= uw["n"] <= C["10001"]["damage_n"], uw
+    u9 = C["10009"]["underinsured"]; assert (u9["n"], u9["over"], u9["excess_median"], u9["over_by_year"]) == (3, 2, 35000, {"2023": 2}), u9   # base rules + M1.4/M1.8 fields
+    assert sum(uw["over_by_year"].values()) == uw["over"] and (uw["excess_median"] is None) == (uw["over"] == 0), uw   # every over-claim in one year bucket
     ev = {e["name"]: e for e in C["10001"]["events"]}
     assert set(ev) == {"Storm A"}, ev                                    # an event with no paid claim is not a row
     a = ev["Storm A"]
