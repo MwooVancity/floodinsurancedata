@@ -28,6 +28,26 @@ Each at /flood-insurance/<name>/: definition, method, 3 computed findings, "why 
 | 9 | Community Discount | data crs list | NFIP communities in county | then |
 | 10 | Flood Map Age | map-status data (verify field first) | counties with a map date | then |
 Cut: "After the Disaster" (no historical policy counts: would need a guess). Storm events stay cut (card_spec).
+### Paper standard (owner 11-12: "PubMed worthy", every paper, no exceptions)
+National data only: pool = every U.S. county in data/all-counties (3,027) meeting the paper's minimum, never just counties with a page here.
+Page sections, in order, each required (tools/paper_check.py fails a page missing one): Abstract (question, data, n, main result, one sentence each) / Data (dataset, version, FEMA field names, as-of, retrieved) / Methods (inclusion rule, exclusions with counts, base, statistic, tie rule, minimum n and why) / Results (3 findings, each with n and the exact figure) / Full table + CSV / Limitations (what the data cannot say, biases: county coded on the policy, missing fields, small-n) / Reproduce (CSV columns, the filter in words, FEMA API link per dataset) / How to cite (title, site, as-of, URL) / Changelog (as-of per version).
+Statistics: report n beside every share; no rank shown for n under the minimum; no claim of cause ("why") unless a quoted official source states it; differences called "higher/lower", never "significant" (no test run); medians named as medians.
+Checks before ship (all must pass): build gates, index_check recompute from raw files with zero shared code + mutations, paper_check sections + mutations, hub_words, site factory case (empty, one row, all tied, huge), phone budget, S16 links, recheck of any quoted rule, then a FULL hater review of each new paper (owner-approved cost ~80k each) plus one adversarial methods reviewer agent ("find the flaw a statistician would") on the first paper of each kind. A FAIL is fixed at the source and re-reviewed on that page only.
+"Only published here": a search the same day; claim dropped if anyone publishes the same ranking.
+Methods review 162 (11-12, hostile statistician, state/reviews/methods-review-162.md): Price Gap MAJOR REVISION, Outside the Zone REJECT; both off (papers.READY empty) until fixed. Rules learned, now part of the standard:
+- ORIGINALITY SEARCH IS STEP 1, before any code (Price Gap already published by Neptune Flood "$2.6+ Billion That Remains" incl. counties, and GAO-23-105977 county tool). A paper that exists elsewhere ships only with a "Prior work" section reconciling numbers (Collier 82.2% here vs Neptune 76.8%) and a real difference (newer data, every county, CSV, like-for-like premium base).
+- No bare ranks: show the share with its 90% interval (Wilson) and bands; 75-81% of rows were tied, top ranks spanned 2nd-26th.
+- Numerator, denominator and n are the SAME base (Outside the Zone used dollars over zoned claims but n = all paid claims).
+- Materiality: report the median gap among those below (below_gap_median exists); 71 counties under $50/yr.
+- Quote FEMA's data-dictionary definition of every field the measure rests on (fullRiskPremium: raw read).
+- Report the pooled national figure and the excluded counties' median beside the county median (selection bias: 33.6% excluded vs 24.6% ranked).
+- Records vs policyCount: verify single-family records carry policyCount 1 (API filter) or sum policyCount.
+- Pooled multi-decade claims: restrict to a stated window (e.g. last 10 loss years) and exclude zone D / pre-1986 B,C or report them apart; say dollars are not inflation-adjusted.
+- Reproduce section lists exact field filters and values, record counts in and out, pull date.
+Originality search 11-12 (step 1, WebSearch): ORIGINAL (nothing found) = Underinsured (damage over coverage by county), Flood Calendar (claims by month by county), Deductible Choice (state/county). EXISTS = Repeat Flood (NRDC "Losing Ground" county tool, data to 2022), Map Age (unvetted personal project, nationalflooddata commercial), Price Gap (Neptune, GAO). CUT = Protection Gap (FEMA publishes the rates itself). New order: Underinsured, Flood Calendar, Deductible Choice, then Price Gap revised, Map Age, Repeat Flood (each with Prior work), Outside the Zone after its cloud field.
+Gates to add before the next paper (methods review caught what gates could not): G1 same base: each spec declares numerator/denominator/n fields and the base sentence; index_check fails when n is not the denominator's count field (Outside the Zone: paid_n vs zoned dollars). G2 no bare rank: a paper page or county line printing a rank without the share's 90% interval fails. G3 site factory with papers on: missing_state, state_not_built, claims_by_zone_empty failed on the 11-12 run (with papers on, overlapping build) - rerun alone, fix in papers section.
+Outside the Zone needs a cloud field: zoned_paid_n (claims with a rated zone and a payment) per county, per window.
+
 ### Edge cases (written before code; each: how it breaks / where at full size / test that fails without the guard)
 Input
 - E1 Field null or missing in one county (old pull lacks it): row crashes build or prints "None%" / any paper, 1,803 counties after widening / index_check "null row shown" mutation; rule: left out, counted in method line "N counties without this field".

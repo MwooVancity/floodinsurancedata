@@ -71,6 +71,8 @@ else:
     step("national rules guard mutations", os.path.join(T, "rules_home.py"), "--test")
     step("identical text across place pages: warning only (owner 11-08, 11-11)", os.path.join(T, "sameness.py"))
     step("sameness ratchet mutation", os.path.join(T, "sameness.py"), "--test")
+    step("research index: every row and county rank line recomputed (owner 11-12)", os.path.join(T, "index_check.py"))
+    step("research index check mutations", os.path.join(T, "index_check.py"), "--test")
     step("AdSense verification tag + ads.txt (owner 11-12)", os.path.join(T, "adsense_check.py"))
     step("AdSense check mutations", os.path.join(T, "adsense_check.py"), "--test")
     step("hub page word rules mutations", os.path.join(T, "hub_words.py"), "--test")

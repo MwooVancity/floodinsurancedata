@@ -136,6 +136,9 @@ CONST = {"min_priced": 30, "zone_min": 50, "zip_min": 25, "spread_min": 100, "ra
 _NRI, _CSB, _PEN, _ML = "NRI", "NfipCommunityStatusBook", "NfipResidentialPenetrationRates", "IndividualAssistanceMultipleLossFloodProperties"
 METRICS.update({   # every other figure a page prints; q (data-q) names the row when one metric fills a table
     "threshold": _m(POL, ["policyCost"], "count"),
+    "below_n": _m(POL, ["totalInsurancePremiumOfThePolicy", "fullRiskPremium"], "count"),   # policies priced both ways (Price Gap base)
+    "paper_min": _m(POL, ["policyCount"], "count"),   # a research paper's minimum sample (tools/papers.py)
+    "gap_rank": _m(POL, ["totalInsurancePremiumOfThePolicy", "fullRiskPremium"], "count"),   # Price Gap Index rank / pool (index_check.py recomputes)
     "cost_p90": _m(POL, ["policyCost"], "usd_cost_with_fees"),
     "cost_n": _m(POL, ["policyCost"], "count"),
     "zone_units": _m(POL, ["policyCount", "ratedFloodZone"], "count"),

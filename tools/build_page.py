@@ -372,6 +372,43 @@ def _gap_parts():
         glide_note = (f"<p class='note'><b>Yearly cap:</b> {rule('cap_short')}</p>")   # owner 11-11: glide + full cap on /nfip/#rules
     return gap_lead, glide_note
 
+def _ord(n): return f"{n}{'th' if 10 <= n % 100 <= 20 else {1: 'st', 2: 'nd', 3: 'rd'}.get(n % 10, 'th')}"
+def card_ranks():   # owner 11-12: this county's place in each national research paper (tools/papers.py; index_check.py recomputes)
+    import papers as PA
+    cache = PA.read_cache(); g = os.environ.get("FF_GEOID", ""); lines = []
+    if IS_STATE:   # PLAN E19: a state page names its highest-ranked county in each paper (and links the paper)
+        nm = PA.names()
+        for sp in PA.READY:
+            c = cache.get(sp["key"]) or {}
+            best = sorted((r[0], gg) for gg, r in (c.get("ranks") or {}).items() if gg[:2] == g[:2])
+            head = f"<b><a href='/flood-insurance/{sp['key']}/'>{html.escape(sp['title'])}</a></b>: "
+            lines.append(f"<li>{head}" + (f"{html.escape(nm.get(best[0][1], best[0][1]))} ranks highest in {CL}, "
+                         f"{m('gap_rank', _ord(best[0][0]), q=sp['key'] + '-best')} of {m('gap_rank', num(c['pool']), q=sp['key'] + '-pool')} U.S. counties; 1st has {sp['first']}.</li>"
+                         if best and c.get("pool") else f"no county in {CL} has at least {m('paper_min', str(sp['min']), q=sp['key'])} {sp['unit']}.</li>"))
+        return card(f"Where {CL}'s counties rank among U.S. counties", "Each research paper ranks every U.S. county with enough records on one measure from FEMA's data. A rank is a position in a list, not a grade and not a forecast.",
+                    "<ul>" + "".join(lines) + "</ul>", id="ranks") if lines else ""
+    for sp in PA.READY:
+        c = cache.get(sp["key"]) or {}
+        if not c.get("pool"): continue
+        mk, mp = sp["metric"]; nk, np_ = sp["n_metric"]
+        r = (c.get("ranks") or {}).get(g)
+        try: own = _get(mp), _get(np_)   # factory 11-12 no_claims: the page's own figure must exist, or no rank is shown
+        except (KeyError, IndexError, TypeError): own = (None, None)
+        if None in own: r = None
+        head = f"<b><a href='/flood-insurance/{sp['key']}/'>{html.escape(sp['title'])}</a></b>: "
+        if r:
+            lines.append(f"<li>{head}{tp(mk, mp, pct, q=sp['key'])} {sp['here']} ({tp(nk, np_, q=sp['key'])} {sp['unit']}). "
+                         f"<span data-paper=\"{sp['key']}\" data-rank=\"{r[0]}\" data-of=\"{c['pool']}\">Ranks {m('gap_rank', _ord(r[0]), q=sp['key'] + '-rank')}"
+                         f"{' (tied)' if r[1] else ''} of {m('gap_rank', num(c['pool']), q=sp['key'] + '-pool')}</span> U.S. counties with at least "
+                         f"{m('paper_min', str(sp['min']), q=sp['key'])} {sp['unit']}; 1st has {sp['first']}.</li>")
+        else:
+            lines.append(f"<li>{head}<span data-paper=\"{sp['key']}\" data-rank=\"0\">not ranked</span>: "
+                         + ("this measure is not in this county's records.</li>" if None in own else f"fewer than {m('paper_min', str(sp['min']), q=sp['key'])} {sp['unit']} here.</li>"))
+    if not lines: return ""
+    return card(f"How {CS} ranks among U.S. counties",
+                "Each research paper ranks every U.S. county with enough records on one measure from FEMA's data. A rank is a position in a list, not a grade and not a forecast.",
+                "<ul>" + "".join(lines) + "</ul>", id="ranks")
+
 def _claims_parts():
     claims_lead = (f"Floods in {CS} have led to {m('claims_filed', num(C['rows']))} NFIP flood {pl(C['rows'], 'claim')} and "
                    f"{m('claims_total', big(C['total_paid']))} in payouts since {C['year_min']}"
@@ -1395,7 +1432,7 @@ def card_takeup():   # owner 11-08 ("do it"): share of homes insured, FEMA's NFI
                 src(["pen_overall", "pen_sfha"], pretty_date(pen["asof"]), RETR))
 
 CARD_ORDER = [card_required, card_cost, card_trend, card_howto, card_claims, card_payout, card_unpaid, card_events, card_rebuild,
-              card_zone_cost, card_zip, card_averages, card_gap, card_save, card_crs, card_risk, card_takeup, card_multiloss,
+              card_zone_cost, card_zip, card_averages, card_gap, card_ranks, card_save, card_crs, card_risk, card_takeup, card_multiloss,
               card_disasters, card_aid, card_counts]
 CARDS = "\n\n".join(h for h in (f() for f in CARD_ORDER) if h)
 # "On this page": pages run 20+ phone screens; one link per card, in page order (owner 2026-10-28)

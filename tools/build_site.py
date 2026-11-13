@@ -91,7 +91,7 @@ srows = "".join(f'<tr data-k="{html.escape((s["name"] + " " + s["abbr"]).lower()
                 f'<td>{money(s["median"])}</td><td>{format(s["units"], ",")}</td><td>{format(s["claims"], ",")}</td><td>{money(s["paid"])}</td></tr>' for s in sorted(states, key=lambda s: -s["median"]))
 _cy = [json.load(open(os.path.join(DATADIR, "states", s["slug"], "agg.json")))["claims"] for s in states]
 _cnote = (f'<p class="mut">NFIP claims on record: every claim record, paid or not, except records FEMA coded "deleted in error" or "assigned in error", for losses from {min(c["year_min"] for c in _cy)} to {max(c["year_max"] for c in _cy)}. '
-          'Paid on them: building plus contents payments, in dollars as paid, not adjusted for inflation. <a href="/flood-insurance/claims/">How often claims get paid, county by county</a>.</p>') if states else ""
+          'Paid on them: building plus contents payments, in dollars as paid, not adjusted for inflation. <a href="/flood-insurance/claims/">How often claims get paid, county by county</a>.' + "".join(f' <a href="/flood-insurance/{_p["key"]}/">{html.escape(_p["title"])}</a>.' for _p in __import__("papers").READY) + '</p>') if states else ""
 _bycost = sorted(states, key=lambda s: -s["median"])
 extremes = (f'<p class="stand">Highest typical cost: {", ".join(html.escape(s["name"]) + " " + money(s["median"]) for s in _bycost[:3])}. '
             f'Lowest: {", ".join(html.escape(s["name"]) + " " + money(s["median"]) for s in _bycost[-3:])}. Sorted by typical cost.</p>') if len(states) > 6 else ""
@@ -284,7 +284,7 @@ meth = HEAD.format(title="Methodology — flood insurance data", desc="Definitio
 wr(os.path.join(DIST, "methodology", "index.html"), meth)
 
 # ---- about (E-E-A-T: who runs it, purpose, corrections, non-commercial, not FEMA) ----
-CONTACT = os.environ.get("FF_CONTACT", "")   # owner-supplied; omitted until provided (never fabricate one)
+CONTACT = os.environ.get("FF_CONTACT", "contact@floodinsurancedata.com")   # owner 11-12; Cloudflare Email Routing to owner inbox (MX live 11-12)
 contact_html = (f'<li><b>Corrections &amp; contact:</b> <a href="mailto:{html.escape(CONTACT)}">{html.escape(CONTACT)}</a> — '
                 'tell us about any figure that looks wrong and we will check it against the source record.</li>'
                 if CONTACT else
@@ -337,16 +337,15 @@ Cloudflare's privacy policy for details.</p></div>
 <p>We use Google Analytics to count visits and see which pages are read. It sets cookies in your browser, and
 Google receives your IP address, the pages you view and basic device details. We see totals, not who you are.
 You can opt out with <a href="https://tools.google.com/dlpage/gaoptout" rel="nofollow">Google's opt-out add-on</a>
-or by blocking cookies in your browser. If advertising is added in future (see below), the cookies and vendors
-involved will be disclosed here before they are enabled.</p></div>
+or by blocking cookies in your browser. Advertising cookies are described below.</p></div>
 <div class="card"><h2>Advertising</h2>
-<p>The site currently shows no ads. If advertising is added, it may be served by Google, including Google
-AdSense. Third-party vendors such as Google use cookies to serve ads based on a user's prior visits to this
+<p>Every page loads Google AdSense's code, and Google may show ads on this site. Google is the only ad
+vendor. Third-party vendors such as Google use cookies to serve ads based on a user's prior visits to this
 and other websites. Google's use of advertising cookies enables it and its partners to serve ads based on
 visits here and elsewhere. You may opt out of personalized advertising via
 <a href="https://www.google.com/settings/ads" rel="nofollow">Google Ads Settings</a>, and review other
-options at <a href="https://www.aboutads.info" rel="nofollow">aboutads.info</a>. This section will be
-updated to name every ad vendor at the time ads are enabled.</p></div>
+options at <a href="https://www.aboutads.info" rel="nofollow">aboutads.info</a>. Ads never change a figure
+on this site, and no advertiser sees or pays for what the data shows.</p></div>
 <div class="card"><h2>Third-party data &amp; links</h2>
 <p>All figures are compiled from public U.S. federal sources (FEMA OpenFEMA and the FEMA National Risk Index).
 We link to official FEMA pages; their privacy practices are their
@@ -794,6 +793,65 @@ if RENT_ON:
 <p class="mut">Sources: FEMA OpenFEMA NFIP Policies v3; rules from {_rule_hosts(_rk)}.</p></div>{FOOT}"""
     wr(os.path.join(DIST, "flood-insurance", "renters", "index.html"), pg)
     zone_urls.append((BASE + "/flood-insurance/renters/", None))
+
+# ---- /flood-insurance/<paper>/: national research papers (owner 11-12: national data, "PubMed worthy"; tools/papers.py specs).
+# Every U.S. county in data/all-counties meeting the paper's minimum is ranked. Sections in PLAN "Paper standard" order;
+# tools/paper_check.py fails a page missing one, tools/index_check.py recomputes every row from the raw files.
+import papers as _PA, statistics as _st
+_recs = _PA.load(); _cn = _PA.names(); _live = {p.get("geoid"): p["slug"] for p in places}
+_snames = {x.get("abbr"): x["name"] for x in states}
+def _ord(n): return f"{n}{'th' if 10 <= n % 100 <= 20 else {1: 'st', 2: 'nd', 3: 'rd'}.get(n % 10, 'th')}"
+def _cty(x, link=True):
+    nm = html.escape(f'{_cn.get(x["geoid"], x["geoid"])}, {x["state"]}')
+    return f'<a href="/flood-insurance/{_live[x["geoid"]]}/">{nm}</a>' if link and x["geoid"] in _live else nm
+def _fmt(v, kind): return "—" if v is None else (money(v) if kind == "usd" else f"{v:,}")
+for _sp in _PA.READY:
+    _r = _PA.rows(_sp, _recs)
+    if len(_r) < 50: continue   # PLAN E9: no thin paper
+    _nul, _small = _PA.skipped(_sp, _recs)
+    _key, _N = _sp["key"], len(_r)
+    _med = round(_st.median(x["value"] for x in _r), 1)
+    _half = sum(x["value"] > 50 for x in _r)
+    _top, _bot = _r[0], _r[-1]
+    _t50 = collections.Counter(x["state"] for x in _r[:50]).most_common(1)[0]
+    _nsum = sum(x["n"] for x in _r)
+    _trs = "".join(f'<tr><td>{x["rank"]}{" (tied)" if x["tied"] else ""}</td><td>{_cty(x)}</td><td>{x["value"]}%</td>'
+                   + "".join(f'<td>{_fmt(v, k)}</td>' for v, (_, _, k) in zip(x["extra"], _sp["extra"]))
+                   + f'<td>{x["n"]:,}</td></tr>' for x in _r)
+    _csvp = os.path.join(DIST, "data", f"{_key}.csv")
+    with open(_csvp, "w", newline="", encoding="utf-8") as f:
+        w = csv.writer(f)
+        w.writerow(["rank", "tied", "county_fips", "county", "state", _sp["short"].replace(" ", "_") + "_pct"]
+                   + [lbl.lower().replace(" ", "_") for lbl, _, _ in _sp["extra"]] + ["n", "as_of"])
+        for x in _r: w.writerow([x["rank"], x["tied"], x["geoid"], _cn.get(x["geoid"], ""), x["state"], x["value"]] + x["extra"] + [x["n"], _asof()])
+    _cite = f'Flood Insurance Data, "{_sp["title"]}," data as of {_ASOF_TXT}, {BASE}/flood-insurance/{_key}/'
+    pg = HEAD.format(title=f'{_sp["title"]}: {_N:,} U.S. counties ranked',
+                     desc=f'{_N:,} U.S. counties ranked by {_sp["measure"]}, from {_sp["dataset"]} as of {_ASOF_TXT}. Method, limits and CSV.',
+                     canon=f"{BASE}/flood-insurance/{_key}/") + f"""
+<h1>{html.escape(_sp["title"])}</h1>
+<div class="card" id="abstract"><h2>Abstract</h2>
+<p class="stand"><b>Question:</b> which U.S. counties have the highest {_sp["measure"]}?</p>
+<p class="stand"><b>Data:</b> {_sp["dataset"]}, as of {_ASOF_TXT}: {_N:,} counties with at least {_sp["min"]} {_sp["unit"]} each, {_nsum:,} in all.</p>
+<p class="stand"><b>Result:</b> the median county's {_sp["short"]} is {_med}%. The highest is {_cty(_top)} at {_top["value"]}% ({_top["n"]:,} {_sp["unit"]}); the lowest is {_cty(_bot)} at {_bot["value"]}% ({_bot["n"]:,}).</p></div>
+<div class="stats"><div class="stat"><div class="n">{_N:,}</div><div class="l">U.S. counties ranked</div></div>
+<div class="stat"><div class="n">{_med}%</div><div class="l">Median county</div></div>
+<div class="stat"><div class="n">{_half:,}</div><div class="l">Counties above 50%</div></div></div>
+<div class="card" id="data"><h2>Data</h2><p class="stand">{_sp["dataset"]} (<a href="{_sp["api"]}" rel="nofollow">API</a>), records as of {_ASOF_TXT}. FEMA fields used: {html.escape(_sp["fields"])}. Base: {html.escape(_sp["base"])}.</p>
+{"".join(f'<p class="stand">{rule(k)}</p>' for k in _sp["rules"])}</div>
+<div class="card" id="methods"><h2>Methods</h2><p class="stand">For each U.S. county FEMA codes on the record, the {_sp["measure"]} is computed from every record in the base. A county is ranked only with at least {_sp["min"]} {_sp["unit"]}, so a handful of records cannot top the list. Left out: {_small:,} counties with fewer, and {_nul:,} counties with no records in the base. Ranked from highest to lowest share; counties with the same share share a rank, and the next rank skips. Shares are rounded to one decimal. No statistical test is run: a difference between two counties is a difference in these records, not a tested effect.</p></div>
+<div class="card" id="results"><h2>Results</h2><ul>
+<li>{_cty(_top)} ranks 1st: {_top["value"]}% across {_top["n"]:,} {_sp["unit"]}.</li>
+<li>In {_half:,} of the {_N:,} counties ({round(100 * _half / _N, 1)}%) the share is above 50%; the median county's is {_med}%.</li>
+<li>{_t50[1]} of the 50 highest-ranked counties are in {html.escape(_snames.get(_t50[0], _t50[0]))}.</li></ul></div>
+<div class="card" id="table"><h2>All {_N:,} counties</h2><p class="stand">1st has {_sp["first"]}. Counties with a page on this site are linked.</p>
+<div style="overflow-x:auto"><table><thead><tr><th>Rank</th><th>County</th><th>{html.escape(_sp["short"][0].upper() + _sp["short"][1:])}</th>{"".join(f"<th>{html.escape(l)}</th>" for l, _, _ in _sp["extra"])}<th>n</th></tr></thead><tbody>{_trs}</tbody></table></div>
+<p class="mut"><a href="/data/{_key}.csv">Download all {_N:,} rows as CSV</a> (county FIPS code, county, state, share, n, as-of date).</p></div>
+<div class="card" id="limitations"><h2>Limitations</h2><ul>{"".join(f"<li>{html.escape(t)}</li>" for t in _sp["limits"])}<li>Only NFIP records: private flood insurance is not in FEMA's data.</li><li>A rank is a position in this list, not a grade, a risk score or a forecast.</li></ul></div>
+<div class="card" id="reproduce"><h2>Reproduce</h2><p class="stand">Download every record from <a href="{_sp["api"]}" rel="nofollow">{_sp["dataset"]}</a>, keep the base above, group by county, apply the minimum, and rank. The CSV lists every ranked county with its n, so any row can be checked against FEMA's records.</p></div>
+<div class="card" id="cite"><h2>How to cite</h2><p class="stand">{html.escape(_cite)}. This product uses FEMA's OpenFEMA API, but is not endorsed by FEMA.</p>
+<p class="mut">Versions: data as of {_ASOF_TXT} (current). <a href="/methodology/">How we check every figure</a>.</p></div>{FOOT}"""
+    wr(os.path.join(DIST, "flood-insurance", _key, "index.html"), pg)
+    zone_urls.append((f"{BASE}/flood-insurance/{_key}/", None))
 
 # ---- /flood-insurance/zip/: national ZIP lookup (PLAN target C). Static JSON per 3-digit ZIP prefix, a few KB per lookup.
 # Figures exactly as each county's agg holds them (by_zip: units, priced single-family policies, median at ZIP_MIN+); a ZIP

@@ -13,6 +13,8 @@ def check(pages, ads):
     bad = [f"{p}: tag missing" for p, h in pages.items() if TAG not in h]
     bad += [f"{p}: snippet missing or outside <head>" for p, h in pages.items() if SNIPPET not in h.split("</head>")[0]]
     bad += [f"{p}: hand-placed ad unit" for p, h in pages.items() if 'class="adsbygoogle"' in h]
+    bad += [f"{p}: privacy page denies the ads it loads" for p, h in pages.items()   # outside review 11-12
+            if "privacy" in p and ("shows no ads" in h or "AdSense" not in h)]
     if (ads or "").strip() != ADS: bad.append(f"ads.txt is {ads!r}")
     return bad
 
@@ -29,6 +31,7 @@ if __name__ == "__main__":
         muts = {"tag removed": ({**pages, one: pages[one].replace(TAG, "")}, ads),
                 "snippet removed": ({**pages, one: pages[one].replace(SNIPPET, "")}, ads),
                 "ad unit added": ({**pages, one: pages[one] + '<ins class="adsbygoogle"></ins>'}, ads),
+                "privacy says no ads": ({**pages, **{p: h + "The site currently shows no ads." for p, h in pages.items() if "privacy" in p}}, ads),
                 "ads.txt missing": (pages, None), "ads.txt wrong id": (pages, ADS.replace("8997", "8998"))}
         for k, (p, a) in muts.items(): assert check(p, a), f"missed: {k}"
         assert not check(pages, ads), "clean build flagged"

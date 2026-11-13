@@ -151,6 +151,7 @@ if __name__ == "__main__":
         places = [p for p in json.load(open(PLACES)) if p["slug"] not in {q["slug"] for q in places}] + places
         places.sort(key=lambda p: -p["units"])
     json.dump(places, open(PLACES, "w"), indent=0)   # before the builds: sibling links and the gate read it
+    import papers; papers.write_cache()   # owner 11-12: national paper ranks once per build, each county page reads its own (PLAN E13)
     with ThreadPoolExecutor(6) as ex: res = list(ex.map(build_one, items))
     bad = [(s, e) for s, e in res if e]
     built = {s for s, e in res if not e} | ({p["slug"] for p in places} - {it[3] for it in items} if only else set())
