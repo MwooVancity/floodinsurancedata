@@ -62,7 +62,7 @@ Guide standard: one searched question per URL; answer in the first 40 words; our
 | 8 | /guides/basement-flooding/ | basement flood insurance cluster 100-1K | new | basement coverage rule (raw), claims basement fields if present | todo |
 | 9 | /guides/condo-flood-insurance/ | condo flood insurance 100-1K x2 | new | condo_unit median by state, RCBAP quotes (PDF read raw) | LIVE 11-13 (r167-168) |
 | 10 | /guides/buying-a-house-in-a-flood-zone/ | 100-1K (+ disclosure 10-100) | new | new-policy cost by state, lender/closing rules | LIVE 11-13 (r168) |
-| 11 | /guides/risk-rating-2/ | risk rating 2.0 100-1K | new | glide, cap rules; national share below full-risk (Price Gap base) | todo |
+| 11 | /guides/risk-rating-2/ | risk rating 2.0 100-1K | new | glide, cap rules; national share below full-risk (Price Gap base) | LIVE 2026-11-13 (review round 190, carried S12 PASS: 410 pages visible-text compared, only this guide + /guides/ index differ) |
 | 12 | /guides/flood-insurance-cars/ | car flood 100-1K x4 | new only if a raw rule quote answers "NFIP does not cover cars"; else cut | rule | check rule |
 | 13 | /guides/flood-claim/ | flood insurance claim 100-1K; proof of loss, ICC, denied 10-100 | extend claims page or new guide; one URL | claims page figures, proof-of-loss tool, ICC rule | decide |
 | 14 | Papers (gate): Damage Over Coverage LIVE 11-13; Flood Calendar, Deductible Choice; then Price Gap revised, Map Age, Repeat Flood | research | new under /flood-insurance/<paper>/ | see Research papers | after paper_gate.py |
