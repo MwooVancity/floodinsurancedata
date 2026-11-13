@@ -12,6 +12,64 @@ Most helpful flood-insurance page for every US place a homeowner or buyer search
 ~50,000 pageviews a month at a $30 RPM (third-party estimate). Milestones (GA4 pageviews a month): 02-2027 2,000; 05 8,000; 08 20,000; 11 50,000; two misses in a row = re-plan. Links are the lever and wait on the owner's contact address. Ads only above 1,000 sessions a month; referrals only after the licensing + FTC check.
 
 ## Next, in order
+- 11-12 ORIGINALITY (owner: "I need originality info gain"; full crawl 399 pages: county pages 4,138 words median but 12% sentences their own, 82% on 20+ pages). Lesson from slabcalc.co: no per-city template pages; original value = derived national indexes nobody publishes (freeze-thaw, soil risk, cost index: key findings, "why the surprise", as-of date, method), pitched as press pieces + embeddable widgets. Build: (1) Flood Insurance Price Gap Index page = 329 counties ranked by share of single-family primary-home premiums below FEMA's full-risk premium (counties.csv fields, already gated per page), key findings, method, CSV; each county page gets its own rank sentence (unique per-place fact). (2) Then claims-payout and repeat-flood indexes the same way. Outside review 11-12 also: privacy said "no ads" (fixed, adsense_check guards it); Palm Beach 10,000 claims verified exact against FEMA (50,523 Pinellas also exact); moving shared county paragraphs to one page = owner's call (cutting a block).
+  SCALE (owner 11-12: "not a handful, a fuckton"): slabcalc.co = 368 pages: 173 guides (one question each, ~1,150 words, table), 118 glossary, 44 calculators, 17 diagnose, 4 research indexes; zero place templates. Ours: (a) indexes: price gap, claim payout, repeat floods, oldest maps, take-up after declarations, deductibles chosen; (b) guides, one searched question each, answered only by rule() quotes + our national/state tables (topic list from GSC queries + People-also-ask; KWP generic list has only ~20 with demand); (c) glossary = FEMA definitions quoted raw; (d) tools under the reader-tools standard. Each new type joins linkcheck.HUBS; county pages link the guide that answers each moved paragraph. Owner OK 11-12: move shared county paragraphs to one page, one line + link each.
+## Research papers (owner 11-12: "max info gain, plan it")
+Each at /flood-insurance/<name>/: definition, method, 3 computed findings, "why it surprises" (data only), full ranked table (ties share a rank), CSV in /data/, as-of, rank line on every county page (data-m tagged), embed badge later, press draft in state/outreach (owner sends). Machinery: ONE spec table in build_site.py (key, field path, base, pool min, sort direction, label) driving page + CSV + county line; ONE generic tools/index_check.py recompute + mutations; refactor Price Gap into it when paper 2 lands. Hub /research/ lists all papers (joins linkcheck.HUBS; home + state link it).
+| # | Paper | Field (data/c/<slug>) | Base, pool | Status |
+| 1 | Price Gap | agg policies.share_below / below_n | SF primary-home priced both ways, 30+ | built 11-12, gates running |
+| 2 | Claim Payout | data claims_extra.cwop_share, paid_n, claims | claims excl. 98/99, 100+ | next |
+| 3 | Outside the Zone | data claims_extra.outside_sfha_pct | claims with a zone, 100+ | next |
+| 4 | Underinsured | extras claims.damage_over_coverage_pct / damage_n; policies.at_building_max_pct | claims with damage recorded, 100+ | then |
+| 5 | Repeat Flood | data multiloss.total, srl per 1,000 policy units | units 1,000+ | then |
+| 6 | Protection Gap | data penetration.overall_pct, sfha_pct + agg nri rating | FEMA penetration rows | then |
+| 7 | Flood Calendar | data claims_extra.loss_months | claims 100+; peak month per county | then |
+| 8 | Deductible Choice | extras policies.deductibles | SF policies, 30+ | then |
+| 9 | Community Discount | data crs list | NFIP communities in county | then |
+| 10 | Flood Map Age | map-status data (verify field first) | counties with a map date | then |
+Cut: "After the Disaster" (no historical policy counts: would need a guess). Storm events stay cut (card_spec).
+### Edge cases (written before code; each: how it breaks / where at full size / test that fails without the guard)
+Input
+- E1 Field null or missing in one county (old pull lacks it): row crashes build or prints "None%" / any paper, 1,803 counties after widening / index_check "null row shown" mutation; rule: left out, counted in method line "N counties without this field".
+- E2 Field stored as text ("20%") or 0-100 vs 0-1 scale: rank inverted or 100x / penetration, deductibles / check parses both and fails on value >100 or <0.
+- E3 Mixed as-of dates across counties (half refreshed): ranks compare different months / every paper during a monthly refresh / check fails if >1 distinct asof in pool.
+- E4 Ties (Price Gap already has 10 tied values): same share, different ranks = mislabel / 30+ ties at 3,000 counties / check: equal values must share rank, next rank skips; page prints "(tied)".
+- E5 Tiny base (7 claims, Tooele): 100% or 0% tops the list / Payout, Outside, Underinsured / pool minimum per paper (100 claims, 30 policies), check fails on any row under it.
+- E6 Rate per units with units 0 or tiny: divide by zero or 5,000 per 1,000 / Repeat Flood / pool units 1,000+, check recomputes ratio.
+- E7 Same county name in two states (Washington Co. x30): wrong link or merged row / every table / rows keyed by slug, state shown on every row; check on duplicate slugs.
+- E8 Parish/borough/census-area/independent city names: label "County" added wrongly / LA, AK, VA / use places.json "short" as is; test_site_factory case.
+Missing
+- E9 Pool under 50 counties (first run, failed refresh): page with 12 rows = thin page / any paper / no page built, no county lines, hub omits it; site factory case.
+- E10 A county page fails its gate and is removed: index links a dead page / any day / pool = places that passed this build; linkcheck S16 catches broken link.
+- E11 FEMA drops or renames a field: whole paper silently empty / any refresh / E9 rule plus a release notice line "paper X off: field missing".
+Scale
+- E12 3,000-row table on a phone: 400+ KB page / after widening / table shows top/bottom 25 + state filter is NOT a fix (JS); full table only in CSV beyond 500 rows; phone_check byte budget fails first.
+- E13 County build reads every county's JSON per page (n squared): 329x329 ok, 3,000x3,000 = 9M reads / after widening / build_counties computes ranks once, pages read one small file; build time measured in release step timer.
+- E14 10 papers x rank line each: county page grows 10 lines, screen 1 pushed / P8 phone check / lines go in one "How this county ranks" card below screen 2, never screen 1; P8 must still pass.
+Two writers, two copies
+- E15 Rank computed twice (build_page and build_site) drifts: county says 5th, index says 6th / any paper / index_check compares every county line to the index table (built for Price Gap).
+- E16 Pool rule typed in two places (30 in build_site, 30 in build_page): one changes / any / single spec table imported by both; check reads the same constant.
+- E17 Daily publish adds counties: every rank on every county page shifts, 329 pages change daily, fake freshness in sitemap / daily / lastmod moves only when a page's own data changes, not its rank (lastmod.py rule + test).
+Who can't see it
+- E18 New hub /research/ not in linkcheck.HUBS: orphan papers / day 1 / S16 fails unless added.
+- E19 State pages have no line: S16 "hub linked from under half" / day 1 / state page gets "Highest-ranked county in this state" line per paper.
+- E20 hater review prompt never reads index pages (national page type): label errors ship / every paper / add each paper to S12 sample list.
+The check itself is wrong
+- E21 Regex in index_check too loose (matches any table): passes a broken page / any / mutation "row dropped", "share changed", "rank wrong" must fail (3 built).
+- E22 Recompute shares code with the builder: both wrong together / any / index_check reads data files only, never imports build_site.
+Readers and Google
+- E23 Reader reads rank 1 as "best" when it means "most below full-risk" / every paper / direction sentence next to every rank; hater checklist item.
+- E24 "Claim Payout" read as denial rate: "denied" banned (Never in copy); unpaid = "no recorded payment", reasons table linked.
+- E25 Outside-the-Zone read as "zone X is risky": base is claims, not homes; sentence names base "of NFIP claims here, not of homes".
+- E26 Underinsured: damage over coverage limit is not "uninsured loss" for contents/deductible; label exactly FEMA field meaning, data dictionary quote.
+- E27 Protection Gap uses FEMA penetration (residential contracts / housing units, FEMA's own estimate) at a different as-of than policies: both dates printed.
+- E28 Ten near-identical paper pages = scaled content: each paper gets its own findings and why-section computed from its data; a paper whose 3 findings are not distinct is not shipped.
+- E29 Press claim "only published here": must be checked by a search the same day; else drop the claim.
+Unattended
+- E30 Monthly refresh changes a top-3 county: findings text stale / monthly / findings computed at build, never typed; sameness of findings to last build logged.
+- E31 A paper breaks for a week and nobody sees: release fails closed on index_check; doctor reports at session start.
+Done = page live, index_check PASS + mutations, county lines on every live county, sitemap, hub link, light review PASS. Then widen refresh-data.yml to all ~3,000 counties so papers rank the whole US.
+  Edge cases: county with null share (left out and counted in the method line); ties (same rank, "tied"); rank sentence must name base and pool ("of 329 counties with 30+ priced policies"); index never called a forecast or premium rise.
 - 11-12 owner applied to AdSense; ownership verified. Owner 11-12 "add it like riverwaterlevels": meta tag + AdSense code snippet in every <head> + /ads.txt live (tools/adsense_check.py, 5 mutations, in release; fails on a hand-placed ad unit; auto ads stay off in the account). contact@floodinsurancedata.com routes to owner Gmail (Cloudflare Email Routing rule active); owner clicks "Add missing records" (MX/SPF/DKIM), then Claude puts it on /methodology/ + About and owner clicks Request review. "No ads before a 4-week Search Console review" still governs ad units. FloodSmart reworded its renters text 11-12: renters_cover/limits excerpts re-read and updated.
 3. WAITING 11-13: read the daily run's build time (map_status out of the global fingerprint 11-12: local rebuild 67 s, unchanged rerun 16 s; CI was ~340 s at 312 pages).
 4. WAITING 11-15: weekly Search Console + GA4 read; IndexNow recheck.
