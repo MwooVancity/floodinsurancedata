@@ -26,8 +26,6 @@ Connecticut,zone_units,other_hr,290,count,FEMA OpenFEMA — NFIP Policies,policy
 Connecticut,zone_share,other_hr,0.9%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"August 31, 2026"
 Connecticut,zone_units,other,159,count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"August 31, 2026"
 Connecticut,zone_share,other,0.5%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"August 31, 2026"
-Connecticut,map_new_n,,19,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"August 31, 2026"
-Connecticut,map_date,first_new,"November 13, 2026",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"August 31, 2026"
 Connecticut,cost_mo,,$126,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"August 31, 2026"
 Connecticut,cost_p25,,"$1,084",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"August 31, 2026"
 Connecticut,cost_p75,,"$2,386",usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"August 31, 2026"

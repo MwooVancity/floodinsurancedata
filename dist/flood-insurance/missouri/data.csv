@@ -29,8 +29,6 @@ Missouri,zone_units,other_hr,359,count,FEMA OpenFEMA — NFIP Policies,policyCou
 Missouri,zone_share,other_hr,2.5%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"August 31, 2026"
 Missouri,zone_units,other,169,count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"August 31, 2026"
 Missouri,zone_share,other,1.2%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"August 31, 2026"
-Missouri,map_new_n,,6,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"August 31, 2026"
-Missouri,map_date,first_new,"November 13, 2026",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"August 31, 2026"
 Missouri,crs_count,not_nfip,193,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),communityName + sfhaDiscount,"August 31, 2026"
 Missouri,cost_mo,,$91,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"August 31, 2026"
 Missouri,cost_p25,,$621,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"August 31, 2026"

@@ -24,8 +24,6 @@ Georgia,zone_units,other_hr,496,count,FEMA OpenFEMA — NFIP Policies,policyCoun
 Georgia,zone_share,other_hr,0.7%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"August 31, 2026"
 Georgia,zone_units,other,108,count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"August 31, 2026"
 Georgia,zone_share,other,0.2%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"August 31, 2026"
-Georgia,map_new_n,,21,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"August 31, 2026"
-Georgia,map_date,first_new,"November 13, 2026",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"August 31, 2026"
 Georgia,crs_count,not_nfip,69,count,FEMA OpenFEMA — NFIP Community Status Book (CRS),communityName + sfhaDiscount,"August 31, 2026"
 Georgia,cost_mo,,$82,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"August 31, 2026"
 Georgia,cost_p25,,$702,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,policyCost,"August 31, 2026"

@@ -967,7 +967,7 @@ Texas,county_count,coastal:Very Low,8,count,FEMA — National Risk Index (flood)
 Texas,county_count,inland:Very Low,123,count,FEMA — National Risk Index (flood),RISK_RATNG,"August 31, 2026"
 Texas,county_count,coastal:none,233,count,FEMA — National Risk Index (flood),RISK_RATNG,"August 31, 2026"
 Texas,county_count,inland:none,0,count,FEMA — National Risk Index (flood),RISK_RATNG,"August 31, 2026"
-Texas,ml_total,,"130,104",count,FEMA OpenFEMA — Individual Assistance Multiple-Loss Flood Properties,highRiskPropertyType,"August 31, 2026"
+Texas,ml_total,,"130,110",count,FEMA OpenFEMA — Individual Assistance Multiple-Loss Flood Properties,highRiskPropertyType,"August 31, 2026"
 Texas,ml_srl,,"8,799",count,FEMA OpenFEMA — Individual Assistance Multiple-Loss Flood Properties,highRiskPropertyType,"August 31, 2026"
 Texas,declarations,,82,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"August 31, 2026"
 Texas,ia_paid,,$3.4 billion,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"August 31, 2026"

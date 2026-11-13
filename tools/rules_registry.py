@@ -14,7 +14,8 @@ CFR64 = "https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part
 CFR59 = "https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=59&section=59.1"
 WIND_FS = "https://agents.floodsmart.gov/sites/default/files/media/document/2025-07/fema-nfip-wind-vs-floodwater-damage-fact-sheet-03-2023.pdf"   # pdf, read by hand 2026-11-03
 CFR70 = "https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=70"
-CONDO_B = "https://agents.floodsmart.gov/sites/default/files/media/document/2025-07/fema-nfip-flood-insurance-condominium-associations-brochure-01-2025.pdf"   # pdf, read raw 2026-11-12
+CFR60 = "https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=60&section=60.3"   # read raw 2026-11-13 (compressed)
+CONDO_B ="https://agents.floodsmart.gov/sites/default/files/media/document/2025-07/fema-nfip-flood-insurance-condominium-associations-brochure-01-2025.pdf"   # pdf, read raw 2026-11-12
 CONDO_P = "https://agents.floodsmart.gov/sites/default/files/media/document/2025-07/fema-nfip-condo-association-flood-policies-dont-protect-belongings-postcard-01-2023.pdf"   # pdf, read raw 2026-11-12
 LOMC = "https://hazards.fema.gov/femaportal/onlinelomc/signin"
 PRELIM = "https://hazards.fema.gov/femaportal/prelimdownload/"
@@ -24,6 +25,16 @@ CFR60 = "https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part
 USC4012A = "https://www.law.cornell.edu/uscode/text/42/4012a"
 
 RULES = {
+    "openings_rule": {   # vents guide 11-13, 44 CFR 60.3(c)(5) read raw from eCFR (scope: (c) header)
+        "text": "Where FEMA has given a community final flood elevations, the community must require, for new construction and substantial improvements, "
+                "that fully enclosed areas below the lowest floor used only for parking, building access or storage (not a basement) let floodwater in and out: "
+                "either a design certified by a registered professional engineer or architect, or at least two openings with a total net area of at least "
+                "one square inch for every square foot of enclosed area, their bottoms no higher than one foot above grade (44 CFR §60.3(c)(5)).",
+        "sources": [(CFR60, "has provided a notice of final flood elevations", "curl"),
+                    (CFR60, "fully enclosed areas below the lowest floor that are usable solely for parking of vehicles, building access or storage", "curl"),
+                    (CFR60, "must either be certified by a registered professional engineer or architect", "curl"),
+                    (CFR60, "A minimum of two openings having a total net area of not less than one square inch for every square foot of enclosed area subject to flooding", "curl"),
+                    (CFR60, "The bottom of all openings shall be no higher than one foot above grade", "curl")]},
     "condo_rcbap": {   # condo guide 11-12, FEMA brochure 01-2025 read raw
         "text": "The NFIP's Residential Condominium Building Association Policy (RCBAP) is available to condominium associations to insure "
                 "against direct physical damage to the building from a flood, and it can pay up to $250,000 in building loss payments for any one unit.",

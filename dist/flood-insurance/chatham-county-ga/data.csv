@@ -33,7 +33,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Chatham County, Georgia",zone_share,other_hr,1.1%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"August 31, 2026"
 "Chatham County, Georgia",zone_units,other,41,count,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"August 31, 2026"
 "Chatham County, Georgia",zone_share,other,0.2%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + ratedFloodZone,"August 31, 2026"
-"Chatham County, Georgia",map_date,first_new,"November 13, 2026",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"August 31, 2026"
+"Chatham County, Georgia",map_date,own,"November 13, 2026",rating,FEMA OpenFEMA — NFIP Community Status Book (CRS),currentlyEffectiveMapDate,"August 31, 2026"
 "Chatham County, Georgia",map_panels,,87,count,"FEMA — National Flood Hazard Layer (map service: FIRM panels, LOMRs, LOMAs)",FIRM_PAN,"August 31, 2026"
 "Chatham County, Georgia",map_panel_date,oldest,"July 7, 2014",rating,"FEMA — National Flood Hazard Layer (map service: FIRM panels, LOMRs, LOMAs)",EFF_DATE,"August 31, 2026"
 "Chatham County, Georgia",map_panel_date,newest,"August 16, 2018",rating,"FEMA — National Flood Hazard Layer (map service: FIRM panels, LOMRs, LOMAs)",EFF_DATE,"August 31, 2026"
