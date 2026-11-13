@@ -311,8 +311,13 @@ disclosed, and nothing publishes if a check fails. The <a href="/methodology/">m
 relationship with any insurer, agent, or lead-generation service</b>. It does not sell insurance, generate
 quotes, or earn commissions on policies. It is a reference, not a sales page. The site shows ads served by
 Google AdSense (see the <a href="/privacy/">privacy page</a>); ads never change a figure, and no advertiser has a say in what is published.</p>
-<p>The site is run anonymously, by choice: there is no named author. Every figure instead names its exact federal
-source and date, and the <a href="/methodology/">methodology</a> shows how each one is counted, so a reader can check it.</p></div>
+</div>
+<div class="card" id="who"><h2>Who runs it</h2>
+<p>Flood Insurance Data is run by <b>Michael Woo</b>. The pages are written and checked with AI tools (Anthropic's Claude)
+working under fixed rules: every figure is recomputed from FEMA's files by separate code before a page ships, every rule is quoted from
+its official source, and each page is read by independent AI reviewers looking for anything wrong or misleading. The site gives no
+insurance advice. Every figure names its federal source and date, and the <a href="/methodology/">methodology</a> shows how each one is
+counted, so anyone can check it. Corrections: <a href="mailto:contact@floodinsurancedata.com">contact@floodinsurancedata.com</a>.</p></div>
 {FOOT}"""
 wr(os.path.join(DIST, "about", "index.html"), about)
 
@@ -1002,7 +1007,7 @@ for _sp in _PA.READY:
                    + (["policy_units_outside_a_v_pct"] if _sp.get("policy_col") else []))
         for x in _r: w.writerow([x["fifth"], x["geoid"], _cn.get(x["geoid"], ""), x["state"], x["value"], x["lo"], x["hi"], x["k"], x["n"], f"{_w0}-{_w1}", _asof()]
                                 + ([_PA.context(_sp, _recs[x["geoid"]], _w0, _w1)["pol_out"]] if _sp.get("policy_col") else []))
-    _cite = f'Flood Insurance Data, "{_sp["title"]}," NFIP losses {_w0}–{_w1}, data as of {_ASOF_TXT}, {BASE}/flood-insurance/{_key}/'
+    _cite = f'Michael Woo, Flood Insurance Data, "{_sp["title"]}," NFIP losses {_w0}–{_w1}, data as of {_ASOF_TXT}, {BASE}/flood-insurance/{_key}/'
     pg = HEAD.format(title=f'{_sp["title"]}: {_N:,} U.S. counties',
                      desc=f'The {_sp["measure"]}, losses {_w0}–{_w1}, in {_N:,} U.S. counties with at least {_sp["min"]} {_sp["unit"]}, from {_sp["dataset"]} as of {_ASOF_TXT}. Method, 90% ranges, limits and CSV.',
                      canon=f"{BASE}/flood-insurance/{_key}/") + f"""
