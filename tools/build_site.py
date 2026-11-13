@@ -882,7 +882,7 @@ if len(states) == 51:   # deductible guide (cloud field batch 11-12): building d
         _dtr = "".join(f'<tr><td>{money(float(d))}</td><td>{_dsh("AE", d)}%</td><td>{_dsh("X", d)}%</td></tr>' for d in _dmain)
         _doth = {z: round(100 - sum(_dsh(z, d) for d in _dmain), 1) for z in ("AE", "X")}
         _dtop = {z: max(_dz[z], key=lambda d: _dz[z][d]) for z in ("AE", "X")}
-        _dhi = {z: round(sum(_dsh(z, d) for d in _dall if float(d) >= 5000), 1) for z in ("AE", "X")}
+        _dhi = {z: round(100 * sum(_dz[z].get(d, 0) for d in _dall if float(d) >= 5000) / _dn[z], 1) for z in ("AE", "X")}   # from counts, never summed rounded shares
         _dk = ["save_ways", "price_drivers"]
         pg = HEAD.format(title="Flood insurance deductibles on NFIP policies: zone AE vs zones X, B or C",
                          desc=f"The building deductibles on {_dn['AE'] + _dn['X']:,} NFIP single-family primary-home policies in zone AE and zones X, B or C, from FEMA's records as of {_ASOF_TXT}.",
@@ -1006,7 +1006,7 @@ for _sp in _PA.READY:
         w.writerow(["fifth", "county_fips", "county", "state", "share_pct", "ci90_low_pct", "ci90_high_pct", "numerator", "denominator", "loss_years", "as_of"]
                    + (["policy_units_outside_a_v_pct"] if _sp.get("policy_col") else []))
         for x in _r: w.writerow([x["fifth"], x["geoid"], _cn.get(x["geoid"], ""), x["state"], x["value"], x["lo"], x["hi"], x["k"], x["n"], f"{_w0}-{_w1}", _asof()]
-                                + ([_PA.context(_sp, _recs[x["geoid"]], _w0, _w1)["pol_out"]] if _sp.get("policy_col") else []))
+                                + ([_ctx[x["geoid"]]["pol_out"]] if _sp.get("policy_col") else []))
     _cite = f'Michael Woo, Flood Insurance Data, "{_sp["title"]}," NFIP losses {_w0}–{_w1}, data as of {_ASOF_TXT}, {BASE}/flood-insurance/{_key}/'
     pg = HEAD.format(title=f'{_sp["title"]}: {_N:,} U.S. counties',
                      desc=f'The {_sp["measure"]}, losses {_w0}–{_w1}, in {_N:,} U.S. counties with at least {_sp["min"]} {_sp["unit"]}, from {_sp["dataset"]} as of {_ASOF_TXT}. Method, 90% ranges, limits and CSV.',
@@ -1014,7 +1014,7 @@ for _sp in _PA.READY:
 <h1>{html.escape(_sp["title"])}</h1>
 <p class="lede">In FEMA's records for losses {_w0}–{_w1}, {_allp}% of {_alln:,} {_sp["unit"]} across all U.S. counties combined {_sp["meets"]}; across the {_N:,} counties with at least {_sp["min"]} each, {_pool}% (90% range {_plo}–{_phi}%, resampling counties).{f" Across those counties, a county's claim share and its share of policy units outside zones A and V go together (correlation {_rcor:.2f}, descriptive, no test), so compare the two columns." if _rcor is not None else ""}</p>
 {"".join(f'<p class="stand">{rule(k)} (<a href="https://www.floodsmart.gov/flood-zones-and-maps/what-is-my-flood-risk" rel="nofollow">FloodSmart</a>.) {html.escape(_sp.get("prior_note") or "")}</p>' for k in _sp.get("prior_rules") or [])}
-{f'<p class="mut">First published {_sp["published"]}; data as of {_ASOF_TXT}.</p>' if _sp.get("published") else ""}
+<p class="mut">By Michael Woo, publisher of Flood Insurance Data (<a href="/about/">about the site</a>), who answers for every figure here. Written with AI tools; every row is recomputed from FEMA's records by a separate check before publishing.{f" First published {_sp['published']}; data as of {_ASOF_TXT}." if _sp.get("published") else ""}</p>
 <div class="card" id="abstract"><h2>Abstract</h2>
 <p class="stand"><b>Data:</b> {_sp["dataset"]}, losses {_w0}–{_w1}, as of {_ASOF_TXT}: {_N:,} U.S. counties with at least {_sp["min"]} {_sp["unit"]} each, {_NN:,} in all.</p>
 <p class="stand"><b>Result:</b> across those counties, {_pool}% (90% range {_plo}–{_phi}%, resampling counties) of {_sp["unit"]} {_sp["meets"]}; the median county's share is {_med}%. The highest share is {_cty(_top)} at {_top["value"]}% ({_top["k"]:,} of {_top["n"]:,}){_tie(_top)}; the lowest share, {_bot["value"]}%, {"is " + _cty(_bot) + f' ({_bot["k"]:,} of {_bot["n"]:,})' if _ties(_bot) == 1 else f"is shared by {_ties(_bot):,} counties"}.</p></div>
@@ -1035,7 +1035,7 @@ for _sp in _PA.READY:
 <div class="card" id="reproduce"><h2>Reproduce</h2><p class="stand">Download every record from <a href="{_sp["api"]}" rel="nofollow">{_sp["dataset"]}</a>, keep the base above for losses {_w0}–{_w1}, group by the county FEMA codes, count the base and the records meeting the measure, drop counties under {_sp["min"]}, and compute each share with a 90% Wilson interval (z = 1.645). The CSV gives every numerator and denominator.</p></div>
 <div class="card" id="cite"><h2>How to cite</h2><p class="stand">{html.escape(_cite)}. This product uses FEMA's OpenFEMA API, but is not endorsed by FEMA.</p></div>
 <div class="card" id="versions"><h2>Versions</h2><p class="stand">Data as of {_ASOF_TXT} (current). Each monthly refresh replaces the figures and this line names the data date; to cite a figure, give the date shown here.</p></div>
-<div class="card" id="corrections"><h2>Corrections</h2><p class="stand">None so far. Report a figure that looks wrong to <a href="mailto:contact@floodinsurancedata.com">contact@floodinsurancedata.com</a>; every correction is listed here with its date.</p></div>{FOOT}"""
+<div class="card" id="corrections"><h2>Corrections</h2><p class="stand">No corrections so far. Report a figure that looks wrong to <a href="mailto:contact@floodinsurancedata.com">contact@floodinsurancedata.com</a>; every correction is listed here with its date.</p></div>{FOOT}"""
     if not _sp.get("indexable"):   # PAPER-GATE M3.5 staged indexing: noindex and out of the sitemap until both reviews pass + 7 days live
         pg = pg.replace("<title>", '<meta name="robots" content="noindex,follow"><title>', 1)
     wr(os.path.join(DIST, "flood-insurance", _key, "index.html"), pg)

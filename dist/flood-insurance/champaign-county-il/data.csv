@@ -111,6 +111,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Champaign County, Illinois",share_below,,48.1%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 "Champaign County, Illinois",units_listed,below_n,133,count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"August 31, 2026"
 "Champaign County, Illinois",share_below,state,33.8%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
+"Champaign County, Illinois",paper_min,outside-the-zone,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Champaign County, Illinois",ded_amount,2000,"$2,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"
 "Champaign County, Illinois",ded_share,2000,39.1%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"August 31, 2026"
 "Champaign County, Illinois",ded_amount,1000,"$1,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"

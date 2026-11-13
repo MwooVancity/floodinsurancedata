@@ -133,6 +133,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Niagara County, New York",share_below,,28.0%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 "Niagara County, New York",units_listed,below_n,397,count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"August 31, 2026"
 "Niagara County, New York",share_below,state,46.1%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
+"Niagara County, New York",paper_min,outside-the-zone,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Niagara County, New York",ded_amount,2000,"$2,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"
 "Niagara County, New York",ded_share,2000,35.6%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"August 31, 2026"
 "Niagara County, New York",ded_amount,1250,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"

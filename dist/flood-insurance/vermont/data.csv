@@ -175,6 +175,8 @@ Vermont,condo_unit_cost,,$645,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies
 Vermont,condo_unit_cost_n,,111,count,FEMA OpenFEMA — NFIP Policies,policyCost + condominiumCoverageTypeCode,"August 31, 2026"
 Vermont,share_below,,42.5%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 Vermont,units_listed,below_n,"1,557",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"August 31, 2026"
+Vermont,paper_min,outside-the-zone-n,2,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
+Vermont,paper_min,outside-the-zone,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Vermont,ded_amount,2000,"$2,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"
 Vermont,ded_share,2000,41.7%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"August 31, 2026"
 Vermont,ded_amount,1250,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"

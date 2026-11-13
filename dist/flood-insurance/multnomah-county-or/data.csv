@@ -160,6 +160,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Multnomah County, Oregon",share_below,,18.3%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 "Multnomah County, Oregon",units_listed,below_n,733,count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"August 31, 2026"
 "Multnomah County, Oregon",share_below,state,41.7%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
+"Multnomah County, Oregon",paper_min,outside-the-zone,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Multnomah County, Oregon",ded_amount,2000,"$2,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"
 "Multnomah County, Oregon",ded_share,2000,44.1%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"August 31, 2026"
 "Multnomah County, Oregon",ded_amount,1250,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"

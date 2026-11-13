@@ -8,9 +8,8 @@ HUBS = ("/guides/homeowners-insurance-flooding/",   # 11-13: topic guides (condo
          "/nfip/", "/flood-insurance/renters/", "/flood-insurance/claims/", "/flood-insurance/zip/", "/flood-zone-map/")   # papers join here when papers.READY lists them (methods review 162)
 
 def fails(pages, indexable):
-    try:   # research papers switched on join the hubs (every county card and state card links them)
-        import papers as _P; _paper_hubs = tuple(f"/flood-insurance/{s['key']}/" for s in _P.READY)
-    except Exception: _paper_hubs = ()
+    import papers as _P   # research papers switched on join the hubs; an import error fails the gate, never skips the papers
+    _paper_hubs = tuple(f"/flood-insurance/{s['key']}/" for s in _P.READY)
     hubs = [h for h in HUBS + _paper_hubs if h in pages]
     out = []
     for p in sorted(indexable):

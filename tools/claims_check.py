@@ -220,6 +220,8 @@ def check_deductible(page):   # deductible guide: shares recomputed from every s
         k = str(int(amt.replace(",", "")))
         want = (round(100 * dz["AE"].get(k, 0) / n["AE"], 1), round(100 * dz["X"].get(k, 0) / n["X"], 1))
         if (float(ae), float(x)) != want: bad.append(f"D2 ${amt}: page {ae}%/{x}%, recomputed {want}")
+    hi = {z: round(100 * sum(c for d, c in dz[z].items() if float(d) >= 5000) / n[z], 1) for z in ("AE", "X")}   # lede, from counts
+    if f"{hi['AE']}% of zone AE policies carry one of $5,000 or more, against {hi['X']}%" not in page: bad.append(f"D4 lede $5,000+ shares, recomputed {hi}")
     return bad
 
 def check_vents(page):   # vents guide: obstruction shares and state rows recomputed from every state's obstruction_counts (11-13)
@@ -276,12 +278,13 @@ if __name__ == "__main__":
         if "--test" in sys.argv:
             assert check_deductible(re.sub(r"<td>([\d.]+)%</td><td>([\d.]+)%</td></tr>", lambda m_: f"<td>{float(m_[1]) + 1}%</td><td>{m_[2]}%</td></tr>", dg, count=1)), "mutation not caught: deductible share"
             assert check_deductible(dg.replace("zone AE vs zones X, B or C", "zone AE vs zone X", 1)), "mutation not caught: zone X label"
+            assert check_deductible(re.sub(r"([\d.]+)(% of zone AE policies carry)", lambda m_: f"{round(float(m_[1]) + 0.3, 1)}{m_[2]}", dg, count=1)), "mutation not caught: $5,000+ lede"
         if "--test" in sys.argv:
             assert check_condo(re.sub(r"<td>\$([\d,]+)</td>", "<td>$1</td>", cg, count=1)), "mutation not caught: condo row"
             assert not bad, bad
             assert check_guides(re.sub(r">(\d+)%<", lambda m_: f">{int(m_[1]) + 1}%<", pg, count=1), zx), "mutation not caught: tile"
             assert check_guides(pg, re.sub(r"(zone on the claim, )(\d+)%", lambda m_: m_[1] + str(int(m_[2]) + 1) + "%", zx, count=1)), "mutation not caught: zone X disagrees"
-            print("guides check mutations: 8 caught"); sys.exit()
+            print("guides check mutations: 9 caught"); sys.exit()
         for b in bad: print("  -", b)
         print("GUIDES CHECK", "FAIL" if bad else "PASS"); sys.exit(1 if bad else 0)
     if "--renters" in sys.argv:

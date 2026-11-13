@@ -1,8 +1,8 @@
 """Research papers (owner 11-12: national data, "PubMed worthy"; docs/PAPER-GATE-PROMPT.md). One spec per paper; every U.S. county
 in data/all-counties whose count base meets the minimum is ranked. Shares are numerator / denominator on ONE base (methods review 162
 M1.1), each with a 90% Wilson interval (M1.3); readers see fifths (bands), never a bare rank. build_site.py writes each paper page +
-CSV; build_counties.py writes .cache/papers.json once per build (PLAN E13). tools/paper_gate.py and tools/index_check.py recompute
-every row from the raw county files with their own code (PLAN E22)."""
+CSV; build_counties.py writes .cache/papers.json once per build (PLAN E13). tools/paper_gate.py recomputes
+every row from the raw county files with its own code (PLAN E22)."""
 import json, math, os
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ALL = os.path.join(ROOT, "data", "all-counties")
@@ -26,9 +26,9 @@ SPECS = [
                 "Only insured, paid claims are in the base: homes without flood insurance are not.",
                 "Counties are those FEMA codes on the claim, which can differ from the property's county."],
      "prior": "No published ranking of this measure by county was found in searches on 2026-11-12 (WebSearch: NFIP claims damage exceeded coverage by county).",
-     "prior_links": [], "prior_rules": [], "policy_col": False, "published": None, "answer": "",
+     "prior_links": [], "prior_rules": [], "policy_col": False, "published": None,
      "rules": []},
-    {"key": "outside-the-zone", "ready": False, "indexable": False, "title": "Outside the zone: paid flood claims rated outside high-risk zones",
+    {"key": "outside-the-zone", "ready": True, "indexable": False, "title": "Outside the zone: paid flood claims rated outside high-risk zones",
      "num": ("extras", "claims", "zone_split", "out_paid_n"), "den": ("extras", "claims", "zone_split", "known_paid_n"), "min": 100,
      "window": ("extras", "claims", "zone_split"),
      "question": "In which U.S. counties are the most paid NFIP flood claims rated outside FEMA's high-risk zones (A and V)?",
@@ -49,7 +49,6 @@ SPECS = [
      # review outside-zone-4 M1: say only what FloodSmart states (current high-risk areas, 2014-2024); it does not say paid-only or all claims
      "prior_note": "FEMA's figure uses current high-risk areas and the years 2014 to 2024, and does not say whether it counts only paid claims; this page counts paid claims by the zone rated on each claim.",
      "policy_note": "Policy units outside A and V: the share of NFIP policy units in force in the county, every policy type, rated outside zones A and V.",
-     "answer": "A county's share mostly follows where its policies are written: compare each county's claim share with its share of policy units outside zones A and V.",
      "rules": []},
 ]
 READY = [s for s in SPECS if s.get("ready")]   # a paper ships only after tools/paper_gate.py and both reviews pass (PAPER-GATE-PROMPT)
@@ -79,18 +78,15 @@ def rows(spec, recs=None):
             out.append({"geoid": g, "state": r.get("state", ""), "k": k, "n": n, "value": round(100 * k / n, 1), "lo": lo, "hi": hi})
     out.sort(key=lambda x: (-x["k"] / x["n"], x["geoid"]))
     N = len(out)
-    for i, x in enumerate(out): x["fifth"] = 1 + (5 * i) // N if N else None
+    first = {}   # review 11-13: an equal printed share always gets the same fifth (the fifth of its first, highest-placed row)
+    for i, x in enumerate(out): x["fifth"] = first.setdefault(x["value"], 1 + (5 * i) // N)
     return out
 
 def context(spec, rec, w0, w1):
-    """Per-row context the statistics review asked for (methods review outside-zone-2, M1 and M4): the county's policy units outside
-    zones A and V today (policies.sfha_share_units is the share inside A and V), and its largest named flood whose loss years all fall
-    in the window, with that flood's paid claims (all zones, all building types). None where FEMA's record has no value."""
+    """Per-row context the statistics review asked for (methods review outside-zone-2, M1): the county's policy units outside
+    zones A and V today (policies.sfha_share_units is the share inside A and V). None where FEMA's record has no value."""
     sf = _get(rec, ("policies", "sfha_share_units"))
-    pol_out = round(100 - sf, 1) if isinstance(sf, (int, float)) else None
-    ev = [e for e in (_get(rec, ("extras", "claims", "events")) or []) if e.get("years") and all(w0 <= y <= w1 for y in e["years"])]
-    top = max(ev, key=lambda e: e.get("claims") or 0) if ev else None
-    return {"pol_out": pol_out, "event": (top["name"], top["claims"], top["years"][0]) if top else None}
+    return {"pol_out": round(100 - sf, 1) if isinstance(sf, (int, float)) else None}
 
 def pooled_boot(rows_, B=2000, seed=20261113):
     """90% range of the pooled share, resampling whole counties (review M2: claims in one county are not independent)."""
@@ -157,4 +153,6 @@ if __name__ == "__main__":   # self-check: interval, base, fifths
     r = rows(S, {"1": {"a": 1, "b": 2}, "2": {"a": 3, "b": 1}, "3": {"a": 0, "b": 1}, "4": {"a": 2, "b": 2}, "5": {"a": None, "b": 5}})
     assert [(x["geoid"], x["value"]) for x in r] == [("4", 100.0), ("1", 50.0)], r   # k > n and n < min left out
     assert [x["fifth"] for x in r] == [1, 3]
+    r = rows(S, {str(i): {"a": a, "b": 2} for i, a in enumerate([2, 1, 1, 1, 0])})   # three tied 50% rows span fifths 2-4
+    assert [x["fifth"] for x in r] == [1, 2, 2, 2, 5], [x["fifth"] for x in r]
     print("papers self-test OK")

@@ -17,6 +17,8 @@ PLACES = os.path.join(ROOT, "places.json")
 BASE = os.environ.get("FF_BASEURL", "https://floodinsurancedata.com")
 
 built, blocked = [], []
+import papers as _P   # 11-13: a state page's paper line changes with each paper's county rows in this state
+_PCACHE = _P.write_cache()   # written here too: a states-only run never reads a cache an older county run left behind
 for st, name in sorted(NAMES.items(), key=lambda kv: kv[1]):
     d = os.path.join(SD, slug(st))
     need = [os.path.join(d, f) for f in ("agg.json", "data.json", "extras.json")]
@@ -28,8 +30,7 @@ for st, name in sorted(NAMES.items(), key=lambda kv: kv[1]):
     label = "the District of Columbia" if st == "DC" else name    # reads right in "in ...", "...'s"
     env = dict(os.environ, FF_LEVEL="state", FF_DIR=d, OUT_HTML=out, FF_COUNTYLABEL=label, FF_COUNTYSHORT=label,
                FF_SLUG=slug(st), FF_GEOID=FIPS[st], FF_OFFICIAL="0", FF_BASEURL=BASE, FF_PLACES=PLACES)
-    import papers as _P   # 11-13: a state page's paper line changes with each paper's county rows in this state
-    _pc = {k: [v.get("pool"), sorted(g_ for g_ in (v.get("rows") or {}) if g_[:2] == FIPS[st])] for k, v in _P.read_cache().items()}
+    _pc = {k: [v.get("pool"), sorted(g_ for g_ in (v.get("rows") or {}) if g_[:2] == FIPS[st])] for k, v in _PCACHE.items()}
     fp = FP.page_fp(need, {"st": st, "label": label, "base": BASE, "papers": _pc,
                             "places": sorted((p["slug"], p["units"], p["median"]) for p in (json.load(open(PLACES)) if os.path.exists(PLACES) else []) if p.get("state") == st)})
     if not FP.unchanged(out, fp):

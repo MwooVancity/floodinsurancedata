@@ -182,6 +182,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Tulare County, California",share_below,,32.7%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 "Tulare County, California",units_listed,below_n,"2,831",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"August 31, 2026"
 "Tulare County, California",share_below,state,41.4%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
+"Tulare County, California",paper_min,outside-the-zone,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Tulare County, California",ded_amount,2000,"$2,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"
 "Tulare County, California",ded_share,2000,36.9%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"August 31, 2026"
 "Tulare County, California",ded_amount,1250,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"

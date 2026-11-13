@@ -383,7 +383,7 @@ def card_ranks():   # owner 11-12 research papers: this county's share, 90% rang
         head = f"<b><a href='/flood-insurance/{sp['key']}/'>{html.escape(sp['title'])}</a></b>: "
         if IS_STATE:   # PLAN E19: a state names how many of its counties are listed; never a state rank
             n_here = sum(1 for gg in (c.get("rows") or {}) if gg[:2] == g[:2])
-            lines.append(f"<li>{head}{m('paper_min', str(n_here), q=sp['key'] + '-n')} of this state's counties have at least "
+            lines.append(f"<li>{head}{m('paper_min', str(n_here), q=sp['key'] + '-n')} of this state's {UNITS} have at least "
                          f"{m('paper_min', str(sp['min']), q=sp['key'])} {sp['unit']} and are listed.</li>")
             continue
         r = (c.get("rows") or {}).get(g)

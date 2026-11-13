@@ -359,6 +359,8 @@ Arkansas,condo_unit_cost,,$767,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policie
 Arkansas,condo_unit_cost_n,,80,count,FEMA OpenFEMA — NFIP Policies,policyCost + condominiumCoverageTypeCode,"August 31, 2026"
 Arkansas,share_below,,41.4%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 Arkansas,units_listed,below_n,"6,152",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"August 31, 2026"
+Arkansas,paper_min,outside-the-zone-n,7,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
+Arkansas,paper_min,outside-the-zone,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Arkansas,ded_amount,1250,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"
 Arkansas,ded_share,1250,37.9%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"August 31, 2026"
 Arkansas,ded_amount,1000,"$1,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"

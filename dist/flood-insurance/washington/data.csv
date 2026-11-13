@@ -289,6 +289,8 @@ Washington,condo_unit_cost,,$536,usd_cost_with_fees,FEMA OpenFEMA — NFIP Polic
 Washington,condo_unit_cost_n,,539,count,FEMA OpenFEMA — NFIP Policies,policyCost + condominiumCoverageTypeCode,"August 31, 2026"
 Washington,share_below,,41.1%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 Washington,units_listed,below_n,"16,402",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"August 31, 2026"
+Washington,paper_min,outside-the-zone-n,5,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
+Washington,paper_min,outside-the-zone,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Washington,ded_amount,1250,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"
 Washington,ded_share,1250,39.5%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"August 31, 2026"
 Washington,ded_amount,2000,"$2,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"

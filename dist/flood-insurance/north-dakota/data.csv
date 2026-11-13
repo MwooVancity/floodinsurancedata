@@ -240,6 +240,8 @@ North Dakota,condo_unit_cost,,$616,usd_cost_with_fees,FEMA OpenFEMA — NFIP Pol
 North Dakota,condo_unit_cost_n,,87,count,FEMA OpenFEMA — NFIP Policies,policyCost + condominiumCoverageTypeCode,"August 31, 2026"
 North Dakota,share_below,,39.5%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 North Dakota,units_listed,below_n,"4,248",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"August 31, 2026"
+North Dakota,paper_min,outside-the-zone-n,0,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
+North Dakota,paper_min,outside-the-zone,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 North Dakota,ded_amount,1250,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"
 North Dakota,ded_share,1250,54.3%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"August 31, 2026"
 North Dakota,ded_amount,2000,"$2,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"

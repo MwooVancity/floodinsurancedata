@@ -118,6 +118,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Otsego County, New York",share_below,,60.8%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 "Otsego County, New York",units_listed,below_n,189,count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"August 31, 2026"
 "Otsego County, New York",share_below,state,46.1%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
+"Otsego County, New York",paper_min,outside-the-zone,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Otsego County, New York",ded_amount,2000,"$2,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"
 "Otsego County, New York",ded_share,2000,46.3%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"August 31, 2026"
 "Otsego County, New York",ded_amount,1250,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"

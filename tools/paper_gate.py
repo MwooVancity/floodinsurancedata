@@ -28,7 +28,11 @@ def truth(recs, key):
     def pol(c):   # policy units outside A and V today, from the county's own inside share (review outside-zone-2 M1)
         s_ = g(recs[c], ("policies", "sfha_share_units"))
         return round(100 - s_, 1) if isinstance(s_, (int, float)) else None
-    return [{"c": c, "k": k, "n": n, "v": round(100 * k / n, 1), "ci": ci(k, n), "fifth": 1 + 5 * i // N, "pol": pol(c)} for i, (c, k, n) in enumerate(rows)]
+    out, band = [], {}   # an equal printed share gets one fifth: the fifth where that share first appears
+    for i, (c, k, n) in enumerate(rows):
+        v = round(100 * k / n, 1)
+        out.append({"c": c, "k": k, "n": n, "v": v, "ci": ci(k, n), "fifth": band.setdefault(v, 1 + 5 * i // N), "pol": pol(c)})
+    return out
 
 def text(h): return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", re.sub(r"(?s)<(script|style|head)\b.*?</\1>", " ", h)))
 
@@ -37,7 +41,8 @@ def check(key, page, csv_text, cards, T):
     pos = [page.find(f'id="{s}"') for s in SECTIONS]
     if -1 in pos: bad.append(f"{key}: missing sections {[s for s, p in zip(SECTIONS, pos) if p < 0]}")
     elif pos != sorted(pos): bad.append(f"{key}: sections out of order")
-    for m in BANNED.finditer(text(page)): bad.append(f"{key}: banned word '{m[0]}'")
+    own = re.sub(r'(?s)<(span|div) data-rule="[^"]+">.*?</\1>', " ", page)   # FEMA's quoted rule text is exact and never reworded
+    for m in BANNED.finditer(text(own)): bad.append(f"{key}: banned word '{m[0]}'")
     if "not endorsed by FEMA" not in page: bad.append(f"{key}: no FEMA attribution")
     rows = re.findall(r"<tr><td>(\w+) fifth</td><td>.*?</td><td>([\d.]+)%</td><td>([\d.]+)–([\d.]+)%</td><td>([\d,]+) of ([\d,]+)</td>(?:<td>[^<]*</td>)*</tr>", page)
     if not rows: bad.append(f"{key}: no table rows with a 90% range")

@@ -120,6 +120,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Bullitt County, Kentucky",share_below,,47.2%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 "Bullitt County, Kentucky",units_listed,below_n,479,count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"August 31, 2026"
 "Bullitt County, Kentucky",share_below,state,51.4%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
+"Bullitt County, Kentucky",paper_min,outside-the-zone,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Bullitt County, Kentucky",ded_amount,1250,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"
 "Bullitt County, Kentucky",ded_share,1250,42.2%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"August 31, 2026"
 "Bullitt County, Kentucky",ded_amount,2000,"$2,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"

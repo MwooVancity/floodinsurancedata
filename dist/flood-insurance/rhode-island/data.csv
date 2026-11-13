@@ -156,6 +156,8 @@ Rhode Island,condo_unit_cost,,$668,usd_cost_with_fees,FEMA OpenFEMA — NFIP Pol
 Rhode Island,condo_unit_cost_n,,270,count,FEMA OpenFEMA — NFIP Policies,policyCost + condominiumCoverageTypeCode,"August 31, 2026"
 Rhode Island,share_below,,30.3%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 Rhode Island,units_listed,below_n,"5,044",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"August 31, 2026"
+Rhode Island,paper_min,outside-the-zone-n,1,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
+Rhode Island,paper_min,outside-the-zone,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Rhode Island,ded_amount,2000,"$2,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"
 Rhode Island,ded_share,2000,39.5%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"August 31, 2026"
 Rhode Island,ded_amount,1250,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"

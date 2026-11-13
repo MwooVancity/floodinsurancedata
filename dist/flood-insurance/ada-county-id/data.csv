@@ -157,6 +157,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Ada County, Idaho",share_below,,43.1%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 "Ada County, Idaho",units_listed,below_n,"1,227",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"August 31, 2026"
 "Ada County, Idaho",share_below,state,37.6%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
+"Ada County, Idaho",paper_min,outside-the-zone,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Ada County, Idaho",ded_amount,1250,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"
 "Ada County, Idaho",ded_share,1250,66.6%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"August 31, 2026"
 "Ada County, Idaho",ded_amount,2000,"$2,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"

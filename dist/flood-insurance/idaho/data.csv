@@ -217,6 +217,8 @@ Idaho,condo_unit_cost,,$853,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,p
 Idaho,condo_unit_cost_n,,92,count,FEMA OpenFEMA — NFIP Policies,policyCost + condominiumCoverageTypeCode,"August 31, 2026"
 Idaho,share_below,,37.6%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 Idaho,units_listed,below_n,"2,791",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"August 31, 2026"
+Idaho,paper_min,outside-the-zone-n,1,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
+Idaho,paper_min,outside-the-zone,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Idaho,ded_amount,1250,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"
 Idaho,ded_share,1250,51.9%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"August 31, 2026"
 Idaho,ded_amount,2000,"$2,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"
