@@ -28,7 +28,7 @@ SPECS = [
      "prior": "No published ranking of this measure by county was found in searches on 2026-11-12 (WebSearch: NFIP claims damage exceeded coverage by county).",
      "prior_links": [], "prior_rules": [], "policy_col": False, "published": None,
      "rules": []},
-    {"key": "outside-the-zone", "ready": True, "indexable": False, "title": "Outside the zone: paid flood claims rated outside high-risk zones",
+    {"key": "outside-the-zone", "ready": True, "indexable": True, "title": "Outside the zone: paid flood claims rated outside high-risk zones",
      "num": ("extras", "claims", "zone_split", "out_paid_n"), "den": ("extras", "claims", "zone_split", "known_paid_n"), "min": 100,
      "window": ("extras", "claims", "zone_split"),
      "question": "In which U.S. counties are the most paid NFIP flood claims rated outside FEMA's high-risk zones (A and V)?",
