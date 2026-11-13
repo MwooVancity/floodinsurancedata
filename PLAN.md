@@ -32,7 +32,8 @@ Review cost 11-11/12 (rounds per shipped batch, ~50-110k each): batch 1 4 (132-1
 
 ## Checkpoints (continue or kill)
 - 11-26: master audit (`docs/AUDIT-PROMPT.md`) + black-hat prompt (`docs/BLACKHAT-PROMPT.md`) + 4-week Search Console review; http/www and csv rows falling, county indexing judged on https HTML only.
-- 12-04: 30+ impressions on "flood zone/map" queries, else restore old titles.
+- 12-04: 30+ impressions on "flood zone/map" queries, else restore old titles. Same day: titles (median 91 chars, research said 60-70) and descriptions (median 295, ~155 shown) shortened, keeping town name and base label; held until then so the title test reads clean.
+- GSC 11-12 (28 d to 11-10): 13 clicks, 1,430 impr, pos 41.7. Indexed 329. Crawled-not-indexed 215 = 177 CSVs + 36 https county pages (12% of 292; research kill line 25%) + /nfip/. Noindex 163 = CSVs (intended).
 - 01-04: unfreeze zero-demand counties only if 5+ county pages have US non-brand impressions, 3+ in top 30, 1+ US click.
 - 01-08 zone pages position 15 or better; 01-29 /flood-zone-map/ 200+ impressions; 02-01 claims page 1+ referring domain or 100+ impressions; 02-03 continue / consolidate / stop.
 
