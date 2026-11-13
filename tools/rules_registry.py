@@ -137,7 +137,7 @@ RULES = {
                 "noopener' target='_blank'>FloodSmart.gov</a>, or ask any licensed insurance agent. Every NFIP insurer "
                 "offers the same rates.",
         "sources": [(FS + "/contact", "Call the NFIP at (877) 336-2627", "curl"),
-                    (FS + "/get-insured/buy-a-policy", "Each one offers the same rates.", "curl")]},
+                    (FS + "/get-insured/buy-a-policy", "vary by insurance provider, who sells through the program", "curl")]},   # FloodSmart reworded 11-13 (was "Each one offers the same rates.")
     "already_flooded": {
         "text": "<b>Already flooded?</b> Insured: report the loss to your insurance agent or company now (FEMA's steps: "
                 "<a href='https://www.floodsmart.gov/recover/start-a-claim' rel='noopener' target='_blank'>how "
