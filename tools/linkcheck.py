@@ -3,7 +3,7 @@ so a template change can never silently starve one (measured 11-08: /nfip/ had 2
 Used by google_gate.py; mutation test in test_calc.py."""
 import re
 from urllib.parse import urljoin, urlparse
-HUBS = ("/guides/homeowners-insurance-flooding/", "/nfip/", "/flood-insurance/renters/", "/flood-insurance/claims/", "/flood-insurance/zip/", "/flood-zone-map/")   # papers join here when papers.READY lists them (methods review 162)
+HUBS = ("/guides/homeowners-insurance-flooding/", "/guides/condo-flood-insurance/", "/nfip/", "/flood-insurance/renters/", "/flood-insurance/claims/", "/flood-insurance/zip/", "/flood-zone-map/")   # papers join here when papers.READY lists them (methods review 162)
 
 def fails(pages, indexable):
     hubs = [h for h in HUBS if h in pages]

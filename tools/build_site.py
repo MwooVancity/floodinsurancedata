@@ -807,6 +807,31 @@ if len(states) == 51:
     wr(os.path.join(DIST, "guides", "homeowners-insurance-flooding", "index.html"), pg)
     zone_urls.append((BASE + "/guides/homeowners-insurance-flooding/", None))
     GUIDES.append(("/guides/homeowners-insurance-flooding/", "Does homeowners insurance cover flooding?"))
+    # condo guide (KWP 11-12 "condo flood insurance" 100-1K x2): FEMA code U = "Individual Condominium Unit insured by a unit owner or by an
+    # association" (DataSetFields read 11-12); premium plus fees; a state shows a median only from 30+ priced unit policies (min_priced)
+    MX_MIN = __import__("metrics").CONST["min_priced"]   # the same floor extras_raw applies before a condo-unit median exists
+    _cd = sorted(((s, json.load(open(os.path.join(DATADIR, "states", s["slug"], "extras.json")))["policies"]) for s in states), key=lambda t: -(t[1].get("condo_unit_cost_n") or 0))
+    _cdr = [(s, x) for s, x in _cd if x.get("condo_unit_cost_median")]
+    if len(_cdr) >= 10:
+        _cdn = sum(x["condo_unit_cost_n"] for _, x in _cdr)
+        _ck = ["condo_rcbap", "condo_contents", "condo_own", "wait_30", "flood_def"]
+        _ctr = "".join(f'<tr><td><a href="/flood-insurance/{s["slug"]}/">{html.escape(s["name"])}</a></td><td>{money(x["condo_unit_cost_median"])}</td><td>{x["condo_unit_cost_n"]:,}</td></tr>' for s, x in _cdr)
+        _cnone = [s["name"] for s, x in _cd if not x.get("condo_unit_cost_median")]
+        pg = HEAD.format(title=f"Condo flood insurance: what NFIP condo-unit policies cost in {len(_cdr)} states",
+                         desc=f"What an association's flood policy covers and what it leaves to unit owners, and the median NFIP condo-unit cost in {len(_cdr)} states from FEMA's records as of {_ASOF_TXT}.",
+                         canon=BASE + "/guides/condo-flood-insurance/") + f"""
+<h1>Condo flood insurance</h1>
+<p class="lede">{rule("condo_rcbap")} {rule("condo_contents")}</p>
+<div class="card"><h2>What do condo-unit policies cost in each state?</h2><p class="stand">Median premium plus fees on NFIP policies FEMA codes as an individual condominium unit (insured by a unit owner or by an association), in force on {_ASOF_TXT}: {len(_cdr)} states with at least {MX_MIN} priced unit policies, {_cdn:,} policies in all, most policies first. Not a quote.</p>
+<table><thead><tr><th>State</th><th>Median / yr, condo-unit policy</th><th>Priced unit policies</th></tr></thead><tbody>{_ctr}</tbody></table>
+{f'<p class="mut">Too few priced unit policies for a median: {", ".join(html.escape(n) for n in _cnone)}.</p>' if _cnone else ""}
+<p class="mut">County pages show the county's condo-unit median where it rests on at least {MX_MIN} policies: <a href="/flood-insurance/">find your county</a>.</p></div>
+<div class="card"><h2>Who should insure what?</h2><p class="stand">{rule("condo_own")}</p><p class="stand">{rule("wait_30")}</p><p class="stand">{rule("flood_def")}</p></div>
+<div class="card"><h2>What this page cannot tell you</h2><p class="stand">What your association's policy covers or its limit, whether your unit policy has building coverage, private insurers' prices, or your premium. A state median mixes units insured by owners and by associations, as FEMA's code does.</p>
+<p class="mut">Sources: FEMA OpenFEMA NFIP Policies v3 (condominiumCoverageTypeCode U, policyCost), as of {_ASOF_TXT}; rules from {_rule_hosts(_ck)}. <a href="/methodology/">How we check them</a>.</p></div>{FOOT}"""
+        wr(os.path.join(DIST, "guides", "condo-flood-insurance", "index.html"), pg)
+        zone_urls.append((BASE + "/guides/condo-flood-insurance/", None))
+        GUIDES.append(("/guides/condo-flood-insurance/", "Condo flood insurance"))
 
 # ---- /flood-insurance/renters/ (PAGE QUEUE row 6: "flood insurance for renters"). Base: NFIP policies in force marked tenant,
 # residential occupancy, no building coverage, contents above $0; priced = policyCost above $0. claims_check.py --renters recomputes.

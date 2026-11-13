@@ -197,16 +197,27 @@ def check_guides(page, zone_x):   # /guides/homeowners-insurance-flooding/: clai
     if not zx or int(zx[1]) != pc: bad.append(f"G3 zone X page says {zx[1] if zx else 'nothing'}%, guide {pc}%: one measure, two numbers")
     return bad
 
+def check_condo(page):   # condo guide: every state row recomputed from data/states/*/extras.json (11-12)
+    rows = []
+    for p in glob.glob(os.path.join(D, "states", "*", "extras.json")):
+        x = json.load(open(p))["policies"]
+        if x.get("condo_unit_cost_median"): rows.append((x["condo_unit_cost_n"], x["condo_unit_cost_median"]))
+    want = sorted(rows)
+    got = sorted((int(b.replace(",", "")), int(a.replace(",", ""))) for a, b in re.findall(r'<tr><td><a href="/flood-insurance/[a-z-]+/">[^<]+</a></td><td>\$([\d,]+)</td><td>([\d,]+)</td></tr>', page))
+    return [] if got == want else [f"C1 condo rows {len(got)} vs {len(want)} recomputed"]
+
 if __name__ == "__main__":
     if "--guides" in sys.argv:
         pg = open(os.path.join(ROOT, "dist", "guides", "homeowners-insurance-flooding", "index.html"), encoding="utf-8").read()
         zx = open(os.path.join(ROOT, "dist", "flood-zones", "x", "index.html"), encoding="utf-8").read()
-        bad = check_guides(pg, zx)
+        cg = open(os.path.join(ROOT, "dist", "guides", "condo-flood-insurance", "index.html"), encoding="utf-8").read()
+        bad = check_guides(pg, zx) + check_condo(cg)
         if "--test" in sys.argv:
+            assert check_condo(re.sub(r"<td>\$([\d,]+)</td>", "<td>$1</td>", cg, count=1)), "mutation not caught: condo row"
             assert not bad, bad
             assert check_guides(re.sub(r">(\d+)%<", lambda m_: f">{int(m_[1]) + 1}%<", pg, count=1), zx), "mutation not caught: tile"
             assert check_guides(pg, re.sub(r"(zone on the claim, )(\d+)%", lambda m_: m_[1] + str(int(m_[2]) + 1) + "%", zx, count=1)), "mutation not caught: zone X disagrees"
-            print("guides check mutations: 2 caught"); sys.exit()
+            print("guides check mutations: 3 caught"); sys.exit()
         for b in bad: print("  -", b)
         print("GUIDES CHECK", "FAIL" if bad else "PASS"); sys.exit(1 if bad else 0)
     if "--renters" in sys.argv:

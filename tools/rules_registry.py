@@ -14,6 +14,8 @@ CFR64 = "https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part
 CFR59 = "https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=59&section=59.1"
 WIND_FS = "https://agents.floodsmart.gov/sites/default/files/media/document/2025-07/fema-nfip-wind-vs-floodwater-damage-fact-sheet-03-2023.pdf"   # pdf, read by hand 2026-11-03
 CFR70 = "https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=70"
+CONDO_B = "https://agents.floodsmart.gov/sites/default/files/media/document/2025-07/fema-nfip-flood-insurance-condominium-associations-brochure-01-2025.pdf"   # pdf, read raw 2026-11-12
+CONDO_P = "https://agents.floodsmart.gov/sites/default/files/media/document/2025-07/fema-nfip-condo-association-flood-policies-dont-protect-belongings-postcard-01-2023.pdf"   # pdf, read raw 2026-11-12
 LOMC = "https://hazards.fema.gov/femaportal/onlinelomc/signin"
 PRELIM = "https://hazards.fema.gov/femaportal/prelimdownload/"
 CFR72 = "https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part=72"
@@ -22,6 +24,18 @@ CFR60 = "https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part
 USC4012A = "https://www.law.cornell.edu/uscode/text/42/4012a"
 
 RULES = {
+    "condo_rcbap": {   # condo guide 11-12, FEMA brochure 01-2025 read raw
+        "text": "The NFIP's Residential Condominium Building Association Policy (RCBAP) is available to condominium associations to insure "
+                "against direct physical damage to the building from a flood, and it can pay up to $250,000 in building loss payments for any one unit.",
+        "sources": [(CONDO_B, "is available to condominium associations to insure against direct physical damage to your building from a flood", "manual"),
+                    (CONDO_B, "$250,000 in building loss payments for any one unit", "manual")]},
+    "condo_contents": {   # FEMA postcard P-2311, January 2023, read raw
+        "text": "An association's RCBAP does not cover the unit owner's personal belongings; the NFIP offers a contents-only policy with a $100,000 coverage limit.",
+        "sources": [(CONDO_P, "but it does not cover your personal belongings", "manual"),
+                    (CONDO_P, "offers a contents-only flood insurance policy with a $100,000 coverage limit", "manual")]},
+    "condo_own": {
+        "text": "FEMA says condominium associations should encourage unit owners to buy contents or building coverage of their own.",
+        "sources": [(CONDO_B, "should encourage individual unit owners to purchase contents or building coverage of their own", "manual")]},
     "homeowners_excl": {
         "text": "Most homeowners insurance does not cover flood damage.",
         "sources": [(FS + "/flood-insurance-basics", "most homeowners insurance does not cover flood damage", "curl")]},
