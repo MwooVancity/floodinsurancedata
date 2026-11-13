@@ -561,7 +561,7 @@ def card_howto():
     howto_card = card("How do I actually get covered — and how fast?",   # limits live in the tiles once (no second copy)
         rule("howto_answer"),
         rule("howto_tiles")
-        + f"<p class='note'>{rule('homeowners_excl')} {rule('how_to_buy')}</p>"
+        + f"<p class='note'>{rule('homeowners_excl')} <a href='/guides/homeowners-insurance-flooding/'>Does homeowners insurance cover flooding?</a> {rule('how_to_buy')}</p>"
         + f"<p class='note'>{rule('already_flooded')}</p>"   # hater r136: screen 1 "Already flooded?" lands here; the urgent answer stays on the page
         # owner 11-11 ("Yes, move it"): the national rules (wait exceptions, lapse, what it won't pay, wind, already flooded, appeals,
         # the 50% rule, closing rules, private policies) live once on /nfip/#rules; this is the page's one link to them (tools/rules_home.py)

@@ -200,7 +200,7 @@ home = HEAD.format(title="Flood insurance cost by state and county (FEMA data)",
 <div class="card"><h2>What to know first</h2>
 <p class="stand"><b>How fast does it start?</b> {rule("howto_answer")}</p>
 <p class="stand"><b>Am I required to buy it?</b> {rule("purchase_answer")} {rule("lender_any_zone")} {rule("fl_citizens_short")} Check your zone on <a href="https://msc.fema.gov/portal/home" rel="noopener" target="_blank">FEMA's flood map</a>{' or with the <a href="/flood-zone-map/">flood zone lookup</a>' if (_zm_on_home == "all" or "flood-zone-map" in _zm_on_home) else ""}.</p>
-<p class="stand"><b>Does my homeowners policy cover floods?</b> {rule("homeowners_excl")}</p>
+<p class="stand"><b>Does my homeowners policy cover floods?</b> {rule("homeowners_excl")} <a href="/guides/homeowners-insurance-flooding/">What FEMA's flood records show</a>.</p>
 <p class="stand"><b>Where do I buy it?</b> {rule("how_to_buy")} {rule("private_accept")}</p>
 <p class="stand"><b>How much can it pay?</b> {rule("limits")}</p>
 <p class="mut">Rules from {_rule_hosts(["howto_answer", "purchase_answer", "lender_any_zone", "fl_citizens_short", "homeowners_excl", "how_to_buy", "private_accept", "limits"])}. <a href="/methodology/">How we check them</a>.</p></div>
@@ -767,6 +767,46 @@ if len(states) == 51:
 <p class="mut">Sources: FEMA OpenFEMA NFIP Policies v3 and Claims v3; rules from {_rule_hosts(_nk)}. <a href="/methodology/">How we check them</a>.</p></div>{FOOT}"""
     wr(os.path.join(DIST, "nfip", "index.html"), pg)
     zone_urls.append((BASE + "/nfip/", None))
+
+# ---- /guides/: one searched question per page (PLAN "Pages to build", owner 11-12). Answer first from rule() quotes read raw;
+# figures only from the FEMA files every other national page uses; tools/claims_check.py --guides recomputes them.
+GUIDES = []
+if len(states) == 51:
+    _czg = json.load(open(os.path.join(DATADIR, "us", "claims_zone.json")))
+    _g_from, _g_to = min(v["from"] for v in _czg.values()), max(v["to"] for v in _czg.values())
+    _zk = lambda z: z and z != "blank"   # 11-12: "blank" = no zone on the claim; counting it as outside A/V printed 25% vs the zone pages' 24%
+    _g_all = sum(c["paid"] for v in _czg.values() for z, c in v["by_zone"].items() if _zk(z))
+    _g_out = sum(c["paid"] for v in _czg.values() for z, c in v["by_zone"].items() if _zk(z) and z.upper()[:1] not in ("A", "V"))
+    _g_n = sum(c["n"] for v in _czg.values() for z, c in v["by_zone"].items() if _zk(z))
+    _g_pn = sum(c["paid_n"] for v in _czg.values() for z, c in v["by_zone"].items() if _zk(z))
+    _gk = ["homeowners_excl", "how_to_buy", "wait_30", "flood_def", "not_covered", "purchase_answer", "lender_any_zone"]
+    # site factory 11-12 claims_by_zone_empty: no zoned claims = no share (never a divide by zero); the page stays, its links stay live
+    _g_pc = round(100 * _g_out / _g_all) if _g_all else None
+    _g_tile = (f'<div class="stat"><div class="n">{_g_pc}%</div><div class="l">Of NFIP claim dollars {_g_from}–{_g_to} paid outside zones A and V</div></div>'
+               if _g_pc is not None else "")
+    _g_claims = (f"<p class=\"stand\">In FEMA's NFIP claims for losses {_g_from}–{_g_to}, {_g_pn:,} of the {_g_n:,} claims with a rated zone had a payment, "
+                 f"and {_g_pc}% of the dollars paid on them went to claims rated outside zones A and V (zones X, B, C and D). These are insured claims only: "
+                 "flood damage on homes without flood insurance is not in this data.</p>" if _g_pc is not None
+                 else "<p class=\"stand\">FEMA's claims-by-zone figures are not in this build.</p>")
+    pg = HEAD.format(title="Does homeowners insurance cover flooding? What FEMA's flood records show",
+                     desc=f"Most homeowners insurance does not cover flood damage. What NFIP flood insurance costs and what its claims paid, from FEMA's records as of {_ASOF_TXT}.",
+                     canon=BASE + "/guides/homeowners-insurance-flooding/") + f"""
+<h1>Does homeowners insurance cover flooding?</h1>
+<p class="lede">{rule("homeowners_excl")} {rule("how_to_buy")}</p>
+<div class="stats"><div class="stat"><div class="n">{money(_med)}</div><div class="l">Median NFIP cost / yr, single-family primary home</div></div>
+{_g_tile}
+<div class="stat"><div class="n">{_units / 1e6:.1f}M</div><div class="l">NFIP policy units in force</div></div></div>
+<p class="mut">FEMA OpenFEMA NFIP Policies v3 and Claims v3, as of {_ASOF_TXT}. Cost: premium plus fees on single-family primary-home policies in force, not a quote. Claims: losses {_g_from}–{_g_to} with a rated zone, every building type, dollars as paid, not adjusted for inflation.</p>
+<div class="card"><h2>What counts as a flood?</h2><p class="stand">{rule("flood_def")}</p><p class="stand">{rule("not_covered")}</p></div>
+<div class="card"><h2>Do floods happen outside the high-risk zones?</h2>{_g_claims}
+<p class="stand">{rule("purchase_answer")} {rule("lender_any_zone")}</p></div>
+<div class="card"><h2>How fast does a new policy start?</h2><p class="stand">{rule("wait_30")}</p></div>
+<div class="card"><h2>What it costs where you live</h2><p class="stand">The median above is for the whole U.S. Each state and county page shows the median for that place, by flood zone: <a href="/flood-insurance/">find your state or county</a>, or <a href="/flood-insurance/zip/">look up a ZIP code</a>.</p></div>
+<div class="card"><h2>What this page cannot tell you</h2><p class="stand">What your own homeowners policy covers (only its wording can say), private flood insurers' prices, or your premium.</p>
+<p class="mut">Sources: FEMA OpenFEMA NFIP Policies v3 and Claims v3; rules from {_rule_hosts(_gk)}. <a href="/methodology/">How we check them</a>.</p></div>{FOOT}"""
+    wr(os.path.join(DIST, "guides", "homeowners-insurance-flooding", "index.html"), pg)
+    zone_urls.append((BASE + "/guides/homeowners-insurance-flooding/", None))
+    GUIDES.append(("/guides/homeowners-insurance-flooding/", "Does homeowners insurance cover flooding?"))
 
 # ---- /flood-insurance/renters/ (PAGE QUEUE row 6: "flood insurance for renters"). Base: NFIP policies in force marked tenant,
 # residential occupancy, no building coverage, contents above $0; priced = policyCost above $0. claims_check.py --renters recomputes.

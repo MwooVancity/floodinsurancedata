@@ -185,7 +185,30 @@ def check_renters(page):   # /flood-insurance/renters/: lede, tiles and state ro
     if got != want: bad.append(f"R3 state rows {len(got)} vs {len(want)}")
     return bad
 
+def check_guides(page, zone_x):   # /guides/homeowners-insurance-flooding/: claims shares recomputed from claims_zone.json, no build_site code
+    z = json.load(open(os.path.join(D, "us", "claims_zone.json")))
+    rows = [(k, c) for v in z.values() for k, c in v["by_zone"].items() if k and k != "blank"]   # 11-12: blank = no zone, never "outside"
+    alld = sum(c["paid"] for _, c in rows); out = sum(c["paid"] for k, c in rows if k.strip().upper()[:1] not in ("A", "V"))
+    n, pn = sum(c["n"] for _, c in rows), sum(c["paid_n"] for _, c in rows); pc = round(100 * out / alld)
+    text = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", page)); bad = []
+    if f"{pn:,} of the {n:,} claims with a rated zone had a payment, and {pc}% of the dollars" not in text: bad.append(f"G1 claims line: {pn:,} of {n:,}, {pc}%")
+    if f">{pc}%<" not in page: bad.append(f"G2 tile {pc}%")
+    zx = re.search(r"Of all paid claim dollars with a zone on the claim, (\d+)%", re.sub(r"<[^>]+>", "", zone_x or ""))
+    if not zx or int(zx[1]) != pc: bad.append(f"G3 zone X page says {zx[1] if zx else 'nothing'}%, guide {pc}%: one measure, two numbers")
+    return bad
+
 if __name__ == "__main__":
+    if "--guides" in sys.argv:
+        pg = open(os.path.join(ROOT, "dist", "guides", "homeowners-insurance-flooding", "index.html"), encoding="utf-8").read()
+        zx = open(os.path.join(ROOT, "dist", "flood-zones", "x", "index.html"), encoding="utf-8").read()
+        bad = check_guides(pg, zx)
+        if "--test" in sys.argv:
+            assert not bad, bad
+            assert check_guides(re.sub(r">(\d+)%<", lambda m_: f">{int(m_[1]) + 1}%<", pg, count=1), zx), "mutation not caught: tile"
+            assert check_guides(pg, re.sub(r"(zone on the claim, )(\d+)%", lambda m_: m_[1] + str(int(m_[2]) + 1) + "%", zx, count=1)), "mutation not caught: zone X disagrees"
+            print("guides check mutations: 2 caught"); sys.exit()
+        for b in bad: print("  -", b)
+        print("GUIDES CHECK", "FAIL" if bad else "PASS"); sys.exit(1 if bad else 0)
     if "--renters" in sys.argv:
         f = os.path.join(ROOT, "dist", "flood-insurance", "renters", "index.html")
         if not os.path.exists(f): print("RENTERS CHECK: no page (floor not met)"); sys.exit()
