@@ -315,7 +315,7 @@ Google AdSense (see the <a href="/privacy/">privacy page</a>); ads never change 
 <div class="card" id="who"><h2>Who runs it</h2>
 <p>Flood Insurance Data is run by <b>Michael Woo</b>. The pages are written and checked with AI tools (Anthropic's Claude)
 working under fixed rules: every figure is recomputed from FEMA's files by separate code before a page ships, every rule is quoted from
-its official source, and each page is read by independent AI reviewers looking for anything wrong or misleading. The site gives no
+its official source, and each page goes through separate AI review passes looking for anything wrong or misleading. The site gives no
 insurance advice. Every figure names its federal source and date, and the <a href="/methodology/">methodology</a> shows how each one is
 counted, so anyone can check it. Corrections: <a href="mailto:contact@floodinsurancedata.com">contact@floodinsurancedata.com</a>.</p></div>
 {FOOT}"""
@@ -1012,8 +1012,8 @@ for _sp in _PA.READY:
                      desc=f'The {_sp["measure"]}, losses {_w0}–{_w1}, in {_N:,} U.S. counties with at least {_sp["min"]} {_sp["unit"]}, from {_sp["dataset"]} as of {_ASOF_TXT}. Method, 90% ranges, limits and CSV.',
                      canon=f"{BASE}/flood-insurance/{_key}/") + f"""
 <h1>{html.escape(_sp["title"])}</h1>
-<p class="lede">In FEMA's records for losses {_w0}–{_w1}, {_allp}% of {_alln:,} {_sp["unit"]} in every U.S. county {_sp["meets"]}; across the {_N:,} counties with at least {_sp["min"]} each, {_pool}% (90% range {_plo}–{_phi}%, resampling counties).{f" Across those counties, a county's claim share and its share of policy units outside zones A and V go together (correlation {_rcor:.2f}, descriptive, no test), so compare the two columns." if _rcor is not None else ""}</p>
-{"".join(f'<p class="stand">{rule(k)} (<a href="https://www.floodsmart.gov/flood-zones-and-maps/what-is-my-flood-risk" rel="nofollow">FloodSmart</a>.) FEMA counts all claims against current maps for 2014–2024; this page counts paid claims by the zone rated on each claim for {_w0}–{_w1}.</p>' for k in _sp.get("prior_rules") or [])}
+<p class="lede">In FEMA's records for losses {_w0}–{_w1}, {_allp}% of {_alln:,} {_sp["unit"]} across all U.S. counties combined {_sp["meets"]}; across the {_N:,} counties with at least {_sp["min"]} each, {_pool}% (90% range {_plo}–{_phi}%, resampling counties).{f" Across those counties, a county's claim share and its share of policy units outside zones A and V go together (correlation {_rcor:.2f}, descriptive, no test), so compare the two columns." if _rcor is not None else ""}</p>
+{"".join(f'<p class="stand">{rule(k)} (<a href="https://www.floodsmart.gov/flood-zones-and-maps/what-is-my-flood-risk" rel="nofollow">FloodSmart</a>.) {html.escape(_sp.get("prior_note") or "")}</p>' for k in _sp.get("prior_rules") or [])}
 {f'<p class="mut">First published {_sp["published"]}; data as of {_ASOF_TXT}.</p>' if _sp.get("published") else ""}
 <div class="card" id="abstract"><h2>Abstract</h2>
 <p class="stand"><b>Data:</b> {_sp["dataset"]}, losses {_w0}–{_w1}, as of {_ASOF_TXT}: {_N:,} U.S. counties with at least {_sp["min"]} {_sp["unit"]} each, {_NN:,} in all.</p>
@@ -1028,7 +1028,7 @@ for _sp in _PA.READY:
 <li>Median county: {_med}%. Highest: {_cty(_top)}, {_top["value"]}% (90% range {_top["lo"]}–{_top["hi"]}%){_tie(_top)}.</li>
 <li>{_t50[1]} of the 50 counties with the highest shares are in {html.escape(_snames.get(_t50[0], _t50[0]))}.</li></ul></div>
 <div class="card" id="prior"><h2>Prior work</h2><p class="stand">{html.escape(_sp["prior"])} {"".join(f'<a href="{u}" rel="nofollow">{html.escape(t)}</a>. ' for t, u in _sp.get("prior_links") or [])}{"FEMA's own figure is set beside this one at the top of the page." if _sp.get("prior_rules") else ""}</p></div>
-<div class="card" id="table"><h2>{"All " if _N <= 500 else "Top and bottom 100 of "}{_N:,} counties</h2><p class="stand">Highest share first. Counties with a page on this site are linked.</p>
+<div class="card" id="table"><h2>{"All " if _N <= 500 else "Top and bottom 100 of "}{_N:,} counties</h2><p class="stand">Highest share first. Counties with a page on this site are linked. {html.escape(_sp.get("policy_note") or "")}</p>
 <div style="overflow-x:auto"><table><thead><tr><th>Fifth</th><th>County</th><th>Share</th><th>90% range</th><th>Count</th>{f"<th>Policy units outside A and V (FEMA NFIP Policies, {_ASOF_TXT})</th>" if _sp.get("policy_col") else ""}</tr></thead><tbody>{_trs}</tbody></table></div>
 <p class="mut"><a href="/data/{_key}.csv">Download all {_N:,} rows as CSV</a> (FIPS code, county, state, share, 90% range, numerator, denominator, loss years, as-of date).</p></div>
 <div class="card" id="limitations"><h2>Limitations</h2><ul>{"".join(f"<li>{html.escape(t)}</li>" for t in _sp["limits"])}<li>Only NFIP records: private flood insurance is not in FEMA's data.</li><li>A fifth is a position in this list, not a grade, a risk score or a prediction.</li></ul></div>

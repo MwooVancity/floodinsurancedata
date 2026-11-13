@@ -46,6 +46,9 @@ SPECS = [
      "prior_links": [("Penn State's PSIRC mapped Pennsylvania NFIP claims, including claims outside the Special Flood Hazard Area, from FEMA's 2019 claims release",
                       "https://www.psirc.psu.edu/assets/NFIP_Insights_for_PA.one-pager.2022-09-05.pdf")],
      "prior_rules": ["fema_outside_third"], "policy_col": True, "published": "2026-11-13",
+     # review outside-zone-4 M1: say only what FloodSmart states (current high-risk areas, 2014-2024); it does not say paid-only or all claims
+     "prior_note": "FEMA's figure uses current high-risk areas and the years 2014 to 2024, and does not say whether it counts only paid claims; this page counts paid claims by the zone rated on each claim.",
+     "policy_note": "Policy units outside A and V: the share of NFIP policy units in force in the county, every policy type, rated outside zones A and V.",
      "answer": "A county's share mostly follows where its policies are written: compare each county's claim share with its share of policy units outside zones A and V.",
      "rules": []},
 ]
