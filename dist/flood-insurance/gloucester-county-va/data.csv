@@ -138,6 +138,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Gloucester County, Virginia",share_below,,42.3%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 "Gloucester County, Virginia",units_listed,below_n,"1,091",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"August 31, 2026"
 "Gloucester County, Virginia",share_below,state,23.4%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
+"Gloucester County, Virginia",paper_min,damage-over-coverage,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Gloucester County, Virginia",paper_min,outside-the-zone,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Gloucester County, Virginia",ded_amount,2000,"$2,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"
 "Gloucester County, Virginia",ded_share,2000,48.5%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"August 31, 2026"

@@ -125,6 +125,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Garland County, Arkansas",share_below,,66.8%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 "Garland County, Arkansas",units_listed,below_n,322,count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"August 31, 2026"
 "Garland County, Arkansas",share_below,state,41.4%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
+"Garland County, Arkansas",paper_min,damage-over-coverage,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Garland County, Arkansas",paper_min,outside-the-zone,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Garland County, Arkansas",ded_amount,1250,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"
 "Garland County, Arkansas",ded_share,1250,34.8%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"August 31, 2026"

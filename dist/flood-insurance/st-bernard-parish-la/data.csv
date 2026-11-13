@@ -182,6 +182,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "St. Bernard Parish, Louisiana",share_below,,46.2%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 "St. Bernard Parish, Louisiana",units_listed,below_n,"6,262",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"August 31, 2026"
 "St. Bernard Parish, Louisiana",share_below,state,52.8%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
+"St. Bernard Parish, Louisiana",paper_min,damage-over-coverage,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "St. Bernard Parish, Louisiana",paper_share,outside-the-zone,49.1%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount,"August 31, 2026"
 "St. Bernard Parish, Louisiana",paper_share,ci-level,90%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount,"August 31, 2026"
 "St. Bernard Parish, Louisiana",paper_share,outside-the-zone-lo,41.4,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount,"August 31, 2026"

@@ -138,6 +138,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Jefferson County, Arkansas",share_below,,25.1%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 "Jefferson County, Arkansas",units_listed,below_n,227,count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"August 31, 2026"
 "Jefferson County, Arkansas",share_below,state,41.4%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
+"Jefferson County, Arkansas",paper_min,damage-over-coverage,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Jefferson County, Arkansas",paper_share,outside-the-zone,8.4%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount,"August 31, 2026"
 "Jefferson County, Arkansas",paper_share,ci-level,90%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount,"August 31, 2026"
 "Jefferson County, Arkansas",paper_share,outside-the-zone-lo,5.1,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount,"August 31, 2026"

@@ -253,6 +253,8 @@ South Dakota,condo_unit_pct,,0.8%,pct,FEMA OpenFEMA — NFIP Policies,policyCoun
 South Dakota,condo_building_pct,,1.0%,pct,FEMA OpenFEMA — NFIP Policies,policyCount + condominiumCoverageTypeCode,"August 31, 2026"
 South Dakota,share_below,,43.4%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 South Dakota,units_listed,below_n,"1,550",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"August 31, 2026"
+South Dakota,paper_min,damage-over-coverage-n,0,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
+South Dakota,paper_min,damage-over-coverage,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 South Dakota,paper_min,outside-the-zone-n,2,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 South Dakota,paper_min,outside-the-zone,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 South Dakota,ded_amount,2000,"$2,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"

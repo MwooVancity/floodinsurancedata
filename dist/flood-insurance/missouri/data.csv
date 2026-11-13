@@ -439,6 +439,8 @@ Missouri,condo_unit_cost,,$872,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policie
 Missouri,condo_unit_cost_n,,237,count,FEMA OpenFEMA — NFIP Policies,policyCost + condominiumCoverageTypeCode,"August 31, 2026"
 Missouri,share_below,,43.5%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 Missouri,units_listed,below_n,"7,916",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"August 31, 2026"
+Missouri,paper_min,damage-over-coverage-n,5,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
+Missouri,paper_min,damage-over-coverage,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Missouri,paper_min,outside-the-zone-n,10,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Missouri,paper_min,outside-the-zone,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Missouri,ded_amount,2000,"$2,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"

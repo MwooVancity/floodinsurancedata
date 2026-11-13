@@ -165,6 +165,8 @@ Arizona,condo_unit_cost,,$518,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies
 Arizona,condo_unit_cost_n,,513,count,FEMA OpenFEMA — NFIP Policies,policyCost + condominiumCoverageTypeCode,"August 31, 2026"
 Arizona,share_below,,43.4%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 Arizona,units_listed,below_n,"12,199",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"August 31, 2026"
+Arizona,paper_min,damage-over-coverage-n,1,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
+Arizona,paper_min,damage-over-coverage,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Arizona,paper_min,outside-the-zone-n,1,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Arizona,paper_min,outside-the-zone,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Arizona,ded_amount,1250,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"

@@ -174,6 +174,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Alachua County, Florida",share_below,,19.6%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 "Alachua County, Florida",units_listed,below_n,"1,663",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"August 31, 2026"
 "Alachua County, Florida",share_below,state,45.2%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
+"Alachua County, Florida",paper_min,damage-over-coverage,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Alachua County, Florida",paper_share,outside-the-zone,35.6%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount,"August 31, 2026"
 "Alachua County, Florida",paper_share,ci-level,90%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount,"August 31, 2026"
 "Alachua County, Florida",paper_share,outside-the-zone-lo,28.3,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount,"August 31, 2026"

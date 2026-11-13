@@ -509,6 +509,8 @@ North Carolina,condo_unit_cost,,$613,usd_cost_with_fees,FEMA OpenFEMA — NFIP P
 North Carolina,condo_unit_cost_n,,"2,262",count,FEMA OpenFEMA — NFIP Policies,policyCost + condominiumCoverageTypeCode,"August 31, 2026"
 North Carolina,share_below,,36.0%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 North Carolina,units_listed,below_n,"64,686",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"August 31, 2026"
+North Carolina,paper_min,damage-over-coverage-n,29,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
+North Carolina,paper_min,damage-over-coverage,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 North Carolina,paper_min,outside-the-zone-n,37,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 North Carolina,paper_min,outside-the-zone,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 North Carolina,ded_amount,1250,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"

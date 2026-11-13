@@ -191,6 +191,8 @@ Maine,condo_unit_cost,,$941,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,p
 Maine,condo_unit_cost_n,,311,count,FEMA OpenFEMA — NFIP Policies,policyCost + condominiumCoverageTypeCode,"August 31, 2026"
 Maine,share_below,,42.0%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 Maine,units_listed,below_n,"2,693",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"August 31, 2026"
+Maine,paper_min,damage-over-coverage-n,1,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
+Maine,paper_min,damage-over-coverage,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Maine,paper_min,outside-the-zone-n,1,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Maine,paper_min,outside-the-zone,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Maine,ded_amount,1250,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"

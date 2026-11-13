@@ -109,6 +109,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Pottawatomie County, Oklahoma",share_below,,34.1%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 "Pottawatomie County, Oklahoma",units_listed,below_n,85,count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"August 31, 2026"
 "Pottawatomie County, Oklahoma",share_below,state,40.2%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
+"Pottawatomie County, Oklahoma",paper_min,damage-over-coverage,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Pottawatomie County, Oklahoma",paper_min,outside-the-zone,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Pottawatomie County, Oklahoma",ded_amount,2000,"$2,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"
 "Pottawatomie County, Oklahoma",ded_share,2000,37.6%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"August 31, 2026"

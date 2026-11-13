@@ -161,6 +161,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Salt Lake County, Utah",share_below,,12.7%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 "Salt Lake County, Utah",units_listed,below_n,608,count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"August 31, 2026"
 "Salt Lake County, Utah",share_below,state,17.7%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
+"Salt Lake County, Utah",paper_min,damage-over-coverage,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Salt Lake County, Utah",paper_min,outside-the-zone,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Salt Lake County, Utah",ded_amount,1250,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"
 "Salt Lake County, Utah",ded_share,1250,52.7%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"August 31, 2026"

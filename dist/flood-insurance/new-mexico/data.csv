@@ -214,6 +214,8 @@ New Mexico,condo_unit_cost,,$678,usd_cost_with_fees,FEMA OpenFEMA — NFIP Polic
 New Mexico,condo_unit_cost_n,,70,count,FEMA OpenFEMA — NFIP Policies,policyCost + condominiumCoverageTypeCode,"August 31, 2026"
 New Mexico,share_below,,27.9%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 New Mexico,units_listed,below_n,"7,607",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"August 31, 2026"
+New Mexico,paper_min,damage-over-coverage-n,0,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
+New Mexico,paper_min,damage-over-coverage,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 New Mexico,paper_min,outside-the-zone-n,1,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 New Mexico,paper_min,outside-the-zone,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 New Mexico,ded_amount,2000,"$2,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"

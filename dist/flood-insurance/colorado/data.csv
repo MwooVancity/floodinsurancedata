@@ -282,6 +282,8 @@ Colorado,condo_unit_cost,,$608,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policie
 Colorado,condo_unit_cost_n,,734,count,FEMA OpenFEMA — NFIP Policies,policyCost + condominiumCoverageTypeCode,"August 31, 2026"
 Colorado,share_below,,25.8%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 Colorado,units_listed,below_n,"7,831",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"August 31, 2026"
+Colorado,paper_min,damage-over-coverage-n,0,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
+Colorado,paper_min,damage-over-coverage,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Colorado,paper_min,outside-the-zone-n,0,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Colorado,paper_min,outside-the-zone,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Colorado,ded_amount,1250,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"

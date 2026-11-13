@@ -163,6 +163,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Boulder County, Colorado",share_below,,31.6%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 "Boulder County, Colorado",units_listed,below_n,"1,660",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"August 31, 2026"
 "Boulder County, Colorado",share_below,state,25.8%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
+"Boulder County, Colorado",paper_min,damage-over-coverage,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Boulder County, Colorado",paper_min,outside-the-zone,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Boulder County, Colorado",ded_amount,2000,"$2,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"
 "Boulder County, Colorado",ded_share,2000,40.7%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"August 31, 2026"

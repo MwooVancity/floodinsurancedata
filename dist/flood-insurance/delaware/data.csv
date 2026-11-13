@@ -150,6 +150,8 @@ Delaware,condo_unit_cost,,$711,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policie
 Delaware,condo_unit_cost_n,,936,count,FEMA OpenFEMA — NFIP Policies,policyCost + condominiumCoverageTypeCode,"August 31, 2026"
 Delaware,share_below,,34.3%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 Delaware,units_listed,below_n,"8,004",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"August 31, 2026"
+Delaware,paper_min,damage-over-coverage-n,2,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
+Delaware,paper_min,damage-over-coverage,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Delaware,paper_min,outside-the-zone-n,2,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Delaware,paper_min,outside-the-zone,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Delaware,ded_amount,1250,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"

@@ -167,6 +167,8 @@ Alaska,condo_unit_cost,,$384,usd_cost_with_fees,FEMA OpenFEMA — NFIP Policies,
 Alaska,condo_unit_cost_n,,75,count,FEMA OpenFEMA — NFIP Policies,policyCost + condominiumCoverageTypeCode,"August 31, 2026"
 Alaska,share_below,,10.7%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 Alaska,units_listed,below_n,"1,986",count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"August 31, 2026"
+Alaska,paper_min,damage-over-coverage-n,0,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
+Alaska,paper_min,damage-over-coverage,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Alaska,paper_min,outside-the-zone-n,0,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Alaska,paper_min,outside-the-zone,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Alaska,ded_amount,1250,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"

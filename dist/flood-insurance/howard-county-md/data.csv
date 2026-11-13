@@ -158,6 +158,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Howard County, Maryland",share_below,,13.7%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 "Howard County, Maryland",units_listed,below_n,721,count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"August 31, 2026"
 "Howard County, Maryland",share_below,state,15.1%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
+"Howard County, Maryland",paper_min,damage-over-coverage,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Howard County, Maryland",paper_share,outside-the-zone,44.6%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount,"August 31, 2026"
 "Howard County, Maryland",paper_share,ci-level,90%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount,"August 31, 2026"
 "Howard County, Maryland",paper_share,outside-the-zone-lo,38.5,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount,"August 31, 2026"

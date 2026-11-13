@@ -117,6 +117,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Anoka County, Minnesota",share_below,,47.2%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
 "Anoka County, Minnesota",units_listed,below_n,212,count,FEMA OpenFEMA — NFIP Policies,censusGeoid,"August 31, 2026"
 "Anoka County, Minnesota",share_below,state,41.7%,pct,FEMA OpenFEMA — NFIP Policies,totalInsurancePremiumOfThePolicy + fullRiskPremium,"August 31, 2026"
+"Anoka County, Minnesota",paper_min,damage-over-coverage,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Anoka County, Minnesota",paper_min,outside-the-zone,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Anoka County, Minnesota",ded_amount,1250,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"
 "Anoka County, Minnesota",ded_share,1250,43.4%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"August 31, 2026"
