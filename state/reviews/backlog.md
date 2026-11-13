@@ -31,3 +31,5 @@ ask is either BUILDING or DECIDED with its reason. Reviewers: a DECIDED item is 
 
 ## sonoma-county-ca (round 133)
 - Event table leads with the catch-all "Flooding (1978–1997)" row ($67.3 million) above the named floods; labelled as many floods, so not wrong. 1995 and 2019 (two costliest years) have no named flood row.
+
+- 11-13 r175 vents guide MINOR: openings rule text should say it is the A-zone rule (44 CFR 60.3(c)); V zones follow 60.3(e) (read raw first). Title 'elevated buildings' vs policies.

@@ -894,6 +894,45 @@ if len(states) == 51:   # deductible guide (cloud field batch 11-12): building d
         zone_urls.append((BASE + "/guides/flood-insurance-deductible/", None))
         GUIDES.append(("/guides/flood-insurance-deductible/", "Flood insurance deductibles"))
 
+if len(states) == 51:   # vents guide (KWP 11-12 "flood vents" 1K-10K): FEMA obstructionType on elevated single-family primary-home
+    # policies (cloud field batch 11-12); code text quoted from FEMA's DataSetFields, read raw 11-13; 44 CFR 60.3(c)(5) via rule()
+    _OBS = {"10": "Free of obstruction", "15": "Enclosure or crawlspace with proper openings (not used for rating; not applicable in V zones)",
+            "50": "Non-breakaway walls, crawlspace or finished enclosure, no machinery or equipment below the lowest elevated floor",
+            "54": "Non-breakaway walls, crawlspace or finished enclosure, with machinery or equipment below the lowest elevated floor",
+            "60": "With obstruction (FEMA's code gives no further detail)"}
+    _oc = collections.Counter(); _ost = []
+    for s in states:
+        oc = json.load(open(os.path.join(DATADIR, "states", s["slug"], "extras.json")))["policies"].get("obstruction_counts") or {}
+        _oc.update(oc); kn = sum(v for k, v in oc.items() if k != "blank")
+        if kn >= 100: _ost.append((s, kn, oc.get("15", 0)))
+    _okn = sum(v for k, v in _oc.items() if k != "blank")
+    if _okn >= 1000 and len(_ost) >= 10:
+        _osh = lambda k: round(100 * _oc.get(k, 0) / _okn, 1)
+        _orest = round(100 - sum(_osh(k) for k in _OBS), 1)
+        _ostr = "".join(f'<tr><td>{html.escape(v)}</td><td>{_osh(k)}%</td><td>{_oc.get(k, 0):,}</td></tr>' for k, v in sorted(_OBS.items(), key=lambda kv: -_oc.get(kv[0], 0)))   # r174: largest first
+        _ost.sort(key=lambda t: -t[1])
+        _ostt = "".join(f'<tr><td><a href="/flood-insurance/{s["slug"]}/">{html.escape(s["name"])}</a></td><td>{round(100 * c / kn, 1)}%</td><td>{kn:,}</td></tr>' for s, kn, c in _ost)
+        _vk = ["openings_rule", "save_ways"]
+        pg = HEAD.format(title="Flood vents: the federal openings rule and FEMA's records of proper openings on elevated buildings",
+                         desc=f"What federal floodplain rules require of flood openings, and the share of {_okn:,} elevated single-family primary-home NFIP policies with an obstruction code that FEMA records with proper openings, as of {_ASOF_TXT}.",
+                         canon=BASE + "/guides/flood-vents/") + f"""
+<h1>Flood vents and flood openings</h1>
+<p class="lede">{rule("openings_rule")}</p>
+<div class="stats"><div class="stat"><div class="n">{_osh("15")}%</div><div class="l">Elevated single-family primary-home NFIP policies recorded with an enclosure or crawlspace with proper openings</div></div>
+<div class="stat"><div class="n">{_okn:,}</div><div class="l">Elevated single-family primary-home policies with an obstruction code</div></div></div>
+<p class="mut">FEMA OpenFEMA NFIP Policies v3 (obstructionType, elevatedBuildingIndicator), as of {_ASOF_TXT}: single-family primary-home policies FEMA marks as elevated buildings and gives an obstruction code; {_oc.get("blank", 0):,} more have no code and are left out.</p>
+<div class="card"><h2>What is recorded under elevated buildings on NFIP policies?</h2><p class="stand">FEMA's obstruction code describes what is below the lowest elevated floor. Its five most common codes, in FEMA's words, shortened:</p>
+<table><thead><tr><th>FEMA obstruction code</th><th>Share</th><th>Policies</th></tr></thead><tbody>{_ostr}<tr><td>Every other code</td><td>{_orest}%</td><td>{_okn - sum(_oc.get(k, 0) for k in _OBS):,}</td></tr></tbody></table>
+<p class="mut">A code records how the policy was written, not an inspection today. "Not used for rating" is FEMA's own wording for this code.</p></div>
+<div class="card"><h2>Proper openings, state by state</h2><p class="stand">Share of elevated single-family primary-home policies with an obstruction code that FEMA records as an enclosure or crawlspace with proper openings, in {len(_ost)} states with at least 100 such policies, most policies first.{(" Fewer than 100 such policies: " + ", ".join(html.escape(s["name"]) for s in states if s not in [t[0] for t in _ost]) + ".") if len(_ost) < len(states) else ""}</p>
+<table><thead><tr><th>State</th><th>With proper openings</th><th>Elevated policies with a code</th></tr></thead><tbody>{_ostt}</tbody></table></div>
+<div class="card"><h2>What FEMA lists as ways that may lower a bill</h2><p class="stand">{rule("save_ways")}</p></div>
+<div class="card"><h2>What this page cannot tell you</h2><p class="stand">Whether a home's openings meet the rule (only an inspection, an engineer's certificate or an Elevation Certificate can say), what a given product costs, or how much any change would lower a premium. No product or company is named or recommended here.</p>
+<p class="mut">Sources: FEMA OpenFEMA NFIP Policies v3 and its field definitions; rules from {_rule_hosts(_vk)}. <a href="/methodology/">How we check them</a>.</p></div>{FOOT}"""
+        wr(os.path.join(DIST, "guides", "flood-vents", "index.html"), pg)
+        zone_urls.append((BASE + "/guides/flood-vents/", None))
+        GUIDES.append(("/guides/flood-vents/", "Flood vents and flood openings"))
+
 if GUIDES:   # /guides/: every guide that built this run, nothing typed by hand (11-13); home links it
     pg = HEAD.format(title="Flood insurance questions answered with FEMA's records", desc="Guides to common flood-insurance questions, each answered with FEMA's own rules and records.",
                      canon=BASE + "/guides/") + "<h1>Flood insurance questions, answered with FEMA's records</h1><div class=\"card\"><ul>" \

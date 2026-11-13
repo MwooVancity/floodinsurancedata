@@ -27,7 +27,7 @@ USC4012A = "https://www.law.cornell.edu/uscode/text/42/4012a"
 RULES = {
     "openings_rule": {   # vents guide 11-13, 44 CFR 60.3(c)(5) read raw from eCFR (scope: (c) header)
         "text": "Where FEMA has given a community final flood elevations, the community must require, for new construction and substantial improvements, "
-                "that fully enclosed areas below the lowest floor used only for parking, building access or storage (not a basement) let floodwater in and out: "
+                "that fully enclosed areas below the lowest floor that are usable only for parking, building access or storage (not a basement) and are subject to flooding let floodwater in and out: "
                 "either a design certified by a registered professional engineer or architect, or at least two openings with a total net area of at least "
                 "one square inch for every square foot of enclosed area, their bottoms no higher than one foot above grade (44 CFR §60.3(c)(5)).",
         "sources": [(CFR60, "has provided a notice of final flood elevations", "curl"),

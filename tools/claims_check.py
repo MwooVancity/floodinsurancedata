@@ -222,6 +222,27 @@ def check_deductible(page):   # deductible guide: shares recomputed from every s
         if (float(ae), float(x)) != want: bad.append(f"D2 ${amt}: page {ae}%/{x}%, recomputed {want}")
     return bad
 
+def check_vents(page):   # vents guide: obstruction shares and state rows recomputed from every state's obstruction_counts (11-13)
+    tot, rows = {}, []
+    for p in glob.glob(os.path.join(D, "states", "*", "extras.json")):
+        oc = json.load(open(p))["policies"].get("obstruction_counts") or {}
+        for k, v in oc.items(): tot[k] = tot.get(k, 0) + v
+        kn = sum(v for k, v in oc.items() if k != "blank")
+        if kn >= 100: rows.append((kn, round(100 * oc.get("15", 0) / kn, 1)))
+    kn = sum(v for k, v in tot.items() if k != "blank"); bad = []
+    if f"{round(100 * tot.get('15', 0) / kn, 1)}%" not in page or f"{kn:,}" not in page: bad.append(f"V1 tile: code 15 {round(100 * tot.get('15', 0) / kn, 1)}% of {kn:,}")
+    got = sorted((int(n.replace(",", "")), float(sh)) for sh, n in re.findall(r'<tr><td><a href="/flood-insurance/[a-z-]+/">[^<]+</a></td><td>([\d.]+)%</td><td>([\d,]+)</td></tr>', page))
+    if got != sorted(rows): bad.append(f"V2 state rows {len(got)} vs {len(rows)}")
+    return bad
+
+HOMES_WORDS = re.compile(r"\b(?:NFIP homes|elevated NFIP homes|zone AE homes|zone X homes|NFIP homeowners choose)\b", re.I)
+def check_base_words(pages):   # r169 + r173 MAJOR twice: guides count POLICIES; "homes" as the base word is a mislabel
+    bad = []
+    for name, h in pages.items():
+        t = re.sub(r"<[^>]+>", " ", re.sub(r"(?s)<script.*?</script>", " ", h)) + " " + " ".join(re.findall(r'<meta name="description" content="([^"]*)"', h))   # r174: the description drifted from the base too
+        bad += [f"B1 {name}: '{m_[0]}' names homes where the base is policies" for m_ in HOMES_WORDS.finditer(t)]
+    return bad
+
 def check_state_labels(pages):   # review r167 MAJOR: "48 states" counted DC. Every "N states" / "N states and DC" label = the table's rows
     bad = []
     for name, h in pages.items():
@@ -234,7 +255,9 @@ def check_state_labels(pages):   # review r167 MAJOR: "48 states" counted DC. Ev
 if __name__ == "__main__":
     if "--guides" in sys.argv:
         gp = {os.path.basename(os.path.dirname(p)): open(p, encoding="utf-8").read() for p in glob.glob(os.path.join(ROOT, "dist", "guides", "*", "index.html"))}
-        lb = check_state_labels(gp)
+        lb = check_state_labels(gp) + check_base_words(gp)
+        if "--test" in sys.argv:
+            assert check_base_words({"x": "<p>26% of zone AE homes carry it</p>"}), "mutation not caught: homes as base"
         if "--test" in sys.argv:
             assert not lb, lb
             k = next(k for k, h in gp.items() if " states and DC" in h)
@@ -246,7 +269,10 @@ if __name__ == "__main__":
         zx = open(os.path.join(ROOT, "dist", "flood-zones", "x", "index.html"), encoding="utf-8").read()
         cg = open(os.path.join(ROOT, "dist", "guides", "condo-flood-insurance", "index.html"), encoding="utf-8").read()
         dg = open(os.path.join(ROOT, "dist", "guides", "flood-insurance-deductible", "index.html"), encoding="utf-8").read()
-        bad = check_guides(pg, zx) + check_condo(cg) + check_deductible(dg)
+        vg = open(os.path.join(ROOT, "dist", "guides", "flood-vents", "index.html"), encoding="utf-8").read()
+        bad = check_guides(pg, zx) + check_condo(cg) + check_deductible(dg) + check_vents(vg)
+        if "--test" in sys.argv:
+            assert check_vents(re.sub(r"</a></td><td>([\d.]+)%</td>", lambda m_: f"</a></td><td>{float(m_[1]) + 1}%</td>", vg, count=1)), "mutation not caught: vents state row"
         if "--test" in sys.argv:
             assert check_deductible(re.sub(r"<td>([\d.]+)%</td><td>([\d.]+)%</td></tr>", lambda m_: f"<td>{float(m_[1]) + 1}%</td><td>{m_[2]}%</td></tr>", dg, count=1)), "mutation not caught: deductible share"
             assert check_deductible(dg.replace("zone AE vs zones X, B or C", "zone AE vs zone X", 1)), "mutation not caught: zone X label"
@@ -255,7 +281,7 @@ if __name__ == "__main__":
             assert not bad, bad
             assert check_guides(re.sub(r">(\d+)%<", lambda m_: f">{int(m_[1]) + 1}%<", pg, count=1), zx), "mutation not caught: tile"
             assert check_guides(pg, re.sub(r"(zone on the claim, )(\d+)%", lambda m_: m_[1] + str(int(m_[2]) + 1) + "%", zx, count=1)), "mutation not caught: zone X disagrees"
-            print("guides check mutations: 6 caught"); sys.exit()
+            print("guides check mutations: 8 caught"); sys.exit()
         for b in bad: print("  -", b)
         print("GUIDES CHECK", "FAIL" if bad else "PASS"); sys.exit(1 if bad else 0)
     if "--renters" in sys.argv:
