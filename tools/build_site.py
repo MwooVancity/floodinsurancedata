@@ -313,7 +313,7 @@ quotes, or earn commissions on policies. It is a reference, not a sales page. Th
 Google AdSense (see the <a href="/privacy/">privacy page</a>); ads never change a figure, and no advertiser has a say in what is published.</p>
 </div>
 <div class="card" id="who"><h2>Who runs it</h2>
-<p>Flood Insurance Data is run by <b>Michael Woo</b>. The pages are written and checked with AI tools (Anthropic's Claude)
+<p>Flood Insurance Data is run by <b>Michael Woo</b>, who works with data; he is not an insurance agent, adjuster or engineer. The pages are written and checked with AI tools (Anthropic's Claude)
 working under fixed rules: every figure is recomputed from FEMA's files by separate code before a page ships, every rule is quoted from
 its official source, and each page goes through separate AI review passes looking for anything wrong or misleading. The site gives no
 insurance advice. Every figure names its federal source and date, and the <a href="/methodology/">methodology</a> shows how each one is
@@ -1014,7 +1014,7 @@ for _sp in _PA.READY:
 <h1>{html.escape(_sp["title"])}</h1>
 <p class="lede">In FEMA's records for losses {_w0}–{_w1}, {_allp}% of {_alln:,} {_sp["unit"]} across all U.S. counties combined {_sp["meets"]}; across the {_N:,} counties with at least {_sp["min"]} each, {_pool}% (90% range {_plo}–{_phi}%, resampling counties).{f" Across those counties, a county's claim share and its share of policy units outside zones A and V go together (correlation {_rcor:.2f}, descriptive, no test), so compare the two columns." if _rcor is not None else ""}</p>
 {"".join(f'<p class="stand">{rule(k)} (<a href="https://www.floodsmart.gov/flood-zones-and-maps/what-is-my-flood-risk" rel="nofollow">FloodSmart</a>.) {html.escape(_sp.get("prior_note") or "")}</p>' for k in _sp.get("prior_rules") or [])}
-<p class="mut">By Michael Woo, publisher of Flood Insurance Data (<a href="/about/">about the site</a>), who answers for every figure here. Written with AI tools; every row is recomputed from FEMA's records by a separate check before publishing.{f" First published {_sp['published']}; data as of {_ASOF_TXT}." if _sp.get("published") else ""}</p>
+<p class="mut">By Michael Woo, publisher of Flood Insurance Data (<a href="/about/">about the site</a>), who works with data, is not an insurance agent, adjuster or engineer, and answers for every figure here. Written with AI tools; every row is recomputed from FEMA's records by a separate check before publishing.{f" First published {_sp['published']}; data as of {_ASOF_TXT}." if _sp.get("published") else ""}</p>
 <div class="card" id="abstract"><h2>Abstract</h2>
 <p class="stand"><b>Data:</b> {_sp["dataset"]}, losses {_w0}–{_w1}, as of {_ASOF_TXT}: {_N:,} U.S. counties with at least {_sp["min"]} {_sp["unit"]} each, {_NN:,} in all.</p>
 <p class="stand"><b>Result:</b> across those counties, {_pool}% (90% range {_plo}–{_phi}%, resampling counties) of {_sp["unit"]} {_sp["meets"]}; the median county's share is {_med}%. The highest share is {_cty(_top)} at {_top["value"]}% ({_top["k"]:,} of {_top["n"]:,}){_tie(_top)}; the lowest share, {_bot["value"]}%, {"is " + _cty(_bot) + f' ({_bot["k"]:,} of {_bot["n"]:,})' if _ties(_bot) == 1 else f"is shared by {_ties(_bot):,} counties"}.</p></div>
