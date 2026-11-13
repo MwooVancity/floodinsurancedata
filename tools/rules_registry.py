@@ -25,6 +25,10 @@ CFR60 = "https://www.ecfr.gov/api/versioner/v1/full/2026-10-01/title-44.xml?part
 USC4012A = "https://www.law.cornell.edu/uscode/text/42/4012a"
 
 RULES = {
+    "fema_outside_third": {   # outside-the-zone paper 11-13, FloodSmart "What is my flood risk" read raw
+        "text": "FEMA's own figure: over the 10 years 2014 to 2024, nearly one-third (29%) of NFIP flood insurance claims came from areas outside "
+                "of current high-risk flood areas.",
+        "sources": [(FS + "/flood-zones-and-maps/what-is-my-flood-risk", "Over the past 10 years (2014 - 2024), nearly one-third of NFIP flood insurance claims came from areas located outside of current high-risk flood areas", "curl")]},
     "openings_rule": {   # vents guide 11-13, 44 CFR 60.3(c)(5) read raw from eCFR (scope: (c) header)
         "text": "Where FEMA has given a community final flood elevations, the community must require, for new construction and substantial improvements, "
                 "that fully enclosed areas below the lowest floor that are usable only for parking, building access or storage (not a basement) and are subject to flooding let floodwater in and out: "

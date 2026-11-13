@@ -1,13 +1,17 @@
 """S16 internal links (owner 11-08): every state and county page links each money hub that exists and a zone page,
 so a template change can never silently starve one (measured 11-08: /nfip/ had 2 inbound links, renters 1).
 Used by google_gate.py; mutation test in test_calc.py."""
-import re
+import os, re, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))   # papers.py sits beside this file; -I drops the script dir
 from urllib.parse import urljoin, urlparse
 HUBS = ("/guides/homeowners-insurance-flooding/",   # 11-13: topic guides (condo...) link only where their topic appears, never forced site-wide
          "/nfip/", "/flood-insurance/renters/", "/flood-insurance/claims/", "/flood-insurance/zip/", "/flood-zone-map/")   # papers join here when papers.READY lists them (methods review 162)
 
 def fails(pages, indexable):
-    hubs = [h for h in HUBS if h in pages]
+    try:   # research papers switched on join the hubs (every county card and state card links them)
+        import papers as _P; _paper_hubs = tuple(f"/flood-insurance/{s['key']}/" for s in _P.READY)
+    except Exception: _paper_hubs = ()
+    hubs = [h for h in HUBS + _paper_hubs if h in pages]
     out = []
     for p in sorted(indexable):
         if not re.fullmatch(r"/flood-insurance/[a-z0-9-]+/", p) or p in hubs: continue

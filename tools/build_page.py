@@ -373,42 +373,33 @@ def _gap_parts():
     return gap_lead, glide_note
 
 def _ord(n): return f"{n}{'th' if 10 <= n % 100 <= 20 else {1: 'st', 2: 'nd', 3: 'rd'}.get(n % 10, 'th')}"
-def card_ranks():   # owner 11-12: this county's place in each national research paper (tools/papers.py; index_check.py recomputes)
+def card_ranks():   # owner 11-12 research papers: this county's share, 90% range and fifth in each national paper (paper_gate.py recomputes)
     import papers as PA
     cache = PA.read_cache(); g = os.environ.get("FF_GEOID", ""); lines = []
-    if IS_STATE:   # PLAN E19: a state page names its highest-ranked county in each paper (and links the paper)
-        nm = PA.names()
-        for sp in PA.READY:
-            c = cache.get(sp["key"]) or {}
-            best = sorted((r[0], gg) for gg, r in (c.get("ranks") or {}).items() if gg[:2] == g[:2])
-            head = f"<b><a href='/flood-insurance/{sp['key']}/'>{html.escape(sp['title'])}</a></b>: "
-            lines.append(f"<li>{head}" + (f"{html.escape(nm.get(best[0][1], best[0][1]))} ranks highest in {CL}, "
-                         f"{m('gap_rank', _ord(best[0][0]), q=sp['key'] + '-best')} of {m('gap_rank', num(c['pool']), q=sp['key'] + '-pool')} U.S. counties; 1st has {sp['first']}.</li>"
-                         if best and c.get("pool") else f"no county in {CL} has at least {m('paper_min', str(sp['min']), q=sp['key'])} {sp['unit']}.</li>"))
-        return card(f"Where {CL}'s counties rank among U.S. counties", "Each research paper ranks every U.S. county with enough records on one measure from FEMA's data. A rank is a position in a list, not a grade and not a forecast.",
-                    "<ul>" + "".join(lines) + "</ul>", id="ranks") if lines else ""
+    _F = {1: "highest fifth", 2: "second fifth", 3: "middle fifth", 4: "fourth fifth", 5: "lowest fifth"}
     for sp in PA.READY:
         c = cache.get(sp["key"]) or {}
         if not c.get("pool"): continue
-        mk, mp = sp["metric"]; nk, np_ = sp["n_metric"]
-        r = (c.get("ranks") or {}).get(g)
-        try: own = _get(mp), _get(np_)   # factory 11-12 no_claims: the page's own figure must exist, or no rank is shown
-        except (KeyError, IndexError, TypeError): own = (None, None)
-        if None in own: r = None
         head = f"<b><a href='/flood-insurance/{sp['key']}/'>{html.escape(sp['title'])}</a></b>: "
+        if IS_STATE:   # PLAN E19: a state names how many of its counties are listed; never a state rank
+            n_here = sum(1 for gg in (c.get("rows") or {}) if gg[:2] == g[:2])
+            lines.append(f"<li>{head}{m('paper_min', str(n_here), q=sp['key'] + '-n')} of this state's counties have at least "
+                         f"{m('paper_min', str(sp['min']), q=sp['key'])} {sp['unit']} and are listed.</li>")
+            continue
+        r = (c.get("rows") or {}).get(g)
         if r:
-            lines.append(f"<li>{head}{tp(mk, mp, pct, q=sp['key'])} {sp['here']} ({tp(nk, np_, q=sp['key'])} {sp['unit']}). "
-                         f"<span data-paper=\"{sp['key']}\" data-rank=\"{r[0]}\" data-of=\"{c['pool']}\">Ranks {m('gap_rank', _ord(r[0]), q=sp['key'] + '-rank')}"
-                         f"{' (tied)' if r[1] else ''} of {m('gap_rank', num(c['pool']), q=sp['key'] + '-pool')}</span> U.S. counties with at least "
-                         f"{m('paper_min', str(sp['min']), q=sp['key'])} {sp['unit']}; 1st has {sp['first']}.</li>")
+            fifth, v, lo, hi, n = r
+            lines.append(f"<li>{head}<span data-paper=\"{sp['key']}\" data-fifth=\"{fifth}\">{m('paper_share', f'{v}%', q=sp['key'])} "
+                         f"({m('paper_share', '90%', q='ci-level')} range {m('paper_share', f'{lo}', q=sp['key'] + '-lo')}–{m('paper_share', f'{hi}%', q=sp['key'] + '-hi')}) of "
+                         f"{m('paper_min', num(n), q=sp['key'] + '-n')} {sp['unit']} here, the {_F[fifth]} of "
+                         f"{m('paper_min', num(c['pool']), q=sp['key'] + '-pool')} U.S. counties listed</span>.</li>")
         else:
-            lines.append(f"<li>{head}<span data-paper=\"{sp['key']}\" data-rank=\"0\">not ranked</span>: "
-                         + ("this measure is not in this county's records.</li>" if None in own else f"fewer than {m('paper_min', str(sp['min']), q=sp['key'])} {sp['unit']} here.</li>"))
+            lines.append(f"<li>{head}<span data-paper=\"{sp['key']}\" data-fifth=\"0\">not listed</span>: fewer than "
+                         f"{m('paper_min', str(sp['min']), q=sp['key'])} {sp['unit']} here.</li>")
     if not lines: return ""
-    return card(f"How {CS} ranks among U.S. counties",
-                "Each research paper ranks every U.S. county with enough records on one measure from FEMA's data. A rank is a position in a list, not a grade and not a forecast.",
+    return card(f"How {CL if IS_STATE else CS} appears in the national research papers",
+                "Each paper measures one thing in FEMA's records for every U.S. county with enough records. A fifth is a position in a list, not a grade or a prediction.",
                 "<ul>" + "".join(lines) + "</ul>", id="ranks")
-
 def _claims_parts():
     claims_lead = (f"Floods in {CS} have led to {m('claims_filed', num(C['rows']))} NFIP flood {pl(C['rows'], 'claim')} and "
                    f"{m('claims_total', big(C['total_paid']))} in payouts since {C['year_min']}"

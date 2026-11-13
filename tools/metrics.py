@@ -137,7 +137,8 @@ _NRI, _CSB, _PEN, _ML = "NRI", "NfipCommunityStatusBook", "NfipResidentialPenetr
 METRICS.update({   # every other figure a page prints; q (data-q) names the row when one metric fills a table
     "threshold": _m(POL, ["policyCost"], "count"),
     "below_n": _m(POL, ["totalInsurancePremiumOfThePolicy", "fullRiskPremium"], "count"),   # policies priced both ways (Price Gap base)
-    "paper_min": _m(POL, ["policyCount"], "count"),   # a research paper's minimum sample (tools/papers.py)
+    "paper_min": _m(POL, ["policyCount"], "count"),
+    "paper_share": _m(CLM, ["netBuildingPaymentAmount"], "pct", of="the paper's base"),   # research paper share / 90% range (papers.py)   # a research paper's minimum sample (tools/papers.py)
     "gap_rank": _m(POL, ["totalInsurancePremiumOfThePolicy", "fullRiskPremium"], "count"),   # Price Gap Index rank / pool (index_check.py recomputes)
     "cost_p90": _m(POL, ["policyCost"], "usd_cost_with_fees"),
     "cost_n": _m(POL, ["policyCost"], "count"),
