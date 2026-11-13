@@ -483,7 +483,7 @@ Florida,ml_total,,"62,764",count,FEMA OpenFEMA — Individual Assistance Multipl
 Florida,ml_srl,,"1,927",count,FEMA OpenFEMA — Individual Assistance Multiple-Loss Flood Properties,highRiskPropertyType,"August 31, 2026"
 Florida,declarations,,75,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"August 31, 2026"
 Florida,ia_paid,,$4.1 billion,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"August 31, 2026"
-Florida,ia_per_reg,,"$1,040",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
+Florida,ia_per_reg,,"$1,041",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 Florida,units,,"1,777,001",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Florida,records_total,rows,"1,116,601",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
 Florida,n_sources,,7,count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"

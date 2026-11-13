@@ -452,7 +452,7 @@ Mississippi,county_count,inland:none,0,count,FEMA — National Risk Index (flood
 Mississippi,ml_total,,"8,086",count,FEMA OpenFEMA — Individual Assistance Multiple-Loss Flood Properties,highRiskPropertyType,"August 31, 2026"
 Mississippi,ml_srl,,322,count,FEMA OpenFEMA — Individual Assistance Multiple-Loss Flood Properties,highRiskPropertyType,"August 31, 2026"
 Mississippi,declarations,,63,count,FEMA OpenFEMA — Disaster Declarations Summaries,disasterNumber + incidentType + declarationDate,"August 31, 2026"
-Mississippi,ia_paid,,$966.9 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"August 31, 2026"
+Mississippi,ia_paid,,$967.0 million,usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount,"August 31, 2026"
 Mississippi,ia_per_reg,,"$2,283",usd_aid_paid,FEMA OpenFEMA — Housing Assistance (Owners),totalApprovedIhpAmount + validRegistrations,"August 31, 2026"
 Mississippi,units,,"48,599",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Mississippi,records_total,rows,"46,544",count,FEMA OpenFEMA — NFIP Policies,id,"August 31, 2026"
