@@ -1,8 +1,8 @@
 {
  "slug": "levy-county-fl",
  "verdict": "PASS",
- "template": "a5e815a481e0078a",
+ "template": "699df1a85c85efed",
  "defects": [],
- "reviewer": "hater round 165 (fresh agent, docs/HATER-PROMPT.md)",
+ "reviewer": "hater round 166 (fresh agent, docs/HATER-PROMPT.md)",
  "notes": ""
 }
