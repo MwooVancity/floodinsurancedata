@@ -99,7 +99,8 @@ for p, h in pages.items():
 
 # S16 internal links: every state/county page links each money hub and a zone page (tools/linkcheck.py)
 import linkcheck
-for _m in linkcheck.fails(pages, indexable) + linkcheck.graph_fails(pages, indexable): fail("S16", _m)
+_cstate = {f"/flood-insurance/{c['slug']}/": f"/flood-insurance/{st_slug[c['state']]}/" for c in places if c.get("state") in st_slug}
+for _m in linkcheck.fails(pages, indexable) + linkcheck.graph_fails(pages, indexable) + linkcheck.state_fails(pages, _cstate): fail("S16", _m)
 
 # S5 hidden text
 for p, h in pages.items():

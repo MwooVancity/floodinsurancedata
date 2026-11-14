@@ -496,11 +496,7 @@ def _nfhl_lines():   # map debate 11-06: map age, revisions, exemption rulings, 
     lo = s.get("loma")
     if lo is not None:   # round 74: FEMA's own outcome groups; "removed" = out of the high-risk zone, never demolished
         g = dict.fromkeys(("bldg", "whole", "part", "bldg_out", "out", "denied", "other"), 0)
-        for k, n in lo.items():
-            o = k.split("|")[0].lower()
-            g["denied" if "denied" in o else "bldg" if o.startswith("structure removed") else "part" if o.startswith("portion of property removed")
-              else "whole" if o.startswith("property removed") else "bldg_out" if o.startswith("structure out as shown")
-              else "out" if "out as shown" in o else "other"] += n
+        for k, n in lo.items(): g[__import__("codes").loma_group(k)] += n   # one grouping rule, shared with the LOMA guide
         t = sum(g.values()); q = lambda k: m('loma_n', format(g[k], ','), q=k)
         qs = lambda ks, nm: m('loma_n', format(sum(g[k] for k in ks), ','), q=nm)   # hcu 11-07: seven groups read as noise; three answer "does asking work"
         out.append(f"FEMA's map service lists {m('loma_n', format(t, ','), q='all')} rulings for owners here who asked FEMA to take a building or lot out of the "

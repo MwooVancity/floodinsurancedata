@@ -20,3 +20,8 @@ GRANDFATHER = {"1": "No grandfathering", "2": "Grandfathered: built to code", "3
 SOURCE = "https://www.fema.gov/api/open/v1/OpenFemaDataSetFields (NfipPolicies v3, NfipClaims v3)"
 
 def truthy(v): return str(v).strip().lower() in ("true", "1", "t", "y", "yes")
+def loma_group(outcome):   # FEMA NFHL LOMA layer OUTCOME wording -> the groups county pages and the LOMA guide print (round 74; one rule, two pages)
+    o = str(outcome).split("|")[0].lower()   # "removed" = out of the high-risk zone, never demolished
+    return ("denied" if "denied" in o else "bldg" if o.startswith("structure removed") else "part" if o.startswith("portion of property removed")
+            else "whole" if o.startswith("property removed") else "bldg_out" if o.startswith("structure out as shown")
+            else "out" if "out as shown" in o else "other")

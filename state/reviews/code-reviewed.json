@@ -1,5 +1,5 @@
 {
- "hash": "9f3939079cb35c76d809d3d92c6df772f49d4a71a89bb89414477c462a1d6ad7",
+ "hash": "0a6d6d692102e40491df5aa0fdaf58773e328dc156a2ead9bfde779e38cdcce2",
  "date": "2026-11-14",
- "note": "11-14 hotfix: multiloss relabel; no typed number (V1); reviewed inline"
+ "note": "11-14: S16 state_fails (+2 test cases, proven on the shipped d455e2966 page), 25-a-day cap new_pages_cap.py (+5 cases) wired into release; reviewed inline"
 }

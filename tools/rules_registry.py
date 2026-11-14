@@ -428,6 +428,21 @@ RULES = {
         "text": "FEMA charges no review or processing fee for a Letter of Map Amendment request (44 CFR §72.5).",
         "sources": [(CFR72, "Requesters are exempt from submitting review and processing fees for", "curl"),
                     (CFR72, "Requests for a Letter of Map Amendment (LOMA)", "curl")]},
+    "lomr_def": {   # 44 CFR 72.1 and 72.2, read raw (eCFR versioner XML, curl --compressed) 11-14; LOMA guide
+        "text": "A Letter of Map Revision (LOMR) is FEMA's change to the flood map itself. It is generally based on physical work that changes how a river "
+                "or other flooding source behaves, such as changing a channel or building a bridge, culvert or levee, and it officially revises the map (44 CFR §72.1, §72.2).",
+        "sources": [(CFR72, "A LOMR is FEMA's modification to an effective Flood Insurance Rate Map (FIRM)", "curl"),
+                    (CFR72, "LOMRs are generally based on the implementation of physical measures that affect the hydrologic or hydraulic characteristics of a flooding source", "curl"),
+                    (CFR72, "modification of a channel; construction or modification of a bridge, culvert, levee, or similar measure", "curl"),
+                    (CFR72, "The LOMR officially revises the FIRM", "curl")]},
+    "lomr_f_def": {   # 44 CFR 72.2, read raw 11-14
+        "text": "A Letter of Map Revision Based on Fill (LOMR-F) is FEMA's change to the high-risk zone shown on the map based on fill placed outside the regulatory floodway (44 CFR §72.2).",
+        "sources": [(CFR72, "A LOMR-F is FEMA's modification of the SFHA shown on the FIRM based on the placement of fill outside the existing regulatory floodway", "curl")]},
+    "lomr_fees": {   # 44 CFR 72.1 and 72.5, read raw 11-14: LOMR/LOMR-F come under cost recovery; some map-change requests are exempt
+        "text": "FEMA's review fees cover requests for a LOMR or a LOMR-F; requests based on mapping or study errors are among those exempt (44 CFR §72.1, §72.5).",
+        "sources": [(CFR72, "cost-recovery procedures for the engineering review and administrative processing", "curl"),
+                    (CFR72, "Letters of Map Revision Based on Fill (LOMR-Fs), Letters of Map Revision (LOMRs)", "curl"),
+                    (CFR72, "Requests for map changes based on mapping or study analysis errors", "curl")]},
     "ec_get": {   # FloodSmart (FEMA's NFIP site), read raw 11-08 (curl --compressed): who completes one, where one may be on file
         "text": "Your home may already have an Elevation Certificate on file with your community: ask your local floodplain manager, "
                 "often in the city or county building, permitting or engineering department. If none is on file, a land surveyor, "

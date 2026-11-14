@@ -1026,6 +1026,60 @@ if len(states) == 51:   # Risk Rating 2.0 guide (KWP 11-12 "risk rating 2.0" 100
         zone_urls.append((BASE + "/guides/risk-rating-2/", None))
         GUIDES.append(("/guides/risk-rating-2/", "Risk Rating 2.0"))
 
+_lmf = os.path.join(DATADIR, "us", "map_status.json")
+_lms = json.load(open(_lmf)) if os.path.exists(_lmf) else {}
+_lmp = [p for p in places if isinstance(_lms.get(p.get("geoid")), dict)]   # live county pages only (G3: "counties on this site", never U.S.)
+_lml = [p for p in _lmp if _lms[p["geoid"]].get("loma") is not None]     # LL4: a county whose LOMA query failed is left out and counted
+if len(_lml) >= 50:   # LOMA/LOMR guide (KWP 11-12 "loma flood zone" 100-1K, "lomr" 100-1K): top 3 (North Port, Key West, FEMA) print the process,
+    # none prints what the rulings decided; FEMA's map service does (NFHL layer 34 OUTCOME, grouped by codes.loma_group as county pages do)
+    from codes import loma_group as _lg
+    _lgt = collections.Counter(); _lst = {}
+    for p in _lml:
+        for k, n in _lms[p["geoid"]]["loma"].items():
+            _lgt[_lg(k)] += n; _lst.setdefault(p["state"], collections.Counter())[_lg(k)] += n
+        _lst.setdefault(p["state"], collections.Counter())["_c"] += 1   # a county with zero rulings ({}) still counts (KeyError before 11-14)
+    _ltot = sum(v for k, v in _lgt.items())
+    _lrm, _lam, _lden, _loth = _lgt["bldg"] + _lgt["whole"] + _lgt["part"], _lgt["bldg_out"] + _lgt["out"], _lgt["denied"], _lgt["other"]
+    _lpc = lambda n, t=None: f"{100 * n / (t or _ltot):.1f}%"
+    _lrp = [p for p in _lmp if "lomr" in _lms[p["geoid"]]]; _lsince = {_lms[p["geoid"]].get("lomr_since") for p in _lrp}
+    _lrn, _lrr = sum(_lms[p["geoid"]]["lomr"] for p in _lrp), sum(_lms[p["geoid"]]["lomr_recent"] for p in _lrp)
+    _lret = _dtm.date.fromisoformat(_lms["_retrieved"]).strftime("%B %d, %Y").replace(" 0", " ") if _lms.get("_retrieved") else None
+    _snm2 = {s.get("abbr"): s for s in states}
+    _lrows = sorted(((ab, c) for ab, c in _lst.items() if ab in _snm2), key=lambda t: -sum(v for k, v in t[1].items() if k != "_c"))
+    def _lrow(ab, c):
+        t = sum(v for k, v in c.items() if k != "_c")
+        return (f'<tr><td><a href="/flood-insurance/{_snm2[ab]["slug"]}/">{html.escape(_snm2[ab]["name"])}</a></td><td>{c["_c"]}</td><td>{t:,}</td>'
+                f'<td>{_lpc(c["bldg"] + c["whole"] + c["part"], t) if t else "—"}</td><td>{_lpc(c["denied"], t) if t else "—"}</td></tr>')
+    _lrt = "".join(f'<tr><td>{lab}</td><td>{_lpc(n)}</td><td>{n:,}</td></tr>' for lab, n in sorted([   # rank by value, never file order
+        ("Building taken out (part of the lot still inside)", _lgt["bldg"]), ("Denied", _lden), ("Whole property taken out", _lgt["whole"]),
+        ("Part of the property taken out", _lgt["part"]), ("Already outside the zone as mapped", _lam), ("Other, mixed or no outcome recorded", _loth)], key=lambda t: -t[1]))
+    if _ltot and len(_lsince) <= 1 and None not in _lsince and _lret:   # LL6: one "since" date, or no LOMR counties and no LOMR sentence; LL10: retrieval date printed
+        _lk = ["loma", "lomr_def", "lomr_f_def", "loma_fee", "lomr_fees", "loma_online", "zone_review", "ec_get", "prelim"]
+        pg = HEAD.format(title="LOMA and LOMR: getting a home out of a FEMA flood zone, and what FEMA's rulings decided",
+                         desc=f"What a Letter of Map Amendment (LOMA) and a Letter of Map Revision (LOMR) are, and how {_ltot:,} rulings in FEMA's LOMA map layer in {len(_lml)} of the {len(places)} counties on this site came out, from FEMA's map service.",
+                         canon=BASE + "/guides/loma-lomr/") + f"""
+<h1>LOMA and LOMR: getting a home out of a FEMA flood zone</h1>
+<p class="lede">FEMA's map service lists {_ltot:,} rulings in its LOMA map layer for owners in {len(_lml)} of the {len(places)} counties on this site who asked FEMA to take a building or lot out of the high-risk flood zone: {_lpc(_lrm)} took the building or some or all of the lot out, {_lpc(_lden)} were denied. {rule("loma")}</p>
+<div class="stats"><div class="stat"><div class="n">{_lpc(_lrm)}</div><div class="l">of {_ltot:,} rulings in FEMA's LOMA layer: building or some or all of the lot taken out of the high-risk zone</div></div>
+<div class="stat"><div class="n">{_lpc(_lden)}</div><div class="l">of {_ltot:,} rulings in FEMA's LOMA layer: denied</div></div></div>
+<p class="mut">FEMA National Flood Hazard Layer map service (LOMA layer, OUTCOME field), retrieved {_lret}: every ruling FEMA lists for the National Flood Insurance Program (NFIP) communities in {len(_lml)} of the {len(places)} counties on this site{f"; {len(_lmp) - len(_lml)} counties returned no LOMA list and are left out" if len(_lmp) > len(_lml) else ""}. These are rulings for owners who applied, not your home's odds, and FEMA's map service gives no dates for them.</p>
+<div class="card"><h2>How did the rulings come out?</h2><p class="stand">Counted by FEMA's own outcome wording. "Removed" means taken out of the high-risk zone on the map, never torn down.</p>
+<table><thead><tr><th>FEMA's ruling</th><th>Share</th><th>Rulings</th></tr></thead><tbody>
+{_lrt}</tbody></table>
+<p class="mut">"Already outside as mapped" means FEMA found the building or property was not in the high-risk zone on the map to begin with. "Other" holds FEMA's "Multiple" and "UNKNOWN", rulings with no outcome recorded, and rarer wordings.</p></div>
+<div class="card"><h2>LOMA or LOMR: what is the difference?</h2><p class="stand">{rule("lomr_def")}</p><p class="stand">{rule("lomr_f_def")}</p><p class="stand">{rule("loma_fee")} {rule("lomr_fees")}</p>
+{f'<p class="stand">FEMA has revised the countywide flood maps of {len(_lrp)} of the {len(places)} counties on this site with {_lrn:,} Letters of Map Revision, {_lrr:,} of them in effect since {_dtm.date.fromisoformat(next(iter(_lsince))).strftime("%B %d, %Y").replace(" 0", " ")}. Counties without a countywide digital map are not counted.</p>' if _lrp else ""}</div>
+<div class="card"><h2>How to ask FEMA</h2><p class="stand">{rule("loma_online")} {rule("ec_get")} {rule("zone_review")}</p><p class="stand">{rule("prelim")}</p>
+<p class="mut">To see the zone FEMA's map shows at an address: <a href="/flood-zone-map/">flood zone map</a>.</p></div>
+<div class="card"><h2>Rulings in FEMA's LOMA layer, state by state</h2><p class="stand">Rulings for owners in the counties on this site, by state, most rulings first. Each state page lists its counties; each county page shows its own rulings.</p>
+<table><thead><tr><th>State</th><th>Counties</th><th>Rulings</th><th>Taken out</th><th>Denied</th></tr></thead><tbody>{"".join(_lrow(ab, c) for ab, c in _lrows)}</tbody></table>
+<p class="mut">Counted by the towns and areas FEMA lists in each county, so a city that reaches into a neighboring county counts in full in its own county.</p></div>
+<div class="card"><h2>What this page cannot tell you</h2><p class="stand">Whether your home would get a LOMA, whether your lender will still require flood insurance after one, your premium, or rulings for counties not on this site.</p>
+<p class="mut">Sources: FEMA National Flood Hazard Layer (map service), retrieved {_lret}; rules from {_rule_hosts(_lk)}. <a href="/methodology/">How we check them</a>.</p></div>{FOOT}"""
+        wr(os.path.join(DIST, "guides", "loma-lomr", "index.html"), pg)
+        zone_urls.append((BASE + "/guides/loma-lomr/", None))
+        GUIDES.append(("/guides/loma-lomr/", "LOMA and LOMR: getting out of a flood zone"))
+
 if GUIDES:   # /guides/: every guide that built this run, nothing typed by hand (11-13); home links it
     pg = HEAD.format(title="Flood insurance questions answered with FEMA's records", desc="Guides to common flood-insurance questions, each answered with FEMA's own rules and records.",
                      canon=BASE + "/guides/") + "<h1>Flood insurance questions, answered with FEMA's records</h1><div class=\"card\"><ul>" \
@@ -1304,7 +1358,7 @@ if _zm_on == "all" or "flood-zone-map" in _zm_on:
 <div class="card"><h2>What the zones mean</h2><p class="stand">{rule("zone_codes")}</p>
 {("<p>Each zone, with what it costs and what claims there paid: " + " · ".join(f'<a href="/flood-zones/{k}/">Zone {v[0]}</a>' for k, v in ZONES.items() if os.path.exists(os.path.join(DIST, "flood-zones", k, "index.html"))) + ".</p>") if any(os.path.exists(os.path.join(DIST, "flood-zones", k, "index.html")) for k in ZONES) else ""}</div>
 <div class="card"><h2>Must I buy flood insurance in my zone?</h2><p class="stand">{rule("purchase_answer")} {rule("lender_any_zone")}</p></div>
-<div class="card"><h2>If the zone looks wrong</h2><p class="stand">{rule("loma")} {rule("loma_fee")} {rule("loma_online")} {rule("zone_review")}</p></div>
+<div class="card"><h2>If the zone looks wrong</h2><p class="stand">{rule("loma")} {rule("loma_fee")} {rule("loma_online")} {rule("zone_review")}</p>{'<p>How FEMA ruled on past requests: <a href="/guides/loma-lomr/">LOMA and LOMR rulings</a>.</p>' if any(u == "/guides/loma-lomr/" for u, _ in GUIDES) else ""}</div>
 <div class="card"><h2>Is my map about to change?</h2><p class="stand">{rule("prelim")}</p></div>
 <div class="card"><h2>What this tool cannot tell you</h2><p class="stand">Your premium, whether your lender will require a policy, and anything FEMA's digital map does not cover. The zone shown is FEMA's map, not an official determination.</p>
 <p><a href="/flood-insurance/">Your state and county</a>: what policies there cost and what floods there paid.</p>

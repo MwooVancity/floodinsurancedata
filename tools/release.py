@@ -78,6 +78,7 @@ else:
     step("county towns: Census place and ZIP in this county", os.path.join(T, "town_check.py"))
     step("town check mutations", os.path.join(T, "town_check.py"), "--test")
     step("unit tests", os.path.join(T, "test_calc.py"))
+    step("25-a-day cap cases", os.path.join(T, "new_pages_cap.py"), "--test")
     step("cloud aggregation on a synthetic FEMA download", os.path.join(T, "test_raw.py"))
     step("mutation suite", os.path.join(T, "test_gate.py"))
     step("factory stress (edge-case data, no crash)", os.path.join(T, "test_factory.py"))
@@ -110,6 +111,9 @@ else:
                 new_keys = set(re.findall(r'data-m="(\w+)"', open(os.path.join(d, f), encoding="utf-8").read())) - set(re.findall(r'data-m="(\w+)"', old))
                 if old and new_keys: grew.append(f"{rel}: {sorted(new_keys)}")
         if grew: sys.exit("RELEASE STOPPED at: hotfix adds figures (needs a hater review): " + "; ".join(grew[:5]))
+    # owner 11-14: at most 25 new pages a day, all kinds; the ledger is written only by a run that ships (here or the cloud publish)
+    _cap = [sys.executable, "-I", os.path.join(T, "new_pages_cap.py")] + (["--record"] if "--ship" in sys.argv or os.environ.get("GITHUB_ACTIONS") == "true" else [])
+    if subprocess.run(_cap).returncode: sys.exit("RELEASE STOPPED at: 25 new pages a day (tools/new_pages_cap.py)")
     if "--ship" not in sys.argv: sys.exit(print("READY TO SHIP: release.py --ship [--hotfix \"reason\"]"))
     # deploy.yml deploys the COMMITTED dist on any push that changes it, so commit the built pages before anything ships
     R = os.path.dirname(T); g = lambda *a: subprocess.run(["git", *a], cwd=R, check=True)

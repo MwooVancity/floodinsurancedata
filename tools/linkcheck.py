@@ -23,6 +23,16 @@ def fails(pages, indexable):
     return out
 
 
+def state_fails(pages, county_state):
+    """11-14: a hotfix built county pages while built.json listed no states, and 312 county pages shipped without their state
+    link (no gate saw it). county_state = {county path: its state page path}; each built state page must be linked."""
+    out = []
+    for p, sp in sorted(county_state.items()):
+        if p in pages and sp in pages and not re.search(r"""href=["'](?:\.\./|/flood-insurance/)""" + re.escape(sp.rstrip("/").rsplit("/", 1)[1]) + r"""/["']""", pages[p]):
+            out.append(f"{p}: no link to its state page {sp}")
+    return out
+
+
 def graph_fails(pages, indexable):
     """Every internal link lands on a built page; every indexable page has an inbound link from another page."""
     out, inbound = [], {p: 0 for p in indexable}

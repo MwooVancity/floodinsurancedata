@@ -2,7 +2,7 @@
 Fails on: C1 lede total, share or county range differs; C2 a table row (claims, share) differs, a county with 500+
 claims is missing or one under is listed; C3 the CSV differs from the table; C4 the word "denied" anywhere outside FEMA's
 own reason labels. Usage: python -I tools/claims_check.py [--test]   (--test: each mutation must fail the check)"""
-import csv, glob, json, os, re, sys
+import collections, csv, glob, json, os, re, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 D = os.path.join(ROOT, "data")
 ERR = {"98", "99"}
@@ -286,6 +286,43 @@ def check_rr2(page):   # Risk Rating 2.0 guide (11-13): U.S. share below full ri
     if got != sorted((x["below_n"], x["share_below"], x["below_gap_median"]) for x in rows): bad.append(f"R2 state rows {len(got)} vs {len(rows)}")
     return bad
 
+def check_loma(page, ms=None):   # LOMA/LOMR guide (11-14): outcomes regrouped from map_status.json with this file's own map (LL1-LL6), no build_site code
+    ms = ms if ms is not None else json.load(open(os.path.join(D, "us", "map_status.json")))
+    live = {p["geoid"]: p["state"] for p in json.load(open(os.path.join(ROOT, "places.json")))}
+    cs = {g: v for g, v in ms.items() if g in live and isinstance(v, dict)}
+    lo = {g: v["loma"] for g, v in cs.items() if v.get("loma") is not None}
+    def grp(o):   # FEMA OUTCOME wording; checked first-match in this order: denied, removed, out as shown, everything else
+        o = o.split("|")[0].lower()
+        return "den" if "denied" in o else "rm" if o.startswith(("structure removed", "property removed", "portion of property removed")) else "as" if "out as shown" in o else "oth"
+    g = collections.Counter(); bys = {}
+    for k, d in lo.items():
+        for o, n in d.items(): g[grp(o)] += n; bys.setdefault(live[k], collections.Counter())[grp(o)] += n
+    t = sum(g.values()); pc = lambda n, d=None: f"{100 * n / (d or t):.1f}%"; bad = []
+    tx = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", page))
+    want = (f"FEMA's map service lists {t:,} rulings in its LOMA map layer for owners in {len(lo)} of the {len(live)} counties on this site who asked FEMA to take a building or lot out "
+            f"of the high-risk flood zone: {pc(g['rm'])} took the building or some or all of the lot out, {pc(g['den'])} were denied.")
+    if want not in tx: bad.append(f"L1 lede: want {t:,} rulings, {len(lo)} counties, {pc(g['rm'])} out, {pc(g['den'])} denied")
+    for lab, n in (("Denied", g["den"]), ("Already outside the zone as mapped", g["as"]), ("Other, mixed or no outcome recorded", g["oth"])):
+        if f"<tr><td>{lab}</td><td>{pc(n)}</td><td>{n:,}</td></tr>" not in page: bad.append(f"L1 outcome row {lab}: {pc(n)} {n:,}")
+    rs = [int(x.replace(",", "")) for x in re.findall(r"<tr><td>[A-Z][^<]*</td><td>[\d.]+%</td><td>([\d,]+)</td></tr>", page)]
+    if rs != sorted(rs, reverse=True) or sum(rs) != t: bad.append(f"L1 outcome table not ranked by value or does not sum to {t:,}")
+    seen = collections.Counter(c for k in lo for c in cs[k].get("cids", []))   # LL2: a community under two counties would be summed twice
+    if any(n > 1 for n in seen.values()): bad.append(f"L2 {sum(n > 1 for n in seen.values())} communities listed under two counties")
+    lede = tx[tx.find("FEMA's map service lists"):tx.find("were denied.")]
+    if re.search(r"\bU\.S\.|\bnationwide\b|\bthe nation\b", lede): bad.append("L3 LOMA lede labelled national; the base is counties on this site")
+    lr = [v for v in cs.values() if "lomr" in v]; sn = {v.get("lomr_since") for v in lr}
+    if len(sn) > 1 or None in sn: bad.append(f"L4 {len(sn)} LOMR 'since' dates")
+    elif not sn:   # no county with a LOMR count: the page prints no LOMR sentence (and still builds)
+        if "Letters of Map Revision, " in tx: bad.append("L4 LOMR sentence with no LOMR counties")
+    elif f"of {len(lr)} of the {len(live)} counties on this site with {sum(v['lomr'] for v in lr):,} Letters of Map Revision, {sum(v['lomr_recent'] for v in lr):,} of them" not in tx:
+        bad.append("L4 LOMR sentence differs")
+    got = sorted((int(b.replace(",", "")), c, d) for b, c, d in re.findall(r'<tr><td><a href="/flood-insurance/[a-z-]+/">[^<]+</a></td><td>\d+</td><td>([\d,]+)</td><td>([\d.]+%|—)</td><td>([\d.]+%|—)</td></tr>', page))
+    for k, d in lo.items():
+        if not d: bys.setdefault(live[k], collections.Counter())   # a state whose counties list zero rulings still prints its row, shares "—"
+    sh = lambda n, d: pc(n, d) if d else "—"
+    if got != sorted((sum(c.values()), sh(c["rm"], sum(c.values())), sh(c["den"], sum(c.values()))) for c in bys.values()): bad.append(f"L5 state rows {len(got)} vs {len(bys)}")
+    return bad
+
 def RULE_TEXT(k):
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     return __import__("rules_registry").RULES[k]["text"]
@@ -342,7 +379,8 @@ if __name__ == "__main__":
         pv = open(os.path.join(ROOT, "dist", "guides", "private-flood-insurance", "index.html"), encoding="utf-8").read()
         bh = open(os.path.join(ROOT, "dist", "guides", "buying-a-house-in-a-flood-zone", "index.html"), encoding="utf-8").read()
         rr = open(os.path.join(ROOT, "dist", "guides", "risk-rating-2", "index.html"), encoding="utf-8").read()
-        bad = check_guides(pg, zx) + check_condo(cg) + check_deductible(dg) + check_vents(vg) + check_private(pv) + check_rr2(rr) + check_order(bh, "wait_30", "start_loan", "O1")
+        lg = open(os.path.join(ROOT, "dist", "guides", "loma-lomr", "index.html"), encoding="utf-8").read()
+        bad = check_guides(pg, zx) + check_condo(cg) + check_deductible(dg) + check_vents(vg) + check_private(pv) + check_rr2(rr) + check_loma(lg) + check_order(bh, "wait_30", "start_loan", "O1")
         sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
         from rules_registry import RULES as _RQ
         bad += check_rule_quotes(_RQ)
@@ -358,6 +396,23 @@ if __name__ == "__main__":
             assert check_order(bh.replace('data-rule="wait_30"', 'data-rule="wait_x"'), "wait_30", "start_loan", "O1"), "mutation not caught: O1 exception without rule"
             assert check_vents(re.sub(r"</a></td><td>([\d.]+)%</td>", lambda m_: f"</a></td><td>{float(m_[1]) + 1}%</td>", vg, count=1)), "mutation not caught: vents state row"
             assert check_rr2(re.sub(r"(\d+)(% of the [\d,]+ U\.S\. single-family)", lambda m_: f"{int(m_[1]) + 1}{m_[2]}", rr, count=1)), "mutation not caught: rr2 U.S. share"
+            assert check_loma(re.sub(r"([\d.]+)(% took the building)", lambda m_: f"{float(m_[1]) + 0.1:.1f}{m_[2]}", lg, count=1)), "mutation not caught: LOMA lede share"
+            assert check_loma(re.sub(r"(<tr><td>Denied</td><td>[\d.]+%</td><td>)([\d,]+)", lambda m_: m_[1] + "1", lg, count=1)), "mutation not caught: LOMA outcome row"
+            assert check_loma(lg.replace("counties on this site who asked", "U.S. counties on this site who asked", 1)), "mutation not caught: L3 U.S. label"
+            assert check_loma(re.sub(r"(</a></td><td>\d+</td><td>[\d,]+</td><td>)([\d.]+)%", lambda m_: f"{m_[1]}{float(m_[2]) + 1:.1f}%", lg, count=1)), "mutation not caught: LOMA state row"
+            _ms = json.load(open(os.path.join(D, "us", "map_status.json"))); _a, _b = [k for k, v in _ms.items() if isinstance(v, dict) and v.get("cids")][:2]
+            _ms[_b] = dict(_ms[_b], cids=_ms[_b]["cids"] + _ms[_a]["cids"][:1])
+            assert any(b.startswith("L2") for b in check_loma(lg, _ms)), "mutation not caught: L2 community in two counties"
+            _ms = json.load(open(os.path.join(D, "us", "map_status.json")))   # 11-14 review: no LOMR counties = page without the sentence, not an L4 failure
+            _nl = {k: ({a: b for a, b in v.items() if not a.startswith("lomr")} if isinstance(v, dict) else v) for k, v in _ms.items()}
+            _lg0 = re.sub(r'<p class="stand">FEMA has revised the countywide.*?</p>', "", lg, count=1, flags=re.S)
+            assert not any(b.startswith("L4") for b in check_loma(_lg0, _nl)), "false failure: L4 with no LOMR counties"
+            assert any(b.startswith("L4") for b in check_loma(lg, _nl)), "mutation not caught: L4 LOMR sentence with no LOMR counties"
+            _vt = [p["geoid"] for p in json.load(open(os.path.join(ROOT, "places.json"))) if p["state"] == "VT"]   # 11-14 review: a state with zero rulings prints "—"
+            if _vt and isinstance(_ms.get(_vt[0]), dict) and _ms[_vt[0]].get("loma") is not None:
+                _zv = dict(_ms, **{_vt[0]: dict(_ms[_vt[0]], loma={})})
+                _lgv = re.sub(r'(<a href="/flood-insurance/vermont/">Vermont</a></td><td>\d+</td><td>)[^<]*</td><td>[^<]*</td><td>[^<]*', r"\g<1>0</td><td>—</td><td>—", lg, count=1)
+                assert not any(b.startswith("L5") for b in check_loma(_lgv, _zv)), "false failure: L5 on a state with zero rulings"
             assert check_rr2(re.sub(r"</a></td><td>([\d.]+)%</td><td>\$([\d,]+)</td>", lambda m_: f"</a></td><td>{m_[1]}%</td><td>${int(m_[2].replace(',', '')) + 1:,}</td>", rr, count=1)), "mutation not caught: rr2 gap"
         if "--test" in sys.argv:
             assert check_deductible(re.sub(r"<td>([\d.]+)%</td><td>([\d.]+)%</td></tr>", lambda m_: f"<td>{float(m_[1]) + 1}%</td><td>{m_[2]}%</td></tr>", dg, count=1)), "mutation not caught: deductible share"
@@ -368,7 +423,7 @@ if __name__ == "__main__":
             assert not bad, bad
             assert check_guides(re.sub(r">(\d+)%<", lambda m_: f">{int(m_[1]) + 1}%<", pg, count=1), zx), "mutation not caught: tile"
             assert check_guides(pg, re.sub(r"(zone on the claim, )(\d+)%", lambda m_: m_[1] + str(int(m_[2]) + 1) + "%", zx, count=1)), "mutation not caught: zone X disagrees"
-            print("guides check mutations: 17 caught"); sys.exit()
+            print("guides check mutations: 23 caught, 2 false failures ruled out"); sys.exit()
         for b in bad: print("  -", b)
         print("GUIDES CHECK", "FAIL" if bad else "PASS"); sys.exit(1 if bad else 0)
     if "--renters" in sys.argv:

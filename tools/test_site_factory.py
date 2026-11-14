@@ -43,6 +43,9 @@ CASES = {
     "asof_dec31": bend(("us", "asof.json"), lambda v: {"asof": "2026-12-31"}),
     "zip_places_empty": bend(("us", "zip_places.json"), lambda v: {}),
     "map_status_empty": bend(("us", "map_status.json"), lambda v: {}),
+    # 11-14 LOMA guide: a county with zero rulings ({}) crashed the state table; no LOMR counts at all must still build the page
+    "loma_zero_no_lomr": bend(("us", "map_status.json"), lambda v: {k: ({a: b for a, b in x.items() if not a.startswith("lomr")} | ({"loma": {}} if k.startswith("50") else {})
+                                                                         if isinstance(x, dict) else x) for k, x in v.items()}),
     "refund_bucket": bend(("us", "cost_hist.json"), add_bucket("TX", "-250", 40)),
     "billion_bucket": bend(("us", "cost_hist.json"), add_bucket("CA", "1000000000", 1)),
     "one_policy_state": bend(("us", "cost_hist.json"), lambda d: dict(d, WY={"500": 1})),
