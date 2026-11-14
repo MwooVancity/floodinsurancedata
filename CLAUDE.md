@@ -21,6 +21,7 @@ US homeowner or buyer at one place, on a phone, 30-60 seconds, urgent. Above tab
 ## Site (HARD)
 - 51 states; counties (median floor `metrics.CONST["min_priced"]` = 30, gate C14); ZIPs fold into the county page; no city pages; ceiling ~2,000.
 - Counties last (owner 11-07): 20 a day, queue "kw" > 0 only; live pages stay indexed.
+- At most 25 new pages a day, all kinds together (owner 11-14); a release adding more stops.
 - No stuffing, doorway, near-duplicate pages, fake freshness, hidden text. One colour system; answers on screen 1; static, no client frameworks. No card or page-length caps.
 - No paid referrals before a licensing + FTC check; no ads before a 4-week Search Console review.
 - Owner alone: domain, Search Console, ads and consent banner, publisher identity (site anonymous), opening pages to the index, paid referrals, cutting any block.

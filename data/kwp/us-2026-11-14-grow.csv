@@ -1,0 +1,26 @@
+keyword,avg_monthly_band,cluster,our_page_today
+flood insurance cost,1K-10K,price,/ (home: cost by state and county)
+how much is flood insurance,1K-10K,price,/ (home: cost by state and county)
+nfip flood insurance,1K-10K,nfip,/nfip/
+sba disaster loan,1K-10K,after disaster,none (no SBA data held)
+sba disaster home loan,100-1K,after disaster,none (no SBA data held)
+lomr,100-1K,get out of zone,county pages (LOMR count line)
+do i need flood insurance,100-1K,required,/ (home: am I required)
+is flood insurance required,100-1K,required,/ (home: am I required)
+letter of map revision,10-100,get out of zone,county pages (LOMR count line)
+how to get out of a flood zone,10-100,get out of zone,county pages (LOMA outcomes)
+flood insurance lender requirements,10-100,required,/ (home: lender_any_zone rule)
+flood insurance contents coverage,10-100,coverage,county pages (contents share)
+flood insurance waiting period,10-100,buying,/ (home: how fast it starts)
+flood insurance coverage limits,10-100,coverage,/guides/private-flood-insurance/ (limits)
+flood insurance premium increase,10-100,price,/guides/risk-rating-2/
+why did my flood insurance go up,10-100,price,/guides/risk-rating-2/
+does fema pay for flood damage,10-100,after disaster,county pages (aid_insurance rule)
+increased cost of compliance coverage,10-100,claims,none
+flood insurance claim denied,10-100,claims,/flood-insurance/claims/
+flood insurance appeal,10-100,claims,/flood-insurance/claims/
+does my mortgage require flood insurance,no data,required,/ (home)
+flood zone change,no data,get out of zone,none
+flood map appeal,no data,get out of zone,none
+sump pump flood insurance,no data,coverage,none
+fema assistance vs flood insurance,no data,after disaster,none

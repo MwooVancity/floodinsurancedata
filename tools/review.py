@@ -20,7 +20,7 @@ def template_hash():
     return h.hexdigest()[:16]
 
 def get(slug):
-    p = os.path.join(DIR, slug + ".json")
+    p = os.path.join(DIR, slug.strip("/").replace("/", "__") + ".json")
     return json.load(open(p, encoding="utf-8")) if os.path.exists(p) else None
 
 def own_pass(slug, th=None):
@@ -81,11 +81,13 @@ def ok(slug, th=None):
     # round 32 passed the round-31 fixes on flagged examples (Manhattan, Broward), so kind approval is back on
     return template_ok(th) and (not fl or kind_approved(fl, th))
 
-def record(slug, verdict, defects, reviewer, notes="", template=None):
-    """template = the hash the reviewer saw (saved at prep); an edit made after the review must not inherit its PASS."""
+def record(slug, verdict, defects, reviewer, notes="", template=None, editor_sha=None):
+    """template = the hash the reviewer saw (saved at prep); an edit made after the review must not inherit its PASS.
+    editor_sha (11-14) = exact visible text of an --editor round (screenshots + Forbes-editor read): tools/outreach_gate.py."""
     os.makedirs(DIR, exist_ok=True)
-    json.dump({"slug": slug, "verdict": verdict, "template": template or template_hash(), "defects": defects, "reviewer": reviewer,
-               "notes": notes}, open(os.path.join(DIR, slug + ".json"), "w", encoding="utf-8"), indent=1, ensure_ascii=False)
+    d = {"slug": slug, "verdict": verdict, "template": template or template_hash(), "defects": defects, "reviewer": reviewer, "notes": notes}
+    if editor_sha: d["editor_sha"] = editor_sha
+    json.dump(d, open(os.path.join(DIR, slug.strip("/").replace("/", "__") + ".json"), "w", encoding="utf-8"), indent=1, ensure_ascii=False)
 
 if __name__ == "__main__" and sys.argv[1:2] == ["status"]:
     th = template_hash(); places = json.load(open(os.path.join(ROOT, "places.json")))

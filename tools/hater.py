@@ -1,7 +1,9 @@
 """The hater gate's mechanical half. The judging half is a fresh agent running docs/HATER-PROMPT.md.
   python -I tools/hater.py prep <round> <slug> [<slug> ...] [--local]   phone screenshots of the LIVE pages (or of dist/) + the filled brief
   python -I tools/hater.py record <round>                     read the review, write state/reviews/<slug>.json
-A slug is "home", a state slug or a county slug. record writes PASS only for a section ending "Verdict: PASS" with
+A slug is "home", a state slug, a county slug, or a site path such as guides/loma-lomr (any page, 11-14).
+  prep ... --editor   outreach gate (owner 11-14 "read it like a human Forbes editor; screenshot every page"): phone, desktop,
+  dark-mode and JavaScript-off screenshots, no random pages, each page's exact visible text hashed for tools/outreach_gate.py. record writes PASS only for a section ending "Verdict: PASS" with
 no BLOCKER or MAJOR in it; google_gate.py S12 refuses any indexable page without a current PASS (tools/review.py)."""
 import json, os, re, shutil, sys
 T = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(T)
@@ -12,9 +14,14 @@ DIR = os.path.join(ROOT, "state", "reviews")
 LOCAL = "--local" in sys.argv   # review the new build in dist/ before it ships (the live site still has the old pages)
 def url(slug):
     if LOCAL: return "file:///" + html_path(slug).replace("\\", "/")
+    if "/" in slug: return f"{BASE}/{slug.strip('/')}/"
     return BASE + "/" if slug == "home" else f"{BASE}/flood-insurance/{slug}/"
+def fname(slug): return slug.strip("/").replace("/", "__")   # a site path as one file name
+def exact_text(h):   # outreach gate: every word and number a reader sees, nothing normalised
+    return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", re.sub(r"<(script|style|head)\b.*?</\1>", " ", h, flags=re.S))).strip()
 def html_path(slug):
     if slug == "home": return os.path.join(ROOT, "dist", "index.html")
+    if "/" in slug: return os.path.join(ROOT, "dist", *slug.strip("/").split("/"), "index.html")
     p = os.path.join(ROOT, "dist", "flood-insurance", slug, "index.html")
     # a queued county held for its own review exists only in the review build (build_counties.py --all) until it ships
     q = os.path.join(ROOT, "review", "flood-insurance", slug, "index.html")
@@ -43,7 +50,7 @@ def snap(rnd, slugs):
     d = os.path.join(SNAP, f"round{rnd}"); os.makedirs(d, exist_ok=True)
     old = sorted((x for x in os.listdir(SNAP) if x.startswith("round")), key=lambda x: int(x[5:]))[:-3]   # cap: last 3 rounds + passed
     for x in old: shutil.rmtree(os.path.join(SNAP, x), ignore_errors=True)
-    for s in slugs: open(os.path.join(d, s + ".txt"), "w", encoding="utf-8").write(vis_text(open(html_path(s), encoding="utf-8").read()))
+    for s in slugs: open(os.path.join(d, fname(s) + ".txt"), "w", encoding="utf-8").write(vis_text(open(html_path(s), encoding="utf-8").read()))
 
 def prep(rnd, slugs):
     if "--light" in sys.argv:   # CLAUDE.md budget: changed cards only, page text, no screenshots, no random pages
@@ -51,9 +58,10 @@ def prep(rnd, slugs):
         return print("light round: template", RV.template_hash(), "pages:", " ".join(html_path(s) for s in slugs))
     # 2 random pages each round beside the samples: findings came only from the same 3-4 pages (2026-10-28)
     import random
+    ED = "--editor" in sys.argv
     pool = [p["slug"] for p in json.load(open(os.path.join(ROOT, "places.json")))] + \
            [s["slug"] for s in json.load(open(os.path.join(ROOT, "data", "states", "built.json")))]
-    slugs = list(slugs) + random.Random(int(rnd)).sample(sorted(set(pool) - set(slugs)), 2)
+    slugs = list(slugs) + ([] if ED else random.Random(int(rnd)).sample(sorted(set(pool) - set(slugs)), 2))
     from playwright.sync_api import sync_playwright
     for x in os.listdir(DIR):   # cap: only this round's screenshots stay on disk (72 MB had piled up by 11-04)
         if re.fullmatch(r"round\d+", x) and x != f"round{rnd}": shutil.rmtree(os.path.join(DIR, x), ignore_errors=True)
@@ -67,8 +75,24 @@ def prep(rnd, slugs):
             pg.goto(url(s) + ("" if LOCAL else "?hater=" + str(rnd)), wait_until="networkidle")   # the live page, past any cache
             n = -(-pg.evaluate("document.documentElement.scrollHeight") // 844)
             for i in range(n):
-                pg.evaluate(f"window.scrollTo(0,{i * 844})"); pg.screenshot(path=os.path.join(shots, f"{s}-{i:02d}.png"))
-            listing.append(f"{s}-00..{s}-{n - 1:02d}.png")
+                pg.evaluate(f"window.scrollTo(0,{i * 844})"); pg.screenshot(path=os.path.join(shots, f"{fname(s)}-{i:02d}.png"))
+            listing.append(f"{fname(s)}-00..{fname(s)}-{n - 1:02d}.png")
+        if ED:   # desktop full page; dark mode and JavaScript off: the first two phone screens of each page
+            for tag, kw in (("desktop", {"viewport": {"width": 1366, "height": 900}}),
+                            ("dark", {"viewport": {"width": 390, "height": 844}, "color_scheme": "dark", "is_mobile": True}),
+                            ("nojs", {"viewport": {"width": 390, "height": 844}, "java_script_enabled": False, "is_mobile": True})):
+                c = b.new_context(**kw); q = c.new_page()
+                for s in slugs:
+                    q.goto(url(s) + ("" if LOCAL else "?editor=" + str(rnd)), wait_until="networkidle")
+                    if tag == "desktop": q.screenshot(path=os.path.join(shots, f"{fname(s)}-desktop.png"), full_page=True); continue
+                    for i in range(2):
+                        q.evaluate(f"window.scrollTo(0,{i * 844})"); q.screenshot(path=os.path.join(shots, f"{fname(s)}-{tag}-{i}.png"))
+                c.close()
+            listing.append("per page also: -desktop.png (full page), -dark-0/1.png, -nojs-0/1.png")
+            import hashlib
+            json.dump({s: hashlib.sha256(exact_text(open(html_path(s), encoding="utf-8").read()).encode()).hexdigest() for s in slugs},
+                      open(os.path.join(DIR, f"round{rnd}-editor.json"), "w"))
+            snap(rnd, slugs)
         b.close()
     prev = os.path.join(DIR, f"hater-round{int(rnd) - 1}.md")
     fill = {"pages": ", ".join(url(s) for s in slugs), "slugs": ", ".join(slugs),
@@ -93,20 +117,22 @@ def record(rnd):
     th = open(tf).read().strip()
     if th and th != RV.template_hash(): print(f"template changed since round {rnd} prep: its PASS will not cover the current build")
     for slug, sec in re.findall(r"^## (\S+)[^\n]*\n(.*?)(?=^## |\Z)", txt, re.S | re.M):
-        slug = slug.strip("`/").split("/")[-1] or "home"
-        if not (slug == "home" or data_dir(slug)): continue   # "Classes", "Previous items"
+        slug = slug.strip("`/")
+        if "/" not in slug or not os.path.exists(html_path(slug)): slug = slug.split("/")[-1] or "home"   # a site path stays whole (11-14)
+        if not (slug == "home" or data_dir(slug) or ("/" in slug and os.path.exists(html_path(slug)))): continue   # "Classes", "Previous items"
         v = re.search(r"Verdict:\s*\**\s*(PASS|FAIL)", sec)
         bad = re.findall(r"\*\*(BLOCKER|MAJOR)\*\*[^\n]*", sec)
         verdict = "PASS" if v and v.group(1) == "PASS" and not bad else "FAIL"
         RV.record(slug, verdict, [b[:160] for b in re.findall(r"\*\*(?:BLOCKER|MAJOR)\*\*[^\n]*", sec)][:60],
-                  reviewer=f"hater round {rnd} (fresh agent, docs/HATER-PROMPT.md)", template=th)
+                  reviewer=f"hater round {rnd} (fresh agent, docs/HATER-PROMPT.md)", template=th,
+                  editor_sha=(json.load(open(_ed)).get(slug) if os.path.exists(_ed := os.path.join(DIR, f"round{rnd}-editor.json")) else None))
         gaps = re.findall(r"\*\*GAP[^*]*\*\*[^\n]*", sec)   # owner 2026-10-28: gaps never block; they go to the to-do list
         if gaps:
             with open(os.path.join(DIR, "backlog.md"), "a", encoding="utf-8") as f:
                 f.write(f"\n## {slug} (round {rnd})\n" + "".join(f"- {re.sub(r'^[*]{2}GAP[^*]*[*]{2}', '', g).strip()}\n" for g in gaps))
-        sp = os.path.join(SNAP, f"round{rnd}", slug + ".txt")
+        sp = os.path.join(SNAP, f"round{rnd}", fname(slug) + ".txt")
         if verdict == "PASS" and os.path.exists(sp):
-            os.makedirs(os.path.join(SNAP, "passed"), exist_ok=True); shutil.copy(sp, os.path.join(SNAP, "passed", slug + ".txt"))
+            os.makedirs(os.path.join(SNAP, "passed"), exist_ok=True); shutil.copy(sp, os.path.join(SNAP, "passed", fname(slug) + ".txt"))
         print(f"{slug}: {verdict} ({len(bad)} blocker/major, {len(gaps)} gaps to backlog.md)")
 
 def stamped_slugs():
@@ -143,6 +169,6 @@ def carry(rnd, prev, slugs):
 
 if __name__ == "__main__":
     if sys.argv[1:2] == ["carry"]: carry(sys.argv[2], sys.argv[3], sys.argv[4:] or stamped_slugs()); sys.exit()
-    if sys.argv[1:2] == ["prep"]: prep(sys.argv[2], [a for a in sys.argv[3:] if a not in ("--local", "--light")])
+    if sys.argv[1:2] == ["prep"]: prep(sys.argv[2], [a for a in sys.argv[3:] if not a.startswith("--")])
     elif sys.argv[1:2] == ["record"]: record(sys.argv[2])
     else: print(__doc__)

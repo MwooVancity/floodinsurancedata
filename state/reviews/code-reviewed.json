@@ -1,5 +1,5 @@
 {
- "hash": "0a6d6d692102e40491df5aa0fdaf58773e328dc156a2ead9bfde779e38cdcce2",
+ "hash": "6ae313eee009d66154dec130f49d171497df664ec41948cc5bb411cb607aeff7",
  "date": "2026-11-14",
- "note": "11-14: S16 state_fails (+2 test cases, proven on the shipped d455e2966 page), 25-a-day cap new_pages_cap.py (+5 cases) wired into release; reviewed inline"
+ "note": "11-14: outreach editor gate (hater --editor mode, review.editor_sha, outreach_gate.py 10 cases), smoke-tested prep+record on guides/loma-lomr; reviewed inline"
 }
