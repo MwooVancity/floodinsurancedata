@@ -718,6 +718,19 @@ if len(states) == 51:
                    "Claims FEMA records with no county are in no county's row, so the county rows add to less than the U.S. total. "
                    f'Claims from {_ya - 1} and {_ya} may still be open, so totals that include them are not final. '
                    f'<a href="/data/claims-by-county.csv">Download every county ({len(_bc):,} rows, CSV)</a>.</p></div>')
+        # PLAN row 13 (11-13, G1): "flood insurance claim / proof of loss / ICC" folds into this page, no twin guide. G6: none of the top 3
+        # (FloodSmart, insurance.com, NerdWallet) prints how many paid claims carried an ICC payment (claims_check C13). Appeal rule says
+        # "denied" (C4), so it is linked on /nfip/, not printed here.
+        _ex = [json.load(open(os.path.join(DATADIR, "states", s["slug"], "extras.json")))["claims"] for s in states]
+        _icc = (sum(c["icc_claims"] for c in _ex), sum(c["paid_n"] for c in _ex)) if all(c.get("icc_claims") is not None and c.get("paid_n") for c in _ex) else None
+        _y0, _y1 = min(c["year_min"] for c in _cy), max(c["year_max"] for c in _cy)
+        _filecard = ('<div class="card" id="file"><h2>Filing an NFIP flood claim: proof of loss and rebuilding costs</h2>'
+                     f'<p class="stand">{rule("already_flooded")}</p><p class="stand">{rule("substantial_damage")}</p>'
+                     + (f'<p class="stand">Of the {_icc[1]:,} NFIP claims with a recorded payment for losses from {_y0} to {_y1}, all 50 states and DC, '
+                        f'{_icc[0]:,} ({round(100 * _icc[0] / _icc[1], 1)}%) include an Increased Cost of Compliance payment.</p>' if _icc and _icc[0] else '')
+                     + '<p class="mut">FEMA OpenFEMA NFIP Claims v3. A recorded payment is any building, contents or Increased Cost of Compliance payment above $0; records FEMA coded "deleted in error" or "assigned in error" are left out. '
+                     'Puerto Rico and the other territories are not in these totals. FEMA\'s data has no open or closed field, so counts for recent loss years are not final. '
+                     '<a href="/nfip/#rules">NFIP claim appeal deadlines</a> are with the other program rules.</p></div>')
         _rows = "".join(f'<tr><td>{clink(r)}</td><td>{r["n"]:,}</td><td>{r["pct"]}%</td><td>{html.escape(_NR.get(r["top"], "—")) if r["top"] else "—"}</td></tr>' for r in _cr)
         with open(os.path.join(DIST, "data", "claims-2020-counties.csv"), "w", newline="", encoding="utf-8") as f:
             w = csv.writer(f); w.writerow(["county_fips", "county", "state", "claims_loss_year_2020_on", "claims_with_recorded_payment", "share_with_payment_pct",
@@ -731,6 +744,7 @@ if len(states) == 51:
 <div class="stats"><div class="stat"><div class="n">{_pct}%</div><div class="l">Claims with a recorded payment, U.S., losses 2020 on</div></div>
 <div class="stat"><div class="n">{_n:,}</div><div class="l">NFIP claims counted</div></div></div>
 <p class="mut">FEMA OpenFEMA NFIP Claims v3, as of {_ASOF_TXT}. A recorded payment is any building, contents or Increased Cost of Compliance payment above $0. Left out: {_err:,} records FEMA coded "Claim deleted in error" or "Assigned in error"; counted as claims with no payment, the U.S. share would be {round(100 * _paid / (_n + _err), 1)}%. FEMA's data does not say whether a claim is still open, so a recent claim with no payment may still be paid.</p>
+{_filecard}
 <div class="card"><h2>Why claims had no recorded payment</h2><p class="stand">FEMA's recorded reason on the building part of each of the {_un:,} U.S. claims with no recorded payment, losses from 2020 on.</p>
 <table><thead><tr><th>FEMA's recorded reason</th><th>Claims</th><th>Share of claims with no payment</th></tr></thead><tbody>{_why}</tbody></table>
 <p class="mut">The ten most common reasons, as FEMA labels its codes. A reason is FEMA's record, not a finding about what happened to the building.</p></div>

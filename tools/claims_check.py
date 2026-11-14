@@ -60,7 +60,16 @@ def check(page, csvtext):
         if re.search(r"includ\w*[^.<]{0,40}(?:coded|entered)[^.<]{0,30}in error", open(f, encoding="utf-8").read()):
             bad.append(f"C8b {os.path.relpath(f, ROOT)}: says error-coded records are included; every count leaves them out"); break
     if re.search(r"\bdenied\b", text.replace("does not mean a claim was denied", ""), re.I): bad.append("C4 'denied' printed")
-    return bad + check_stories(page) + check_bycounty(page)
+    return bad + check_stories(page) + check_bycounty(page) + check_icc(text)
+
+def check_icc(text):   # C13 (11-13, claim guide folded in): paid claims with an ICC payment, summed from every state's extras.json
+    ex = [json.load(open(p))["claims"] for p in glob.glob(os.path.join(D, "states", "*", "extras.json"))]
+    m = re.search(r"Of the ([\d,]+) NFIP claims with a recorded payment for losses from \d{4} to \d{4}, all 50 states and DC, ([\d,]+) \(([\d.]+)%\) include an Increased Cost of Compliance payment", text)
+    if len(ex) != 51 or any(c.get("icc_claims") is None for c in ex):
+        return ["C13 ICC sentence printed with states missing"] if m else []
+    i, n = sum(c["icc_claims"] for c in ex), sum(c["paid_n"] for c in ex)
+    if not m: return ["C13 ICC sentence missing"] if i else []
+    return [] if (int(m[1].replace(",", "")), int(m[2].replace(",", "")), float(m[3])) == (n, i, round(100 * i / n, 1)) else [f"C13 ICC {m.groups()} vs {n:,}/{i:,}"]
 
 def check_bycounty(page, bcv=None):   # C12 (audit 11-10, "nfip claims by county"): top 25 by dollars paid, the county count, title, CSV of every county
     want = {}
@@ -391,6 +400,8 @@ if __name__ == "__main__":
                 "row": pg[:pg.find('id="counties"')] + re.sub(r"(</td><td>[\d,]+</td><td>)([\d.]+)%", r"\g<1>1.0%", pg[pg.find('id="counties"'):], count=1),   # audit 11-10: slice, or it hits #outside
                 "denied": pg + "<p>Claims denied.</p>",
                 "size": re.sub(r"(claim runs from \$)[\d,]+", r"\g<1>1", pg, count=1),
+                "icc": re.sub(r"\(([\d.]+)%\) include an", lambda m_: f"({float(m_[1]) + 0.1:.1f}%) include an", pg, count=1),
+                "icc gone": pg.replace("include an Increased Cost of Compliance payment", "", 1),
                 "year": re.sub(r'(id="years".*?<tr><td>\d{4}</td><td>[\d,]+</td><td>\$)([\d,]+)', r"\g<1>1", pg, count=1, flags=re.S)}
         if "the median paid building claim is $" in pg: muts["us median"] = re.sub(r"(the median paid building claim is \$)[\d,]+", r"\g<1>1", pg, count=1)
         for k, m in muts.items(): assert check(m, cv), f"mutation not caught: {k}"
