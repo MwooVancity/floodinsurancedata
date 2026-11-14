@@ -53,7 +53,7 @@
 "Portion of property removed|DetermLetter": 19,
 "Property denied|DetermLetter": 1,
 "Property out as shown|DetermLetter": 4,
-"Property removed|DetermLetter": 14,
+"Property removed|DetermLetter": 16,
 "Structure denied|DetermLetter": 21,
 "Structure out as shown-Property partially inundated|DetermLetter": 3,
 "Structure removed-Property partially inundated|DetermLetter": 107
@@ -124,12 +124,12 @@
 "Structure removed-Property partially inundated|DetermLetter": 55,
 "UNKNOWN|DetermLetter": 1
 },
-"lomr": 23,
-"lomr_recent": 3,
+"lomr": 12,
+"lomr_recent": 2,
 "lomr_since": "2021-01-01",
 "newest": "2016-10-20",
 "oldest": "2008-08-28",
-"panels": 582
+"panels": 291
 },
 "04013": {
 "cids": [
@@ -270,8 +270,8 @@
 "Structure out as shown-Property partially inundated|DetermLetter": 18,
 "Structure removed-Property partially inundated|DetermLetter": 85
 },
-"lomr": 76,
-"lomr_recent": 16,
+"lomr": 77,
+"lomr_recent": 17,
 "lomr_since": "2021-01-01",
 "newest": "2025-11-28",
 "oldest": "2007-12-04",
@@ -1075,8 +1075,8 @@
 "Structure removed-Property partially inundated|DetermLetter": 6086,
 "UNKNOWN|DetermLetter": 16
 },
-"lomr": 43,
-"lomr_recent": 14,
+"lomr": 44,
+"lomr_recent": 15,
 "lomr_since": "2021-01-01",
 "newest": "2019-03-21",
 "oldest": "2009-12-03",
@@ -1103,7 +1103,7 @@
 "Property removed|DetermLetter": 37,
 "Structure denied|DetermLetter": 23,
 "Structure out as shown-Property partially inundated|DetermLetter": 18,
-"Structure removed-Property partially inundated|DetermLetter": 134
+"Structure removed-Property partially inundated|DetermLetter": 135
 },
 "lomr": 14,
 "lomr_recent": 11,
@@ -1163,8 +1163,8 @@
 "Suspended|DetermLetter": 1,
 "UNKNOWN|DetermLetter": 2
 },
-"lomr": 170,
-"lomr_recent": 96,
+"lomr": 171,
+"lomr_recent": 97,
 "lomr_since": "2021-01-01",
 "newest": "2024-09-12",
 "oldest": "2008-08-28",
@@ -1237,11 +1237,11 @@
 "Property removed|DetermLetter": 105,
 "Structure denied and in floodway|DetermLetter": 4,
 "Structure denied|DetermLetter": 97,
-"Structure out as shown-Property partially inundated|DetermLetter": 101,
+"Structure out as shown-Property partially inundated|DetermLetter": 102,
 "Structure removed-Property partially inundated|DetermLetter": 734
 },
-"lomr": 89,
-"lomr_recent": 38,
+"lomr": 92,
+"lomr_recent": 41,
 "lomr_since": "2021-01-01",
 "newest": "2026-03-03",
 "oldest": "2012-05-16",
@@ -1391,7 +1391,7 @@
 "Property removed|DetermLetter": 355,
 "Structure denied|DetermLetter": 210,
 "Structure out as shown-Property partially inundated|DetermLetter": 58,
-"Structure removed-Property partially inundated|DetermLetter": 3932,
+"Structure removed-Property partially inundated|DetermLetter": 3933,
 "UNKNOWN|DetermLetter": 3
 },
 "lomr": 50,
@@ -1594,14 +1594,14 @@
 "Multiple|DetermLetter": 28,
 "Portion of property denied|DetermLetter": 14,
 "Portion of property out as shown|DetermLetter": 3,
-"Portion of property removed|DetermLetter": 97,
+"Portion of property removed|DetermLetter": 98,
 "Property denied and in floodway|DetermLetter": 1,
 "Property denied|DetermLetter": 2,
 "Property out as shown|DetermLetter": 82,
-"Property removed|DetermLetter": 79,
+"Property removed|DetermLetter": 80,
 "Structure denied|DetermLetter": 91,
 "Structure out as shown-Property partially inundated|DetermLetter": 38,
-"Structure removed-Property partially inundated|DetermLetter": 3843
+"Structure removed-Property partially inundated|DetermLetter": 3847
 },
 "lomr": 8,
 "lomr_recent": 4,
@@ -2195,13 +2195,13 @@
 "No outcome (Other response or violation)|DetermLetter": 2,
 "None|DetermLetter": 177,
 "Portion of property denied|DetermLetter": 8,
-"Portion of property removed|DetermLetter": 68,
+"Portion of property removed|DetermLetter": 69,
 "Property denied|DetermLetter": 8,
 "Property out as shown|DetermLetter": 661,
 "Property removed|DetermLetter": 575,
 "Structure denied|DetermLetter": 631,
 "Structure out as shown-Property partially inundated|DetermLetter": 442,
-"Structure removed-Property partially inundated|DetermLetter": 5893,
+"Structure removed-Property partially inundated|DetermLetter": 5894,
 "UNKNOWN|DetermLetter": 2
 },
 "lomr": 13,
@@ -2227,7 +2227,7 @@
 "Property removed|DetermLetter": 71,
 "Structure denied|DetermLetter": 118,
 "Structure out as shown-Property partially inundated|DetermLetter": 48,
-"Structure removed-Property partially inundated|DetermLetter": 913,
+"Structure removed-Property partially inundated|DetermLetter": 915,
 "UNKNOWN|DetermLetter": 1
 },
 "lomr": 19,
@@ -2254,7 +2254,7 @@
 "Property removed|DetermLetter": 18,
 "Structure denied|DetermLetter": 76,
 "Structure out as shown-Property partially inundated|DetermLetter": 22,
-"Structure removed-Property partially inundated|DetermLetter": 261
+"Structure removed-Property partially inundated|DetermLetter": 262
 },
 "lomr": 0,
 "lomr_recent": 0,
@@ -2306,13 +2306,13 @@
 "None|DetermLetter": 18,
 "Portion of property denied|DetermLetter": 5,
 "Portion of property out as shown|DetermLetter": 1,
-"Portion of property removed|DetermLetter": 171,
+"Portion of property removed|DetermLetter": 172,
 "Property denied|DetermLetter": 10,
 "Property out as shown|DetermLetter": 19,
 "Property removed|DetermLetter": 395,
 "Structure denied|DetermLetter": 228,
 "Structure out as shown-Property partially inundated|DetermLetter": 170,
-"Structure removed-Property partially inundated|DetermLetter": 5045
+"Structure removed-Property partially inundated|DetermLetter": 5052
 },
 "lomr": 10,
 "lomr_recent": 10,
@@ -2338,7 +2338,7 @@
 "lomr": 0,
 "lomr_recent": 0,
 "lomr_since": "2021-01-01",
-"newest": "9999-09-09",
+"newest": null,
 "oldest": "2006-09-29",
 "panels": 136
 },
@@ -2393,7 +2393,7 @@
 "Property removed|DetermLetter": 12,
 "Structure denied|DetermLetter": 22,
 "Structure out as shown-Property partially inundated|DetermLetter": 16,
-"Structure removed-Property partially inundated|DetermLetter": 137
+"Structure removed-Property partially inundated|DetermLetter": 138
 },
 "lomr": 0,
 "lomr_recent": 0,
@@ -2583,7 +2583,7 @@
 "Property removed|DetermLetter": 77,
 "Structure denied|DetermLetter": 54,
 "Structure out as shown-Property partially inundated|DetermLetter": 16,
-"Structure removed-Property partially inundated|DetermLetter": 599
+"Structure removed-Property partially inundated|DetermLetter": 600
 },
 "lomr": 4,
 "lomr_recent": 3,
@@ -2622,8 +2622,8 @@
 "Property out as shown|DetermLetter": 142,
 "Property removed|DetermLetter": 177,
 "Structure denied|DetermLetter": 36,
-"Structure out as shown-Property partially inundated|DetermLetter": 138,
-"Structure removed-Property partially inundated|DetermLetter": 1233
+"Structure out as shown-Property partially inundated|DetermLetter": 139,
+"Structure removed-Property partially inundated|DetermLetter": 1234
 },
 "lomr": 40,
 "lomr_recent": 28,
@@ -2655,7 +2655,7 @@
 "Structure denied and in floodway|DetermLetter": 14,
 "Structure denied|DetermLetter": 404,
 "Structure out as shown-Property partially inundated|DetermLetter": 101,
-"Structure removed-Property partially inundated|DetermLetter": 4487,
+"Structure removed-Property partially inundated|DetermLetter": 4489,
 "Structure|DetermLetter": 1
 },
 "lomr": 33,
@@ -2736,10 +2736,10 @@
 "None|DetermLetter": 20,
 "Portion of property denied|DetermLetter": 8,
 "Portion of property out as shown|DetermLetter": 1,
-"Portion of property removed|DetermLetter": 73,
+"Portion of property removed|DetermLetter": 74,
 "Property denied|DetermLetter": 9,
 "Property out as shown|DetermLetter": 44,
-"Property removed|DetermLetter": 204,
+"Property removed|DetermLetter": 206,
 "Structure denied|DetermLetter": 55,
 "Structure out as shown-Property partially inundated|DetermLetter": 33,
 "Structure removed-Property partially inundated|DetermLetter": 366
@@ -2768,10 +2768,10 @@
 "Portion of property removed|DetermLetter": 15,
 "Property denied|DetermLetter": 6,
 "Property out as shown|DetermLetter": 22,
-"Property removed|DetermLetter": 69,
+"Property removed|DetermLetter": 70,
 "Structure denied|DetermLetter": 139,
 "Structure out as shown-Property partially inundated|DetermLetter": 36,
-"Structure removed-Property partially inundated|DetermLetter": 691
+"Structure removed-Property partially inundated|DetermLetter": 693
 },
 "lomr": 17,
 "lomr_recent": 12,
@@ -2858,7 +2858,7 @@
 "Property removed|DetermLetter": 453,
 "Structure denied|DetermLetter": 409,
 "Structure out as shown-Property partially inundated|DetermLetter": 163,
-"Structure removed-Property partially inundated|DetermLetter": 4668
+"Structure removed-Property partially inundated|DetermLetter": 4671
 },
 "lomr": 60,
 "lomr_recent": 12,
@@ -3012,11 +3012,11 @@
 "Structure denied and in floodway|DetermLetter": 1,
 "Structure denied|DetermLetter": 187,
 "Structure out as shown-Property partially inundated|DetermLetter": 149,
-"Structure removed-Property partially inundated|DetermLetter": 1557,
+"Structure removed-Property partially inundated|DetermLetter": 1558,
 "UNKNOWN|DetermLetter": 1
 },
-"lomr": 112,
-"lomr_recent": 58,
+"lomr": 113,
+"lomr_recent": 59,
 "lomr_since": "2021-01-01",
 "newest": "2021-09-24",
 "oldest": "2009-09-25",
@@ -3137,7 +3137,7 @@
 "Property removed|DetermLetter": 308,
 "Structure denied|DetermLetter": 191,
 "Structure out as shown-Property partially inundated|DetermLetter": 125,
-"Structure removed-Property partially inundated|DetermLetter": 1843,
+"Structure removed-Property partially inundated|DetermLetter": 1844,
 "UNKNOWN|DetermLetter": 3
 },
 "lomr": 55,
@@ -3234,8 +3234,8 @@
 "Structure out as shown-Property partially inundated|DetermLetter": 168,
 "Structure removed-Property partially inundated|DetermLetter": 1701
 },
-"lomr": 56,
-"lomr_recent": 39,
+"lomr": 57,
+"lomr_recent": 40,
 "lomr_since": "2021-01-01",
 "newest": "2016-12-22",
 "oldest": "2012-09-28",
@@ -3284,7 +3284,7 @@
 "None|DetermLetter": 44,
 "Portion of property denied|DetermLetter": 2,
 "Portion of property out as shown|DetermLetter": 1,
-"Portion of property removed|DetermLetter": 81,
+"Portion of property removed|DetermLetter": 82,
 "Property denied|DetermLetter": 2,
 "Property out as shown|DetermLetter": 44,
 "Property removed|DetermLetter": 117,
@@ -3493,7 +3493,7 @@
 "dfirm": "12127C",
 "loma": {
 "Denied|DetermLetter": 2,
-"Multiple|DetermLetter": 78,
+"Multiple|DetermLetter": 79,
 "None|DetermLetter": 22,
 "Portion of property denied|DetermLetter": 1,
 "Portion of property out as shown|DetermLetter": 1,
@@ -3504,7 +3504,7 @@
 "Structure denied and in floodway|DetermLetter": 1,
 "Structure denied|DetermLetter": 146,
 "Structure out as shown-Property partially inundated|DetermLetter": 113,
-"Structure removed-Property partially inundated|DetermLetter": 932
+"Structure removed-Property partially inundated|DetermLetter": 934
 },
 "lomr": 34,
 "lomr_recent": 28,
@@ -3631,7 +3631,7 @@
 "None|DetermLetter": 2,
 "Portion of property removed|DetermLetter": 20,
 "Property out as shown|DetermLetter": 1,
-"Property removed|DetermLetter": 1,
+"Property removed|DetermLetter": 2,
 "Structure denied|DetermLetter": 8,
 "Structure out as shown-Property partially inundated|DetermLetter": 2,
 "Structure removed-Property partially inundated|DetermLetter": 37
@@ -3669,10 +3669,10 @@
 "Structure out as shown-Property partially inundated|DetermLetter": 14,
 "Structure removed-Property partially inundated|DetermLetter": 250
 },
-"lomr": 4,
-"lomr_recent": 1,
+"lomr": 2,
+"lomr_recent": 0,
 "lomr_since": "2021-01-01",
-"newest": "2018-08-16",
+"newest": "2026-11-13",
 "oldest": "2014-07-07",
 "panels": 87
 },
@@ -4167,7 +4167,7 @@
 "None|DetermLetter": 45,
 "Portion of property denied|DetermLetter": 8,
 "Portion of property out as shown|DetermLetter": 2,
-"Portion of property removed|DetermLetter": 78,
+"Portion of property removed|DetermLetter": 79,
 "Property out as shown|DetermLetter": 19,
 "Property removed|DetermLetter": 41,
 "Structure denied and in floodway|DetermLetter": 4,
@@ -4263,7 +4263,7 @@
 "Property removed|DetermLetter": 120,
 "Structure denied|DetermLetter": 33,
 "Structure out as shown-Property partially inundated|DetermLetter": 65,
-"Structure removed-Property partially inundated|DetermLetter": 597
+"Structure removed-Property partially inundated|DetermLetter": 598
 },
 "lomr": 44,
 "lomr_recent": 35,
@@ -4294,7 +4294,7 @@
 "Structure denied and in floodway|DetermLetter": 1,
 "Structure denied|DetermLetter": 9,
 "Structure out as shown-Property partially inundated|DetermLetter": 21,
-"Structure removed-Property partially inundated|DetermLetter": 388
+"Structure removed-Property partially inundated|DetermLetter": 389
 },
 "lomr": 3,
 "lomr_recent": 1,
@@ -4423,7 +4423,7 @@
 "Multiple|DetermLetter": 18,
 "Portion of property denied|DetermLetter": 2,
 "Portion of property out as shown|DetermLetter": 1,
-"Portion of property removed|DetermLetter": 47,
+"Portion of property removed|DetermLetter": 48,
 "Property denied|DetermLetter": 3,
 "Property out as shown|DetermLetter": 16,
 "Property removed|DetermLetter": 62,
@@ -4536,7 +4536,7 @@
 "Structure denied and in floodway|DetermLetter": 1,
 "Structure denied|DetermLetter": 97,
 "Structure out as shown-Property partially inundated|DetermLetter": 104,
-"Structure removed-Property partially inundated|DetermLetter": 880
+"Structure removed-Property partially inundated|DetermLetter": 881
 },
 "lomr": 11,
 "lomr_recent": 11,
@@ -4593,7 +4593,7 @@
 "Property removed|DetermLetter": 178,
 "Structure denied|DetermLetter": 86,
 "Structure out as shown-Property partially inundated|DetermLetter": 29,
-"Structure removed-Property partially inundated|DetermLetter": 593,
+"Structure removed-Property partially inundated|DetermLetter": 594,
 "UNKNOWN|DetermLetter": 11
 },
 "lomr": 7,
@@ -4755,7 +4755,7 @@
 "Property removed|DetermLetter": 36,
 "Structure denied|DetermLetter": 16,
 "Structure out as shown-Property partially inundated|DetermLetter": 4,
-"Structure removed-Property partially inundated|DetermLetter": 338
+"Structure removed-Property partially inundated|DetermLetter": 339
 },
 "lomr": 2,
 "lomr_recent": 0,
@@ -4840,7 +4840,7 @@
 "Property removed|DetermLetter": 129,
 "Structure denied|DetermLetter": 89,
 "Structure out as shown-Property partially inundated|DetermLetter": 17,
-"Structure removed-Property partially inundated|DetermLetter": 971,
+"Structure removed-Property partially inundated|DetermLetter": 974,
 "UNKNOWN|DetermLetter": 10
 },
 "lomr": 8,
@@ -4890,13 +4890,13 @@
 "Multiple|DetermLetter": 57,
 "Portion of property denied|DetermLetter": 27,
 "Portion of property out as shown|DetermLetter": 2,
-"Portion of property removed|DetermLetter": 207,
+"Portion of property removed|DetermLetter": 208,
 "Property denied|DetermLetter": 18,
 "Property out as shown|DetermLetter": 34,
 "Property removed|DetermLetter": 146,
 "Structure denied|DetermLetter": 176,
 "Structure out as shown-Property partially inundated|DetermLetter": 23,
-"Structure removed-Property partially inundated|DetermLetter": 1395,
+"Structure removed-Property partially inundated|DetermLetter": 1397,
 "UNKNOWN|DetermLetter": 5
 },
 "lomr": 2,
@@ -5115,7 +5115,7 @@
 "Property removed|DetermLetter": 39,
 "Structure denied|DetermLetter": 52,
 "Structure out as shown-Property partially inundated|DetermLetter": 18,
-"Structure removed-Property partially inundated|DetermLetter": 468,
+"Structure removed-Property partially inundated|DetermLetter": 469,
 "UNKNOWN|DetermLetter": 2
 },
 "lomr": 4,
@@ -5170,7 +5170,7 @@
 "Property removed|DetermLetter": 3,
 "Structure denied|DetermLetter": 11,
 "Structure out as shown-Property partially inundated|DetermLetter": 3,
-"Structure removed-Property partially inundated|DetermLetter": 96
+"Structure removed-Property partially inundated|DetermLetter": 97
 },
 "lomr": 0,
 "lomr_recent": 0,
@@ -5548,7 +5548,7 @@
 "None|DetermLetter": 48,
 "Portion of property denied|DetermLetter": 5,
 "Portion of property out as shown|DetermLetter": 1,
-"Portion of property removed|DetermLetter": 58,
+"Portion of property removed|DetermLetter": 59,
 "Property denied|DetermLetter": 4,
 "Property out as shown|DetermLetter": 25,
 "Property removed|DetermLetter": 45,
@@ -6006,7 +6006,7 @@
 "Structure denied and in floodway|DetermLetter": 1,
 "Structure denied|DetermLetter": 51,
 "Structure out as shown-Property partially inundated|DetermLetter": 143,
-"Structure removed-Property partially inundated|DetermLetter": 1244,
+"Structure removed-Property partially inundated|DetermLetter": 1245,
 "UNKNOWN|DetermLetter": 4
 },
 "lomr": 10,
@@ -6628,7 +6628,7 @@
 "Structure denied and in floodway|DetermLetter": 11,
 "Structure denied|DetermLetter": 204,
 "Structure out as shown-Property partially inundated|DetermLetter": 97,
-"Structure removed-Property partially inundated|DetermLetter": 1070
+"Structure removed-Property partially inundated|DetermLetter": 1071
 },
 "lomr": 1,
 "lomr_recent": 1,
@@ -6779,7 +6779,7 @@
 "Structure denied and in floodway|DetermLetter": 2,
 "Structure denied|DetermLetter": 109,
 "Structure out as shown-Property partially inundated|DetermLetter": 14,
-"Structure removed-Property partially inundated|DetermLetter": 434
+"Structure removed-Property partially inundated|DetermLetter": 435
 },
 "lomr": 4,
 "lomr_recent": 0,
@@ -7096,7 +7096,7 @@
 "Property removed|DetermLetter": 14,
 "Structure denied and in floodway|DetermLetter": 4,
 "Structure denied|DetermLetter": 98,
-"Structure out as shown-Property partially inundated|DetermLetter": 40,
+"Structure out as shown-Property partially inundated|DetermLetter": 41,
 "Structure removed-Property partially inundated|DetermLetter": 351
 },
 "lomr": 2,
@@ -7935,13 +7935,14 @@
 "No outcome (Other response or violation)|DetermLetter": 2,
 "None|DetermLetter": 4,
 "Portion of property denied|DetermLetter": 1,
+"Portion of property out as shown|DetermLetter": 1,
 "Portion of property removed|DetermLetter": 50,
 "Property denied|DetermLetter": 6,
 "Property out as shown|DetermLetter": 8,
 "Property removed|DetermLetter": 33,
 "Structure denied|DetermLetter": 27,
 "Structure out as shown-Property partially inundated|DetermLetter": 8,
-"Structure removed-Property partially inundated|DetermLetter": 253
+"Structure removed-Property partially inundated|DetermLetter": 254
 },
 "lomr": 0,
 "lomr_recent": 0,
@@ -8785,7 +8786,7 @@
 "Structure denied and in floodway|DetermLetter": 1,
 "Structure denied|DetermLetter": 172,
 "Structure out as shown-Property partially inundated|DetermLetter": 99,
-"Structure removed-Property partially inundated|DetermLetter": 1812,
+"Structure removed-Property partially inundated|DetermLetter": 1813,
 "UNKNOWN|DetermLetter": 14
 },
 "lomr": 26,
@@ -9410,7 +9411,7 @@
 "Structure denied and in floodway|DetermLetter": 2,
 "Structure denied|DetermLetter": 114,
 "Structure out as shown-Property partially inundated|DetermLetter": 84,
-"Structure removed-Property partially inundated|DetermLetter": 663
+"Structure removed-Property partially inundated|DetermLetter": 664
 },
 "lomr": 25,
 "lomr_recent": 12,
@@ -9673,7 +9674,7 @@
 "None|DetermLetter": 8,
 "Portion of property denied|DetermLetter": 4,
 "Portion of property out as shown|DetermLetter": 1,
-"Portion of property removed|DetermLetter": 35,
+"Portion of property removed|DetermLetter": 36,
 "Property denied|DetermLetter": 4,
 "Property out as shown|DetermLetter": 14,
 "Property removed|DetermLetter": 42,
@@ -10217,8 +10218,8 @@
 "Structure removed-Property partially inundated|DetermLetter": 482,
 "UNKNOWN|DetermLetter": 8
 },
-"lomr": 160,
-"lomr_recent": 70,
+"lomr": 161,
+"lomr_recent": 71,
 "lomr_since": "2021-01-01",
 "newest": "2019-03-21",
 "oldest": "2001-08-23",
@@ -10261,7 +10262,7 @@
 "Multiple|DetermLetter": 47,
 "Portion of property denied|DetermLetter": 13,
 "Portion of property out as shown|DetermLetter": 1,
-"Portion of property removed|DetermLetter": 84,
+"Portion of property removed|DetermLetter": 85,
 "Property denied|DetermLetter": 4,
 "Property out as shown|DetermLetter": 18,
 "Property removed|DetermLetter": 121,
@@ -10487,7 +10488,7 @@
 "Denied|DetermLetter": 3,
 "Multiple|DetermLetter": 7,
 "Portion of property denied|DetermLetter": 10,
-"Portion of property removed|DetermLetter": 101,
+"Portion of property removed|DetermLetter": 102,
 "Property denied|DetermLetter": 6,
 "Property out as shown|DetermLetter": 16,
 "Property removed|DetermLetter": 88,
@@ -10806,8 +10807,8 @@
 "Structure removed-Property partially inundated|DetermLetter": 787,
 "UNKNOWN|DetermLetter": 3
 },
-"lomr": 310,
-"lomr_recent": 134,
+"lomr": 311,
+"lomr_recent": 135,
 "lomr_since": "2021-01-01",
 "newest": "2019-03-21",
 "oldest": "2009-09-25",
@@ -11574,7 +11575,7 @@
 "Structure denied and in floodway|DetermLetter": 1,
 "Structure denied|DetermLetter": 86,
 "Structure out as shown-Property partially inundated|DetermLetter": 54,
-"Structure removed-Property partially inundated|DetermLetter": 701,
+"Structure removed-Property partially inundated|DetermLetter": 702,
 "UNKNOWN|DetermLetter": 1
 },
 "lomr": 12,
@@ -11962,5 +11963,5 @@
 "oldest": "2006-09-29",
 "panels": 119
 },
-"_retrieved": "2026-11-12"
+"_retrieved": "2026-11-14"
 }
