@@ -915,17 +915,17 @@ def card_multiloss():
         _srl = ml.get("srl") or 0
         _mldate = ml.get("retrieved", RETR); _mlu = ml.get("uncoded") or 0
         # FEMA: one row per property PER declared disaster, and "there is not a way to aggregate by property" —
-        # so the count is damage records on repeat-flooded homes, never a count of distinct homes.
-        _ml_lead = (claim("Yes", "yes", ("ml_total", ">", 0)) + f": FEMA's disaster-aid records hold {m('ml_total', num(ml['total']))} damage records from homes here that flooded more than once"
+        # so the count is records on repeat-flooded homes, never a count of distinct homes. 11-14: about 30% of rows have floodDamage false, so never 'damage records'.
+        _ml_lead = (claim("Yes", "yes", ("ml_total", ">", 0)) + f": FEMA's disaster-aid records hold {m('ml_total', num(ml['total']))} records from homes here that FEMA lists as flood-damaged in more than one declared disaster"   # F1: 40-word opening; one-per-disaster is in the note
                     + (f"; {m('ml_srl', num(_srl))} records are from homes FEMA's disaster-aid data flags as severe repeat-loss (SRL)" if _srl else "") + "."
                     if ml["total"] else
                     (f"None are coded to this {UNIT}, but {m('ml_uncoded', num(_mlu))} records in this state have no usable county code, so this {UNIT} may have some. NFIP insurance claims are counted separately." if _mlu else
                      f"Not in FEMA's disaster-aid records since 2002: no aid applications here came from homes that flooded more than once. NFIP insurance claims are counted separately."))
         multiloss_card = card("Do the same homes flood again here?", _ml_lead,
-            f"<ul class='kv'><li><b>Repeat-flood damage records</b><span>{tp('ml_total', 'data.multiloss.total')}</span></li>"
+            f"<ul class='kv'><li><b>Disaster-aid records on repeat-flood homes</b><span>{tp('ml_total', 'data.multiloss.total')}</span></li>"
             + (f"<li><b>Records from homes flagged severe repeat-loss (SRL)</b><span>{tp('ml_srl', 'data.multiloss.srl')}</span></li>" if _srl else "")
             + (f"<li><b>Records in this state with no usable county code, not counted above</b><span>{tp('ml_uncoded', 'data.multiloss.uncoded')}</span></li>" if _mlu else "")
-            + f"</ul><p class='note'>These count damage events on repeat-flooded homes, not distinct homes.{how('multiloss')}</p>",
+            + f"</ul><p class='note'>These count records, one per home per declared disaster, not distinct homes, and FEMA does not mark flood damage on every record.{how('multiloss')}</p>",
             src(["ml_total"], "FEMA's current multiple-loss list", _mldate))
     return multiloss_card
 

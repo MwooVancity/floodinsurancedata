@@ -1,5 +1,5 @@
 {
- "hash": "8fd278c0782b97dd621458be58dd62da86997169c475e0cf5851e621a99c636a",
+ "hash": "9f3939079cb35c76d809d3d92c6df772f49d4a71a89bb89414477c462a1d6ad7",
  "date": "2026-11-14",
- "note": "11-14 plain-words card + county lookup on every paper; reviewed inline (lookup callers, noscript wording fixed, gate check + 2 mutations)"
+ "note": "11-14 hotfix: multiloss relabel; no typed number (V1); reviewed inline"
 }
