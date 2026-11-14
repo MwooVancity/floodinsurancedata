@@ -12,8 +12,9 @@ def wait_deploy(poll, now, sleep, stuck=900, limit=1800, every=15):
     t0 = now()
     while True:
         status, concl, jobs = poll()
+        if status == "completed" and concl != "success" and not jobs: return "not started (GitHub refused the job: Actions minutes or billing)"
         if status == "completed": return "" if concl == "success" else f"finished {concl}"
-        if status == "queued" and not jobs and now() - t0 > stuck: return "queued with no job for 15 min (GitHub stuck or Actions minutes used up)"
+        if status == "queued" and not jobs and now() - t0 > stuck: return "not started: queued with no job for 15 min (GitHub stuck or Actions minutes used up)"
         if now() - t0 > limit: return f"still {status} after 30 min"
         sleep(every)
 
@@ -25,8 +26,9 @@ if "--test-deploy-wait" in sys.argv:   # fake GitHub and clock: every path of wa
     assert run([("queued", None, 0), ("in_progress", None, 1), ("completed", "success", 1)]) == ""
     assert "queued with no job" in run([("queued", None, 0)])
     assert "finished failure" in run([("in_progress", None, 1), ("completed", "failure", 1)])
+    assert run([("completed", "failure", 0)]).startswith("not started")   # 11-14: billing block, the job never ran
     assert "after 30 min" in run([("in_progress", None, 1)])
-    print("deploy wait: 4 cases PASS"); sys.exit()
+    print("deploy wait: 5 cases PASS"); sys.exit()
 def step(name, *cmd):   # every step is timed (PLAN: measure every recurring job; what grows with pages gets fingerprinted)
     print(f"== {name}", flush=True); t0 = __import__("time").time()
     r = subprocess.run([sys.executable, "-I", *cmd], cwd=os.path.dirname(T))
@@ -120,7 +122,10 @@ else:
             j = json.loads(subprocess.run(["gh", "run", "view", rid, "--json", "status,conclusion,jobs"], cwd=R, capture_output=True, text=True).stdout or "{}")
             return j.get("status"), j.get("conclusion"), len(j.get("jobs") or [])
         why = wait_deploy(poll, time.monotonic, time.sleep)
-        if why: sys.exit(f"RELEASE STOPPED at: deploy (deploy.yml run {rid} for {head[:9]}: {why})")
+        if why.startswith("not started"):   # 11-14: GitHub never ran the job, so there is no second writer: deploy the same committed dist here
+            print(f"deploy.yml run {rid} {why}; deploying committed {head[:9]} from this machine", flush=True)
+            subprocess.run(["npx", "--yes", "wrangler@4.86.0", "deploy"], cwd=R, check=True, shell=os.name == "nt")
+        elif why: sys.exit(f"RELEASE STOPPED at: deploy (deploy.yml run {rid} for {head[:9]}: {why})")
     time.sleep(20)   # Cloudflare edge caches
     step("live", os.path.join(T, "release.py"), "--live")
     subprocess.run([sys.executable, "-I", os.path.join(T, "indexnow.py"), base], cwd=R)   # notice only; never stops a release
