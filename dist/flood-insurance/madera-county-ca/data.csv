@@ -135,6 +135,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Madera County, California",paper_share,deductible-choice-hi,36.9%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount,"August 31, 2026"
 "Madera County, California",paper_min,deductible-choice-n,306,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Madera County, California",paper_min,deductible-choice-pool,"1,793",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
+"Madera County, California",paper_min,flood-calendar,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Madera County, California",ded_amount,2000,"$2,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"
 "Madera County, California",ded_share,2000,36.3%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"August 31, 2026"
 "Madera County, California",ded_amount,1250,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"

@@ -365,6 +365,8 @@ Michigan,paper_min,outside-the-zone-n,6,count,FEMA OpenFEMA — NFIP Policies,po
 Michigan,paper_min,outside-the-zone,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Michigan,paper_min,deductible-choice-n,45,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Michigan,paper_min,deductible-choice,30,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
+Michigan,paper_min,flood-calendar-n,7,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
+Michigan,paper_min,flood-calendar,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Michigan,ded_amount,2000,"$2,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"
 Michigan,ded_share,2000,41.1%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"August 31, 2026"
 Michigan,ded_amount,1250,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"

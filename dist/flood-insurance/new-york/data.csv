@@ -418,6 +418,8 @@ New York,paper_min,outside-the-zone-n,12,count,FEMA OpenFEMA — NFIP Policies,p
 New York,paper_min,outside-the-zone,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 New York,paper_min,deductible-choice-n,60,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 New York,paper_min,deductible-choice,30,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
+New York,paper_min,flood-calendar-n,16,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
+New York,paper_min,flood-calendar,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 New York,ded_amount,2000,"$2,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"
 New York,ded_share,2000,52.0%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"August 31, 2026"
 New York,ded_amount,1250,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"

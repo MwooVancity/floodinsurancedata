@@ -182,6 +182,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Leon County, Florida",paper_share,deductible-choice-hi,11.0%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount,"August 31, 2026"
 "Leon County, Florida",paper_min,deductible-choice-n,"1,865",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Leon County, Florida",paper_min,deductible-choice-pool,"1,793",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
+"Leon County, Florida",paper_min,flood-calendar,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Leon County, Florida",ded_amount,1250,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"
 "Leon County, Florida",ded_share,1250,62.7%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"August 31, 2026"
 "Leon County, Florida",ded_amount,2000,"$2,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"

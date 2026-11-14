@@ -174,6 +174,8 @@ New Hampshire,paper_min,outside-the-zone-n,1,count,FEMA OpenFEMA — NFIP Polici
 New Hampshire,paper_min,outside-the-zone,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 New Hampshire,paper_min,deductible-choice-n,10,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 New Hampshire,paper_min,deductible-choice,30,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
+New Hampshire,paper_min,flood-calendar-n,1,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
+New Hampshire,paper_min,flood-calendar,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 New Hampshire,ded_amount,2000,"$2,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"
 New Hampshire,ded_share,2000,34.3%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"August 31, 2026"
 New Hampshire,ded_amount,1250,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"

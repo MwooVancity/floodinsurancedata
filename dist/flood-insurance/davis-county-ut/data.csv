@@ -133,6 +133,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Davis County, Utah",paper_share,deductible-choice-hi,9.5%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount,"August 31, 2026"
 "Davis County, Utah",paper_min,deductible-choice-n,285,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Davis County, Utah",paper_min,deductible-choice-pool,"1,793",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
+"Davis County, Utah",paper_min,flood-calendar,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Davis County, Utah",ded_amount,1250,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"
 "Davis County, Utah",ded_share,1250,69.1%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"August 31, 2026"
 "Davis County, Utah",ded_amount,1000,"$1,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"

@@ -95,6 +95,71 @@ SPECS.append(
                      ("Michel-Kerjan and Kousky, Come Rain or Shine: Evidence on Flood Insurance Purchases in Florida (Florida policies)",
                       "https://media.rff.org/archive/files/sharepoint/Documents/Publications/Non-RFF_Pubs/09-09_Kousky_Come-Rain-or-Shine.pdf")],
      "prior_rules": [], "policy_col": False, "published": "2026-11-13", "rules": []})
+# Flood Calendar (11-13). Edge cases, written before the code, each with its test:
+# - no loss_month_n / empty by_month / non-int counts -> county not listed (self-test cal_k({}) is None)
+# - tied peak months -> every tied month named, one share (self-test 'tie'); a flag is checked on each tied month
+# - peak month under ONE_YEAR_MIN claims -> never flagged (self-test); exactly half -> not over half (self-test)
+# - month key outside 01-12 -> ignored (self-test); date read as text [5:7], so no time-zone shift (extras_raw)
+# - by_year_month not adding up to by_month -> paper_gate fails (consistency check + mutation)
+# - peak picked from the same claims -> share biased up; Limitations says so (no interval claims to fix it)
+# - 404 of 416 counties flagged (11-13 data): the Abstract and Results print the flagged count, never a 'season'
+# Review round 2 (statistician + rater, 11-13), edge cases before the code:
+# - peak share is the max of 12 by construction, larger at small n (13.3% at n=100, 9.4% at 2000, floor 1/12): every row prints
+#   the expected peak share at random for its own n and rows are ranked and put in fifths on share minus that (self-test: oracle values)
+# - the null is a simulation: seeded by n and summed as integers, so paper_gate's own copy gets the same figure (gate oracle test)
+# - tied months: the null is for the largest month whatever month it is, so ties need no change
+# - flagged rows: the Wilson range assumes independent claims; the header says 'if claims were independent' (gate label check)
+# - 'calendar' / 'season' in a label is a claim the data does not make (404 of 416 one-year): gate LABEL word check + mutation
+# - distinct loss years in the peak month: zero-count year-months not counted (self-test)
+# Review round 3 (statistician, 11-13), edge cases before the code:
+# - the over-half flag fires in 404 of 416 (no power) and says nothing about other years: no 'repeats each year' / 'not a pattern' /
+#   'mostly one year's flood' anywhere on the page (gate OVERCLAIM + mutation); graded columns instead (largest year's share, 10+ years)
+# - a year with one claim counted as a year with claims (Greenbrier 2 years / 344): header says 'at least one claim' (gate header check
+#   + mutation) and a second column counts years with ONE_YEAR_MIN+ claims (self-test: 9 claims is not a 10+ year)
+# - tied peak months: each month graded on its own, joined with 'and' like the month names (self-test 'tie graded')
+# - no year-months for a county: largest share 0.0, never a crash; the months_add_up gate fails that county anyway
+# - largest year = the peak month itself (one storm, every claim): 100.0, never over 100 (self-test)
+MONTHS = ("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
+def _bm(rec):
+    b = _get(rec, ("extras", "claims", "loss_month_n", "by_month"))
+    b = {k: v for k, v in b.items() if k in {f"{i:02d}" for i in range(1, 13)} and isinstance(v, int) and v >= 0} if isinstance(b, dict) else {}
+    return b if b and sum(b.values()) else None
+def cal_k(rec): b = _bm(rec); return max(b.values()) if b else None   # claims in the peak month
+def cal_n(rec): b = _bm(rec); return sum(b.values()) if b else None   # claims with a month of loss
+NULL_R = 4000   # draws per county for the chance expectation
+import functools
+@functools.lru_cache(maxsize=None)
+def chance_peak(n):
+    """Expected peak-month share, in percent, if a county's n claims fell at random, each of the 12 months equally likely:
+    the mean largest month over NULL_R seeded draws (seed = n, integer sum, so paper_gate's own copy matches to the digit)."""
+    import numpy as np
+    m = np.random.default_rng(n).multinomial(n, [1 / len(MONTHS)] * len(MONTHS), size=NULL_R).max(axis=1)
+    return round(100 * int(m.sum()) / (NULL_R * n), 1)
+SPECS.append(
+    {"key": "flood-calendar", "ready": True, "indexable": True,
+     "title": "Peak month of NFIP claims by county",   # statistician round 2: no calendar or season word (404 of 416 one-year)
+     "num": cal_k, "den": cal_n, "min": 100, "window": ("extras", "claims", "loss_month_n"), "months": True, "null": chance_peak,
+     "question": "In which month of the year do a U.S. county's NFIP flood claims most often fall, how much larger is that month's share than claims spread at random would give, and how much of that month is one year's claims?",
+     "unit": "NFIP claims with a month of loss",
+     "measure": "share of a county's NFIP claims, paid or not, whose date of loss falls in the county's peak month (the month of the year with the most claims there)",
+     "short": "claims in the peak month", "meets": "fell in their county's peak month",
+     "fields": "dateOfLoss, yearOfLoss, countyCode, nonPaymentReasonBuilding",
+     "why_rules": ["wait_30"],
+     # raw read of OpenFemaDataSetFields (NfipClaims v3) 2026-11-13
+     "defs": ['FEMA defines dateOfLoss as "Date on which water first entered the insured building. When time is not specified in the field, it will default to T00:00:00.000Z".',
+              'FEMA defines yearOfLoss as "Year in which the flood loss occurred".',
+              'FEMA defines countyCode as "FIPS code uniquely identifying the primary County (e.g., 011 represents Broward County) associated with the project. Note, the County Code field may not reflect the individual county the property is located as projects can be associated with more than one county".'],
+     "dataset": "FEMA OpenFEMA NFIP Claims v3", "api": "https://www.fema.gov/api/open/v3/NfipClaims",
+     "base": "NFIP claims on every building type, paid or not, with a loss year in the window and a month in the date of loss, the month read from the date as FEMA writes it (no time-zone shift); records FEMA coded deleted or assigned in error (nonPaymentReasonBuilding 98 and 99) left out",
+     "limits": ["Each county's 90% range is narrower than it should be for two reasons: the peak month is picked from the same claims it is measured on, so the share is the highest of twelve by construction (the expected share at random, beside each row, shows how much of it chance alone gives), and claims from one flood are not independent, which matters most in the marked rows where one year holds over half of the peak month. The ranges are those that would hold if claims were independent.",
+                "A marked row means only that one year holds over half of the peak month's claims; that year may hold one flood or several. The mark does not say whether the month floods in other years and almost every listed county has one; the columns beside it give the largest year's share of the peak month and two counts of loss years with claims in it.",
+                "A large excess over chance can come from one flood event: one storm's claims, all in one month, raise both the share and the excess.",
+                "The expectation at random treats the twelve months as equally likely and ignores their different numbers of days.",
+                "Claims count insured buildings that filed, not floods: one storm can bring thousands of claims, and a flood where few buildings are insured brings few.",
+                "Ten loss years are a short record: a month with few or no claims here can still flood.",
+                "Counties are those FEMA codes on the claim, which can differ from the property's county."],
+     "prior": "No published ranking or table of U.S. counties by the calendar month of NFIP flood claims was found in searches on 2026-11-13 (WebSearch: NFIP flood claims by month of loss by county peak month; flood season by county NFIP claims seasonality map; dateOfLoss NFIP claims seasonality month analysis county). County tables of NFIP claims found in those searches count claims by year of loss, not by month.",
+     "prior_links": [], "prior_rules": [], "policy_col": False, "published": "2026-11-13", "rules": []})
 READY = [s for s in SPECS if s.get("ready")]   # a paper ships only after tools/paper_gate.py and both reviews pass (PAPER-GATE-PROMPT)
 
 def names():
@@ -120,11 +185,13 @@ def rows(spec, recs=None):
         k, n = _get(r, spec["num"]), _get(r, spec["den"])
         if isinstance(k, int) and isinstance(n, int) and n >= spec["min"] and 0 <= k <= n:
             lo, hi = wilson(k, n)
-            out.append({"geoid": g, "state": r.get("state", ""), "k": k, "n": n, "value": round(100 * k / n, 1), "lo": lo, "hi": hi})
-    out.sort(key=lambda x: (-x["k"] / x["n"], x["geoid"]))
+            e = spec["null"](n) if spec.get("null") else None   # Flood Calendar: expected share at random for this n
+            out.append({"geoid": g, "state": r.get("state", ""), "k": k, "n": n, "value": round(100 * k / n, 1), "lo": lo, "hi": hi,
+                        "exp": e, "excess": None if e is None else round(100 * k / n - e, 1)})
+    out.sort(key=lambda x: (-(x["k"] / x["n"] - (x["exp"] or 0) / 100), x["geoid"]))   # with a null: ranked on share minus chance
     N = len(out)
-    first = {}   # review 11-13: an equal printed share always gets the same fifth (the fifth of its first, highest-placed row)
-    for i, x in enumerate(out): x["fifth"] = first.setdefault(x["value"], 1 + (5 * i) // N)
+    first = {}   # review 11-13: an equal printed share (or excess) always gets the same fifth (the fifth of its first, highest-placed row)
+    for i, x in enumerate(out): x["fifth"] = first.setdefault(x["value"] if x["excess"] is None else x["excess"], 1 + (5 * i) // N)
     return out
 
 ONE_YEAR_MIN = 10   # methods review underinsured-2 N1: fewer claims than this over coverage and one year holding most is noise, not a flag
@@ -137,8 +204,24 @@ def context(spec, rec, w0, w1):
     by = _get(rec, spec["by_year"]) if spec.get("by_year") else None
     top = max(by.items(), key=lambda kv: (kv[1], kv[0])) if isinstance(by, dict) and by else None   # M1.8: a year with over half
     ex = _get(rec, spec["excess"]) if spec.get("excess") else None
-    return {"pol_out": round(100 - sf, 1) if isinstance(sf, (int, float)) else None, "excess": ex if isinstance(ex, (int, float)) else None,
-            "one_year": top[0] if top and 2 * top[1] > sum(by.values()) and sum(by.values()) >= ONE_YEAR_MIN else None}
+    out = {"pol_out": round(100 - sf, 1) if isinstance(sf, (int, float)) else None, "excess": ex if isinstance(ex, (int, float)) else None,
+           "one_year": top[0] if top and 2 * top[1] > sum(by.values()) and sum(by.values()) >= ONE_YEAR_MIN else None}
+    if spec.get("months"):   # Flood Calendar: tied peak months all named; each peak month's year-month holding over half (10+ claims)
+        b = _bm(rec) or {}; ym = _get(rec, ("extras", "claims", "loss_month_n", "by_year_month")) or {}
+        pk = max(b.values()) if b else 0
+        out["peak"] = sorted(k for k, v in b.items() if v == pk)
+        out["storm"] = []
+        for mo in out["peak"] if pk >= ONE_YEAR_MIN else []:
+            t = max(((y, v) for y, v in ym.items() if y[5:] == mo and isinstance(v, int)), key=lambda kv: (kv[1], kv[0]), default=None)
+            if t and 2 * t[1] > pk: out["storm"].append(t[0])
+        out["years"] = [sum(1 for y, v in ym.items() if y[5:] == mo and isinstance(v, int) and v > 0) for mo in out["peak"]]   # distinct loss years
+        # review round 3 M1/M2: graded, not just a flag: years with ONE_YEAR_MIN+ claims, and the largest year's share of each peak month
+        out["years10"] = [sum(1 for y, v in ym.items() if y[5:] == mo and isinstance(v, int) and v >= ONE_YEAR_MIN) for mo in out["peak"]]
+        out["top_share"] = [round(100 * max((v for y, v in ym.items() if y[5:] == mo and isinstance(v, int)), default=0) / pk, 1) if pk else None for mo in out["peak"]]
+    return out
+
+def month_words(c):   # "September", "August and September"; flag "September 2017"
+    return (" and ".join(MONTHS[int(x) - 1] for x in c["peak"]), " and ".join(f"{MONTHS[int(y[5:]) - 1]} {y[:4]}" for y in c["storm"]))
 
 def pooled_boot(rows_, B=2000, seed=20261113):
     """90% range of the pooled share, resampling whole counties (review M2: claims in one county are not independent)."""
@@ -191,7 +274,8 @@ def write_cache():
     recs = load(); out = {}
     for s in READY:
         rs = rows(s, recs)
-        out[s["key"]] = {"pool": len(rs), "rows": {x["geoid"]: [x["fifth"], x["value"], x["lo"], x["hi"], x["n"]] for x in rs}}
+        out[s["key"]] = {"pool": len(rs), "rows": {x["geoid"]: [x["fifth"], x["value"], x["lo"], x["hi"], x["n"]]
+                                                   + (list(month_words(context(s, recs[x["geoid"]], 0, 0))) + [x["exp"], x["excess"]] if s.get("months") else []) for x in rs}}
     os.makedirs(os.path.dirname(CACHE), exist_ok=True)
     json.dump(out, open(CACHE, "w"))
     return out
@@ -215,4 +299,23 @@ if __name__ == "__main__":   # self-check: interval, base, fifths
     assert context(T, {"y": {"2021": 6, "2019": 3}}, 0, 0)["one_year"] is None   # 9 claims: under ONE_YEAR_MIN, never flagged
     R = {"extras": {"policies": {"deductible_units": {"1250": 5, "5000": 3, "10000": 2}}}}
     assert (ded_units(R, DED_MIN), ded_units(R, 0)) == (5, 10) and ded_units({}, 0) is None
+    L = lambda bm, ym=None: {"extras": {"claims": {"loss_month_n": {"by_month": bm, "by_year_month": ym or {}}}}}
+    assert cal_k({}) is None and cal_n(L({})) is None and cal_n(L({"13": 5, "09": "x"})) is None   # empty, bad key, bad count
+    C = {"months": True}
+    c = context(C, L({"08": 6, "09": 6, "01": 1}, {"2017-08": 6, "2017-09": 3, "2020-09": 3}), 0, 0)
+    assert c["peak"] == ["08", "09"] and c["storm"] == [] and cal_k(L({"08": 6, "09": 6})) == 6   # tie named; 6 < ONE_YEAR_MIN
+    c = context(C, L({"09": 20, "01": 1}, {"2017-09": 11, "2018-09": 9}), 0, 0)
+    assert c["storm"] == ["2017-09"] and month_words(c) == ("September", "September 2017"), c
+    assert context(C, L({"09": 20}, {"2017-09": 10, "2018-09": 10}), 0, 0)["storm"] == []   # exactly half: not over half
+    c = context(C, L({"09": 20, "01": 1}, {"2017-09": 11, "2018-09": 9, "2019-09": 0}), 0, 0); assert c["years"] == [2], c   # zero year-month not a year
+    assert (c["years10"], c["top_share"]) == ([1], [55.0]), c   # 9 claims is not a 10+ year; 11 of 20 = 55.0%
+    c = context(C, L({"08": 12, "09": 12}, {"2017-08": 12, "2016-09": 6, "2017-09": 6}), 0, 0)
+    assert (c["years10"], c["top_share"], c["storm"]) == ([1, 0], [100.0, 50.0], ["2017-08"]), c   # tied months graded each
+    assert context(C, L({"09": 120}), 0, 0)["top_share"] == [0.0]   # no year-months: 0.0, and paper_gate's months_add_up fails it
+    assert [chance_peak(n) for n in (100, 473, 2000)] == [13.3, 10.6, 9.4]   # statistician's independent simulation, round 2
+    N0 = {"num": ("a",), "den": ("b",), "min": 1, "null": lambda n: {100: 13.3, 2000: 9.4}[n]}
+    r = rows(N0, {"1": {"a": 20, "b": 100}, "2": {"a": 300, "b": 2000}})   # excess 20.0 - 13.3 = 6.7 ranks above 15.0 - 9.4 = 5.6
+    assert [(x["geoid"], x["excess"]) for x in r] == [("1", 6.7), ("2", 5.6)], r
+    r = rows(N0, {"1": {"a": 18, "b": 100}, "2": {"a": 300, "b": 2000}})   # higher share (18.0) but lower excess (4.7) ranks second
+    assert [x["geoid"] for x in r] == ["2", "1"], r
     print("papers self-test OK")

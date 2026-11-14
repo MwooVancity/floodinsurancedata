@@ -388,11 +388,14 @@ def card_ranks():   # owner 11-12 research papers: this county's share, 90% rang
             continue
         r = (c.get("rows") or {}).get(g)
         if r:
-            fifth, v, lo, hi, n = r
+            fifth, v, lo, hi, n = r[:5]
+            mw = (f"; peak month {html.escape(r[5])}" + (f", over half of it from {html.escape(r[6])} alone" if r[6] else "")
+                  + (f"; {m('paper_share', f'{r[7]}%', q=sp['key'] + '-exp')} would be expected at random for this many claims, and the fifth is by share minus that" if len(r) > 8 else "")) if len(r) > 6 else ""   # Flood Calendar
+            ind = " if claims were independent" if len(r) > 8 else ""   # statistician round 2: Wilson assumes independent claims
             lines.append(f"<li>{head}<span data-paper=\"{sp['key']}\" data-fifth=\"{fifth}\">{m('paper_share', f'{v}%', q=sp['key'])} "
-                         f"({m('paper_share', '90%', q='ci-level')} range {m('paper_share', f'{lo}', q=sp['key'] + '-lo')}–{m('paper_share', f'{hi}%', q=sp['key'] + '-hi')}) of "
+                         f"({m('paper_share', '90%', q='ci-level')} range{ind} {m('paper_share', f'{lo}', q=sp['key'] + '-lo')}–{m('paper_share', f'{hi}%', q=sp['key'] + '-hi')}) of "
                          f"{m('paper_min', num(n), q=sp['key'] + '-n')} {sp['unit']} here, the {_F[fifth]} of "
-                         f"{m('paper_min', num(c['pool']), q=sp['key'] + '-pool')} U.S. counties listed</span>.</li>")
+                         f"{m('paper_min', num(c['pool']), q=sp['key'] + '-pool')} U.S. counties listed{mw}</span>.</li>")
         else:
             lines.append(f"<li>{head}<span data-paper=\"{sp['key']}\" data-fifth=\"0\">not listed</span>: fewer than "
                          f"{m('paper_min', str(sp['min']), q=sp['key'])} {sp['unit']} here.</li>")

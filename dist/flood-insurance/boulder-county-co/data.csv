@@ -171,6 +171,7 @@ place,metric,row,value,unit,dataset,fields,policies_as_of
 "Boulder County, Colorado",paper_share,deductible-choice-hi,16.9%,pct,FEMA OpenFEMA — NFIP Claims,netBuildingPaymentAmount,"August 31, 2026"
 "Boulder County, Colorado",paper_min,deductible-choice-n,"1,659",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Boulder County, Colorado",paper_min,deductible-choice-pool,"1,793",count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
+"Boulder County, Colorado",paper_min,flood-calendar,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 "Boulder County, Colorado",ded_amount,2000,"$2,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"
 "Boulder County, Colorado",ded_share,2000,40.7%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"August 31, 2026"
 "Boulder County, Colorado",ded_amount,1250,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"
