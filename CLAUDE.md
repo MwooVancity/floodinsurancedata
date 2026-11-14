@@ -38,6 +38,7 @@ Name the scoreboard number it moves; none = delete it. Each defect becomes a che
 
 ## Commands
 - `python -I` always. Build `build_all.py`; gates `release.py` (build, gate, truth proof, mutations, factory, phone, google_gate); `recheck.py` independent recompute.
+- Code bug review before ship (owner 11-14): `release.py --ship` stops unless `tools/code_stamp.py` matches (/code-review medium, every finding fixed, then `--stamp`); `--hotfix` exempt.
 - Ship only `release.py --ship` (`--hotfix "reason"` skips only the review, only for wrong live text; `--live` = live gate). No wrangler by hand; release.py deploys locally only when GitHub never started the deploy job (11-14 minutes block).
 - Data runs in the cloud (`refresh-data.yml`, `publish-counties.yml`); locally only build and gates. Private repo = 2,000 Actions min/month: a forced refresh costs ~60-100 min, so batch new fields into one forced run (11-14: 33 refresh runs, 1,606 min, used the month up). No emails; jobs fail closed. One background job, one writer, pull first. Backlog `state/reviews/backlog.md` (S14).
 
