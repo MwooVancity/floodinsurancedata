@@ -1,6 +1,6 @@
 # floodinsurancedata.com: rules
 State and next moves: PLAN.md (read at session start, update after every batch). History: git. Two docs only; this file under 8 KB. Global CLAUDE.md applies, not repeated.
-Session start: report deploys since last session (`gh run list`, `git log` "publish:", live sitemap count); fix any failed run.
+Session start: report deploys since last session (`gh run list`, `git log` "publish:", live sitemap count) and `tools/actions_check.py` (minutes, refused runs); fix any failed run.
 Run from this folder; nothing shared with calcscrape or river. Global project-manager rule applies; "Nothing left missing" only when PLAN.md "Next" is fully done, dated items included (hook `~/.claude/hooks/plan-gate.mjs`).
 ONLY GOAL (HARD, owner 11-09): maximum helpfulness, information gain, Google HCU. Every change names which one it moves; none = don't build. "Nothing to do but wait" is never true: when nothing in Next is doable today, run the top-3 compare (PLAN Next) on every keyword group and build its gaps the same session.
 

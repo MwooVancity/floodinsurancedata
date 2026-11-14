@@ -6,6 +6,9 @@ import json, os, re, subprocess, sys
 
 T = os.path.dirname(os.path.abspath(__file__))
 
+def started_jobs(run):   # 11-14 audit: a billing-blocked run lists its job with 0 steps (run 43561612814), so count jobs that ran a step
+    return sum(1 for j in run.get("jobs") or [] if j.get("steps"))
+
 def wait_deploy(poll, now, sleep, stuck=900, limit=1800, every=15):
     """'' when the deploy run succeeds, else why it stopped. 11-11: run 43097109682 sat queued with no job for 4 h and the
     release waited on it; a run queued with no job for 15 min (GitHub stuck, or Actions minutes used up) stops the release."""
@@ -27,8 +30,11 @@ if "--test-deploy-wait" in sys.argv:   # fake GitHub and clock: every path of wa
     assert "queued with no job" in run([("queued", None, 0)])
     assert "finished failure" in run([("in_progress", None, 1), ("completed", "failure", 1)])
     assert run([("completed", "failure", 0)]).startswith("not started")   # 11-14: billing block, the job never ran
+    blocked = {"status": "completed", "conclusion": "failure", "jobs": [{"name": "deploy", "conclusion": "failure", "steps": []}]}   # real shape, run 43561612814
+    assert run([("completed", "failure", started_jobs(blocked))]).startswith("not started")
+    assert started_jobs({"jobs": [{"steps": [{"name": "x"}]}]}) == 1
     assert "after 30 min" in run([("in_progress", None, 1)])
-    print("deploy wait: 5 cases PASS"); sys.exit()
+    print("deploy wait: 7 cases PASS"); sys.exit()
 def step(name, *cmd):   # every step is timed (PLAN: measure every recurring job; what grows with pages gets fingerprinted)
     print(f"== {name}", flush=True); t0 = __import__("time").time()
     r = subprocess.run([sys.executable, "-I", *cmd], cwd=os.path.dirname(T))
@@ -120,9 +126,13 @@ else:
         if not rid: sys.exit(f"RELEASE STOPPED at: deploy (no deploy.yml run for {head[:9]})")
         def poll():
             j = json.loads(subprocess.run(["gh", "run", "view", rid, "--json", "status,conclusion,jobs"], cwd=R, capture_output=True, text=True).stdout or "{}")
-            return j.get("status"), j.get("conclusion"), len(j.get("jobs") or [])
+            return j.get("status"), j.get("conclusion"), started_jobs(j)
         why = wait_deploy(poll, time.monotonic, time.sleep)
         if why.startswith("not started"):   # 11-14: GitHub never ran the job, so there is no second writer: deploy the same committed dist here
+            # wrangler uploads ./dist as it is on disk: only the committed release may go live (11-14 audit: a build running beside it would ship unchecked pages)
+            dirty = subprocess.run(["git", "status", "--porcelain", "--", "dist"], cwd=R, capture_output=True, text=True).stdout.strip()
+            now_head = subprocess.run(["git", "rev-parse", "HEAD"], cwd=R, capture_output=True, text=True).stdout.strip()
+            if dirty or now_head != head: sys.exit(f"RELEASE STOPPED at: deploy (deploy.yml {why}; dist differs from committed {head[:9]}, local deploy refused)")
             print(f"deploy.yml run {rid} {why}; deploying committed {head[:9]} from this machine", flush=True)
             subprocess.run(["npx", "--yes", "wrangler@4.86.0", "deploy"], cwd=R, check=True, shell=os.name == "nt")
         elif why: sys.exit(f"RELEASE STOPPED at: deploy (deploy.yml run {rid} for {head[:9]}: {why})")
