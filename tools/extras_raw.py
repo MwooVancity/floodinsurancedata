@@ -44,7 +44,7 @@ def new_acc():
             # 11-12 cloud field batch (PLAN): within-zone elevated vs not (never across zones: hcu 11-07), openings under elevated
             # homes (FEMA obstructionType), basement types, floodproofed, deductible by zone group; FEMA codes kept raw, labelled at display
             "pz": collections.defaultdict(list), "obs": collections.Counter(), "bsm": collections.Counter(), "fp": 0, "dedz": collections.defaultdict(collections.Counter),
-            "dedu": collections.Counter(), "dedu_blank": 0}   # Deductible Choice paper: single-family primary policy units (SUM policyCount) per deductible   # year -> [single-family records, their costs > 0]
+            "dedu": collections.Counter(), "dedu_blank": 0, "gcrs": collections.defaultdict(lambda: [0, 0])}   # Deductible Choice paper: single-family primary policy units (SUM policyCount) per deductible   # year -> [single-family records, their costs > 0]
 
 def policies(st):
     acc = collections.defaultdict(new_acc)
@@ -83,6 +83,8 @@ def policies(st):
                 if (r["originalNBDate"] or "")[:10] >= NB_FROM: a["sf_new_cost"].append(cost); a["cost_hist_new"][round(cost)] += 1
                 a["sf_cost"].append(cost)
             if prem and prem > 0: a["sf_prem"].append(prem)
+            _fr = f(r["fullRiskPremium"])
+            if prem and prem > 0 and _fr and _fr > 0: g_ = a["gcrs"][(r.get("crsClassCode") or "").strip() or "blank"]; g_[0] += 1; g_[1] += prem < _fr   # Price Gap M3: [both priced, below full-risk] per FEMA CRS class code
             if prem and prem > 0:
                 (a["prem_new"] if (r["originalNBDate"] or "")[:10] >= RR2_NEW else a["prem_old"]).append(prem)
                 (a["prem_elev"] if truthy(r["elevatedBuildingIndicator"]) else a["prem_low"]).append(prem)
@@ -130,7 +132,8 @@ def policies(st):
                   "prem_zone_elev": {f"{zg}|{el}": {"median": med(v), "n": len(v)} for (zg, el), v in a["pz"].items()},
                   "obstruction_counts": dict(a["obs"]), "basement_counts": dict(a["bsm"]), "floodproofed_n": a["fp"],
                   "deductibles_by_zone": {zg: {str(d): c for d, c in cn.items()} for zg, cn in a["dedz"].items()},
-                  "deductible_units": {str(d): c for d, c in sorted(a["dedu"].items())}, "deductible_units_blank": a["dedu_blank"]}
+                  "deductible_units": {str(d): c for d, c in sorted(a["dedu"].items())}, "deductible_units_blank": a["dedu_blank"],
+                  "below_by_crs": {c: v for c, v in sorted(a["gcrs"].items())}}
         if k == "ST":   # histograms and counts the home page sums into exact U.S. figures
             out[k]["cost_hist"] = dict(a["cost_hist"]); out[k]["cost_hist_new"] = dict(a["cost_hist_new"])
             out[k]["cost_hist_zone"] = {g: dict(h) for g, h in a["zone_hist"].items()}
@@ -164,7 +167,7 @@ def claims(st):
                                            "moved": [0, 0, 0],   # loss years LOSS_FROM..LOSS_TO, rated outside A/V: [current zone known, current A/V, current blank]
                                            "cause10": [0, 0, collections.Counter()],   # same years, paid claims: [paid, with a labelled cause, claims per cause code]
                                            "recent": [0, 0, collections.Counter()],
-                                           "mo": collections.Counter(), "mo_none": 0})   # Flood Calendar paper: claims (paid or not) by month of loss, loss years LOSS_FROM..LOSS_TO   # loss year RECENT_FROM+: [claims, paid, reason codes of the unpaid] (claims research page)   # zone on the claim, loss years LOSS_FROM..LOSS_TO: [claims, paid, dollars]
+                                           "mo": collections.Counter(), "mo_none": 0, "ym": collections.Counter()})   # Flood Calendar paper: claims (paid or not) by month of loss, loss years LOSS_FROM..LOSS_TO   # loss year RECENT_FROM+: [claims, paid, reason codes of the unpaid] (claims research page)   # zone on the claim, loss years LOSS_FROM..LOSS_TO: [claims, paid, dollars]
     for r in rows("NfipClaims", st):
         paid = net(r)
         err = r["nonPaymentReasonBuilding"] in ("98", "99")   # bookkeeping, not claims (agg_raw drops them too)
@@ -181,7 +184,7 @@ def claims(st):
                 rz = (r["ratedFloodZone"] or "").strip().upper()
                 zc = a["zone"][rz or "blank"]; zc[0] += 1
                 mo = (r["dateOfLoss"] or "")[5:7]
-                if mo.isdigit() and 1 <= int(mo) <= 12: a["mo"][mo] += 1
+                if mo.isdigit() and 1 <= int(mo) <= 12: a["mo"][mo] += 1; a["ym"][str(r["yearOfLoss"])[:4] + "-" + mo] += 1
                 else: a["mo_none"] += 1
                 if paid > 0: zc[1] += 1; zc[2] += paid
                 if rz and rz[0] not in "AV":   # 11-10 story "rated outside A/V, in A/V on FEMA's record of where it is now" (floodZoneCurrent)
@@ -243,7 +246,7 @@ def claims(st):
         out[k]["recent"] = {"from": RECENT_FROM, "n": rc[0], "paid_n": rc[1], "unpaid_reasons": dict(rc[2])}
         mv, cc = a["moved"], a["cause10"]
         out[k]["moved"] = {"from": LOSS_FROM, "to": LOSS_TO, "rated_out_known": mv[0], "now_av": mv[1], "current_blank": mv[2]}
-        out[k]["loss_month_n"] = {"from": LOSS_FROM, "to": LOSS_TO, "by_month": dict(sorted(a["mo"].items())), "no_month": a["mo_none"]}
+        out[k]["loss_month_n"] = {"from": LOSS_FROM, "to": LOSS_TO, "by_month": dict(sorted(a["mo"].items())), "no_month": a["mo_none"], "by_year_month": dict(sorted(a["ym"].items()))}
         out[k]["cause10"] = {"from": LOSS_FROM, "to": LOSS_TO, "paid_n": cc[0], "with_cause": cc[1], "by_code": dict(cc[2])}
         if k == "ST": out[k]["by_zone"] = {z: {"n": v[0], "paid_n": v[1], "paid": round(v[2])} for z, v in a["zone"].items()}; out[k]["_pb"] = a["paid_b"]
         else:   # same split as the zone pages: a zone on the claim, first letter not A or V = outside the high-risk zones

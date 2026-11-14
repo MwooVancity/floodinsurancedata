@@ -24,11 +24,13 @@ jobs:
         with: { python-version: '3.12' }
       - name: Pull county map status from FEMA
         run: python -I tools/pull_mapstatus.py
+      - name: Pull every U.S. county's map panel dates (Flood Map Age paper, one query per state)
+        run: python -I tools/pull_mapstatus.py --panels
       - name: Commit
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898+github-actions[bot]@users.noreply.github.com"
-          git add data/us/map_status.json
+          git add data/us/map_status.json data/us/map_panels.json
           git diff --cached --quiet && { echo "unchanged"; exit 0; }
           git commit -m "data: county flood-map status from FEMA's map service"
           git pull --rebase origin master && git push

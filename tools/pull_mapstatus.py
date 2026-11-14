@@ -69,6 +69,33 @@ def county(c, cids):
         o["cids"] = sorted(set(cids))
     return o
 
+def panels_rows(rows):   # grouped FIRM Panels stats -> {county geoid: panels, oldest, newest}; countywide maps only (<geoid>C)
+    out = {}
+    for r in rows:
+        d = str(r.get("DFIRM_ID") or "")
+        if len(d) != 6 or not d[:5].isdigit() or d[5] != "C": continue   # community-based maps are not a county's map
+        o = {"panels": r.get("n") or 0, "oldest": day(r.get("oldest")), "newest": day(r.get("newest"))}
+        for k in ("oldest", "newest"):   # same placeholder-date rule as county()
+            if o[k] and not ("1968-01-01" <= o[k] <= str(TODAY)): o[k] = None
+        out[d[:5]] = o
+    return out
+
+def panels_all(state_fips):   # Flood Map Age paper (11-13): every U.S. county, one grouped query per state, not ~3,000 county queries
+    st = [{"statisticType": "count", "onStatisticField": "OBJECTID", "outStatisticFieldName": "n"},
+          {"statisticType": "min", "onStatisticField": "EFF_DATE", "outStatisticFieldName": "oldest"},
+          {"statisticType": "max", "onStatisticField": "EFF_DATE", "outStatisticFieldName": "newest"}]
+    out, bad = {}, []
+    for sf in sorted(state_fips):
+        try:
+            d = get(f"{B}/3/query", {"where": f"DFIRM_ID LIKE '{sf}___C'", "outStatistics": json.dumps(st), "groupByFieldsForStatistics": "DFIRM_ID", "f": "json"})
+            if d.get("exceededTransferLimit"): raise RuntimeError("group limit hit")   # a cut-off list would drop counties silently
+            out.update(panels_rows([f_["attributes"] for f_ in d.get("features", [])]))
+        except Exception as e: bad.append(sf); print("FAILED state", sf, repr(e)[:150], flush=True)
+    if bad: sys.exit(f"STOP: panel dates failed for states {bad}; map_panels.json left as it was")   # never a partial national file
+    out["_retrieved"] = str(TODAY)
+    json.dump(out, open(os.path.join(ROOT, "data", "us", "map_panels.json"), "w"), indent=0, sort_keys=True)
+    print(f"map panels: {len(out) - 1} counties with a countywide digital map, {len(state_fips)} states")
+
 def main(only):
     cs = json.load(open(os.path.join(ROOT, "tools", "counties.json"), encoding="utf-8"))
     if only: cs = [c for c in cs if c["geoid"] in only]
@@ -87,4 +114,13 @@ def main(only):
     json.dump(old, open(p, "w"), indent=0, sort_keys=True)
 
 if __name__ == "__main__":
-    main(set(sys.argv[1:]))
+    if sys.argv[1:] == ["--test"]:
+        r = panels_rows([{"DFIRM_ID": "12071C", "n": 5, "oldest": 0, "newest": 1700000000000}, {"DFIRM_ID": "125128", "n": 3},
+                         {"DFIRM_ID": "48201C", "n": 2, "oldest": -2208988800000, "newest": None}])
+        assert set(r) == {"12071", "48201"}, r   # community map 125128 is not a county row
+        assert r["12071"] == {"panels": 5, "oldest": "1970-01-01", "newest": "2023-11-14"}, r
+        assert r["48201"]["oldest"] is None and r["48201"]["newest"] is None, r   # 1800s placeholder dropped, missing date stays None
+        print("pull_mapstatus --test ok")
+    elif sys.argv[1:] == ["--panels"]:
+        panels_all({f[:2] for f in os.listdir(os.path.join(ROOT, "data", "all-counties")) if f[:5].isdigit()})
+    else: main(set(sys.argv[1:]))

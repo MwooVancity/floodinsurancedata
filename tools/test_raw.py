@@ -73,6 +73,9 @@ try:
     p5 = P["10005"]; assert (p5["deductible_units"], p5["deductible_units_blank"]) == ({"1000": 1, "5000": 2}, 1), p5   # SUM policyCount, base only
     lm = C["10007"]["loss_month_n"]; assert (lm["by_month"], lm["no_month"], lm["from"] <= "2024" <= lm["to"]) == ({"03": 2}, 1, True), lm
     assert C["10001"]["loss_month_n"]["by_month"] == {"09": 6}, C["10001"]["loss_month_n"]   # every window claim lands in a month or no_month
+    assert C["10001"]["loss_month_n"]["by_year_month"] == {"2023-09": 6}, C["10001"]["loss_month_n"]   # Flood Calendar one-storm flag base
+    assert sum(lm["by_year_month"].values()) == sum(lm["by_month"].values()), lm   # same claims, split by year too
+    assert p["below_by_crs"] == {"blank": [40, 30]}, p["below_by_crs"]   # Price Gap M3: condo units out, 30 of 40 below, CRS blank kept as its own bucket
     uw = C["10001"]["underinsured"]   # 11-13 Underinsured paper: one base (window, single-family primary, damage+payment+coverage > 0)
     assert set(uw) == {"n", "over", "from", "to", "excess_median", "over_by_year"} and 0 <= uw["over"] <= uw["n"] <= C["10001"]["damage_n"], uw
     u9 = C["10009"]["underinsured"]; assert (u9["n"], u9["over"], u9["excess_median"], u9["over_by_year"]) == (3, 2, 35000, {"2023": 2}), u9   # base rules + M1.4/M1.8 fields

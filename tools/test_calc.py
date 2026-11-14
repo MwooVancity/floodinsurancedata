@@ -26,6 +26,9 @@ assert P["zone_units"] == {"AE": 4, "VE": 4, "X": 1}, P["zone_units"]   # zone m
 assert P["zone_units_all"] == P["zone_units"], P["zone_units_all"]   # uncapped copy (zone pages); differs only past 12 zones
 assert P["sfha_units"] == 8 and P["sfha_share_units"] == round(100 * 8 / 9, 1), (P["sfha_units"], P["sfha_share_units"])
 assert P["share_below"] == 100.0 and P["below_n"] == 3, (P["share_below"], P["below_n"])  # ids 1,2,3 below on premium basis
+assert (P["below_k"], P["below10_k"], P["below100_k"]) == (3, 3, 3), P   # Price Gap: exact count, not rebuilt from the rounded share
+_g = ffcalc.premium_gap([{ffcalc.PREM: 100, "fullRiskPremium": 105}, {ffcalc.PREM: 100, "fullRiskPremium": 110}, {ffcalc.PREM: 100, "fullRiskPremium": 200}, {ffcalc.PREM: 300, "fullRiskPremium": 200}, {ffcalc.PREM: -5, "fullRiskPremium": 200}])
+assert (_g["below_n"], _g["below_k"], _g["below10_k"], _g["below100_k"]) == (4, 3, 2, 1), _g   # $5 gap counts below, not at $10; $10 counts at $10; refund out
 assert P["gap_basis"] == "premium" and P["prem_median"] == 1400 and P["frp_median"] == 3000, P
 assert round(1 - 0.99 ** 30, 2) == 0.26                             # rule odds_30
 _mb = ffcalc._median_by([{"z": "AE", "v": 100}] * 50 + [{"z": "X", "v": 100}] * 49 + [{"z": "", "v": 100}] * 60 + [{"z": "AE", "v": -5}], "z", "v")

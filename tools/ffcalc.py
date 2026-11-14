@@ -42,10 +42,11 @@ def premium_gap(coh):
     both = [r for r in coh if isinstance(r.get(PREM), (int, float)) and r[PREM] > 0
             and isinstance(r.get("fullRiskPremium"), (int, float)) and r["fullRiskPremium"] > 0]
     below = sum(1 for r in both if r[PREM] < r["fullRiskPremium"])
+    gaps = [r["fullRiskPremium"] - r[PREM] for r in both]   # Price Gap paper: exact counts, never rebuilt from the rounded share
     return {"below_gap_median": pctl([r["fullRiskPremium"] - r[PREM] for r in both if r[PREM] < r["fullRiskPremium"]], 50),   # the two medians below come from different policies; this one is per policy
             "prem_median": pctl([r[PREM] for r in both], 50),
             "frp_median": pctl([r["fullRiskPremium"] for r in both], 50), "frp_n": len(both),
-            "share_below": round(100 * below / len(both), 1) if both else None, "below_n": len(both),
+            "share_below": round(100 * below / len(both), 1) if both else None, "below_n": len(both), "below_k": below, "below10_k": sum(1 for x in gaps if x >= 10), "below100_k": sum(1 for x in gaps if x >= 100),
             "gap_basis": "premium"}
 
 def _median_by(coh, key, val):
