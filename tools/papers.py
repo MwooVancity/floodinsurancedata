@@ -159,7 +159,49 @@ SPECS.append(
                 "Ten loss years are a short record: a month with few or no claims here can still flood.",
                 "Counties are those FEMA codes on the claim, which can differ from the property's county."],
      "prior": "No published ranking or table of U.S. counties by the calendar month of NFIP flood claims was found in searches on 2026-11-13 (WebSearch: NFIP flood claims by month of loss by county peak month; flood season by county NFIP claims seasonality map; dateOfLoss NFIP claims seasonality month analysis county). County tables of NFIP claims found in those searches count claims by year of loss, not by month.",
-     "prior_links": [], "prior_rules": [], "policy_col": False, "published": "2026-11-13", "rules": []})
+     "prior_links": [], "prior_rules": [], "policy_col": False, "published": "2026-11-13", "rules": [],
+     # bug review 11-14: excess was computed from the unrounded share; one printed value changed, no fifth changed
+     "corrections": [("2026-11-14", "Excess over chance is now the printed share minus the printed expected share. One county changed: Taylor County, FL (12123), from 56.5 to 56.4 points. No county changed rank or fifth.")]})
+# Price Gap revised (11-14; methods review 162 M1-M9). Originality 11-14: GAO-27-108012 (Oct 1 2026) downloads every county's share of
+# ALL NFIP policies "with premiums that do not fully reflect their flood risk as of April 2026" (any amount, no n, no gap size); Neptune
+# gives national/state figures. The real difference here: a material line ($100+ a year), the gap's size per county, n and 90% range,
+# single-family primary homes only, and the CRS split (M3). Edge cases: see paper_gate.py price-gap checks and the self-test below.
+GAP_MIN, GAP_MED_MIN = 100, 30   # the $100 line; a median gap printed only from 30+ policies below (M2.8: never a figure from a few records)
+def gap_ctx(rec):
+    p = rec.get("policies") or {}; k, n, md = p.get("below_k"), p.get("below_n"), p.get("below_gap_median")
+    if not (isinstance(k, int) and isinstance(n, int) and n): return {"any_k": None, "any_pct": None, "gap_med": None}
+    return {"any_k": k, "any_pct": round(100 * k / n, 1), "gap_med": md if isinstance(md, (int, float)) and k >= GAP_MED_MIN else None}
+SPECS.append(
+    {"key": "price-gap", "ready": True, "indexable": False, "gap": True,   # M3.5: published None = staged noindex (paper_gate STAGED)
+     "title": "The gap to FEMA's full-risk premium: NFIP single-family homes by county",   # no number in a title: county cards print it untagged (V1)
+     "num": ("policies", "below100_k"), "den": ("policies", "below_n"), "min": 30,
+     "question": f"In which U.S. counties do NFIP single-family primary homes most often pay a premium at least ${GAP_MIN} a year below FEMA's full-risk premium for the same policy, and how large is the gap there?",
+     "unit": "single-family primary-home policies priced both ways",
+     "measure": f"share of NFIP single-family primary-home policies in force whose premium is at least ${GAP_MIN} a year below the full-risk premium FEMA records on the same policy",
+     "short": f"premiums ${GAP_MIN} or more below full-risk", "meets": f"had a premium at least ${GAP_MIN} a year below FEMA's full-risk premium",
+     "fields": "totalInsurancePremiumOfThePolicy, fullRiskPremium, crsClassCode, policyCount, occupancyType, primaryResidenceIndicator, condominiumCoverageTypeCode, censusGeoid",
+     "why": [f"The ${GAP_MIN} line is this paper's choice, so that a gap of a few dollars is not counted as a price gap; the share below by any amount and the median gap are in the table, and Results gives the pooled share by any amount, by $10 or more and by ${GAP_MIN} or more, so a reader can see how much the line moves the figure."],
+     # raw read of OpenFemaDataSetFields (NfipPolicies v3) 2026-11-14
+     "defs": ['FEMA defines fullRiskPremium as "The chargeable premium for a property based on its determined flood risk and the full cost to pay anticipated losses and expenses for that property."',
+              'FEMA defines totalInsurancePremiumOfThePolicy as "Total Insurance Premium of the Policy in whole dollars. Negative values indicate a refund."',
+              'FEMA defines crsClassCode as "The Community Rating System (CRS) Classification Credit Percentage used to rate the policy." and adds "Beginning with Risk Rating 2.0, there are no longer percentage discount differences for policies inside and outside of the SFHA."',
+              'FEMA defines policyCount as "Insured units in an active status."'],
+     "dataset": "FEMA OpenFEMA NFIP Policies v3", "api": "https://www.fema.gov/api/open/v3/NfipPolicies",
+     "base": "NFIP policies in force on the data date on single-family primary homes (FEMA occupancy type 1 or 11, primary residence, condominium coverage type N or blank) with a premium above $0 and a full-risk premium above $0 (refunds and blanks left out); the gap is full-risk premium minus premium, both premium only, before fees and surcharges; counted as records, and every such single-family record here holds one policy unit, which the check confirms",
+     "limits": ["FEMA's data dictionary does not say whether the full-risk premium is before or after the Community Rating System credit; Results gives the share by the CRS class code on the policy so a reader can see whether the class lines up with the share.",
+                "The data does not say which discount puts a premium below full-risk (the yearly increase cap, pre-flood-map construction, a newly mapped area or another rule), and this paper does not say either.",
+                "The gap is a yearly premium difference on one snapshot of policies in force; it is not what any one owner will pay next year.",
+                "The median gap is over every policy below full-risk by any amount, and is printed only where 30 or more policies are below.",
+                "Counties come from the census geography FEMA codes on each policy (censusGeoid), which can differ from the property's county.",
+                "The table is ordered by share alone, not by count: a county with few policies can sit above a county with thousands whose 90% range overlaps its own, so counties within one fifth cannot be told apart and the order inside a fifth is not a ranking.",
+                "Policies in one county share a flood map, a community and its rating, so they are not independent; each county's 90% range treats them as independent and is narrower than it should be.",
+                "Every listed county gets its own 90% range, so about one range in ten would be expected to miss that county's true share by chance alone; no range is adjusted for the number of counties."],
+     "prior": "Published work on this measure, read 2026-11-14: GAO's report GAO-27-108012 (October 1, 2026) gives, for every county with at least 10 properties and as a download, the percentage of all NFIP policies in a county with premiums that do not fully reflect their flood risk as of April 2026, by any amount, with no count of policies and no size of the gap. Neptune Flood's research group reports 1.5 million policyholders, 42% of the program, still paying below their full-risk price, about $2.6 billion a year; Neptune's 42% counts every NFIP policyholder, while this paper's share below by any amount counts only single-family primary homes priced both ways, so the two shares are on different bases. This paper differs in base (single-family primary homes only), in a material line (at least $100 a year, with the any-amount share beside it), in giving the gap's size, the policy count and a 90% range for every county, and in the CRS split.",
+     "reconcile": ("12021", "GAO's download gives 0.765 (76.5%) of all NFIP policies there as of April 2026; the two differ in base (all policies against single-family primary homes) and date"),   # bug review 11-14: our as-of is printed from the data just before this; a typed "August 2026" went stale on refresh
+     "prior_links": [("GAO-27-108012 interactive county map and data download", "https://files.gao.gov/multimedia/gao-27-108012/interactive/index.html"),
+                     ("Neptune Flood analysis as reported by InsuranceNewsNet", "https://insurancenewsnet.com/oarticle/2-6-billion-in-nfip-subsidies-remain-five-years-into-risk-rating-2-0-neptune-flood-research-group-analysis-of-fema-data-shows")],
+     "csv_note": f"share_pct, ci90_low_pct, ci90_high_pct and numerator count policies at least ${GAP_MIN} a year below full-risk; below_any_amount_n, below_any_amount_pct and median_gap_usd_below_any_amount count policies below by any amount (the median gap is blank where fewer than {GAP_MED_MIN} are below).",
+     "prior_rules": [], "policy_col": False, "published": None, "rules": []})
 READY = [s for s in SPECS if s.get("ready")]   # a paper ships only after tools/paper_gate.py and both reviews pass (PAPER-GATE-PROMPT)
 
 def names():
@@ -187,8 +229,8 @@ def rows(spec, recs=None):
             lo, hi = wilson(k, n)
             e = spec["null"](n) if spec.get("null") else None   # Flood Calendar: expected share at random for this n
             out.append({"geoid": g, "state": r.get("state", ""), "k": k, "n": n, "value": round(100 * k / n, 1), "lo": lo, "hi": hi,
-                        "exp": e, "excess": None if e is None else round(100 * k / n - e, 1)})
-    out.sort(key=lambda x: (-(x["k"] / x["n"] - (x["exp"] or 0) / 100), x["geoid"]))   # with a null: ranked on share minus chance
+                        "exp": e, "excess": None if e is None else round(round(100 * k / n, 1) - e, 1)})   # printed share minus printed expected (review 11-14)
+    out.sort(key=lambda x: (-(x["k"] / x["n"] - (x["exp"] or 0) / 100), x["geoid"]))   # with a null: ranked on share minus chance (unrounded; printed excess stays in order, gate checks)   # with a null: ranked on share minus chance
     N = len(out)
     first = {}   # review 11-13: an equal printed share (or excess) always gets the same fifth (the fifth of its first, highest-placed row)
     for i, x in enumerate(out): x["fifth"] = first.setdefault(x["value"] if x["excess"] is None else x["excess"], 1 + (5 * i) // N)
@@ -206,6 +248,7 @@ def context(spec, rec, w0, w1):
     ex = _get(rec, spec["excess"]) if spec.get("excess") else None
     out = {"pol_out": round(100 - sf, 1) if isinstance(sf, (int, float)) else None, "excess": ex if isinstance(ex, (int, float)) else None,
            "one_year": top[0] if top and 2 * top[1] > sum(by.values()) and sum(by.values()) >= ONE_YEAR_MIN else None}
+    if spec.get("gap"): out.update(gap_ctx(rec))   # Price Gap M2: any-amount share and median gap beside the $100 share
     if spec.get("months"):   # Flood Calendar: tied peak months all named; each peak month's year-month holding over half (10+ claims)
         b = _bm(rec) or {}; ym = _get(rec, ("extras", "claims", "loss_month_n", "by_year_month")) or {}
         pk = max(b.values()) if b else 0
@@ -274,8 +317,9 @@ def write_cache():
     recs = load(); out = {}
     for s in READY:
         rs = rows(s, recs)
-        out[s["key"]] = {"pool": len(rs), "rows": {x["geoid"]: [x["fifth"], x["value"], x["lo"], x["hi"], x["n"]]
-                                                   + (list(month_words(context(s, recs[x["geoid"]], 0, 0))) + [x["exp"], x["excess"]] if s.get("months") else []) for x in rs}}
+        # named fields, never positions (bug review 11-14: a new field would have shifted the county card's figures)
+        out[s["key"]] = {"pool": len(rs), "rows": {x["geoid"]: {"fifth": x["fifth"], "v": x["value"], "lo": x["lo"], "hi": x["hi"], "n": x["n"],
+                                                   **(dict(zip(("peak", "storm"), month_words(context(s, recs[x["geoid"]], 0, 0))), exp=x["exp"]) if s.get("months") else {})} for x in rs}}
     os.makedirs(os.path.dirname(CACHE), exist_ok=True)
     json.dump(out, open(CACHE, "w"))
     return out
@@ -285,7 +329,7 @@ def read_cache():
     except Exception: return {}
 
 if __name__ == "__main__":   # self-check: interval, base, fifths
-    lo, hi = wilson(10, 100); assert (lo, hi) == (6.1, 16.0), (lo, hi)   # hand-checked: z=1.6449, (0.1135 -+ 0.0512) / 1.0271
+    lo, hi = wilson(10, 100); assert (lo, hi) == (6.1, 16.0), (lo, hi)   # hand-checked: z=1.64485, (0.1135 -+ 0.0512) / 1.0271
     S = {"num": ("a",), "den": ("b",), "min": 2}
     r = rows(S, {"1": {"a": 1, "b": 2}, "2": {"a": 3, "b": 1}, "3": {"a": 0, "b": 1}, "4": {"a": 2, "b": 2}, "5": {"a": None, "b": 5}})
     assert [(x["geoid"], x["value"]) for x in r] == [("4", 100.0), ("1", 50.0)], r   # k > n and n < min left out
@@ -316,6 +360,15 @@ if __name__ == "__main__":   # self-check: interval, base, fifths
     N0 = {"num": ("a",), "den": ("b",), "min": 1, "null": lambda n: {100: 13.3, 2000: 9.4}[n]}
     r = rows(N0, {"1": {"a": 20, "b": 100}, "2": {"a": 300, "b": 2000}})   # excess 20.0 - 13.3 = 6.7 ranks above 15.0 - 9.4 = 5.6
     assert [(x["geoid"], x["excess"]) for x in r] == [("1", 6.7), ("2", 5.6)], r
+    r = rows({**N0, "null": lambda n: 10.8}, {"1": {"a": 6725, "b": 10000}})   # bug review 11-14: excess is printed share minus printed expected
+    assert r[0]["excess"] == round(r[0]["value"] - 10.8, 1), r
     r = rows(N0, {"1": {"a": 18, "b": 100}, "2": {"a": 300, "b": 2000}})   # higher share (18.0) but lower excess (4.7) ranks second
     assert [x["geoid"] for x in r] == ["2", "1"], r
+    G = lambda k, n, md: {"policies": {"below_k": k, "below_n": n, "below_gap_median": md}}
+    assert gap_ctx(G(29, 40, 500))["gap_med"] is None and gap_ctx(G(30, 40, 500)) == {"any_k": 30, "any_pct": 75.0, "gap_med": 500}   # 29 below: no median
+    assert gap_ctx({})["any_pct"] is None and gap_ctx(G(None, 40, 5))["any_k"] is None   # old data: no column value, never a crash
+    import re   # bug review 11-14: a paper's own text never types a month-year; only the cited study's fixed April 2026 snapshot
+    for s in SPECS:
+        for t in [s.get("reconcile", ("", ""))[1], s.get("csv_note", "")]:
+            assert not re.search(r"\b(?!April )[A-Z][a-z]+ 20\d\d\b", t), (s["key"], t)
     print("papers self-test OK")

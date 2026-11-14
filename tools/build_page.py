@@ -378,27 +378,29 @@ def card_ranks():   # owner 11-12 research papers: this county's share, 90% rang
     cache = PA.read_cache(); g = os.environ.get("FF_GEOID", ""); lines = []
     _F = {1: "highest fifth", 2: "second fifth", 3: "middle fifth", 4: "fourth fifth", 5: "lowest fifth"}
     for sp in PA.READY:
+        _pol = "Policies" in sp["dataset"]   # bug review 11-14: each figure's data.csv row names the paper's own dataset
+        def mx(k, v, q, _pol=_pol): return m({"paper_share": "paper_share_pol" if _pol else k, "paper_min": k if _pol else "paper_min_clm"}.get(k, k), v, q=q)
         c = cache.get(sp["key"]) or {}
         if not c.get("pool"): continue
         head = f"<b><a href='/flood-insurance/{sp['key']}/'>{html.escape(sp['title'])}</a></b>: "
         if IS_STATE:   # PLAN E19: a state names how many of its counties are listed; never a state rank
             n_here = sum(1 for gg in (c.get("rows") or {}) if gg[:2] == g[:2])
-            lines.append(f"<li>{head}{m('paper_min', str(n_here), q=sp['key'] + '-n')} of this state's {UNITS} have at least "
-                         f"{m('paper_min', str(sp['min']), q=sp['key'])} {sp['unit']} and are listed.</li>")
+            lines.append(f"<li>{head}{mx('paper_min', str(n_here), q=sp['key'] + '-n')} of this state's {UNITS} have at least "
+                         f"{mx('paper_min', str(sp['min']), q=sp['key'])} {sp['unit']} and are listed.</li>")
             continue
         r = (c.get("rows") or {}).get(g)
         if r:
-            fifth, v, lo, hi, n = r[:5]
-            mw = (f"; peak month {html.escape(r[5])}" + (f", over half of it from {html.escape(r[6])} alone" if r[6] else "")
-                  + (f"; {m('paper_share', f'{r[7]}%', q=sp['key'] + '-exp')} would be expected at random for this many claims, and the fifth is by share minus that" if len(r) > 8 else "")) if len(r) > 6 else ""   # Flood Calendar
-            ind = " if claims were independent" if len(r) > 8 else ""   # statistician round 2: Wilson assumes independent claims
-            lines.append(f"<li>{head}<span data-paper=\"{sp['key']}\" data-fifth=\"{fifth}\">{m('paper_share', f'{v}%', q=sp['key'])} "
-                         f"({m('paper_share', '90%', q='ci-level')} range{ind} {m('paper_share', f'{lo}', q=sp['key'] + '-lo')}–{m('paper_share', f'{hi}%', q=sp['key'] + '-hi')}) of "
-                         f"{m('paper_min', num(n), q=sp['key'] + '-n')} {sp['unit']} here, the {_F[fifth]} of "
-                         f"{m('paper_min', num(c['pool']), q=sp['key'] + '-pool')} U.S. counties listed{mw}</span>.</li>")
+            fifth, v, lo, hi, n = (r[k] for k in ("fifth", "v", "lo", "hi", "n")); _e = r.get("exp")
+            mw = (f"; peak month {html.escape(r['peak'])}" + (f", over half of it from {html.escape(r['storm'])} alone" if r.get("storm") else "")
+                  + (f"; {mx('paper_share', f'{_e}%', q=sp['key'] + '-exp')} would be expected at random for this many claims, and the fifth is by share minus that" if _e is not None else "")) if "peak" in r else ""   # Flood Calendar
+            ind = " if claims were independent" if _e is not None else ""   # statistician round 2: Wilson assumes independent claims
+            lines.append(f"<li>{head}<span data-paper=\"{sp['key']}\" data-fifth=\"{fifth}\">{mx('paper_share', f'{v}%', q=sp['key'])} "
+                         f"({mx('paper_share', '90%', q='ci-level')} range{ind} {mx('paper_share', f'{lo}', q=sp['key'] + '-lo')}–{mx('paper_share', f'{hi}%', q=sp['key'] + '-hi')}) of "
+                         f"{mx('paper_min', num(n), q=sp['key'] + '-n')} {sp['unit']} here, the {_F[fifth]} of "
+                         f"{mx('paper_min', num(c['pool']), q=sp['key'] + '-pool')} U.S. counties listed{mw}</span>.</li>")
         else:
             lines.append(f"<li>{head}<span data-paper=\"{sp['key']}\" data-fifth=\"0\">not listed</span>: fewer than "
-                         f"{m('paper_min', str(sp['min']), q=sp['key'])} {sp['unit']} here.</li>")
+                         f"{mx('paper_min', str(sp['min']), q=sp['key'])} {sp['unit']} here.</li>")
     if not lines: return ""
     return card(f"How {CL if IS_STATE else CS} appears in the national research papers",
                 "Each paper measures one thing in FEMA's records for every U.S. county with enough records. A fifth is a position in a list, not a grade or a prediction.",

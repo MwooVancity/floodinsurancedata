@@ -25,6 +25,29 @@ def chance(n):   # own copy: expected largest-month share (%) of n claims thrown
         draws = numpy.random.default_rng(n).multinomial(n, [1 / 12] * 12, size=4000)
         _CH[n] = round(100 * int(draws.max(axis=1).sum()) / (4000 * n), 1)
     return _CH[n]
+# Price Gap, own copy: SF primary-home policies priced both ways (agg), $100+ below full-risk; any-amount share and median gap (30+ below)
+BASES["price-gap"] = (("policies", "below100_k"), ("policies", "below_n"), 30)
+def gapcols(r):
+    p = r.get("policies") or {}; k, n, md = p.get("below_k"), p["below_n"], p.get("below_gap_median")
+    crs = g(r, ("extras", "policies", "below_by_crs"))   # bug review 11-14: Results' $10 line and CRS split recomputed too
+    return (round(100 * k / n, 1), md if k >= 30 and isinstance(md, (int, float)) else None, k, p.get("below10_k"), crs if isinstance(crs, dict) else {})
+def gap_results(T):   # own copy of the price-gap Results words: pooled shares at any amount / $10 / $100, CRS classes with 1,000+ policies
+    n = sum(t["n"] for t in T); r = lambda a: round(100 * a / n, 1)
+    pooled = (f"pooled over the {len(T):,} counties, {r(sum(t['gap'][2] for t in T))}% of {n:,} ",
+              f" by any amount, {r(sum(t['gap'][3] or 0 for t in T))}% by $10 or more and {r(sum(t['k'] for t in T))}% by $100 or more.</li>")
+    tot = {}
+    for t in T:
+        for c, (a, b) in t["gap"][4].items(): tot[c] = [tot.get(c, [0, 0])[0] + a, tot.get(c, [0, 0])[1] + b]
+    cl = sorted((c for c in tot if tot[c][0] >= 1000), key=lambda c: (c == "blank", int(c) if c.isdigit() else 99))
+    crs = "; ".join(f'{"no class code" if c == "blank" else "class " + c} {round(100 * tot[c][1] / tot[c][0], 1)}% of {tot[c][0]:,}' for c in cl)
+    return pooled, (f"the share below by any amount is {crs}.</li>" if cl else None)
+def crs_adds_up(recs):   # M3 split (extras_raw, its own pass) must hold exactly the agg base: same policies, same count below
+    bad = []
+    for c, r in recs.items():
+        b = g(r, ("extras", "policies", "below_by_crs")); p = r.get("policies") or {}
+        if isinstance(b, dict) and b and isinstance(p.get("below_n"), int) and (sum(v[0] for v in b.values()), sum(v[1] for v in b.values())) != (p["below_n"], p.get("below_k")):
+            bad.append(f"price-gap: county {c} CRS split does not hold the same policies as the base")
+    return bad[:5]
 NULL = {"flood-calendar": chance}   # papers ranked on share minus a chance expectation (statistician round 2)
 def cal(r):   # (peak months, year-months holding over half of a peak month with 10+ claims), both as page words
     b = mon(r); ym = g(r, ("extras", "claims", "loss_month_n", "by_year_month")) or {}; top = max(b.values())
@@ -59,10 +82,12 @@ EXTRA = {"damage-over-coverage": (("extras", "claims", "underinsured", "excess_m
 # never appear in a label (title, description, h1, lede, Abstract, Question, Results); a cited study's own title in Prior work is not a label
 LABEL = {"deductible-choice": re.compile(r"\b(choice|choices|choose|chooses|chose|chosen|opt|opts|opted|elect|elects|elected)\b", re.I),
          # statistician round 2: 404 of 416 peak months are mostly one year, so no season or calendar word in a label
-         "flood-calendar": re.compile(r"\b(calendar|seasons?|seasonal|seasonality)\b", re.I)}
+         "flood-calendar": re.compile(r"\b(calendar|seasons?|seasonal|seasonality)\b", re.I),
+         # FEMA records a full-risk premium, not a subsidy: the word is Neptune's reading, never this paper's label
+         "price-gap": re.compile(r"\bsubsid(y|ies|ized|ised|ize|ise)\b", re.I)}
 # round 3 (statistician): the over-half flag says nothing about other years, so no sentence anywhere claims the month does not recur
 OVERCLAIM = {"flood-calendar": re.compile(r"repeats? each year|not a pattern|mostly one year's flood|\brecur(s|ring)?\b", re.I)}
-LABEL_MUT = {"deductible-choice": " choice", "flood-calendar": " calendar"}
+LABEL_MUT = {"deductible-choice": " choice", "flood-calendar": " calendar", "price-gap": " subsidy"}
 STAGED, SITEMAP = set(), ""   # papers with no published date: must be noindex and out of the sitemap (M3.5); filled in main
 SECTIONS = ["abstract", "question", "data", "methods", "results", "prior", "table", "limitations", "reproduce", "cite", "versions", "corrections"]
 BANNED = re.compile(r"\b(best|worst|safest|most dangerous|peer[- ]reviewed|significant(ly)?|only published here|denied|forecast|will rise|because|due to|caused by|driven by)\b", re.I)
@@ -94,9 +119,9 @@ def truth(recs, key):
         if key in EXTRA:
             ex, by = g(recs[c], EXTRA[key][0]), g(recs[c], EXTRA[key][1]) or {}
             by = next((y for y, m in by.items() if 2 * m > sum(by.values()) >= 10), None)   # at most one year holds over half; 10+ claims only (review underinsured-2 N1)
-        e = nf(n) if nf else None; x = None if e is None else round(100 * k / n - e, 1)
+        e = nf(n) if nf else None; x = None if e is None else round(v - e, 1)   # printed share minus printed expected
         out.append({"c": c, "k": k, "n": n, "v": v, "ci": ci(k, n), "fifth": band.setdefault(v if x is None else x, 1 + 5 * i // N), "pol": pol(c), "ex": ex, "yr": by, "e": e, "x": x,
-                    "cal": cal(recs[c]) if key == "flood-calendar" else None})
+                    "cal": cal(recs[c]) if key == "flood-calendar" else None, "gap": gapcols(recs[c]) if key == "price-gap" else None})
     return out
 
 def text(h): return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", re.sub(r"(?s)<(script|style|head)\b.*?</\1>", " ", h)))
@@ -108,6 +133,11 @@ def check(key, page, csv_text, cards, T, sm=None):
         for m in LABEL[key].finditer(text(lab)): bad.append(f"{key}: label word '{m[0]}' (a claim the data does not make)")
     if key in STAGED and ('content="noindex' not in page or f"/flood-insurance/{key}/<" in sm):
         bad.append(f"{key}: not yet opened by the owner, must be noindex and out of the sitemap (M3.5)")
+    # owner 11-14: the plain-words answer and the county lookup come first; its median is the recomputed median
+    pl = page[page.find('id="plain"'):page.find('class="lede"')] if 'id="plain"' in page else ""
+    _pm = re.search(r"(?:median listed county (?:it (?:is|was)|the busiest month held)) ([\d.]+)%", text(pl))
+    if not pl or 'id="ps"' not in pl or not _pm or float(_pm[1]) != round(statistics.median(t["v"] for t in T), 1) if T else False:
+        bad.append(f"{key}: plain-words answer, its median ({_pm and _pm[1]}) or the county lookup missing or wrong")
     asof = next(csv.DictReader(io.StringIO(csv_text or "")), {}).get("as_of", "")   # M2.5: the current dated address, listed and built
     vc = page[page.find('id="versions"'):page.find('id="corrections"')]
     vdir = os.path.join(D, "flood-insurance", key)
@@ -140,6 +170,22 @@ def check(key, page, csv_text, cards, T, sm=None):
         m = re.search(r"from one loss year, (\d{4}), which may hold one flood or several \(([\d,]+) of the [\d,]+ counties", page)   # the Abstract's one-flood flag on the top county
         want_ab = (T[0]["yr"], sum(1 for t in T if t["yr"])) if T and T[0]["yr"] else None
         if (m and (m[1], int(m[2].replace(",", "")))) != (want_ab or None): bad.append(f"{key}: Abstract one-year flag {m and m.groups()} vs {want_ab}")
+    if key == "price-gap":   # M2 columns = recompute, page and CSV; M9 prior work cites GAO
+        gcol = re.findall(r"</td><td>[\d,]+ of [\d,]+</td><td>([\d.]+)%</td><td>(\$[\d,]+|—)</td></tr>", page)
+        if len(gcol) != len(want) or any((float(a_), None if b_ == "—" else int(b_[1:].replace(",", ""))) != (t["gap"][0], None if t["gap"][1] is None else round(t["gap"][1])) for (a_, b_), t in zip(gcol, want)):
+            bad.append(f"{key}: any-amount share or median gap column disagrees with recompute")
+        tg = {x["c"]: x for x in T}
+        for r in csv.DictReader(io.StringIO(csv_text or "")):
+            t = tg.get(r["county_fips"])
+            if t and (int(r["below_any_amount_n"]), float(r["below_any_amount_pct"]), r["median_gap_usd_below_any_amount"] or None) != (t["gap"][2], t["gap"][0], None if t["gap"][1] is None else str(t["gap"][1])):
+                bad.append(f"{key}: CSV row {r['county_fips']} any-amount/median gap disagrees with recompute"); break
+        rs = page[page.find('id="results"'):page.find('id="prior"')]; (p0, p1), crs = gap_results(T)
+        if p0 not in rs or p1 not in rs: bad.append(f"{key}: Results pooled any/$10/$100 shares disagree with recompute")
+        if (crs is None) != ("By the CRS class code" not in rs) or (crs and crs not in rs): bad.append(f"{key}: Results CRS split disagrees with recompute")
+        t0 = next((t for t in T if t["c"] == "12021"), None)   # M9 reconcile: Collier County, FL, beside GAO's own figure
+        if t0 and f"here {t0['gap'][0]}% of {t0['n']:,} " not in page or t0 and f"by any amount and {t0['v']}% by $100 or more, as of" not in page:
+            bad.append(f"{key}: Prior work Collier County figures disagree with recompute")
+        if "GAO-27-108012" not in page[page.find('id="prior"'):page.find('id="table"')]: bad.append(f"{key}: Prior work does not cite GAO-27-108012 (M9)")
     if key in OVERCLAIM:
         for m in OVERCLAIM[key].finditer(text(page)): bad.append(f"{key}: '{m[0]}' claims more than the one-year flag measures (round 3 M1)")
     if key == "flood-calendar":   # peak month + one-year flag columns, the Abstract flag count and top-county flag = recompute
@@ -170,6 +216,11 @@ def check(key, page, csv_text, cards, T, sm=None):
         m = re.search(r"over half of those claims are from ([A-Z][a-z]+ \d{4}(?: and [A-Z][a-z]+ \d{4})*) alone", page)
         if (m and m[1]) != (T[0]["cal"][1] or None): bad.append(f"{key}: Abstract top-county flag {m and m[1]} vs {T[0]['cal'][1]}")
     cr = list(csv.DictReader(io.StringIO(csv_text or "")))
+    hdr = next(csv.reader(io.StringIO(csv_text or "")), [])   # label vs data (stat review): the download line names every CSV column, in order
+    m = re.search(r'\.csv">Download all [\d,]+ rows as CSV</a> \((\d+) columns: ([^)]*)\)', page)
+    if not m or int(m[1]) != len(hdr) or m[2].split(", ") != hdr: bad.append(f"{key}: CSV column list on the page {m and m.groups()} vs header {hdr}")
+    if "below_any_amount_n" in hdr and not re.search(r"share_pct, ci90_low_pct, ci90_high_pct and numerator count policies at least \$\d+ a year below full-risk; below_any_amount_n, below_any_amount_pct and median_gap_usd_below_any_amount count policies below by any amount", page):
+        bad.append(f"{key}: CSV note does not say which columns use the $ line and which the any-amount base")
     if len(cr) != len(T): bad.append(f"{key}: CSV {len(cr)} rows, recompute {len(T)}")
     tc = {t["c"]: t for t in T}
     for r in cr:
@@ -216,6 +267,8 @@ if __name__ == "__main__":
         T = truth(recs, key); pages[key] = page
         if "--test" in sys.argv:
             muts = {"section dropped": (page.replace('id="limitations"', 'id="x"'), csv_text, cards),
+                    "plain median wrong": (re.sub(r"(median listed county (?:it (?:is|was)|the busiest month held) )([\d.]+)%", lambda m: f"{m[1]}{float(m[2]) + 1}%", page, count=1), csv_text, cards),
+                    "lookup not first": (page.replace('id="plain"', 'id="x"', 1), csv_text, cards),
                     "banned word": (page.replace("</h1>", " the worst counties</h1>", 1), csv_text, cards),
                     "share changed": (re.sub(r"(<td>\w+ fifth</td><td>.*?</td><td>)([\d.]+)%", lambda m: m[1] + "0.1%", page, count=1), csv_text, cards),
                     "range dropped": (re.sub(r"<td>[\d.]+–[\d.]+%</td>", "<td></td>", page, count=1), csv_text, cards),
@@ -247,6 +300,17 @@ if __name__ == "__main__":
                         "largest excess wrong": (re.sub(r"(the largest excess is .*?: )([\d.]+)%", lambda m: f"{m[1]}{float(m[2]) + 1}%", page, count=1, flags=re.S), csv_text, cards),
                         "csv expected wrong": (page, re.sub(r"(?m)^((?:[^,\n]*,){13})([\d.]+)", lambda m: f"{m[1]}{float(m[2]) + 1}", csv_text, count=1), cards)} if key == "flood-calendar" else {}),
                     "card range unlabelled": (page, csv_text, {c: h.replace("range if claims were independent", "range") for c, h in cards.items()}) if key in NULL else (page.replace('id="prior"', 'id="x"'), csv_text, cards),
+                    **({"any share wrong": (re.sub(r"( of [\d,]+</td><td>)([\d.]+)%(</td><td>(?:\$[\d,]+|—)</td></tr>)", lambda m: f"{m[1]}{float(m[2]) + 1}%{m[3]}", page, count=1), csv_text, cards),
+                        "median gap wrong": (re.sub(r"(%</td><td>\$)([\d,]+)(</td></tr>)", lambda m: m[1] + "1" + m[3], page, count=1), csv_text, cards),
+                        "csv any wrong": (page, re.sub(r"(?m)^((?:[^,\n]*,){12})([\d.]+)", lambda m: f"{m[1]}{float(m[2]) + 1}", csv_text, count=1), cards),
+                        "gao dropped": (page.replace("GAO-27-108012", "GAO"), csv_text, cards),
+                        "pooled $10 wrong": (re.sub(r"([\d.]+)(% by \$10 or more)", lambda m: f"{float(m[1]) + 1}{m[2]}", page, count=1), csv_text, cards),
+                        "crs share wrong": (re.sub(r"(the share below by any amount is class \d+ )([\d.]+)", lambda m: f"{m[1]}{float(m[2]) + 1}", page, count=1), csv_text, cards),
+                        "crs line dropped": (re.sub(r"<li>By the CRS class code.*?</li>", "", page, count=1, flags=re.S), csv_text, cards),
+                        "reconcile wrong": (re.sub(r"(: here )([\d.]+)%", lambda m: f"{m[1]}{float(m[2]) + 1}%", page, count=1), csv_text, cards)} if key == "price-gap" else {}),
+                    "csv column unlisted": (re.sub(r"(rows as CSV</a> \(\d+ columns: )[^,]+, ", r"\1", page, count=1), csv_text, cards),
+                    "csv column added": (page, csv_text.replace(csv_text.splitlines()[0], csv_text.splitlines()[0] + ",extra", 1), cards),
+                    **({"csv base note dropped": (page.replace(" count policies below by any amount", " are extra", 1), csv_text, cards)} if key == "price-gap" else {}),
                     "card fifth wrong": (page, csv_text, {c: re.sub(rf'data-paper="{key}" data-fifth="(\d)"', lambda m: f'data-paper="{key}" data-fifth="{(int(m[1]) % 5) + 1}"', h, count=1) for c, h in cards.items()})}
             for k, (pg, cs, cd) in muts.items(): assert check(key, pg, cs, cd, T), f"{key}: missed {k}"
             if key in STAGED:   # M3.5 mutations: noindex dropped; URL put in the sitemap
@@ -257,6 +321,11 @@ if __name__ == "__main__":
                 c0 = next(c for c, r in recs.items() if mon(r)); m8 = dict(recs); m8[c0] = json.loads(json.dumps(recs[c0]))
                 m8[c0]["extras"]["claims"]["loss_month_n"]["by_year_month"] = {}
                 assert months_add_up(m8) and not months_add_up(recs), "flood-calendar: missed year-months vs months"
+            if key == "price-gap":   # M3 mutation: the CRS split gains a policy the base does not hold
+                c0 = next(c for c, r in recs.items() if g(r, ("extras", "policies", "below_by_crs")))
+                m9 = dict(recs); m9[c0] = json.loads(json.dumps(recs[c0])); k0 = next(iter(m9[c0]["extras"]["policies"]["below_by_crs"]))
+                m9[c0]["extras"]["policies"]["below_by_crs"][k0][0] += 1
+                assert crs_adds_up(m9) and not crs_adds_up(recs), "price-gap: missed CRS split vs base"
             if key == "deductible-choice":   # M1.7 mutation: one county's records hold two units each
                 c0 = next(c for c, r in recs.items() if g(r, ("extras", "policies", "deductible_units")))
                 m7 = dict(recs); m7[c0] = json.loads(json.dumps(recs[c0])); m7[c0]["extras"]["policies"]["sf_n"] //= 2
@@ -264,7 +333,7 @@ if __name__ == "__main__":
             if re.search(r"\bNone\b", text(page)): assert False, f"{key}: 'None' printed on the page"
             assert not check(key, page, csv_text, cards, T), check(key, page, csv_text, cards, T)[:3]
             print(f"{key}: {len(muts)} mutations caught"); continue
-        bad += check(key, page, csv_text, cards, T) + (units_are_records(recs) if key == "deductible-choice" else []) + (months_add_up(recs) if key == "flood-calendar" else []) + ([f"{key}: 'None' printed"] if re.search(r"\bNone\b", text(page)) else [])
+        bad += check(key, page, csv_text, cards, T) + (units_are_records(recs) if key == "deductible-choice" else []) + (months_add_up(recs) if key == "flood-calendar" else []) + (crs_adds_up(recs) + units_are_records(recs) if key == "price-gap" else []) + ([f"{key}: 'None' printed"] if re.search(r"\bNone\b", text(page)) else [])
         print(f"{key}: {len(T)} counties recomputed")
     if "--test" not in sys.argv: bad += sameness(pages)
     for b in bad[:15]: print("PAPER GATE FAIL", b)

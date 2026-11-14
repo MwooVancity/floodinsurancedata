@@ -47,6 +47,14 @@ if "--live" in sys.argv:
     step("every live page = the built page that passed (as Googlebot)", os.path.join(T, "gate_live.py"))
     print("LIVE OK")
 else:
+    # owner 11-14 "I don't want to ship nonperfect pages": the code that writes pages must be bug-reviewed before it ships
+    # (a --hotfix for wrong live text may skip it, like the hater review). Checked first so a long gate run never ends in a refusal.
+    # bug review 11-14: the cloud's daily publish runs release.py without --ship and then deploys, so it must stop too
+    _need_cr = ("--ship" in sys.argv or os.environ.get("GITHUB_ACTIONS") == "true") and "--hotfix" not in sys.argv
+    if _need_cr:
+        sys.path.insert(0, T); import code_stamp
+        _cr = code_stamp.check()
+        if _cr: sys.exit(f"RELEASE STOPPED at: code bug review ({_cr}): run /code-review medium on the changed tools, fix every finding, then code_stamp.py --stamp")
     out = subprocess.run([sys.executable, "-I", os.path.join(T, "build_all.py")], cwd=os.path.dirname(T),
                          capture_output=True, text=True).stdout
     n_pass, bad = len(re.findall(r"GATE PASS", out)), re.findall(r".*(?:GATE FAIL|FAILED|\[\w+\]).*", out)
@@ -107,6 +115,7 @@ else:
     R = os.path.dirname(T); g = lambda *a: subprocess.run(["git", *a], cwd=R, check=True)
     base = subprocess.run(["git", "rev-parse", "HEAD"], cwd=R, capture_output=True, text=True).stdout.strip()   # IndexNow: pages changed since here
     subprocess.run([sys.executable, "-I", os.path.join(T, "sameness.py"), "--record"], cwd=R)   # the shipped share becomes the new ceiling
+    if _need_cr and code_stamp.check(): sys.exit(f"RELEASE STOPPED at: code bug review (tools changed during the gate run: {code_stamp.check()})")   # bug review 11-14
     g("add", "-A", "dist", "data/c", "data/states", "places.json", "tools", "state")
     if subprocess.run(["git", "diff", "--cached", "--quiet"], cwd=R).returncode:
         g("commit", "-q", "-m", "release: built site" + (f" (hotfix, hater review skipped: {hot})" if hot else "")

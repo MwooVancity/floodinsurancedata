@@ -21,7 +21,7 @@ places = {p["slug"] for p in json.load(open(os.path.join(ROOT, "places.json")))}
 fdir = os.path.join(DIST, "flood-insurance")
 sys.path.insert(0, TOOLS); from agg_raw import NAMES, slug as _sslug
 _states = {_sslug(st) for st in NAMES}   # state folders stay: build_states rebuilds only the ones whose inputs changed
-from papers import SPECS as _PS; _papers = {s["key"] for s in _PS if s.get("ready")}   # paper folders hold dated versions (PAPER-GATE M2.5): never pruned
+from papers import SPECS as _PS; _papers = {s["key"] for s in _PS}   # every paper, ready or not: switching one off must not delete its dated versions (bug review 11-14)   # paper folders hold dated versions (PAPER-GATE M2.5): never pruned
 for name in os.listdir(fdir):   # prune any page folder that is neither a county that passed this run nor a state
     if os.path.isdir(os.path.join(fdir, name)) and name not in places and name not in _states and name not in _papers:
         shutil.rmtree(os.path.join(fdir, name), ignore_errors=True)
