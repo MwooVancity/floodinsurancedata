@@ -43,7 +43,8 @@ def new_acc():
             "trend": collections.defaultdict(lambda: [0, []]),
             # 11-12 cloud field batch (PLAN): within-zone elevated vs not (never across zones: hcu 11-07), openings under elevated
             # homes (FEMA obstructionType), basement types, floodproofed, deductible by zone group; FEMA codes kept raw, labelled at display
-            "pz": collections.defaultdict(list), "obs": collections.Counter(), "bsm": collections.Counter(), "fp": 0, "dedz": collections.defaultdict(collections.Counter)}   # year -> [single-family records, their costs > 0]
+            "pz": collections.defaultdict(list), "obs": collections.Counter(), "bsm": collections.Counter(), "fp": 0, "dedz": collections.defaultdict(collections.Counter),
+            "dedu": collections.Counter(), "dedu_blank": 0}   # Deductible Choice paper: single-family primary policy units (SUM policyCount) per deductible   # year -> [single-family records, their costs > 0]
 
 def policies(st):
     acc = collections.defaultdict(new_acc)
@@ -92,7 +93,8 @@ def policies(st):
             for col, key in (("federalPolicyFee", "fee"), ("hfiaaSurcharge", "hfiaa"), ("reserveFundAssessment", "reserve"), ("iccPremium", "icc")):
                 v = f(r[col])
                 if v is not None and v >= 0: a[key].append(v)
-            if r["buildingDeductibleCode"] in DEDUCTIBLE: a["ded"][DEDUCTIBLE[r["buildingDeductibleCode"]]] += 1
+            if r["buildingDeductibleCode"] in DEDUCTIBLE: a["ded"][DEDUCTIBLE[r["buildingDeductibleCode"]]] += 1; a["dedu"][DEDUCTIBLE[r["buildingDeductibleCode"]]] += u
+            else: a["dedu_blank"] += u   # blank or a code FEMA adds later: counted out, never guessed
             _zx = (r["ratedFloodZone"] or "").strip().upper(); _zgx = "AE" if _zx == "AE" else "X" if _zx in ("B", "C", "X") else None
             if _zgx and prem and prem > 0: a["pz"][(_zgx, "elevated" if truthy(r["elevatedBuildingIndicator"]) else "not")].append(prem)
             if _zgx and r["buildingDeductibleCode"] in DEDUCTIBLE: a["dedz"][_zgx][DEDUCTIBLE[r["buildingDeductibleCode"]]] += 1
@@ -127,7 +129,8 @@ def policies(st):
                   "deductibles": {str(d): pct(c, n_ded) for d, c in a["ded"].most_common(4)}, "sf_n": a["sf_n"],
                   "prem_zone_elev": {f"{zg}|{el}": {"median": med(v), "n": len(v)} for (zg, el), v in a["pz"].items()},
                   "obstruction_counts": dict(a["obs"]), "basement_counts": dict(a["bsm"]), "floodproofed_n": a["fp"],
-                  "deductibles_by_zone": {zg: {str(d): c for d, c in cn.items()} for zg, cn in a["dedz"].items()}}
+                  "deductibles_by_zone": {zg: {str(d): c for d, c in cn.items()} for zg, cn in a["dedz"].items()},
+                  "deductible_units": {str(d): c for d, c in sorted(a["dedu"].items())}, "deductible_units_blank": a["dedu_blank"]}
         if k == "ST":   # histograms and counts the home page sums into exact U.S. figures
             out[k]["cost_hist"] = dict(a["cost_hist"]); out[k]["cost_hist_new"] = dict(a["cost_hist_new"])
             out[k]["cost_hist_zone"] = {g: dict(h) for g, h in a["zone_hist"].items()}
@@ -160,7 +163,8 @@ def claims(st):
                                            "zone": collections.defaultdict(lambda: [0, 0, 0.0]),
                                            "moved": [0, 0, 0],   # loss years LOSS_FROM..LOSS_TO, rated outside A/V: [current zone known, current A/V, current blank]
                                            "cause10": [0, 0, collections.Counter()],   # same years, paid claims: [paid, with a labelled cause, claims per cause code]
-                                           "recent": [0, 0, collections.Counter()]})   # loss year RECENT_FROM+: [claims, paid, reason codes of the unpaid] (claims research page)   # zone on the claim, loss years LOSS_FROM..LOSS_TO: [claims, paid, dollars]
+                                           "recent": [0, 0, collections.Counter()],
+                                           "mo": collections.Counter(), "mo_none": 0})   # Flood Calendar paper: claims (paid or not) by month of loss, loss years LOSS_FROM..LOSS_TO   # loss year RECENT_FROM+: [claims, paid, reason codes of the unpaid] (claims research page)   # zone on the claim, loss years LOSS_FROM..LOSS_TO: [claims, paid, dollars]
     for r in rows("NfipClaims", st):
         paid = net(r)
         err = r["nonPaymentReasonBuilding"] in ("98", "99")   # bookkeeping, not claims (agg_raw drops them too)
@@ -176,6 +180,9 @@ def claims(st):
             if LOSS_FROM <= str(r["yearOfLoss"] or "")[:4] <= LOSS_TO:   # 11-09: counties too (zone_split: claims outside zones A and V)
                 rz = (r["ratedFloodZone"] or "").strip().upper()
                 zc = a["zone"][rz or "blank"]; zc[0] += 1
+                mo = (r["dateOfLoss"] or "")[5:7]
+                if mo.isdigit() and 1 <= int(mo) <= 12: a["mo"][mo] += 1
+                else: a["mo_none"] += 1
                 if paid > 0: zc[1] += 1; zc[2] += paid
                 if rz and rz[0] not in "AV":   # 11-10 story "rated outside A/V, in A/V on FEMA's record of where it is now" (floodZoneCurrent)
                     cz = (r.get("floodZoneCurrent") or "").strip().upper(); mv = a["moved"]
@@ -236,6 +243,7 @@ def claims(st):
         out[k]["recent"] = {"from": RECENT_FROM, "n": rc[0], "paid_n": rc[1], "unpaid_reasons": dict(rc[2])}
         mv, cc = a["moved"], a["cause10"]
         out[k]["moved"] = {"from": LOSS_FROM, "to": LOSS_TO, "rated_out_known": mv[0], "now_av": mv[1], "current_blank": mv[2]}
+        out[k]["loss_month_n"] = {"from": LOSS_FROM, "to": LOSS_TO, "by_month": dict(sorted(a["mo"].items())), "no_month": a["mo_none"]}
         out[k]["cause10"] = {"from": LOSS_FROM, "to": LOSS_TO, "paid_n": cc[0], "with_cause": cc[1], "by_code": dict(cc[2])}
         if k == "ST": out[k]["by_zone"] = {z: {"n": v[0], "paid_n": v[1], "paid": round(v[2])} for z, v in a["zone"].items()}; out[k]["_pb"] = a["paid_b"]
         else:   # same split as the zone pages: a zone on the claim, first letter not A or V = outside the high-risk zones

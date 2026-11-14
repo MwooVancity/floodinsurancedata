@@ -21,7 +21,10 @@ def write(ds, recs):
 base = {"policyCount": 1, "censusGeoid": "10001040100", "occupancyType": 1, "primaryResidenceIndicator": "True", "ratedFloodZone": "AE",
         "reportedZipCode": "19901", "policyEffectiveDate": "2026-01-01", "totalBuildingInsuranceCoverage": 200000, "totalContentsInsuranceCoverage": 0}
 pol = ([dict(base, policyCost=1000, **{ffcalc.PREM: 800, "fullRiskPremium": 1200 if i < 30 else 600}) for i in range(40)]      # ZIP 19901: 30 of 40 below full-risk
-       + [dict(base, condominiumCoverageTypeCode="U", policyCost=500 + i, **{ffcalc.PREM: 400, "fullRiskPremium": 400}) for i in range(31)])   # 31 condo units: median 515
+       + [dict(base, condominiumCoverageTypeCode="U", policyCost=500 + i, **{ffcalc.PREM: 400, "fullRiskPremium": 400}) for i in range(31)]   # 31 condo units: median 515
+       # Deductible Choice, county 10005 (unpriced): $1,000 x1 unit, $5,000 on a 2-unit record, blank code 1 unit; condo unit and rental out of the base
+       + [dict(base, censusGeoid="10005000100", buildingDeductibleCode=c, policyCount=n, **x) for c, n, x in (
+          ("1", 1, {}), ("5", 2, {}), ("", 1, {}), ("1", 1, {"condominiumCoverageTypeCode": "U"}), ("1", 1, {"primaryResidenceIndicator": "False"}))])
 clm = ([{"countyCode": "10001", "yearOfLoss": "2023", "floodEvent": "Storm A", "netBuildingPaymentAmount": 5000, "ratedFloodZone": "AE", "dateOfLoss": "2023-09-01"} for _ in range(6)]
        + [{"countyCode": "10001", "yearOfLoss": "2023", "floodEvent": "Storm A", "netBuildingPaymentAmount": 0, "nonPaymentReasonBuilding": "01"} for _ in range(2)]
        + [{"countyCode": "10001", "yearOfLoss": "2023", "floodEvent": "Storm A", "netBuildingPaymentAmount": 0, "nonPaymentReasonBuilding": "98"}]   # deleted in error: not a claim
@@ -42,7 +45,12 @@ clm = ([{"countyCode": "10001", "yearOfLoss": "2023", "floodEvent": "Storm A", "
           {"yearOfLoss": "2023", "buildingDamageAmount": 300000, "totalBuildingInsuranceCoverage": 100000, "netBuildingPaymentAmount": 99000, "primaryResidenceIndicator": "0"},
           {"yearOfLoss": "2010", "buildingDamageAmount": 300000, "totalBuildingInsuranceCoverage": 100000, "netBuildingPaymentAmount": 99000},
           {"yearOfLoss": "2023", "buildingDamageAmount": 300000, "totalBuildingInsuranceCoverage": 0, "netBuildingPaymentAmount": 99000},
-          {"yearOfLoss": "2023", "buildingDamageAmount": 0, "totalBuildingInsuranceCoverage": 100000, "netBuildingPaymentAmount": 99000})])
+          {"yearOfLoss": "2023", "buildingDamageAmount": 0, "totalBuildingInsuranceCoverage": 100000, "netBuildingPaymentAmount": 99000})]
+       # Flood Calendar, county 10007: 2 March claims (one unpaid) in the window; bad date; 2010 outside the window; code 98 out
+       + [dict({"countyCode": "10007"}, **x) for x in (
+          {"yearOfLoss": "2024", "dateOfLoss": "2024-03-15", "netBuildingPaymentAmount": 1000}, {"yearOfLoss": "2024", "dateOfLoss": "2024-03-02T00:00:00.000Z", "nonPaymentReasonBuilding": "01"},
+          {"yearOfLoss": "2024", "dateOfLoss": "2024-3-5", "netBuildingPaymentAmount": 1000}, {"yearOfLoss": "2010", "dateOfLoss": "2010-03-01", "netBuildingPaymentAmount": 1000},
+          {"yearOfLoss": "2024", "dateOfLoss": "2024-03-01", "nonPaymentReasonBuilding": "98"})])
 write("NfipPolicies", pol); write("NfipClaims", clm)
 # 11-09 cost trend (pull_bulk.trend's columns): 2022 all priced; 2023 under 30 priced; 2024 95 of 100 priced; 2025 35 of 40 (< 90%)
 _t = lambda y, n, cost, **k: [dict({"year": y, "propertyState": "DE", "censusGeoid": "10001040100", "occupancyType": "1",
@@ -62,6 +70,9 @@ try:
     assert {"prem_zone_elev", "obstruction_counts", "basement_counts", "floodproofed_n", "deductibles_by_zone"} <= set(p), sorted(p)
     assert all(k.split("|")[0] in ("AE", "X") and k.split("|")[1] in ("elevated", "not") and v["n"] >= 1 for k, v in p["prem_zone_elev"].items()), p["prem_zone_elev"]
     assert sum(p["basement_counts"].values()) == p["sf_n"], (p["basement_counts"], p["sf_n"])   # every single-family record lands in one bucket
+    p5 = P["10005"]; assert (p5["deductible_units"], p5["deductible_units_blank"]) == ({"1000": 1, "5000": 2}, 1), p5   # SUM policyCount, base only
+    lm = C["10007"]["loss_month_n"]; assert (lm["by_month"], lm["no_month"], lm["from"] <= "2024" <= lm["to"]) == ({"03": 2}, 1, True), lm
+    assert C["10001"]["loss_month_n"]["by_month"] == {"09": 6}, C["10001"]["loss_month_n"]   # every window claim lands in a month or no_month
     uw = C["10001"]["underinsured"]   # 11-13 Underinsured paper: one base (window, single-family primary, damage+payment+coverage > 0)
     assert set(uw) == {"n", "over", "from", "to", "excess_median", "over_by_year"} and 0 <= uw["over"] <= uw["n"] <= C["10001"]["damage_n"], uw
     u9 = C["10009"]["underinsured"]; assert (u9["n"], u9["over"], u9["excess_median"], u9["over_by_year"]) == (3, 2, 35000, {"2023": 2}), u9   # base rules + M1.4/M1.8 fields
