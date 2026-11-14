@@ -25,7 +25,7 @@ jobs:
       - name: Pull county map status from FEMA
         run: python -I tools/pull_mapstatus.py
       - name: Pull every U.S. county's map panel dates (Flood Map Age paper, one query per state)
-        run: python -I tools/pull_mapstatus.py --panels
+        run: python -I tools/pull_mapstatus.py --panels || echo "::warning::map panel dates not refreshed; map_panels.json left as it was"   # review 11-14: one failed state must not block map_status.json
       - name: Commit
         run: |
           git config user.name "github-actions[bot]"

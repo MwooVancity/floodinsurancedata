@@ -63,7 +63,7 @@ jobs:
         id: add
         run: |
           if [ -n "${{ inputs.drill }}" ] && [ "${{ inputs.drill }}" != none ]; then echo "none=1" >> "$GITHUB_OUTPUT"; echo "drill: nothing added"; exit 0; fi
-          pip install -q pillow==12.2.0   # the county build draws its share card with PIL (11-07: missing, so every new county was set aside)
+          pip install -q pillow==12.2.0 numpy==2.4.6   # numpy: Flood Calendar's chance expectation (papers.chance_peak; review 11-14: missing in a clean runner). The county build draws its share card with PIL (11-07: missing, so every new county was set aside)
           out=$(python -I tools/add_counties.py 20); echo "$out"   # owner 11-07: money keywords first, counties last; money groups done 11-07, so 20 a day, kw > 0 only
           echo "msg=$(echo "$out" | tail -n 1)" >> "$GITHUB_OUTPUT"   # one line: a multi-line value broke the step (11-07)
           new=$(git diff -U0 tools/counties.json | grep -o '^+ *"geoid": "[0-9]*"' | grep -o '[0-9]\{5\}' | xargs)

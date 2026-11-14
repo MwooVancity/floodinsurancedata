@@ -123,11 +123,10 @@ else:
                                  cwd=R, capture_output=True, text=True).stdout.strip()
             if rid: break
             time.sleep(6)
-        if not rid: sys.exit(f"RELEASE STOPPED at: deploy (no deploy.yml run for {head[:9]})")
         def poll():
             j = json.loads(subprocess.run(["gh", "run", "view", rid, "--json", "status,conclusion,jobs"], cwd=R, capture_output=True, text=True).stdout or "{}")
             return j.get("status"), j.get("conclusion"), started_jobs(j)
-        why = wait_deploy(poll, time.monotonic, time.sleep)
+        why = wait_deploy(poll, time.monotonic, time.sleep) if rid else "not started: no deploy.yml run appeared (Actions off or push event lost)"
         if why.startswith("not started"):   # 11-14: GitHub never ran the job, so there is no second writer: deploy the same committed dist here
             # wrangler uploads ./dist as it is on disk: only the committed release may go live (11-14 audit: a build running beside it would ship unchecked pages)
             dirty = subprocess.run(["git", "status", "--porcelain", "--", "dist"], cwd=R, capture_output=True, text=True).stdout.strip()
