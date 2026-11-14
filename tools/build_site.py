@@ -1,7 +1,7 @@
 """Build the shared site pages from places.json: home+lookup, methodology, data (CSV),
 sitemap.xml, robots.txt, llms.txt. Reads per-county agg.json for the download table.
 Env: FF_PLACES (places.json), FF_DIST (dist dir), FF_DATADIR (per-county data root), FF_BASEURL."""
-import collections, csv, json, os, html, shutil, sys
+import collections, csv, json, os, html, re, shutil, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from theme import THEME
 
@@ -284,8 +284,8 @@ meth = HEAD.format(title="Methodology — flood insurance data", desc="Definitio
 <li>Each county's share carries a 90% Wilson score interval (z = 1.645). The overall range on each paper resamples whole counties 2,000 times: claims in one county are not independent of each other.</li>
 <li>Counties are grouped into fifths by share instead of numbered ranks, since neighbouring counties' intervals overlap; counties with the same printed share are always in the same fifth. A fifth is a position in a list, not a grade, a risk score or a prediction.</li>
 <li>No statistical test is run: a difference between two counties is a difference in FEMA's records, not a tested effect. Each paper gives two overall figures: every county with at least one record pooled, and the listed counties pooled, with its range.</li>
-<li>Records FEMA codes as deleted or assigned in error (nonPaymentReasonBuilding 98 or 99) are left out; unless a paper's Base says otherwise, a claim counts as paid when building, contents and Increased Cost of Compliance payments add to more than $0; the county is the one FEMA codes on the claim (countyCode).</li>
-<li>Each monthly data refresh replaces every paper's figures; each paper names its data date, which is the date to give when citing a figure.</li></ul></div>
+<li>On claims papers, records FEMA codes as deleted or assigned in error (nonPaymentReasonBuilding 98 or 99) are left out; unless a paper's Base says otherwise, a claim counts as paid when building, contents and Increased Cost of Compliance payments add to more than $0; the county is the one FEMA codes on the claim (countyCode).</li>
+<li>Each data refresh adds a new dated version of every paper at its own address; earlier versions are not changed. Each paper names its data date, which is the date to give when citing a figure.</li></ul></div>
 {FOOT}"""
 wr(os.path.join(DIST, "methodology", "index.html"), meth)
 
@@ -951,7 +951,7 @@ if len(states) == 51:   # deductible guide (cloud field batch 11-12): building d
 <table><thead><tr><th>Building deductible</th><th>Zone AE</th><th>Zone X, B or C</th></tr></thead><tbody>{_dtr}{f"<tr><td>Every other amount</td><td>{_doth['AE']}%</td><td>{_doth['X']}%</td></tr>" if max(_doth.values()) >= 0.1 else ""}</tbody></table>
 <p class="mut">Shares are of policies, not homes; a policy's contents deductible is separate and not shown. Rounded to one decimal, so a column can miss 100% by 0.1.</p></div>
 <div class="card"><h2>What FEMA prices a policy on</h2><p class="stand">{rule("price_drivers")}</p></div>
-<div class="card"><h2>What this page cannot tell you</h2><p class="stand">How much a higher deductible would lower your premium, which deductible suits you, or what private policies offer. Each county page shows that county's most common deductibles: <a href="/flood-insurance/">find your county</a>.</p>
+<div class="card"><h2>What this page cannot tell you</h2><p class="stand">How much a higher deductible would lower your premium, which deductible suits you, or what private policies offer. Each county page shows that county's most common deductibles: <a href="/flood-insurance/">find your county</a>.{" Every county's share at $5,000 or more, with its 90% range: <a href='/flood-insurance/deductible-choice/'>building deductibles on record by county</a>." if any(p["key"] == "deductible-choice" for p in __import__("papers").READY) else ""}</p>
 <p class="mut">Sources: FEMA OpenFEMA NFIP Policies v3 (buildingDeductibleCode, ratedFloodZone), as of {_ASOF_TXT}; rules from {_rule_hosts(_dk)}. <a href="/methodology/">How we check them</a>.</p></div>{FOOT}"""
         wr(os.path.join(DIST, "guides", "flood-insurance-deductible", "index.html"), pg)
         zone_urls.append((BASE + "/guides/flood-insurance-deductible/", None))
@@ -1066,14 +1066,40 @@ import papers as _PA, statistics as _st
 _recs = _PA.load() if _PA.READY else {}; _cn = _PA.names() if _PA.READY else {}; _live = {p.get("geoid"): p["slug"] for p in places}
 _snames = {x.get("abbr"): x["name"] for x in states}
 _FIFTH = {1: "Highest fifth", 2: "Second fifth", 3: "Middle fifth", 4: "Fourth fifth", 5: "Lowest fifth"}
+# CSV columns: fifth, county_fips, county, state, share_pct, ci90_low_pct, ci90_high_pct, numerator, denominator (written below)
+_LOOKJS = """<script>(function(){var s=document.getElementById('ps'),q=document.getElementById('pq'),o=document.getElementById('po'),R=null,
+F=['','Highest fifth','Second fifth','Middle fifth','Fourth fifth','Lowest fifth'];
+function p(l){var a=[],c='',Q=false;for(var i=0;i<l.length;i++){var h=l[i];if(h=='"')Q=!Q;else if(h==','&&!Q){a.push(c);c=''}else c+=h}a.push(c);return a}
+function e(t){return String(t).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function n(x){return Number(x).toLocaleString('en-US')}
+function show(){if(!s.value){o.innerHTML='';return}var t=q.value.trim().toLowerCase(),h=R.filter(function(r){return r[3]==s.value&&(!t||r[2].toLowerCase().indexOf(t)>=0)});
+o.innerHTML=h.length?'<div style="overflow-x:auto"><table><thead><tr><th>Fifth by share</th><th>County</th><th>Share</th><th>90% range</th><th>Count</th></tr></thead><tbody>'+h.map(function(r){return '<tr><td>'+e(F[+r[0]]||'')+'</td><td>'+e(r[2])+'</td><td>'+e(r[4])+'%</td><td>'+e(r[5])+'\\u2013'+e(r[6])+'%</td><td>'+n(r[7])+' of '+n(r[8])+'</td></tr>'}).join('')+'</tbody></table></div>':'<p class="stand">No listed county in this state matches that name. Counties under the minimum are not listed.</p>'}
+function go(){if(R)return show();fetch('__CSV__').then(function(x){if(!x.ok)throw 0;return x.text()}).then(function(x){R=x.trim().split(/\\r?\\n/).slice(1).map(p);show()}).catch(function(){o.innerHTML='<p class="stand">The lookup could not load; every county is in the CSV below.</p>'})}
+s.onchange=go;q.oninput=function(){if(s.value)go()}})();</script>"""
 def _cty(x):
     nm = html.escape(f'{_cn.get(x["geoid"], x["geoid"])}, {x["state"]}')
     return f'<a href="/flood-insurance/{_live[x["geoid"]]}/">{nm}</a>' if x["geoid"] in _live else nm
+def _vers(key):   # PAPER-GATE M2.5: the current as-of plus every earlier dated folder already in dist, newest first
+    d = os.path.join(DIST, "flood-insurance", key)
+    ds = sorted({x for x in (os.listdir(d) if os.path.isdir(d) else []) if re.fullmatch(r"\d{4}-\d{2}-\d{2}", x)} | {_asof()}, reverse=True)
+    fmt = lambda x: _dtm.date.fromisoformat(x).strftime("%B %d, %Y").replace(" 0", " ")
+    return (f'Data as of {_ASOF_TXT} (current), kept at <a href="/flood-insurance/{key}/{_asof()}/">its own dated address</a> with its CSV. '
+            + (f'Earlier versions, each kept at its own address: {", ".join(f"<a href={chr(34)}/flood-insurance/{key}/{x}/{chr(34)}>data as of {fmt(x)}</a>" for x in ds if x != _asof())}.' if len(ds) > 1 else "This is the first version.")
+            + ' Each data refresh adds a new dated version; earlier versions are not changed.')
+def _look(key, r):   # rater Needs Met: more than 500 rows live in the CSV only (M2.7), so a state + county filter reads that same CSV
+    sts = sorted({x["state"] for x in r}, key=lambda a: _snames.get(a, a))
+    return (f'<form id="pl" onsubmit="return false"><label>State <select id="ps"><option value="">Choose a state</option>'
+            + "".join(f'<option value="{html.escape(a)}">{html.escape(_snames.get(a, a))}</option>' for a in sts)
+            + f'</select></label> <label>County name <input id="pq" autocomplete="off"></label></form><div id="po" aria-live="polite"></div>'
+            + f'<noscript><p class="stand">The state lookup needs JavaScript; every county is in the CSV below.</p></noscript>'
+            + _LOOKJS.replace("__CSV__", f"/data/{key}.csv"))
 for _sp in _PA.READY:
     _r = _PA.rows(_sp, _recs)
     if len(_r) < 50: continue   # PLAN E9: no thin paper
     _nul, _small = _PA.skipped(_sp, _recs); _w0, _w1 = _PA.window(_sp, _recs)
     _key, _N = _sp["key"], len(_r)
+    _lw = f"losses {_w0}–{_w1}" if _w0 else "policies in force"   # a policy snapshot (Deductible Choice) has no loss window
+    _rk = f" for losses {_w0}–{_w1}" if _w0 else " in force on the data date"
     _K, _NN = sum(x["k"] for x in _r), sum(x["n"] for x in _r)
     _pool = round(100 * _K / _NN, 1); _plo, _phi = _PA.pooled_boot(_r)   # review outside-zone-2 M2: resample counties, not claims
     _xn, _xmed, _xpool = _PA.excluded(_sp, _recs)   # M3: the counties left out, shown beside the listed ones
@@ -1092,23 +1118,23 @@ for _sp in _PA.READY:
     _tie = lambda x: f", tied with {_ties(x) - 1:,} other count{'y' if _ties(x) == 2 else 'ies'}" if _ties(x) > 1 else ""
     with open(os.path.join(DIST, "data", f"{_key}.csv"), "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
-        w.writerow(["fifth", "county_fips", "county", "state", "share_pct", "ci90_low_pct", "ci90_high_pct", "numerator", "denominator", "loss_years", "as_of"]
+        w.writerow(["fifth", "county_fips", "county", "state", "share_pct", "ci90_low_pct", "ci90_high_pct", "numerator", "denominator", "loss_years" if _w0 else "in_force_on", "as_of"]
                    + (["policy_units_outside_a_v_pct"] if _sp.get("policy_col") else []) + (["median_excess_usd", "loss_year_over_half"] if _sp.get("excess") else []))
-        for x in _r: w.writerow([x["fifth"], x["geoid"], _cn.get(x["geoid"], ""), x["state"], x["value"], x["lo"], x["hi"], x["k"], x["n"], f"{_w0}-{_w1}", _asof()]
+        for x in _r: w.writerow([x["fifth"], x["geoid"], _cn.get(x["geoid"], ""), x["state"], x["value"], x["lo"], x["hi"], x["k"], x["n"], f"{_w0}-{_w1}" if _w0 else _asof(), _asof()]
                                 + ([_ctx[x["geoid"]]["pol_out"]] if _sp.get("policy_col") else [])
                                 + ([_ctx[x["geoid"]]["excess"], _ctx[x["geoid"]]["one_year"] or ""] if _sp.get("excess") else []))
-    _cite = f'Michael Woo, Flood Insurance Data, "{_sp["title"]}," NFIP losses {_w0}–{_w1}, data as of {_ASOF_TXT}, {BASE}/flood-insurance/{_key}/'
+    _cite = f'Michael Woo, Flood Insurance Data, "{_sp["title"]}," NFIP {_lw}, data as of {_ASOF_TXT}, {BASE}/flood-insurance/{_key}/'
     pg = HEAD.format(title=f'{_sp["title"]}: {_N:,} U.S. counties',
-                     desc=f'The {_sp["measure"]}, losses {_w0}–{_w1}, in {_N:,} U.S. counties with at least {_sp["min"]} {_sp["unit"]}, from {_sp["dataset"]} as of {_ASOF_TXT}. Method, 90% ranges, limits and CSV.',
+                     desc=f'The {_sp["measure"]}, {_lw}, in {_N:,} U.S. counties with at least {_sp["min"]} {_sp["unit"]}, from {_sp["dataset"]} as of {_ASOF_TXT}. Method, 90% ranges, limits and CSV.',
                      canon=f"{BASE}/flood-insurance/{_key}/") + f"""
 <h1>{html.escape(_sp["title"])}</h1>
-<p class="lede">In FEMA's records for losses {_w0}–{_w1}, {_allp}% of {_alln:,} {_sp["unit"]} across all U.S. counties combined {_sp["meets"]}; across the {_N:,} counties with at least {_sp["min"]} each, {_pool}% (90% range {_plo}–{_phi}%, resampling counties).{f" Across those counties, a county's claim share and its share of policy units outside zones A and V go together (correlation {_rcor:.2f}, descriptive, no test), so compare the two columns." if _rcor is not None else ""}</p>
+<p class="lede">In FEMA's records for {_lw}, {_allp}% of {_alln:,} {_sp["unit"]} across all U.S. counties combined {_sp["meets"]}; across the {_N:,} counties with at least {_sp["min"]} each, {_pool}% (90% range {_plo}–{_phi}%, resampling counties).{f" Across those counties, a county's claim share and its share of policy units outside zones A and V go together (correlation {_rcor:.2f}, descriptive, no test), so compare the two columns." if _rcor is not None else ""}</p>
 {"".join(f'<p class="stand">{rule(k)} (<a href="https://www.floodsmart.gov/flood-zones-and-maps/what-is-my-flood-risk" rel="nofollow">FloodSmart</a>.) {html.escape(_sp.get("prior_note") or "")}</p>' for k in _sp.get("prior_rules") or [])}
 <p class="mut">By Michael Woo, publisher of Flood Insurance Data (<a href="/about/">about the site</a>), who works with data, is not an insurance agent, adjuster or engineer, and answers for every figure here. Written with AI tools; every row is recomputed from FEMA's records by a separate check before publishing.{f" First published {_sp['published']}; data as of {_ASOF_TXT}." if _sp.get("published") else ""}</p>
 <div class="card" id="abstract"><h2>Abstract</h2>
-<p class="stand"><b>Data:</b> {_N:,} counties with at least {_sp["min"]} {_sp["unit"]} each ({_NN:,} in all), from {_sp["dataset"]}, losses {_w0}–{_w1}, as of {_ASOF_TXT}.</p>
+<p class="stand"><b>Data:</b> {_N:,} counties with at least {_sp["min"]} {_sp["unit"]} each ({_NN:,} in all), from {_sp["dataset"]}, {_lw}, as of {_ASOF_TXT}.</p>
 <p class="stand"><b>Result:</b> across those counties, {_pool}% (90% range {_plo}–{_phi}%, resampling counties) of {_sp["unit"]} {_sp["meets"]}; the median county's share is {_med}%. The highest share is {_cty(_top)} at {_top["value"]}% ({_top["k"]:,} of {_top["n"]:,}){_tie(_top)}{f'; over half of those {_top["k"]:,} are from one loss year, {_ctx[_top["geoid"]]["one_year"]}, which may hold one flood or several ({sum(1 for x in _r if _ctx[x["geoid"]]["one_year"]):,} of the {_N:,} counties have at least 10 such claims and one year holding over half)' if _sp.get("excess") and _ctx[_top["geoid"]]["one_year"] else ""}; the lowest share, {_bot["value"]}%, {"is " + _cty(_bot) + f' ({_bot["k"]:,} of {_bot["n"]:,})' if _ties(_bot) == 1 else f"is shared by {_ties(_bot):,} counties"}.</p></div>
-<div class="card" id="question"><h2>Question</h2><p class="stand">{html.escape(_sp["question"])} The measure is the {html.escape(_sp["measure"])}.</p></div>
+<div class="card" id="question"><h2>Question</h2><p class="stand">{html.escape(_sp["question"])} The measure is the {html.escape(_sp["measure"])}.</p>{"".join(f'<p class="stand">{html.escape(d)}</p>' for d in _sp.get("why") or [])}</div>
 <div class="card" id="data"><h2>Data</h2><p class="stand">{_sp["dataset"]} (<a href="{_sp["api"]}" rel="nofollow">API</a>) records as of {_ASOF_TXT}, FEMA fields {html.escape(_sp["fields"])}. Base: {html.escape(_sp["base"])}.</p>
 {"".join(f'<p class="stand">{html.escape(d)}</p>' for d in _sp["defs"])}{"".join(f'<p class="stand">{rule(k)}</p>' for k in _sp["rules"])}</div>
 <div class="card" id="methods"><h2>Methods</h2><p class="stand">The share is the number of {_sp["unit"]} that {_sp["meets"]}, divided by all {_sp["unit"]} in the county FEMA codes on the record, both counted from the same records. A county is listed only with at least {_sp["min"]} {_sp["unit"]}. Left out: {_small:,} counties with fewer than {_sp["min"]} {_sp["unit"]} and {_nul:,} with none; across the {_xn:,} left-out counties with at least one, the median share of {_sp["short"]} is {_xmed}% and the pooled share {_xpool}%, so the listed counties are not a sample of every county. Intervals, fifths, the county-resampling range, records left out and why no test is run: <a href="/methodology/#papers">shared methods for every paper</a>.</p></div>
@@ -1120,17 +1146,26 @@ for _sp in _PA.READY:
 <div class="card" id="prior"><h2>Prior work</h2><p class="stand">{html.escape(_sp["prior"])} {"".join(f'<a href="{u}" rel="nofollow">{html.escape(t)}</a>. ' for t, u in _sp.get("prior_links") or [])}{"FEMA's own figure is set beside this one at the top of the page." if _sp.get("prior_rules") else ""}</p></div>
 <div class="card" id="table"><h2>{"All " if _N <= 500 else "Top and bottom 100 of "}{_N:,} counties</h2><p class="stand">Highest share of {html.escape(_sp["short"])} first; counties with a page on this site are linked. {html.escape(_sp.get("policy_note") or "")}</p>
 <div style="overflow-x:auto"><table><thead><tr><th>Fifth by share</th><th>County</th><th>Share</th><th>90% range</th><th>Count</th>{f"<th>Policy units outside A and V (FEMA NFIP Policies, {_ASOF_TXT})</th>" if _sp.get("policy_col") else ""}{"<th>Median amount damage was over coverage, on those claims</th><th>Loss year with over half of them (only with 10 or more)</th>" if _sp.get("excess") else ""}</tr></thead><tbody>{_trs}</tbody></table></div>
-<p class="mut"><a href="/data/{_key}.csv">Download all {_N:,} rows as CSV</a> (FIPS code, county, state, share, 90% range, numerator, denominator, loss years, as-of date).</p></div>
+{_look(_key, _r) if _N > 500 else ""}<p class="mut"><a href="/data/{_key}.csv">Download all {_N:,} rows as CSV</a> (FIPS code, county, state, share, 90% range, numerator, denominator, {"loss years" if _w0 else "in-force date"}, as-of date).</p></div>
 <div class="card" id="limitations"><h2>Limitations</h2><ul>{"".join(f"<li>{html.escape(t)}</li>" for t in _sp["limits"])}<li>Only NFIP records: private flood insurance is not in FEMA's data.</li><li>A fifth is a position in this list, not a grade, a risk score or a prediction.</li></ul></div>
-<div class="card" id="reproduce"><h2>Reproduce</h2><p class="stand">Download every record from <a href="{_sp["api"]}" rel="nofollow">{_sp["dataset"]}</a>, keep the {html.escape(_sp["unit"])} for losses {_w0}–{_w1}, group by the county FEMA codes, count the base and the records meeting the measure, drop counties under {_sp["min"]}, and compute each share of {html.escape(_sp["short"])} with a 90% Wilson interval (z = 1.645), checking against the CSV, which gives every numerator and denominator.</p></div>
+<div class="card" id="reproduce"><h2>Reproduce</h2><p class="stand">Download every record from <a href="{_sp["api"]}" rel="nofollow">{_sp["dataset"]}</a>, keep the {html.escape(_sp["unit"])}{_rk}, group by the county FEMA codes, count the base and the records meeting the measure, drop counties under {_sp["min"]}, and compute each share of {html.escape(_sp["short"])} with a 90% Wilson interval (z = 1.645), checking against the CSV, which gives every numerator and denominator.</p></div>
 <div class="card" id="cite"><h2>How to cite</h2><p class="stand">{html.escape(_cite)}. This product uses FEMA's OpenFEMA API, but is not endorsed by FEMA.</p></div>
-<div class="card" id="versions"><h2>Versions</h2><p class="stand">Data as of {_ASOF_TXT} (current); <a href="/methodology/#papers">each monthly refresh</a> replaces the figures and this date.</p></div>
+<div class="card" id="versions"><h2>Versions</h2><p class="stand">{_vers(_key)}</p></div>
 <div class="card" id="corrections"><h2>Corrections</h2><p class="stand">No corrections so far. Report a figure that looks wrong to <a href="mailto:contact@floodinsurancedata.com">contact@floodinsurancedata.com</a>; every correction is listed here with its date.</p></div>{FOOT}"""
     pg = pg.replace('<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8997828618122077" crossorigin="anonymous"></script>', "", 1)   # M3.4: no ads on papers (adsense_check)
     if not _sp.get("indexable"):   # PAPER-GATE M3.5 staged indexing: noindex and out of the sitemap until both reviews pass + 7 days live
         pg = pg.replace("<title>", '<meta name="robots" content="noindex,follow"><title>', 1)
     wr(os.path.join(DIST, "flood-insurance", _key, "index.html"), pg)
-    if _sp.get("indexable"): zone_urls.append((f"{BASE}/flood-insurance/{_key}/", None))
+    # PAPER-GATE M2.5: the same page kept at /<key>/<as-of>/ with its own CSV, noindex (the current page is the indexed one);
+    # earlier as-of folders are never touched, so every version stays at its address (build_all.py keeps paper folders)
+    _vp = pg.replace(f'href="{BASE}/flood-insurance/{_key}/"', f'href="{BASE}/flood-insurance/{_key}/{_asof()}/"', 1).replace(f'href="/data/{_key}.csv"', f'href="/data/{_key}-{_asof()}.csv"')
+    if "noindex" not in _vp: _vp = _vp.replace("<title>", '<meta name="robots" content="noindex,follow"><title>', 1)
+    # a frozen copy must never call itself current once a newer refresh lands
+    _vp = _vp.replace(f'<p class="stand">{_vers(_key)}</p>', f'<p class="stand">This is a fixed copy of the version with data as of {_ASOF_TXT}; it is not changed by later refreshes. <a href="/flood-insurance/{_key}/">The current version</a> has the latest data.</p>', 1)
+    assert "(current)" not in _vp, f"{_key} dated copy still says current"
+    wr(os.path.join(DIST, "flood-insurance", _key, _asof(), "index.html"), _vp)
+    shutil.copyfile(os.path.join(DIST, "data", f"{_key}.csv"), os.path.join(DIST, "data", f"{_key}-{_asof()}.csv"))
+    if _sp.get("indexable"): zone_urls.append((f"{BASE}/flood-insurance/{_key}/", _asof()))   # M2.5: lastmod = as-of, never build day
 
 # ---- /flood-insurance/zip/: national ZIP lookup (PLAN target C). Static JSON per 3-digit ZIP prefix, a few KB per lookup.
 # Figures exactly as each county's agg holds them (by_zip: units, priced single-family policies, median at ZIP_MIN+); a ZIP

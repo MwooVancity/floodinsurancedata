@@ -579,6 +579,8 @@ Virginia,paper_min,damage-over-coverage-n,5,count,FEMA OpenFEMA — NFIP Policie
 Virginia,paper_min,damage-over-coverage,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Virginia,paper_min,outside-the-zone-n,7,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Virginia,paper_min,outside-the-zone,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
+Virginia,paper_min,deductible-choice-n,85,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
+Virginia,paper_min,deductible-choice,30,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Virginia,ded_amount,1250,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"
 Virginia,ded_share,1250,52.9%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"August 31, 2026"
 Virginia,ded_amount,2000,"$2,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"

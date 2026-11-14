@@ -8,12 +8,30 @@ D = os.path.join(ROOT, "dist")
 # a second, independent copy of each paper's base: (numerator path, denominator path, minimum). A drift from papers.py fails.
 BASES = {"damage-over-coverage": (("extras", "claims", "underinsured", "over"), ("extras", "claims", "underinsured", "n"), 100),
          "outside-the-zone": (("extras", "claims", "zone_split", "out_paid_n"), ("extras", "claims", "zone_split", "known_paid_n"), 100)}
+def ded_at(r, lo):   # Deductible Choice, own copy: SF primary policy units with a building deductible of lo dollars or more
+    d = g(r, ("extras", "policies", "deductible_units"))
+    return sum(v for k, v in d.items() if k.isdigit() and int(k) >= lo and isinstance(v, int)) if isinstance(d, dict) and d else None
+BASES["deductible-choice"] = (lambda r: ded_at(r, 5000), lambda r: ded_at(r, 0), 30)
+
+def units_are_records(recs):   # M1.7: Wilson counts units as records; a county whose SF records hold more units than records fails
+    bad = []
+    for c, r in recs.items():
+        p = g(r, ("extras", "policies")) or {}
+        if isinstance(p.get("deductible_units"), dict) and p["deductible_units"] and p.get("sf_n") != sum(p["deductible_units"].values()) + (p.get("deductible_units_blank") or 0):
+            bad.append(f"deductible-choice: county {c} single-family records {p.get('sf_n')} differ from policy units (M1.7)")
+    return bad[:5]
+
 # M1.4/M1.8 second copy: (median excess path, over-by-year path) for papers with an excess column
 EXTRA = {"damage-over-coverage": (("extras", "claims", "underinsured", "excess_median"), ("extras", "claims", "underinsured", "over_by_year"))}
+# label-vs-data (statistician review, deductible paper): FEMA records a value on the policy, not an owner's choice, so these words
+# never appear in a label (title, description, h1, lede, Abstract, Question, Results); a cited study's own title in Prior work is not a label
+LABEL = {"deductible-choice": re.compile(r"\b(choice|choices|choose|chooses|chose|chosen|opt|opts|opted|elect|elects|elected)\b", re.I)}
+STAGED, SITEMAP = set(), ""   # papers with no published date: must be noindex and out of the sitemap (M3.5); filled in main
 SECTIONS = ["abstract", "question", "data", "methods", "results", "prior", "table", "limitations", "reproduce", "cite", "versions", "corrections"]
 BANNED = re.compile(r"\b(best|worst|safest|most dangerous|peer[- ]reviewed|significant(ly)?|only published here|denied|forecast|will rise|because|due to|caused by|driven by)\b", re.I)
 
 def g(r, p):
+    if callable(p): return p(r)
     for k in p: r = r.get(k) if isinstance(r, dict) else None
     return r
 
@@ -42,8 +60,21 @@ def truth(recs, key):
 
 def text(h): return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", re.sub(r"(?s)<(script|style|head)\b.*?</\1>", " ", h)))
 
-def check(key, page, csv_text, cards, T):
-    bad = []
+def check(key, page, csv_text, cards, T, sm=None):
+    bad = []; sm = SITEMAP if sm is None else sm
+    if key in LABEL:
+        lab = page[:max(0, page.find('id="data"'))] + page[page.find('id="results"'):page.find('id="prior"')]
+        for m in LABEL[key].finditer(text(lab)): bad.append(f"{key}: label word '{m[0]}' (FEMA records the value, not a choice)")
+    if key in STAGED and ('content="noindex' not in page or f"/flood-insurance/{key}/<" in sm):
+        bad.append(f"{key}: not yet opened by the owner, must be noindex and out of the sitemap (M3.5)")
+    asof = next(csv.DictReader(io.StringIO(csv_text or "")), {}).get("as_of", "")   # M2.5: the current dated address, listed and built
+    vc = page[page.find('id="versions"'):page.find('id="corrections"')]
+    vdir = os.path.join(D, "flood-insurance", key)
+    olds = [x for x in (os.listdir(vdir) if os.path.isdir(vdir) else []) if re.fullmatch(r"\d{4}-\d{2}-\d{2}", x)]
+    if not asof or f'href="/flood-insurance/{key}/{asof}/"' not in vc or not os.path.exists(os.path.join(vdir, asof, "index.html"))             or any(f'/flood-insurance/{key}/{x}/' not in vc for x in olds) or re.search(r"replaces? (the|every)", vc):
+        bad.append(f"{key}: Versions card does not link every dated version (M2.5)")
+    if len(T) > 500 and (f"fetch('/data/{key}.csv')" not in page or 'id="ps"' not in page):
+        bad.append(f"{key}: over 500 counties and no state lookup on the CSV (rater Needs Met)")
     pos = [page.find(f'id="{s}"') for s in SECTIONS]
     if -1 in pos: bad.append(f"{key}: missing sections {[s for s, p in zip(SECTIONS, pos) if p < 0]}")
     elif pos != sorted(pos): bad.append(f"{key}: sections out of order")
@@ -96,6 +127,8 @@ if __name__ == "__main__":
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))   # -I drops the script dir
     import papers   # only to learn which papers are switched on, never for figures
     ready = [s["key"] for s in papers.READY]
+    STAGED.update(s["key"] for s in papers.READY if not s.get("published"))
+    SITEMAP = open(os.path.join(D, "sitemap.xml"), encoding="utf-8").read() if os.path.exists(os.path.join(D, "sitemap.xml")) else ""
     if set(ready) - set(BASES): sys.exit(f"PAPER GATE FAIL: no independent base for {sorted(set(ready) - set(BASES))}")
     if not ready: print("PAPER GATE: no paper switched on"); sys.exit(0)
     recs = {os.path.basename(f)[:5]: json.load(open(f)) for f in glob.glob(os.path.join(ROOT, "data", "all-counties", "*.json"))}
@@ -116,11 +149,22 @@ if __name__ == "__main__":
                     "policy share wrong": (re.sub(r"(</td><td>[\d,]+ of [\d,]+</td><td>)([\d.]+)%", lambda m: f"{m[1]}{float(m[2]) + 1}%", page, count=1) if "Policy units outside" in page else page.replace('id="prior"', 'id="x"'), csv_text, cards),
                     "excess wrong": (re.sub(r"( of [\d,]+</td><td>\$)([\d,]+)", lambda m: m[1] + "1", page, count=1) if key in EXTRA else page.replace('id="prior"', 'id="x"'), csv_text, cards),
                     "abstract flag wrong": (re.sub(r"(from one loss year, \d{4}, which may hold one flood or several \()([\d,]+)", lambda m: m[1] + "9999", page, count=1) if key in EXTRA else page.replace('id="prior"', 'id="x"'), csv_text, cards),
+                    "label word": (page.replace("</h1>", " choice</h1>", 1) if key in LABEL else page.replace('id="prior"', 'id="x"'), csv_text, cards),
+                    "version link dropped": (re.sub(rf'href="/flood-insurance/{key}/\d{{4}}-\d{{2}}-\d{{2}}/"', 'href="/"', page), csv_text, cards),
+                    "lookup dropped": (page.replace('id="ps"', 'id="x"') if len(T) > 500 else page.replace('id="prior"', 'id="x"'), csv_text, cards),
                     "card fifth wrong": (page, csv_text, {c: re.sub(rf'data-paper="{key}" data-fifth="(\d)"', lambda m: f'data-paper="{key}" data-fifth="{(int(m[1]) % 5) + 1}"', h, count=1) for c, h in cards.items()})}
             for k, (pg, cs, cd) in muts.items(): assert check(key, pg, cs, cd, T), f"{key}: missed {k}"
+            if key in STAGED:   # M3.5 mutations: noindex dropped; URL put in the sitemap
+                assert check(key, page.replace('content="noindex', 'content="index'), csv_text, cards, T), f"{key}: missed noindex dropped"
+                assert check(key, page, csv_text, cards, T, sm=SITEMAP + f"<loc>https://x/flood-insurance/{key}/</loc>"), f"{key}: missed sitemap entry"
+            if key == "deductible-choice":   # M1.7 mutation: one county's records hold two units each
+                c0 = next(c for c, r in recs.items() if g(r, ("extras", "policies", "deductible_units")))
+                m7 = dict(recs); m7[c0] = json.loads(json.dumps(recs[c0])); m7[c0]["extras"]["policies"]["sf_n"] //= 2
+                assert units_are_records(m7) and not units_are_records(recs), "deductible-choice: missed units vs records"
+            if re.search(r"\bNone\b", text(page)): assert False, f"{key}: 'None' printed on the page"
             assert not check(key, page, csv_text, cards, T), check(key, page, csv_text, cards, T)[:3]
             print(f"{key}: {len(muts)} mutations caught"); continue
-        bad += check(key, page, csv_text, cards, T)
+        bad += check(key, page, csv_text, cards, T) + (units_are_records(recs) if key == "deductible-choice" else []) + ([f"{key}: 'None' printed"] if re.search(r"\bNone\b", text(page)) else [])
         print(f"{key}: {len(T)} counties recomputed")
     if "--test" not in sys.argv: bad += sameness(pages)
     for b in bad[:15]: print("PAPER GATE FAIL", b)

@@ -363,6 +363,8 @@ Arkansas,paper_min,damage-over-coverage-n,1,count,FEMA OpenFEMA — NFIP Policie
 Arkansas,paper_min,damage-over-coverage,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Arkansas,paper_min,outside-the-zone-n,7,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Arkansas,paper_min,outside-the-zone,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
+Arkansas,paper_min,deductible-choice-n,36,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
+Arkansas,paper_min,deductible-choice,30,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Arkansas,ded_amount,1250,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"
 Arkansas,ded_share,1250,37.9%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"August 31, 2026"
 Arkansas,ded_amount,1000,"$1,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"

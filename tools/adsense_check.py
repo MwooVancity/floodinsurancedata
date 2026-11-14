@@ -10,9 +10,9 @@ SNIPPET = ('<script async src="https://pagead2.googlesyndication.com/pagead/js/a
            ' crossorigin="anonymous"></script>')
 ADS = "google.com, pub-8997828618122077, DIRECT, f08c47fec0942fa0"
 
-def paper(p):   # PAPER-GATE M3.4: no ads on research paper pages (the READY papers, exactly)
-    import papers
-    return any(p.replace("\\", "/").endswith(f"/flood-insurance/{s['key']}/index.html") for s in papers.READY)
+def paper(p):   # PAPER-GATE M3.4: no ads on research paper pages (the READY papers and their dated versions, M2.5)
+    import papers, re
+    return any(re.search(rf"/flood-insurance/{re.escape(s['key'])}/(\d{{4}}-\d{{2}}-\d{{2}}/)?index\.html$", p.replace("\\", "/")) for s in papers.READY)
 
 def check(pages, ads):
     bad = [f"{p}: tag missing" for p, h in pages.items() if TAG not in h]

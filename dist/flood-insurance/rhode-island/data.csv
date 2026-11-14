@@ -160,6 +160,8 @@ Rhode Island,paper_min,damage-over-coverage-n,0,count,FEMA OpenFEMA — NFIP Pol
 Rhode Island,paper_min,damage-over-coverage,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Rhode Island,paper_min,outside-the-zone-n,1,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Rhode Island,paper_min,outside-the-zone,100,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
+Rhode Island,paper_min,deductible-choice-n,5,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
+Rhode Island,paper_min,deductible-choice,30,count,FEMA OpenFEMA — NFIP Policies,policyCount,"August 31, 2026"
 Rhode Island,ded_amount,2000,"$2,000",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"
 Rhode Island,ded_share,2000,39.5%,pct,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode + occupancyType,"August 31, 2026"
 Rhode Island,ded_amount,1250,"$1,250",usd_deductible,FEMA OpenFEMA — NFIP Policies,buildingDeductibleCode,"August 31, 2026"

@@ -53,12 +53,55 @@ SPECS = [
      "policy_note": "Policy units outside A and V: the share of NFIP policy units in force in the county, every policy type, rated outside zones A and V.",
      "rules": []},
 ]
+
+DED_MIN = 5000   # Deductible Choice threshold: the same "$5,000 or more" the deductible guide shows (D4 check)
+def ded_units(rec, at_least):
+    """Single-family primary-home policy units (SUM policyCount, extras_raw) whose building deductible is at least at_least dollars;
+    None where the county has no deductible on record. Blank and unknown codes are never in deductible_units (counted out)."""
+    u = _get(rec, ("extras", "policies", "deductible_units"))
+    if not isinstance(u, dict) or not u: return None
+    return sum(v for k, v in u.items() if str(k).isdigit() and int(k) >= at_least and isinstance(v, int))
+
+def _ded_codes():
+    import sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))   # -I drops the script dir
+    from codes import DEDUCTIBLE
+    return (", ".join(f"{c} - ${d:,}" for c, d in sorted(DEDUCTIBLE.items(), key=lambda kv: kv[1]) if d >= DED_MIN),
+            ", ".join(f"{c} - ${d:,}" for c, d in sorted(DEDUCTIBLE.items(), key=lambda kv: kv[1]) if d < DED_MIN))
+
+SPECS.append(
+    {"key": "deductible-choice", "ready": True, "indexable": True, "title": "Building deductibles on record: NFIP single-family homes by county",
+     # statistician review: FEMA records the deductible on the policy, not an owner's choice; no choice word in any label (paper_gate LABEL)
+     "num": lambda r: ded_units(r, DED_MIN), "den": lambda r: ded_units(r, 0), "min": 30,
+     "question": f"In which U.S. counties do single-family primary homes insured by the NFIP most often have a building deductible of ${DED_MIN:,} or more on record?",
+     "unit": "single-family primary-home policy units with a known building deductible",
+     "measure": f"share of single-family primary-home NFIP policy units in force whose building deductible is ${DED_MIN:,} or more",
+     "short": f"building deductibles of ${DED_MIN:,} or more", "meets": f"had a building deductible of ${DED_MIN:,} or more on record",
+     "fields": "buildingDeductibleCode, policyCount, occupancyType, primaryResidenceIndicator, condominiumCoverageTypeCode, censusGeoid",
+     # rater: why the measure matters, in FEMA's words only (raw read of OpenFemaDataSetFields NfipPolicies v3, 2026-11-13), no advice
+     "why": ['FEMA defines buildingDeductibleCode as "The total deductible amount in dollars for buildings, both main and appurtenant, that can be applied against the loss."',
+             f"The FEMA codes counted as ${DED_MIN:,} or more, in the data dictionary's own form: {_ded_codes()[0]}. FEMA's standard codes below ${DED_MIN:,}, counted in the base but not the share: {_ded_codes()[1]}."],
+     "defs": ['FEMA defines policyCount as "Insured units in an active status."',
+              ],
+     "dataset": "FEMA OpenFEMA NFIP Policies v3", "api": "https://www.fema.gov/api/open/v3/NfipPolicies",
+     "base": "NFIP policies in force on the data date on single-family primary homes (FEMA occupancy type 1 or 11, primary residence, not a condominium coverage type), counted as policy units (sum of policyCount; every such record here holds one unit, which the check confirms); units with a blank building deductible code, or a code outside FEMA's standard list such as H (used only for Group Flood Insurance Policies), left out",
+     "limits": ["FEMA records the building deductible on each policy; a deductible on record is not shown to be the owner's choice, and the data does not say who set it or why.",
+                "Only the building deductible is counted; the contents deductible is separate and not in this measure.",
+                "This is one snapshot of policies in force on the data date; it shows no change over time.",
+                "A county's share says nothing about which deductible suits any one home.",
+                "Counties come from the census geography FEMA codes on each policy (censusGeoid), which can differ from the property's county."],
+     "prior": "No ranking of counties or states by the building deductible on record was found in searches on 2026-11-13 (WebSearch: NFIP policies deductible chosen by county; flood insurance deductible choice by county map; NFIP minimum deductible studies). Published work on NFIP deductible choice is national or for one state and does not rank counties:",
+     "prior_links": [("Deductible Choice in Flood Insurance: Who Chooses the Maximum? (Taylor & Francis, 2020; owner-occupied single-family NFIP policies, national, not by county)",
+                      "https://www.tandfonline.com/doi/full/10.1080/10527001.2020.1839320"),
+                     ("Michel-Kerjan and Kousky, Come Rain or Shine: Evidence on Flood Insurance Purchases in Florida (Florida policies)",
+                      "https://media.rff.org/archive/files/sharepoint/Documents/Publications/Non-RFF_Pubs/09-09_Kousky_Come-Rain-or-Shine.pdf")],
+     "prior_rules": [], "policy_col": False, "published": "2026-11-13", "rules": []})
 READY = [s for s in SPECS if s.get("ready")]   # a paper ships only after tools/paper_gate.py and both reviews pass (PAPER-GATE-PROMPT)
 
 def names():
     return json.load(open(os.path.join(ROOT, "data", "us", "county_names.json"), encoding="utf-8"))
 
 def _get(rec, path):
+    if callable(path): return path(rec)   # a derived count (Deductible Choice sums deductible amounts)
     v = rec
     for k in path: v = v.get(k) if isinstance(v, dict) else None
     return v
@@ -135,6 +178,7 @@ def skipped(spec, recs):
     return nul, small
 
 def window(spec, recs):
+    if not spec.get("window"): return None, None   # a policy snapshot has no loss window
     for r in recs.values():
         w = _get(r, spec["window"])
         if isinstance(w, dict) and w.get("from"): return w["from"], w["to"]
@@ -169,4 +213,6 @@ if __name__ == "__main__":   # self-check: interval, base, fifths
     assert context(T, {"y": {"2021": 6, "2019": 4}, "x": 9}, 0, 0) == {"pol_out": None, "excess": 9, "one_year": "2021"}
     assert context(T, {"y": {"2021": 5, "2019": 5}}, 0, 0)["one_year"] is None   # exactly half is not over half
     assert context(T, {"y": {"2021": 6, "2019": 3}}, 0, 0)["one_year"] is None   # 9 claims: under ONE_YEAR_MIN, never flagged
+    R = {"extras": {"policies": {"deductible_units": {"1250": 5, "5000": 3, "10000": 2}}}}
+    assert (ded_units(R, DED_MIN), ded_units(R, 0)) == (5, 10) and ded_units({}, 0) is None
     print("papers self-test OK")
