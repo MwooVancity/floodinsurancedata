@@ -1105,7 +1105,7 @@ if len(states) == 51:   # contents guide (KWP 11-14 "flood insurance contents co
         _ftr = "".join(f'<tr><td><a href="/flood-insurance/{s["slug"]}/">{html.escape(s["name"])}</a></td><td>{x["sfha_share_units"]}%</td><td>{x["units"]:,}</td></tr>' for s, x in _fpr)
         _fno = [s["name"] for s, x in _ct if (s, x) not in _fpr]
         _flo, _fhi = min(_fpr, key=lambda t: t[1]["sfha_share_units"]), max(_fpr, key=lambda t: t[1]["sfha_share_units"])
-        pg = HEAD.format(title="What is a 100-year floodplain? FEMA's definition, and how many NFIP policies are in one, by state",
+        pg = HEAD.format(title="What is a 100-year floodplain? FEMA's definition, and the share of NFIP policy units rated in those zones, by state",   # review 11-15: units rated in zones A/V, not policies located in the floodplain
                          desc=f"What a 100-year floodplain is in FEMA's rules, which zones show it on the flood map, and the share of {_fpu:,} NFIP policy units in force rated in those zones, by state, from FEMA's records as of {_ASOF_TXT}.",
                          canon=BASE + "/guides/100-year-floodplain/") + f"""
 <h1>What is a 100-year floodplain?</h1>
