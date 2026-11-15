@@ -9,7 +9,7 @@ from test_zonemap import oracle   # Python mirror of describe(), written from th
 from playwright.sync_api import sync_playwright
 BROWSER = sys.argv[sys.argv.index("--browser") + 1] if "--browser" in sys.argv else "chromium"
 PAGE = "https://floodinsurancedata.com/flood-zone-map/"
-NFHL = "https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer"
+NFHL = "https://msc.fema.gov/arcgis/rest/services/NFHL_Print/NFHLQuery/MapServer"   # same service as tools/static/zonemap.js (11-15); LOMAs are layer 2 here
 ADDRS = ["301 N Olive Ave, West Palm Beach, FL", "1700 Convention Center Dr, Miami Beach, FL",
          "1001 Preston St, Houston, TX", "1300 Perdido St, New Orleans, LA", "100 Ocean Blvd, Long Beach, NY"]
 
@@ -34,7 +34,7 @@ def fema(addr):
     bx = get(NFHL + "/28/query", dict(base, distance=15, units="esriSRUnit_Meter", outFields="FLD_ZONE,ZONE_SUBTY"))   # D5: true 15 m circle
     pn = get(NFHL + "/3/query", dict(base, outFields="FIRM_PAN,EFF_DATE"))
     lr = get(NFHL + "/1/query", dict(base, outFields="EFF_DATE"))   # owner 11-08: map letters near the pin, as the page asks
-    la = get(NFHL + "/34/query", dict(base, distance=150, units="esriSRUnit_Meter", outFields="OUTCOME"))
+    la = get(NFHL + "/2/query", dict(base, distance=150, units="esriSRUnit_Meter", outFields="OUTCOME"))
     return mt[0]["matchedAddress"], pt, bx, pn, lr, la
 
 bad, zones = [], []

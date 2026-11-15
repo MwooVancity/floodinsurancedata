@@ -147,7 +147,7 @@ def main():
             if "/MapServer/28/query" in u: return r.fulfill(status=200, content_type="application/json", body=json.dumps(bx if "distance=15" in u and "esriSRUnit_Meter" in u else pt))   # D5: the nearby query must be a 15 m circle
             if "/MapServer/3/query" in u: return r.fulfill(status=200, content_type="application/json", body=json.dumps(pn))
             if "/MapServer/1/query" in u: return r.fulfill(status=200, content_type="application/json", body=json.dumps(lr))
-            if "/MapServer/34/query" in u: return r.fulfill(status=200, content_type="application/json", body=json.dumps(la if "distance=150" in u and "esriSRUnit_Meter" in u else F()))   # a 150 m circle
+            if "/MapServer/2/query" in u: return r.fulfill(status=200, content_type="application/json", body=json.dumps(la if "distance=150" in u and "esriSRUnit_Meter" in u else F()))   # a 150 m circle
             if "/export?" in u or "basemap.nationalmap.gov" in u: return r.fulfill(status=200, content_type="image/png", body=b"")
             if u.startswith(host): return r.continue_()
             return r.abort()

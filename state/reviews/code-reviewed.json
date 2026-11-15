@@ -1,5 +1,5 @@
 {
- "hash": "b47f32632b4cce6889ccffafe8a64fcf2eb8562978022291885df3cc7f45e267",
+ "hash": "f5ebafb31e029c4f315db0ede1008579f4be9bf4182b0658e1270cdbd744384b",
  "date": "2026-11-15",
- "note": "actions_check watch_problems W1-W4 + live_zonemap error reasons; main session wrote and read"
+ "note": "zonemap.js + live/test_zonemap: FEMA MSC NFHLQuery endpoint (hazards NFHL 504); main session wrote and read"
 }
