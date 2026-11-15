@@ -1052,31 +1052,79 @@ if len(states) == 51:   # contents guide (KWP 11-14 "flood insurance contents co
     _ctr = sorted(((s, x) for s, x in _ct if x.get("contents_share") is not None and (x.get("cohort_n") or 0) >= __import__("metrics").CONST["min_priced"]),
                   key=lambda t: -t[1]["cohort_n"])
     _cpc, _cpn = _pwhole(_ctr, "contents_share", "cohort_n")
+    _the = lambda s: ("the " if s.get("abbr") == "DC" else "") + html.escape(s["name"])   # "in the District of Columbia"
+    # 11-15 retitled for "what does flood insurance cover" (KWP ~7,900/mo; top 3 SoFi, NAR, GEICO read 11-15 give the covered/not-covered
+    # lists and limits only, no policy shares): G1 = this page twins it, so it gains the building part instead of a new URL.
+    # Building figure = the private guide's _pmx/_pmn (extras at_building_max_pct over sf_n), same field and helper, no second computation.
+    # Edge cases (claims_check check_contents): T4 building tile base/test unlabelled or off (mutations); T5 building rule missing (mutation);
+    # _pmx None (rounding could tip) = no tile and no sentence, checked by T4's "not m4 and round(ml)==round(mh)" branch.
     if len(_ctr) >= 10 and _cpc is not None:
-        _tk = ["contents_separate", "contents_what", "contents_acv", "contents_basement", "wait_30"]
+        _tk = ["cover_two", "building_what", "contents_separate", "contents_what", "contents_basement", "flood_def", "not_covered", "wait_30"]
         _ttr = "".join(f'<tr><td><a href="/flood-insurance/{s["slug"]}/">{html.escape(s["name"])}</a></td><td>{x["contents_share"]}%</td><td>{x["cohort_n"]:,}</td></tr>' for s, x in _ctr)
         _tno = [s["name"] for s, x in _ct if (s, x) not in _ctr]
-        _the = lambda s: ("the " if s.get("abbr") == "DC" else "") + html.escape(s["name"])   # "in the District of Columbia"
         _tlo, _thi = min(_ctr, key=lambda t: t[1]["contents_share"]), max(_ctr, key=lambda t: t[1]["contents_share"])
-        pg = HEAD.format(title="Flood insurance contents coverage: what it pays for, and how many NFIP policies carry it, by state",
-                         desc=f"NFIP contents coverage is bought separately from building coverage. What it pays for, the basement limit, and the share of {_cpn:,} single-family primary-home NFIP policies that carry it, by state, from FEMA's records as of {_ASOF_TXT}.",
+        pg = HEAD.format(title="What does flood insurance cover? Building and contents coverage, with FEMA's policy records by state",
+                         desc=f"NFIP flood insurance has building coverage and contents coverage, bought separately. What each pays for, what neither covers, and the share of {_cpn:,} single-family primary-home NFIP policies with contents coverage, by state, from FEMA's records as of {_ASOF_TXT}.",
                          canon=BASE + "/guides/flood-insurance-contents-coverage/") + f"""
-<h1>Flood insurance contents coverage</h1>
-<p class="lede">Your belongings are covered only if you buy contents coverage. NFIP flood insurance sells it apart from building coverage. In FEMA's records, {_cpc}% of the {_cpn:,} U.S. single-family primary-home NFIP policies carry some contents coverage.</p>
-<div class="stats"><div class="stat"><div class="n">{_cpc}%</div><div class="l">of {_cpn:,} U.S. NFIP single-family primary-home policies: some contents coverage</div></div></div>
-<p class="mut">FEMA OpenFEMA NFIP Policies v3, as of {_ASOF_TXT}. A policy counts when its contents coverage is above $0. The share counts policies, not homes, and says nothing about how much coverage each one carries.</p>
+<h1>What does flood insurance cover?</h1>
+<p class="lede">{rule("cover_two")} In FEMA's records, {_cpc}% of the {_cpn:,} U.S. single-family primary-home NFIP policies carry some contents coverage.</p>
+<div class="stats"><div class="stat"><div class="n">{_cpc}%</div><div class="l">of {_cpn:,} U.S. NFIP single-family primary-home policies: some contents coverage</div></div>
+{f'<div class="stat"><div class="n">{_pmx}%</div><div class="l">of all {_pmn:,} U.S. NFIP single-family primary-home policies: building coverage of $250,000 or more</div></div>' if _pmx is not None else ""}</div>
+<p class="mut">FEMA OpenFEMA NFIP Policies v3, as of {_ASOF_TXT}. A policy counts for contents when its contents coverage is above $0.{f" The building figure counts policies whose building coverage (totalBuildingInsuranceCoverage) is $250,000 or more, the most a home can buy." if _pmx is not None else ""} The shares count policies, not homes.</p>
+<div class="card"><h2>What building coverage pays for</h2><p class="stand">{rule("building_what")}</p></div>
 <div class="card"><h2>Is contents coverage part of a flood policy?</h2><p class="stand">{rule("contents_separate")}</p><p class="stand">{rule("wait_30")}</p></div>
-<div class="card"><h2>What contents coverage pays for</h2><p class="stand">{rule("contents_what")}</p><p class="stand">{rule("contents_acv")}</p></div>
+<div class="card"><h2>What contents coverage pays for</h2><p class="stand">{rule("contents_what")}</p></div>
 <div class="card"><h2>Belongings in a basement</h2><p class="stand">{rule("contents_basement")}</p></div>
+<div class="card"><h2>What flood insurance does not cover</h2><p class="stand">{rule("flood_def")}</p><p class="stand">{rule("not_covered")}</p></div>
 <div class="card"><h2>Contents coverage, state by state</h2><p class="stand">The share runs from {_tlo[1]["contents_share"]}% in {_the(_tlo[0])} to {_thi[1]["contents_share"]}% in {_the(_thi[0])}. The table lists {_nst(_ctr)} with at least {__import__("metrics").CONST["min_priced"]} such policies, most policies first.</p>
 <table><thead><tr><th>State</th><th>With contents coverage</th><th>Single-family primary-home policies</th></tr></thead><tbody>{_ttr}</tbody></table>
 {f'<p class="mut">Too few such policies: {", ".join(html.escape(n) for n in _tno)}.</p>' if _tno else ""}
 <p class="mut">Your <a href="/flood-insurance/">state and county pages</a> show what NFIP policies cost there.</p></div>
-<div class="card"><h2>What this page cannot tell you</h2><p class="stand">How much contents coverage a policy carries, whether it is enough for your belongings, what adding it would cost, or your premium. Condo units, second homes and other building types are not in these shares.</p>
-<p class="mut">Sources: FEMA OpenFEMA NFIP Policies v3 (totalContentsInsuranceCoverage), as of {_ASOF_TXT}; rules from {_rule_hosts(_tk)}. <a href="/methodology/">How we check them</a>.</p></div>{FOOT}"""
+<div class="card"><h2>What this page cannot tell you</h2><p class="stand">What your own policy covers (only its wording can say), how much coverage a policy carries, whether it is enough to rebuild or replace your belongings, what adding coverage would cost, or your premium. Condo units, second homes and other building types are not in these shares.</p>
+<p class="mut">Sources: FEMA OpenFEMA NFIP Policies v3 (totalContentsInsuranceCoverage, totalBuildingInsuranceCoverage), as of {_ASOF_TXT}; rules from {_rule_hosts(_tk)}. <a href="/methodology/">How we check them</a>.</p></div>{FOOT}"""
         wr(os.path.join(DIST, "guides", "flood-insurance-contents-coverage", "index.html"), pg)
         zone_urls.append((BASE + "/guides/flood-insurance-contents-coverage/", None))
-        GUIDES.append(("/guides/flood-insurance-contents-coverage/", "Flood insurance contents coverage"))
+        GUIDES.append(("/guides/flood-insurance-contents-coverage/", "What does flood insurance cover?"))
+    # floodplain guide 11-15 (KWP "floodplain" ~10,000/mo, "100 year flood" ~1,000/mo; no page owned it in state/keyword-map.csv).
+    # Top 3 (Neptune, Rainbow Restoration, FEMA EMI IS-273, read 11-15): definitions, 1%/26%-over-30-years odds, "nearly one-third of claims
+    # outside" (FEMA's figure); none says how many insured policies sit in the high-risk zones. G6 figure = sum of ffcalc sfha_units over sum
+    # of units (both integers in agg.json, the state pages' sfha_share_units base), so no second share computation; state rows = sfha_share_units.
+    # Edge cases, each caught in claims_check --guides check_floodplain:
+    #  FP0 first run / old data, no state has sfha_units: page not built (n==0 guard; check returns FP0 if the page exists anyway)
+    #  FP1 U.S. share or base drifts from the data, or the tile loses its base word ("policy units" -> "homes"): FP1 + mutations
+    #  FP2 a state with units 0 or no sfha_units left out silently, or a row edited: FP2 rows == recomputed rows, mutation
+    #  FP3 range sentence min/max off: FP3, mutation
+    #  FP4 rated zone read as today's map zone, or uninsured buildings implied: FP4 disclosure sentence, mutation
+    #  FP5 "N states and DC" vs table rows (DC counted as a state): check_state_labels (existing mutation)
+    _fpr = sorted(((s, x) for s, x in _ct if x.get("sfha_units") is not None and x.get("sfha_share_units") is not None and x.get("units")),
+                  key=lambda t: -t[1]["units"])
+    _fpu = sum(x["units"] for _, x in _fpr)
+    if len(_fpr) >= 10 and _fpu:
+        _fpc = round(100 * sum(x["sfha_units"] for _, x in _fpr) / _fpu, 1)
+        _fk = ["floodplain_100", "floodplain_any", "sfha_zones", "odds_30", "fema_outside_third", "purchase_answer", "lender_any_zone"]
+        _ftr = "".join(f'<tr><td><a href="/flood-insurance/{s["slug"]}/">{html.escape(s["name"])}</a></td><td>{x["sfha_share_units"]}%</td><td>{x["units"]:,}</td></tr>' for s, x in _fpr)
+        _fno = [s["name"] for s, x in _ct if (s, x) not in _fpr]
+        _flo, _fhi = min(_fpr, key=lambda t: t[1]["sfha_share_units"]), max(_fpr, key=lambda t: t[1]["sfha_share_units"])
+        pg = HEAD.format(title="What is a 100-year floodplain? FEMA's definition, and how many NFIP policies are in one, by state",
+                         desc=f"What a 100-year floodplain is in FEMA's rules, which zones show it on the flood map, and the share of {_fpu:,} NFIP policy units in force rated in those zones, by state, from FEMA's records as of {_ASOF_TXT}.",
+                         canon=BASE + "/guides/100-year-floodplain/") + f"""
+<h1>What is a 100-year floodplain?</h1>
+<p class="lede">{rule("floodplain_100")} In FEMA's records, {_fpc}% of the {_fpu:,} NFIP policy units in force in {_nst(_fpr)} are rated in zones A or V, the zones FEMA's map uses for that area.</p>
+<div class="stats"><div class="stat"><div class="n">{_fpc}%</div><div class="l">of {_fpu:,} NFIP policy units in force: rated in zones A or V</div></div></div>
+<p class="mut">FEMA OpenFEMA NFIP Policies v3, as of {_ASOF_TXT}. A unit is FEMA's policyCount on each policy, summed. Each policy is counted by the zone it is rated in, which can differ from the zone on today's map. Buildings without NFIP flood insurance are not in these counts.</p>
+<div class="card"><h2>Is my building in one?</h2><p class="stand">{rule("sfha_zones")}</p><p class="stand">To see the zone FEMA's map shows at your building, put the pin on it in the <a href="/flood-zone-map/">flood zone map</a>.</p></div>
+<div class="card"><h2>How likely is the 100-year flood?</h2><p class="stand">{rule("odds_30")}</p><p class="stand">{rule("fema_outside_third")}</p></div>
+<div class="card"><h2>Must I buy flood insurance there?</h2><p class="stand">{rule("purchase_answer")} {rule("lender_any_zone")}</p></div>
+<div class="card"><h2>Floodplain in the wider sense</h2><p class="stand">{rule("floodplain_any")}</p></div>
+<div class="card"><h2>Policy units in zones A and V, state by state</h2><p class="stand">The share runs from {_flo[1]["sfha_share_units"]}% in {_the(_flo[0])} to {_fhi[1]["sfha_share_units"]}% in {_the(_fhi[0])}. The table lists {_nst(_fpr)}, most policy units first.</p>
+<table><thead><tr><th>State</th><th>Policy units rated in zones A or V</th><th>Policy units in force</th></tr></thead><tbody>{_ftr}</tbody></table>
+{f'<p class="mut">No policy units recorded: {", ".join(html.escape(n) for n in _fno)}.</p>' if _fno else ""}
+<p class="mut">Your <a href="/flood-insurance/">state and county pages</a> show what NFIP policies cost in each zone there.</p></div>
+<div class="card"><h2>What this page cannot tell you</h2><p class="stand">Whether your own building is in the 100-year floodplain (the flood zone map shows FEMA's map at your address, not an official determination), how deep a flood there could get, or your premium.</p>
+<p class="mut">Sources: FEMA OpenFEMA NFIP Policies v3 (ratedFloodZone, policyCount), as of {_ASOF_TXT}; rules from {_rule_hosts(_fk)}. <a href="/methodology/">How we check them</a>.</p></div>{FOOT}"""
+        wr(os.path.join(DIST, "guides", "100-year-floodplain", "index.html"), pg)
+        zone_urls.append((BASE + "/guides/100-year-floodplain/", None))
+        GUIDES.append(("/guides/100-year-floodplain/", "What is a 100-year floodplain?"))
 
 _lmf = os.path.join(DATADIR, "us", "map_status.json")
 _lms = json.load(open(_lmf)) if os.path.exists(_lmf) else {}

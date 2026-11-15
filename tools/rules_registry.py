@@ -629,6 +629,35 @@ RULES = {
                     (CFR61, "Coverage for items of property below the lowest elevated floor of an elevated post-FIRM building located in Zones A1-A30, AE, AH, AR, AR/A, AR/AE, AR/AH, AR/A1-A30, V1-V30, or VE", "curl"),
                     (CFR61, "having its floor below ground level on all sides", "curl"),
                     (CFR61, "A building for which construction or substantial improvement occurred after December 31, 1974, or on or after the effective date of an initial Flood Insurance Rate Map (FIRM), whichever is later", "curl")]},
+    # ---- coverage guide 11-15 (KWP "what does flood insurance cover", ~7,900/mo): FloodSmart buy-a-policy read raw this session (curl --compressed) ----
+    "cover_two": {
+        "text": "NFIP (National Flood Insurance Program) flood insurance has two parts: building coverage, for physical damage to the insured building, "
+                "and contents coverage, for your belongings inside it. They are typically bought separately and have separate deductibles.",
+        "sources": [(FS + "/get-insured/buy-a-policy", "Building and contents coverage are typically purchased separately and have separate deductibles", "curl"),
+                    (FS + "/get-insured/buy-a-policy", "Covers physical damage to the insured structure", "curl"),
+                    (FS + "/get-insured/buy-a-policy", "Covers physical damage to the personal property inside the building", "curl")]},
+    "building_what": {
+        "text": "FloodSmart lists what building coverage pays for: electrical and plumbing systems; furnaces and water heaters; refrigerators, stoves and built-in "
+                "appliances such as dishwashers; permanently installed carpeting, cabinets, paneling and bookcases; window blinds; foundation walls, anchorage "
+                "systems and staircases; detached garages; and fuel tanks, well water tanks and pumps, and solar energy equipment. For a home, building coverage "
+                "goes up to <b>$250,000</b>.",
+        "sources": [(FS + "/get-insured/buy-a-policy", "Covers physical damage to the insured structure: Electrical and plumbing systems. Furnaces and water heaters.", "curl"),
+                    (FS + "/get-insured/buy-a-policy", "Refrigerators, stoves and built-in appliances like dishwashers. Permanently installed carpeting. Permanently installed cabinets, paneling and bookcases. Window blinds.", "curl"),
+                    (FS + "/get-insured/buy-a-policy", "Foundation walls, anchorage systems and staircases. Detached garages. Fuel tanks, well water tanks and pumps and solar energy equipment.", "curl"),
+                    (FS + "/get-insured/buy-a-policy", "Building policies cover up to $250,000 of flood damage", "curl")]},
+    # ---- floodplain guide 11-15 (KWP "floodplain" / "100 year flood", ~11,000/mo): 44 CFR 59.1 read raw this session (eCFR, curl --compressed) ----
+    "floodplain_100": {
+        "text": "In FEMA's rules, the land in the flood plain with a 1 percent or greater chance of flooding in any given year is the special flood hazard area. "
+                "The flood with a one percent chance of being equalled or exceeded in any given year is the base flood, also called the 100-year flood (44 CFR §59.1).",
+        "sources": [(CFR59, "Area of special flood hazard is the land in the flood plain within a community subject to a 1 percent or greater chance of flooding in any given year", "curl"),
+                    (CFR59, "Base flood means the flood having a one percent chance of being equalled or exceeded in any given year", "curl"),
+                    (CFR59, "100-year flood see base flood", "curl")]},
+    "floodplain_any": {
+        "text": "The same rules use flood plain more widely: any land area that can be flooded by water from any source (44 CFR §59.1).",
+        "sources": [(CFR59, "Flood plain or flood-prone area means any land area susceptible to being inundated by water from any source", "curl")]},
+    "sfha_zones": {
+        "text": "On FEMA's flood insurance rate map, the special flood hazard area usually shows as zones A, AO, AH, A1-30, AE, A99, AR, VO, V1-30, VE or V (44 CFR §59.1).",
+        "sources": [(CFR59, "After detailed ratemaking has been completed in preparation for publication of the flood insurance rate map, Zone A usually is refined into Zones A, AO, AH, A1-30, AE, A99, AR, AR/A1-30, AR/AE, AR/AO, AR/AH, AR/A, VO, or V1-30, VE, or V", "curl")]},
 }
 # owner 11-11 move: the place page keeps the cap's first clause; the full cap rule lives on /nfip/#rules (same sources, no new wording)
 RULES["cap_short"] = {"text": RULES["cap"]["text"].split(";")[0] + " (42 U.S.C. §4015(e)).",

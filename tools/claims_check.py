@@ -260,13 +260,7 @@ def check_private(page):   # private flood guide (11-13): U.S. share from state 
     got = sorted((int(b.replace(",", "")), float(a)) for a, b in re.findall(r'<tr><td><a href="/flood-insurance/[a-z-]+/">[^<]+</a></td><td>([\d.]+)%</td><td>([\d,]+)</td></tr>', page))
     if got != sorted((x["replacement_n"], x["replacement_over_250k_pct"]) for x in rows): bad.append(f"P2 state rows {len(got)} vs {len(rows)}")
     bad += [f"P3 G4 word '{w}'" for w in re.findall(r"\b(?:best|cheapest|top-rated|recommended insurers?)\b", t, re.I)]
-    # P4 (r-private MAJOR: 77% printed with no base): the coverage tile names its base (all sf_n) and its test (>= $250,000, as extras_raw counts)
-    mx = [x for x in (json.load(open(p))["policies"] for p in glob.glob(os.path.join(D, "states", "*", "extras.json"))) if x.get("at_building_max_pct") is not None and x.get("sf_n")]
-    mn = sum(x["sf_n"] for x in mx)
-    ml, mh = (sum((x["at_building_max_pct"] + d) * x["sf_n"] for x in mx) / mn for d in (-0.05, 0.05))
-    m4 = re.search(r'<div class="n">(\d+)%</div><div class="l">of all ([\d,]+) U\.S\. NFIP single-family primary-home policies: building coverage of \$250,000 or more</div>', page)
-    if not m4 and round(ml) == round(mh): bad.append("P4 coverage tile missing, or its base or test unlabelled")
-    if m4 and (int(m4[2].replace(",", "")) != mn or not (ml <= int(m4[1]) + 0.5 and int(m4[1]) - 0.5 <= mh)): bad.append(f"P4 coverage tile {m4[1]}% of {m4[2]}, recomputed {ml:.2f}-{mh:.2f}% of {mn:,}")
+    bad += cap_tile(page, "P4")
     # P5 (r-private2 MAJOR: the lede opened on a legal fragment): the answer sentence comes before the lender rule
     a, r = t.find("single-family primary-home NFIP policies that report a rebuilding cost report one above"), t.find(re.sub(r"<[^>]+>", "", RULE_TEXT("private_accept"))[:40])
     if a < 0 or r < 0 or a > r: bad.append("P5 the 37%-style answer does not come before the private_accept rule")
@@ -286,6 +280,34 @@ def check_rr2(page):   # Risk Rating 2.0 guide (11-13): U.S. share below full ri
     if got != sorted((x["below_n"], x["share_below"], x["below_gap_median"]) for x in rows): bad.append(f"R2 state rows {len(got)} vs {len(rows)}")
     return bad
 
+def cap_tile(page, code):   # P4 (r-private MAJOR: 77% printed with no base): the coverage tile names its base (all sf_n) and its test (>= $250,000,
+    # as extras_raw counts); one copy for the private and coverage guides (11-15)
+    mx = [x for x in (json.load(open(p))["policies"] for p in glob.glob(os.path.join(D, "states", "*", "extras.json"))) if x.get("at_building_max_pct") is not None and x.get("sf_n")]
+    mn = sum(x["sf_n"] for x in mx)
+    if not mn: return [f"{code} building tile printed with no extras data"] if "building coverage of $250,000 or more</div>" in page else []
+    ml, mh = (sum((x["at_building_max_pct"] + d) * x["sf_n"] for x in mx) / mn for d in (-0.05, 0.05))
+    m4 = re.search(r'<div class="n">(\d+)%</div><div class="l">of all ([\d,]+) U\.S\. NFIP single-family primary-home policies: building coverage of \$250,000 or more</div>', page)
+    if not m4 and round(ml) == round(mh): return [f"{code} coverage tile missing, or its base or test unlabelled"]
+    if m4 and (int(m4[2].replace(",", "")) != mn or not (ml <= int(m4[1]) + 0.5 and int(m4[1]) - 0.5 <= mh)): return [f"{code} coverage tile {m4[1]}% of {m4[2]}, recomputed {ml:.2f}-{mh:.2f}% of {mn:,}"]
+    return []
+
+def check_floodplain(page):   # floodplain guide (11-15): U.S. unit share from integer sums, base, state rows, range, zone disclosure; no build_site code
+    rows = [x for x in (json.load(open(p))["policies"] for p in glob.glob(os.path.join(D, "states", "*", "agg.json")))
+            if x.get("sfha_units") is not None and x.get("sfha_share_units") is not None and x.get("units")]
+    n = sum(x["units"] for x in rows)
+    if not n: return ["FP0 no state has sfha_units (first run or old data): guide must not be built"] if "100-year floodplain" in page else []
+    pc = round(100 * sum(x["sfha_units"] for x in rows) / n, 1)
+    t = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", page)); bad = []
+    if not re.search(rf"In FEMA's records, {pc}% of the {n:,} NFIP policy units in force in \d+ states(?: and DC)? are rated in zones A or V", t):
+        bad.append(f"FP1 U.S. share: want {pc}% of {n:,} policy units")
+    if f'<div class="n">{pc}%</div><div class="l">of {n:,} NFIP policy units in force: rated in zones A or V</div>' not in page: bad.append("FP1 tile differs or loses its base")
+    got = sorted((int(b.replace(",", "")), float(a)) for a, b in re.findall(r'<tr><td><a href="/flood-insurance/[a-z-]+/">[^<]+</a></td><td>([\d.]+)%</td><td>([\d,]+)</td></tr>', page))
+    if got != sorted((x["units"], x["sfha_share_units"]) for x in rows): bad.append(f"FP2 state rows {len(got)} vs {len(rows)}")
+    sh = [x["sfha_share_units"] for x in rows]
+    if not re.search(rf"The share runs from {min(sh)}% in (?:the )?[A-Z][^.]* to {max(sh)}% in ", t): bad.append(f"FP3 range sentence: want {min(sh)}% to {max(sh)}%")
+    if "which can differ from the zone on today's map" not in t or "Buildings without NFIP flood insurance are not in these counts" not in t: bad.append("FP4 rated-zone / insured-only disclosure missing")
+    return bad
+
 def check_contents(page):   # contents guide (11-15): U.S. share with rounding bounds, base count, state rows, range sentence; no build_site code
     rows = [json.load(open(p))["policies"] for p in glob.glob(os.path.join(D, "states", "*", "agg.json"))]
     _min = __import__("metrics").CONST["min_priced"]   # code review 11-15: the page's own floor, one copy
@@ -303,6 +325,8 @@ def check_contents(page):   # contents guide (11-15): U.S. share with rounding b
     if got != sorted((x["cohort_n"], x["contents_share"]) for x in rows): bad.append(f"T2 state rows {len(got)} vs {len(rows)}")
     sh = [x["contents_share"] for x in rows]
     if not re.search(rf"The share runs from {min(sh)}% in (?:the )?[A-Z][^.]* to {max(sh)}% in ", t): bad.append(f"T3 range sentence: want {min(sh)}% to {max(sh)}%")
+    bad += cap_tile(page, "T4")   # 11-15 coverage retitle: the building tile, same test as the private guide's
+    if 'data-rule="building_what"' not in page: bad.append("T5 'what does flood insurance cover' page without the building coverage rule")
     return bad
 
 def check_loma(page, ms=None):   # LOMA/LOMR guide (11-14): outcomes regrouped from map_status.json with this file's own map (LL1-LL6), no build_site code
@@ -400,7 +424,8 @@ if __name__ == "__main__":
         rr = open(os.path.join(ROOT, "dist", "guides", "risk-rating-2", "index.html"), encoding="utf-8").read()
         lg = open(os.path.join(ROOT, "dist", "guides", "loma-lomr", "index.html"), encoding="utf-8").read()
         tg = open(os.path.join(ROOT, "dist", "guides", "flood-insurance-contents-coverage", "index.html"), encoding="utf-8").read()
-        bad = check_guides(pg, zx) + check_condo(cg) + check_deductible(dg) + check_vents(vg) + check_private(pv) + check_rr2(rr) + check_loma(lg) + check_contents(tg) + check_order(bh, "wait_30", "start_loan_plain", "O1")
+        fg = open(os.path.join(ROOT, "dist", "guides", "100-year-floodplain", "index.html"), encoding="utf-8").read()
+        bad = check_guides(pg, zx) + check_condo(cg) + check_deductible(dg) + check_vents(vg) + check_private(pv) + check_rr2(rr) + check_loma(lg) + check_contents(tg) + check_floodplain(fg) + check_order(bh, "wait_30", "start_loan_plain", "O1")
         sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
         from rules_registry import RULES as _RQ
         bad += check_rule_quotes(_RQ)
@@ -437,6 +462,15 @@ if __name__ == "__main__":
             assert check_contents(re.sub(r"</a></td><td>([\d.]+)%</td>", lambda m_: f"</a></td><td>{round(float(m_[1]) + 0.1, 1)}%</td>", tg, count=1)), "mutation not caught: contents state row"
             assert check_contents(tg.replace("policies: some contents coverage</div>", "homes: some contents coverage</div>", 1)), "mutation not caught: contents tile base"
             assert check_contents(re.sub(r"(The share runs from )([\d.]+)%", lambda m_: f"{m_[1]}{round(float(m_[2]) + 1, 1)}%", tg, count=1)), "mutation not caught: contents range"
+            assert check_contents(tg.replace(": building coverage of $250,000 or more</div>", ": insured to the building limit</div>", 1)), "mutation not caught: T4 building tile label"
+            assert check_contents(re.sub(r'(<div class="n">)(\d+)(%</div><div class="l">of all [\d,]+ U\.S\. NFIP single-family primary-home policies: building)', lambda m_: f"{m_[1]}{int(m_[2]) + 1}{m_[3]}", tg, count=1)), "mutation not caught: T4 building share"
+            assert check_contents(tg.replace('data-rule="building_what"', 'data-rule="x"')), "mutation not caught: T5 building rule"
+            assert check_floodplain(re.sub(r"(In FEMA's records, )([\d.]+)%", lambda m_: f"{m_[1]}{round(float(m_[2]) + 0.1, 1)}%", fg, count=1)), "mutation not caught: FP1 U.S. share"
+            assert check_floodplain(fg.replace("NFIP policy units in force: rated", "NFIP homes: rated", 1)), "mutation not caught: FP1 tile base"
+            assert check_floodplain(re.sub(r"</a></td><td>([\d.]+)%</td>", lambda m_: f"</a></td><td>{round(float(m_[1]) + 0.1, 1)}%</td>", fg, count=1)), "mutation not caught: FP2 state row"
+            assert check_floodplain(re.sub(r"<tr><td><a href=\"/flood-insurance/[a-z-]+/\">[^<]+</a></td><td>[\d.]+%</td><td>[\d,]+</td></tr>", "", fg, count=1)), "mutation not caught: FP2 state dropped"
+            assert check_floodplain(re.sub(r"(The share runs from )([\d.]+)%", lambda m_: f"{m_[1]}{round(float(m_[2]) + 1, 1)}%", fg, count=1)), "mutation not caught: FP3 range"
+            assert check_floodplain(fg.replace("which can differ from the zone on today's map", "as on today's map", 1)), "mutation not caught: FP4 disclosure"
             assert check_rr2(re.sub(r"</a></td><td>([\d.]+)%</td><td>\$([\d,]+)</td>", lambda m_: f"</a></td><td>{m_[1]}%</td><td>${int(m_[2].replace(',', '')) + 1:,}</td>", rr, count=1)), "mutation not caught: rr2 gap"
         if "--test" in sys.argv:
             assert check_deductible(re.sub(r"<td>([\d.]+)%</td><td>([\d.]+)%</td></tr>", lambda m_: f"<td>{float(m_[1]) + 1}%</td><td>{m_[2]}%</td></tr>", dg, count=1)), "mutation not caught: deductible share"
@@ -447,7 +481,7 @@ if __name__ == "__main__":
             assert not bad, bad
             assert check_guides(re.sub(r">(\d+)%<", lambda m_: f">{int(m_[1]) + 1}%<", pg, count=1), zx), "mutation not caught: tile"
             assert check_guides(pg, re.sub(r"(zone on the claim, )(\d+)%", lambda m_: m_[1] + str(int(m_[2]) + 1) + "%", zx, count=1)), "mutation not caught: zone X disagrees"
-            print("guides check mutations: 27 caught, 2 false failures ruled out"); sys.exit()
+            print("guides check mutations: 37 caught, 2 false failures ruled out"); sys.exit()
         for b in bad: print("  -", b)
         print("GUIDES CHECK", "FAIL" if bad else "PASS"); sys.exit(1 if bad else 0)
     if "--renters" in sys.argv:
