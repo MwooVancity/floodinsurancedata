@@ -1,5 +1,5 @@
 # floodinsurancedata.com: rules
-State and next moves: PLAN.md (read at session start, update after every batch). History: git. Two docs only; this file under 8 KB. Global CLAUDE.md applies, not repeated.
+State, next moves: PLAN.md (read at start, update each batch). History: git. Two docs only; this file under 8 KB. Global CLAUDE.md applies, not repeated.
 Session start: deploys since last session (`gh run list`, live sitemap count) + `tools/actions_check.py`; fix any failed run. Nothing shared with calcscrape or river. "Nothing left missing" only when PLAN "Next" is done (hook plan-gate.mjs).
 ONLY GOAL (HARD, owner 11-09): helpfulness, information gain, Google HCU; every change names which it moves, none = don't build. Never "nothing to do": run the top-3 compare (PLAN Next) on a keyword group and build its gaps.
 
