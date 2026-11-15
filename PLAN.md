@@ -46,6 +46,11 @@ Owner decision: drop the second 21-item table of contents on county/state pages 
 | Repeat Flood | CUT (IA rows one per property per disaster, no base) |
 No new papers for now (owner 11-14: guides over research).
 
+## "Flood zone map" demand (KWP 11-05: ~60x "[county] flood insurance"); SERP read 11-15 (WebSearch, top results only, no traffic numbers)
+- "[county] flood zone map" (Pinellas, Harris): won by the county's own address viewer (pinellas.gov/flood-maps, HCFCD MAAPnext) and FEMA's map; the rest is local news and spam pages. Reading: searchers want their address on the official map. No new page type; the answer is the address lookup on county pages (WAITING 11-20: address tool to "all" after 7 green nightly tests) and linking the county's own viewer where FEMA's community data names it.
+- "flood zone x meaning": won by private insurers' articles (Kin, Compare.com, Insurify) with definitions only. /flood-zones/x/ already has what none of them shows (zone X cost, share of claims outside A/V). Move: zone pages lead with the definition in plain words (rule-quoted) in the next template batch; no twin page.
+- Owner check still useful (Ahrefs traffic of each #1) before retitling county pages to "flood zone map".
+
 ## Guides (standard: one searched question per URL, answer in 40 words, our FEMA table, rule() quotes only, G6 = a figure no top-3 result has)
 Live: homeowners vs flooding, private flood, condo, buying a house in a flood zone, deductibles, Risk Rating 2.0, LOMA/LOMR, claims section; built: contents coverage.
 Queue (each needs G1 owner check + G6 figure): flood vents (obstructionType code 15 after FEMA code list read raw); glossary pages only if GSC shows term queries.
