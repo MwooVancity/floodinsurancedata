@@ -19,7 +19,7 @@ US homeowner or buyer at one place, on a phone, 30-60 s, urgent. Above tables, i
 - 51 states, counties (median floor 30), no city pages, ceiling ~2,000. At most 25 new pages a day, all kinds (`new_pages_cap.py`, owner 11-14). Counties 20/day after the money groups.
 - Template text (on every county/state page) changes at most once a day, batched, reviewed (PLAN "Template batch"); same-day fix-on-fix only for wrong live text (11-14: 6 site-wide releases in a day, one dropped 312 state links).
 - No stuffing, doorway, near-duplicates, fake freshness, hidden text. No ads before the 4-week Search Console review; no paid referrals before a licensing + FTC check.
-- Owner alone: domain, Search Console, ads, publisher identity, opening pages to the index, paid referrals, cutting any block, money, sends.
+- Owner alone: domain, Search Console, ads, publisher identity (byline "Michael Woo, publisher" since 11-13), opening pages to the index, paid referrals, cutting any block, money, sends.
 
 ## Internal links (HARD, owner 11-14, replaces 11-08; S16 = `tools/linkcheck.py`)
 Follow Google's "Link best practices" (developers.google.com/search/docs/crawling-indexing/links-crawlable, read 11-14): every page linked from at least one other page; link related pages "in context"; anchor "descriptive, reasonably concise, and relevant" and makes sense alone; never "click here"/"read more"/empty; no keyword cramming; don't chain links in a sentence; real `<a href>` only; "no magical ideal number of links". Test: would a reader click it right there?
