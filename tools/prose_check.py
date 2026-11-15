@@ -31,6 +31,7 @@ QCLASS = {"src", "prov", "srclist"}                           # source lines: na
 MONTH = r"(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)[a-z]*\.?"
 DATE_ON = re.compile(r"\bon\s+(?:" + MONTH + r"\s+\d{1,2},?\s+\d{4}|" + MONTH + r"\s+\d{4}|\d{4}-\d{2}-\d{2}|\d{1,2}/\d{1,2}/\d{2,4})\s+on\b", re.I)
 DOUBLE = re.compile(r"\b([A-Za-z]+)\s+\1\b", re.I)
+PLACE_DOUBLE = {"Walla Walla"}   # real place names (Walla Walla County, WA), exact case only; ponytail: add one when a place trips it
 INQUOTE = re.compile(r"\u201c[^\u201d]*\u201d|\"[^\"]*\"")
 
 class Walk(HTMLParser):
@@ -100,7 +101,7 @@ def findings(html):
             # 4+ semicolons = a list of names printed inline (communities), not a sentence
             if n > MAXW and s.count(";") < 4: out.append(f"sentence {n} words: {s[:80]}")
     for _, c in w.blocks:
-        out += [f"doubled word: {m.group(0)}" for m in DOUBLE.finditer(c)]
+        out += [f"doubled word: {m.group(0)}" for m in DOUBLE.finditer(c) if m.group(0) not in PLACE_DOUBLE]
         out += [f"date doubled: {m.group(0)}" for m in DATE_ON.finditer(c)]
     return out
 
@@ -153,6 +154,7 @@ def test():
     assert not [f for f in findings(P(*[f"<p>Part {i}: {run} shown here.</p>" for i in range(3)])) if f.startswith("8-word")], "3 repeats allowed"
     assert not [f for f in findings(P(*[f"<table><tr><td>{run} {i}</td></tr></table>" for i in range(5)])) if f.startswith("8-word")], "tables exempt"
     assert any(f.startswith("doubled word: the the") for f in findings(P("<p>Read the the page.</p>")))
+    assert not findings(P("<nav><a>Walla Walla County</a></nav>")) and findings(P("<p>walla walla</p>")), "place name vs typo"
     assert any(f.startswith("doubled word") for f in findings(P("<table><tr><td>flood flood</td></tr></table>"))), "typo in a table cell"
     assert not findings(P("<table><tr><td>AE</td><td>AE</td></tr></table>")), "two cells are not a doubled word"
     assert not findings(P("<blockquote>that that</blockquote>")), "a source quote stays verbatim"
@@ -166,7 +168,7 @@ def test():
     assert judge({"n": 3}, {"a": 2}, k), "new county over its type fails"
     assert judge({"g": 1}, {"a": 2}, k), "new type with no baseline: any fault fails"
     assert judge({"g": 0}, {}, k) == []
-    print("prose_check --test: 27 cases PASS")
+    print("prose_check --test: 28 cases PASS")
 
 if __name__ == "__main__":
     if "--test" in sys.argv: test(); sys.exit()

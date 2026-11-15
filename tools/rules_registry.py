@@ -180,10 +180,14 @@ RULES = {
         "sources": [("https://www.flsenate.gov/Laws/Statutes/2025/627.351", "flood insurance is not provided by the corporation", "curl"),
                     ("https://www.flsenate.gov/Laws/Statutes/2025/627.351", "must meet, at a minimum, the dwelling coverage available from the National Flood Insurance Program or the requirements of s. 627.715", "curl")]},
     "fl_citizens_short": {   # must not contradict fl_citizens: same two tracks, no "now" that goes stale
-        "text": "In Florida, homes insured by Citizens (the state-backed insurer) with wind cover need it in a high-risk zone since 2023; outside one, since January 2026 "
-                "if they cost $400,000 or more to rebuild, and from January 2027 for all others.",
+        # owner 11-15 review: was one run-on with four time conditions; same two tracks, three short sentences
+        "text": "Florida has its own rule for homes insured by Citizens, the state-backed insurer, that have wind cover. In a high-risk zone, flood cover "
+                "has been required since 2023. Outside one, it has been required since January 2026 for homes that cost $400,000 or more to rebuild, "
+                "and from January 2027 for all others.",
         "sources": [("https://www.flsenate.gov/Laws/Statutes/2025/627.351",
                      "located within the special flood hazard area defined by the Federal Emergency Management Agency must have flood coverage in place", "curl"),
+                    ("https://www.flsenate.gov/Laws/Statutes/2025/627.351",
+                     "January 1, 2026, for a structure that has a dwelling replacement cost of $400,000 or more", "curl"),
                     ("https://www.flsenate.gov/Laws/Statutes/2025/627.351",
                      "January 1, 2027, for all other personal lines residential property insured by the corporation", "curl")]},
     "aid_register_60": {   # deadline planner (2026-10-29): stated as a rule, never computed (the page cannot know the declaration date)
@@ -298,8 +302,11 @@ RULES = {
         "text": "The premium is based on the flood risk of the building. The reason for any one zone is not in this data.",
         "sources": [(FS + "/premiumcosts", "The premium amount is based on the flood risk of the building.", "curl")]},
     "glide": {
-        "text": "Except for the Emergency Program discount, statutory discounts gradually phase out through an annual increase cap discount at each renewal date until the policy reaches its full-risk premium.",
+        # owner 11-15 review: "statutory discounts ... annual increase cap discount" was jargon a newcomer cannot parse; same rule, plain words
+        "text": "Some policies pay less than FEMA's full-risk premium because of discounts set by law. Except for the Emergency Program discount, "
+                "those discounts shrink a little at each renewal, within the yearly cap on increases, until the policy reaches its full-risk premium.",
         "sources": [(FS + "/premiumcosts", "Limits annual premium increases to a set percentage.", "curl"),
+                    (FS + "/premiumcosts", "after subtracting statutory discounts from the full-risk premium", "curl"),
                     (FIM, "gradually phase out through a statutory annual increase cap discount", "manual")]},
     "rr2_start": {   # risk-rating-2 guide 11-13: FEMA's Risk Rating 2.0 fact sheet (April 2025 PDF), read raw 2026-11-13
         "text": "Under Risk Rating 2.0, FEMA calculates premiums from the value of the home and the property's own flood risk. "
@@ -534,6 +541,90 @@ RULES = {
     "ia_partial": {
         "text": "FEMA disaster aid helps with uninsured and underinsured losses, and is separate from NFIP insurance.",
         "sources": [(IA_META, "uninsured and underinsured personal property losses", "curl")]},
+    # ---- owner 11-15 plain-words rewrites for the national pages: same sources as the long rule each one shortens; the long rules
+    # stay as they are on county pages (template text changes once a day, batched) ----
+    "start_loan_plain": {   # buying guide; start_loan's sources (FIM Table 10); 10 days first, as on the home page (howto_answer)
+        "text": "Bought while taking out, increasing, extending or renewing a mortgage, coverage can start at the loan closing. The insurer must get "
+                "the form and full amount due within 10 calendar days of closing, or within 30 if your lender, title company or settlement attorney pays. "
+                "Miss that and the earliest start is the 30th calendar day after the insurer gets them. Contents-only coverage qualifies only if the "
+                "contents are part of the security for the loan.",
+        "sources": [(FS + "/get-insured/buy-a-policy", "There is no wait if you buy flood insurance while making, increasing, extending or renewing a mortgage", "curl"),
+                    (FIM, "Contents-only policies and endorsements can only be eligible for the loan exception if the contents are part of the security for a loan", "manual"),
+                    (FIM, "If the lender, title company, or settlement attorney pays the premium", "manual"),
+                    (FIM, "within 30 calendar days from the closing", "manual"),
+                    (FIM, "within 10 calendar days from the loan transaction closing", "manual"),
+                    (FIM, "The effective date will be the date and time of the loan closing", "manual")]},
+    "zone_codes_list": {   # flood-zone-map and zone pages: zone_codes as a list; review 11-15: "B and X ... C and X" read as a contradiction.
+        # 44 CFR 64.3 lists "B, X" and "C, X" only; the shaded/unshaded split is FEMA's flood zone glossary (zone_x's source), so both are named
+        "text": "<ul><li><b>A, AE, A1–A30:</b> high-risk.</li><li><b>AO, AH:</b> high-risk, shallow flooding.</li>"
+                "<li><b>A99:</b> high-risk, behind a flood barrier FEMA treats as complete.</li>"
+                "<li><b>V, VE, V1–V30:</b> coastal high-risk, flooded by tides with fast-moving water.</li>"
+                "<li><b>B and shaded X:</b> moderate flood hazard.</li><li><b>C and unshaded X:</b> minimal flood hazard.</li>"
+                "<li><b>D:</b> flood hazard possible but not determined.</li></ul>"
+                "<p class='mut'>Zone codes from 44 CFR §64.3; the shaded and unshaded X labels from FEMA's flood zone glossary.</p>",
+        "sources": [(CFR64, "B, X Areas of moderate flood hazards", "curl"),
+                    (CFR64, "C, X Area of minimal hazards", "curl"),
+                    (CFR64, "D Area of undetermined but possible, flood hazards", "curl"),
+                    (CFR64, "and with velocity, that is inundated by tidal floods (coastal high hazard area)", "curl"),
+                    (CFR64, "A99 Area of special flood hazard where enough progress has been made on a protective system", "curl"),
+                    ("https://www.fema.gov/about/glossary/flood-zones", "Moderate flood hazard areas, labeled Zone B or Zone X (shaded)", "browser"),
+                    ("https://www.fema.gov/about/glossary/flood-zones", "are labeled Zone C or Zone X (unshaded)", "browser")]},
+    "private_plain": {   # private guide opening; private_accept's statute, in plain words; "must" kept (the statute's "shall ... direct")
+        "text": "Under federal law, regulated lenders are directed to accept a private flood policy in place of an NFIP policy when its coverage "
+                "meets the federal flood insurance requirement (42 U.S.C. §4012a(b)(1)(B)).",
+        "sources": [("https://www.govinfo.gov/content/pkg/USCODE-2023-title42/html/USCODE-2023-title42-chap50-subchapI-sec4012a.htm",
+                     "shall by regulation direct regulated lending institutions", "curl"),
+                    ("https://www.govinfo.gov/content/pkg/USCODE-2023-title42/html/USCODE-2023-title42-chap50-subchapI-sec4012a.htm",
+                     "to accept private flood insurance as satisfaction of the flood insurance coverage requirement", "curl")]},
+    "condo_layers": {   # condo guide opening: condo_rcbap + condo_contents in one plain answer (same FEMA brochure and postcard)
+        "text": "Condo flood insurance comes in two layers. The condominium association can buy one NFIP policy for the building. That policy does "
+                "not cover your own belongings: for those, the NFIP offers a contents-only policy with a $100,000 coverage limit.",
+        "sources": [(CONDO_B, "is available to condominium associations to insure against direct physical damage to your building from a flood", "manual"),
+                    (CONDO_P, "but it does not cover your personal belongings", "manual"),
+                    (CONDO_P, "offers a contents-only flood insurance policy with a $100,000 coverage limit", "manual")]},
+    "buyer_lender": {   # buying guide opening: purchase_answer + zone_price in a buyer's words
+        "text": "If the house is in a high-risk zone (A or V) and your mortgage is federally regulated or backed, the lender must require flood "
+                "insurance (42 U.S.C. §4012a). Outside those zones, a lender may still require it.",
+        "sources": [("https://www.govinfo.gov/content/pkg/USCODE-2023-title42/html/USCODE-2023-title42-chap50-subchapI-sec4012a.htm",
+                     "regulated lending institutions", "curl"),
+                    ("https://www.federalreserve.gov/frrs/regulations/interagency-questions-and-answers-regarding-flood-insurance.htm",
+                     "a lender may require flood insurance as a condition of making the loan, as a matter of safety and soundness", "curl")]},
+    # ---- contents guide 11-15 (KWP "flood insurance contents coverage"): 44 CFR 61 (eCFR, curl --compressed) and FloodSmart
+    # buy-a-policy read raw this session; Dwelling Form = Part 61 Appendix A(1) ----
+    "contents_separate": {
+        "text": "NFIP building coverage and contents coverage are bought separately. The NFIP's standard home policy covers your belongings only if you bought "
+                "contents coverage, which the policy calls personal property coverage (44 CFR §61.3 and Part 61, Appendix A(1)).",
+        "sources": [(CFR61, "Insurance coverage under the Program is available for buildings and their contents. Coverage for each may be purchased separately.", "curl"),
+                    (CFR61, "If you have purchased personal property coverage, we insure against direct physical loss by or from flood to personal property inside a building at the described location", "curl")]},
+    "contents_what": {
+        "text": "FloodSmart lists what contents coverage pays for: clothing, furniture and electronic equipment; curtains; a clothes washer and dryer; "
+                "portable and window air conditioners; a microwave; carpet installed over wood floors; and valuable items such as original artwork and furs, "
+                "up to $2,500. For a home, contents coverage goes up to <b>$100,000</b>.",
+        "sources": [(FS + "/get-insured/buy-a-policy", "Covers physical damage to the personal property inside the building: Clothing, furniture and electronic equipment.", "curl"),
+                    (FS + "/get-insured/buy-a-policy", "Portable and window air conditioners. Microwave. Carpet installed over wood floors.", "curl"),
+                    (FS + "/get-insured/buy-a-policy", "Valuable items such as original artwork and furs (up to $2,500)", "curl"),
+                    (FS + "/get-insured/buy-a-policy", "contents policies cover up to $100,000 of flood damage for belongings kept inside your home", "curl")]},
+    "contents_acv": {
+        "text": "Belongings are paid at actual cash value: what it costs to replace an item at the time of the loss, less its physical depreciation "
+                "(Dwelling Form, 44 CFR Part 61, Appendix A(1)).",
+        "sources": [(CFR61, "Actual Cash Value. The cost to replace an insured item of property at the time of loss, less the value of its physical depreciation.", "curl"),
+                    (CFR61, "are subject to actual cash value (or in the case of R.4.a.2., below, proportional) loss settlement", "curl"),
+                    (CFR61, "e. Personal property. f. Appliances, carpets, and carpet pads.", "curl")]},
+    "contents_basement": {
+        # r-contents MAJOR 11-15: one 90-word sentence, and the post-1974 scope read as if it covered basements too (the CFR limits
+        # basements "regardless of the zone", post-FIRM only for elevated buildings); "not covered" = what "limited to" leaves out
+        "text": "In a basement, in any flood zone, contents coverage pays for only a short list: portable or window air conditioners, "
+                "clothes washers and dryers, and food freezers (not walk-in) with the food in them. "
+                "Furniture, clothing and other belongings kept there are not covered by contents coverage. "
+                "A basement is a floor below ground level on all sides. "
+                "Each item must be installed where it works and, if needed, connected to power. "
+                "The same short list applies below the lowest elevated floor of an elevated building in FEMA zones A1-A30, AE, AH, AR, V1-V30 or VE, "
+                "if the building was built or substantially improved after 1974, or after the area's first flood insurance rate map took effect if that was later "
+                "(Dwelling Form, 44 CFR Part 61, Appendix A(1)).",
+        "sources": [(CFR61, "or in a basement regardless of the zone, is limited to the following items, if installed in their functioning locations and, if necessary for operation, connected to a power source: a. Air conditioning units, portable or window type; b. Clothes washers and dryers; and c. Food freezers, other than walk-in, and food in any freezer.", "curl"),
+                    (CFR61, "Coverage for items of property below the lowest elevated floor of an elevated post-FIRM building located in Zones A1-A30, AE, AH, AR, AR/A, AR/AE, AR/AH, AR/A1-A30, V1-V30, or VE", "curl"),
+                    (CFR61, "having its floor below ground level on all sides", "curl"),
+                    (CFR61, "A building for which construction or substantial improvement occurred after December 31, 1974, or on or after the effective date of an initial Flood Insurance Rate Map (FIRM), whichever is later", "curl")]},
 }
 # owner 11-11 move: the place page keeps the cap's first clause; the full cap rule lives on /nfip/#rules (same sources, no new wording)
 RULES["cap_short"] = {"text": RULES["cap"]["text"].split(";")[0] + " (42 U.S.C. §4015(e)).",

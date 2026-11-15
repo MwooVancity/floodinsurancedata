@@ -39,8 +39,8 @@ def gap_results(T):   # own copy of the price-gap Results words: pooled shares a
     for t in T:
         for c, (a, b) in t["gap"][4].items(): tot[c] = [tot.get(c, [0, 0])[0] + a, tot.get(c, [0, 0])[1] + b]
     cl = sorted((c for c in tot if tot[c][0] >= 1000), key=lambda c: (c == "blank", int(c) if c.isdigit() else 99))
-    crs = "; ".join(f'{"no class code" if c == "blank" else "class " + c} {round(100 * tot[c][1] / tot[c][0], 1)}% of {tot[c][0]:,}' for c in cl)
-    return pooled, (f"the share below by any amount is {crs}.</li>" if cl else None)
+    crs = "".join(f'<tr><td>{"No class code" if c == "blank" else "Class " + c}</td><td>{tot[c][0]:,}</td><td>{round(100 * tot[c][1] / tot[c][0], 1)}%</td></tr>' for c in cl)   # owner 11-15: a small table
+    return pooled, (f"<tbody>{crs}</tbody></table>" if cl else None)
 def crs_adds_up(recs):   # M3 split (extras_raw, its own pass) must hold exactly the agg base: same policies, same count below
     bad = []
     for c, r in recs.items():
@@ -195,18 +195,19 @@ def check(key, page, csv_text, cards, T, sm=None):
                                          for (e_, x_, a_, s_, y_, z_, b_), t in zip(mcol, want)): bad.append(f"{key}: expected, excess, peak month, largest-year share, loss years or one-year column disagrees with recompute")
         if "<th>Loss years with at least one claim in the peak month</th>" not in page or "<th>Loss years with 10 or more claims in the peak month</th>" not in page:
             bad.append(f"{key}: loss-years column not labelled 'at least one claim', or no 10-or-more column (round 3 M2)")
-        m = re.search(r"the median county's largest loss year holds ([\d.]+)% of its peak month .*?that month has 10 or more claims in ([\d.]+) of the ", text(page))
+        m = re.search(r"In the median county, the largest loss year holds ([\d.]+)% of the peak month's claims .*?peak month had 10 or more claims in ([\d.]+) of the ", text(page))
         want_g = (round(statistics.median(t["cal"][6][0] for t in T), 1), float(statistics.median(t["cal"][5][0] for t in T)))
         if not m or (float(m[1]), float(m[2])) != want_g: bad.append(f"{key}: Abstract graded figures {m and m.groups()} vs {want_g} (round 3 M1)")
         # label-vs-data (round 2): Wilson ranges assume independent claims and ignore the peak pick; the table must say both
-        tb = page[page.find('id="table"'):page.find('id="limitations"')]
-        if "<th>90% range if claims were independent</th>" not in tb or "picked from the same claims" not in tb or "not independent" not in tb or "<th>Fifth by excess over chance</th>" not in tb:
-            bad.append(f"{key}: table does not say its ranges assume independent claims and the peak pick, or fifths are not by excess (round 2)")
+        # owner 11-15: the two reasons are explained once, in Limitations; the table labels its ranges and points there
+        tb = page[page.find('id="table"'):page.find('id="limitations"')]; lim = page[page.find('id="limitations"'):page.find('id="reproduce"')]
+        if "<th>90% range if claims were independent</th>" not in tb or "if claims were independent" not in tb.split("<table>")[0] or "picked from the same claims" not in lim or "not independent" not in lim or "<th>Fifth by excess over chance</th>" not in tb:
+            bad.append(f"{key}: table does not say its ranges assume independent claims, Limitations does not give the peak pick, or fifths are not by excess (round 2)")
         rs = page[page.find('id="results"'):page.find('id="prior"')]
         if "(90% range if claims were independent " not in rs or "Highest:" in rs: bad.append(f"{key}: Results range not labelled 'if claims were independent'")
         ab = page[page.find('id="abstract"'):page.find('id="question"')]
         if "Main finding:</b> In " not in ab.split("<b>Data:</b>")[0]: bad.append(f"{key}: Abstract does not lead with the one-year finding (round 2)")
-        m = re.search(r"the median county's share is ([\d.]+)%, against a median expected share at random of ([\d.]+)%", ab)
+        m = re.search(r"[Tt]he median county's share is ([\d.]+)%, against a median expected share at random of ([\d.]+)%", ab)
         want_m = (round(statistics.median(t["v"] for t in T), 1), round(statistics.median(t["e"] for t in T), 1))
         if not m or (float(m[1]), float(m[2])) != want_m: bad.append(f"{key}: Abstract median vs chance {m and m.groups()} vs {want_m}")
         m = re.search(r"the largest excess is .*?: ([\d.]+)% against ([\d.]+)% expected at random \(([\d,]+) of ([\d,]+)\)", text(ab))
@@ -217,7 +218,7 @@ def check(key, page, csv_text, cards, T, sm=None):
         if (m and m[1]) != (T[0]["cal"][1] or None): bad.append(f"{key}: Abstract top-county flag {m and m[1]} vs {T[0]['cal'][1]}")
     cr = list(csv.DictReader(io.StringIO(csv_text or "")))
     hdr = next(csv.reader(io.StringIO(csv_text or "")), [])   # label vs data (stat review): the download line names every CSV column, in order
-    m = re.search(r'\.csv">Download all [\d,]+ rows as CSV</a> \((\d+) columns: ([^)]*)\)', page)
+    m = re.search(r'\.csv">Download all [\d,]+ rows as CSV</a> \((\d+) columns: <code>([^<]*)</code>\)', page)
     if not m or int(m[1]) != len(hdr) or m[2].split(", ") != hdr: bad.append(f"{key}: CSV column list on the page {m and m.groups()} vs header {hdr}")
     if "below_any_amount_n" in hdr and not re.search(r"share_pct, ci90_low_pct, ci90_high_pct and numerator count policies at least \$\d+ a year below full-risk; below_any_amount_n, below_any_amount_pct and median_gap_usd_below_any_amount count policies below by any amount", page):
         bad.append(f"{key}: CSV note does not say which columns use the $ line and which the any-amount base")
@@ -235,8 +236,8 @@ def check(key, page, csv_text, cards, T, sm=None):
         m = re.search(rf'data-paper="{key}" data-fifth="(\d)"', h)
         if not m: bad.append(f"{c}: no {key} line"); continue
         if int(m[1]) != (tc[c]["fifth"] if c in tc else 0): bad.append(f"{c}: {key} fifth {m[1]} vs {tc[c]['fifth'] if c in tc else 0}")
-        if key in NULL and int(m[1]) and ("range if claims were independent" not in h[m.end():h.find("</li>", m.end())] or "expected at random" not in h[m.end():h.find("</li>", m.end())]):
-            bad.append(f"{c}: {key} card range not labelled 'if claims were independent' or no chance expectation (round 2)")
+        if key in NULL and int(m[1]) and ("90%</span> range" not in h[m.end():h.find("</li>", m.end())] or "At random, " not in h[m.end():h.find("</li>", m.end())]):
+            bad.append(f"{c}: {key} card has no 90% range or no chance expectation (round 2; reviewer 11-15: the independence caveat lives on the paper page)")
     return bad
 
 def sameness(pages):   # M3.1 (our threshold): any two papers share under 30% of sentences (numbers masked)
@@ -287,28 +288,29 @@ if __name__ == "__main__":
                         "loss years wrong": (re.sub(r"(</td><td>[A-Z][a-z]+</td><td>[\d.]+%</td><td>)(\d+)(</td>)", lambda m: f"{m[1]}{int(m[2]) + 1}{m[3]}", page, count=1), csv_text, cards),
                         "largest-year share wrong": (re.sub(r"(</td><td>[A-Z][a-z]+</td><td>)([\d.]+)%", lambda m: f"{m[1]}{float(m[2]) / 2}%", page, count=1), csv_text, cards),
                         "10+ years wrong": (re.sub(r"(</td><td>[A-Z][a-z]+</td><td>[\d.]+%</td><td>\d+</td><td>)(\d+)(</td>)", lambda m: f"{m[1]}{int(m[2]) + 1}{m[3]}", page, count=1), csv_text, cards),
-                        "overclaim back": (page.replace("That mark does not say", "So the peak month is not a pattern that repeats each year. That mark does not say", 1), csv_text, cards),
+                        "overclaim back": (page.replace("This does not say whether the month", "So the peak month is not a pattern that repeats each year. This does not say whether the month", 1), csv_text, cards),
                         "loss years unlabelled": (page.replace("<th>Loss years with at least one claim in the peak month</th>", "<th>Loss years with claims in the peak month</th>"), csv_text, cards),
                         "graded median wrong": (re.sub(r"(largest loss year holds )([\d.]+)%", lambda m: f"{m[1]}{float(m[2]) + 1}%", page, count=1), csv_text, cards),
                         "csv 10+ years wrong": (page, re.sub(r"(?m)^(.*),(\d+)\r?$", lambda m: f"{m[1]},{int(m[2]) + 1}", csv_text, count=1), cards),
                         "independence label dropped": (page.replace("<th>90% range if claims were independent</th>", "<th>90% range</th>"), csv_text, cards),
                         "results range unlabelled": (page.replace("(90% range if claims were independent ", "(90% range ", 1).replace("Largest excess over chance:", "Highest:", 1), csv_text, cards),
-                        "peak-pick cause dropped": (page.replace("picked from the same claims it is measured on, and ", "", 1), csv_text, cards),
+                        "peak-pick cause dropped": (page.replace("picked from the same claims", "chosen", 1), csv_text, cards),
+                        "table range note dropped": (page.replace("Each 90% range is the one that would hold if claims were independent; ", "", 1), csv_text, cards),
                         "fifths by share": (page.replace("<th>Fifth by excess over chance</th>", "<th>Fifth by share</th>"), csv_text, cards),
                         "finding not first": (re.sub(r'(<p class="stand"><b>Main finding:</b>.*?</p>)(\s*<p class="stand"><b>Data:</b>.*?</p>)', r"\2\1", page, count=1, flags=re.S), csv_text, cards),
                         "median chance wrong": (re.sub(r"(a median expected share at random of )([\d.]+)", lambda m: f"{m[1]}{float(m[2]) + 1}", page, count=1), csv_text, cards),
                         "largest excess wrong": (re.sub(r"(the largest excess is .*?: )([\d.]+)%", lambda m: f"{m[1]}{float(m[2]) + 1}%", page, count=1, flags=re.S), csv_text, cards),
                         "csv expected wrong": (page, re.sub(r"(?m)^((?:[^,\n]*,){13})([\d.]+)", lambda m: f"{m[1]}{float(m[2]) + 1}", csv_text, count=1), cards)} if key == "flood-calendar" else {}),
-                    "card range unlabelled": (page, csv_text, {c: h.replace("range if claims were independent", "range") for c, h in cards.items()}) if key in NULL else (page.replace('id="prior"', 'id="x"'), csv_text, cards),
+                    "card range unlabelled": (page, csv_text, {c: h.replace("At random, ", "So, ") for c, h in cards.items()}) if key in NULL else (page.replace('id="prior"', 'id="x"'), csv_text, cards),
                     **({"any share wrong": (re.sub(r"( of [\d,]+</td><td>)([\d.]+)%(</td><td>(?:\$[\d,]+|—)</td></tr>)", lambda m: f"{m[1]}{float(m[2]) + 1}%{m[3]}", page, count=1), csv_text, cards),
                         "median gap wrong": (re.sub(r"(%</td><td>\$)([\d,]+)(</td></tr>)", lambda m: m[1] + "1" + m[3], page, count=1), csv_text, cards),
                         "csv any wrong": (page, re.sub(r"(?m)^((?:[^,\n]*,){12})([\d.]+)", lambda m: f"{m[1]}{float(m[2]) + 1}", csv_text, count=1), cards),
                         "gao dropped": (page.replace("GAO-27-108012", "GAO"), csv_text, cards),
                         "pooled $10 wrong": (re.sub(r"([\d.]+)(% by \$10 or more)", lambda m: f"{float(m[1]) + 1}{m[2]}", page, count=1), csv_text, cards),
-                        "crs share wrong": (re.sub(r"(the share below by any amount is class \d+ )([\d.]+)", lambda m: f"{m[1]}{float(m[2]) + 1}", page, count=1), csv_text, cards),
+                        "crs share wrong": (re.sub(r"(<tr><td>Class \d+</td><td>[\d,]+</td><td>)([\d.]+)", lambda m: f"{m[1]}{float(m[2]) + 1}", page, count=1), csv_text, cards),
                         "crs line dropped": (re.sub(r"<li>By the CRS class code.*?</li>", "", page, count=1, flags=re.S), csv_text, cards),
                         "reconcile wrong": (re.sub(r"(: here )([\d.]+)%", lambda m: f"{m[1]}{float(m[2]) + 1}%", page, count=1), csv_text, cards)} if key == "price-gap" else {}),
-                    "csv column unlisted": (re.sub(r"(rows as CSV</a> \(\d+ columns: )[^,]+, ", r"\1", page, count=1), csv_text, cards),
+                    "csv column unlisted": (re.sub(r"(rows as CSV</a> \(\d+ columns: <code>)[^,]+, ", r"\1", page, count=1), csv_text, cards),
                     "csv column added": (page, csv_text.replace(csv_text.splitlines()[0], csv_text.splitlines()[0] + ",extra", 1), cards),
                     **({"csv base note dropped": (page.replace(" count policies below by any amount", " are extra", 1), csv_text, cards)} if key == "price-gap" else {}),
                     "card fifth wrong": (page, csv_text, {c: re.sub(rf'data-paper="{key}" data-fifth="(\d)"', lambda m: f'data-paper="{key}" data-fifth="{(int(m[1]) % 5) + 1}"', h, count=1) for c, h in cards.items()})}

@@ -209,19 +209,20 @@ def card_risk():
         def rating_row(block, label):
             rr = block.get("risk_rating")
             return f"<li><b>{label} flood risk rating (FEMA)</b><span>{html.escape(str(rr))}</span></li>" if _present(rr) else ""
-        def _detail(block, label):
-            pctl, eald = block.get("eal_national_pctl"), block.get("eal_total_usd")
-            if not _present(block.get("risk_rating")): return ""
-            bits = []
-            # NRI's *_ALR_NPCTL is the loss RATE percentile (loss per dollar of building value), not total loss: say so
-            if isinstance(eald, (int, float)) and eald > 0: bits.append(f"FEMA models roughly {tp('nri_eal_usd', 'nri.' + label.lower() + '.eal_total_usd', big, q=label.lower())} of flood loss a year (buildings, people and farmland valued in dollars, insured or not; a model, not insurance payouts)")
-            if isinstance(pctl, (int, float)): bits.append(f"a separate FEMA measure, loss per dollar of building value: {label.lower()} flood loss here is higher than in about {m('nri_eal_pctl_' + label.lower(), str(round(pctl)) + '%')} of U.S. counties")   # stress test: equal coastal/inland percentiles printed one sentence twice
-            return (f" {label}: " + "; ".join(bits) + ".") if bits else ""
+        # owner 11-15 proofread: one sentence per measure, both sides in it (was a 47-word run per side, the base twice)
+        _rated = [(b, lab) for b, lab in ((cf, "Coastal"), (inl, "Inland")) if _present(b.get("risk_rating"))]
+        _eal = [f"{tp('nri_eal_usd', 'nri.' + lab.lower() + '.eal_total_usd', big, q=lab.lower())} for {lab.lower()} flooding"
+                for b, lab in _rated if isinstance(b.get("eal_total_usd"), (int, float)) and b["eal_total_usd"] > 0]
+        # NRI's *_ALR_NPCTL is the loss RATE percentile (loss per dollar of building value), not total loss: say so
+        _pctl = [f"about {m('nri_eal_pctl_' + lab.lower(), str(round(b['eal_national_pctl'])) + '%')}" + (" of U.S. counties" if not i else "") + f" for {lab.lower()} flooding"
+                 for i, (b, lab) in enumerate((b, lab) for b, lab in _rated if isinstance(b.get("eal_national_pctl"), (int, float)))]
         risk_body = ("<ul class='kv'>" + rating_row(cf, "Coastal") + rating_row(inl, "Inland") + "</ul>"
-                     "<p class='note'>FEMA's rating weighs modeled loss with social vulnerability and community resilience; it is not a "
+                     "<p class='note'>FEMA's rating weighs modeled loss with social vulnerability and community resilience. It is not a "
                      "prediction for your home, and it can differ from the loss percentile below."
-                     + _detail(cf, "Coastal") + _detail(inl, "Inland") +
-                     " Loss figures model all flood loss, insured or not, so they run far above insurance payouts." + how("nri") + "</p>")
+                     + (f" FEMA's model puts yearly flood loss here at roughly {and_list(_eal)}. It counts buildings, people and farmland "
+                        "valued in dollars, insured or not, so it runs far above insurance payouts." if _eal else "")
+                     + (f" A separate FEMA measure, loss per dollar of building value, is higher here than in {and_list(_pctl)}." if _pctl else "")
+                     + how("nri") + "</p>")
         parts = []
         if _present(cf.get("risk_rating")): parts.append(f"{html.escape(str(cf['risk_rating']))} for coastal flooding")   # same order as the tiles
         if _present(inl.get("risk_rating")): parts.append(f"{html.escape(str(inl['risk_rating']))} for inland (river) flooding")
@@ -274,10 +275,10 @@ def _sea_line():   # PLAN 3e: NOAA's published sea-level trend at a tide gauge i
     def one(s, i):   # a signed figure, no direction word (gate B2); Alaska trends are negative (land rising)
         t = s["trend"]
         return (f"NOAA's tide gauge at {m('sea_trend', html.escape(s['name']), q=s['station'] + '_name')} measured a sea-level trend of "
-                f"{m('sea_trend', f'{t:+.2f}', q=s['station'])} inches per decade (give or take {m('sea_trend', f'{s['error']:.2f}', q=s['station'] + '_err')} inches per decade) "
+                f"{m('sea_trend', f'{t:+.2f}', q=s['station'])} inches per decade (give or take {m('sea_trend', f'{s['error']:.2f}', q=s['station'] + '_err')}) "
                 f"from {m('sea_trend', s['start'][-4:], q=s['station'] + '_from')} to {m('sea_trend', s['end'][-4:], q=s['station'] + '_to')}")
     where = ""
-    return (f"<p class='note'><b>Local sea level:</b> " + "; ".join(one(s, i) for i, s in enumerate(st)) + where
+    return (f"<p class='note'><b>Local sea level:</b> " + ". ".join(one(s, i) for i, s in enumerate(st)) + where
             + ". A plus sign means the water there got higher over that period. A tide gauge measures one spot on the coast; it is not your property's flood risk.</p>")
 
 # ---- zone card (policy UNITS) ----
@@ -356,8 +357,8 @@ def card_zone_cost():
 
 def _gap_parts():
     MX.compare("prem_median", "frp_median")   # like-for-like or it raises
-    gap_lead = ((m('share_below', str(P['share_below']) + '%') + " of single-family primary-home policies in " + CS + " have a premium below FEMA's <a href='/guides/risk-rating-2/'>full-risk premium</a> by any amount, so "   # 11-14: link on words already there, no added sentence
-                 + claim("those policies' bills are rising", "rising", ("share_below", ">", 0)) + " toward it." if P.get("share_below") else
+    gap_lead = ((m('share_below', str(P['share_below']) + '%') + " of single-family primary-home policies in " + CS + " have a premium below FEMA's <a href='/guides/risk-rating-2/'>full-risk premium</a> by any amount (not a quote)."   # 11-14: link on words already there; reviewer 11-15: no "bills are rising" (a premium-rise claim)
+                 if P.get("share_below") else
                  "No policy here pays less than FEMA's full-risk price.")
                 + f" Median premium {m('prem_median', money(PREM_MED))}, full-risk {m('frp_median', money(P['frp_median']))} (premiums only, before fees).")
     # Years-to-full-risk glide path — derived from data we already hold + the statutory annual cap (a RULE,
@@ -377,7 +378,7 @@ def _ord(n): return f"{n}{'th' if 10 <= n % 100 <= 20 else {1: 'st', 2: 'nd', 3:
 def card_ranks():   # owner 11-12 research papers: this county's share, 90% range and fifth in each national paper (paper_gate.py recomputes)
     import papers as PA
     cache = PA.read_cache(); g = os.environ.get("FF_GEOID", ""); lines = []
-    _F = {1: "highest fifth", 2: "second fifth", 3: "middle fifth", 4: "fourth fifth", 5: "lowest fifth"}
+    _F = {1: "highest fifth", 2: "second-highest fifth", 3: "middle fifth", 4: "second-lowest fifth", 5: "lowest fifth"}
     for sp in PA.READY:
         _pol = "Policies" in sp["dataset"]   # bug review 11-14: each figure's data.csv row names the paper's own dataset
         def mx(k, v, q, _pol=_pol): return m({"paper_share": "paper_share_pol" if _pol else k, "paper_min": k if _pol else "paper_min_clm"}.get(k, k), v, q=q)
@@ -387,31 +388,32 @@ def card_ranks():   # owner 11-12 research papers: this county's share, 90% rang
         def hd(linked): return (f"<b><a href='/flood-insurance/{sp['key']}/'>{html.escape(sp['title'])}</a></b>: " if linked
                                 else f"<b>{html.escape(sp['title'])}</b>: ")
         _w = c.get("from_to") or [None, None]
-        win = f" with a loss in {_w[0]}–{_w[1]}" if _w[0] else ""   # audit 11-14: 'not listed' names the paper's window
+        win = f" (losses {_w[0]}–{_w[1]})" if _w[0] else ""   # audit 11-14: 'not listed' names the paper's window; 11-15: no second "with"
         # audit 11-14: the share says what it counts; its dollar line is tagged (V1), "fell" is the B2 price word, so "were"
         meets = re.sub(r"\$[\d,]+", lambda a: m(sp["line_metric"], a.group(0), q=sp["key"] + "-line"), html.escape(sp["meets"]).replace("fell in", "were in"))
         if IS_STATE:   # PLAN E19: a state names how many of its counties are listed; never a state rank
             n_here = sum(1 for gg in (c.get("rows") or {}) if gg[:2] == g[:2]); head = hd(n_here > 0)
+            if not n_here: continue   # reviewer 11-15 (Wyoming: three "0 of this state's counties" lines): a paper listing none of them is left out
             lines.append(f"<li>{head}{mx('paper_min', str(n_here), q=sp['key'] + '-n')} of this state's {UNITS} have at least "
                          f"{mx('paper_min', str(sp['min']), q=sp['key'])} {sp['unit']} and are listed.</li>")
             continue
         r = (c.get("rows") or {}).get(g)
         if r:
             fifth, v, lo, hi, n = (r[k] for k in ("fifth", "v", "lo", "hi", "n")); _e = r.get("exp")
-            mw = (f"; peak month {html.escape(r['peak'])}" + (f", over half of it from {html.escape(r['storm'])} alone" if r.get("storm") else "")
-                  + (f"; {mx('paper_share', f'{_e}%', q=sp['key'] + '-exp')} would be expected at random for this many claims, and the fifth is by share minus that" if _e is not None else "")) if "peak" in r else ""   # Flood Calendar
-            ind = " if claims were independent" if _e is not None else ""   # statistician round 2: Wilson assumes independent claims
+            mw = (f". Peak month: {html.escape(r['peak'])}" + (f", over half of it from {html.escape(r['storm'])} alone" if r.get("storm") else "")
+                  + (f". At random, {mx('paper_share', f'{_e}%', q=sp['key'] + '-exp')} of claims would land in one month at this size, so the ranking uses the share above that" if _e is not None else "")) if "peak" in r else ""   # Flood Calendar
             head = hd(True)
-            lines.append(f"<li>{head}<span data-paper=\"{sp['key']}\" data-fifth=\"{fifth}\">{mx('paper_share', f'{v}%', q=sp['key'])} "
-                         f"({mx('paper_share', '90%', q='ci-level')} range{ind} {mx('paper_share', f'{lo}', q=sp['key'] + '-lo')}–{mx('paper_share', f'{hi}%', q=sp['key'] + '-hi')}) of "
-                         f"{mx('paper_min', num(n), q=sp['key'] + '-n')} {sp['unit']} here{win} {meets}, the {_F[fifth]} of "
-                         f"{mx('paper_min', num(c['pool']), q=sp['key'] + '-pool')} U.S. counties listed{mw}</span>.</li>")
+            # owner 11-15 proofread: base first ("Of N ... here"), then the share, then the rank in its own sentence
+            lines.append(f"<li>{head}<span data-paper=\"{sp['key']}\" data-fifth=\"{fifth}\">Of {mx('paper_min', num(n), q=sp['key'] + '-n')} {sp['unit']} here{win}, "
+                         f"{mx('paper_share', f'{v}%', q=sp['key'])} ({mx('paper_share', '90%', q='ci-level')} range {mx('paper_share', f'{lo}', q=sp['key'] + '-lo')}–{mx('paper_share', f'{hi}%', q=sp['key'] + '-hi')}) "
+                         f"{meets}. That ranks in the {_F[fifth]} of {mx('paper_min', num(c['pool']), q=sp['key'] + '-pool')} U.S. counties listed{mw}</span>.</li>")
         else:
             lines.append(f"<li>{hd(False)}<span data-paper=\"{sp['key']}\" data-fifth=\"0\">not listed</span>: fewer than "
                          f"{mx('paper_min', str(sp['min']), q=sp['key'])} {sp['unit']} here{win}.</li>")
     if not lines: return ""
     return card(f"How {CL if IS_STATE else CS} appears in the national research papers",
-                "Each paper measures one thing in FEMA's records for every U.S. county with enough records. A fifth is a position in a list, not a grade or a prediction.",
+                "Each paper sorts the U.S. counties with enough records by one measure into five groups of about equal size, from highest fifth to lowest fifth. "
+                "A group is a position in a list, not a grade or a prediction.",
                 "<ul>" + "".join(lines) + "</ul>", id="ranks")
 def _claims_parts():
     claims_lead = (f"Floods in {CS} have led to {m('claims_filed', num(C['rows']))} NFIP flood {pl(C['rows'], 'claim')} and "
@@ -475,9 +477,10 @@ def _map_line():   # PLAN 3e: when this place's FEMA map took effect, and which 
     elif new:
         out.append(f"{m('map_new_n', str(len(new)))} {pl(len(new), 'community', 'communities')} in {CS} {pl(len(new), 'gets', 'get')} a new FEMA flood map after FEMA's latest report, "
                    f"the first on {m('map_date', _mdate(new[0][2]), q='first_new')}.")
-    out += _nfhl_lines()
+    _nl, _nb = _nfhl_lines(); out += _nl
     if not out: return ""
-    return (f"<p class='note'><b>Flood map:</b> {' '.join(out)} {rule('prelim')} Check your own address on "
+    return (f"<p class='note'><b>Flood map:</b> {' '.join(out)}</p>" + "".join(_nb)
+            + f"<p class='note'>{rule('prelim')} Check your own address on "
             "<a href='https://msc.fema.gov/portal/home' rel='noopener' target='_blank'>FEMA's flood map</a>"
             + (" or with our <a href='/flood-zone-map/'>flood zone map lookup by address</a>" if _HUB_ON else "") + ".</p>")
 
@@ -488,11 +491,11 @@ _ZIP_ON = _ZF == "all" or "zip" in _ZF
 _MS = json.load(open(os.path.join(os.path.dirname(HERE), "data", "us", "map_status.json"))) if os.path.exists(os.path.join(os.path.dirname(HERE), "data", "us", "map_status.json")) else {}
 def _nfhl_lines():   # map debate 11-06: map age, revisions, exemption rulings, from FEMA's map service (tools/pull_mapstatus.py)
     s = _MS.get(GEOID) if not IS_STATE else None
-    if not s or not s.get("panels"): return []   # no countywide digital FEMA map: say nothing rather than guess
+    if not s or not s.get("panels"): return [], []   # no countywide digital FEMA map: say nothing rather than guess; (map sentences, LOMA blocks)
     d = lambda v: _mdate(datetime.date.fromisoformat(v))
     # hater r133 (Dixie FL "since September 9, 9999"): FEMA stores placeholder dates; a date before the NFIP (1968) or after today is not printed
     ok = lambda v: bool(v) and "1968-01-01" <= v <= datetime.date.today().isoformat()
-    if not ok(s.get("oldest")): return []
+    if not ok(s.get("oldest")): return [], []
     out = [f"FEMA's digital flood map for {CS} has {m('map_panels', format(s['panels'], ','))} map panels, the oldest in effect since "
            f"{m('map_panel_date', d(s['oldest']), q='oldest')}"
            + (f" and the newest since {m('map_panel_date', d(s['newest']), q='newest')}." if ok(s.get("newest")) else
@@ -507,13 +510,19 @@ def _nfhl_lines():   # map debate 11-06: map age, revisions, exemption rulings, 
         for k, n in lo.items(): g[__import__("codes").loma_group(k)] += n   # one grouping rule, shared with the LOMA guide
         t = sum(g.values()); q = lambda k: m('loma_n', format(g[k], ','), q=k)
         qs = lambda ks, nm: m('loma_n', format(sum(g[k] for k in ks), ','), q=nm)   # hcu 11-07: seven groups read as noise; three answer "does asking work"
-        out.append(f"FEMA's map service lists {m('loma_n', format(t, ','), q='all')} rulings for owners here who asked FEMA to take a building or lot out of the "
-                   f"high-risk zone (<a href='/guides/loma-lomr/'>rulings in FEMA's LOMA map layer</a>): {qs(('bldg', 'whole', 'part'), 'removed')} took the building or some or all of the lot out, "
-                   f"{qs(('bldg_out', 'out'), 'as_mapped')} found it already outside the zone as mapped, {q('denied')} were denied"
-                   + (f", {q('other')} other or mixed" if g['other'] else "") + f". {rule('loma_fee')} {rule('loma_online')} {rule('ec_get')} Rulings for owners who applied (not your home's odds; FEMA's map service gives no dates for them), counted by "
-                   f"the towns and areas FEMA lists in this {UNIT}, so a city that reaches into a neighboring {UNIT} counts in full here." if t else
-                   "FEMA's map service lists no rulings for owners here who asked to take a building or lot out of the high-risk zone (Letters of Map Amendment).")
-    return out
+        if not t:
+            out.append("FEMA's map service lists no rulings for owners here who asked to take a building or lot out of the high-risk zone (Letters of Map Amendment).")
+            return out, []
+        # reviewer 11-15: one 230-word paragraph split into short blocks: count + list, how to ask, what the counts are
+        rows = [(qs(('bldg', 'whole', 'part'), 'removed'), "took the building or some or all of the lot out"),
+                (qs(('bldg_out', 'out'), 'as_mapped'), "found it already outside the zone as mapped"),
+                (q('denied'), "were denied")] + ([(q('other'), "were other or mixed")] if g['other'] else [])
+        return out, [f"<p class='note'>Owners here asked FEMA to take a building or lot out of the high-risk zone {m('loma_n', format(t, ','), q='all')} times "
+                     f"(<a href='/guides/loma-lomr/'>rulings in FEMA's LOMA map layer</a>):</p><ul>" + "".join(f"<li>{n} {w}</li>" for n, w in rows) + "</ul>",
+                     f"<p class='note'>{rule('loma_fee')} {rule('loma_online')} {rule('ec_get')}</p>",
+                     f"<p class='note'>These counts are for owners who applied, not your home's odds. FEMA's map service gives no dates for them. "
+                     f"They are counted by the towns and areas FEMA lists in this {UNIT}, so a city that reaches into a neighboring {UNIT} counts in full here.</p>"]
+    return out, []
 
 from zonemap_block import block as _zm_block
 ZONEMAP = _zm_block(rule)
@@ -906,7 +915,7 @@ def card_events():
                       f"<td>{tp('event_avg', f'extras.claims.events.{e[chr(105)]}.avg', money, q=e['name'])}</td>"
                       + (f"<td>{tp('event_paid_pct', f'extras.claims.events.{e[chr(105)]}.paid_pct', pct, q=e['name'])}</td>" if _pp else "") + "</tr>"
                       for e in sorted(_ev + _ev_all, key=lambda e: -(e.get("paid") or 0)))   # one list, biggest first (r106: catch-all sat last)
-            + f"</tbody></table><p class='note'>Grouped by the flood event FEMA named; claims, totals and averages count only claims that paid something{"; the share is of every claim filed under that name" if _pp else ""}, and only floods with {tp('threshold', 'const.event_min', q='event_min')} or more paid claims here. Totals include code-upgrade (ICC) payments, which the yearly chart leaves out.{how('events')}</p>" + _unnamed_note,
+            + f"</tbody></table><p class='note'>Claims are grouped by the flood event FEMA named, and only floods with {tp('threshold', 'const.event_min', q='event_min')} or more paid claims here are listed. Claims, totals and averages count only claims that paid something{"; the share is of every claim filed under that name" if _pp else ""}. Totals include code-upgrade (ICC) payments, which the yearly chart leaves out.{how('events')}</p>" + _unnamed_note,
             src(["event_paid", "event_claims"], f"{C['year_min']}–{C['year_max']}", RETR))
     return events_card
 
@@ -1078,18 +1087,22 @@ if IS_STATE and US_P50:
             if (_pp.get("cost_n") or 0) >= 100: _ranked.append((_pp["p50"], _a))
     _ranked.sort(reverse=True)
     _r = next((i + 1 for i, (_, a) in enumerate(_ranked) if a == _ab), None)
-    cmp_line = (f'<p class="cmp">The median here, {m('cost_p50', money(P['p50']))} a year (single-family primary home, premium plus fees, in force {POL_ASOF}), is {_pct_vs(P["p50"], US_P50, "us")} the U.S. median of {m("us_p50", money(US_P50))}'
-                + ((f'; {m("cost_rank", _rank(_r, len(_ranked)))} of the {m("rank_n", str(len(_ranked) - 1), q="states")} states and DC'
+    # owner 11-15 proofread: the figure first, its base once, the comparison in its own sentence
+    cmp_line = (f'<p class="cmp">The median here is {m('cost_p50', money(P['p50']))} a year (single-family primary home, premium plus fees, in force {POL_ASOF}). '
+                f'That is {_pct_vs(P["p50"], US_P50, "us")} the U.S. median of {m("us_p50", money(US_P50))}.'
+                # reviewer 11-15: the rank in its own sentence, so it never reads as the U.S. median's rank (county branch matches)
+                + ((f' {CS} ranks {m("cost_rank", _rank(_r, len(_ranked)))} of the {m("rank_n", str(len(_ranked) - 1), q="states")} states and DC.'
                     if "DC" in [a for _, a in _ranked] else
-                    f'; {m("cost_rank", _rank(_r, len(_ranked)))} of {m("rank_n", str(len(_ranked)))} states') if _r else "") + ".</p>")
+                    f' {CS} ranks {m("cost_rank", _rank(_r, len(_ranked)))} of {m("rank_n", str(len(_ranked)))} states.') if _r else "") + "</p>")
 elif _sagg and not IS_STATE:
     _sc = [(r["p50"], g) for g, r in (_sagg.get("counties") or {}).items() if (r.get("cost_n") or 0) >= 100 and r.get("p50") and g[:2] == GEOID_SELF[:2]]
     _sc.sort(reverse=True)
     _r = next((i + 1 for i, (_, g) in enumerate(_sc) if g == GEOID_SELF), None)
     _sn = html.escape(STATE_NAMES[_ab])
-    cmp_line = (f'<p class="cmp">The median here, {m('cost_p50', money(P['p50']))} a year (single-family primary home, premium plus fees, in force {POL_ASOF}), is {_pct_vs(P["p50"], _sagg["policies"]["p50"], "state")} the {_sn} median of {m("state_p50", money(_sagg["policies"]["p50"]))}'
-                + (f' and {_pct_vs(P["p50"], US_P50, "us")} the U.S. median of {m("us_p50", money(US_P50))}' if US_P50 else "")
-                + (f'; {m("cost_rank", _rank(_r, len(_sc)))} of {m("rank_n", str(len(_sc)))} {_sn} {UNITS} with {tp("threshold", "const.rank_min", q="rank_min")}+ priced policies' if _r else "") + ".</p>")
+    cmp_line = (f'<p class="cmp">The median here is {m('cost_p50', money(P['p50']))} a year (single-family primary home, premium plus fees, in force {POL_ASOF}). '
+                f'That is {_pct_vs(P["p50"], _sagg["policies"]["p50"], "state")} the {_sn} median of {m("state_p50", money(_sagg["policies"]["p50"]))}'
+                + (f' and {_pct_vs(P["p50"], US_P50, "us")} the U.S. median of {m("us_p50", money(US_P50))}' if US_P50 else "") + "."
+                + (f' It is {m("cost_rank", _rank(_r, len(_sc)))} of {m("rank_n", str(len(_sc)))} {_sn} {UNITS} with {tp("threshold", "const.rank_min", q="rank_min")}+ priced policies.' if _r else "") + "</p>")
     _zs = [z for z in (P.get("by_zip") or []) if z.get("median")]
     if len(_zs) >= 2:   # a county median can hide coastal ZIPs paying two or three times as much: say so on screen 1
         _zlo, _zhi = min(_zs, key=lambda z: z["median"]), max(_zs, key=lambda z: z["median"])
@@ -1151,14 +1164,21 @@ if _zq:
              + ' a year (median, single-family homes)'
              + "".join(f"; Zone {html.escape(z)}, {m('zone_share', str(round(100 * P['zone_units'][z] / P['units'], 1)) + '%', q=z)} of policy units, has too few single-family homes to price" for z in _zbig)
              + ("; more zones below" if set(z for z in (P.get("cost_by_zone") or {}) if z != "Unknown") - set(dict(_zq)) else "") + '</a>')
-if P.get("share_below"):
-    _q[4] = (f'<a href="#gap" data-ans="4"><b>{claim("Is it rising?", "rising", ("share_below", ">", 0))}</b> {m("share_below", str(P["share_below"]) + "%", q="qa")} '
-             f'of single-family primary-home premiums are under FEMA\'s full-risk premium by any amount (not a quote): {claim("rising toward it", "rising", ("share_below", ">", 0))}</a>')
+# reviewer 11-15: "is it rising?" is answered by the same-day cost in past years (the trend card), never a premium-rise claim
+_tL, _tpa, _tsh, _tya = _trend_rows()
+_sbq = f' {m("share_below", str(P["share_below"]) + "%", q="qa")} of these policies pay a premium, before fees, below FEMA\'s full-risk premium.' if P.get("share_below") else ""
+if _tsh:
+    _t0 = _tL[_tsh[0]]; _tup = ("cost_p50", ">", _t0["median"])
+    _q[4] = ('<a href="#trend" data-ans="4"><b>' + (f'{claim("Is it rising?", "rising", _tup)}</b> {claim("Yes", "yes", _tup)}' if P["p50"] > _t0["median"] else "Has it gone up?</b> No")
+             + f': median {tp("trend_cost", f"extras.policies.cost_trend.{_tsh[0]}.median", money, q="qa")} in {_t0["year"]}, {m("cost_p50", money(P["p50"]), q="qa")} in {P["asof"][:4]} '
+             + f'(single-family primary home, premium plus fees).{_sbq}</a>')
+elif P.get("share_below"):
+    _q[4] = f'<a href="#gap" data-ans="4"><b>Has it gone up?</b> Too few priced policies in past years to compare.{_sbq}</a>'
 _cxq = data.get("claims_extra") or {}
 if _cxq.get("claims") and _cxq.get("avg_paid") and P.get("p50"):
     _sroot = ROOT_DATA.get("state") if isinstance(ROOT_DATA.get("state"), dict) else {}   # on a state page "state" is just its code
     _scx = (_sroot.get("data") or {}).get("claims_extra") or {}
-    _q[5] = (f'<a href="#payout" data-ans="5"><b>Does it pay out?</b> {m("paid_share", str(round(100 - _cxq["cwop_share"], 1)) + "%")} of NFIP claims here, all years, paid something'
+    _q[5] = (f'<a href="#payout" data-ans="5"><b>Does it pay out?</b> {m("paid_share", str(round(100 - _cxq["cwop_share"], 1)) + "%")} of claims to the National Flood Insurance Program (NFIP) here, all years, paid something'
              + (f' ({html.escape(agg["state"])} {m("paid_share", str(round(100 - _scx["cwop_share"], 1)) + "%", q="state")})' if _scx.get("cwop_share") is not None else '')
              + '. No recorded payment can mean paperwork or damage the policy did not count as flood</a>')   # r6/r16/r31: the share needs its context on screen 1
 _qd = [c for c in crs if _pct(c.get("sfhaDiscount"))]
@@ -1174,7 +1194,7 @@ _gap = {1: (f'<a href="#c-how-much-flood-risk-is-here" data-ans="1"><b>How risky
             + f'; {UNIT} median {m("cost_p50", money(P["p50"]), q="qa")} a year</a>'),
         4: ('<a href="#gap" data-ans="4"><b>Will it go up?</b> No single-family primary-home premium here is under FEMA&#39;s full-risk premium (not a quote)</a>'
             if P.get("share_below") == 0 else '<a href="#gap" data-ans="4"><b>Will it go up?</b> FEMA&#39;s data here gives no full-risk comparison</a>'),
-        5: '<a href="#payout" data-ans="5"><b>Does it pay out?</b> Too few NFIP claims here for a paid share</a>',
+        5: '<a href="#payout" data-ans="5"><b>Does it pay out?</b> Too few claims to the National Flood Insurance Program (NFIP) here for a paid share</a>',
         6: '<a href="#save" data-ans="6"><b>Can I pay less?</b> FEMA&#39;s ways to lower a bill are below</a>'}
 for _k, _g in _gap.items(): _q.setdefault(_k, _g)
 _qa = [_q[k] for k in sorted(_q)]
@@ -1189,9 +1209,10 @@ _mp, _mc = _man.get("policies") or {}, _man.get("claims") or {}
 _pulled = pretty_date(_mp["pulled"]) if _mp.get("pulled") else RETR
 PROV_OK = bool(_mp.get("complete") and _mc.get("complete") and not _mp.get("missing") and not _mc.get("missing"))
 prov_line = (f'<p class="prov">Built from all {tp("records_policies", "manifest.policies.unique_fetched")} in-force NFIP policy records and '
-             f'{tp("records_claims", "manifest.claims.unique_fetched")} claim records FEMA publishes for {CS}, downloaded {_pulled} '
-             + (f'with every record for {html.escape(STATE_NAMES.get(agg.get("state"), "the state"))}, every record the download listed was received, none missing.'
-                if _mp.get("scope") == "state" else "and every record the download listed was received, none missing.") + f' <a href="data.csv">Download the figures on this page (CSV)</a> · '
+             f'{tp("records_claims", "manifest.claims.unique_fetched")} claim records FEMA publishes for {CS}. We downloaded them on {_pulled}'
+             # reviewer 11-15: the run-on split; the state-wide pull is attached to the download, the completeness claim is its own clause
+             + (f', together with every record for {html.escape(STATE_NAMES.get(agg.get("state"), "the state"))},' if _mp.get("scope") == "state" else "")
+             + " and received every record the download listed." + f' <a href="data.csv">Download the figures on this page (CSV)</a> · '
              f'<a href="../../methodology/">How we check them</a></p>') if PROV_OK else ""
 _nc = data.get("no_county") or {}
 if PROV_OK and (_nc.get("units_pct", 0) >= 1 or _nc.get("claims_pct", 0) >= 1):
@@ -1303,7 +1324,7 @@ def card_required():
       + (f"<p class='note'><b>Not in the NFIP ({m('crs_count', str(len(crs_out)), q='not_nfip')} {pl(len(crs_out), 'community', 'communities')} here)"
          + (": " + "; ".join(sorted((_cname(c) + (" (unincorporated area only)" if re.search(r"\b(COUNTY|PARISH|BOROUGH)\b", (c.get("communityName") or "").upper()) else "") for c in crs_out), key=lambda h: html.unescape(re.sub("<[^>]+>", "", h)).casefold())))
          + f".</b> {rule('nfip_not_sold')}</p>" if crs_out else ""),
-      src(["units", "sfha_share"], POL_ASOF, RETR) + (src(["outside_sfha_dollars"], f"{C['year_min']}–{C['year_max']}", RETR) if _outside_line() else "") + (src(["map_date"], "FEMA's current Community Status Book", RETR) if _map_line() else "") + (src(["map_panels", "lomr_n", "loma_n"], "FEMA's map service", _MS.get('_retrieved') or RETR) if _nfhl_lines() else "") + src_rules(["purchase_answer", "lender_any_zone", "prelim", "loma_fee", "loma_online", "ec_get"] + (["fl_citizens", "fl_disclosure", "fl_citizens_private"] if agg.get("state") == "FL" else []) + (["tx_twia"] if agg.get("state") == "TX" else []) + (["harris_maapnext"] if agg.get("geoid") == "48201" else []) + (["nfip_not_sold"] if crs_out else [])), id="required")
+      src(["units", "sfha_share"], POL_ASOF, RETR) + (src(["outside_sfha_dollars"], f"{C['year_min']}–{C['year_max']}", RETR) if _outside_line() else "") + (src(["map_date"], "FEMA's current Community Status Book", RETR) if _map_line() else "") + (src(["map_panels", "lomr_n", "loma_n"], "FEMA's map service", _MS.get('_retrieved') or RETR) if _nfhl_lines()[0] else "") + src_rules(["purchase_answer", "lender_any_zone", "prelim", "loma_fee", "loma_online", "ec_get"] + (["fl_citizens", "fl_disclosure", "fl_citizens_private"] if agg.get("state") == "FL" else []) + (["tx_twia"] if agg.get("state") == "TX" else []) + (["harris_maapnext"] if agg.get("geoid") == "48201" else []) + (["nfip_not_sold"] if crs_out else [])), id="required")
 
 def card_cost():
     cost_lead, cost_body = _cost_parts()
@@ -1347,12 +1368,13 @@ def _open_note():   # hater r103 Dixie: "latest two years" sat on 2024 data in 2
 def _zone_split_note():   # top-3 compare 11-09: how much of the claim money here was outside the high-risk zones (county pages; extras zone_split)
     z = _xc.get("zone_split") or {}
     if (z.get("known_n") or 0) < MIN_PRICED or (z.get("known_paid_n") or 0) < MIN_PRICED or z.get("out_pct") is None or z.get("out_paid_pct") is None: return ""
-    return (f"<p class='note'><b>Outside the high-risk zones:</b> of the {tp('zone_known_n', 'extras.claims.zone_split.known_n')} claims here with a flood zone on the claim, "
-            f"losses {z['from']}–{z['to']}, {tp('zone_out_pct', 'extras.claims.zone_split.out_pct', pct)}"
+    # owner 11-15 proofread: base in its own sentence, then the share in short words
+    return (f"<p class='note'><b>Outside the high-risk zones:</b> {tp('zone_known_n', 'extras.claims.zone_split.known_n')} claims here from losses "
+            f"{z['from']}–{z['to']} have a flood zone on the claim. Of these, {tp('zone_out_pct', 'extras.claims.zone_split.out_pct', pct)}"
             # audit 11-10 (Nye NV: 1 claim of 59 read as 1.7% and 0.0%): under thirty such claims, the count is printed beside the share
             + (f" ({tp('zone_out_n', 'extras.claims.zone_split.out_n')} {pl(z['out_n'], 'claim')})" if (z.get("out_n") or 0) < MIN_PRICED else "")
-            + f" were rated outside zones A and V (zones X, B, C and D), "
-            f"and they got {tp('zone_out_paid_pct', 'extras.claims.zone_split.out_paid_pct', pct)} of the dollars paid on those claims. "
+            + f" were rated outside zones A and V (zones X, B, C and D). "
+            f"They got {tp('zone_out_paid_pct', 'extras.claims.zone_split.out_paid_pct', pct)} of the dollars paid on these claims. "
             f"The zone is the one on each claim, not today's map; claims with no zone on them are left out.</p>")
 
 def card_claims():
@@ -1388,7 +1410,7 @@ def card_disasters():
     return card(f"How often is {CS} a flood disaster?" if IS_STATE else f"How often is this {UNIT} a flood disaster?",
       f"{m('declarations', str(len(fh_events)))} federal {pl(len(fh_events), 'disaster')} for floods or storms here"
       + (f"; the latest was {html.escape(_dtitle(recent[0]))} ({html.escape(cal_year(recent[0]))})." if recent else "."),
-      f"<ul>{_recent_li()}</ul><p class='note'>Only the latest are listed, newest first; disasters with the same month and title share one line, which says how many; the count covers every flood, hurricane, tropical-storm and coastal-storm declaration FEMA lists here, plus severe-storm declarations whose title names flooding, including emergency declarations.{how('declarations')}</p>",
+      f"<ul>{_recent_li()}</ul><p class='note'>Only the latest are listed, newest first. Disasters with the same month and title share one line, which says how many. The count covers every flood, hurricane, tropical-storm and coastal-storm declaration FEMA lists here, plus severe-storm declarations whose title names flooding, including emergency declarations.{how('declarations')}</p>",
       src(["declarations"], "declarations through " + max((cal_year(d) for d in fh), default="the latest on file"), RETR))
 
 def card_aid():
@@ -1450,9 +1472,9 @@ _jump = f'<p class="cmp"><a href="#counties">Find your {UNIT} in the table ↓</
 # hcu 11-07: a state page is a router; the reader's own county page one tap away on screen 1 (native details, no JS)
 _own = sorted((q for q in _PL_ALL if str(q.get("geoid") or "")[:2] == os.environ.get("FF_GEOID", "")[:2]), key=lambda q: q.get("short", "").casefold()) if IS_STATE else []
 if _own:
-    _jump = (f'<details class="pick"><summary><b>Pick your {UNIT}</b> (those with their own page)</summary><p>'
+    _jump = (f'<details class="pick"><summary><b>Pick your {UNIT}</b> (those with their own page)</summary><nav><p>'   # a list of links, not a sentence (prose_check)
              + " · ".join(f'<a href="/flood-insurance/{q["slug"]}/">{html.escape(q.get("short") or q["slug"])}</a>' for q in _own)
-             + f'</p></details>' + _jump)
+             + f'</p></nav></details>' + _jump)
 
 HTML = f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="google-adsense-account" content="ca-pub-8997828618122077"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8997828618122077" crossorigin="anonymous"></script>{'<meta name="robots" content="noindex,follow">' if os.environ.get("FF_NOINDEX") == "1" else ""}

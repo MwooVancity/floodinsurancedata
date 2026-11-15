@@ -286,6 +286,23 @@ def check_rr2(page):   # Risk Rating 2.0 guide (11-13): U.S. share below full ri
     if got != sorted((x["below_n"], x["share_below"], x["below_gap_median"]) for x in rows): bad.append(f"R2 state rows {len(got)} vs {len(rows)}")
     return bad
 
+def check_contents(page):   # contents guide (11-15): U.S. share with rounding bounds, base count, state rows, range sentence; no build_site code
+    rows = [json.load(open(p))["policies"] for p in glob.glob(os.path.join(D, "states", "*", "agg.json"))]
+    rows = [x for x in rows if x.get("contents_share") is not None and (x.get("cohort_n") or 0) >= 30]
+    n = sum(x["cohort_n"] for x in rows)
+    lo, hi = (sum((x["contents_share"] + d) * x["cohort_n"] for x in rows) / n for d in (-0.05, 0.05))
+    t = re.sub(r"<[^>]+>", "", page); bad = []
+    m_ = re.search(r"(\d+)% of the ([\d,]+) U\.S\. single-family primary-home NFIP policies carry some contents coverage", t)
+    if not m_ or int(m_[2].replace(",", "")) != n or not (lo <= int(m_[1]) + 0.5 and int(m_[1]) - 0.5 <= hi) or round(lo) != round(hi):
+        bad.append(f"T1 U.S. share: page {m_[0][:12] if m_ else 'none'}, recomputed {lo:.2f}-{hi:.2f}% of {n:,}")
+    if f'<div class="n">{m_[1] if m_ else "?"}%</div><div class="l">of {n:,} U.S. NFIP single-family primary-home policies: some contents coverage</div>' not in page:
+        bad.append("T1 tile differs from the sentence or loses its base")
+    got = sorted((int(b.replace(",", "")), float(a)) for a, b in re.findall(r'<tr><td><a href="/flood-insurance/[a-z-]+/">[^<]+</a></td><td>([\d.]+)%</td><td>([\d,]+)</td></tr>', page))
+    if got != sorted((x["cohort_n"], x["contents_share"]) for x in rows): bad.append(f"T2 state rows {len(got)} vs {len(rows)}")
+    sh = [x["contents_share"] for x in rows]
+    if not re.search(rf"The share runs from {min(sh)}% in (?:the )?[A-Z][^.]* to {max(sh)}% in ", t): bad.append(f"T3 range sentence: want {min(sh)}% to {max(sh)}%")
+    return bad
+
 def check_loma(page, ms=None):   # LOMA/LOMR guide (11-14): outcomes regrouped from map_status.json with this file's own map (LL1-LL6), no build_site code
     ms = ms if ms is not None else json.load(open(os.path.join(D, "us", "map_status.json")))
     live = {p["geoid"]: p["state"] for p in json.load(open(os.path.join(ROOT, "places.json")))}
@@ -300,7 +317,7 @@ def check_loma(page, ms=None):   # LOMA/LOMR guide (11-14): outcomes regrouped f
     t = sum(g.values()); pc = lambda n, d=None: f"{100 * n / (d or t):.1f}%"; bad = []
     tx = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", page))
     want = (f"FEMA's map service lists {t:,} rulings in its LOMA map layer for owners in {len(lo)} of the {len(live)} counties on this site who asked FEMA to take a building or lot out "
-            f"of the high-risk flood zone: {pc(g['rm'])} took the building or some or all of the lot out, {pc(g['den'])} were denied.")
+            f"of the high-risk flood zone. {pc(g['rm'])} of these rulings took the building or some or all of the lot out, and {pc(g['den'])} were denied.")   # owner 11-15: two sentences, same figures
     if want not in tx: bad.append(f"L1 lede: want {t:,} rulings, {len(lo)} counties, {pc(g['rm'])} out, {pc(g['den'])} denied")
     for lab, n in (("Denied", g["den"]), ("Already outside the zone as mapped", g["as"]), ("Other, mixed or no outcome recorded", g["oth"])):
         if f"<tr><td>{lab}</td><td>{pc(n)}</td><td>{n:,}</td></tr>" not in page: bad.append(f"L1 outcome row {lab}: {pc(n)} {n:,}")
@@ -380,7 +397,8 @@ if __name__ == "__main__":
         bh = open(os.path.join(ROOT, "dist", "guides", "buying-a-house-in-a-flood-zone", "index.html"), encoding="utf-8").read()
         rr = open(os.path.join(ROOT, "dist", "guides", "risk-rating-2", "index.html"), encoding="utf-8").read()
         lg = open(os.path.join(ROOT, "dist", "guides", "loma-lomr", "index.html"), encoding="utf-8").read()
-        bad = check_guides(pg, zx) + check_condo(cg) + check_deductible(dg) + check_vents(vg) + check_private(pv) + check_rr2(rr) + check_loma(lg) + check_order(bh, "wait_30", "start_loan", "O1")
+        tg = open(os.path.join(ROOT, "dist", "guides", "flood-insurance-contents-coverage", "index.html"), encoding="utf-8").read()
+        bad = check_guides(pg, zx) + check_condo(cg) + check_deductible(dg) + check_vents(vg) + check_private(pv) + check_rr2(rr) + check_loma(lg) + check_contents(tg) + check_order(bh, "wait_30", "start_loan_plain", "O1")
         sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
         from rules_registry import RULES as _RQ
         bad += check_rule_quotes(_RQ)
@@ -393,10 +411,10 @@ if __name__ == "__main__":
             assert check_rule_quotes({"x": {"text": 'The law says "lenders must accept any policy".', "sources": [("u", "lenders must accept a policy", "curl")]}}), "mutation not caught: Q1 paraphrase in quotes"
             assert check_rule_quotes({"x": {"text": 'Regulators direct "lenders" "to accept a policy" under subparagraph (A).', "sources": [("u", "lenders to accept a policy", "curl")]}}), "mutation not caught: Q2 garbled quote"
             assert check_private(pv.replace('<p class="lede">', '<p class="lede">' + __import__("rules_registry").rule("private_accept") + " ", 1)), "mutation not caught: P5 rule before answer"
-            assert check_order(bh.replace('data-rule="wait_30"', 'data-rule="wait_x"'), "wait_30", "start_loan", "O1"), "mutation not caught: O1 exception without rule"
+            assert check_order(bh.replace('data-rule="wait_30"', 'data-rule="wait_x"'), "wait_30", "start_loan_plain", "O1"), "mutation not caught: O1 exception without rule"
             assert check_vents(re.sub(r"</a></td><td>([\d.]+)%</td>", lambda m_: f"</a></td><td>{float(m_[1]) + 1}%</td>", vg, count=1)), "mutation not caught: vents state row"
             assert check_rr2(re.sub(r"(\d+)(% of the [\d,]+ U\.S\. single-family)", lambda m_: f"{int(m_[1]) + 1}{m_[2]}", rr, count=1)), "mutation not caught: rr2 U.S. share"
-            assert check_loma(re.sub(r"([\d.]+)(% took the building)", lambda m_: f"{float(m_[1]) + 0.1:.1f}{m_[2]}", lg, count=1)), "mutation not caught: LOMA lede share"
+            assert check_loma(re.sub(r"([\d.]+)(% of these rulings took the building)", lambda m_: f"{float(m_[1]) + 0.1:.1f}{m_[2]}", lg, count=1)), "mutation not caught: LOMA lede share"
             assert check_loma(re.sub(r"(<tr><td>Denied</td><td>[\d.]+%</td><td>)([\d,]+)", lambda m_: m_[1] + "1", lg, count=1)), "mutation not caught: LOMA outcome row"
             assert check_loma(lg.replace("counties on this site who asked", "U.S. counties on this site who asked", 1)), "mutation not caught: L3 U.S. label"
             assert check_loma(re.sub(r"(</a></td><td>\d+</td><td>[\d,]+</td><td>)([\d.]+)%", lambda m_: f"{m_[1]}{float(m_[2]) + 1:.1f}%", lg, count=1)), "mutation not caught: LOMA state row"
@@ -413,6 +431,10 @@ if __name__ == "__main__":
                 _zv = dict(_ms, **{_vt[0]: dict(_ms[_vt[0]], loma={})})
                 _lgv = re.sub(r'(<a href="/flood-insurance/vermont/">Vermont</a></td><td>\d+</td><td>)[^<]*</td><td>[^<]*</td><td>[^<]*', r"\g<1>0</td><td>—</td><td>—", lg, count=1)
                 assert not any(b.startswith("L5") for b in check_loma(_lgv, _zv)), "false failure: L5 on a state with zero rulings"
+            assert check_contents(re.sub(r"(\d+)(% of the [\d,]+ U\.S\. single-family)", lambda m_: f"{int(m_[1]) + 1}{m_[2]}", tg, count=1)), "mutation not caught: contents U.S. share"
+            assert check_contents(re.sub(r"</a></td><td>([\d.]+)%</td>", lambda m_: f"</a></td><td>{round(float(m_[1]) + 0.1, 1)}%</td>", tg, count=1)), "mutation not caught: contents state row"
+            assert check_contents(tg.replace("policies: some contents coverage</div>", "homes: some contents coverage</div>", 1)), "mutation not caught: contents tile base"
+            assert check_contents(re.sub(r"(The share runs from )([\d.]+)%", lambda m_: f"{m_[1]}{round(float(m_[2]) + 1, 1)}%", tg, count=1)), "mutation not caught: contents range"
             assert check_rr2(re.sub(r"</a></td><td>([\d.]+)%</td><td>\$([\d,]+)</td>", lambda m_: f"</a></td><td>{m_[1]}%</td><td>${int(m_[2].replace(',', '')) + 1:,}</td>", rr, count=1)), "mutation not caught: rr2 gap"
         if "--test" in sys.argv:
             assert check_deductible(re.sub(r"<td>([\d.]+)%</td><td>([\d.]+)%</td></tr>", lambda m_: f"<td>{float(m_[1]) + 1}%</td><td>{m_[2]}%</td></tr>", dg, count=1)), "mutation not caught: deductible share"
@@ -423,7 +445,7 @@ if __name__ == "__main__":
             assert not bad, bad
             assert check_guides(re.sub(r">(\d+)%<", lambda m_: f">{int(m_[1]) + 1}%<", pg, count=1), zx), "mutation not caught: tile"
             assert check_guides(pg, re.sub(r"(zone on the claim, )(\d+)%", lambda m_: m_[1] + str(int(m_[2]) + 1) + "%", zx, count=1)), "mutation not caught: zone X disagrees"
-            print("guides check mutations: 23 caught, 2 false failures ruled out"); sys.exit()
+            print("guides check mutations: 27 caught, 2 false failures ruled out"); sys.exit()
         for b in bad: print("  -", b)
         print("GUIDES CHECK", "FAIL" if bad else "PASS"); sys.exit(1 if bad else 0)
     if "--renters" in sys.argv:

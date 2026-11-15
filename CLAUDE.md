@@ -38,7 +38,8 @@ Read-only in the owner's Google Ads, Search Console, Cloudflare, GitHub, Gmail: 
 - `python -I` always. Ship only `release.py --ship` (`--hotfix` only for wrong live text); it deploys locally only when GitHub refuses. No wrangler by hand.
 - Ship needs `code_stamp.py` to match; stamp only code you reviewed this session (`/code-review medium`, all fixed), never another agent's edit unread.
 - While release.py runs: no edits to tools/, dist/, CLAUDE.md-listed state files; one release at a time; a stopped release is rerun whole (11-14 mixed commit).
-- Data runs in the cloud (2,000 Actions min/month: batch new fields into one forced refresh). One background job, one writer per file, pull first. Never regex or backslash code through a heredoc: Write/Edit.
+- Data runs in the cloud (2,000 Actions min/month). One background job, one writer per file, pull first.
+- Start cloud jobs only via `tools/cloud_run.py` (budget check; one forced refresh a month).
 
 ## 5-step here, each with the case that already broke it (HARD, owner 11-15)
 1. Question: a one-field change never reruns the full data job (33 forced refreshes burned the month); a page type nobody searches is not built (papers before guides); a link or page count is never a target.
