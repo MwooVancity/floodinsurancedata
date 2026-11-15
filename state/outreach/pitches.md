@@ -28,7 +28,7 @@ Subject: Free, sourced flood insurance page for <county> residents
 
 Hi <name>,
 I publish floodinsurancedata.com, one page per county built only from FEMA's public NFIP, map and disaster records.
-The <county> page shows what homeowners there actually pay (median <$X> a year, single-family primary homes), cost by flood zone, claims paid since 1978, FEMA's map panel dates and Letter of Map Amendment outcomes, each figure with its FEMA source and date. It also points residents to their floodplain manager for an Elevation Certificate.
+The <county> page shows what NFIP policies on single-family primary homes there cost (median <$X> a year, premium plus fees), cost by flood zone, claims paid since 1978, FEMA's map panel dates and Letter of Map Amendment outcomes, each figure with its FEMA source and date. It also points residents to their floodplain manager for an Elevation Certificate.
 If it is useful for your CRS outreach or residents' resource list, you are welcome to link it: <county page URL>
 Corrections go to <contact email>; we fix and date them.
 <sign-off>

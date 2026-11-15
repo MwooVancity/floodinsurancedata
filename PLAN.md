@@ -77,7 +77,8 @@ Edge cases kept: K1 never print a search volume; K2 a KWP file without "United S
 ## Backlinks (Claude drafts and sends after owner approves each batch)
 - One email per organization ever (outreach guard), one exact figure + the page that holds it, reply address contact@floodinsurancedata.com; CAPTCHA forms left to the owner.
 - Send day: `tools/outreach_gate.py <urls>` PASS (editor review, live text unchanged, indexed).
-- Drafts: state/outreach/pitches.md. Lead figure: 83.4% of 267,655 NFIP claims since 2020 had a recorded payment.
+- Drafts: state/outreach/pitches.md (11-15: Wave 2 "homeowners pay" mislabel fixed; all figures dated 11-08, re-read live on send day).
+- Batch 1 (owner 11-15 "send them yourself"; owner approves list + text first): resource-page owners who add links (extension services, county CRS coordinators, floodplain-manager chapters, library guides), not big-newsroom tip lines (Floodlight, ICN, Houston Chronicle, Tampa Bay Times publish no tips email; ICN and the Times use forms or secure channels: low link yield, forms are owner-only). Order: after the 11-16 ship, editor gate (`hater.py prep --editor`, ~250k) on the linked pages, then 10 named contacts with published emails, then owner approval, then send + outreach guard. Lead figure: 83.4% of 267,655 NFIP claims since 2020 had a recorded payment.
 - Targets: local newsrooms within 48 h of a declaration; data desks; ASFPM, CRS coordinators, extension services, library guides. Numbers: 12-15 2+ referring domains; 01-15 5+; 03-01 15+. Never paid links or swaps.
 
 ## Checkpoints and waiting
