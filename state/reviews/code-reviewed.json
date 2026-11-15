@@ -1,5 +1,5 @@
 {
- "hash": "43fdda1ca05dd3768f540232abf1b1e13c8750a5a118a1e06633acc64a117707",
+ "hash": "67411a7140ddbf783c8722795be9fffed53b9577396f9649933562ba2c87f5d2",
  "date": "2026-11-15",
- "note": "SFHA sentence fix + gate A2c; main session wrote and read"
+ "note": "town_check T4 reads the new 'flood zone map' titles; main session wrote and read"
 }

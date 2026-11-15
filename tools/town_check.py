@@ -27,7 +27,7 @@ def check(page, geoid):
     d = re.search(r'<meta name="description" content="[^"]*? primary home in [^"(]*?(?: \(([^)]*)\))? is \$', page)
     dw = ", ".join(wt[:3]) if wt else None
     if not d or (html.unescape(d[1]) if d[1] else None) != dw: bad.append(f"T3 description towns {d and d[1]} vs {dw}")
-    t = re.search(r"<title>[^<(]*?(?: \(([^)]*)\))? flood zones", page)   # T4 title names the top town, or none
+    t = re.search(r"<title>[^<(]*?(?: \(([^)]*)\))? flood zones? (?:map )?and flood insurance", page)   # T4 title names the top town, or none (11-15: "flood zone map and flood insurance" or the old "flood zones and flood insurance")
     # a New York City county is one borough (Census county subdivision, not a place): the title names the borough instead
     boro = {"36061": "Manhattan", "36047": "Brooklyn", "36081": "Queens", "36005": "the Bronx", "36085": "Staten Island"}.get(geoid)
     if not t or (html.unescape(t[1]) if t[1] else None) != (boro or (wt[0] if wt and wt[0].lower() not in page[t.start():t.end()].split(" (")[0].lower() else None)):
@@ -47,13 +47,13 @@ def pages():
 
 if __name__ == "__main__":
     if "--test" in sys.argv:
-        sl, g, pg = next((s, g, p) for s, g, p in pages() if len(expect(g)[0]) > 2 and f" ({expect(g)[0][0]}) flood zones" in p)
+        sl, g, pg = next((s, g, p) for s, g, p in pages() if len(expect(g)[0]) > 2 and f" ({expect(g)[0][0]}) flood zone" in p)
         assert not check(pg, g), check(pg, g)
         w = expect(g)[0]
         muts = {"swap order": pg.replace(f"{w[0]}</span>, <span data-name>{w[1]}", f"{w[1]}</span>, <span data-name>{w[0]}", 1),
                 "foreign town": pg.replace(f"their ZIPs: <span data-name>{w[0]}<", "their ZIPs: <span data-name>Houston<", 1),
                 "description town": pg.replace(f" ({w[0]}, ", " (Atlantis, ", 1),
-                "title town": pg.replace(f" ({w[0]}) flood zones", " (Atlantis) flood zones", 1)}
+                "title town": pg.replace(f" ({w[0]}) flood zone", " (Atlantis) flood zone", 1)}
         for k, mp in muts.items(): assert mp != pg and check(mp, g), f"mutation not caught: {k}"
         # T5 (r114): a page whose ranking leaves ZIP units out must say so; drop that line and the check must fire
         s5 = next(((s, g5, p5) for s, g5, p5 in pages() if "ZIPs where no single town covers at least a quarter of the land" in p5), None)
