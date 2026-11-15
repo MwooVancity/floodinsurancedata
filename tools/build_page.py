@@ -489,6 +489,7 @@ _HUB_ON = _ZMF == "all" or "flood-zone-map" in _ZMF
 _ZF = json.load(open(os.path.join(HERE, "tools_flags.json"), encoding="utf-8")).get("zip") or []
 _ZIP_ON = _ZF == "all" or "zip" in _ZF
 _MS = json.load(open(os.path.join(os.path.dirname(HERE), "data", "us", "map_status.json"))) if os.path.exists(os.path.join(os.path.dirname(HERE), "data", "us", "map_status.json")) else {}
+@__import__("functools").lru_cache(None)   # code review 11-15: called 3 times a page; one page per process, callers never mutate the result
 def _nfhl_lines():   # map debate 11-06: map age, revisions, exemption rulings, from FEMA's map service (tools/pull_mapstatus.py)
     s = _MS.get(GEOID) if not IS_STATE else None
     if not s or not s.get("panels"): return [], []   # no countywide digital FEMA map: say nothing rather than guess; (map sentences, LOMA blocks)
@@ -1168,12 +1169,13 @@ if _zq:
 _tL, _tpa, _tsh, _tya = _trend_rows()
 _sbq = f' {m("share_below", str(P["share_below"]) + "%", q="qa")} of these policies pay a premium, before fees, below FEMA\'s full-risk premium.' if P.get("share_below") else ""
 if _tsh:
-    _t0 = _tL[_tsh[0]]; _tup = ("cost_p50", ">", _t0["median"])
-    _q[4] = ('<a href="#trend" data-ans="4"><b>' + (f'{claim("Is it rising?", "rising", _tup)}</b> {claim("Yes", "yes", _tup)}' if P["p50"] > _t0["median"] else "Has it gone up?</b> No")
-             + f': median {tp("trend_cost", f"extras.policies.cost_trend.{_tsh[0]}.median", money, q="qa")} in {_t0["year"]}, {m("cost_p50", money(P["p50"]), q="qa")} in {P["asof"][:4]} '
-             + f'(single-family primary home, premium plus fees).{_sbq}</a>')
+    # code review 11-15: no Yes/No verdict (a $1 move printed "Yes"; CLAUDE.md: no premium-rise claim): the two medians, labelled
+    _t0 = _tL[_tsh[0]]
+    _q[4] = ('<a href="#trend" data-ans="4"><b>How has the cost changed?</b> The median policy cost '
+             + f'{tp("trend_cost", f"extras.policies.cost_trend.{_tsh[0]}.median", money, q="qa")} in {_t0["year"]} and {m("cost_p50", money(P["p50"]), q="qa")} in {P["asof"][:4]} '
+             + f'(single-family primary home, premium plus fees; different policies each year, not one bill).{_sbq}</a>')
 elif P.get("share_below"):
-    _q[4] = f'<a href="#gap" data-ans="4"><b>Has it gone up?</b> Too few priced policies in past years to compare.{_sbq}</a>'
+    _q[4] = f'<a href="#gap" data-ans="4"><b>How has the cost changed?</b> Too few priced policies in past years to compare.{_sbq}</a>'
 _cxq = data.get("claims_extra") or {}
 if _cxq.get("claims") and _cxq.get("avg_paid") and P.get("p50"):
     _sroot = ROOT_DATA.get("state") if isinstance(ROOT_DATA.get("state"), dict) else {}   # on a state page "state" is just its code

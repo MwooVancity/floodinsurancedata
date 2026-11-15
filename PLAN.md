@@ -12,7 +12,7 @@ Most helpful flood-insurance page for every US place a homeowner or buyer search
 ~50,000 pageviews a month at ~$30 RPM (third-party estimate). Milestones (GA4 pageviews/month): 02-2027 2,000; 05 8,000; 08 20,000; 11 50,000; two misses in a row = re-plan. Links are the lever. Ads only after the 4-week GSC review and above 1,000 sessions/month; referrals after licensing + FTC check.
 
 ## Next, in order
-1. Template batch (below): code review medium + stamp, fix the open MAJORs that are wrong text, one S12 proofread review of home/louisiana/palm-beach/new-york, one ship. Not the same UTC day as the last template ship (release.py refuses).
+1. Template batch (below): code review medium DONE 11-15 (8 findings fixed, stamp 821f8e5cd818). WAITING 2026-11-16 UTC (last template ship 11-15 03:14 UTC; release.py refuses a second): fix the rule-text items below after a raw re-read, one S12 proofread review of home/louisiana/palm-beach/new-york (~80k, light), one ship.
 2. After ship: `prose_check.py --record` lowers the baseline to today's 0 faults (ratchet then holds every page at 0).
 3. Guides: build the next one only when a live guide shows impressions in GSC (none have yet); queue in "Guides" below.
 4. Outreach batch once guides settle: editor gate (`hater.py prep --editor`), owner approves list + text, Claude sends.
@@ -24,6 +24,8 @@ Gates 11-14 after rebuild: build PASS, paper_gate + --test PASS, prose 0 faults 
 Open review findings to fix before ship (the rest are style, decided no):
 - Rule text, needs raw re-read before rewording (rules_registry): /nfip/ 30-day wait exceptions as a 3-item list; LOMA/lender-review split; TWIA spelled out; Elevation Certificate defined; "Emergency Program discount" defined or cut from zone pages; contents guide elevated-building sentence (65 words) split.
 - Copy: "Among the five costliest years..." note reworded (test_gate.py pins the string); Flood Calendar plain-words lede and the 404-of-416 clause said once; Damage Over Coverage top-county sentence split (paper_gate regex pins it); "How risky?" on state pages gives the count of Very High/Relatively High counties.
+- Done 11-15 (code review): answer 4 is now "How has the cost changed?" with two labelled medians, no Yes/No verdict; buyer_lender rule dropped (sources did not hold it), buying guide uses purchase_answer + lender_any_zone; unsourced "Miss that..." sentence cut; typed zone meanings cut; About regains the recompute + methodology lines.
+- Data check (next cloud batch): 179 of 379 places have a 2021 median of exactly $572 (63 at $633). A guess, unverified: fixed pre-Risk Rating 2.0 Preferred Risk rates make the median land on one price. Verify with the share of 2021 policies at exactly $572 before it goes in an outreach pitch.
 - Decided no: restoring "if claims were independent" on county cards (the caveat lives on each paper page, paper_gate checks it there).
 Owner decision: drop the second 21-item table of contents on county/state pages (cutting a block).
 

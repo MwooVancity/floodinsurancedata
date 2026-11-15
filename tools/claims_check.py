@@ -288,8 +288,10 @@ def check_rr2(page):   # Risk Rating 2.0 guide (11-13): U.S. share below full ri
 
 def check_contents(page):   # contents guide (11-15): U.S. share with rounding bounds, base count, state rows, range sentence; no build_site code
     rows = [json.load(open(p))["policies"] for p in glob.glob(os.path.join(D, "states", "*", "agg.json"))]
-    rows = [x for x in rows if x.get("contents_share") is not None and (x.get("cohort_n") or 0) >= 30]
+    _min = __import__("metrics").CONST["min_priced"]   # code review 11-15: the page's own floor, one copy
+    rows = [x for x in rows if x.get("contents_share") is not None and (x.get("cohort_n") or 0) >= _min]
     n = sum(x["cohort_n"] for x in rows)
+    if not n: return ["T0 no state has contents_share (first run or old data): guide must not be built"] if "contents coverage" in page else []
     lo, hi = (sum((x["contents_share"] + d) * x["cohort_n"] for x in rows) / n for d in (-0.05, 0.05))
     t = re.sub(r"<[^>]+>", "", page); bad = []
     m_ = re.search(r"(\d+)% of the ([\d,]+) U\.S\. single-family primary-home NFIP policies carry some contents coverage", t)

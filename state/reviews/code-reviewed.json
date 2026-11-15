@@ -1,5 +1,5 @@
 {
- "hash": "9abe1f7b839c91e08f9ee9056dd0442b8dd01c69b37d17efc1d93a5e6f621dae",
+ "hash": "821f8e5cd818da61b91ee7c04d16e48f850a2a08986f5564eb3a79b725109eb1",
  "date": "2026-11-14",
- "note": "gates 11-15: 4 fixed"
+ "note": "11-15 template batch: /code-review medium on 0853000a2..HEAD + fixes, 8 findings all fixed, read by main session"
 }

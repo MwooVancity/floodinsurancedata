@@ -331,8 +331,9 @@ Google AdSense (see the <a href="/privacy/">privacy page</a>); ads never change 
 </div>
 <div class="card" id="who"><h2>Who runs it</h2>
 <p>Flood Insurance Data is run by <b>Michael Woo</b>, who works with data and is not an insurance agent, adjuster or engineer. The pages are written and checked with AI tools (Anthropic's Claude)
-working under fixed rules. Every rule is quoted from its official source. Each page also goes through separate AI review passes looking
-for anything wrong or misleading. The site gives no insurance advice.</p></div>
+working under fixed rules. Every figure is recomputed from FEMA's files by separate code before a page ships. Every rule is quoted from its
+official source. Each page also goes through separate AI review passes looking for anything wrong or misleading. The site gives no insurance
+advice. The <a href="/methodology/">methodology</a> shows how each figure is counted, so anyone can check it.</p></div>
 {FOOT}"""
 wr(os.path.join(DIST, "about", "index.html"), about)
 
@@ -883,13 +884,13 @@ if len(states) == 51:   # buyer guide (KWP 11-12 "buying a house in a flood zone
     _bxr = sorted(((s, x) for s, x in _bx if x.get("cost_new_median") and (x.get("cost_new_n") or 0) >= __import__("metrics").CONST["min_priced"]),
                   key=lambda t: -t[1]["cost_new_n"])
     if len(_bxr) >= 10:
-        _bk = ["buyer_lender", "lender_amount", "lender_force", "wait_30", "start_loan_plain", "seller_assign", "zone_review", "private_accept"]
+        _bk = ["purchase_answer", "lender_any_zone", "lender_amount", "lender_force", "wait_30", "start_loan_plain", "seller_assign", "zone_review", "private_accept"]
         _btr = "".join(f'<tr><td><a href="/flood-insurance/{s["slug"]}/">{html.escape(s["name"])}</a></td><td>{money(x["cost_new_median"])}</td><td>{x["cost_new_n"]:,}</td></tr>' for s, x in _bxr)
         pg = HEAD.format(title="Buying a house in a flood zone: what new flood policies cost, by state",
                          desc=f"Whether your lender will require flood insurance, when it can start at closing, and what policies first bought in the past year cost in each state, from FEMA's records as of {_ASOF_TXT}.",
                          canon=BASE + "/guides/buying-a-house-in-a-flood-zone/") + f"""
 <h1>Buying a house in a flood zone</h1>
-<p class="lede">Across the U.S., NFIP policies on single-family primary homes first bought in the past year cost a median of {money(_new_med)} a year, premium plus fees ({_new_n:,} policies). {rule("buyer_lender")}</p>
+<p class="lede">Across the U.S., NFIP policies on single-family primary homes first bought in the past year cost a median of {money(_new_med)} a year, premium plus fees ({_new_n:,} policies). {rule("purchase_answer")} {rule("lender_any_zone")}</p>
 <div class="stats"><div class="stat"><div class="n">{money(_new_med)}</div><div class="l">Typical cost, U.S. policies first bought in the past year</div></div>
 <div class="stat"><div class="n">{_new_n:,}</div><div class="l">Such single-family primary-home policies</div></div></div>
 <p class="mut">FEMA OpenFEMA NFIP Policies v3, as of {_ASOF_TXT}. The figure is the median premium plus fees on single-family primary-home policies first written in the 12 months to that date. It is not a quote: a new policy is priced for the building.</p>
@@ -1412,10 +1413,9 @@ if _zm_on:
     shutil.copy(os.path.join(_ST, "zonemap.js"), os.path.join(DIST, "zonemap.js"))
 if _zm_on == "all" or "flood-zone-map" in _zm_on:
     _zkeys = ["zone_codes_list", "purchase_answer", "lender_any_zone", "zone_review", "loma", "loma_fee", "loma_online", "prelim", "fema_asis"]
-    # owner 11-15 review: one link per zone on its own line (was seven links chained in one sentence); meaning in plain words, as zone_codes_list
-    _zmean = {"ae": "high-risk", "x": "moderate or minimal flood hazard", "ve": "coastal high-risk", "a": "high-risk", "ao": "high-risk, shallow flooding",
-              "ah": "high-risk, shallow flooding", "d": "flood hazard possible but not determined"}
-    _zli = "".join(f'<li><a href="/flood-zones/{k}/">Zone {v[0]}</a>: {_zmean[k]}</li>' for k, v in ZONES.items() if os.path.exists(os.path.join(DIST, "flood-zones", k, "index.html")))
+    # owner 11-15 review: one link per zone on its own line (was seven links chained in one sentence); meanings only from zone_codes_list
+    # (rule() on this page), never typed here (code review 11-15)
+    _zli = "".join(f'<li><a href="/flood-zones/{k}/">Zone {v[0]}</a></li>' for k, v in ZONES.items() if os.path.exists(os.path.join(DIST, "flood-zones", k, "index.html")))
     pg = HEAD.format(title="Flood zone map: find your FEMA flood zone by address",
                      desc="Type an address or use your location, confirm the pin on your building, and see the flood zone FEMA's own map shows there, with its map panel and date.",
                      canon=BASE + "/flood-zone-map/") + f"""

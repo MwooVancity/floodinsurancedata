@@ -546,7 +546,7 @@ RULES = {
     "start_loan_plain": {   # buying guide; start_loan's sources (FIM Table 10); 10 days first, as on the home page (howto_answer)
         "text": "Bought while taking out, increasing, extending or renewing a mortgage, coverage can start at the loan closing. The insurer must get "
                 "the form and full amount due within 10 calendar days of closing, or within 30 if your lender, title company or settlement attorney pays. "
-                "Miss that and the earliest start is the 30th calendar day after the insurer gets them. Contents-only coverage qualifies only if the "
+                "Contents-only coverage qualifies only if the "   # review 11-15: "Miss that ..." sentence cut, no source quote held it
                 "contents are part of the security for the loan.",
         "sources": [(FS + "/get-insured/buy-a-policy", "There is no wait if you buy flood insurance while making, increasing, extending or renewing a mortgage", "curl"),
                     (FIM, "Contents-only policies and endorsements can only be eligible for the loan exception if the contents are part of the security for a loan", "manual"),
