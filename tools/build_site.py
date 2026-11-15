@@ -101,7 +101,10 @@ def _man(sl):   # records downloaded for a built state (its pull manifest)
     return (mm.get("policies") or {}).get("unique_fetched") or 0, (mm.get("claims") or {}).get("unique_fetched") or 0
 _tp = sum(_man(s["slug"])[0] for s in states); _tc = sum(_man(s["slug"])[1] for s in states)
 prov = (f'<p class="mut" style="font-size:14px">Built from {_tp:,} NFIP policy records and {_tc:,} claim records downloaded from FEMA (one record can cover several insured units, such as a condo building): '
-        f'every record the download listed for each state, none missing. <a href="/methodology/">How we check them</a></p>') if states else ""
+        f'every record the download listed for each state, none missing. '
+        # audit 11-14: home's record count vs /nfip/'s claim count; the gap is the bookkeeping records every claim count leaves out (agg_raw)
+        + (f'{_tc - sum(s["claims"] for s in states):,} of those claim records are ones FEMA codes as deleted or assigned in error (codes 98 and 99), so they are left out of every claim count. ' if _tc > sum(s["claims"] for s in states) else '')
+        + '<a href="/methodology/">How we check them</a></p>') if states else ""
 RENT_ON = False
 if len(states) == 51:   # U.S. figures only once every state is built and gated: never a partial total called national
     _h = json.load(open(os.path.join(DATADIR, "us", "cost_hist.json")))
@@ -164,7 +167,8 @@ if len(states) == 51:   # U.S. figures only once every state is built and gated:
                 f'<p class="mut">Median and per month: what existing single-family primary-home policies pay, premium plus fees. Insured units: every NFIP policy unit in force on {_ASOF_TXT}, including condos, rentals and businesses.</p>'
                 f'<h2>How much is flood insurance?</h2><p class="stand">Existing NFIP policies on single-family primary homes cost a median of {money(_med)} a year, '
                 f'premium plus fees; half pay between {money(_q[0.25])} and {money(_q[0.75])}, and one in ten pays {money(_q[0.9])} or more.</p>'
-                f'<p class="cmp"><b>Buying?</b> Policies first bought in the past year typically pay {money(_new_med)} ({_new_n:,} policies). <a href="#prices">Why sites differ</a>. <a href="/nfip/">The NFIP in numbers</a>.' + (' <a href="/flood-insurance/renters/">What renters pay</a>.' if RENT_ON else '') + '</p>')
+                f'<p class="cmp"><b>Buying?</b> Policies first bought in the past year typically pay {money(_new_med)} ({_new_n:,} policies); <a href="#prices">why sites quote different prices</a> is answered below, and the national totals are in <a href="/nfip/">the NFIP in numbers</a>'
+                + ('; renters can check <a href="/flood-insurance/renters/">what renters pay</a>' if RENT_ON else '') + '.</p>')   # audit 11-14: three link-only sentences folded into one (home lists every hub: S16 fails())
     # hater r5 (home): price drivers, ways to pay less, a quote check and the averages other sites quote, all from the same records
     home_cards = (f'<div class="card" id="check"><h2>Is my quote normal?</h2><p class="stand">Type your yearly cost (premium plus fees) to see where it '
         f'sits among U.S. single-family policies; your state page compares it with your area.</p>'
@@ -537,7 +541,7 @@ if len(states) == 51 and len(_zh) == 51:
 {"<h2>Zone X, shaded X, zone B and zone C</h2>" if xcol else ""}<p class="stand">{rule(rk)}{" " + rule("odds_30") if hr else ""}</p>
 <p class="stand"><b>Must I buy?</b> {rule("purchase_answer")} {rule("lender_any_zone")}</p>
 <a class="btn" href="https://msc.fema.gov/portal/home" rel="noopener" target="_blank">Check your address on FEMA's flood map →</a>
-{'<p><a href="/flood-zone-map/">Or look up your zone by address here</a>, with FEMA' + "'" + 's map.</p>' if (_zm_on_home == "all" or "flood-zone-map" in _zm_on_home) else ""}
+{'<p>Or use our <a href="/flood-zone-map/">flood zone lookup by address</a>, with FEMA' + "'" + 's map.</p>' if (_zm_on_home == "all" or "flood-zone-map" in _zm_on_home) else ""}
 <div class="stats">{tiles}</div>
 {base}
 {claims}{ztab}
@@ -1011,9 +1015,9 @@ if len(states) == 51:   # Risk Rating 2.0 guide (KWP 11-12 "risk rating 2.0" 100
                          desc=f"What Risk Rating 2.0 is, the yearly cap on increases, and the share of {_rpn:,} NFIP single-family primary-home policies whose premium is below FEMA's full-risk premium, by state, from FEMA's records as of {_ASOF_TXT}.",
                          canon=BASE + "/guides/risk-rating-2/") + f"""
 <h1>Risk Rating 2.0</h1>
-<p class="lede">In FEMA's records, {_rpc}% of the {_rpn:,} U.S. single-family primary-home NFIP policies with both premiums recorded pay a premium below FEMA's full-risk premium on {_ASOF_TXT}. {rule("rr2_start")}</p>
-<div class="stats"><div class="stat"><div class="n">{_rpc}%</div><div class="l">of {_rpn:,} U.S. NFIP single-family primary-home policies: premium below FEMA's full-risk premium</div></div></div>
-<p class="mut">FEMA OpenFEMA NFIP Policies v3, as of {_ASOF_TXT}: single-family primary-home policies in force with a premium (totalInsurancePremiumOfThePolicy) and a full-risk premium (fullRiskPremium) both above $0. Both are premium only, before fees and surcharges.</p>
+<p class="lede">In FEMA's records, {_rpc}% of the {_rpn:,} U.S. single-family primary-home NFIP policies with both premiums recorded pay a premium below FEMA's full-risk premium by any amount on {_ASOF_TXT}. {rule("rr2_start")}</p>
+<div class="stats"><div class="stat"><div class="n">{_rpc}%</div><div class="l">of {_rpn:,} U.S. NFIP single-family primary-home policies: premium below FEMA's full-risk premium by any amount</div></div></div>
+<p class="mut">FEMA OpenFEMA NFIP Policies v3, as of {_ASOF_TXT}: single-family primary-home policies in force with a premium (totalInsurancePremiumOfThePolicy) and a full-risk premium (fullRiskPremium) both above $0. Both are premium only, before fees and surcharges.{__import__("notes").how("below")}</p>
 <div class="card"><h2>How fast can a bill below full risk rise?</h2><p class="stand">{rule("glide")}</p><p class="stand">{rule("cap")}</p></div>
 <div class="card"><h2>What FEMA prices a policy on</h2><p class="stand">{rule("price_drivers")}</p></div>
 <div class="card"><h2>Policies below full-risk premium, by state</h2><p class="stand">Share of single-family primary-home NFIP policies in force on {_ASOF_TXT} whose premium is below FEMA's full-risk premium, and the median gap per policy among those below, in {_nst(_rgr)} with at least {__import__("metrics").CONST["min_priced"]} such policies, most policies first.</p>
@@ -1260,7 +1264,7 @@ for _sp in _PA.READY:
 {(lambda pc: f'<li>Peak month by county: {", ".join(f"{_PA.MONTHS[int(k) - 1]} in {v:,}" for k, v in pc.most_common(3))} of the {_N:,} counties (ties count each month); in {_mflag:,} of them over half of the peak month is one year.</li>')(collections.Counter(mo for x in _r for mo in _ctx[x["geoid"]]["peak"])) if _sp.get("months") else ""}
 {_nli if _isn else f'<li>Median county: {_med}%. Highest: {_cty(_top)}, {_top["value"]}% (90% range {_top["lo"]}–{_top["hi"]}%){_tie(_top)}.</li>'}
 <li>{_t50[1]} of the 50 counties with the {"largest excess over chance in" if _isn else "highest share of"} {html.escape(_sp["short"])} are in {html.escape(_snames.get(_t50[0], _t50[0]))}, which has {sum(1 for x in _r if x["state"] == _t50[0]):,} of the {_N:,} listed counties.</li></ul></div>
-<div class="card" id="prior"><h2>Prior work</h2><p class="stand">{html.escape(_sp["prior"])} {"".join(f'<a href="{u}" rel="nofollow">{html.escape(t)}</a>. ' for t, u in _sp.get("prior_links") or [])}{"FEMA's own figure is set beside this one at the top of the page." if _sp.get("prior_rules") else ""}{_recon(_sp)}</p></div>
+<div class="card" id="prior"><h2>Prior work</h2><p class="stand">{html.escape(_sp["prior"])} {"".join(f'<a href="{l[1]}" rel="nofollow">{html.escape(l[0])}</a>' + ((" " if l[2][:1] not in ":,;" else "") + html.escape(l[2]) if len(l) > 2 else "") + ". " for l in _sp.get("prior_links") or [])}{"FEMA's own figure is set beside this one at the top of the page." if _sp.get("prior_rules") else ""}{_recon(_sp)}</p></div>
 <div class="card" id="table"><h2>{"All " if _N <= 500 else "Top and bottom 100 of "}{_N:,} counties</h2><p class="stand">{_nnote if _isn else f'Highest share of {html.escape(_sp["short"])} first; counties with a page on this site are linked. '}{html.escape(_sp.get("policy_note") or "")}</p>
 <div style="overflow-x:auto"><table><thead><tr><th>{"Fifth by excess over chance" if _isn else "Fifth by share"}</th><th>County</th><th>Share</th><th>{"90% range if claims were independent" if _isn else "90% range"}</th><th>Count</th>{f"<th>Policy units outside A and V (FEMA NFIP Policies, {_ASOF_TXT})</th>" if _sp.get("policy_col") else ""}{f"<th>Share below by any amount</th><th>Median yearly gap, policies below by any amount (only with {_PA.GAP_MED_MIN} or more)</th>" if _sp.get("gap") else ""}{"<th>Median amount damage was over coverage, on those claims</th><th>Loss year with over half of them (only with 10 or more)</th>" if _sp.get("excess") else ""}{f"<th>Expected share at random (twelve equal months, this county's claim count)</th><th>Excess over chance (points)</th><th>Peak month</th><th>Largest loss year's share of the peak month</th><th>Loss years with at least one claim in the peak month</th><th>Loss years with {_PA.ONE_YEAR_MIN} or more claims in the peak month</th><th>One year with over half of the peak month (only with {_PA.ONE_YEAR_MIN} or more)</th>" if _sp.get("months") else ""}</tr></thead><tbody>{_trs}</tbody></table></div>
 <p class="mut"><a href="/data/{_key}.csv">Download all {_N:,} rows as CSV</a> ({len(_cols)} columns: {", ".join(_cols)}).{" " + html.escape(_sp["csv_note"]) if _sp.get("csv_note") else ""}</p></div>

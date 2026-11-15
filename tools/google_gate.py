@@ -97,10 +97,10 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); from notes impor
 for p, h in pages.items():
     if GA_TAG not in h: fail("S15", f"{p}: Google Analytics tag missing")
 
-# S16 internal links: every state/county page links each money hub and a zone page (tools/linkcheck.py)
+# S16 internal links: home lists every hub, county links its state, no orphan or broken link, Google anchor rules (tools/linkcheck.py)
 import linkcheck
 _cstate = {f"/flood-insurance/{c['slug']}/": f"/flood-insurance/{st_slug[c['state']]}/" for c in places if c.get("state") in st_slug}
-for _m in linkcheck.fails(pages, indexable) + linkcheck.graph_fails(pages, indexable) + linkcheck.state_fails(pages, _cstate): fail("S16", _m)
+for _m in linkcheck.fails(pages, indexable) + linkcheck.anchor_fails(pages) + linkcheck.graph_fails(pages, indexable) + linkcheck.state_fails(pages, _cstate): fail("S16", _m)
 
 # S5 hidden text
 for p, h in pages.items():

@@ -161,7 +161,7 @@ MUTATIONS = [   # (defect class from THE EVIDENCE table, what we reintroduce, ex
     ("round 97/103", "big zone missing from the cost answer", "C11",
      rsub(r'(<a href="#zone-cost"[^>]*>.*?</span>)(?:, [^<]+<span data-m="zone_cost"[^>]*>[^<]*</span>)+', r"\1"), None),
     ("11-08 own slip", "priced zone called too few to price", "C11",
-     rsub(r'(<a href="#zone-cost"[^>]*>.*?) a year \(median, single-family homes\)', r"\1 a year (median, single-family homes); Zone X, 1.0% of policy units, has too few to price"), None),
+     rsub(r'(<a href="#zone-cost"[^>]*>.*?) a year \(median, single-family homes\)', r"\1 a year (median, single-family homes); Zone X, 1.0% of policy units, has too few single-family homes to price"), None),
     ("round 103", "'costliest flood' beaten by its own table", "C12",
      (lambda i, js: re.sub(rf"(costliest flood FEMA named here was.*?)extras\.claims\.events\.{i}\.paid", rf"\g<1>extras.claims.events.{min(js, key=lambda j: _EV[int(j)].get('paid') or 0)}.paid", PAGE, count=1, flags=re.S))(
          re.search(r'costliest flood FEMA named here was.*?events\.(\d+)\.paid', PAGE, re.S).group(1),

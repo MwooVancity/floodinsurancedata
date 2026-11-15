@@ -142,6 +142,7 @@ METRICS.update({   # every other figure a page prints; q (data-q) names the row 
     # bug review 11-14: a policy paper's share and a claims paper's count cite their own dataset in each county's data.csv
     "paper_share_pol": _m(POL, ["policyCount"], "pct", of="the paper's base"),
     "paper_min_clm": _m(CLM, ["id"], "count"),   # claim records (and counties of them), like claims_filed; not policyCount (review 11-14)
+    "gap_line": _m(POL, ["totalInsurancePremiumOfThePolicy", "fullRiskPremium"], "usd_premium_only"),   # Price Gap's $ line (papers.GAP_MIN) on the county card
     "gap_rank": _m(POL, ["totalInsurancePremiumOfThePolicy", "fullRiskPremium"], "count"),   # Price Gap Index rank / pool (index_check.py recomputes)
     "cost_p90": _m(POL, ["policyCost"], "usd_cost_with_fees"),
     "cost_n": _m(POL, ["policyCost"], "count"),

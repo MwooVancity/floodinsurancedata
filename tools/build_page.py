@@ -47,6 +47,7 @@ def pretty_date(s):
     except ValueError: return s
 _SF = os.environ.get("FF_GEOID", "12071")[:2]
 UNIT, UNITS = {"22": ("parish", "parishes"), "02": ("borough", "boroughs")}.get(_SF, ("county", "counties"))
+if _SF in ("51", "24", "29", "32"): UNITS = "counties and independent cities"   # audit 11-14: VA, MD (Baltimore), MO (St. Louis), NV (Carson City) list cities beside counties
 for _u in ("city", "census area", "municipality"):   # Virginia Beach is an independent city, not "this county"; UNITS stays: it names the state's list
     if os.environ.get("FF_COUNTYSHORT", "").lower().endswith(" " + _u): UNIT = _u
 RETR = _retr()
@@ -355,7 +356,7 @@ def card_zone_cost():
 
 def _gap_parts():
     MX.compare("prem_median", "frp_median")   # like-for-like or it raises
-    gap_lead = ((m('share_below', str(P['share_below']) + '%') + " of single-family primary-home policies in " + CS + " have a premium below FEMA's <a href='/guides/risk-rating-2/'>full-risk premium</a>, so "   # 11-14: link on words already there, no added sentence
+    gap_lead = ((m('share_below', str(P['share_below']) + '%') + " of single-family primary-home policies in " + CS + " have a premium below FEMA's <a href='/guides/risk-rating-2/'>full-risk premium</a> by any amount, so "   # 11-14: link on words already there, no added sentence
                  + claim("those policies' bills are rising", "rising", ("share_below", ">", 0)) + " toward it." if P.get("share_below") else
                  "No policy here pays less than FEMA's full-risk price.")
                 + f" Median premium {m('prem_median', money(PREM_MED))}, full-risk {m('frp_median', money(P['frp_median']))} (premiums only, before fees).")
@@ -382,9 +383,15 @@ def card_ranks():   # owner 11-12 research papers: this county's share, 90% rang
         def mx(k, v, q, _pol=_pol): return m({"paper_share": "paper_share_pol" if _pol else k, "paper_min": k if _pol else "paper_min_clm"}.get(k, k), v, q=q)
         c = cache.get(sp["key"]) or {}
         if not c.get("pool"): continue
-        head = f"<b><a href='/flood-insurance/{sp['key']}/'>{html.escape(sp['title'])}</a></b>: "
+        # 11-14 link rule: a paper that does not list this place is named, not linked (the link would promise a row it lacks)
+        def hd(linked): return (f"<b><a href='/flood-insurance/{sp['key']}/'>{html.escape(sp['title'])}</a></b>: " if linked
+                                else f"<b>{html.escape(sp['title'])}</b>: ")
+        _w = c.get("from_to") or [None, None]
+        win = f" with a loss in {_w[0]}–{_w[1]}" if _w[0] else ""   # audit 11-14: 'not listed' names the paper's window
+        # audit 11-14: the share says what it counts; its dollar line is tagged (V1), "fell" is the B2 price word, so "were"
+        meets = re.sub(r"\$[\d,]+", lambda a: m(sp["line_metric"], a.group(0), q=sp["key"] + "-line"), html.escape(sp["meets"]).replace("fell in", "were in"))
         if IS_STATE:   # PLAN E19: a state names how many of its counties are listed; never a state rank
-            n_here = sum(1 for gg in (c.get("rows") or {}) if gg[:2] == g[:2])
+            n_here = sum(1 for gg in (c.get("rows") or {}) if gg[:2] == g[:2]); head = hd(n_here > 0)
             lines.append(f"<li>{head}{mx('paper_min', str(n_here), q=sp['key'] + '-n')} of this state's {UNITS} have at least "
                          f"{mx('paper_min', str(sp['min']), q=sp['key'])} {sp['unit']} and are listed.</li>")
             continue
@@ -394,13 +401,14 @@ def card_ranks():   # owner 11-12 research papers: this county's share, 90% rang
             mw = (f"; peak month {html.escape(r['peak'])}" + (f", over half of it from {html.escape(r['storm'])} alone" if r.get("storm") else "")
                   + (f"; {mx('paper_share', f'{_e}%', q=sp['key'] + '-exp')} would be expected at random for this many claims, and the fifth is by share minus that" if _e is not None else "")) if "peak" in r else ""   # Flood Calendar
             ind = " if claims were independent" if _e is not None else ""   # statistician round 2: Wilson assumes independent claims
+            head = hd(True)
             lines.append(f"<li>{head}<span data-paper=\"{sp['key']}\" data-fifth=\"{fifth}\">{mx('paper_share', f'{v}%', q=sp['key'])} "
                          f"({mx('paper_share', '90%', q='ci-level')} range{ind} {mx('paper_share', f'{lo}', q=sp['key'] + '-lo')}–{mx('paper_share', f'{hi}%', q=sp['key'] + '-hi')}) of "
-                         f"{mx('paper_min', num(n), q=sp['key'] + '-n')} {sp['unit']} here, the {_F[fifth]} of "
+                         f"{mx('paper_min', num(n), q=sp['key'] + '-n')} {sp['unit']} here{win} {meets}, the {_F[fifth]} of "
                          f"{mx('paper_min', num(c['pool']), q=sp['key'] + '-pool')} U.S. counties listed{mw}</span>.</li>")
         else:
-            lines.append(f"<li>{head}<span data-paper=\"{sp['key']}\" data-fifth=\"0\">not listed</span>: fewer than "
-                         f"{mx('paper_min', str(sp['min']), q=sp['key'])} {sp['unit']} here.</li>")
+            lines.append(f"<li>{hd(False)}<span data-paper=\"{sp['key']}\" data-fifth=\"0\">not listed</span>: fewer than "
+                         f"{mx('paper_min', str(sp['min']), q=sp['key'])} {sp['unit']} here{win}.</li>")
     if not lines: return ""
     return card(f"How {CL if IS_STATE else CS} appears in the national research papers",
                 "Each paper measures one thing in FEMA's records for every U.S. county with enough records. A fifth is a position in a list, not a grade or a prediction.",
@@ -522,7 +530,7 @@ def _crs_parts():
                        f"<td>{_tagd('crs_discount', _disc(c.get('sfhaDiscount')), _cname_plain(c) + ':sfha')}</td>"   # Risk Rating 2.0: one rate for every zone; FEMA's separate non-SFHA column is pre-2021
                        f"<td>{_tagd('crs_class', _cls(c.get('classRating')), _cname_plain(c))}</td></tr>" for c in _shown_disc)
     crs_none_note = ((f"<p class='note'>The {m('crs_count', str(len(_shown_disc)), q='shown')} largest discounts of {m('crs_count', str(len(_has_disc)), q='discounted')} discounted communities are shown; "
-                      f"{m('crs_count', str(len(_no_disc)), q='none')} {pl(len(_no_disc), 'community', 'communities')} here {pl(len(_no_disc), 'has', 'have')} no CRS discount." + (f" {UNITS.title()} with their own page list their towns." if HAS_CPAGES else "") + "</p>")
+                      f"{m('crs_count', str(len(_no_disc)), q='none')} {pl(len(_no_disc), 'community', 'communities')} here {pl(len(_no_disc), 'has', 'have')} no CRS discount." + (f" {UNITS[0].upper() + UNITS[1:]} with their own page list their towns." if HAS_CPAGES else "") + "</p>")
                      if IS_STATE else
                      (f"<p class='note'><b>No CRS discount ({m('crs_count', str(len(_no_disc)), q='none')}):</b> " + "; ".join(_cname(c) for c in _no_disc) + ".</p>") if _no_disc else "")
     _disc_communities = [c for c in crs if _pct(c.get("sfhaDiscount"))]
@@ -783,7 +791,7 @@ def card_save():
             (f"The usual building deductible here is {_dl(_top)} ({tp('ded_share', f'extras.policies.deductibles.{_top}', pct, q=_top)} "
              "of single-family policies). " if _top else "") + rule("save_ways"),
             (f"<table><thead><tr><th>Building deductible</th><th>Share of policies</th></tr></thead><tbody>{_rows}</tbody></table>"
-             "<p class='note'>Single-family primary homes; the commonest deductibles. <a href='/guides/flood-insurance-deductible/'>Deductibles in zone AE and zones X, B or C across the U.S.</a></p>" if _rows else "")
+             "<p class='note'>Single-family primary homes; the commonest deductibles. <a href='/guides/flood-insurance-deductible/'>Deductibles in zone AE and zones X, B or C nationwide</a></p>" if _rows else "")
             + "<p class='note'>Community discount: see <a href='#crs'>Does my town get a community discount?</a></p>",
             src(["ded_share"], POL_ASOF, RETR) + src_rules(["save_ways"]), id="save")
     return save_card
@@ -823,7 +831,7 @@ def _counties_table():
             + (f"<p class='note'><b>Lowest typical cost:</b> {and_list(_cn(g) + ' (' + tp('county_cost', f'counties.{g}.p50', money, q=g) + ')' for g, r in _cheap)}. "
                f"<b>Highest:</b> {and_list(_cn(g) + ' (' + tp('county_cost', f'counties.{g}.p50', money, q=g) + ')' for g, r in _dear)}. "
                "Median annual cost of single-family primary-home policies.</p>" if len(_priced) >= 10 else "")
-            + f"<p class='note'>{UNITS.title()} with fewer than {tp('threshold', 'const.min_priced', q='min_priced')} priced single-family policies say “too few” (it counts priced policies, not the policy-units column); medians from under {tp('threshold', 'const.spread_min', q='spread_min')} policies move more from year to year.</p>",
+            + f"<p class='note'>{UNITS[0].upper() + UNITS[1:]} with fewer than {tp('threshold', 'const.min_priced', q='min_priced')} priced single-family policies say “too few” (it counts priced policies, not the policy-units column); medians from under {tp('threshold', 'const.spread_min', q='spread_min')} policies move more from year to year.</p>",
             src(["county_units", "cost_p50", "share_below", "claims_filed"], POL_ASOF, RETR), id="counties")
     return zip_card
 
@@ -853,7 +861,7 @@ def card_unpaid():
             "<table><thead><tr><th>Reason recorded</th><th>Claims</th></tr></thead><tbody>"
             + "".join(f"<tr><td>{html.escape(r['label'])}</td><td>{tp('unpaid_reason_n', f'extras.claims.unpaid_reasons.{r[chr(105)]}.n', q=r['code'])}</td></tr>" for r in _whyall)
             + (f"<tr><td>Smaller reasons, or none recorded</td><td>{m('unpaid_reason_n', num(_why_rest), q='rest')}</td></tr>" if _why_rest > 0 else "")
-            + f"</tbody></table><p class='note'>No recorded payment can mean paperwork (a duplicate, a claim opened in error) or damage the policy did not count as flood damage; the table shows which here.{how('unpaid')} <a href='/flood-insurance/claims/'>How often claims get paid, county by county</a>.</p>",
+            + f"</tbody></table><p class='note'>No recorded payment can mean paperwork (a duplicate, a claim opened in error) or damage the policy did not count as flood damage; the table shows which here.{how('unpaid')}. Compare <a href='/flood-insurance/claims/'>how often claims get paid, county by county</a>.</p>",
             src(["unpaid_n", "unpaid_reason_n"], f"{C['year_min']}–{C['year_max']}", RETR))
     return unpaid_card
 
@@ -1096,10 +1104,16 @@ if IS_STATE:
     sib_html = ("<nav class='sib'><b>Neighboring states:</b> " + " · ".join(f'<a href="../{state_slug(a)}/">{html.escape(n)}</a>' for a, n in _nb)
                 + ' · <a href="../../">all states</a></nav>')
 elif siblings:
-    _lbl = "Bordering counties" if all(p in _nbr for p in siblings) else "Bordering and other counties" if _nbr else f"Other {html.escape(_state)} counties" if len(_same) >= 3 else "Compare other counties"
-    sib_html = (f"<nav class='sib'>{_state_link}<b>{_lbl}:</b> " +
-                " · ".join(f'<a href="../{p["slug"]}/">{html.escape(p["short"])}</a>' for p in siblings) +
-                ' · <a href="../../">all places</a></nav>')
+    # review 11-14: only true bordering counties sit under "Bordering"; the rest get their own label (Cochise listed Maricopa as bordering)
+    def _sl(ps): return " · ".join(f'<a href="../{p["slug"]}/">{html.escape(p["short"])}</a>' for p in ps)
+    _b = [p for p in siblings if p in _nbr]; _o = [p for p in siblings if p not in _nbr]
+    def _uw(ps):   # the unit word each listed place really is (a Virginia independent city is not a county)
+        k = {"independent cities" if p["short"].lower().endswith(" city") else {"LA": "parishes", "AK": "boroughs"}.get(p.get("state"), "counties") for p in ps}
+        return " and ".join(sorted(k, key=lambda w: (w == "independent cities", w)))   # bug review 11-15: set order varied per run
+    _olbl = f"Other {html.escape(STATE_NAMES.get(_state, _state or ''))} {_uw(_o)}" if _o and all(p in _same for p in _o) else "Other places"
+    sib_html = (f"<nav class='sib'>{_state_link}" + (f"<b>Bordering {_uw(_b)}:</b> {_sl(_b)}" if _b else "")
+                + (" · " if _b and _o else "") + (f"<b>{_olbl}:</b> {_sl(_o)}" if _o else "")
+                + ' · <a href="../../">all places</a></nav>')
 else:
     sib_html = f'<nav class="sib">{_state_link}<a href="../../">Browse all places by state →</a></nav>'
 # Federal source catalog — single source of truth for the citation schema AND the visible sources block.
@@ -1135,11 +1149,11 @@ if _zq:
     _q[3] = ('<a href="#zone-cost" data-ans="3"><b>Cost in my zone?</b> ' + ("Zones " if len(_zq) > 1 else "Zone ")
              + ", ".join(f"{html.escape(z)} {tp('zone_cost', f'policies.cost_by_zone.{z}.median', money, q=z)}" for z, d in _zq)
              + ' a year (median, single-family homes)'
-             + "".join(f"; Zone {html.escape(z)}, {m('zone_share', str(round(100 * P['zone_units'][z] / P['units'], 1)) + '%', q=z)} of policy units, has too few to price" for z in _zbig)
+             + "".join(f"; Zone {html.escape(z)}, {m('zone_share', str(round(100 * P['zone_units'][z] / P['units'], 1)) + '%', q=z)} of policy units, has too few single-family homes to price" for z in _zbig)
              + ("; more zones below" if set(z for z in (P.get("cost_by_zone") or {}) if z != "Unknown") - set(dict(_zq)) else "") + '</a>')
 if P.get("share_below"):
     _q[4] = (f'<a href="#gap" data-ans="4"><b>{claim("Is it rising?", "rising", ("share_below", ">", 0))}</b> {m("share_below", str(P["share_below"]) + "%", q="qa")} '
-             f'of single-family primary-home premiums are under FEMA\'s full-risk premium (not a quote): {claim("rising toward it", "rising", ("share_below", ">", 0))}</a>')
+             f'of single-family primary-home premiums are under FEMA\'s full-risk premium by any amount (not a quote): {claim("rising toward it", "rising", ("share_below", ">", 0))}</a>')
 _cxq = data.get("claims_extra") or {}
 if _cxq.get("claims") and _cxq.get("avg_paid") and P.get("p50"):
     _sroot = ROOT_DATA.get("state") if isinstance(ROOT_DATA.get("state"), dict) else {}   # on a state page "state" is just its code

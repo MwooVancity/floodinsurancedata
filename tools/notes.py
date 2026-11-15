@@ -8,9 +8,18 @@ GA_TAG = ('<script>if(location.hostname=="floodinsurancedata.com"&&!navigator.we
           'window.gtag=function(){dataLayer.push(arguments)};gtag("js",new Date());gtag("config","G-EXCYW0PJYG");'
           'var s=document.createElement("script");s.async=true;s.src="https://www.googletagmanager.com/gtag/js?id=G-EXCYW0PJYG";'
           'document.head.appendChild(s)}</script>')
+import os as _os, sys as _sys
+_sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))   # -I drops the script dir; papers.py sits beside this file
+from papers import GAP_MIN   # bug review 11-15: the "below" note's $ line is the paper's constant, never a typed copy
 NOTES = {
     "zones": ("Policy units by flood zone",
               "Insured units by the flood zone each policy is rated in; a condo-building policy counts each of its units."),
+    "below": ("Below FEMA's full-risk premium: two lines, two bases",   # audit 11-14: the RR2 guide's share and Price Gap's share read as one fact
+              "Both count NFIP single-family primary-home policies in force on the data date with a premium and a full-risk premium "
+              "both above $0, premium only, before fees. “Below by any amount” (county and state pages, the Risk Rating 2.0 guide) "
+              "counts every such policy whose premium is under the full-risk premium. The Price Gap paper counts only policies at least "
+              f"${GAP_MIN} a year below, so its share is smaller. The guide sums state records and the paper pools county records, so their "
+              "policy counts can differ slightly."),
     "zip": ("ZIP codes",
             "A ZIP median is shown when the ZIP has 25 or more priced single-family policies; otherwise the lookup gives its "
             "policy count. Policy units also count condo units, so they can be far more than the priced policies. Each town "

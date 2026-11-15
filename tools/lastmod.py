@@ -7,7 +7,9 @@ import datetime, re, subprocess, sys
 def vis(h):   # what a reader sees: no scripts, styles, tags or the build fingerprint comment
     h = re.sub(r"<(script|style)\b.*?</\1>", "", h or "", flags=re.S)
     h = re.sub(r"<!--.*?-->", "", h, flags=re.S)
-    return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", h)).strip()
+    t = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", h)).strip()
+    # audit 11-14: the daily fetch date ("downloaded November 14, 2026", "retrieved ...") is not a content change (380 URLs moved to today)
+    return re.sub(r"(?i)\b(downloaded|retrieved)( on)? (?:[A-Z][a-z]+ \d{1,2}, \d{4}|\d{4}-\d\d-\d\d)", r"\1", t)
 
 def pick(old_html, new_html, old_lm, data_lm, today):
     """old_html None = page not in the last release (new page): data date only."""
@@ -42,4 +44,7 @@ if __name__ == "__main__":
         assert pick(None, b, None, "2026-08-31", "2026-11-10") == "2026-08-31", "new page = data date, not today"
         assert pick(a, a, "2026-08-01", "2026-08-31", "2026-11-10") == "2026-08-31", "newer data date wins"
         assert pick(a, "<script>x=1</script>" + a, "2026-09-01", None, "2026-11-10") == "2026-09-01", "script change is not visible text"
-        print("lastmod self-check: 7 cases PASS"); sys.exit()
+        d1, d2 = "<p>165,626 records, downloaded <span>November 13, 2026</span>.</p>", "<p>165,626 records, downloaded <span>November 14, 2026</span>.</p>"
+        assert pick(d1, d2, "2026-11-01", "2026-08-31", "2026-11-14") == "2026-11-01", "a changed download date alone keeps lastmod"
+        assert pick(d1, d2.replace("165,626", "165,700"), "2026-11-01", "2026-08-31", "2026-11-14") == "2026-11-14", "a changed count beside it still moves lastmod"
+        print("lastmod self-check: 9 cases PASS"); sys.exit()

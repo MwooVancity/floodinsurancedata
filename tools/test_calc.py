@@ -177,20 +177,43 @@ if os.path.exists(_zh):
 print("test_calc: all assertions passed (exercising ffcalc production functions)")
 
 
-# S16 internal links (11-08): a county page missing a hub link fails; the same page with it passes
+# S16 internal links (11-14 rule, structure only): home lists every built hub; a county page is never forced to link hubs
 import linkcheck
-_pg = {"/nfip/": "", "/flood-insurance/harris-county-tx/": "<a href='/nfip/'>n</a> <a href='/flood-zones/ae/'>AE</a>"}
-assert linkcheck.fails(_pg, set(_pg)) == [], linkcheck.fails(_pg, set(_pg))
-_pg["/flood-insurance/harris-county-tx/"] = "<a href='/flood-zones/ae/'>AE</a>"
-assert linkcheck.fails(_pg, set(_pg)) == ["/flood-insurance/harris-county-tx/: no link to /nfip/"]
-_pg["/flood-insurance/harris-county-tx/"] = "<a href='../../nfip/'>n</a>"
-assert linkcheck.fails(_pg, set(_pg)) == ["/flood-insurance/harris-county-tx/: no link to a zone page"]
+_pg = {"/": "<a href='/nfip/'>The NFIP in numbers</a>", "/nfip/": "", "/flood-insurance/harris-county-tx/": "<a href='/flood-zones/ae/'>AE</a>"}
+assert linkcheck.fails(_pg, set(_pg)) == [], linkcheck.fails(_pg, set(_pg))   # county without a /nfip/ link passes now
+_pg["/"] = "<a href='/flood-zone-map/'>map</a>"
+assert linkcheck.fails(_pg, set(_pg)) == ["/: home does not list /nfip/"]   # mutation: hub dropped from home fails
 _sp = {"/flood-insurance/texas/": "", "/flood-insurance/harris-county-tx/": "<a href='../texas/'>Texas overview</a>"}
 _cs = {"/flood-insurance/harris-county-tx/": "/flood-insurance/texas/"}
 assert linkcheck.state_fails(_sp, _cs) == []
 _sp["/flood-insurance/harris-county-tx/"] = "<a href='../travis-county-tx/'>Travis</a>"   # 11-14: state link dropped by a hotfix build
 assert linkcheck.state_fails(_sp, _cs) == ["/flood-insurance/harris-county-tx/: no link to its state page /flood-insurance/texas/"]
-print("S16 link check: 5 cases ok")
+print("S16 link check: 4 cases ok")
+
+# S16 anchors (Google link best practices): one passing page, then one failing case per rule
+_ok = "<p>See <a href='/nfip/'>the NFIP in numbers</a>, and <a href='/x/'>zone X</a>.</p><nav><a href='/a/'>A</a> <a href='/b/'>B</a></nav><a href='#q' data-ans='1'>" + "word " * 20 + "</a><p>Map:</p><a href='/i/'><img alt='Flood map'></a>"
+assert linkcheck.anchor_fails({"/p/": _ok}) == [], linkcheck.anchor_fails({"/p/": _ok})   # nav chain, long answer card, icon with alt all pass
+for _bad, _why in (("<a href='/x/'></a>", "empty anchor"), ("<a href='/x/'>Click here</a>", "generic anchor"), ("<a href='/x/'>read more</a>", "generic anchor"),
+                   ("<a href='/x/'>" + "word " * 13 + "</a>", "over 12 words"), ("<a>zone X</a>", "without a real href"),
+                   ("<a href='javascript:void(0)'>zone X</a>", "without a real href"), ("<p><a href='/a/'>zone A</a> <a href='/b/'>zone B</a></p>", "side by side")):
+    _r = linkcheck.anchor_fails({"/p/": _bad}); assert len(_r) == 1 and _why in _r[0], (_bad, _r)
+print("S16 anchor check: 8 cases ok")
+
+# sitemap lastmod (audit 11-14): the daily download date alone never moves lastmod; a real change beside it does
+import lastmod
+_d1, _d2 = "<p>165,626 records, downloaded November 13, 2026.</p>", "<p>165,626 records, downloaded November 14, 2026.</p>"
+assert lastmod.pick(_d1, _d2, "2026-11-01", "2026-08-31", "2026-11-14") == "2026-11-01"
+assert lastmod.pick(_d1, _d2.replace("165,626", "165,700"), "2026-11-01", "2026-08-31", "2026-11-14") == "2026-11-14"
+print("lastmod download-date check: 2 cases ok")
+
+# bug review 11-15: a paper's dollar line on the county card cites its own field and a dollar unit in data.csv
+# (it was tagged "threshold" = policyCost count); the methodology note's $ line is the paper's constant, not typed
+import papers as _PP, metrics as _MT, notes as _NT
+for _s in _PP.SPECS:
+    if "$" in _s["meets"]:
+        assert _MT.METRICS[_s["line_metric"]]["unit"].startswith("usd_"), _s["key"]
+assert f"${_PP.GAP_MIN} a year below" in _NT.NOTES["below"][1]
+print("paper dollar-line tags: ok")
 
 # S16 graph: a broken internal link and an orphan both fail; a linked page passes
 _g = {"/": "<a href='/a/'>a</a>", "/a/": "<a href='../b/'>b</a> <a href='/'>home</a>", "/b/": ""}

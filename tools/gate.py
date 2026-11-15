@@ -240,7 +240,7 @@ if _zc and units:
     for _z, _v in (P.get("zone_units") or {}).items():
         if _v >= 0.10 * units and _z not in ("Unknown", "other", "other_hr") and _z not in _priced_q and not re.search(rf"\bZone {re.escape(_z)}\b", _zt_):
             fail("C11", f"Zone {_z} holds {100 * _v / units:.1f}% of policy units but the cost answer leaves it out: {_zt_[:90]}")
-    for _z in re.findall(r"Zone (\w+), [\d.]+% of policy units, has too few to price", _zt_):
+    for _z in re.findall(r"Zone (\w+), [\d.]+% of policy units, has too few single-family homes to price", _zt_):
         if _z in (P.get("cost_by_zone") or {}): fail("C11", f"Zone {_z} called too few to price, but it has a median")
     _named = re.findall(r'data-m="zone_cost"[^>]*data-q="([^"]+)"|data-m="zone_cost" data-q="([^"]+)"', _zc.group(1))
     _named = [x or y for x, y in _named]

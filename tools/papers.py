@@ -45,8 +45,9 @@ SPECS = [
                 "The zone is the zone FEMA rated on the claim, which can differ from today's map.",
                 "Claims with no rated zone are not in the base."],
      "prior": "No national ranking of counties on this base was found in searches on 2026-11-12.",
-     "prior_links": [("Penn State's PSIRC mapped Pennsylvania NFIP claims, including claims outside the Special Flood Hazard Area, from FEMA's 2019 claims release",
-                      "https://www.psirc.psu.edu/assets/NFIP_Insights_for_PA.one-pager.2022-09-05.pdf")],
+     "prior_links": [("Penn State's PSIRC",   # (anchor, url, text after): anchors stay under 12 words (S16 anchor_fails)
+                      "https://www.psirc.psu.edu/assets/NFIP_Insights_for_PA.one-pager.2022-09-05.pdf",
+                      "mapped Pennsylvania NFIP claims, including claims outside the Special Flood Hazard Area, from FEMA's 2019 claims release")],
      "prior_rules": ["fema_outside_third"], "policy_col": True, "published": "2026-11-13",
      # review outside-zone-4 M1: say only what FloodSmart states (current high-risk areas, 2014-2024); it does not say paid-only or all claims
      "prior_note": "FEMA's figure uses current high-risk areas and the years 2014 to 2024, and does not say whether it counts only paid claims; this page counts paid claims by the zone rated on each claim.",
@@ -75,7 +76,7 @@ SPECS.append(
      "question": f"In which U.S. counties do single-family primary homes insured by the NFIP most often have a building deductible of ${DED_MIN:,} or more on record?",
      "unit": "single-family primary-home policy units with a known building deductible",
      "measure": f"share of single-family primary-home NFIP policy units in force whose building deductible is ${DED_MIN:,} or more",
-     "short": f"building deductibles of ${DED_MIN:,} or more", "meets": f"had a building deductible of ${DED_MIN:,} or more on record",
+     "short": f"building deductibles of ${DED_MIN:,} or more", "meets": f"had a building deductible of ${DED_MIN:,} or more on record", "line_metric": "ded_amount",
      "fields": "buildingDeductibleCode, policyCount, occupancyType, primaryResidenceIndicator, condominiumCoverageTypeCode, censusGeoid",
      # rater: why the measure matters, in FEMA's words only (raw read of OpenFemaDataSetFields NfipPolicies v3, 2026-11-13), no advice
      "why": ['FEMA defines buildingDeductibleCode as "The total deductible amount in dollars for buildings, both main and appurtenant, that can be applied against the loss."',
@@ -90,10 +91,12 @@ SPECS.append(
                 "A county's share says nothing about which deductible suits any one home.",
                 "Counties come from the census geography FEMA codes on each policy (censusGeoid), which can differ from the property's county."],
      "prior": "No ranking of counties or states by the building deductible on record was found in searches on 2026-11-13 (WebSearch: NFIP policies deductible chosen by county; flood insurance deductible choice by county map; NFIP minimum deductible studies). Published work on NFIP deductible choice is national or for one state and does not rank counties:",
-     "prior_links": [("Deductible Choice in Flood Insurance: Who Chooses the Maximum? (Taylor & Francis, 2020; owner-occupied single-family NFIP policies, national, not by county)",
-                      "https://www.tandfonline.com/doi/full/10.1080/10527001.2020.1839320"),
-                     ("Michel-Kerjan and Kousky, Come Rain or Shine: Evidence on Flood Insurance Purchases in Florida (Florida policies)",
-                      "https://media.rff.org/archive/files/sharepoint/Documents/Publications/Non-RFF_Pubs/09-09_Kousky_Come-Rain-or-Shine.pdf")],
+     "prior_links": [("Deductible Choice in Flood Insurance: Who Chooses the Maximum?",
+                      "https://www.tandfonline.com/doi/full/10.1080/10527001.2020.1839320",
+                      "(Taylor & Francis, 2020; owner-occupied single-family NFIP policies, national, not by county)"),
+                     ("Michel-Kerjan and Kousky, Come Rain or Shine",
+                      "https://media.rff.org/archive/files/sharepoint/Documents/Publications/Non-RFF_Pubs/09-09_Kousky_Come-Rain-or-Shine.pdf",
+                      ": Evidence on Flood Insurance Purchases in Florida (Florida policies)")],
      "prior_rules": [], "policy_col": False, "published": "2026-11-13", "rules": []})
 # Flood Calendar (11-13). Edge cases, written before the code, each with its test:
 # - no loss_month_n / empty by_month / non-int counts -> county not listed (self-test cal_k({}) is None)
@@ -178,7 +181,7 @@ SPECS.append(
      "question": f"In which U.S. counties do NFIP single-family primary homes most often pay a premium at least ${GAP_MIN} a year below FEMA's full-risk premium for the same policy, and how large is the gap there?",
      "unit": "single-family primary-home policies priced both ways",
      "measure": f"share of NFIP single-family primary-home policies in force whose premium is at least ${GAP_MIN} a year below the full-risk premium FEMA records on the same policy",
-     "short": f"premiums ${GAP_MIN} or more below full-risk", "meets": f"had a premium at least ${GAP_MIN} a year below FEMA's full-risk premium",
+     "short": f"premiums ${GAP_MIN} or more below full-risk", "meets": f"had a premium at least ${GAP_MIN} a year below FEMA's full-risk premium", "line_metric": "gap_line",
      "fields": "totalInsurancePremiumOfThePolicy, fullRiskPremium, crsClassCode, policyCount, occupancyType, primaryResidenceIndicator, condominiumCoverageTypeCode, censusGeoid",
      "why": [f"The ${GAP_MIN} line is this paper's choice, so that a gap of a few dollars is not counted as a price gap; the share below by any amount and the median gap are in the table, and Results gives the pooled share by any amount, by $10 or more and by ${GAP_MIN} or more, so a reader can see how much the line moves the figure."],
      # raw read of OpenFemaDataSetFields (NfipPolicies v3) 2026-11-14
@@ -318,7 +321,7 @@ def write_cache():
     for s in READY:
         rs = rows(s, recs)
         # named fields, never positions (bug review 11-14: a new field would have shifted the county card's figures)
-        out[s["key"]] = {"pool": len(rs), "rows": {x["geoid"]: {"fifth": x["fifth"], "v": x["value"], "lo": x["lo"], "hi": x["hi"], "n": x["n"],
+        out[s["key"]] = {"pool": len(rs), "from_to": window(s, recs), "rows": {x["geoid"]: {"fifth": x["fifth"], "v": x["value"], "lo": x["lo"], "hi": x["hi"], "n": x["n"],
                                                    **(dict(zip(("peak", "storm"), month_words(context(s, recs[x["geoid"]], 0, 0))), exp=x["exp"]) if s.get("months") else {})} for x in rs}}
     os.makedirs(os.path.dirname(CACHE), exist_ok=True)
     json.dump(out, open(CACHE, "w"))
