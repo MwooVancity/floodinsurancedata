@@ -1478,7 +1478,7 @@ if _zm_on == "all" or "flood-zone-map" in _zm_on:
 <h1>Flood zone map: find your FEMA flood zone by address</h1>
 <p class="lede">Type an address or use your location, then put the pin on your building. You will see the flood zone FEMA's own map shows there, with its map panel and the date it took effect.</p>
 {_zm_block(rule)}
-<div class="card"><h2>What if no zone shows, or my lot looks split?</h2><p class="stand">{rule("nfhl_coverage")}</p><p class="stand">The zone shown is the one at your pin. {rule("lot_vs_building")}</p></div>
+<div class="card"><h2>If no zone shows, or a zone line crosses your lot</h2><p class="stand">{rule("nfhl_coverage")}</p><p class="stand">The zone shown is FEMA's answer at your pin only, not a ruling on your whole property. If you ask FEMA to <a href="/guides/loma-lomr/">review your property's zone</a>, this is what its rules compare: {rule("lot_vs_building")}</p></div>
 <div class="card"><h2>What the zones mean</h2>{rule("zone_codes_list")}
 {('<p class="stand">What each zone costs, and what NFIP claims there paid:</p><ul>' + _zli + '</ul>') if _zli else ""}</div>
 <div class="card"><h2>Must I buy flood insurance in my zone?</h2><p class="stand">{rule("purchase_answer")} {rule("lender_any_zone")}</p></div>
