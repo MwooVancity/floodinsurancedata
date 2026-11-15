@@ -1323,7 +1323,7 @@ def card_required():
       (f"<p class='note'><b>At a closing:</b> {rule('fl_disclosure')}</p>" if agg.get("state") == "FL" else "") +
       (f"<p class='note'>{rule('tx_twia')}</p>" if agg.get("state") == "TX" else "") +
       (f"<p class='note'>{rule('harris_maapnext')}</p>" if agg.get("geoid") == "48201" else "") +
-      f"<p class='note'>{m('sfha_share', str(P['sfha_share_units']) + '%')} of {CS}'s NFIP policy units are in high-risk zones (not {tp('sfha_share', 'policies.sfha_share_units', pct)} of all buildings, and not an answer about your own home).</p>" + _outside_line() +
+      f"<p class='note'>{m('sfha_share', str(P['sfha_share_units']) + '%')} of {CS}'s NFIP policy units are in high-risk zones. That is a share of insured policy units, not of all buildings, and not an answer about your own home.</p>" + _outside_line() +
       f"{_zone_body()}<p class='note'>Insured units by the zone each policy is rated in.{how('zones')} What each means: <a href='/flood-zones/ae/'>zone AE</a>, <a href='/flood-zones/x/'>zone X</a>, <a href='/flood-zones/ve/'>zone VE</a>." + (" Find yours with the <a href='/flood-zone-map/'>flood zone map lookup by address</a>." if _HUB_ON and IS_STATE else "") + "</p>" + ("" if P.get("cost_by_zone") else f"<p class='note'>{rule('zone_codes')}</p>") + _map_line()
       + (f"<p class='note'><b>Not in the NFIP ({m('crs_count', str(len(crs_out)), q='not_nfip')} {pl(len(crs_out), 'community', 'communities')} here)"
          + (": " + "; ".join(sorted((_cname(c) + (" (unincorporated area only)" if re.search(r"\b(COUNTY|PARISH|BOROUGH)\b", (c.get("communityName") or "").upper()) else "") for c in crs_out), key=lambda h: html.unescape(re.sub("<[^>]+>", "", h)).casefold())))
