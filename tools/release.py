@@ -21,6 +21,52 @@ def wait_deploy(poll, now, sleep, stuck=900, limit=1800, every=15):
         if now() - t0 > limit: return f"still {status} after 30 min"
         sleep(every)
 
+# Template text at most once a day (CLAUDE.md Site; 11-14: 6 site-wide releases in a day, one dropped 312 state links).
+# A template ship = the review template hash (review.TEMPLATE files) differs from the last ship's AND some county/state
+# page's visible text, digits and month names masked, differs from HEAD's copy. Ledger: state/template-ships.json.
+# Edge cases: a data refresh changes numbers and the as-of month only (masked; template code unchanged = not a batch);
+# code-only change with identical text = not a batch; a new county has no HEAD copy (skipped); first run, no ledger =
+# text decides alone; the UTC day (cloud publish and CLAUDE.md count UTC); --hotfix ships and is still recorded; ledger
+# capped at 60 entries. Ceiling: a data refresh that moves a size word (claim()) on the same day as a template edit counts.
+TSHIPS = os.path.join(os.path.dirname(T), "state", "template-ships.json")
+
+def template_refusal(changed, cur_hash, ledger, today, hot):   # '' to go, else why
+    if not changed or (ledger.get("hash") and ledger["hash"] == cur_hash): return ""
+    done = [s for s in ledger.get("ships", []) if s.get("date") == today and s.get("template")]
+    if done and not hot: return (f"a template batch already shipped today ({today} UTC, commit {done[0].get('commit_before', '?')[:9]}); "
+                                 f"this release changes county/state text on {len(changed)} pages, e.g. {changed[:3]}; ship it tomorrow, or --hotfix only for wrong live text")
+    return ""
+
+def template_pages_changed(R):   # county/state pages whose masked visible text differs from HEAD's copy
+    sys.path.insert(0, T); import hater
+    states = {s["slug"] for s in json.load(open(os.path.join(R, "data", "states", "built.json")))}
+    rels = [f"dist/flood-insurance/{s}/index.html" for s in sorted(os.listdir(os.path.join(R, "dist", "flood-insurance")))
+            if (s in states or os.path.isdir(os.path.join(R, "data", "c", s))) and os.path.exists(os.path.join(R, "dist", "flood-insurance", s, "index.html"))]
+    out = subprocess.run(["git", "cat-file", "--batch"], cwd=R, input="".join(f"HEAD:{r}\n" for r in rels).encode(), capture_output=True).stdout
+    mask = lambda h: hater.masked(hater.vis_text(h))   # digits and month names masked (hater.masked)
+    changed, i = [], 0
+    for r in rels:   # cat-file --batch: "<sha> blob <size>\n<bytes>\n" or "<name> missing\n"
+        j = out.index(b"\n", i); head = out[i:j].split(); i = j + 1
+        if head[-1] == b"missing": continue
+        n = int(head[2]); old = out[i:i + n].decode("utf-8", "replace"); i += n + 1
+        if mask(old) != mask(open(os.path.join(R, r), encoding="utf-8").read()): changed.append(r.split("/")[2])
+    return changed
+
+if "--test-template" in sys.argv:
+    L = {"hash": "h1", "ships": [{"date": "2026-11-14", "template": True, "commit_before": "abc"}]}
+    assert template_refusal(["a"], "h2", L, "2026-11-14", "").startswith("a template batch already shipped"), "second batch same day"
+    assert template_refusal(["a"], "h2", L, "2026-11-14", "wrong figure live") == "", "--hotfix ships"
+    assert template_refusal(["a"], "h2", L, "2026-11-15", "") == "", "next UTC day"
+    assert template_refusal([], "h2", L, "2026-11-14", "") == "", "no visible county/state change"
+    assert template_refusal(["a"], "h1", L, "2026-11-14", "") == "", "template code unchanged since last ship: a data refresh"
+    assert template_refusal(["a"], "h2", {}, "2026-11-14", "") == "", "first run, no ledger"
+    assert template_refusal(["a"], "h2", {"hash": "h1", "ships": [{"date": "2026-11-14", "template": False}]}, "2026-11-14", "") == "", "a data-only ship today"
+    sys.path.insert(0, T); import hater
+    m = lambda h: hater.masked(hater.vis_text(h))
+    assert m("<p>As of August 31, 2026: $1,015</p>") == m("<p>As of September 30, 2026: $1,240</p>"), "data refresh masked"
+    assert m("<p>As of August 31: the median</p>") != m("<p>As of August 31: the typical</p>"), "wording change seen"
+    print("template once a day: 9 cases PASS"); sys.exit()
+
 if "--test-deploy-wait" in sys.argv:   # fake GitHub and clock: every path of wait_deploy
     def run(states):
         t = [0]; it = iter(states)
@@ -60,6 +106,15 @@ else:
     n_pass, bad = len(re.findall(r"GATE PASS", out)), re.findall(r".*(?:GATE FAIL|FAILED|\[\w+\]).*", out)
     print(f"== build + gate: {n_pass} pages pass"); [print("  ", b) for b in bad[:30]]
     if bad or not n_pass: sys.exit("RELEASE STOPPED at: build + gate")
+    if "--ship" in sys.argv:   # template text at most once a UTC day; checked before the long steps
+        import datetime; sys.path.insert(0, T); import review as _RV
+        try: _tl = json.load(open(TSHIPS, encoding="utf-8"))
+        except (OSError, ValueError): _tl = {}
+        _tday, _th = str(datetime.datetime.now(datetime.timezone.utc).date()), _RV.template_hash()
+        _tchanged = template_pages_changed(os.path.dirname(T))
+        _twhy = template_refusal(_tchanged, _th, _tl, _tday, "--hotfix" in sys.argv)
+        if _twhy: sys.exit(f"RELEASE STOPPED at: template text once a day ({_twhy})")
+        print(f"== template once a day: {len(_tchanged)} county/state pages with changed wording; " + ("a template batch" if _tchanged and _tl.get("hash") != _th else "not a template batch"))
     step("truth proof: every fixed defect is fixed on the built pages", os.path.join(T, "test_truth.py"))
     step("reader tools: oracle, edge cases, fuzz, JS off (CLAUDE.md ship standard)", os.path.join(T, "test_tools.py"))
     step("rule sources: every rule's quoted wording is still on its official page", os.path.join(T, "recheck.py"), "--rules-only")
@@ -84,6 +139,12 @@ else:
     step("factory stress (edge-case data, no crash)", os.path.join(T, "test_factory.py"))
     step("site factory stress (national edge cases: no crash, garbage, dead link)", os.path.join(T, "test_site_factory.py"))
     step("hater verdict parser", os.path.join(T, "test_hater.py"))
+    step("proofread flag + S12 notice cases (owner 11-15)", os.path.join(T, "hater.py"), "--test")
+    step("writing gate mutations (owner 11-15)", os.path.join(T, "prose_check.py"), "--test")
+    step("writing gate: repeats, 45-word sentences, doubled words; ratchet on state/prose-baseline.json", os.path.join(T, "prose_check.py"))
+    step("template text once a day cases", os.path.join(T, "release.py"), "--test-template")
+    step("cloud job budget cases (tools/cloud_run.py)", os.path.join(T, "cloud_run.py"), "--test")
+    step("refresh plan cases (one forced refresh a month)", os.path.join(T, "refresh_plan.py"), "--test")
     step("sitemap lastmod rule", os.path.join(T, "lastmod.py"), "--test")
     step("deploy wait: stuck or failed deploy run stops the release", os.path.join(T, "release.py"), "--test-deploy-wait")
     step("national rules live once on /nfip/ (owner 11-11)", os.path.join(T, "rules_home.py"))
@@ -121,6 +182,11 @@ else:
     base = subprocess.run(["git", "rev-parse", "HEAD"], cwd=R, capture_output=True, text=True).stdout.strip()   # IndexNow: pages changed since here
     subprocess.run([sys.executable, "-I", os.path.join(T, "sameness.py"), "--record"], cwd=R)   # the shipped share becomes the new ceiling
     if _need_cr and code_stamp.check(): sys.exit(f"RELEASE STOPPED at: code bug review (tools changed during the gate run: {code_stamp.check()})")   # bug review 11-14
+    subprocess.run([sys.executable, "-I", os.path.join(T, "prose_check.py"), "--record"], cwd=R)   # the shipped faults become the new ceiling (lower only)
+    if _tchanged and _tl.get("hash") != _th:   # record the template ship (committed with the release below)
+        _tl.setdefault("ships", []).append({"date": _tday, "template": True, "commit_before": base, "pages": len(_tchanged)})
+    _tl["hash"] = _th; _tl["ships"] = _tl.get("ships", [])[-60:]
+    json.dump(_tl, open(TSHIPS, "w", encoding="utf-8"), indent=1)
     g("add", "-A", "dist", "data/c", "data/states", "places.json", "tools", "state")
     if subprocess.run(["git", "diff", "--cached", "--quiet"], cwd=R).returncode:
         g("commit", "-q", "-m", "release: built site" + (f" (hotfix, hater review skipped: {hot})" if hot else "")

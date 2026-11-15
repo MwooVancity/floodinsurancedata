@@ -1,4 +1,6 @@
 name: refresh-data
+# owner 11-15: the run's name marks a forced run, so refresh_plan.py (and cloud_run.py) can refuse a second one in a month
+run-name: ${{ inputs.force && 'refresh-data (forced)' || 'refresh-data' }}
 # Owner 2026-10-28: "delete it all" off the laptop. The FEMA download and the number crunching run here, not on the
 # laptop; only the computed data/ files are committed. Nothing ships from here: the daily publish job ships the new
 # figures only through every gate. FEMA updates every 40-60 days; refresh_plan.py downloads only when there is a new
@@ -39,7 +41,7 @@ jobs:
       - name: "Run the aggregation code on a tiny synthetic download first (11-08, a code slip died 1 h in, after the download)"
         run: python -I tools/test_raw.py
       - id: plan   # skip the download when nothing is new (owner 2026-11-03)
-        env: { FORCE: "${{ inputs.force }}" }
+        env: { FORCE: "${{ inputs.force }}", GH_TOKEN: "${{ github.token }}" }   # token: list this month's forced runs
         run: python -I tools/refresh_plan.py
       - name: "Run the bulk-file code (cost trend pass) on a tiny synthetic parquet first (11-09)"
         if: steps.plan.outputs.pull == 'true'

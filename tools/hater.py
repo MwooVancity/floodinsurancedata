@@ -52,10 +52,30 @@ def snap(rnd, slugs):
     for x in old: shutil.rmtree(os.path.join(SNAP, x), ignore_errors=True)
     for s in slugs: open(os.path.join(d, fname(s) + ".txt"), "w", encoding="utf-8").write(vis_text(open(html_path(s), encoding="utf-8").read()))
 
+# owner 11-15 copy-editor read: prep --proofread puts this line in the brief; record() flags each page reviewed under it, and
+# google_gate S12 prints a notice for a page type whose visible text changed since its last proofread PASS.
+# Edge cases: a light round has no brief (prep --light --proofread writes one); a carry keeps the old proofread (text
+# unchanged by definition); a data refresh moves numbers only (digits masked in the compare); no proofread yet = notice.
+PROOFREAD = ("PROOFREAD ROUND: reviewer 5, the copy editor, reads every page above whole, top to bottom, every sentence, as a "
+             "person would (not the changed cards only): flag each sentence a reader must read twice, a base defined twice, "
+             "a paragraph or phrase repeated, a run-on sentence; method and fine print belong below the answer.")
+PROOF = os.path.join(SNAP, "proofread")
+def asks_proofread(brief): return PROOFREAD in brief
+MONTHS = re.compile(r"\b(?:January|February|March|April|May|June|July|August|September|October|November|December)\b")
+def masked(t): return MONTHS.sub("M", re.sub(r"\d[\d,.]*", "N", t))   # numbers and the as-of month are data
+def proofread_stale(slug, html=None, snapdir=None):   # '' when this page's text is what its last proofread PASS read
+    p = os.path.join(snapdir or PROOF, fname(slug) + ".txt")
+    if not os.path.exists(p): return "never proofread whole"
+    now = vis_text(html if html is not None else open(html_path(slug), encoding="utf-8").read())
+    return "" if masked(open(p, encoding="utf-8").read()) == masked(now) else "visible text changed since its last proofread"
+
 def prep(rnd, slugs):
+    PR = "--proofread" in sys.argv
     if "--light" in sys.argv:   # CLAUDE.md budget: changed cards only, page text, no screenshots, no random pages
         open(os.path.join(DIR, f"round{rnd}-template.txt"), "w").write(RV.template_hash()); snap(rnd, slugs)
-        return print("light round: template", RV.template_hash(), "pages:", " ".join(html_path(s) for s in slugs))
+        if PR: open(os.path.join(DIR, f"round{rnd}-brief.md"), "w", encoding="utf-8").write(
+            PROOFREAD + "\n\nPages: " + "; ".join(html_path(s) for s in slugs) + f"\nWrite: {os.path.join(DIR, f'hater-round{rnd}.md')}\n")
+        return print("light round: template", RV.template_hash(), "pages:", " ".join(html_path(s) for s in slugs), "(proofread brief written)" if PR else "")
     # 2 random pages each round beside the samples: findings came only from the same 3-4 pages (2026-10-28)
     import random
     ED = "--editor" in sys.argv
@@ -103,8 +123,9 @@ def prep(rnd, slugs):
             "previous": prev if os.path.exists(prev) else "none",
             "out": os.path.join(DIR, f"hater-round{rnd}.md")}
     body = open(os.path.join(ROOT, "docs", "HATER-PROMPT.md"), encoding="utf-8").read().split("\n---\n", 1)[1]
-    brief = re.sub(r"\{(\w+)\}", lambda mm: fill.get(mm.group(1), mm.group(0)), body)
-    path = os.path.join(DIR, f"round{rnd}-brief.md"); open(path, "w", encoding="utf-8").write(brief)
+    brief = re.sub(r"\{(\w+)\}", lambda mm: fill.get(mm.group(1), mm.group(0)), body) + ("\n\n" + PROOFREAD + "\n" if PR else "")
+    if PR and not ED: snap(rnd, slugs)   # the text the proofreader reads (an editor round already snapped)
+    path =os.path.join(DIR, f"round{rnd}-brief.md"); open(path, "w", encoding="utf-8").write(brief)
     open(os.path.join(DIR, f"round{rnd}-template.txt"), "w").write(RV.template_hash())   # the template this round reviews
     print("brief:", path)
 
@@ -116,6 +137,8 @@ def record(rnd):
     if not os.path.exists(tf): sys.exit(f"no {tf}: run prep {rnd} first (a PASS covers only the template the reviewer saw)")
     th = open(tf).read().strip()
     if th and th != RV.template_hash(): print(f"template changed since round {rnd} prep: its PASS will not cover the current build")
+    bf = os.path.join(DIR, f"round{rnd}-brief.md")
+    pr = os.path.exists(bf) and asks_proofread(open(bf, encoding="utf-8", errors="replace").read())
     for slug, sec in re.findall(r"^## (\S+)[^\n]*\n(.*?)(?=^## |\Z)", txt, re.S | re.M):
         slug = slug.strip("`/")
         if "/" not in slug or not os.path.exists(html_path(slug)): slug = slug.split("/")[-1] or "home"   # a site path stays whole (11-14)
@@ -124,7 +147,7 @@ def record(rnd):
         bad = re.findall(r"\*\*(BLOCKER|MAJOR)\*\*[^\n]*", sec)
         verdict = "PASS" if v and v.group(1) == "PASS" and not bad else "FAIL"
         RV.record(slug, verdict, [b[:160] for b in re.findall(r"\*\*(?:BLOCKER|MAJOR)\*\*[^\n]*", sec)][:60],
-                  reviewer=f"hater round {rnd} (fresh agent, docs/HATER-PROMPT.md)", template=th,
+                  reviewer=f"hater round {rnd} (fresh agent, docs/HATER-PROMPT.md)", template=th, proofread=pr,
                   editor_sha=(json.load(open(_ed)).get(slug) if os.path.exists(_ed := os.path.join(DIR, f"round{rnd}-editor.json")) else None))
         gaps = re.findall(r"\*\*GAP[^*]*\*\*[^\n]*", sec)   # owner 2026-10-28: gaps never block; they go to the to-do list
         if gaps:
@@ -133,7 +156,8 @@ def record(rnd):
         sp = os.path.join(SNAP, f"round{rnd}", fname(slug) + ".txt")
         if verdict == "PASS" and os.path.exists(sp):
             os.makedirs(os.path.join(SNAP, "passed"), exist_ok=True); shutil.copy(sp, os.path.join(SNAP, "passed", fname(slug) + ".txt"))
-        print(f"{slug}: {verdict} ({len(bad)} blocker/major, {len(gaps)} gaps to backlog.md)")
+            if pr: os.makedirs(PROOF, exist_ok=True); shutil.copy(sp, os.path.join(PROOF, fname(slug) + ".txt"))
+        print(f"{slug}: {verdict} ({len(bad)} blocker/major, {len(gaps)} gaps to backlog.md{', proofread whole' if pr else ''})")
 
 def stamped_slugs():
     """Every page with its own PASS on the samples' last approved template: all of them must move together, or a flagged
@@ -167,7 +191,22 @@ def carry(rnd, prev, slugs):
     open(os.path.join(DIR, f"round{rnd}-template.txt"), "w").write(RV.template_hash())
     record(rnd)
 
+def test():   # proofread flag and S12 notice, on temp files only
+    import tempfile
+    assert asks_proofread("brief ...\n\n" + PROOFREAD + "\n") and not asks_proofread(open(os.path.join(ROOT, "docs", "HATER-PROMPT.md"), encoding="utf-8").read())
+    assert not asks_proofread(PROOFREAD[:60]), "a cut-short ask is not a proofread round"
+    with tempfile.TemporaryDirectory() as d:
+        h = "<html><body><p>The median premium here is $1,015 a year.</p></body></html>"
+        assert proofread_stale("louisiana", h, d) == "never proofread whole"
+        open(os.path.join(d, "louisiana.txt"), "w", encoding="utf-8").write(vis_text(h))
+        assert proofread_stale("louisiana", h, d) == ""
+        assert proofread_stale("louisiana", h.replace("1,015", "1,240"), d) == "", "a data refresh (numbers only) is not a text change"
+        assert masked("As of August 31, 2026") == masked("As of September 30, 2026"), "a refresh moves the as-of month too"
+        assert proofread_stale("louisiana", h.replace("a year", "each year"), d), "changed wording must need a new proofread"
+    print("hater --test: proofread 8 cases PASS")
+
 if __name__ == "__main__":
+    if sys.argv[1:2] == ["--test"]: test(); sys.exit()
     if sys.argv[1:2] == ["carry"]: carry(sys.argv[2], sys.argv[3], sys.argv[4:] or stamped_slugs()); sys.exit()
     if sys.argv[1:2] == ["prep"]: prep(sys.argv[2], [a for a in sys.argv[3:] if not a.startswith("--")])
     elif sys.argv[1:2] == ["record"]: record(sys.argv[2])

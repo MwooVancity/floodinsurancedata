@@ -206,6 +206,12 @@ for p in ([] if "--skip-review" in sys.argv else sorted(indexable)):   # skipped
     slug = "home" if p == "/" else m_.group(1) if m_ else None
     if slug and not RV.ok(slug, _th):
         fail("S12", f"{p}: no current hater-review PASS (template {_th}; state/reviews/{slug}.json is {(RV.get(slug) or {}).get('verdict') or 'missing'})")
+# S12 proofread (owner 11-15): one sample per page type read whole by the copy editor since its text last changed; a notice, never a fail
+import hater as _HT
+for _s in RV.SAMPLES:
+    if os.path.exists(_HT.html_path(_s)) and (_why := _HT.proofread_stale(_s)):
+        _ty = "home" if _s == "home" else "state" if os.path.isdir(os.path.join(_HT.ROOT, "data", "states", _s)) else "county"
+        notes.insert(0, f"[S12 proofread notice] {_ty} pages ({_s}): {_why}; run hater.py prep <round> {_s} --proofread")   # first: notes print 20
 
 # S14 a ranked gap blocks once it is 3 review rounds old (2026-10-28: "gaps never block" became "gaps never get done")
 _bl = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "state", "reviews", "backlog.md")
