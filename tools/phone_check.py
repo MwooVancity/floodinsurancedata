@@ -38,7 +38,7 @@ if not slugs:
     _bp = os.path.join(ROOT, "data", "states", "built.json")   # plus the largest and smallest state page
     st = sorted(json.load(open(_bp)), key=lambda s: s["units"]) if os.path.exists(_bp) else []
     slugs += list(dict.fromkeys(s["slug"] for s in st[-1:] + st[:1]))
-    slugs += ["/", "/flood-zones/x/", "/flood-zone-map/"]   # 11-12 hater r153: the home page scrolled sideways and was never phone-checked   # 11-06: zone pages shipped a blue-on-blue button for days; P1/P2/P7 only (no county blocks)
+    slugs += ["/", "/flood-insurance/", "/flood-zones/x/", "/flood-zone-map/"]   # 11-15: /flood-insurance/ has the same find box (P9)   # 11-12 hater r153: the home page scrolled sideways and was never phone-checked   # 11-06: zone pages shipped a blue-on-blue button for days; P1/P2/P7 only (no county blocks)
 
 # vw is the DEVICE width, not innerWidth: given wide content a phone widens the layout viewport and zooms the whole
 # page out, so measuring against innerWidth would hide exactly the overflow a reader suffers.

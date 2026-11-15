@@ -15,9 +15,9 @@ floor_per_month,keyword,kind,page
 1000,www disasterassistance gov,generic,
 1000,wrights flood insurance,generic,/
 1000,wright national flood ins,generic,/nfip/
-1000,what will flood insurance cover,generic,
-1000,what does the flood insurance cover,generic,
-1000,what does flood insurance cover,generic,
+1000,what will flood insurance cover,generic,/guides/flood-insurance-contents-coverage/
+1000,what does the flood insurance cover,generic,/guides/flood-insurance-contents-coverage/
+1000,what does flood insurance cover,generic,/guides/flood-insurance-contents-coverage/
 1000,what does a flood insurance policy cover,generic,/nfip/
 1000,water in basement,generic,
 1000,renters insurance with flood coverage,generic,/flood-insurance/renters/
@@ -56,7 +56,7 @@ floor_per_month,keyword,kind,page
 1000,flood vents,generic,/guides/flood-vents/
 1000,flood risk,generic,
 1000,flood insurance with geico,generic,
-1000,flood insurance what does it cover,generic,
+1000,flood insurance what does it cover,generic,/guides/flood-insurance-contents-coverage/
 1000,flood insurance texas,state,/flood-insurance/texas/
 1000,flood insurance renters,generic,/flood-insurance/renters/
 1000,flood insurance quotes,generic,
@@ -91,7 +91,7 @@ floor_per_month,keyword,kind,page
 1000,assistance for fema,generic,
 1000,aonedge,generic,
 1000,allstate insurance flood insurance,generic,/
-1000,allstate flood insurance coverage,generic,
+1000,allstate flood insurance coverage,generic,/guides/flood-insurance-contents-coverage/
 1000,allstate flood insurance,generic,/
 1000,100 year flood,generic,
 100,www fema disaster assistance gov,generic,
@@ -115,7 +115,7 @@ floor_per_month,keyword,kind,page
 100,water clean up basement,generic,
 100,volusia county flood zone map,county,/flood-insurance/volusia-county-fl/
 100,vehicle flood insurance,generic,/
-100,usaa flood insurance coverage,generic,
+100,usaa flood insurance coverage,generic,/guides/flood-insurance-contents-coverage/
 100,usaa flood insurance,generic,/
 100,trip insurance for hurricane season,generic,
 100,trip insurance cover hurricanes,generic,
@@ -296,7 +296,7 @@ floor_per_month,keyword,kind,page
 100,flood insurance for condominiums,generic,/guides/condo-flood-insurance/
 100,flood insurance for apartments,generic,
 100,flood insurance for a condo,generic,/guides/condo-flood-insurance/
-100,flood insurance cover,generic,
+100,flood insurance cover,generic,/guides/flood-insurance-contents-coverage/
 100,flood insurance cost zone x,zone,/flood-zones/x/
 100,flood insurance cost zone ae,zone,/flood-zones/ae/
 100,flood insurance cost zone a,zone,/flood-zones/a/
@@ -346,7 +346,7 @@ floor_per_month,keyword,kind,page
 100,farmers insurance flood insurance,generic,/
 100,farmers flood insurance,generic,/
 100,fannie mae flood insurance requirements,generic,
-100,excess flood insurance coverage,generic,
+100,excess flood insurance coverage,generic,/guides/flood-insurance-contents-coverage/
 100,excess flood insurance,generic,/
 100,engineered flood vents,generic,/guides/flood-vents/
 100,do i need flood insurance,generic,/
@@ -357,7 +357,7 @@ floor_per_month,keyword,kind,page
 100,disaster assistance fema phone number,generic,
 100,dade county flood zone map,county,/flood-insurance/miami-dade-county-fl/
 100,condo flood insurance,generic,/guides/condo-flood-insurance/
-100,commercial flood insurance coverage,generic,
+100,commercial flood insurance coverage,generic,/guides/flood-insurance-contents-coverage/
 100,commercial flood insurance,generic,/
 100,collier county flood zone map,county,/flood-insurance/collier-county-fl/
 100,chubb insurance flood coverage,generic,
@@ -446,21 +446,21 @@ floor_per_month,keyword,kind,page
 10,whatcom county flood zone map,county,/flood-insurance/whatcom-county-wa/
 10,what is flood insurance and what does it cover,generic,
 10,what is covered under flood insurance,generic,/
-10,what exactly does flood insurance cover,generic,
-10,what does usaa flood insurance cover,generic,
+10,what exactly does flood insurance cover,generic,/guides/flood-insurance-contents-coverage/
+10,what does usaa flood insurance cover,generic,/guides/flood-insurance-contents-coverage/
 10,what does renters insurance cover flood,generic,/flood-insurance/renters/
 10,what does nfip cover,generic,/nfip/
-10,what does my flood insurance cover,generic,
-10,what does home flood insurance cover,generic,
+10,what does my flood insurance cover,generic,/guides/flood-insurance-contents-coverage/
+10,what does home flood insurance cover,generic,/guides/flood-insurance-contents-coverage/
 10,what does flood insurance pay for,generic,
 10,what does flood insurance cover in a condo,generic,/guides/condo-flood-insurance/
 10,what does flood insurance actually cover,generic,
 10,what does flood coverage cover,generic,
 10,what does condo flood insurance cover,generic,/guides/condo-flood-insurance/
-10,what does commercial flood insurance cover,generic,
-10,what does allstate flood insurance cover,generic,
+10,what does commercial flood insurance cover,generic,/guides/flood-insurance-contents-coverage/
+10,what does allstate flood insurance cover,generic,/guides/flood-insurance-contents-coverage/
 10,what does a flood policy cover,generic,
-10,what all does flood insurance cover,generic,
+10,what all does flood insurance cover,generic,/guides/flood-insurance-contents-coverage/
 10,wet carpet padding basement,generic,
 10,wet carpet in basement after rain,generic,
 10,wet basement insurance claim,generic,/flood-insurance/claims/
@@ -942,7 +942,7 @@ floor_per_month,keyword,kind,page
 10,minor basement flooding,generic,
 10,minimum flood insurance requirements,generic,
 10,minimum flood insurance coverage required,generic,/
-10,minimum flood insurance coverage,generic,
+10,minimum flood insurance coverage,generic,/guides/flood-insurance-contents-coverage/
 10,minimum deductible for flood insurance,generic,/guides/flood-insurance-deductible/
 10,minimum amount of flood insurance required,generic,/
 10,middlesex county flood zone map,county,/flood-insurance/middlesex-county-ma/
@@ -953,8 +953,8 @@ floor_per_month,keyword,kind,page
 10,mchenry county flood zone map,county,/flood-insurance/mchenry-county-il/
 10,maximum nfip coverage,generic,/nfip/
 10,maximum flood insurance deductible for commercial property,generic,/guides/flood-insurance-deductible/
-10,maximum flood insurance coverage for commercial property,generic,
-10,maximum flood insurance coverage for a multi family 5 building,generic,
+10,maximum flood insurance coverage for commercial property,generic,/guides/flood-insurance-contents-coverage/
+10,maximum flood insurance coverage for a multi family 5 building,generic,/guides/flood-insurance-contents-coverage/
 10,maximum fema assistance,generic,
 10,maui county flood zone map,county,/flood-insurance/maui-county-hi/
 10,master flood insurance policy,generic,/nfip/
@@ -1491,8 +1491,8 @@ floor_per_month,keyword,kind,page
 10,flood insurance deductible,generic,/guides/flood-insurance-deductible/
 10,flood insurance deal,town,
 10,flood insurance dallas,town,
-10,flood insurance covers damage from,generic,
-10,flood insurance coverage for car,generic,
+10,flood insurance covers damage from,generic,/guides/flood-insurance-contents-coverage/
+10,flood insurance coverage for car,generic,/guides/flood-insurance-contents-coverage/
 10,flood insurance cost virginia,state,/flood-insurance/virginia/
 10,flood insurance cost vermont,state,/flood-insurance/vermont/
 10,flood insurance cost utah,state,/flood-insurance/utah/
@@ -1612,7 +1612,7 @@ floor_per_month,keyword,kind,page
 10,fha flood insurance requirements,generic,
 10,fha flood insurance guidelines,generic,
 10,fha flood insurance deductible requirements,generic,/guides/flood-insurance-deductible/
-10,fha flood insurance coverage requirements,generic,
+10,fha flood insurance coverage requirements,generic,/guides/flood-insurance-contents-coverage/
 10,fha and flood insurance,generic,/
 10,fence storm damage insurance,generic,
 10,femadisaster assistance,generic,
@@ -2293,7 +2293,7 @@ floor_per_month,keyword,kind,page
 10,aig flood,generic,
 10,after basement flood,generic,
 10,aflac flood insurance,generic,/
-10,additional flood insurance coverage,generic,
+10,additional flood insurance coverage,generic,/guides/flood-insurance-contents-coverage/
 10,additional flood insurance,generic,/
 10,ada county flood zone map,county,/flood-insurance/ada-county-id/
 10,acord flood insurance,generic,/

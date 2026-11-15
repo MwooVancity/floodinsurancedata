@@ -1116,7 +1116,7 @@ if len(states) == 51:   # contents guide (KWP 11-14 "flood insurance contents co
 <p class="mut">FEMA OpenFEMA NFIP Policies v3, as of {_ASOF_TXT}. A unit is FEMA's policyCount on each policy, summed. Each policy is counted by the zone it is rated in, which can differ from the zone on today's map. Buildings without NFIP flood insurance are not in these counts.</p>
 <div class="card"><h2>Is my building in one?</h2><p class="stand">{rule("sfha_zones")}</p><p class="stand">To see the zone FEMA's map shows at your building, put the pin on it in the <a href="/flood-zone-map/">flood zone map</a>.</p></div>
 <div class="card"><h2>How likely is the 100-year flood?</h2><p class="stand">{rule("odds_30")}</p><p class="stand">{rule("fema_outside_third")}</p></div>
-<div class="card"><h2>Must I buy flood insurance there?</h2><p class="stand">{rule("purchase_answer")} {rule("lender_any_zone")}</p></div>
+<div class="card"><h2>Am I required to buy flood insurance there?</h2><p class="stand">{rule("purchase_answer")} {rule("lender_any_zone")}</p></div>
 <div class="card"><h2>Floodplain in the wider sense</h2><p class="stand">{rule("floodplain_any")}</p></div>
 <div class="card"><h2>Policy units in zones A and V, state by state</h2><p class="stand">The share runs from {_flo[1]["sfha_share_units"]}% in {_the(_flo[0])} to {_fhi[1]["sfha_share_units"]}% in {_the(_fhi[0])}. The table lists {_nst(_fpr)}, most policy units first.</p>
 <table><thead><tr><th>State</th><th>Policy units rated in zones A or V</th><th>Policy units in force</th></tr></thead><tbody>{_ftr}</tbody></table>

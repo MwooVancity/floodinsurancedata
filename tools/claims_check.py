@@ -423,8 +423,8 @@ if __name__ == "__main__":
         bh = open(os.path.join(ROOT, "dist", "guides", "buying-a-house-in-a-flood-zone", "index.html"), encoding="utf-8").read()
         rr = open(os.path.join(ROOT, "dist", "guides", "risk-rating-2", "index.html"), encoding="utf-8").read()
         lg = open(os.path.join(ROOT, "dist", "guides", "loma-lomr", "index.html"), encoding="utf-8").read()
-        tg = open(os.path.join(ROOT, "dist", "guides", "flood-insurance-contents-coverage", "index.html"), encoding="utf-8").read()
-        fg = open(os.path.join(ROOT, "dist", "guides", "100-year-floodplain", "index.html"), encoding="utf-8").read()
+        _rd = lambda g: (lambda f: open(f, encoding="utf-8").read() if os.path.exists(f) else "")(os.path.join(ROOT, "dist", "guides", g, "index.html"))   # code review 11-15: a guide not built (n==0 / fewer than 10 states) is read as "", so its FP0/T guard runs instead of a crash
+        tg, fg = _rd("flood-insurance-contents-coverage"), _rd("100-year-floodplain")
         bad = check_guides(pg, zx) + check_condo(cg) + check_deductible(dg) + check_vents(vg) + check_private(pv) + check_rr2(rr) + check_loma(lg) + check_contents(tg) + check_floodplain(fg) + check_order(bh, "wait_30", "start_loan_plain", "O1")
         sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
         from rules_registry import RULES as _RQ
