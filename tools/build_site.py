@@ -165,12 +165,14 @@ if len(states) == 51:   # U.S. figures only once every state is built and gated:
                       # owner 11-15 review: the chain of seven zone links repeated the table above, which links each zone row
                       f'<p class="mut">NFIP policies in force on {_ASOF_TXT}. {_zleft}. Your state page '
                       'breaks this down by every zone code.</p></div>')
-    national = (f'<div class="stats"><div class="stat"><div class="n">{money(_med)}</div><div class="l">U.S. median a year</div></div>'
+    # 11-15: the "How much is flood insurance?" answer sits directly under the H1 and lede, tiles after it (same figures, same
+    # variables, nothing recomputed). Edge: it must not push the state/county lookup off screen 1 (phone_check runs on home).
+    national = (f'<h2>How much is flood insurance?</h2><p class="stand">Existing National Flood Insurance Program (NFIP) policies on single-family primary homes cost a median of {money(_med)} a year, '
+                f'premium plus fees. Half pay between {money(_q[0.25])} and {money(_q[0.75])}, and one in ten pays {money(_q[0.9])} or more.</p>'
+                f'<div class="stats"><div class="stat"><div class="n">{money(_med)}</div><div class="l">U.S. median a year</div></div>'
                 f'<div class="stat"><div class="n">{money(_med / 12)}</div><div class="l">Per month</div></div>'
                 f'<div class="stat"><div class="n">{_units / 1e6:.1f}M</div><div class="l">Policy units in force</div></div></div>'
                 f'<p class="mut">The median and per-month figures are what existing policies on single-family primary homes pay, premium plus fees. Policy units count every NFIP policy unit in force on {_ASOF_TXT}, including condos, rentals and businesses.</p>'
-                f'<h2>How much is flood insurance?</h2><p class="stand">Existing National Flood Insurance Program (NFIP) policies on single-family primary homes cost a median of {money(_med)} a year, '
-                f'premium plus fees. Half pay between {money(_q[0.25])} and {money(_q[0.75])}, and one in ten pays {money(_q[0.9])} or more.</p>'
                 f'<p class="cmp"><b>Buying?</b> Policies first bought in the past year typically pay {money(_new_med)} ({_new_n:,} policies). <a href="#prices">Why sites quote different prices</a> is explained below. National totals are in <a href="/nfip/">the NFIP in numbers</a>'
                 + (', and renters can see <a href="/flood-insurance/renters/">what renters pay</a>' if RENT_ON else '') + '.</p>')   # audit 11-14: home lists every hub (S16 fails()); owner 11-15: short sentences, no run-on
     # hater r5 (home): price drivers, ways to pay less, a quote check and the averages other sites quote, all from the same records
@@ -1201,12 +1203,15 @@ if RENT_ON:
     _rs = sorted(((st, sum(h.values()), _hq({st: h}, 0.5)) for st, h in _rh.items() if sum(h.values()) >= 30), key=lambda r: -r[1])
     _snm = {s["abbr"]: s for s in states} if states and "abbr" in states[0] else {}
     _rtr = "".join(f'<tr><td>{(f'<a href="/flood-insurance/{_snm[st]["slug"]}/">' + html.escape(_snm[st]["name"]) + "</a>") if st in _snm else st}</td><td>{money(md)}</td><td>{n:,}</td></tr>' for st, n, md in _rs)
-    _rk = ["renters_cover", "wait_30", "how_to_buy", "not_covered", "flood_def", "nfip_not_sold", "tx_tenant_notice"]
+    # 11-15: the renter's first question (does my renters policy cover floods?) answered right under the lede, FloodSmart's words
+    # via rule(). Edge: a typed "standard renters insurance never covers" would overclaim; the rule keeps FloodSmart's "most".
+    _rk = ["renters_excl", "renters_cover", "wait_30", "how_to_buy", "not_covered", "flood_def", "nfip_not_sold", "tx_tenant_notice"]
     pg = HEAD.format(title=f"Flood insurance for renters: {money(_rq[0.5])}/yr NFIP median, by state",
                      desc=f"What renters pay for NFIP flood insurance on their belongings: a median of {money(_rq[0.5])} a year on {_rn:,} priced renter policies, by state, from FEMA's own records.",
                      canon=BASE + "/flood-insurance/renters/") + f"""
 <h1>Flood insurance for renters</h1>
 <p class="lede">Renters with a National Flood Insurance Program (NFIP) policy on their belongings paid a median of {money(_rq[0.5])} a year, premium plus fees, across {_rn:,} priced renter policies in force on {_ASOF_TXT}. The middle half paid {money(_rq[0.25])} to {money(_rq[0.75])}.</p>
+<p class="stand"><b>Does my renters insurance cover floods?</b> {rule("renters_excl")}</p>
 <div class="stats"><div class="stat"><div class="n">{money(_rq[0.5])}</div><div class="l">Median / yr, NFIP renter policy</div></div>
 <div class="stat"><div class="n">{money(_rq[0.25])}–{money(_rq[0.75])}</div><div class="l">Middle half / yr</div></div>
 <div class="stat"><div class="n">{_rn:,}</div><div class="l">Priced renter policies</div></div></div>
@@ -1461,7 +1466,9 @@ if _zm_on:
     shutil.copytree(os.path.join(_ST, "vendor"), os.path.join(DIST, "vendor"), dirs_exist_ok=True)
     shutil.copy(os.path.join(_ST, "zonemap.js"), os.path.join(DIST, "zonemap.js"))
 if _zm_on == "all" or "flood-zone-map" in _zm_on:
-    _zkeys = ["zone_codes_list", "purchase_answer", "lender_any_zone", "zone_review", "loma", "loma_fee", "loma_online", "prelim", "fema_asis"]
+    # 11-15: what a blank answer means and why the pin can differ from the lot, in FEMA's words (rule() only). Edges: the
+    # tool's own "no flood zone at this pin" line (zonemap.js) stays the result; this card explains it, never a verdict on an address.
+    _zkeys = ["zone_codes_list", "purchase_answer", "lender_any_zone", "zone_review", "loma", "loma_fee", "loma_online", "prelim", "fema_asis", "nfhl_coverage", "lot_vs_building"]
     # owner 11-15 review: one link per zone on its own line (was seven links chained in one sentence); meanings only from zone_codes_list
     # (rule() on this page), never typed here (code review 11-15)
     _zli = "".join(f'<li><a href="/flood-zones/{k}/">Zone {v[0]}</a></li>' for k, v in ZONES.items() if os.path.exists(os.path.join(DIST, "flood-zones", k, "index.html")))
@@ -1471,6 +1478,7 @@ if _zm_on == "all" or "flood-zone-map" in _zm_on:
 <h1>Flood zone map: find your FEMA flood zone by address</h1>
 <p class="lede">Type an address or use your location, then put the pin on your building. You will see the flood zone FEMA's own map shows there, with its map panel and the date it took effect.</p>
 {_zm_block(rule)}
+<div class="card"><h2>What if no zone shows, or my lot looks split?</h2><p class="stand">{rule("nfhl_coverage")}</p><p class="stand">The zone shown is the one at your pin. {rule("lot_vs_building")}</p></div>
 <div class="card"><h2>What the zones mean</h2>{rule("zone_codes_list")}
 {('<p class="stand">What each zone costs, and what NFIP claims there paid:</p><ul>' + _zli + '</ul>') if _zli else ""}</div>
 <div class="card"><h2>Must I buy flood insurance in my zone?</h2><p class="stand">{rule("purchase_answer")} {rule("lender_any_zone")}</p></div>
