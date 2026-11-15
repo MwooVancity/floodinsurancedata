@@ -5,9 +5,14 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from agg_raw import NAMES
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-path = sorted(glob.glob(os.path.join(ROOT, "data", "kwp", "us-[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9].csv")))[-1]   # 11-15: the Planner export only, never the hand-made -topics/-grow lists (UTF-8, other columns)
-rows = list(csv.DictReader(io.StringIO(open(path, encoding="utf-16").read().split("\n", 2)[2]), delimiter="\t"))
-rows = [r for r in rows if r.get("Keyword", "").strip()]  # drop Google's blank total rows
+# 11-15: every Planner export (us-YYYY-MM-DD.csv or us-YYYY-MM-DD-N.csv, UTF-16), never the hand-made -topics/-grow lists;
+# one keyword in two exports = the newest file's row (files sort by date, then N)
+EXPORTS = sorted(p for p in glob.glob(os.path.join(ROOT, "data", "kwp", "us-*.csv")) if re.fullmatch(r"us-\d{4}-\d\d-\d\d(-\d+)?\.csv", os.path.basename(p)))
+_kw = {}
+for path in EXPORTS:
+    for r in csv.DictReader(io.StringIO(open(path, encoding="utf-16").read().split("\n", 2)[2]), delimiter="\t"):
+        if r.get("Keyword", "").strip(): _kw[r["Keyword"].strip().lower()] = dict(r, Keyword=r["Keyword"].strip().lower())   # drop Google's blank total rows
+rows = list(_kw.values())
 STATES = {s.lower() for s in NAMES.values()}
 import json
 TOWNS = {t.lower() for t in json.load(open(os.path.join(ROOT, "data", "us", "zip_places.json"), encoding="utf-8")).values()}
@@ -61,7 +66,9 @@ def owner(k, kd):   # owner 11-15 "all the keywords": the built page that answer
     for pat, u in ((r"map|by address|what flood zone|my flood zone", "/flood-zone-map/"), (r"renter", "/flood-insurance/renters/"),
                    (r"\bnfip\b|national flood|fema flood insurance", "/nfip/"), (r"required|mandatory|need flood insurance", "/"), (r"claim", "/flood-insurance/claims/"),
                    (r"private", "/guides/private-flood-insurance/"), (r"condo", "/guides/condo-flood-insurance/"),
-                   (r"risk rating", "/guides/risk-rating-2/"), (r"homeowners", "/guides/homeowners-insurance-flooding/"),
+                   (r"risk rating|preferred risk", "/guides/risk-rating-2/"), (r"homeowners|home insurance|house insurance", "/guides/homeowners-insurance-flooding/"),
+                   (r"\bvents?\b", "/guides/flood-vents/"), (r"^flood zones?$|flood zone (lookup|check|search)", "/flood-zone-map/"),
+                   (r"flood insurance (policy|program)", "/nfip/"),
                    (r"loma|lomr|letter of map", "/guides/loma-lomr/"), (r"deductible", "/guides/flood-insurance-deductible/"),
                    (r"contents", "/guides/flood-insurance-contents-coverage/"), (r"buying|buy a house", "/guides/buying-a-house-in-a-flood-zone/"),
                    (r"zip", "/flood-insurance/zip/"), (r"cost|how much|price|average|flood insurance$", "/")):
