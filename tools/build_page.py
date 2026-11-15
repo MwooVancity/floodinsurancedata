@@ -317,8 +317,9 @@ def _cost_parts():
                      f"<li><b>Median annual cost</b><span>{m('cost_p50', money(P['p50']))}</span></li></ul>"
                      f"<p class='note'>Suppressed percentile spread: fewer than {tp('threshold', 'const.spread_min', q='spread_min')} policies with a valid recorded cost.</p>")
     else:
-        cost_lead = (f"In {CS}, typically about {m('cost_p50', money(P['p50']))} a year ({m('cost_mo', money(P['p50'] / 12))} a month), "
-                     f"fees included. Half of homeowners here pay between {m('cost_p25', money(P['p25']))} and "
+        # r198: the base is policies, not homeowners; named once, then "half pay" (F1: opening at most 40 words)
+        cost_lead = (f"In {CS}, single-family primary-home NFIP policies typically cost about {m('cost_p50', money(P['p50']))} a year ({m('cost_mo', money(P['p50'] / 12))} a month), "
+                     f"fees included. Half pay between {m('cost_p25', money(P['p25']))} and "
                      f"{m('cost_p75', money(P['p75']))}. To check a quote, use the checker at the top.")
         cost_body = (spread_svg() + "<p class='note'>Each policy's annual cost (premium plus the federal policy fee, "
                      "reserve fund assessment and HFIAA surcharge), single-family primary residences. The bar is the middle "

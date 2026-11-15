@@ -1,5 +1,5 @@
 {
- "hash": "86ad936254f52b6f4ccb97aef679af901e8de8b5912c7f287f758719882a2212",
- "date": "2026-11-14",
- "note": "11-15 rule text splits (wait_exceptions, contents_basement), TWIA name with source, costliest-years note, calendar plain words + gate regex; main session wrote and read"
+ "hash": "60cd14a8233a2e1a270c90c32dfed1cbe3e275a629a250f41d86eb2ef8ce94db",
+ "date": "2026-11-15",
+ "note": "r198 MAJOR: cost card opening names policies not homeowners; gate A2b + test_gate mutation; main session wrote and read"
 }

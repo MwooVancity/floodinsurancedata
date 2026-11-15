@@ -96,6 +96,7 @@ MUTATIONS = [   # (defect class from THE EVIDENCE table, what we reintroduce, ex
      if "Both are premiums only" in PAGE else sub("(premiums only, before fees)", '(premiums only, before fees) <span data-claim="{&quot;word&quot;: &quot;most&quot;, &quot;cond&quot;: [&quot;share_below&quot;, &quot;&gt;&quot;, 50]}">Most</span> pay below.'), None),
     ("2 prose vs numbers", "free-typed 'climb toward'", "B2", sub("(premiums only, before fees)", "(premiums only, before fees). Bills climb toward it"), None),
     ("3 rows called homes", "IA records labelled homes", "A2", sub("</span> records from homes", "</span> homes"), None),
+    ("3 rows called homes", "policies labelled homeowners (r198)", "A2b", sub("fees included. Half pay between", "fees included. Half of homeowners here pay between"), None),
     ("4 cross-panel", "filed count called 'paid'", "C3", sub("</span> NFIP flood claims and", "</span> paid NFIP flood claims and"), None),
     ("5 rating vs percentile", "percentile without its basis", "A4", PAGE.replace("A separate FEMA measure, loss per dollar of building value, is higher here than in about", "Flood risk is higher here than in about"), None),
     ("6 attribution", "FEMA panel credited to NOAA", "A1", sub(STORM, '<p class="src" data-src="ml_total">Source: NOAA NCEI.'), None),

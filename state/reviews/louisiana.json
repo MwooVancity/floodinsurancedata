@@ -1,8 +1,11 @@
 {
  "slug": "louisiana",
- "verdict": "PASS",
- "template": "9327eb31732df183",
- "defects": [],
- "reviewer": "hater round 197 (fresh agent, docs/HATER-PROMPT.md)",
- "notes": ""
+ "verdict": "FAIL",
+ "template": "4c6a4f91d332e273",
+ "defects": [
+  "**MAJOR** \"Half of homeowners here pay between $866 and $1,289 .\" | the base is NFIP policies on single-family primary homes (287,832 of them), not homeowners; "
+ ],
+ "reviewer": "hater round 198 (fresh agent, docs/HATER-PROMPT.md)",
+ "notes": "",
+ "proofread": true
 }
