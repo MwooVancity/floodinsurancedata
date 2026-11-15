@@ -13,10 +13,10 @@ Most helpful flood-insurance page for every US place a homeowner or buyer search
 
 ## Next, in order
 1. Template batch (below): code review medium DONE 11-15 (8 findings fixed, stamp 821f8e5cd818). WAITING 2026-11-16 UTC (last template ship 11-15 03:14 UTC; release.py refuses a second): fix the rule-text items below after a raw re-read, one S12 proofread review of home/louisiana/palm-beach/new-york (~80k, light), one ship.
-2. After ship: `prose_check.py --record` lowers the baseline to today's 0 faults (ratchet then holds every page at 0).
-3. Guides: build the next one only when a live guide shows impressions in GSC (none have yet); queue in "Guides" below.
-4. Outreach batch once guides settle: editor gate (`hater.py prep --editor`), owner approves list + text, Claude sends.
-5. 12-01 Actions reset: Flood Map Age data pull via `tools/cloud_run.py` (one forced refresh a month, batch every queued field).
+2. WAITING 2026-11-16 (after the ship): `prose_check.py --record` lowers the baseline to today's 0 faults (ratchet then holds every page at 0).
+3. WAITING 2026-11-22 (weekly GSC read): guides: build the next one only when a live guide shows impressions in GSC (none have yet); queue in "Guides" below.
+4. WAITING 2026-11-16 (after the template ship, so the reviewed text is final): outreach batch: editor gate (`hater.py prep --editor`), owner approves list + text, Claude sends.
+5. WAITING 2026-12-01 Actions reset: Flood Map Age data pull via `tools/cloud_run.py` (one forced refresh a month, batch every queued field).
 
 ## Template batch (next site-wide release; built 11-14, uncommitted until code review, not shipped)
 In it: papers prose rewrite (plain-words cards, shorter Results/Limitations, Price Gap "exact order is not reliable"); hub prose rewrite (home, /nfip/, zones, guides, methodology, about, data; long rule runs split); county template (papers card explains the five groups, 0-county state lines dropped, LOMA paragraph split, "Is it rising?" from the trend card, "52.8% of these policies pay a premium, before fees, below..."); link-only sentences removed on home and /nfip/; footer gains "Guides" (S16 caught /guides/ orphaned); new guide /guides/flood-insurance-contents-coverage/ (U.S. 81% of 2,320,412 SF primary-home policies carry contents; WV 43.8% to DC 95.3%; claims_check --guides 27 mutations).
