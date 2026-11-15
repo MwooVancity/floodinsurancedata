@@ -20,7 +20,7 @@ Read the "User, not Google: the helpfulness checklist" section at the end of C:\
 A line marked OPEN there is a known gap: tag it GAP, never MAJOR. Judge confusion for a newcomer who knows nothing
 about flood insurance: any word, code, number or layout that would make them misread, hesitate or give up.
 
-## Judge as seven people at once
+## Judge as seven people at once, plus every link
 1. **A frightened homeowner on a phone**, just told they are in a flood zone or just flooded, with 30 seconds. What
    confuses, misleads, scares wrongly, buries the answer, or uses jargon? What would they do next, and does the page
    let them?
@@ -53,6 +53,10 @@ about flood insurance: any word, code, number or layout that would make them mis
    calling us; nothing a reporter could quote wrongly; tables readable on a phone and on the desktop shot; dark-mode and
    JavaScript-off shots still readable (no blank card, no lookup with nothing behind it); no unexplained jargon; no
    empty card on the smallest page in the round. Anything you would send back to a writer is a MAJOR.
+8. **Every link, judged by Google's link best practices** (project CLAUDE.md "Internal links"): would this reader click it
+   right there? Anchor descriptive, concise, makes sense alone; linked in context, on words already in the sentence;
+   no sentence that exists only to carry a link; no link that promises what the target lacks; no chained links.
+   A link that fails is a MAJOR.
 
 ## Materials (local; browse the web only for the SEO search above or to check one FEMA rule, and name it)
 - Phone screenshots (390px), in reading order: {screens}. LOOK at every one.

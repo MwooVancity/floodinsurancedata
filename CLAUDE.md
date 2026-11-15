@@ -1,65 +1,64 @@
 # floodinsurancedata.com: rules
 State and next moves: PLAN.md (read at session start, update after every batch). History: git. Two docs only; this file under 8 KB. Global CLAUDE.md applies, not repeated.
-Session start: report deploys since last session (`gh run list`, `git log` "publish:", live sitemap count) and `tools/actions_check.py` (minutes, refused runs); fix any failed run.
-Run from this folder; nothing shared with calcscrape or river. Global project-manager rule applies; "Nothing left missing" only when PLAN.md "Next" is fully done, dated items included (hook `~/.claude/hooks/plan-gate.mjs`).
-ONLY GOAL (HARD, owner 11-09): maximum helpfulness, information gain, Google HCU. Every change names which one it moves; none = don't build. "Nothing to do but wait" is never true: when nothing in Next is doable today, run the top-3 compare (PLAN Next) on every keyword group and build its gaps the same session.
+Session start: deploys since last session (`gh run list`, live sitemap count) + `tools/actions_check.py`; fix any failed run. Nothing shared with calcscrape or river. "Nothing left missing" only when PLAN "Next" is done (hook plan-gate.mjs).
+ONLY GOAL (HARD, owner 11-09): helpfulness, information gain, Google HCU; every change names which it moves, none = don't build. Never "nothing to do": run the top-3 compare (PLAN Next) on a keyword group and build its gaps.
 
 ## Reader (HARD)
-US homeowner or buyer at one place, on a phone, 30-60 seconds, urgent. Above tables, in order: how risky, am I required, cost in my zone, is it rising, what floods pay here, can I pay less; plus urgency and next steps (where to buy, 30-day wait, limits). One static page per place from public federal data. Reader beats SEO. Reviews judge the checklist in `docs/HATER-PROMPT.md`.
+US homeowner or buyer at one place, on a phone, 30-60 s, urgent. Above tables, in order: how risky, am I required, cost in my zone, is it rising, what floods pay here, can I pay less; then next steps (where to buy, 30-day wait, limits). Every page opens with the answer in plain words (NFIP spelled out once) and, where rows exist, a find-your-county lookup on screen 1 (owner 11-14). Reader beats SEO. Reviews use `docs/HATER-PROMPT.md`.
 
 ## Truth (HARD)
 - Wrong, mislabelled or misleading is the one unforgivable sin. Label every base (median/mean, premium/cost, homes/all policies). Never fake, estimate or recall a figure; null and a gap line beat a guess.
-- Every public dataset that changes the decision is shown with source and as-of date; withhold only if wrong, misleading, padding or no mechanism. A reader question with no dataset = a printed gap line; a dataset answering no question = left out.
-- No quote, advice prose, "safe / you should" verdict, hedging, premium-rise or premium-estimate calculator. Quote checker and ZIP lookup stay.
-- Every page prints what the data cannot say: your premium, private prices, your exact zone (link FEMA's map), why prices rise. Aggregates only, never record- or address-level NFIP data.
-- Address tool (owner 11-06, 11-08): never compute, draw or store a zone; for a confirmed pin show FEMA's live zone, panel, date, base flood elevation / AO depth (feet only, one zone only) and map letters (LOMR date at the pin; LOMA counts within 150 m, never names or case numbers) as returned, labelled "FEMA's map, not an official determination", every zone within 15 m; a failed lookup prints nothing.
-- Datasets: NFIP Policies v3, Claims v3 (FEMA codes 98/99 out), NRI, Disaster Declarations, Housing Assistance Owners (flood only), Community Status Book, IA Multiple-Loss, NOAA Sea Level, FEMA NFHL (US cloud). Cut on purpose (`card_spec.py`): Census take-up, NOAA storm events, tile maps; FEMA's take-up (penetration) card restored by the owner 11-08.
-- Data traps: SUM `policyCount`, never count rows; negative premiums are refunds; claims `countyCode` may not match the property county.
-- Builder: numbers via `tp()`/`m()`; size words `claim()`; law `rule()` (exact quote read this session); county word `UNIT`; shares `_share_words()`. Never type a number, date, law or source into a template. New figure: state base and blanks, recompute from raw first. No paragraph twice; shared definitions on `/methodology/`.
-- Rule guardrails (each failure happened): raw source text only (a search summary is a lead); scope in the sentence (program, form, occupancy, lender, state); keep the source's strength ("at least", "may"); every sentence quoted, inference cut; two official sources disagree = print only what both support; one example is not a rule; `recheck` re-reads live text, unreachable sources go in `state/manual-rule-read.json` (183 days max); new FEMA codes labelled from the data dictionary. FEMA and bot-walled sites: read via the US runner (`fema-probe.yml`).
+- A label names what the source records, never more (11-14: IA rows called "damage records", ~30% have no damage; LOMA layer rows called LOMAs though LOMR-F is mixed in; Pima and Maricopa both called "bordering"). Use the source's own category; a mixed group gets one label per part.
+- Every dataset that changes the decision shows source and as-of; a question with no dataset = a printed gap line; a dataset answering no question = left out. Every page prints what the data cannot say (your premium, private prices, your exact zone).
+- No quote, advice, verdict, hedging, premium-rise or premium estimate. Aggregates only. Address tool: FEMA's live answer as returned, "FEMA's map, not an official determination"; a failed lookup prints nothing.
+- Datasets, cuts, address-tool and rule detail: PLAN "Reference". Traps: SUM `policyCount`; negative premiums are refunds; claims `countyCode` may differ from the property county.
+- Builder: numbers `tp()`/`m()`, size words `claim()`, law `rule()` (exact quote read this session), county word `UNIT`. Never type a number, date, law or source into a template. No paragraph twice.
+- Rules: raw source text only; scope in the sentence; keep the source's strength; every sentence quoted, inference cut; two sources disagree = print what both support. FEMA/bot-walled: US runner `fema-probe.yml`.
 
 ## Site (HARD)
-- 51 states; counties (median floor `metrics.CONST["min_priced"]` = 30, gate C14); ZIPs fold into the county page; no city pages; ceiling ~2,000.
-- Counties last (owner 11-07): 20 a day, queue "kw" > 0 only; live pages stay indexed.
-- At most 25 new pages a day, all kinds together (owner 11-14); a release adding more stops.
-- No stuffing, doorway, near-duplicate pages, fake freshness, hidden text. One colour system; answers on screen 1; static, no client frameworks. No card or page-length caps.
-- No paid referrals before a licensing + FTC check; no ads before a 4-week Search Console review.
-- Owner alone: domain, Search Console, ads and consent banner, publisher identity (site anonymous), opening pages to the index, paid referrals, cutting any block.
+- 51 states, counties (median floor 30), no city pages, ceiling ~2,000. At most 25 new pages a day, all kinds (`new_pages_cap.py`, owner 11-14). Counties 20/day after the money groups.
+- Template text (on every county/state page) changes at most once a day, batched, reviewed (PLAN "Template batch"); same-day fix-on-fix only for wrong live text (11-14: 6 site-wide releases in a day, one dropped 312 state links).
+- No stuffing, doorway, near-duplicates, fake freshness, hidden text. No ads before the 4-week Search Console review; no paid referrals before a licensing + FTC check.
+- Owner alone: domain, Search Console, ads, publisher identity, opening pages to the index, paid referrals, cutting any block, money, sends.
 
-## Internal links (HARD, owner 11-08; google_gate S16 = `tools/linkcheck.py`, tests in test_calc.py)
-- State/county pages link home, state, up to 6 bordering counties, each named zone's page, every `linkcheck.HUBS` hub. Home links every state and hub; a state every live county; zone pages their top 10 counties (Z8). S16 fails a missing hub, broken link, orphan.
-- Anchor = destination in searcher's words ("Zone AE", "Harris County"), never "here". Links in the sentence that needs them; no link blocks or footer farms.
-- A new page type joins `HUBS` with home and state links the same day; a hub linked from under half of state + county pages is a defect.
+## Internal links (HARD, owner 11-14, replaces 11-08; S16 = `tools/linkcheck.py`)
+Follow Google's "Link best practices" (developers.google.com/search/docs/crawling-indexing/links-crawlable, read 11-14): every page linked from at least one other page; link related pages "in context"; anchor "descriptive, reasonably concise, and relevant" and makes sense alone; never "click here"/"read more"/empty; no keyword cramming; don't chain links in a sentence; real `<a href>` only; "no magical ideal number of links". Test: would a reader click it right there?
+- Structure only is enforced: breadcrumb home > state > county; home lists every state and hub; a state every county; /guides/ every guide; zone pages their top counties. S16 fails a broken link, an orphan, or a county without its state link.
+- Topic links per page only: where the page's own sentence covers the topic, on words already there; never a sentence added for a link, never "on every page", no link-count target (calcscrape model).
+- No link blocks, footer farms, "related" boxes. A link must not promise what the target lacks (a paper that does not list the county is named, not linked).
 
-## Backlinks (HARD, owner 11-08)
-Every keyword group gets a link asset, target list and pitch with one exact figure (PLAN "Backlinks"); Claude builds, owner sends. Never buy, swap or farm links.
+## Outreach and backlinks (HARD)
+Claude drafts; sends from the owner's Gmail only after the owner approves each batch's final list and text; one email per organization, ever (outreach guard). Before any batch, every linked page passes `hater.py prep <round> <pages> --editor` (phone, desktop, dark, no-JS screenshots + Forbes-editor reviewer) and `tools/outreach_gate.py` on send day. Never buy, swap or farm links.
+
+## Owner accounts (HARD, 11-14)
+Read-only in the owner's Google Ads, Search Console, Cloudflare, GitHub, Gmail: no saving plans, no setting or location changes, no sign-ups. A tool that would save or change anything: stop and say so first (a Keyword Planner run saved a plan and switched its location).
 
 ## Decide before building (HARD)
-Name the scoreboard number it moves; none = delete it. Each defect becomes a check with a mutation test the same day; reader-harm logic gets one oracle check. Phone bytes (gzipped) and tokens are the hot paths; never trade a wrong-number check for speed. A build writes no tracked file; a step skips when its input did not change.
+Name the scoreboard number; none = delete it. Each defect becomes a check with a mutation test the same day. A step skips when its input did not change.
 
 ## Commands
-- `python -I` always. Build `build_all.py`; gates `release.py` (build, gate, truth proof, mutations, factory, phone, google_gate); `recheck.py` independent recompute.
-- Code bug review before ship (owner 11-14): `release.py --ship` stops unless `tools/code_stamp.py` matches (/code-review medium, every finding fixed, then `--stamp`); `--hotfix` exempt.
-- Ship only `release.py --ship` (`--hotfix "reason"` skips only the review, only for wrong live text; `--live` = live gate). No wrangler by hand; release.py deploys locally only when GitHub never started the deploy job (11-14 minutes block).
-- Data runs in the cloud (`refresh-data.yml`, `publish-counties.yml`); locally only build and gates. Private repo = 2,000 Actions min/month: a forced refresh costs ~60-100 min, so batch new fields into one forced run (11-14: 33 refresh runs, 1,606 min, used the month up). No emails; jobs fail closed. One background job, one writer, pull first. Backlog `state/reviews/backlog.md` (S14).
+- `python -I` always. Build `build_all.py`; gates `release.py`; ship only `release.py --ship` (`--hotfix "reason"` only for wrong live text, skips only the content review). Deploy is deploy.yml; release.py deploys locally only when GitHub never starts it. No wrangler by hand.
+- Code bug review before ship: `release.py --ship` stops unless `code_stamp.py` matches; stamp only code you reviewed this session (`/code-review medium`, every finding fixed). Never restamp another agent's or a later edit unread.
+- While release.py runs: no edits to tools/, dist/, CLAUDE.md-listed state files; one release at a time; a stopped release is rerun whole (11-14 mixed commit).
+- Data runs in the cloud (2,000 Actions min/month: batch new fields into one forced refresh). One background job, one writer per file, pull first. Never regex or backslash code through a heredoc: Write/Edit.
+
+## Agents and workflows (HARD, 11-14)
+Before launch, 5-step every prompt: say the cost; builders and reviewers never run release.py, test_factory, test_site_factory or phone_check (the ship step runs them once); no background shells or polling; read-only agents say so. Flag a redundant running task at once with its cost.
 
 ## Every fix
-- Wrong live text first (`--hotfix`). Work the latest `hater-round<N>.md`; each BLOCKER/MAJOR gets a `fixlog-round<N>.md` line (defect, root cause, fix, proof); fix the class at its source. Anything the gates passed: `docs/GATE-FIX-PROMPT.md`.
-- Screen-1 figures live in `metrics.py`, recomputed independently. Beat #1: give what the top 3 give, or a gap line.
+- Wrong live text first. Each review BLOCKER/MAJOR gets a `fixlog-round<N>.md` line (defect, root cause, fix, proof); fix the class at its source; a third fix of one thing = wrong target.
+- Beat #1: give what the top 3 give, or a gap line.
 
 ## One-shot a batch
-- Likely failure first; `ast.parse` each edited file. Read gate.py word rules first (A6, B2 `claim()`, E2, V1, F1 40-word openings, truth-proof banned phrases). New metric field: `metrics.py --refresh`.
-- Screen 1 = answers only; P4: quote checker inside screen 2 (390x844).
-- Fast loop: `build_counties.py --only <slugs>` (+ `--all` for queued, in review/) + gate; then ONE release.py, one light review, ship, one live read.
+Likely failure first; `ast.parse` each edit; gate.py word rules first (V1 no typed numbers, F1 40-word openings). New metric: `metrics.py --refresh`. Loop: `build_counties.py --only a,b` + gate; one release, one review, ship, one live read.
 
 ## Reviews (HARD)
 - Name the defect gates cannot catch first; none = no review. Say level and cost. Once per batch; a FAIL re-reviews that page only.
-- Light: one cheap-model agent, changed cards, text only, ~50k (measured 115k at 7 pages: keep to changed cards). Full (~320k): redesign or new source, owner's OK.
-- S12: samples home, louisiana, palm-beach-county-fl, new-york-county-ny on the template hash cover all, except `review.flags()` pages: own PASS or a same-kind example at most 2x out.
-- `hater.py prep <round> <slugs> --local --light`, fresh agent, `hater.py record <round>`; unchanged text: `hater.py carry <round> passed <slugs>`. PASS = zero BLOCKER/MAJOR; fixlog read after its own list.
+- Light (~50k): one cheap-model agent, changed text only. Full/editor (~250-320k): new page type, redesign or outreach.
+- S12: samples home, louisiana, palm-beach-county-fl, new-york-county-ny cover the template; a carry needs a word-level visible-text diff of every committed page showing only the reviewed change.
 
-## Reader tools ship standard (HARD)
-Truth table tied to rules_registry; Python oracle = page JS; edge suites (Feb 29, Dec 31, Hawaii/Guam, 0, negative, 1e9, letters, monthly-for-yearly); fuzz (no crash/NaN/verdict word); Chromium + WebKit + JS off; kill switch `tools/tools_flags.json`; 3 samples for 2 weeks, then all; rule wording checked by a second model. One tool URL.
+## Reader tools (HARD)
+Truth table tied to rules_registry; Python oracle = page JS; edge suites; fuzz; Chromium + WebKit + JS off; kill switch `tools_flags.json`.
 
-## Labels are claims (HARD, owner 11-08: "we keep shipping what gates miss")
-Gates checked number = data, not label = data. Every "left out / only / excluded / not final / costliest / largest / since" is checked against the data it labels (gate C10-C14); a table or range that drops rows says which; rank by value, never file order. Reviewers: label-vs-data is MAJOR, never MINOR. A new data shape (empty, one row, reordered, huge, date edge) becomes a case in `tools/test_factory.py` (per-place pages) or `tools/test_site_factory.py` (national pages) the same day; both run in release.
+## Labels are claims (HARD, owner 11-08)
+Every "left out / only / excluded / costliest / largest / since / bordering" is checked against its data (gates C10-C14); a table that drops rows says which; rank by value. Label-vs-data is MAJOR. A new data shape becomes a case in `test_factory.py` / `test_site_factory.py` the same day.
