@@ -203,7 +203,7 @@ home = HEAD.format(title="Flood insurance cost by state and county (FEMA data)",
     canon=BASE + "/") + f"""
 <section class="hero"><p class="kicker">NFIP records · {"50 states and DC" if len(states) == 51 else str(len(states)) + " states"} (not Puerto Rico or other U.S. territories) · {len(places)} counties</p>
 <h1>What flood insurance costs in your state</h1>
-<p class="lede">What people with federal flood insurance actually pay where you live, whether you must buy it, and how fast it starts. Every figure comes from FEMA's own records of existing policies and claims, not from quotes.</p>
+<p class="lede">What people with federal flood insurance actually pay where you live, whether you are required to buy it, and how fast it starts. Every figure comes from FEMA's own records of existing policies and claims, not from quotes.</p>
 {national}
 {prov}
 <input id="s" placeholder="Type your state or county…" aria-label="Find your state or county" autocomplete="off"><p id="nomatch" class="mut" aria-live="polite"></p>{'<p>Or <a href="/flood-insurance/zip/">look up a ZIP code</a>.</p>' if (_zm_zip == "all" or "zip" in _zm_zip) else ""}</section>
@@ -241,7 +241,7 @@ hub = HEAD.format(title="Flood insurance by state and county (FEMA data)",
     desc="Every published state and county: what NFIP policyholders pay, whether coverage is required, claims history and flood risk. Public federal data.",
     canon=BASE + "/flood-insurance/") + f"""
 <section class="hero"><p class="kicker">{len(states)} state{"" if len(states) == 1 else "s"} · {len(places)} counties</p><h1>Flood insurance by state and county</h1>
-<p class="lede">Find your state or county to see what people there pay for National Flood Insurance Program (NFIP) policies, whether you must buy one, and what floods have paid out.</p>
+<p class="lede">Find your state or county to see what people there pay for National Flood Insurance Program (NFIP) policies, whether you are required to buy one, and what floods have paid out.</p>
 <input id="s" placeholder="Type your state or county…" aria-label="Find your state or county" autocomplete="off"><p id="nomatch" class="mut" aria-live="polite"></p>{'<p>Or <a href="/flood-insurance/zip/">look up a ZIP code</a>.</p>' if (_zm_zip == "all" or "zip" in _zm_zip) else ""}</section>
 <div class="card"><h2>States</h2>
 <div class="tw"><table id="st"><thead><tr><th>State</th><th>Median / yr</th><th>Insured units</th><th>NFIP claims on record</th><th>Paid on them</th></tr></thead>
@@ -796,7 +796,7 @@ if len(states) == 51:
 <h3>What a policy won't pay</h3><p class="stand">{rule("flood_def")} {rule("not_covered")} {rule("wind_excl")}</p>
 <h3>FEMA disaster aid and insurance</h3><p class="stand">{rule("aid_insurance")}</p>
 <h3>Appeals and rebuilding</h3><p class="stand">{rule("claim_appeal")} {rule("substantial_damage")}</p>
-<h3>At a closing</h3><p class="stand"><b>What a lender must require.</b> {rule("lender_amount")}</p>
+<h3>At a closing</h3><p class="stand"><b>What a lender requires.</b> {rule("lender_amount")}</p>
 <p class="stand"><b>If you do not buy it (45 days).</b> {rule("lender_force")}</p>
 <p class="stand"><b>If you think the zone is wrong.</b> {rule("zone_review")}</p>
 <p class="stand"><b>Buying a home that has a policy.</b> {rule("seller_assign")}</p>
@@ -1144,7 +1144,7 @@ wr(os.path.join(DIST, "index.html"), home.replace("__PRIVATE__", ('Private polic
                                                                   "their prices are not in FEMA's records.") if _priv_on else "Private flood policies' prices are not in FEMA's records."))
 if len(states) == 51:   # /nfip/ closing rules: the private-policy quote moved to the private guide (owner 11-15 review); linked by its own words
     wr(os.path.join(DIST, "nfip", "index.html"), _nfip_pg.replace("__PRIVNFIP__", '<p class="stand"><b>Private policies.</b> The <a href="/guides/private-flood-insurance/">private flood insurance guide</a> '
-                                                                  'says when a lender must accept one.</p>' if _priv_on else ""))
+                                                                  'quotes the law on when lenders accept one.</p>' if _priv_on else ""))   # hub_words W-T1: no duty word outside rule()
 
 # ---- /flood-insurance/renters/ (PAGE QUEUE row 6: "flood insurance for renters"). Base: NFIP policies in force marked tenant,
 # residential occupancy, no building coverage, contents above $0; priced = policyCost above $0. claims_check.py --renters recomputes.

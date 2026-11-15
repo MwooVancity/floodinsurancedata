@@ -1,5 +1,5 @@
 {
- "hash": "67411a7140ddbf783c8722795be9fffed53b9577396f9649933562ba2c87f5d2",
+ "hash": "47906ddcd075c5cc3bb4b7f6fbcbbaaf03dd3bfaa011e76d0e443dd8dda25330",
  "date": "2026-11-15",
- "note": "town_check T4 reads the new 'flood zone map' titles; main session wrote and read"
+ "note": "hub_words fixes: duty words out of hub text, flood-calendar limit sentence de-duplicated; main session wrote and read"
 }
