@@ -1,0 +1,11 @@
+{
+ "ships": [
+  {
+   "date": "2026-11-15",
+   "template": true,
+   "commit_before": "237fb1e39a8e11c768507b33525cb5a0b5fd25e4",
+   "pages": 380
+  }
+ ],
+ "hash": "4dd7cca77501f245"
+}

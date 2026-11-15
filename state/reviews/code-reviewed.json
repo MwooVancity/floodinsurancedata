@@ -1,5 +1,5 @@
 {
- "hash": "6c61837ecde1d180d6b5a24d927a702d4aba39c53eb53c6d9ea58bf0d66fd4a4",
+ "hash": "47906ddcd075c5cc3bb4b7f6fbcbbaaf03dd3bfaa011e76d0e443dd8dda25330",
  "date": "2026-11-15",
- "note": "outreach_guard.py + release step; main session wrote and read"
+ "note": "hub_words fixes: duty words out of hub text, flood-calendar limit sentence de-duplicated; main session wrote and read"
 }

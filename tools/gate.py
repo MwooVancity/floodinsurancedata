@@ -126,6 +126,10 @@ for mm in re.finditer(r'<span data-m="(\w+)"([^>]*)>([^<]*)</span>([^<]{0,60})',
     in_tile = page[max(0, mm.start() - 12): mm.start()].endswith("<span>") and k in tiles
     words = tiles[k] if in_tile else " ".join(after.split()[:3])
     if not re.search(rf"\b({need})\b", words, re.I): fail("A2", f"{k} ({shown}) named '{words.strip()[:40]}', needs {need}")
+# A2c (review 11-15): one figure printed as both what it is and what it is not ("81.0% of policy units ... (not 81.0% of all buildings")
+_vt = re.sub(r"<[^>]+>", "", page)
+for mm in re.finditer(r"(\d[\d,.]*%)[^.<]{0,200}?\bnot \1", _vt):
+    fail("A2c", f"{mm.group(1)} given as both the figure and what it is not")
 # A2b (r198): a premium figure counts policies, never people: "homeowners ... pay <cost>" overclaims the base
 for mm in re.finditer(r'\bhomeowners\b[^.<]{0,60}<span data-m="(cost_\w+|prem_\w+|trend_cost)"', page, re.I):
     fail("A2b", f"{mm.group(1)} labelled as what homeowners pay; the base is NFIP policies")
