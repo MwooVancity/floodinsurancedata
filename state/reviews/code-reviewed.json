@@ -1,5 +1,5 @@
 {
- "hash": "0e1ee0d74601524b10892b74b400781de04773459a4379c5a280aeb488755d78",
+ "hash": "b47f32632b4cce6889ccffafe8a64fcf2eb8562978022291885df3cc7f45e267",
  "date": "2026-11-15",
- "note": "kwp_rank reads every Planner export + mapping rules; main session wrote and read"
+ "note": "actions_check watch_problems W1-W4 + live_zonemap error reasons; main session wrote and read"
 }
