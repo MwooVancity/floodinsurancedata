@@ -69,6 +69,7 @@ JS = """() => {
       if (k < (big ? 3 : 4.5)) out.faint.push(e.tagName + ' ' + k.toFixed(2) + ':1 "' + e.textContent.trim().slice(0, 30) + '"'); }
   }
   const top = s => { const e = document.querySelector(s); return e ? e.getBoundingClientRect().top + scrollY : null; };
+  out.find = top('input#s');   // P9 (owner 11-14, found below screen 1 on 11-15): the find-your-place box on hub pages
   out.median = top('[data-m="cost_p50"]'); out.map = top('a.btn'); out.jump = top('nav.jump'); out.compare = top('#compare');
   { const q = [...document.querySelectorAll('[data-ans]')]; out.qlast = q.length ? Math.max(...q.map(e => e.getBoundingClientRect().top + scrollY)) : null; out.qn = q.length; }
   out.hidden = [...document.querySelectorAll('details:not([open])')].filter(d => d.querySelector('.card, table, [data-m]')).length;
@@ -103,6 +104,7 @@ with sync_playwright() as p:
         # P8 (audit 11-10, parent live check 11-12): the six reader answers (risk, required, cost, rising, pays, pay less) start on screen 1
         if not site and r["qn"] != 6: bad.append(f"P8 {r['qn']} of the six reader answers printed (a missing one needs its gap line)")
         if not site and (r["qlast"] is None or r["qlast"] > H): bad.append(f"P8 last of the {r['qn']} screen-1 answers starts at {r['qlast']} (screen 1 ends {H})")
+        if r["find"] is not None and r["find"] > H: bad.append(f"P9 find-your-state-or-county box not on screen 1 (top {r['find']:.0f}, screen 1 ends {H})")
         if r["hidden"]: bad.append(f"P5 {r['hidden']} collapsed <details> hide data")
         if r["overlap"]: bad.append(f"P6 chart labels overlap: {r['overlap'][:3]}")
         print(("PHONE FAIL " if bad else "PHONE PASS ") + f"{s} (height {r['height']}px = {r['height'] / H:.1f} screens)")
