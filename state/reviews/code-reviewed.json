@@ -1,5 +1,5 @@
 {
- "hash": "821f8e5cd818da61b91ee7c04d16e48f850a2a08986f5564eb3a79b725109eb1",
+ "hash": "86ad936254f52b6f4ccb97aef679af901e8de8b5912c7f287f758719882a2212",
  "date": "2026-11-14",
- "note": "11-15 template batch: /code-review medium on 0853000a2..HEAD + fixes, 8 findings all fixed, read by main session"
+ "note": "11-15 rule text splits (wait_exceptions, contents_basement), TWIA name with source, costliest-years note, calendar plain words + gate regex; main session wrote and read"
 }

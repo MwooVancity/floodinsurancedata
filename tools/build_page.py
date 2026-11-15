@@ -895,8 +895,9 @@ def card_events():
     _ev_years = {int(y) for e in _ev for y in e["years"]}   # hater r5/r6: Louisiana's 1995 (4th costliest year) sat under the catch-all label
     _top5 = sorted(((y, by[str(y)][1]) for y in years), key=lambda x: -x[1])[:5]
     _unnamed = [(y, p) for y, p in _top5 if int(y) not in _ev_years]
-    _unnamed_note = ("<p class='note'>Among the five costliest years, these have no flood of their own in the table above: "
-                     + ", ".join(str(y) for y, _ in _unnamed) + " (their totals are in the yearly chart above).</p>") if _unnamed else ""
+    # review 11-15: "these have ...: 1995" read wrong for one year; gate C15 reads the "no flood of their own in the table above:" phrase
+    _unnamed_note = ("<p class='note'>Of the five costliest years, those with no flood of their own in the table above: "
+                     + and_list(str(y) for y, _ in _unnamed) + " (totals in the yearly chart above).</p>") if _unnamed else ""
     # test_factory 11-08: "costliest" is the largest by dollars, never the first row in FEMA's file order
     _ev1 = max((e for e in _ev if not re.match(r"not a named", e["name"], re.I)), key=lambda e: e.get("paid") or 0, default=None)
     _pp = bool(_ev + _ev_all) and all(e.get("paid_pct") is not None for e in _ev + _ev_all)   # 11-08: the column shows once the refresh carries it

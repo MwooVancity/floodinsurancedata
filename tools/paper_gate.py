@@ -135,7 +135,7 @@ def check(key, page, csv_text, cards, T, sm=None):
         bad.append(f"{key}: not yet opened by the owner, must be noindex and out of the sitemap (M3.5)")
     # owner 11-14: the plain-words answer and the county lookup come first; its median is the recomputed median
     pl = page[page.find('id="plain"'):page.find('class="lede"')] if 'id="plain"' in page else ""
-    _pm = re.search(r"(?:median listed county (?:it (?:is|was)|the busiest month held)) ([\d.]+)%", text(pl))
+    _pm = re.search(r"(?:median listed county (?:it (?:is|was)|the (?:busiest|peak) month held)) ([\d.]+)%", text(pl))
     if not pl or 'id="ps"' not in pl or not _pm or float(_pm[1]) != round(statistics.median(t["v"] for t in T), 1) if T else False:
         bad.append(f"{key}: plain-words answer, its median ({_pm and _pm[1]}) or the county lookup missing or wrong")
     asof = next(csv.DictReader(io.StringIO(csv_text or "")), {}).get("as_of", "")   # M2.5: the current dated address, listed and built
@@ -268,7 +268,7 @@ if __name__ == "__main__":
         T = truth(recs, key); pages[key] = page
         if "--test" in sys.argv:
             muts = {"section dropped": (page.replace('id="limitations"', 'id="x"'), csv_text, cards),
-                    "plain median wrong": (re.sub(r"(median listed county (?:it (?:is|was)|the busiest month held) )([\d.]+)%", lambda m: f"{m[1]}{float(m[2]) + 1}%", page, count=1), csv_text, cards),
+                    "plain median wrong": (re.sub(r"(median listed county (?:it (?:is|was)|the (?:busiest|peak) month held) )([\d.]+)%", lambda m: f"{m[1]}{float(m[2]) + 1}%", page, count=1), csv_text, cards),
                     "lookup not first": (page.replace('id="plain"', 'id="x"', 1), csv_text, cards),
                     "banned word": (page.replace("</h1>", " the worst counties</h1>", 1), csv_text, cards),
                     "share changed": (re.sub(r"(<td>\w+ fifth</td><td>.*?</td><td>)([\d.]+)%", lambda m: m[1] + "0.1%", page, count=1), csv_text, cards),

@@ -61,10 +61,11 @@ RULES = {
                 "flood this week.",
         "sources": [(FS + "/get-insured/buy-a-policy", "will go into effect 30 days after your date of purchase", "curl")]},
     "wait_exceptions": {
-        "text": "Exceptions in FEMA's flood insurance manual: with a loan secured by the insured property (making, increasing, extending or renewing it), coverage "
-                "you apply for on or before closing can start at the time of the loan closing if the "
-                "insurer gets the form and full amount due in time; the wait is one day when a FEMA map revision newly shows the building in a high-risk zone "
-                "and the insurer gets them within 13 months of the revision's effective date.",
+        # review 11-15: one 80-word run split into the two exceptions, same words and sources
+        "text": "FEMA's flood insurance manual lists two exceptions. With a mortgage: when you are making, increasing, extending or renewing a loan secured "
+                "by the insured property, coverage you apply for on or before closing can start at the time of the loan closing, if the "
+                "insurer gets the form and full amount due in time. With a new map: when a FEMA map revision newly shows the building in a high-risk zone, "
+                "the wait is one day if the insurer gets them within 13 months of the revision's effective date.",
         # 11-03: was "(44 CFR §61.11)" on a 2024 CFR snapshot. Current 61.11(a) gives the 1-day wait for ANY initial purchase in the 13 months
         # after a map revision; the October 2025 manual (what insurers apply) limits it to buildings newly mapped into an SFHA. Rule 4: the
         # narrower case is the one both support, so the page prints the manual's (a reader never reads "1 day" when FEMA applies 30).
@@ -520,9 +521,11 @@ RULES = {
                     ("https://www.maapnext.org/", "These draft maps are not final, cannot be used for insurance or regulatory decisions", "curl"),
                     ("https://www.maapnext.org/", "FEMA is anticipated to release Preliminary Flood Insurance Rate Maps (FIRMs) after completion of its federal review", "curl")]},
     "tx_twia": {   # Texas only
-        "text": "In Texas, a TWIA windstorm policy requires flood insurance when any part of the property is in a V, VE or V1-V30 zone, NFIP cover "
+        # review 11-15: TWIA spelled out once (name read raw from twia.org 11-15)
+        "text": "In Texas, a windstorm policy from the Texas Windstorm Insurance Association (TWIA) requires flood insurance when any part of the property is in a V, VE or V1-V30 zone, NFIP cover "
                 "is available for it, and the structure was built, altered, remodeled or enlarged after September 1, 2009.",
-        "sources": [("https://www.twia.org/flood-requirement", "Flood insurance is required when all three of the following conditions are met", "curl"),
+        "sources": [("https://www.twia.org/", "Texas Windstorm Insurance Association", "curl"),
+                    ("https://www.twia.org/flood-requirement", "Flood insurance is required when all three of the following conditions are met", "curl"),
                     ("https://www.twia.org/flood-requirement", "constructed, altered, remodeled, or enlarged after September 1, 2009", "curl")]},
     "fl_disclosure": {   # Florida only
         "text": "In Florida, a home seller must give the buyer a flood disclosure at or before the sales contract, saying whether the seller knows of "
@@ -613,13 +616,14 @@ RULES = {
     "contents_basement": {
         # r-contents MAJOR 11-15: one 90-word sentence, and the post-1974 scope read as if it covered basements too (the CFR limits
         # basements "regardless of the zone", post-FIRM only for elevated buildings); "not covered" = what "limited to" leaves out
-        "text": "In a basement, in any flood zone, contents coverage pays for only a short list: portable or window air conditioners, "
+        # review 11-15: definition first; the 65-word elevated-building sentence split in two (same conditions)
+        "text": "A basement is a floor below ground level on all sides. "
+                "In a basement, in any flood zone, contents coverage pays for only a short list: portable or window air conditioners, "
                 "clothes washers and dryers, and food freezers (not walk-in) with the food in them. "
                 "Furniture, clothing and other belongings kept there are not covered by contents coverage. "
-                "A basement is a floor below ground level on all sides. "
                 "Each item must be installed where it works and, if needed, connected to power. "
-                "The same short list applies below the lowest elevated floor of an elevated building in FEMA zones A1-A30, AE, AH, AR, V1-V30 or VE, "
-                "if the building was built or substantially improved after 1974, or after the area's first flood insurance rate map took effect if that was later "
+                "The same short list applies below the lowest elevated floor of an elevated building in FEMA zones A1-A30, AE, AH, AR, V1-V30 or VE. "
+                "That holds only if the building was built or substantially improved after 1974, or after the area's first flood insurance rate map took effect if that was later "
                 "(Dwelling Form, 44 CFR Part 61, Appendix A(1)).",
         "sources": [(CFR61, "or in a basement regardless of the zone, is limited to the following items, if installed in their functioning locations and, if necessary for operation, connected to a power source: a. Air conditioning units, portable or window type; b. Clothes washers and dryers; and c. Food freezers, other than walk-in, and food in any freezer.", "curl"),
                     (CFR61, "Coverage for items of property below the lowest elevated floor of an elevated post-FIRM building located in Zones A1-A30, AE, AH, AR, AR/A, AR/AE, AR/AH, AR/A1-A30, V1-V30, or VE", "curl"),
