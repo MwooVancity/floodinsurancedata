@@ -1,5 +1,5 @@
 {
- "hash": "b68ca751449cee78acddcac20be972eeb504a56ed5c6fc9bcee07eaff39e8eab",
+ "hash": "d992030cfa6024eb1a3d8b6d9f087e200d24ebc6693d0aeac8969f81fd4d809a",
  "date": "2026-11-15",
- "note": "kwp_rank reads the Planner export only; main session wrote and read"
+ "note": "kwp_rank --map keyword-to-page map; main session wrote and read"
 }

@@ -45,6 +45,41 @@ if "--queue" in sys.argv:   # reorder state/county-queue.json by Keyword Planner
     json.dump(q2, open(qp, "w", encoding="utf-8"), indent=0, ensure_ascii=False)
     print("queue reordered:", len(q2), "| first 10:", [p["slug"] for p in q2[:10]]); sys.exit()
 
+def owner(k, kd):   # owner 11-15 "all the keywords": the built page that answers each keyword, or why none ("" = none)
+    D = os.path.join(ROOT, "dist")
+    ok = lambda u: u if os.path.exists(os.path.join(D, u.strip("/"), "index.html")) else ""
+    if kd == "zone":
+        z = re.search(r"\bzone (shaded x|ae|ah|ao|ve|a|v|x|d|b|c)\b", k)[1]
+        return ok("/flood-zones/" + {"shaded x": "x", "v": "ve", "b": "x", "c": "x"}.get(z, z) + "/")
+    if kd == "state":
+        return ok("/flood-insurance/" + re.sub(r"^(flood insurance cost|flood insurance|flood zone map) ", "", k).replace(" ", "-") + "/")
+    if kd == "county":
+        m = re.match(r"(.+? (?:county|parish|borough))\b", k)
+        hits = [p["slug"] for p in PLACES if m and p["slug"].rsplit("-", 1)[0].replace("-", " ") == m[1].replace(".", "").replace("'", "")]
+        return ok(f"/flood-insurance/{hits[0]}/") if hits else ok("/flood-insurance/miami-dade-county-fl/") if m and m[1] == "dade county" else ""   # a shared name: the built page answers it
+    if kd == "town": return ""   # city pages: PLAN growth move 6
+    for pat, u in ((r"map|by address|what flood zone|my flood zone", "/flood-zone-map/"), (r"renter", "/flood-insurance/renters/"),
+                   (r"\bnfip\b|national flood|fema flood insurance", "/nfip/"), (r"required|mandatory|need flood insurance", "/"), (r"claim", "/flood-insurance/claims/"),
+                   (r"private", "/guides/private-flood-insurance/"), (r"condo", "/guides/condo-flood-insurance/"),
+                   (r"risk rating", "/guides/risk-rating-2/"), (r"homeowners", "/guides/homeowners-insurance-flooding/"),
+                   (r"loma|lomr|letter of map", "/guides/loma-lomr/"), (r"deductible", "/guides/flood-insurance-deductible/"),
+                   (r"contents", "/guides/flood-insurance-contents-coverage/"), (r"buying|buy a house", "/guides/buying-a-house-in-a-flood-zone/"),
+                   (r"zip", "/flood-insurance/zip/"), (r"cost|how much|price|average|flood insurance$", "/")):
+        if re.search(pat, k): return ok(u)
+    return ""
+
+if "--map" in sys.argv:   # state/keyword-map.csv: every keyword, its floor, kind and owning page; the unowned volume is the build queue
+    PLACES = json.load(open(os.path.join(ROOT, "places.json"), encoding="utf-8"))
+    out = sorted(((low(r["Avg. monthly searches"]), r["Keyword"], kind(r["Keyword"])) for r in rows), reverse=True)
+    out = [(v, k, kd, owner(k, kd)) for v, k, kd in out]
+    with open(os.path.join(ROOT, "state", "keyword-map.csv"), "w", newline="", encoding="utf-8") as f:
+        w = csv.writer(f); w.writerow(["floor_per_month", "keyword", "kind", "page"]); w.writerows(out)
+    tot = collections.defaultdict(lambda: [0, 0, 0, 0])
+    for v, k, kd, u in out: t = tot[kd]; t[0 if u else 2] += v; t[1 if u else 3] += 1
+    for kd, (vo, no, vn, nn) in sorted(tot.items(), key=lambda x: -(x[1][0] + x[1][2])):
+        print(f"{kd:8} owned {vo:>7,}/mo ({no:,} kw) | no page {vn:>7,}/mo ({nn:,} kw)")
+    print("top unowned:", [(v, k) for v, k, kd, u in out if not u][:15]); sys.exit()
+
 by = collections.defaultdict(list)
 for r in rows:
     by[kind(r["Keyword"])].append((low(r["Avg. monthly searches"]), r["Avg. monthly searches"], r["Keyword"]))
