@@ -5,7 +5,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from agg_raw import NAMES
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-path = sorted(glob.glob(os.path.join(ROOT, "data", "kwp", "*.csv")))[-1]
+path = sorted(glob.glob(os.path.join(ROOT, "data", "kwp", "us-[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9].csv")))[-1]   # 11-15: the Planner export only, never the hand-made -topics/-grow lists (UTF-8, other columns)
 rows = list(csv.DictReader(io.StringIO(open(path, encoding="utf-16").read().split("\n", 2)[2]), delimiter="\t"))
 rows = [r for r in rows if r.get("Keyword", "").strip()]  # drop Google's blank total rows
 STATES = {s.lower() for s in NAMES.values()}

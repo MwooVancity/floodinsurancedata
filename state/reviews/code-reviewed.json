@@ -1,5 +1,5 @@
 {
- "hash": "89e0292e09aa06e0675f74719647c0453f0e8b6530de21c24b02722e7323bf60",
+ "hash": "b68ca751449cee78acddcac20be972eeb504a56ed5c6fc9bcee07eaff39e8eab",
  "date": "2026-11-15",
- "note": "title says flood zone map where the FEMA lookup is on (_tool_on zonemap); main session wrote and read"
+ "note": "kwp_rank reads the Planner export only; main session wrote and read"
 }

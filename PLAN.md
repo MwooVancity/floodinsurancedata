@@ -46,7 +46,9 @@ Owner decision: drop the second 21-item table of contents on county/state pages 
 | Repeat Flood | CUT (IA rows one per property per disaster, no base) |
 No new papers for now (owner 11-14: guides over research).
 
-## "Flood zone map" demand (KWP 11-05: ~60x "[county] flood insurance"); SERP read 11-15 (WebSearch, top results only, no traffic numbers)
+## Demand by kind (tools/kwp_rank.py on the 11-05 Planner export, band floors per month; fixed 11-15: it read the newest file, a hand list)
+National heads 38,800 (flood zone map, fema flood map by address, flood insurance: 10K+ each; owners /flood-zone-map/ and home) > states 13,510 (flood zone map <state> 1K+ for FL NJ NY LA NC) > zone meanings 7,530 (x, ae, a, ao 1K+) > counties 7,350 (260 of 271 map keywords already have a page) > towns 3,050 (5,180 keywords; chicago 1K+, rest under 1K). More county or town pages is the smallest prize; the national hubs and state pages are the largest.
+## "Flood zone map" demand; SERP read 11-15 (WebSearch, top results only, no traffic numbers)
 - "[county] flood zone map" (Pinellas, Harris): won by the county's own address viewer (pinellas.gov/flood-maps, HCFCD MAAPnext) and FEMA's map; the rest is local news and spam pages. Reading: searchers want their address on the official map. No new page type; the answer is the address lookup on county pages (WAITING 11-20: address tool to "all" after 7 green nightly tests) and linking the county's own viewer where FEMA's community data names it.
 - "flood zone x meaning": won by private insurers' articles (Kin, Compare.com, Insurify) with definitions only. /flood-zones/x/ already has what none of them shows (zone X cost, share of claims outside A/V). Move: zone pages lead with the definition in plain words (rule-quoted) in the next template batch; no twin page.
 - Owner check still useful (Ahrefs traffic of each #1) before retitling county pages to "flood zone map".
