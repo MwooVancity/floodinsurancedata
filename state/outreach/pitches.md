@@ -48,3 +48,10 @@ Within 48 h, to the declared county's daily + 2 TV consumer reporters: that coun
 ## Send log
 | date | outlet | person | asset | reply | link |
 |---|---|---|---|---|---|
+
+## Batch 1 candidates (11-15; found by web search, NOT yet verified on the official page: verify each address raw on send day)
+| # | Organization | Contact | Page we would link | Why they would link | Status |
+| 1 | LSU AgCenter, Louisiana FloodMaps portal | Patricia Skinner, pskinner@agcenter.lsu.edu (faculty profile; some copies blank) | /flood-insurance/louisiana/ + parish pages | runs Louisiana's flood map portal; residents ask what insurance costs | candidate |
+| 2 | Texas Floodplain Management Association | tfma@tfma.org (TFMA documents) | /flood-insurance/texas/ | member resources for Texas floodplain managers | candidate |
+| 3-10 | to find after the ship: county CRS coordinators (Pinellas, Hillsborough, Monroe, Palm Beach list CRS pages), UF/IFAS county extension offices (flood insurance blog posts), Florida Sea Grant flood insurance page, library guides | | | | open |
+Rule: no form submissions (owner-only); one email per organization ever (outreach guard); each email quotes one figure read from the live page that day.
