@@ -60,7 +60,7 @@ if __name__ == "__main__":
     import base64, os
     root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     try:
-        lw = gh("run", "list", "-R", WATCH, "--limit", "1", "--json", "conclusion,createdAt")
+        lw = gh("run", "list", "-R", WATCH, "-w", "live-lookup.yml", "--limit", "1", "--json", "conclusion,createdAt")   # only the live test, never a one-off run
         remote = {f: base64.b64decode(gh("api", f"repos/{WATCH}/contents/{f}")["content"]).decode("utf-8") for f in WFILES}
     except (subprocess.CalledProcessError, KeyError, ValueError):
         lw, remote = None, {}
