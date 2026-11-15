@@ -32,12 +32,7 @@
     "st-john-the-baptist-parish-la",
     "polk-county-fl"
   ],
-  "zonemap": [
-    "flood-zone-map",
-    "palm-beach-county-fl",
-    "harris-county-tx",
-    "louisiana"
-  ],
+  "zonemap": "all",
   "trend": "all",
   "zip": [
     "zip"
