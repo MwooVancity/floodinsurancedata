@@ -1,11 +1,9 @@
 {
  "slug": "new-york-county-ny",
- "verdict": "FAIL",
- "template": "4c6a4f91d332e273",
- "defects": [
-  "**MAJOR** \"Half of homeowners here pay between $646 and $1,364 .\" | the base is 171 NFIP single-family primary-home policies, not homeowners; in Manhattan, wher"
- ],
- "reviewer": "hater round 198 (fresh agent, docs/HATER-PROMPT.md)",
+ "verdict": "PASS",
+ "template": "5d870b8d135af0dc",
+ "defects": [],
+ "reviewer": "hater round 199 (fresh agent, docs/HATER-PROMPT.md)",
  "notes": "",
  "proofread": true
 }
