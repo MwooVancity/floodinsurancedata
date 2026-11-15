@@ -38,7 +38,7 @@ if not slugs:
     _bp = os.path.join(ROOT, "data", "states", "built.json")   # plus the largest and smallest state page
     st = sorted(json.load(open(_bp)), key=lambda s: s["units"]) if os.path.exists(_bp) else []
     slugs += list(dict.fromkeys(s["slug"] for s in st[-1:] + st[:1]))
-    slugs += ["/", "/flood-zones/x/", "/flood-zone-map/"]   # 11-12 hater r153: the home page scrolled sideways and was never phone-checked   # 11-06: zone pages shipped a blue-on-blue button for days; P1/P2/P7 only (no county blocks)
+    slugs += ["/", "/flood-insurance/", "/flood-zones/x/", "/flood-zone-map/"]   # 11-15: /flood-insurance/ has the same find box (P9)   # 11-12 hater r153: the home page scrolled sideways and was never phone-checked   # 11-06: zone pages shipped a blue-on-blue button for days; P1/P2/P7 only (no county blocks)
 
 # vw is the DEVICE width, not innerWidth: given wide content a phone widens the layout viewport and zooms the whole
 # page out, so measuring against innerWidth would hide exactly the overflow a reader suffers.
@@ -69,6 +69,7 @@ JS = """() => {
       if (k < (big ? 3 : 4.5)) out.faint.push(e.tagName + ' ' + k.toFixed(2) + ':1 "' + e.textContent.trim().slice(0, 30) + '"'); }
   }
   const top = s => { const e = document.querySelector(s); return e ? e.getBoundingClientRect().top + scrollY : null; };
+  out.find = top('input#s');   // P9 (owner 11-14, found below screen 1 on 11-15): the find-your-place box on hub pages
   out.median = top('[data-m="cost_p50"]'); out.map = top('a.btn'); out.jump = top('nav.jump'); out.compare = top('#compare');
   { const q = [...document.querySelectorAll('[data-ans]')]; out.qlast = q.length ? Math.max(...q.map(e => e.getBoundingClientRect().top + scrollY)) : null; out.qn = q.length; }
   out.hidden = [...document.querySelectorAll('details:not([open])')].filter(d => d.querySelector('.card, table, [data-m]')).length;
@@ -103,6 +104,7 @@ with sync_playwright() as p:
         # P8 (audit 11-10, parent live check 11-12): the six reader answers (risk, required, cost, rising, pays, pay less) start on screen 1
         if not site and r["qn"] != 6: bad.append(f"P8 {r['qn']} of the six reader answers printed (a missing one needs its gap line)")
         if not site and (r["qlast"] is None or r["qlast"] > H): bad.append(f"P8 last of the {r['qn']} screen-1 answers starts at {r['qlast']} (screen 1 ends {H})")
+        if r["find"] is not None and r["find"] > H: bad.append(f"P9 find-your-state-or-county box not on screen 1 (top {r['find']:.0f}, screen 1 ends {H})")
         if r["hidden"]: bad.append(f"P5 {r['hidden']} collapsed <details> hide data")
         if r["overlap"]: bad.append(f"P6 chart labels overlap: {r['overlap'][:3]}")
         print(("PHONE FAIL " if bad else "PHONE PASS ") + f"{s} (height {r['height']}px = {r['height'] / H:.1f} screens)")

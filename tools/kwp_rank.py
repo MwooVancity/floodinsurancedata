@@ -70,7 +70,7 @@ def owner(k, kd):   # owner 11-15 "all the keywords": the built page that answer
                    (r"\bvents?\b", "/guides/flood-vents/"), (r"^flood zones?$|flood zone (lookup|check|search)", "/flood-zone-map/"),
                    (r"flood insurance (policy|program)", "/nfip/"),
                    (r"loma|lomr|letter of map", "/guides/loma-lomr/"), (r"deductible", "/guides/flood-insurance-deductible/"),
-                   (r"contents", "/guides/flood-insurance-contents-coverage/"), (r"buying|buy a house", "/guides/buying-a-house-in-a-flood-zone/"),
+                   (r"contents|what (does|will|do)( a| the)? flood insurance( policy)? cover|flood insurance (what does it )?cover", "/guides/flood-insurance-contents-coverage/"), (r"buying|buy a house", "/guides/buying-a-house-in-a-flood-zone/"),
                    (r"zip", "/flood-insurance/zip/"), (r"cost|how much|price|average|flood insurance$", "/")):
         if re.search(pat, k): return ok(u)
     return ""

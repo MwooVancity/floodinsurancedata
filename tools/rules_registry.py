@@ -360,10 +360,14 @@ RULES = {
         "sources": [(CFR64, "with water surface elevations determined", "curl"),
                     (CFR59, "subject to a 1 percent or greater chance of flooding in any given year", "curl")]},
     "zone_ve": {
-        "text": "Zone VE is a coastal high-risk area: land with a 1 percent or greater chance of flooding in any given year, hit by "
-                "tidal floods with fast-moving water, where FEMA has worked out how high the water would reach (44 CFR §59.1, §64.3).",
-        "sources": [(CFR64, "with water surface elevations determined and with velocity, that is inundated by tidal floods", "curl"),
-                    (CFR59, "subject to a 1 percent or greater chance of flooding in any given year", "curl")]},
+        # 11-15: 64.3 calls VE a "coastal high hazard area"; 59.1 defines that term (offshore to the dune, or high velocity wave
+        # action), read raw this session. Edge: "any other area" is kept as "or other land", never "all VE land has waves".
+        "text": "Zone VE is a coastal high hazard area: land with a 1 percent or greater chance of flooding in any given year, inundated by "
+                "tidal floods with velocity, where FEMA has worked out how high the water would reach. The regulation's coastal high hazard area runs from offshore "
+                "to the inland limit of a primary frontal dune along an open coast, plus other land subject to high velocity wave action from storms or seismic sources (44 CFR §59.1, §64.3).",
+        "sources": [(CFR64, "with water surface elevations determined and with velocity, that is inundated by tidal floods (coastal high hazard area)", "curl"),
+                    (CFR59, "subject to a 1 percent or greater chance of flooding in any given year", "curl"),
+                    (CFR59, "extending from offshore to the inland limit of a primary frontal dune along an open coast and any other area subject to high velocity wave action from storms or seismic sources", "curl")]},
     "zone_x": {
         "text": "Zone X is outside the high-risk zones and covers two kinds of land (44 CFR §64.3). FEMA labels the moderate-hazard kind Zone B or Zone X (shaded): land between the limits of the 1 percent flood and the "
                 "0.2-percent-annual-chance (500-year) flood. It labels the minimal-hazard kind Zone C or Zone X (unshaded): land outside the "
@@ -378,15 +382,19 @@ RULES = {
         "sources": [(CFR64, "Area of special flood hazard without water surface elevations determined", "curl"),
                     (CFR59, "subject to a 1 percent or greater chance of flooding in any given year", "curl")]},
     "zone_ao": {
-        "text": "Zone AO is a high-risk area of shallow flooding: shallow water depths and/or unpredictable flow paths between 1 and 3 feet, "
-                "on land with a 1 percent or greater chance of flooding in any given year (44 CFR §59.1, §64.3).",
+        # 11-15 ("flood zone ao" searches): 59.1's "area of shallow flooding" read raw this session; "ponding or sheet flow" is the
+        # regulation's for AO and AH alike, so neither page claims one kind only. Edge: recheck fails if the eCFR wording moves.
+        "text": "Zone AO is a high-risk area of shallow flooding: a 1 percent or greater annual chance of flooding to an average depth of 1 to 3 feet, "
+                "where no clearly defined channel exists and the path of flooding is unpredictable. Such flooding is characterized by ponding or sheet flow (44 CFR §59.1, §64.3).",
         "sources": [(CFR64, "Area of special flood hazards having shallow water depths and/or unpredictable flow paths between (1) and (3) ft", "curl"),
-                    (CFR59, "subject to a 1 percent or greater chance of flooding in any given year", "curl")]},
+                    (CFR59, "with a 1 percent or greater annual chance of flooding to an average depth of 1 to 3 feet where a clearly defined channel does not exist, where the path of flooding is unpredictable", "curl"),
+                    (CFR59, "Such flooding is characterized by ponding or sheet flow", "curl")]},
     "zone_ah": {
-        "text": "Zone AH is a high-risk area of shallow flooding: shallow water depths and/or unpredictable flow paths between 1 and 3 feet, "
-                "where FEMA has worked out how high the water would reach (44 CFR §59.1, §64.3).",
+        "text": "Zone AH is a high-risk area of shallow flooding: a 1 percent or greater annual chance of flooding to an average depth of 1 to 3 feet, "
+                "where FEMA has worked out how high the water would reach. Such flooding is characterized by ponding or sheet flow (44 CFR §59.1, §64.3).",
         "sources": [(CFR64, "between (1) and (3) feet, and with water surface elevations determined", "curl"),
-                    (CFR59, "subject to a 1 percent or greater chance of flooding in any given year", "curl")]},
+                    (CFR59, "with a 1 percent or greater annual chance of flooding to an average depth of 1 to 3 feet", "curl"),
+                    (CFR59, "Such flooding is characterized by ponding or sheet flow", "curl")]},
     "zone_d": {
         "text": "Zone D is land where flood hazards are possible but have not been determined (44 CFR §64.3).",
         "sources": [(CFR64, "D Area of undetermined but possible, flood hazards", "curl")]},
@@ -520,6 +528,48 @@ RULES = {
         "sources": [("https://www.maapnext.org/", "MAAPnext flood maps are currently in draft form", "curl"),
                     ("https://www.maapnext.org/", "These draft maps are not final, cannot be used for insurance or regulatory decisions", "curl"),
                     ("https://www.maapnext.org/", "FEMA is anticipated to release Preliminary Flood Insurance Rate Maps (FIRMs) after completion of its federal review", "curl")]},
+    # 11-15 official map viewers (one sourced sentence each, linked on the viewer's own name). Edge cases:
+    # - the page moves or the wording changes: recheck.py fails the curl excerpt (Pinellas); NJ is Incapsula-walled, so "manual"
+    #   and state/manual-rule-read.json dates it (recheck fails it after 183 days)
+    # - shown on the wrong page: build_page prints nj only when IS_STATE and state NJ, pinellas only on geoid 12103 (checked in dist)
+    # - overclaim: the NJ tool "does not calculate actual risk" and no-indicator is not no-risk, both kept in the sentence
+    # - Florida (FDEM statewide viewer) skipped: no floridadisaster.org page naming one could be read raw 11-15 (floodplain pages
+    #   link none; Know Your Zone is evacuation zones), and a vendor/help-center page is not the official source
+    "nj_flood_tool": {   # NJDEP climatechange/flood-tool page read raw 11-15 in a browser (curl gets an Incapsula wall)
+        "text": "New Jersey's environmental agency (NJDEP) offers <a href='https://dep.nj.gov/climatechange/flood-tool/' rel='noopener'>New Jersey's Flood Indicator Tool</a>, "
+                "a screening tool that shows indicators of potential flood risk on or near a property, among them FEMA flood zones and State Flood Hazard Areas. "
+                "NJDEP says it does not calculate actual risk, and that the absence of indicators does not mean a property is free from flood risk.",
+        "sources": [("https://dep.nj.gov/climatechange/flood-tool/", "This screening tool provides users with information regarding the presence of indicators of potential flood risk on or near a property of interest", "manual"),
+                    ("https://dep.nj.gov/climatechange/flood-tool/", "Flood indicators include waterbodies, watercourses, FEMA Flood Zones, and State Flood Hazard Areas", "manual"),
+                    ("https://dep.nj.gov/climatechange/flood-tool/", "This tool does not calculate actual risk", "manual"),
+                    ("https://dep.nj.gov/climatechange/flood-tool/", "the absence of indicators does not mean that a property is free from flood risk", "manual")]},
+    "pinellas_floodmaps": {   # pinellas.gov/floodmaps/ (pinellas.gov/flood-maps redirects there) read raw 11-15 (curl)
+        "text": "Pinellas County points residents to its own <a href='https://floodmaps.pinellascounty.org/' rel='noopener'>Pinellas County Flood Map Service</a> to find their flood risk. "
+                "The county also maps County Flood Hazard Areas, land with a 1% or greater chance of flooding in any given year, which it treats as high-risk and subject to specific regulation, like FEMA's high-risk zones.",
+        "sources": [("https://pinellas.gov/floodmaps/", "Visit the Pinellas County Flood Map Service to find your flood risk", "curl"),
+                    ("https://pinellas.gov/floodmaps/", "Pinellas County Flood Hazard Areas (FHAs) are areas that have a 1% or greater chance of flooding in any given year", "curl"),
+                    ("https://pinellas.gov/floodmaps/", "Like with the FEMA SFHA, these floodplains are also considered high-risk areas and subject to specific regulation", "curl")]},
+    # 11-15 /flood-zone-map/: what a blank answer means and why a pin can differ from the lot. Edge cases:
+    # - the catalog JSON breaks lines with a literal "\n": every excerpt sits inside one line (checked against recheck's own
+    #   normalization 11-15), else recheck would report a false "excerpt gone"
+    # - overclaim: FEMA says other products "may" cover a gap, so the page says "may"; the lot/building line names only what
+    #   44 CFR 70 says (a portion of a property; parcel or structure compared), no claim about any one address
+    "nfhl_coverage": {   # FEMA's NFHL catalog record (same item as fema_asis), read raw 11-15 (curl)
+        "text": "FEMA says its digital flood map data covers over 90 percent of the U.S. population and new data is added continuously; for areas it does not cover, "
+                "other FEMA flood hazard products may. The simplest way to reach FEMA's flood hazard data is <a href='https://msc.fema.gov/portal/home' rel='noopener'>FEMA's Map Service Center</a>.",
+        "sources": [("https://www.arcgis.com/sharing/rest/content/items/ae38b6f94eaf4abf97f986fa01921e13?f=json", "NFHL digital data covers over 90", "curl"),
+                    ("https://www.arcgis.com/sharing/rest/content/items/ae38b6f94eaf4abf97f986fa01921e13?f=json", "percent of the U.S. population. New and revised data is being added", "curl"),
+                    ("https://www.arcgis.com/sharing/rest/content/items/ae38b6f94eaf4abf97f986fa01921e13?f=json", "If you need information for areas not covered by the NFHL", "curl"),
+                    ("https://www.arcgis.com/sharing/rest/content/items/ae38b6f94eaf4abf97f986fa01921e13?f=json", "which provide coverage for those areas", "curl"),
+                    ("https://www.arcgis.com/sharing/rest/content/items/ae38b6f94eaf4abf97f986fa01921e13?f=json", "simplest way for you to access the flood hazard data", "curl")]},
+    "lot_vs_building": {   # 44 CFR 70.5 and 70.9, read raw 11-15 (eCFR versioner XML, curl --compressed)
+        "text": "FEMA's rules allow that only a portion of a property may be in a high-risk zone: when FEMA reviews a property's zone, it compares either the ground "
+                "of an entire legally defined parcel of land or the ground next to a structure with the elevation of the base flood (44 CFR §70.5, §70.9).",
+        "sources": [(CFR70, "build one or more structures on a portion of property that may be included inadvertently in a Special Flood Hazard Area", "curl"),
+                    (CFR70, "the ground elevations of an entire legally defined parcel of land or the elevation of the lowest adjacent grade to a structure with the elevation of the base flood", "curl")]},
+    "renters_excl": {   # renters page 11-15: FloodSmart buy-a-policy read raw (curl); "most" kept (the source's strength)
+        "text": "FEMA's FloodSmart site says most homeowners and renters insurance does not cover flood damage.",
+        "sources": [(FS + "/get-insured/buy-a-policy", "Most homeowners and renters insurance does not cover flood damage", "curl")]},
     "tx_twia": {   # Texas only
         # review 11-15: TWIA spelled out once (name read raw from twia.org 11-15)
         "text": "In Texas, a windstorm policy from the Texas Windstorm Insurance Association (TWIA) requires flood insurance when any part of the property is in a V, VE or V1-V30 zone, NFIP cover "
@@ -629,6 +679,35 @@ RULES = {
                     (CFR61, "Coverage for items of property below the lowest elevated floor of an elevated post-FIRM building located in Zones A1-A30, AE, AH, AR, AR/A, AR/AE, AR/AH, AR/A1-A30, V1-V30, or VE", "curl"),
                     (CFR61, "having its floor below ground level on all sides", "curl"),
                     (CFR61, "A building for which construction or substantial improvement occurred after December 31, 1974, or on or after the effective date of an initial Flood Insurance Rate Map (FIRM), whichever is later", "curl")]},
+    # ---- coverage guide 11-15 (KWP "what does flood insurance cover", ~7,900/mo): FloodSmart buy-a-policy read raw this session (curl --compressed) ----
+    "cover_two": {
+        "text": "NFIP (National Flood Insurance Program) flood insurance has two parts: building coverage, for physical damage to the insured building, "
+                "and contents coverage, for your belongings inside it. They are typically bought separately and have separate deductibles.",
+        "sources": [(FS + "/get-insured/buy-a-policy", "Building and contents coverage are typically purchased separately and have separate deductibles", "curl"),
+                    (FS + "/get-insured/buy-a-policy", "Covers physical damage to the insured structure", "curl"),
+                    (FS + "/get-insured/buy-a-policy", "Covers physical damage to the personal property inside the building", "curl")]},
+    "building_what": {
+        "text": "FloodSmart lists what building coverage pays for: electrical and plumbing systems; furnaces and water heaters; refrigerators, stoves and built-in "
+                "appliances such as dishwashers; permanently installed carpeting, cabinets, paneling and bookcases; window blinds; foundation walls, anchorage "
+                "systems and staircases; detached garages; and fuel tanks, well water tanks and pumps, and solar energy equipment. For a home, building coverage "
+                "goes up to <b>$250,000</b>.",
+        "sources": [(FS + "/get-insured/buy-a-policy", "Covers physical damage to the insured structure: Electrical and plumbing systems. Furnaces and water heaters.", "curl"),
+                    (FS + "/get-insured/buy-a-policy", "Refrigerators, stoves and built-in appliances like dishwashers. Permanently installed carpeting. Permanently installed cabinets, paneling and bookcases. Window blinds.", "curl"),
+                    (FS + "/get-insured/buy-a-policy", "Foundation walls, anchorage systems and staircases. Detached garages. Fuel tanks, well water tanks and pumps and solar energy equipment.", "curl"),
+                    (FS + "/get-insured/buy-a-policy", "Building policies cover up to $250,000 of flood damage", "curl")]},
+    # ---- floodplain guide 11-15 (KWP "floodplain" / "100 year flood", ~11,000/mo): 44 CFR 59.1 read raw this session (eCFR, curl --compressed) ----
+    "floodplain_100": {
+        "text": "In FEMA's rules, the land in the flood plain with a 1 percent or greater chance of flooding in any given year is the special flood hazard area. "
+                "The flood with a one percent chance of being equalled or exceeded in any given year is the base flood, also called the 100-year flood (44 CFR §59.1).",
+        "sources": [(CFR59, "Area of special flood hazard is the land in the flood plain within a community subject to a 1 percent or greater chance of flooding in any given year", "curl"),
+                    (CFR59, "Base flood means the flood having a one percent chance of being equalled or exceeded in any given year", "curl"),
+                    (CFR59, "100-year flood see base flood", "curl")]},
+    "floodplain_any": {
+        "text": "The same rules use flood plain more widely: any land area that can be flooded by water from any source (44 CFR §59.1).",
+        "sources": [(CFR59, "Flood plain or flood-prone area means any land area susceptible to being inundated by water from any source", "curl")]},
+    "sfha_zones": {
+        "text": "On FEMA's flood insurance rate map, the special flood hazard area usually shows as zones A, AO, AH, A1-30, AE, A99, AR, VO, V1-30, VE or V (44 CFR §59.1).",
+        "sources": [(CFR59, "After detailed ratemaking has been completed in preparation for publication of the flood insurance rate map, Zone A usually is refined into Zones A, AO, AH, A1-30, AE, A99, AR, AR/A1-30, AR/AE, AR/AO, AR/AH, AR/A, VO, or V1-30, VE, or V", "curl")]},
 }
 # owner 11-11 move: the place page keeps the cap's first clause; the full cap rule lives on /nfip/#rules (same sources, no new wording)
 RULES["cap_short"] = {"text": RULES["cap"]["text"].split(";")[0] + " (42 U.S.C. §4015(e)).",

@@ -1,8 +1,8 @@
 {
  "slug": "new-jersey",
  "verdict": "PASS",
- "template": "63f77b4626326a26",
+ "template": "0ec27de37c505fe7",
  "defects": [],
- "reviewer": "hater round 125 (fresh agent, docs/HATER-PROMPT.md)",
+ "reviewer": "hater round 205 (fresh agent, docs/HATER-PROMPT.md)",
  "notes": ""
 }
