@@ -89,6 +89,8 @@ Edge cases kept: K1 never print a search volume; K2 a KWP file without "United S
 - 01-05: .git size (241 MB 11-11, ~12 MB/day); at 1 GB move built pages to a 'site' branch.
 - 01-08 zone pages position 15 or better; 01-29 /flood-zone-map/ 200+ impressions; 02-01 claims page 1+ referring domain or 100+ impressions; 02-03 continue / consolidate / stop.
 
+## Live lookup test (11-15)
+Nightly in the public repo MwooVancity/flood-lookup-watch (03:41 UTC, free minutes); actions_check reads it (W1 red, W2 older than 2 days, W3 the two test copies differ: push tools/live_zonemap.py + test_zonemap.py there, W4 unreachable). First runs 11-15: FEMA's map service answered HTTP 504 Gateway Time-out for all 5 addresses (FEMA's side, as on 11-13); the page matched FEMA (showed no zone, linked FEMA's map). Watch: two red nights in a row = check whether the lookup should say plainly that FEMA's service is not answering.
 ## Runs on its own
 Daily `publish-counties.yml` (paused with Actions minutes), monthly `refresh-data.yml` (skips when current), `map-status.yml`, nightly `watch.yml`. Session start: `tools/actions_check.py` reads refused/failed runs.
 
