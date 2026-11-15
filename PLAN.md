@@ -98,7 +98,7 @@ Daily `publish-counties.yml` (paused with Actions minutes), monthly `refresh-dat
 Open vs closed claims; "denied"; a period or base left out; a promise of AI citations; IndexNow as proof of indexing; a premium estimate or rise.
 
 ## Owner only
-Decisions, sends, money, identity. Bing: Re-submit sitemap in Bing Webmaster. GA: mark home IP as internal traffic. AdSense "Request review". Price Gap to index. Drop the second table of contents (yes/no). Actions spending limit or public repo (optional).
+Decisions, sends, money, identity. (Bing sitemap DONE: read 11-15, submitted + crawled 11-15, Success, 412 URLs, 0 errors.) GA: mark home IP as internal traffic. AdSense "Request review". Price Gap to index. Drop the second table of contents (yes/no). Actions spending limit or public repo (optional).
 
 ## Reference
 - Datasets: NFIP Policies v3, Claims v3 (codes 98/99 out), NRI, Disaster Declarations, Housing Assistance Owners (flood only), Community Status Book, IA Multiple-Loss, NOAA Sea Level, FEMA NFHL (US cloud). Cut on purpose (`card_spec.py`): Census take-up, NOAA storm events, tile maps.
