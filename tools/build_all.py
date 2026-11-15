@@ -25,5 +25,12 @@ from papers import SPECS as _PS; _papers = {s["key"] for s in _PS}   # every pap
 for name in os.listdir(fdir):   # prune any page folder that is neither a county that passed this run nor a state
     if os.path.isdir(os.path.join(fdir, name)) and name not in places and name not in _states and name not in _papers:
         shutil.rmtree(os.path.join(fdir, name), ignore_errors=True)
-codes += [run("build_states.py"), run("build_site.py")]
+_bj = os.path.join(ROOT, "data", "states", "built.json"); _rd = lambda: open(_bj, "rb").read() if os.path.exists(_bj) else b""
+_before = _rd()
+codes += [run("build_states.py")]
+# 11-14: county pages link only the states in built.json, which build_states writes AFTER them; when that list changed this run
+# (a state blocked last run, passing now), the county pages were built from the old list and lost their state link (312 shipped
+# that way). Rebuild them from the new list; the fingerprint skips every county whose inputs did not change.
+if _rd() != _before: codes += [run("build_counties.py")]
+codes += [run("build_site.py")]
 sys.exit(1 if any(codes) else 0)   # a blocked page fails the build, so nothing downstream can ship around it

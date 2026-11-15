@@ -1,5 +1,5 @@
 {
- "hash": "6ae313eee009d66154dec130f49d171497df664ec41948cc5bb411cb607aeff7",
+ "hash": "f1a87d9f7ec8af191975d022f425290799165e10559c8663a620640e0af41eca",
  "date": "2026-11-14",
- "note": "11-14: outreach editor gate (hater --editor mode, review.editor_sha, outreach_gate.py 10 cases), smoke-tested prep+record on guides/loma-lomr; reviewed inline"
+ "note": "11-14: guide links on existing words (2) + LOMA label narrowed with link; build_all reruns counties when built.json changes; bordering edit reverted to the template batch; reviewed inline"
 }

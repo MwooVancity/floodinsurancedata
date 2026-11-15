@@ -355,7 +355,7 @@ def card_zone_cost():
 
 def _gap_parts():
     MX.compare("prem_median", "frp_median")   # like-for-like or it raises
-    gap_lead = ((m('share_below', str(P['share_below']) + '%') + " of single-family primary-home policies in " + CS + " have a premium below FEMA's full-risk premium, so "
+    gap_lead = ((m('share_below', str(P['share_below']) + '%') + " of single-family primary-home policies in " + CS + " have a premium below FEMA's <a href='/guides/risk-rating-2/'>full-risk premium</a>, so "   # 11-14: link on words already there, no added sentence
                  + claim("those policies' bills are rising", "rising", ("share_below", ">", 0)) + " toward it." if P.get("share_below") else
                  "No policy here pays less than FEMA's full-risk price.")
                 + f" Median premium {m('prem_median', money(PREM_MED))}, full-risk {m('frp_median', money(P['frp_median']))} (premiums only, before fees).")
@@ -500,7 +500,7 @@ def _nfhl_lines():   # map debate 11-06: map age, revisions, exemption rulings, 
         t = sum(g.values()); q = lambda k: m('loma_n', format(g[k], ','), q=k)
         qs = lambda ks, nm: m('loma_n', format(sum(g[k] for k in ks), ','), q=nm)   # hcu 11-07: seven groups read as noise; three answer "does asking work"
         out.append(f"FEMA's map service lists {m('loma_n', format(t, ','), q='all')} rulings for owners here who asked FEMA to take a building or lot out of the "
-                   f"high-risk zone (Letters of Map Amendment): {qs(('bldg', 'whole', 'part'), 'removed')} took the building or some or all of the lot out, "
+                   f"high-risk zone (<a href='/guides/loma-lomr/'>rulings in FEMA's LOMA map layer</a>): {qs(('bldg', 'whole', 'part'), 'removed')} took the building or some or all of the lot out, "
                    f"{qs(('bldg_out', 'out'), 'as_mapped')} found it already outside the zone as mapped, {q('denied')} were denied"
                    + (f", {q('other')} other or mixed" if g['other'] else "") + f". {rule('loma_fee')} {rule('loma_online')} {rule('ec_get')} Rulings for owners who applied (not your home's odds; FEMA's map service gives no dates for them), counted by "
                    f"the towns and areas FEMA lists in this {UNIT}, so a city that reaches into a neighboring {UNIT} counts in full here." if t else
@@ -1418,7 +1418,7 @@ def card_takeup():   # owner 11-08 ("do it"): share of homes insured, FEMA's NFI
     body = (f"<ul class='kv'><li><b>Homes with NFIP flood insurance</b><span>{tp('pen_overall', 'data.penetration.overall_pct', pct)}</span>{vs_state('pen_overall', 'data.penetration.overall_pct', pct)}</li>"
             + (f"<li><b>High-risk-zone homes insured</b><span>{tp('pen_sfha', 'data.penetration.sfha_pct', pct)}</span></li>" if s_ is not None and s_ <= 100 else "")
             + f"<li><b>Residential policies in FEMA's count (each condo building counts once)</b><span>{tp('pen_contracts', 'data.penetration.contracts')}</span></li></ul>"
-            "<p class='note'>FEMA's share of residential buildings here with an NFIP policy. NFIP only: private flood insurance is not "
+            "<p class='note'>FEMA's share of residential buildings here with an NFIP policy. NFIP only: <a href='/guides/private-flood-insurance/'>private flood insurance</a> is not "
             "counted, so the real share of insured homes can be higher.</p>")
     return card(f"How many homes in this {UNIT} carry flood insurance?", lead, body,
                 src(["pen_overall", "pen_sfha"], pretty_date(pen["asof"]), RETR))
