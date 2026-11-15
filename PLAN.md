@@ -12,8 +12,8 @@ Most helpful flood-insurance page for every US place a homeowner or buyer search
 ~50,000 pageviews a month at ~$30 RPM (third-party estimate). Milestones (GA4 pageviews/month): 02-2027 2,000; 05 8,000; 08 20,000; 11 50,000; two misses in a row = re-plan. Links are the lever. Ads only after the 4-week GSC review and above 1,000 sessions/month; referrals after licensing + FTC check.
 
 ## Next, in order
-1. WAITING 2026-11-16 00:00 UTC (release.py refuses a second template ship on 11-15 UTC; last one 03:14 UTC): template batch ship. Done 11-15: code review medium (8 fixed), rule text, r198 proofread (one MAJOR "homeowners" label fixed + gate A2b). r199 (4 samples) + r201 (Sonoma, covers the 4 claims-high flagged pages) PASS; google_gate PASS, code stamp matches. Only step left: `release.py --ship` after 00:00 UTC, then read live louisiana + palm-beach + home. Review MINORs (r198/r201) go to the next batch, none wrong text.
-2. WAITING 2026-11-16 (after the ship): `prose_check.py --record` lowers the baseline to today's 0 faults (ratchet then holds every page at 0).
+1. SHIPPED 2026-11-15 21:4x UTC as a wrong-text hotfix (owner: "why tonight instead of now"): flood zone map titles, FEMA address lookup on every page (msc.fema.gov NFHLQuery), homeowners + SFHA label fixes, hub duty-word fixes. Read live: Pinellas + Louisiana titles, no "Half of homeowners", new SFHA sentence, lookup block, zonemap.js on msc. Two release stops first (town_check T4 title regex, hub_words W-T1/W-E2): workflow builders must run `release.py` without --ship, never a hand-picked check list.
+2. DONE 11-15: prose_check --record, baseline 0 faults.
 3. WAITING 2026-11-22 (weekly GSC read): guides: build the next one only when a live guide shows impressions in GSC (none have yet); queue in "Guides" below.
 4. WAITING 2026-11-16 (after the template ship, so the reviewed text is final): outreach batch: editor gate (`hater.py prep --editor`), owner approves list + text, Claude sends.
 5. WAITING 2026-12-01 Actions reset: Flood Map Age data pull via `tools/cloud_run.py` (one forced refresh a month, batch every queued field).
