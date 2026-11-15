@@ -16,7 +16,7 @@ US homeowner or buyer at one place, on a phone, 30-60 s, urgent. Above tables, i
 - Rules: raw source text only; scope in the sentence; keep the source's strength; every sentence quoted, inference cut; two sources disagree = print what both support. FEMA/bot-walled: US runner `fema-probe.yml`.
 
 ## Site (HARD)
-- 51 states, counties (median floor 30), no city pages, ceiling ~2,000. At most 25 new pages a day, all kinds (`new_pages_cap.py`, owner 11-14). Counties 20/day after the money groups.
+- 51 states, counties (median floor 30), cities only with their own ZIP data (owner 11-15), ceiling ~2,000. At most 25 new pages a day, all kinds (`new_pages_cap.py`, owner 11-14). Counties 20/day after the money groups.
 - Template text (on every county/state page) changes at most once a day, batched, reviewed (PLAN "Template batch"); same-day fix-on-fix only for wrong live text (11-14: 6 site-wide releases in a day, one dropped 312 state links).
 - No stuffing, doorway, near-duplicates, fake freshness, hidden text. No ads before the 4-week Search Console review; no paid referrals before a licensing + FTC check.
 - Owner alone: domain, Search Console, ads, publisher identity (byline "Michael Woo, publisher" since 11-13), opening pages to the index, paid referrals, cutting any block, money, sends.
