@@ -1,5 +1,5 @@
 {
- "hash": "f265e569b95fb3b7679aaeb9651fc451b206c0f7ebb221faeefb8e6d69e52a91",
+ "hash": "6c61837ecde1d180d6b5a24d927a702d4aba39c53eb53c6d9ea58bf0d66fd4a4",
  "date": "2026-11-15",
- "note": "actions_check reads live-lookup.yml runs only"
+ "note": "outreach_guard.py + release step; main session wrote and read"
 }

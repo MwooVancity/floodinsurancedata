@@ -156,6 +156,7 @@ else:
     step("AdSense verification tag + ads.txt (owner 11-12)", os.path.join(T, "adsense_check.py"))
     step("AdSense check mutations", os.path.join(T, "adsense_check.py"), "--test")
     step("outreach gate cases (editor round PASS on the exact live text)", os.path.join(T, "outreach_gate.py"), "--test")
+    step("outreach guard cases (one email per organization, ever)", os.path.join(T, "outreach_guard.py"), "--test")
     step("hub page word rules mutations", os.path.join(T, "hub_words.py"), "--test")
     step("hub page word rules (pages gate.py never sees)", os.path.join(T, "hub_words.py"))
     step("phone check (dist)", os.path.join(T, "phone_check.py"))
