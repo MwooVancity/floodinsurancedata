@@ -9,14 +9,20 @@ from test_zonemap import oracle   # Python mirror of describe(), written from th
 from playwright.sync_api import sync_playwright
 BROWSER = sys.argv[sys.argv.index("--browser") + 1] if "--browser" in sys.argv else "chromium"
 PAGE = "https://floodinsurancedata.com/flood-zone-map/"
-NFHL = "https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer"
+NFHL = "https://msc.fema.gov/arcgis/rest/services/NFHL_Print/NFHLQuery/MapServer"   # same service as tools/static/zonemap.js (11-15); LOMAs are layer 2 here
 ADDRS = ["301 N Olive Ave, West Palm Beach, FL", "1700 Convention Center Dr, Miami Beach, FL",
          "1001 Preston St, Houston, TX", "1300 Perdido St, New Orleans, LA", "100 Ocean Blvd, Long Beach, NY"]
 
+ERRS = {}   # 11-15: a red run must say why FEMA gave nothing (timeout, refused, HTTP code, FEMA's own error), not just "None"
 def get(url, p):
     req = urllib.request.Request(url + "?" + urllib.parse.urlencode(p), headers={"User-Agent": "Mozilla/5.0"})
-    try: return json.load(urllib.request.urlopen(req, timeout=20))
-    except Exception: return None
+    try:
+        d = json.load(urllib.request.urlopen(req, timeout=20))
+        if isinstance(d, dict) and d.get("error"): ERRS[url.split("/")[2]] = f"service error {d['error'].get('code')}: {str(d['error'].get('message'))[:80]}"
+        return d
+    except Exception as e:
+        ERRS[url.split("/")[2]] = f"{type(e).__name__}: {str(e)[:100]}"
+        return None
 
 def fema(addr):
     g = get("https://geocoding.geo.census.gov/geocoder/locations/onelineaddress", {"address": addr, "benchmark": "Public_AR_Current", "format": "json"})
@@ -28,7 +34,7 @@ def fema(addr):
     bx = get(NFHL + "/28/query", dict(base, distance=15, units="esriSRUnit_Meter", outFields="FLD_ZONE,ZONE_SUBTY"))   # D5: true 15 m circle
     pn = get(NFHL + "/3/query", dict(base, outFields="FIRM_PAN,EFF_DATE"))
     lr = get(NFHL + "/1/query", dict(base, outFields="EFF_DATE"))   # owner 11-08: map letters near the pin, as the page asks
-    la = get(NFHL + "/34/query", dict(base, distance=150, units="esriSRUnit_Meter", outFields="OUTCOME"))
+    la = get(NFHL + "/2/query", dict(base, distance=150, units="esriSRUnit_Meter", outFields="OUTCOME"))
     return mt[0]["matchedAddress"], pt, bx, pn, lr, la
 
 bad, zones = [], []
@@ -56,6 +62,7 @@ for a, z in zones: print(f"  {a}: FEMA zone {z}")
 # The tool is only working when FEMA named a zone for at least 4 of the 5 real addresses.
 named = sum(1 for _, z in zones if z)
 if named < 4: bad.append(f"only {named} of {len(ADDRS)} real addresses got a zone from FEMA: FEMA down, blocked or changed")
+for h, e in ERRS.items(): print(f"  {h} last error: {e}")
 for x in bad: print("  -", x)
 print(f"LIVE ZONEMAP {'FAIL' if bad else 'PASS'} ({BROWSER}): {len(zones)} real addresses, page == FEMA via oracle")
 sys.exit(1 if bad else 0)

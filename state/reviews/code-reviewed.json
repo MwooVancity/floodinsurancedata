@@ -1,5 +1,5 @@
 {
- "hash": "0e1ee0d74601524b10892b74b400781de04773459a4379c5a280aeb488755d78",
+ "hash": "6c61837ecde1d180d6b5a24d927a702d4aba39c53eb53c6d9ea58bf0d66fd4a4",
  "date": "2026-11-15",
- "note": "kwp_rank reads every Planner export + mapping rules; main session wrote and read"
+ "note": "outreach_guard.py + release step; main session wrote and read"
 }

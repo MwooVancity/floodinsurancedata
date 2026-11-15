@@ -4,7 +4,9 @@
    describe() is pure and mirrored by an independent Python oracle (tools/test_zonemap.py). */
 (function () {
   "use strict";
-  var NFHL = "https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer";
+  // 11-15: FEMA's Map Service Center copy of the NFHL (same layers 28/3/1, LOMAs are layer 2; CORS allows this site).
+  // hazards.fema.gov's NFHL answered 504 Gateway Time-out to every request on 11-13 and 11-15 (live test logs).
+  var NFHL = "https://msc.fema.gov/arcgis/rest/services/NFHL_Print/NFHLQuery/MapServer", LOMA_LAYER = "/2/query";
   var GEO = "https://geocoding.geo.census.gov/geocoder/locations/onelineaddress";
   var MSC = "https://msc.fema.gov/portal/home";
   var NEAR_M = 15, LOMA_M = 150, WAIT_MS = 8000;
@@ -137,7 +139,7 @@
         get(NFHL + "/28/query", Object.assign({ geometry: g, distance: NEAR_M, units: "esriSRUnit_Meter", outFields: "FLD_ZONE,ZONE_SUBTY" }, base)),
         get(NFHL + "/3/query", Object.assign({ geometry: g, outFields: "FIRM_PAN,EFF_DATE" }, base)),
         get(NFHL + "/1/query", Object.assign({ geometry: g, outFields: "EFF_DATE" }, base)),   // LOMR polygons at the pin
-        get(NFHL + "/34/query", Object.assign({ geometry: g, distance: LOMA_M, units: "esriSRUnit_Meter", outFields: "OUTCOME" }, base))   // LOMA points nearby, outcome only
+        get(NFHL + LOMA_LAYER,Object.assign({ geometry: g, distance: LOMA_M, units: "esriSRUnit_Meter", outFields: "OUTCOME" }, base))   // LOMA points nearby, outcome only
       ]).then(function (r) {
         if (my !== seq) return;   // the reader moved the pin while FEMA answered: that answer is for another spot
         var d = describe(r[0], r[1], r[2], r[3], r[4]);

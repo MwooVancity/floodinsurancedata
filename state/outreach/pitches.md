@@ -28,7 +28,7 @@ Subject: Free, sourced flood insurance page for <county> residents
 
 Hi <name>,
 I publish floodinsurancedata.com, one page per county built only from FEMA's public NFIP, map and disaster records.
-The <county> page shows what homeowners there actually pay (median <$X> a year, single-family primary homes), cost by flood zone, claims paid since 1978, FEMA's map panel dates and Letter of Map Amendment outcomes, each figure with its FEMA source and date. It also points residents to their floodplain manager for an Elevation Certificate.
+The <county> page shows what NFIP policies on single-family primary homes there cost (median <$X> a year, premium plus fees), cost by flood zone, claims paid since 1978, FEMA's map panel dates and Letter of Map Amendment outcomes, each figure with its FEMA source and date. It also points residents to their floodplain manager for an Elevation Certificate.
 If it is useful for your CRS outreach or residents' resource list, you are welcome to link it: <county page URL>
 Corrections go to <contact email>; we fix and date them.
 <sign-off>
@@ -48,3 +48,10 @@ Within 48 h, to the declared county's daily + 2 TV consumer reporters: that coun
 ## Send log
 | date | outlet | person | asset | reply | link |
 |---|---|---|---|---|---|
+
+## Batch 1 candidates (11-15; found by web search, NOT yet verified on the official page: verify each address raw on send day)
+| # | Organization | Contact | Page we would link | Why they would link | Status |
+| 1 | LSU AgCenter, Louisiana FloodMaps portal | Patricia Skinner, pskinner@agcenter.lsu.edu (faculty profile; some copies blank) | /flood-insurance/louisiana/ + parish pages | runs Louisiana's flood map portal; residents ask what insurance costs | candidate |
+| 2 | Texas Floodplain Management Association | tfma@tfma.org (TFMA documents) | /flood-insurance/texas/ | member resources for Texas floodplain managers | candidate |
+| 3-10 | to find after the ship: county CRS coordinators (Pinellas, Hillsborough, Monroe, Palm Beach list CRS pages), UF/IFAS county extension offices (flood insurance blog posts), Florida Sea Grant flood insurance page, library guides | | | | open |
+Rule: no form submissions (owner-only); one email per organization ever (outreach guard); each email quotes one figure read from the live page that day.
