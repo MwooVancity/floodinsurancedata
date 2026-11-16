@@ -67,7 +67,7 @@ def load(ds, st, nums, strs):
 def net(r): return (r["netBuildingPaymentAmount"] or 0) + (r["netContentsPaymentAmount"] or 0) + (r["netIccPaymentAmount"] or 0)
 
 def claims_extra(rows):
-    """Payout reality, same definitions as collect_claims_extra.py (net = building + contents + ICC)."""
+    """Payout reality (net = building + contents + ICC). 11-16: replaced the old collect_claims_extra.py API puller (deleted, unused)."""
     if not rows: return None
     paid = [r for r in rows if net(r) > 0]
     paid_total = sum(net(r) for r in paid)

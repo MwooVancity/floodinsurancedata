@@ -1,5 +1,5 @@
 {
- "hash": "a2be13e72cdf0c283e540f26a7cc4b5828d3795b91e4a914be2349937a255eea",
- "date": "2026-11-15",
- "note": "branch: /code-review medium master...HEAD, 4 of 5 findings fixed (1 kept as reader instruction); main session read the full diff"
+ "hash": "c0398e50a3e7b8ca12bdf0ba466a1da3347df8d106a7707c8dd87d3e3a855c57",
+ "date": "2026-11-16",
+ "note": "delete unused collect_claims_extra.py; agg_raw comment"
 }
