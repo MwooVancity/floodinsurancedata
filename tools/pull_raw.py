@@ -33,7 +33,9 @@ CLM_FIELDS = ("id state countyCode censusGeoid reportedZipCode yearOfLoss dateOf
               "netContentsPaymentAmount netIccPaymentAmount buildingDamageAmount contentsDamageAmount buildingPropertyValue "
               "totalBuildingInsuranceCoverage totalContentsInsuranceCoverage buildingDeductibleCode nonPaymentReasonBuilding "
               "nonPaymentReasonContents waterDepth floodWaterDuration elevatedBuildingIndicator postFIRMConstructionIndicator "
-              "rateMethod originalNBDate crsClassCode nfipCommunityNumberCurrent").split()
+              "rateMethod originalNBDate crsClassCode nfipCommunityNumberCurrent condominiumCoverageTypeCode").split()
+# bug review 11-16: without condominiumCoverageTypeCode, ffcalc.is_sf_home read every claim as not-a-condo, so the
+# single-family claim bases (damage over coverage) kept condo-unit claims (~1.4% in Palm Beach). Takes effect at the next pull.
 LOCK = threading.Lock()
 def log(msg):
     line = f"{datetime.datetime.now():%H:%M:%S} {msg}"

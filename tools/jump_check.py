@@ -21,7 +21,22 @@ def judge(rel, a, b, state):   # a = last month's policies block, b = this month
         out.append(f"{rel}: policy units {a['units']:,} -> {b.get('units') or 0:,} (limit {lim:.0%})")
     return out
 
+CLAIMS_DROP = 0.02   # bug review 11-16: claims history is cumulative; FEMA revisions move it ~0.01%, a truncated file halves it
+
+def judge_claims(rel, a, b):   # a/b = last/this month's claims block. FEMA's live claims held no year before 2009 on 11-15
+    out = []                   # (FL 221,271 live vs 430,122 ours): a refresh must never publish a cut-short history
+    if a.get("rows") and (not b.get("rows") or b["rows"] < a["rows"] * (1 - CLAIMS_DROP)):
+        out.append(f"{rel}: claims {a['rows']:,} -> {b.get('rows') or 0:,} (history is cumulative; more than {CLAIMS_DROP:.0%} lost)")
+    if a.get("year_min") and (not b.get("year_min") or b["year_min"] > a["year_min"]):
+        out.append(f"{rel}: claims start {a['year_min']} -> {b.get('year_min')} (earlier years missing)")
+    return out
+
 if "--test" in sys.argv:
+    assert judge_claims("x", {"rows": 430122, "year_min": 1978}, {"rows": 221271, "year_min": 2009}), "truncated history held"
+    assert judge_claims("x", {"rows": 1000, "year_min": 1978}, {"rows": 1000, "year_min": 2009}), "earlier years gone held"
+    assert not judge_claims("x", {"rows": 430122, "year_min": 1978}, {"rows": 430500, "year_min": 1978}), "normal growth passes"
+    assert not judge_claims("x", {"rows": 77055, "year_min": 1978}, {"rows": 77050, "year_min": 1978}), "FEMA revision passes"
+    assert judge_claims("x", {"rows": 500}, {}), "vanished claims held"
     assert judge("x", {"p50": 1000, "cost_n": 500}, {"p50": None, "cost_n": 0}, False)            # vanished median is held
     assert judge("x", {"p50": 1000, "cost_n": 500}, {"p50": 1300, "cost_n": 500}, False)          # +30% held
     assert not judge("x", {"p50": 1000, "cost_n": 500}, {"p50": 1100, "cost_n": 500}, False)      # +10% passes
@@ -41,6 +56,8 @@ for f in sorted(glob.glob(os.path.join(ROOT, "data", "states", "*", "agg.json"))
     if "all-counties" in rel and os.path.basename(f)[:5] not in PUB: continue
     old = subprocess.run(["git", "show", f"HEAD:{rel}"], cwd=ROOT, capture_output=True, text=True, encoding="utf-8").stdout
     if not old: continue   # a new page has nothing to compare with
-    held += judge(rel, json.loads(old).get("policies") or {}, json.load(open(f, encoding="utf-8")).get("policies") or {}, "/states/" in rel)
+    _o, _n = json.loads(old), json.load(open(f, encoding="utf-8"))
+    held += judge(rel, _o.get("policies") or {}, _n.get("policies") or {}, "/states/" in rel)
+    held += judge_claims(rel, _o.get("claims") or {}, _n.get("claims") or {})
 print("\n".join(held) or f"JUMP CHECK PASS: no median moved more than {LIMIT:.0%}, no state's policies more than {STATE_UNITS:.0%}")
 sys.exit(1 if held else 0)

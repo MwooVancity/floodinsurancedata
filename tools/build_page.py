@@ -418,7 +418,7 @@ def card_ranks():   # owner 11-12 research papers: this county's share, 90% rang
                 "<ul>" + "".join(lines) + "</ul>", id="ranks")
 def _claims_parts():
     claims_lead = (f"Floods in {CS} have led to {m('claims_filed', num(C['rows']))} NFIP flood {pl(C['rows'], 'claim')} and "
-                   f"{m('claims_total', big(C['total_paid']))} in payouts since {C['year_min']}"
+                   f"{m('claims_total', big(C['total_paid']))} in building and contents payouts since {C['year_min']}"   # bug review 11-16: ffcalc totals leave out code-upgrade (ICC) payments; the average paid includes them
                    + (f"; the worst {pl(len(top_paid), 'year was', 'years were')} {and_list(y for y, _ in top_paid)}." if top_paid else "."))
     # the ratio reads like a risk score, so it is demoted to a note with both numbers shown, never the headline.
     claims_ratio_note = ""   # hcu 11-07 delete list: a disclaimer for a ratio the page no longer shows
@@ -1213,7 +1213,7 @@ _mp, _mc = _man.get("policies") or {}, _man.get("claims") or {}
 _pulled = pretty_date(_mp["pulled"]) if _mp.get("pulled") else RETR
 PROV_OK = bool(_mp.get("complete") and _mc.get("complete") and not _mp.get("missing") and not _mc.get("missing"))
 prov_line = (f'<p class="prov">Built from all {tp("records_policies", "manifest.policies.unique_fetched")} in-force NFIP policy records and '
-             f'{tp("records_claims", "manifest.claims.unique_fetched")} claim records FEMA publishes for {CS}. We downloaded them on {_pulled}'
+             f'{tp("records_claims", "manifest.claims.unique_fetched")} of the claim records FEMA publishes for {CS} (those FEMA codes as deleted or assigned in error are left out). We downloaded them on {_pulled}'
              # reviewer 11-15: the run-on split; the state-wide pull is attached to the download, the completeness claim is its own clause
              + (f', together with every record for {html.escape(STATE_NAMES.get(agg.get("state"), "the state"))},' if _mp.get("scope") == "state" else "")
              + " and received every record the download listed." + f' <a href="data.csv">Download the figures on this page (CSV)</a> · '
