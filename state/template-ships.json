@@ -5,7 +5,13 @@
    "template": true,
    "commit_before": "237fb1e39a8e11c768507b33525cb5a0b5fd25e4",
    "pages": 380
+  },
+  {
+   "date": "2026-11-17",
+   "template": true,
+   "commit_before": "6838429445caa1824ae6c175cee5db1a0cce1cb1",
+   "pages": 380
   }
  ],
- "hash": "0ec27de37c505fe7"
+ "hash": "82aa00d2beefc960"
 }
