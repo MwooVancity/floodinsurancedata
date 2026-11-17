@@ -1,0 +1,14 @@
+## home
+Verdict: PASS
+
+## louisiana
+Verdict: PASS
+
+## palm-beach-county-fl
+Verdict: PASS
+
+## new-york-county-ny
+Verdict: PASS
+
+## sonoma-county-ca
+Verdict: PASS
