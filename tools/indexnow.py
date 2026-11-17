@@ -26,6 +26,7 @@ def send(us):
     req = urllib.request.Request("https://api.indexnow.org/indexnow", data=body, headers={"Content-Type": "application/json; charset=utf-8", "User-Agent": "floodinsurancedata-indexnow/1"})
     try:
         with urllib.request.urlopen(req, timeout=30) as resp: return resp.status
+    except urllib.error.HTTPError as e: return f"{e.code} {e.read()[:200]!r}"   # code review 11-17: the body says why (a bare 403 hid it since 11-10)
     except Exception as e: return repr(e)[:120]
 
 if __name__ == "__main__":
