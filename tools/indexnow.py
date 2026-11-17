@@ -5,7 +5,7 @@ The key file dist/<KEY>.txt is written by build_site.py; IndexNow keys are publi
 Usage: python -I tools/indexnow.py <base-commit>   |   --test (URL mapping self-check, sends nothing)"""
 import json, os, subprocess, sys, urllib.request
 
-KEY = "6f1c2a9e4b7d40c8a3e5f9b2d1c07e64"
+KEY = "b95e6ffd9ee84397a9045e7ba6388d25"   # 11-17: new key; Bing and indexnow.org answered 403 to the first one since 11-10 although its file served 200
 HOST = "floodinsurancedata.com"
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 

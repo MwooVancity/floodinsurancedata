@@ -12,3 +12,4 @@ state/recheck.jsonl
 kwp-upload.txt
 kwp-upload.csv
 *.tmp
+.release.lock
