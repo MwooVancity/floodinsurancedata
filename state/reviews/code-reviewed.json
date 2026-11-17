@@ -1,5 +1,5 @@
 {
- "hash": "9a55cdf54657d1cae54871010fa506419c8f7e1d9730329e32ca19b2c9226882",
+ "hash": "397b317b726e1a60b780f3b7bbd7219600a7827337a6d3439a2c119b773ba601",
  "date": "2026-11-16",
- "note": "bug review 11-16 fixes: jump_check claims guard (5 tests), claims condo field, payouts + records wording; main session wrote and read"
+ "note": "no-email setup: release skips wait when deploy.yml is off, actions_check lists off workflows + reads live test verdict line (16 tests)"
 }

@@ -199,7 +199,9 @@ else:
     head = subprocess.run(["git", "rev-parse", "HEAD"], cwd=R, capture_output=True, text=True).stdout.strip()
     if subprocess.run(["git", "diff", "--quiet", base, "HEAD", "--", "dist"], cwd=R).returncode:   # no dist change = deploy.yml does not run, nothing new to deploy
         rid = ""
-        for _ in range(40):   # the run appears a few seconds after the push
+        # 11-16: deploy.yml is switched off while Actions minutes are used up (no failure emails); then no run will appear, so do not wait 4 min
+        _off = subprocess.run(["gh", "workflow", "view", "deploy.yml", "--json", "state", "-q", ".state"], cwd=R, capture_output=True, text=True).stdout.strip()
+        for _ in (range(0) if _off.startswith("disabled") else range(40)):   # the run appears a few seconds after the push
             rid = subprocess.run(["gh", "run", "list", "--workflow", "deploy.yml", "--commit", head, "--json", "databaseId", "-q", ".[0].databaseId"],
                                  cwd=R, capture_output=True, text=True).stdout.strip()
             if rid: break
@@ -207,7 +209,7 @@ else:
         def poll():
             j = json.loads(subprocess.run(["gh", "run", "view", rid, "--json", "status,conclusion,jobs"], cwd=R, capture_output=True, text=True).stdout or "{}")
             return j.get("status"), j.get("conclusion"), started_jobs(j)
-        why = wait_deploy(poll, time.monotonic, time.sleep) if rid else "not started: no deploy.yml run appeared (Actions off or push event lost)"
+        why = wait_deploy(poll, time.monotonic, time.sleep) if rid else ("not started: deploy.yml is switched off" if _off.startswith("disabled") else "not started: no deploy.yml run appeared (Actions off or push event lost)")
         if why.startswith("not started"):   # 11-14: GitHub never ran the job, so there is no second writer: deploy the same committed dist here
             # wrangler uploads ./dist as it is on disk: only the committed release may go live (11-14 audit: a build running beside it would ship unchecked pages)
             dirty = subprocess.run(["git", "status", "--porcelain", "--", "dist"], cwd=R, capture_output=True, text=True).stdout.strip()

@@ -17,6 +17,10 @@ def refused(run):   # failed with every job at zero steps = GitHub never started
 def gh(*a): return json.loads(subprocess.run(["gh", *a], capture_output=True, text=True, check=True).stdout or "[]")
 
 WATCH, WFILES = "MwooVancity/flood-lookup-watch", ("tools/live_zonemap.py", "tools/test_zonemap.py")
+def log_verdict(log):   # the run is green even when the test step failed (continue-on-error, no email): the step's own line decides
+    if "LIVE ZONEMAP PASS" in log: return "success"
+    return "failure (test step: " + ("LIVE ZONEMAP FAIL" if "LIVE ZONEMAP FAIL" in log else "no verdict line") + ")"
+
 def watch_problems(last, today, local, remote):
     """11-15 public watch repo edge cases: W1 no run or not success (a run in progress counts as not passed);
     W2 last run older than 2 days (GitHub pauses schedules after 60 quiet days, silently); W3 a test file differs
@@ -47,7 +51,10 @@ if __name__ == "__main__":
         assert watch_problems([{"conclusion": "failure", "createdAt": "2026-11-15T03:41:00Z"}], d, fs, fs)[0].startswith("W1"), "red"
         assert any(p.startswith("W2") for p in watch_problems([{"conclusion": "success", "createdAt": "2026-11-11T03:41:00Z"}], d, fs, fs)), "stale"
         assert any(p.startswith("W3") for p in watch_problems(ok, d, fs, dict(fs, **{WFILES[1]: "a\nc"}))), "drift"
-        sys.exit(print("actions_check --test ok (13 cases)"))
+        assert log_verdict("...\nLIVE ZONEMAP PASS (chromium): 5 real addresses") == "success"
+        assert log_verdict("LIVE ZONEMAP FAIL (chromium): 5 real addresses").startswith("failure"), "green run, failed step"
+        assert log_verdict("").startswith("failure"), "log unreadable or step never ran"
+        sys.exit(print("actions_check --test ok (16 cases)"))
     today = datetime.date.today()
     runs = gh("run", "list", "--limit", "500", "--created", f">={today.replace(day=1)}", "--json", "databaseId,workflowName,conclusion,createdAt,updatedAt")
     used = minutes(runs)
@@ -60,11 +67,18 @@ if __name__ == "__main__":
     import base64, os
     root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     try:
-        lw = gh("run", "list", "-R", WATCH, "-w", "live-lookup.yml", "--limit", "1", "--json", "conclusion,createdAt")   # only the live test, never a one-off run
+        lw = gh("run", "list", "-R", WATCH, "-w", "live-lookup.yml", "--limit", "1", "--json", "databaseId,conclusion,createdAt")   # only the live test, never a one-off run
+        if lw and lw[0].get("conclusion") == "success":   # 11-16: the test step may fail without failing the run (no email): read its own verdict line
+            log = subprocess.run(["gh", "run", "view", str(lw[0]["databaseId"]), "-R", WATCH, "--log"], capture_output=True, text=True, encoding="utf-8", errors="replace").stdout
+            lw[0]["conclusion"] = log_verdict(log)
         remote = {f: base64.b64decode(gh("api", f"repos/{WATCH}/contents/{f}")["content"]).decode("utf-8") for f in WFILES}
     except (subprocess.CalledProcessError, KeyError, ValueError):
         lw, remote = None, {}
     local = {f: open(os.path.join(root, f), encoding="utf-8").read() for f in WFILES}
     wp = watch_problems(lw, today, local, remote)
     print(f"live lookup test ({WATCH}): " + ("; ".join(wp) if wp else f"success {lw[0]['createdAt'][:10]}, files in step"))
-    sys.exit(1 if bad or used > WARN or wp else 0)
+    # 11-16 (owner: no GitHub failure emails): workflows GitHub would refuse are switched off; never forget them once minutes are back
+    off = [w["name"] for w in gh("workflow", "list", "--all", "--json", "name,state") if w.get("state", "").startswith("disabled")]
+    back = used < WARN and not bad   # a new month's minutes: switch them back on (`gh workflow enable <name>`)
+    if off: print(("RE-ENABLE NOW (minutes are back): " if back else "switched off until the Actions minutes reset: ") + ", ".join(off))
+    sys.exit(1 if bad or used > WARN or wp or (off and back) else 0)
