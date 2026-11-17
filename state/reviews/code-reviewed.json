@@ -1,5 +1,5 @@
 {
- "hash": "397b317b726e1a60b780f3b7bbd7219600a7827337a6d3439a2c119b773ba601",
+ "hash": "2073c6c0149d26afa07d0f0e719fdfd57bd69f7a3996f49da3934de818c562d6",
  "date": "2026-11-16",
- "note": "no-email setup: release skips wait when deploy.yml is off, actions_check lists off workflows + reads live test verdict line (16 tests)"
+ "note": "11-17 /code-review medium: release lock + IndexNow key/refusal body; 3 fixed, 2 ruled out (one release at a time)"
 }
