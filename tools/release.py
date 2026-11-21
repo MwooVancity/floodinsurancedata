@@ -95,7 +95,7 @@ if "--live" in sys.argv:
 else:
     # 11-17: while this runs, ~/.claude/hooks/plan-gate.mjs skips its "keep working" push (nothing may be edited meanwhile)
     import atexit; _LOCK = os.path.join(os.path.dirname(T), ".release.lock"); open(_LOCK, "w").write(str(os.getpid()))
-    atexit.register(lambda: os.path.exists(_LOCK) and os.remove(_LOCK))
+    atexit.register(lambda: os.path.exists(_LOCK) and open(_LOCK).read() == str(os.getpid()) and os.remove(_LOCK))   # code review 11-17: never remove another release's lock
     # owner 11-14 "I don't want to ship nonperfect pages": the code that writes pages must be bug-reviewed before it ships
     # (a --hotfix for wrong live text may skip it, like the hater review). Checked first so a long gate run never ends in a refusal.
     # bug review 11-14: the cloud's daily publish runs release.py without --ship and then deploys, so it must stop too

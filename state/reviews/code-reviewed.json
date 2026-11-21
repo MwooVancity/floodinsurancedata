@@ -1,5 +1,5 @@
 {
- "hash": "2073c6c0149d26afa07d0f0e719fdfd57bd69f7a3996f49da3934de818c562d6",
- "date": "2026-11-16",
- "note": "11-17 /code-review medium: release lock + IndexNow key/refusal body; 3 fixed, 2 ruled out (one release at a time)"
+ "hash": "7694de7649d925f044fbb7391f62ffdcb4dd80e419962bbc93d20387d32b17ca",
+ "date": "2026-11-21",
+ "note": "11-21: release lock removed only by its own release (code review 11-17 finding 3)"
 }
