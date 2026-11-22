@@ -66,4 +66,12 @@ Louisiana page: https://floodinsurancedata.com/flood-insurance/louisiana/ . Pari
 If it is useful on your resources page, you are welcome to link it. Corrections go to contact@floodinsurancedata.com; we fix and date them.
 Michael Woo, publisher, floodinsurancedata.com
 
+### Batch 1 draft #2 (figures read live 11-22; re-read the same day before sending)
+To: hillsborough@ifas.ufl.edu (read raw on sfyl.ifas.ufl.edu/hillsborough 11-22; guard: OK) | Subject: Hillsborough County flood insurance costs and claims from FEMA's records, free for your residents
+Hi,
+I publish floodinsurancedata.com, built only from FEMA's public NFIP policy and claim records, with no quotes. Your office has a 2024 post on homeowner and flood insurance guidance; for residents who ask what flood insurance costs here: a Hillsborough County single-family primary home pays a median $1,154 a year (premium plus fees, policies in force August 31, 2026); zone AE $1,808, zone X $719. 80.6% of the county's NFIP claims, all years, had a recorded payment.
+County page: https://floodinsurancedata.com/flood-insurance/hillsborough-county-fl/ . It also shows FEMA's own definitions of each zone, the community discount, and an address lookup that sends residents to FEMA's map.
+If it is useful on your resource list, you are welcome to link it. Corrections go to contact@floodinsurancedata.com; we fix and date them.
+Michael Woo, publisher, floodinsurancedata.com
+
 Rule: no form submissions (owner-only); one email per organization ever (outreach guard); each email quotes one figure read from the live page that day.
