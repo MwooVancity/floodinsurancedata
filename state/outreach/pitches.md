@@ -53,5 +53,16 @@ Within 48 h, to the declared county's daily + 2 TV consumer reporters: that coun
 | # | Organization | Contact | Page we would link | Why they would link | Status |
 | 1 | LSU AgCenter, Louisiana FloodMaps portal | Patricia Skinner, pskinner@agcenter.lsu.edu (faculty profile; some copies blank) | /flood-insurance/louisiana/ + parish pages | runs Louisiana's flood map portal; residents ask what insurance costs | candidate |
 | 2 | Texas Floodplain Management Association | tfma@tfma.org (TFMA documents) | /flood-insurance/texas/ | member resources for Texas floodplain managers | candidate |
+| 1b | LSU AgCenter FloodMaps (the portal's own address, read raw on lsuagcenter.com/floodmaps 11-21; guard: OK) | FloodMaps@agcenter.lsu.edu | /flood-insurance/louisiana/ + /flood-insurance/claims/ | the portal answers residents' map questions | DRAFT below, awaiting owner approval |
+| 2b | TFMA tfma.org did not load from here 11-21 (site down or blocking); address stays unverified | tfma@tfma.org | /flood-insurance/texas/ | | HOLD until the address is read on their page |
 | 3-10 | to find after the ship: county CRS coordinators (Pinellas, Hillsborough, Monroe, Palm Beach list CRS pages), UF/IFAS county extension offices (flood insurance blog posts), Florida Sea Grant flood insurance page, library guides | | | | open |
+### Batch 1 draft #1 (figures read live 11-21; re-read the same day before sending)
+To: FloodMaps@agcenter.lsu.edu | Subject: Louisiana flood insurance costs and claims from FEMA's records, free for your residents
+Hi,
+I publish floodinsurancedata.com, built only from FEMA's public NFIP policy and claim records, no ads or quotes. For people who come to your FloodMaps portal asking what flood insurance costs: a Louisiana single-family primary home pays a median $1,114 a year (premium plus fees, policies in force August 31, 2026); zone X $1,082, zone AE $1,259. 80.2% of Louisiana's NFIP claims, all years, had a recorded payment.
+By parish, claims since 2020 with a recorded payment run as low as 52.7% in Terrebonne Parish (603 claims). FEMA's data has no open/closed field, so a recent claim with no payment may still be paid.
+Louisiana page: https://floodinsurancedata.com/flood-insurance/louisiana/ . Parish table and CSV: https://floodinsurancedata.com/flood-insurance/claims/
+If it is useful on your resources page, you are welcome to link it. Corrections go to contact@floodinsurancedata.com; we fix and date them.
+Michael Woo, publisher, floodinsurancedata.com
+
 Rule: no form submissions (owner-only); one email per organization ever (outreach guard); each email quotes one figure read from the live page that day.
