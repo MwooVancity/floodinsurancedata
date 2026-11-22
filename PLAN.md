@@ -3,7 +3,8 @@ State, dated numbers, next moves, owner-only items. Rules: CLAUDE.md. History: g
 
 ## Goal and scoreboard
 Most helpful flood-insurance page for every US place a homeowner or buyer searches, on a phone. Scoreboard: pages indexed, impressions, clicks, page-1 queries, AI citations.
-- GSC 28 d to 11-10: 13 clicks, 1,430 impressions, position 41.7; 329 indexed; crawled-not-indexed 215 (177 CSVs, 36 county pages = 12%, kill line 25%).
+- GSC 28 d to 11-19 (read 11-21): 23 clicks, 4,480 impressions, CTR 0.5%, position 45.9; 369 pages with impressions; US 20 clicks / 4,309 impressions (the earlier "zero US clicks" is over). By type: counties 233 pages 13 clicks 1,982 impr; states+papers 52 pages 4 clicks 2,161 impr; zone+map 8 pages 0 clicks 514 impr (/flood-zone-map/ 315, /flood-zones/x/ 112); guides 8 pages 1 click 174 impr; ZIP page 3 clicks on 31 impr (best CTR, query "flood insurance rates by zip code" 3/25). City queries land on county pages (salt lake city 42, bradenton 34, grand forks 24 impr, 0 clicks).
+- GSC 28 d to 11-10 (earlier): 13 clicks, 1,430 impressions, position 41.7; 329 indexed; crawled-not-indexed 215 (177 CSVs, 36 county pages = 12%, kill line 25%).
 - GA4 28 d to 11-08: 4 organic + 4 ChatGPT sessions. Bing: sitemap error 11-10 ("page not accessible", 0 URLs), IndexNow 403.
 - Live 11-14: 419 pages (home, 51 states, 329 counties, 7 zones, map tool, /nfip/, renters, claims, ZIP, 9 guides, 5 papers, methodology). Data as of 2026-08-31.
 - Cost 11-14: one "do the rest" workflow = 2.63M tokens, 18 agents; every prose stage ended on a FAIL review. Lesson: review loops do not converge (each pass finds new style MAJORs); cap at one fix pass, owner sees the cost first for any run over ~200k.
