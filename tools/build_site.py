@@ -770,6 +770,7 @@ if len(states) == 51:
 <div class="card"><h2>What these numbers cannot tell you</h2><p class="stand">No recorded payment does not mean a claim was denied: it includes damage under the deductible, claims not pursued and reasons FEMA does not record. These are shares of claims filed, not a chance that any one claim gets paid.</p>
 <p>Your <a href="/flood-insurance/">state and county pages</a> show what policies cost there and every claim paid since 1978.</p>
 <p class="mut">Source: FEMA OpenFEMA NFIP Claims v3 (fema.gov/openfema-data-page/nfip-redacted-claims-v3). Reason labels from FEMA's data dictionary. <a href="/methodology/">How we check them</a>.</p></div>{FOOT}"""
+        pg = pg.replace("<table>", '<table style="display:block;overflow-x:auto">')   # round 208: the 5-column cause table was clipped at 390px; it scrolls instead (a wrapper div would cut claims_check's card slice at the first </div>)
         wr(os.path.join(DIST, "flood-insurance", "claims", "index.html"), pg)
         zone_urls.append((BASE + "/flood-insurance/claims/", None))
 

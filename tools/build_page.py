@@ -413,9 +413,11 @@ def card_ranks():   # owner 11-12 research papers: this county's share, 90% rang
                          f"{mx('paper_min', str(sp['min']), q=sp['key'])} {sp['unit']} here{win}.</li>")
     if not lines: return ""
     return card(f"How {CL if IS_STATE else CS} appears in the national research papers",
-                "Each paper sorts the U.S. counties with enough records by one measure into five groups of about equal size, from highest fifth to lowest fifth. "
-                "A group is a position in a list, not a grade or a prediction.",
-                "<ul>" + "".join(lines) + "</ul>", id="ranks")
+                ((f"Each paper sorts U.S. counties with enough records into five groups of about equal size by one measure. Below: how many of this state's {UNITS} each paper lists. Open a paper to see where each falls."   # round 208: the old intro promised a position the state lines never gave; F1 caps the opening at 40 words
+                  if IS_STATE else
+                  "Each paper sorts the U.S. counties with enough records by one measure into five groups of about equal size, from highest fifth to lowest fifth. "
+                  "A group is a position in a list, not a grade or a prediction.")),
+                "<ul>" + "".join(lines) + "</ul>" + ("<p class='note'>A group is a position in a list, not a grade or a prediction.</p>" if IS_STATE else ""), id="ranks")
 def _claims_parts():
     claims_lead = (f"Floods in {CS} have led to {m('claims_filed', num(C['rows']))} NFIP flood {pl(C['rows'], 'claim')} and "
                    f"{m('claims_total', big(C['total_paid']))} in building and contents payouts since {C['year_min']}"   # bug review 11-16: ffcalc totals leave out code-upgrade (ICC) payments; the average paid includes them
@@ -837,7 +839,7 @@ def _counties_table():
                 '<script>document.getElementById("cf").addEventListener("input",function(){var q=this.value.toLowerCase();'
                 '[].forEach.call(document.getElementById("ct").tBodies[0].rows,function(r){r.style.display=(!q||r.cells[0].textContent.toLowerCase().indexOf(q)>-1)?"":"none";});});</script>')
                if len(_cty) >= 16 else "")
-            + f"<table id='ct'><thead><tr><th>{UNIT.title()}</th><th>Policy units</th><th>Median / yr</th><th>Below full-risk</th><th>Claims since 1978</th></tr></thead>"
+            + f"<table id='ct'><thead><tr><th>{UNIT.title()}</th><th>Policy units</th><th>Median / yr</th><th>Policies below full-risk premium</th><th>Claims since 1978</th></tr></thead>"
             f"<tbody>{_rows}</tbody></table>"
             + (f"<p class='note'><b>Lowest typical cost:</b> {and_list(_cn(g) + ' (' + tp('county_cost', f'counties.{g}.p50', money, q=g) + ')' for g, r in _cheap)}. "
                f"<b>Highest:</b> {and_list(_cn(g) + ' (' + tp('county_cost', f'counties.{g}.p50', money, q=g) + ')' for g, r in _dear)}. "
@@ -912,7 +914,7 @@ def card_events():
             # hater r103/r106 Sonoma: a catch-all label that paid more than the named flood is said in the lead (gate C12)
             + "".join(f" Catch-all {_evname(e)}, many floods: {tp('event_paid', f'extras.claims.events.{e[chr(105)]}.paid', big, q=e['name'])}."
                       for e in sorted(_ev_all, key=lambda e: -(e.get("paid") or 0))[:1] if (e.get("paid") or 0) > (_ev1.get("paid") or 0)),
-            "<table><thead><tr><th>Flood (FEMA's name)</th><th>Claims</th><th>Total paid</th><th>Average</th>" + ("<th>Share of claims filed that paid</th>" if _pp else "") + "</tr></thead><tbody>"
+            "<table><thead><tr><th>Flood (FEMA's name)</th><th>Claims that paid</th><th>Total paid</th><th>Average</th>" + ("<th>Share of claims filed that paid</th>" if _pp else "") + "</tr></thead><tbody>"
             + "".join(f"<tr><td>{_evname(e)}{": many floods; FEMA's records use this name for claims in several years" if e in _ev_all else ''}</td><td>{tp('event_claims', f'extras.claims.events.{e[chr(105)]}.claims', q=e['name'])}</td>"
                       f"<td>{tp('event_paid', f'extras.claims.events.{e[chr(105)]}.paid', big, q=e['name'])}</td>"
                       f"<td>{tp('event_avg', f'extras.claims.events.{e[chr(105)]}.avg', money, q=e['name'])}</td>"
@@ -1484,7 +1486,7 @@ if _own:
              + f'</p></nav></details>' + _jump)
 
 HTML = f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1"><meta name="google-adsense-account" content="ca-pub-8997828618122077"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8997828618122077" crossorigin="anonymous"></script>{'<meta name="robots" content="noindex,follow">' if os.environ.get("FF_NOINDEX") == "1" else ""}
+<meta name="viewport" content="width=device-width,initial-scale=1"><meta name="google-adsense-account" content="ca-pub-8997828618122077"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8997828618122077" crossorigin="anonymous"></script><noscript><style>#compare,.tool input,.tool select,.tool label{{display:none}}</style></noscript>{'<meta name="robots" content="noindex,follow">' if os.environ.get("FF_NOINDEX") == "1" else ""}
 {GA_TAG}<title>{CL + (' flood zone map and flood insurance' if _tool_on("zonemap") else ' flood insurance and flood zones') if IS_STATE else CS + ', ' + agg.get('state', '') + _T1 + (' flood zone map and flood insurance' if _tool_on("zonemap") else ' flood zones and flood insurance')}: {money(P['p50'])}/yr median, single-family</title>
 <meta name="description" content="{html.escape(META_DESC)}">
 <link rel="canonical" href="{CANON}"><link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" href="/favicon.svg" type="image/svg+xml">
