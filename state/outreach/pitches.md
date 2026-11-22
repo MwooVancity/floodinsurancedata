@@ -48,6 +48,7 @@ Within 48 h, to the declared county's daily + 2 TV consumer reporters: that coun
 ## Send log
 | date | outlet | person | asset | reply | link |
 |---|---|---|---|---|---|
+| 2026-11-22 | LSU AgCenter FloodMaps | FloodMaps@agcenter.lsu.edu (address read on their page 11-21) | /flood-insurance/louisiana/ + /flood-insurance/claims/ | none yet | pending |
 
 ## Batch 1 candidates (11-15; found by web search, NOT yet verified on the official page: verify each address raw on send day)
 | # | Organization | Contact | Page we would link | Why they would link | Status |
