@@ -57,6 +57,7 @@ def main():
     st, _, sm = get(BASE + "/sitemap.xml")
     allu = re.findall(r"<loc>([^<]+)</loc>", sm); urls = allu[:LIMIT]
     print("sitemap", st, len(allu), "URLs")
+    if st != 200 or not allu: print("ERROR sitemap unreadable or empty: crawl not trusted"); sys.exit(1)
     pages, errors, warns = {}, [], []
     for n, u in enumerate(urls):
         st, loc, body = get(u)
@@ -66,7 +67,7 @@ def main():
                         links=sorted({urllib.parse.urljoin(u, l).split("#")[0] for l in p.links}), h1n=p.h1n, ld=p.ld)
         time.sleep(0.25)
     inbound, bad_links, seen = defaultdict(set), [], {}
-    site = set(allu)
+    site = set(allu); norm = {x.rstrip("/") + "/" for x in site}
     for u, d in pages.items():
         if d["canon"].rstrip("/") != u.rstrip("/"): errors.append(f"{u}: canonical {d['canon']!r} is not itself")
         if "noindex" in d["robots"].lower(): errors.append(f"{u}: noindex in a sitemap page")
@@ -75,7 +76,9 @@ def main():
         if not d["desc"]: warns.append(f"{u}: no meta description")
         if d["words"] < 250: warns.append(f"{u}: only {d['words']} words of body text")
         for l in d["links"]:
-            if l.startswith(BASE) and l.rstrip("/") + "/" in {x.rstrip("/") + "/" for x in site}: inbound[l.rstrip("/") + "/"].add(u)
+            if l.startswith(BASE) and l.rstrip("/") + "/" in norm:
+                if l not in site: warns.append(f"{u}: internal link {l} is not the sitemap form (would redirect)")
+                if l.rstrip("/") + "/" != u.rstrip("/") + "/": inbound[l.rstrip("/") + "/"].add(u)   # a self-link is not an inbound link
             elif l.startswith(BASE) and "/data/" not in l and "." not in l.rsplit("/", 1)[-1]: bad_links.append((u, l))
     for kind in ("title", "desc", "h1"):
         g = defaultdict(list)
@@ -84,6 +87,7 @@ def main():
         for t, us in g.items():
             if len(us) > 1: warns.append(f"duplicate {kind} on {len(us)} pages: {t[:70]!r} e.g. {us[0]}")
     orph = [u for u in pages if u.rstrip("/") + "/" not in inbound and u.rstrip("/") != BASE]
+    if LIMIT < len(allu): orph = []; print("note: --limit crawl, orphan check skipped (a partial crawl cannot see all inbound links)")
     for u in orph: errors.append(f"{u}: orphan (no internal link to it)")
     targets = defaultdict(list)
     for u, l in bad_links: targets[l].append(u)
