@@ -1,5 +1,5 @@
 {
- "hash": "f9f813e9a888730e3422eab6ddbb6b64243dcf19503d23e8635d81b946cf4910",
+ "hash": "cc6e16f3971211888b3a7150f0670ecabf09af533722d260dd70c4f1cc8be919",
  "date": "2026-11-25",
- "note": "ads: gate S15 exempts ad-frame"
+ "note": "ads: iframe src=/ad-frame + _headers both paths (self-reviewed, round 216)"
 }

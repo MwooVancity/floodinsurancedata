@@ -8,3 +8,6 @@
 /ad-frame.html
   ! X-Frame-Options
   X-Frame-Options: SAMEORIGIN
+/ad-frame
+  ! X-Frame-Options
+  X-Frame-Options: SAMEORIGIN

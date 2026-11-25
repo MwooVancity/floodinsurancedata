@@ -1524,7 +1524,7 @@ wr(os.path.join(DIST, "robots.txt"), f"User-agent: *\nAllow: /\nSitemap: {BASE}/
 wr(os.path.join(DIST, "_headers"), "/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n"
    "  X-Frame-Options: DENY\n  Strict-Transport-Security: max-age=31536000\n"   # audit 11-04; no CSP: inline scripts + GA tag
    "/flood-insurance/*/data.csv\n  X-Robots-Tag: noindex\n"   # a download, not a search result
-   "/ad-frame.html\n  ! X-Frame-Options\n  X-Frame-Options: SAMEORIGIN\n")   # only our own pages may frame the ad page (DENY would blank the ad box)
+   "/ad-frame.html\n  ! X-Frame-Options\n  X-Frame-Options: SAMEORIGIN\n/ad-frame\n  ! X-Frame-Options\n  X-Frame-Options: SAMEORIGIN\n")   # only our own pages may frame the ad page (DENY would blank the ad box)
 # 11-08: AI assistants (ChatGPT sends visitors) read this file and quote it: every figure carries its base and date, every
 # county its state, and the reader tools are listed (a bare "median $1,169" or "Jefferson County" would be quoted wrong)
 _llm_tools = [(u, t) for u, t in (("/flood-zone-map/", "Flood zone map lookup by address (FEMA's own map service, not an official determination)"),
