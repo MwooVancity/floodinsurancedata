@@ -1,0 +1,43 @@
+robots.txt 200 Disallow lines: 0
+sitemap 200 414 URLs
+crawled 414 pages; ERRORS 0; warnings 401
+warn https://floodinsurancedata.com/data/: only 117 words of body text
+warn https://floodinsurancedata.com/terms/: only 217 words of body text
+warn https://floodinsurancedata.com/flood-insurance/claims/: title length 83
+warn https://floodinsurancedata.com/nfip/: title length 82
+warn https://floodinsurancedata.com/guides/homeowners-insurance-flooding/: title length 72
+warn https://floodinsurancedata.com/guides/condo-flood-insurance/: title length 77
+warn https://floodinsurancedata.com/guides/private-flood-insurance/: title length 109
+warn https://floodinsurancedata.com/guides/flood-insurance-deductible/: title length 72
+warn https://floodinsurancedata.com/guides/flood-vents/: title length 98
+warn https://floodinsurancedata.com/guides/risk-rating-2/: title length 90
+warn https://floodinsurancedata.com/guides/flood-insurance-contents-coverage/: title length 100
+warn https://floodinsurancedata.com/guides/100-year-floodplain/: title length 115
+warn https://floodinsurancedata.com/guides/loma-lomr/: title length 87
+warn https://floodinsurancedata.com/guides/: only 117 words of body text
+warn https://floodinsurancedata.com/flood-insurance/damage-over-coverage/: title length 77
+warn https://floodinsurancedata.com/flood-insurance/outside-the-zone/: title length 84
+warn https://floodinsurancedata.com/flood-insurance/deductible-choice/: title length 87
+warn https://floodinsurancedata.com/flood-insurance/zip/: only 241 words of body text
+warn https://floodinsurancedata.com/flood-insurance/miami-dade-county-fl/: title length 87
+warn https://floodinsurancedata.com/flood-insurance/broward-county-fl/: title length 102
+warn https://floodinsurancedata.com/flood-insurance/harris-county-tx/: title length 95
+warn https://floodinsurancedata.com/flood-insurance/lee-county-fl/: title length 95
+warn https://floodinsurancedata.com/flood-insurance/pinellas-county-fl/: title length 104
+warn https://floodinsurancedata.com/flood-insurance/palm-beach-county-fl/: title length 100
+warn https://floodinsurancedata.com/flood-insurance/collier-county-fl/: title length 101
+warn https://floodinsurancedata.com/flood-insurance/jefferson-parish-la/: title length 99
+warn https://floodinsurancedata.com/flood-insurance/orleans-parish-la/: title length 86
+warn https://floodinsurancedata.com/flood-insurance/hillsborough-county-fl/: title length 99
+warn https://floodinsurancedata.com/flood-insurance/sarasota-county-fl/: title length 100
+warn https://floodinsurancedata.com/flood-insurance/charleston-county-sc/: title length 87
+warn https://floodinsurancedata.com/flood-insurance/galveston-county-tx/: title length 88
+warn https://floodinsurancedata.com/flood-insurance/horry-county-sc/: title length 97
+warn https://floodinsurancedata.com/flood-insurance/sacramento-county-ca/: title length 87
+warn https://floodinsurancedata.com/flood-insurance/cape-may-county-nj/: title length 100
+warn https://floodinsurancedata.com/flood-insurance/volusia-county-fl/: title length 100
+warn https://floodinsurancedata.com/flood-insurance/beaufort-county-sc/: title length 106
+warn https://floodinsurancedata.com/flood-insurance/honolulu-county-hi/: title length 104
+warn https://floodinsurancedata.com/flood-insurance/brevard-county-fl/: title length 98
+warn https://floodinsurancedata.com/flood-insurance/nassau-county-ny/: title length 98
+warn https://floodinsurancedata.com/flood-insurance/st-tammany-parish-la/: title length 100

@@ -1,5 +1,5 @@
 {
- "hash": "7694de7649d925f044fbb7391f62ffdcb4dd80e419962bbc93d20387d32b17ca",
- "date": "2026-11-21",
- "note": "11-21: release lock removed only by its own release (code review 11-17 finding 3)"
+ "hash": "196218adc286f54999626d92c295cb29af4e6f11e8bf77c1c316008aa333d95f",
+ "date": "2026-11-24",
+ "note": "11-24 Adsterra + bordering + costliest-lead fixes: /code-review medium, findings fixed or ruled out"
 }

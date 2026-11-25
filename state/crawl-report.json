@@ -1,0 +1,10 @@
+{
+ "base": "https://floodinsurancedata.com",
+ "pages": 12,
+ "errors": [],
+ "warnings": [
+  "https://floodinsurancedata.com/data/: only 117 words of body text",
+  "https://floodinsurancedata.com/terms/: only 217 words of body text",
+  "https://floodinsurancedata.com/flood-insurance/price-gap/: noindex page linked from 2 pages (intended?)"
+ ]
+}

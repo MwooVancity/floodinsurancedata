@@ -11,7 +11,13 @@
    "template": true,
    "commit_before": "6838429445caa1824ae6c175cee5db1a0cce1cb1",
    "pages": 380
+  },
+  {
+   "date": "2026-11-25",
+   "template": true,
+   "commit_before": "424ccc06da36ea3a271ebba0c73e51dc4d99dda4",
+   "pages": 380
   }
  ],
- "hash": "82aa00d2beefc960"
+ "hash": "3f68f296d4448640"
 }

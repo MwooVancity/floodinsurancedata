@@ -5,6 +5,7 @@ import collections, datetime, json, html, os, re, sys
 from collections import defaultdict, Counter
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))  # -I drops script dir; restore for ffcalc
 import ffcalc
+import ads
 import metrics as MX
 from metrics import m
 from rules_registry import RULES, rule
@@ -905,8 +906,9 @@ def card_events():
     _ev1 = max((e for e in _ev if not re.match(r"not a named", e["name"], re.I)), key=lambda e: e.get("paid") or 0, default=None)
     _pp = bool(_ev + _ev_all) and all(e.get("paid_pct") is not None for e in _ev + _ev_all)   # 11-08: the column shows once the refresh carries it
     if len(_ev) >= 2 and _ev1:
+        _big_catch = any((e.get("paid") or 0) > (_ev1.get("paid") or 0) for e in _ev_all)   # hater r212 Sonoma: a bigger catch-all row makes "costliest" false unless the lead leaves it out
         events_card = card("Which floods paid out the biggest totals here?",
-            f"The costliest flood FEMA named here was {_evname(_ev1)}: {tp('event_paid', f'extras.claims.events.{_ev1[chr(105)]}.paid', big, q=_ev1['name'])} over "
+            ("The costliest named flood, catch-all aside, was " if _big_catch else "The costliest flood FEMA named here was ") + f"{_evname(_ev1)}: {tp('event_paid', f'extras.claims.events.{_ev1[chr(105)]}.paid', big, q=_ev1['name'])} over "
             f"{tp('event_claims', f'extras.claims.events.{_ev1[chr(105)]}.claims', q=_ev1['name'])} claims."
             # round 16 (Maine): a costlier year with no flood FEMA named for it alone is said in the lead, not only in a note
             + (f" The costliest year, {_top5[0][0]} ({tp('claims_year_paid', f'claims.by_year.{_top5[0][0]}.1', money, q=str(_top5[0][0]))}), has no single named flood."
@@ -1129,7 +1131,7 @@ elif siblings:
         k = {"independent cities" if p["short"].lower().endswith(" city") else {"LA": "parishes", "AK": "boroughs"}.get(p.get("state"), "counties") for p in ps}
         return " and ".join(sorted(k, key=lambda w: (w == "independent cities", w)))   # bug review 11-15: set order varied per run
     _olbl = f"Other {html.escape(STATE_NAMES.get(_state, _state or ''))} {_uw(_o)}" if _o and all(p in _same for p in _o) else "Other places"
-    sib_html = (f"<nav class='sib'>{_state_link}" + (f"<b>Bordering {_uw(_b)}:</b> {_sl(_b)}" if _b else "")
+    sib_html = (f"<nav class='sib'>{_state_link}" + (f"<b>Bordering {_uw(_b)} with a page here:</b> {_sl(_b)}" if _b else "")
                 + (" · " if _b and _o else "") + (f"<b>{_olbl}:</b> {_sl(_o)}" if _o else "")
                 + ' · <a href="../../">all places</a></nav>')
 else:
@@ -1559,7 +1561,7 @@ details.more>summary::-webkit-details-marker{{display:none}}details.more>summary
 .card{{padding:18px 15px}}.card h2{{font-size:21px}}.stat .n{{font-size:23px}}ul.kv > li > span{{font-size:19px}}ul.kv b{{font-size:11px}}
 table{{font-size:13.5px}}th,td{{padding:7px 6px}}thead th{{font-size:11px;white-space:normal}}
 table{{width:100%}}}}
-</style><style>{THEME}</style></head><body>
+</style><style>{THEME}{ads.CSS if _tool_on('ads') else ''}</style></head><body>
 <header class="topbar"><div class="wrap"><a class="brand" href="../../">Flood Insurance Data</a><span class="crumb">Flood insurance › {(f'<a href="../{state_slug(_state)}/" style="color:inherit">{html.escape(STATE_NAMES[_state])}</a> › ' if (not IS_STATE and _state in _built_states) else '')}{CS}</span></div></header>
 <main class="wrap">
 <section class="hero">
@@ -1574,7 +1576,7 @@ table{{width:100%}}}}
 {ZONEMAP if _tool_on("zonemap") else ''}
 {quick_more}
 </section>
-
+{ads.ad_slot() if _tool_on('ads') else ''}
 {quote_widget}
 {('<section class="card cmpcard">' + cmp_line + '</section>') if cmp_line else ''}
 {('<section class="card">' + _renew_line + '</section>') if _renew_line else ''}

@@ -10,6 +10,7 @@ DIST = os.environ.get("FF_DIST", "dist")
 DATADIR = os.environ.get("FF_DATADIR", "data")
 BASE = os.environ.get("FF_BASEURL", "https://floodinsurancedata.com").rstrip("/")   # never example.com: a standalone run would ship wrong canonicals
 RETR = os.environ.get("FF_RETR", "October 22, 2026")   # data retrieval date, for Privacy/Terms "last updated"
+PRIVACY_UPDATED = "November 24, 2026"   # edit when the privacy text changes (Adsterra banner added 11-24); not the data date
 places = json.load(open(PLACES)) if os.path.exists(PLACES) else []
 # fail-closed: include ONLY counties that passed this run (published.json). A county that rendered a
 # page but failed the gate/criteria is in places.json but not here, so it never reaches home/sitemap/CSV.
@@ -350,7 +351,7 @@ wr(os.path.join(DIST, "404.html"), """<!doctype html><html lang="en"><head><meta
 # ---- privacy policy (required for AdSense; written to current state + ad-ready, no false claims) ----
 privacy = HEAD.format(title="Privacy Policy — Flood Insurance Data", desc="How Flood Insurance Data handles data, cookies, logs, and advertising.", canon=BASE + "/privacy/") + f"""
 <h1>Privacy Policy</h1>
-<p class="mut">Last updated {RETR}.</p>
+<p class="mut">Last updated {PRIVACY_UPDATED}.</p>
 <div class="card"><h2>What we collect</h2>
 <p>Flood Insurance Data is a static reference site. We do not ask for personal information, and there
 are no accounts, sign-ups, or forms. Visits are counted with Google Analytics (see below). Our host (Cloudflare) processes standard
@@ -368,7 +369,8 @@ and other websites. Google's use of advertising cookies enables it and its partn
 visits here and elsewhere. You may opt out of personalized advertising via
 <a href="https://www.google.com/settings/ads" rel="nofollow">Google Ads Settings</a>, and review other
 options at <a href="https://www.aboutads.info" rel="nofollow">aboutads.info</a>. Ads never change a figure
-on this site.</p></div>
+on this site.</p>
+<p>State and county pages also show one banner from the ad network Adsterra, in a box marked "Advertisement" below the opening answer. The banner loads from Adsterra's ad servers (the domain bauval.org) inside a sandboxed frame, so the ad cannot read this page or send you to another site on its own; if you click it, it opens the advertiser's site in a new tab. Adsterra may set cookies or read your browser and device details to choose and measure the ad. The Adsterra banner is not shown on the address lookup, the ZIP lookup, the home page or the guides. We do not choose the advertiser and do not endorse it. To limit this, block third-party cookies in your browser or use an ad blocker. Ads, from Google or Adsterra, never change a figure on this site.</p></div>
 <div class="card"><h2>Third-party data &amp; links</h2>
 <p>All figures are compiled from public U.S. federal sources (FEMA OpenFEMA and the FEMA National Risk Index).
 We link to official FEMA pages; their privacy practices are their
