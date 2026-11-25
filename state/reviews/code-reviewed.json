@@ -1,5 +1,5 @@
 {
- "hash": "196218adc286f54999626d92c295cb29af4e6f11e8bf77c1c316008aa333d95f",
- "date": "2026-11-24",
- "note": "11-24 Adsterra + bordering + costliest-lead fixes: /code-review medium, findings fixed or ruled out"
+ "hash": "f9f813e9a888730e3422eab6ddbb6b64243dcf19503d23e8635d81b946cf4910",
+ "date": "2026-11-25",
+ "note": "ads: gate S15 exempts ad-frame"
 }

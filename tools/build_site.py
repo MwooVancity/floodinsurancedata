@@ -68,6 +68,7 @@ import sys as _sys, datetime as _dtm
 _sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from rules_registry import rule, RULES
 from notes import GA_TAG
+import ads
 _zm_zip = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "tools_flags.json"), encoding="utf-8")).get("zip") or []
 _zm_on_home = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "tools_flags.json"), encoding="utf-8")).get("zonemap") or []
 HEAD = HEAD.replace("<title>", GA_TAG.replace("{", "{{").replace("}", "}}") + "<title>", 1)   # HEAD goes through .format
@@ -1518,10 +1519,12 @@ wr(os.path.join(DIST, "sitemap.xml"), sm)
 from indexnow import KEY as _INKEY
 wr(os.path.join(DIST, _INKEY + ".txt"), _INKEY)   # IndexNow key file (tools/indexnow.py)
 wr(os.path.join(DIST, "ads.txt"), "google.com, pub-8997828618122077, DIRECT, f08c47fec0942fa0\n")   # owner applied to AdSense 11-12 (verification only; no ad units)
+wr(os.path.join(DIST, "ad-frame.html"), ads.FRAME)   # the ad iframe loads this page, so Adsterra sees floodinsurancedata.com (a srcdoc frame hides the host)
 wr(os.path.join(DIST, "robots.txt"), f"User-agent: *\nAllow: /\nSitemap: {BASE}/sitemap.xml\n")
 wr(os.path.join(DIST, "_headers"), "/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n"
    "  X-Frame-Options: DENY\n  Strict-Transport-Security: max-age=31536000\n"   # audit 11-04; no CSP: inline scripts + GA tag
-   "/flood-insurance/*/data.csv\n  X-Robots-Tag: noindex\n")   # a download, not a search result
+   "/flood-insurance/*/data.csv\n  X-Robots-Tag: noindex\n"   # a download, not a search result
+   "/ad-frame.html\n  ! X-Frame-Options\n  X-Frame-Options: SAMEORIGIN\n")   # only our own pages may frame the ad page (DENY would blank the ad box)
 # 11-08: AI assistants (ChatGPT sends visitors) read this file and quote it: every figure carries its base and date, every
 # county its state, and the reader tools are listed (a bare "median $1,169" or "Jefferson County" would be quoted wrong)
 _llm_tools = [(u, t) for u, t in (("/flood-zone-map/", "Flood zone map lookup by address (FEMA's own map service, not an official determination)"),

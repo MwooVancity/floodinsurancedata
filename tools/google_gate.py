@@ -95,7 +95,7 @@ for p in sorted(indexable):
 # S15 analytics: every page carries the tag /privacy/ discloses, so no new page or template goes uncounted
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); from notes import GA_TAG
 for p, h in pages.items():
-    if GA_TAG not in h: fail("S15", f"{p}: Google Analytics tag missing")
+    if GA_TAG not in h and not p.replace("\\", "/").endswith("/ad-frame.html"): fail("S15", f"{p}: Google Analytics tag missing")   # the ad iframe's page is not a reader page: not counted as a visit
 
 # S16 internal links: home lists every hub, county links its state, no orphan or broken link, Google anchor rules (tools/linkcheck.py)
 import linkcheck

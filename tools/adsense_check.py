@@ -55,5 +55,10 @@ if __name__ == "__main__":
         assert not check(pages, ads), "clean build flagged"
         print(f"adsense mutations: {len(muts)} caught"); sys.exit(0)
     bad = check(pages, ads)
+    fr = os.path.join(ROOT, "dist", "ad-frame.html")   # the ad iframe's page: must exist, stay noindex, be the one script (11-25)
+    f = open(fr, encoding="utf-8").read() if os.path.exists(fr) else ""
+    if 'name="robots" content="noindex"' not in f or f.count("<script") != 2 or "bauval.org" not in f: bad.append("dist/ad-frame.html missing, indexable or not the one Adsterra banner")
+    hd = os.path.join(ROOT, "dist", "_headers")   # site-wide X-Frame-Options DENY would blank the ad box: /ad-frame.html must say SAMEORIGIN
+    if "/ad-frame.html\n  ! X-Frame-Options\n  X-Frame-Options: SAMEORIGIN" not in (open(hd, encoding="utf-8").read().replace("\r\n", "\n") if os.path.exists(hd) else ""): bad.append("_headers lets DENY block the ad frame")
     for b in bad[:10]: print("ADSENSE FAIL", b)
     print("ADSENSE FAIL" if bad else f"ADSENSE PASS ({len(pages)} pages, snippet, ads.txt)"); sys.exit(1 if bad else 0)

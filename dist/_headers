@@ -5,3 +5,6 @@
   Strict-Transport-Security: max-age=31536000
 /flood-insurance/*/data.csv
   X-Robots-Tag: noindex
+/ad-frame.html
+  ! X-Frame-Options
+  X-Frame-Options: SAMEORIGIN
